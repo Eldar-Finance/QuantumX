@@ -1,0 +1,38 @@
+{
+  "buildInfo": {
+    "rustc": {
+      "version": "1.59.0-nightly",
+      "commitHash": "78fd0f633faaa5b6dd254fc1456735f63a1b1238",
+      "commitDate": "2021-12-29",
+      "channel": "Nightly",
+      "short": "rustc 1.59.0-nightly (78fd0f633 2021-12-29)"
+    },
+    "contractCrate": {
+      "name": "jex",
+      "version": "0.0.0"
+    },
+    "framework": {
+      "name": "elrond-wasm",
+      "version": "0.30.0"
+    }
+  },
+  "name": "Jex",
+  "constructor": {
+    "inputs": [],
+    "outputs": []
+  },
+  "endpoints": [
+    {
+      "name": "getDefaultFeesTokenA",
+      "mutability": "mutable",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "u32"
+        }
+      ]
+    }
+  ],
+  "hasCallback": false,
+  "types": {}
+}

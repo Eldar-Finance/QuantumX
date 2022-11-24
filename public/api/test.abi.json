@@ -1,0 +1,59 @@
+{
+    "buildInfo": {
+        "rustc": {
+            "version": "1.59.0-nightly",
+            "commitHash": "78fd0f633faaa5b6dd254fc1456735f63a1b1238",
+            "commitDate": "2021-12-29",
+            "channel": "Nightly",
+            "short": "rustc 1.59.0-nightly (78fd0f633 2021-12-29)"
+        },
+        "contractCrate": {
+            "name": "template",
+            "version": "0.0.0"
+        },
+        "framework": {
+            "name": "elrond-wasm",
+            "version": "0.30.0"
+        }
+    },
+    "name": "Template",
+    "constructor": {
+        "inputs": [],
+        "outputs": []
+    },
+    "endpoints": [
+        {
+            "name": "setDist",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "prize_distribution",
+                    "type": "bytes"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "getPrizeDist",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "Distribution"
+                }
+            ]
+        }
+    ],
+    "hasCallback": false,
+    "types": {
+        "Distribution": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "prize_distribution",
+                    "type": "bytes"
+                }
+            ]
+        }
+    }
+}

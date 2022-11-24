@@ -1,0 +1,93 @@
+{
+    "buildInfo": {
+        "rustc": {
+            "version": "1.59.0-nightly",
+            "commitHash": "78fd0f633faaa5b6dd254fc1456735f63a1b1238",
+            "commitDate": "2021-12-29",
+            "channel": "Nightly",
+            "short": "rustc 1.59.0-nightly (78fd0f633 2021-12-29)"
+        },
+        "contractCrate": {
+            "name": "crowdfunding",
+            "version": "0.1.0"
+        },
+        "framework": {
+            "name": "elrond-wasm",
+            "version": "0.27.4"
+        }
+    },
+    "name": "EldarCrowd",
+    "constructor": {
+        "inputs": [
+            {
+                "name": "token",
+                "type": "TokenIdentifier"
+            }
+        ],
+        "outputs": []
+    },
+    "endpoints": [
+        {
+            "name": "fund",
+            "mutability": "mutable",
+            "payableInTokens": [
+                "*"
+            ],
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "name": "claim",
+            "mutability": "mutable",
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "name": "getToken",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "TokenIdentifier"
+                }
+            ]
+        },
+        {
+            "name": "getTotalContributions",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "getAvailableClaim",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "getUserContribution",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "user",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        }
+    ],
+    "hasCallback": false,
+    "types": {}
+}

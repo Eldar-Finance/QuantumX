@@ -1,0 +1,1028 @@
+{
+    "buildInfo": {
+        "rustc": {
+            "version": "1.62.0-nightly",
+            "commitHash": "88860d5474a32f507dde8fba8df35fd2064f11b9",
+            "commitDate": "2022-05-09",
+            "channel": "Nightly",
+            "short": "rustc 1.62.0-nightly (88860d547 2022-05-09)"
+        },
+        "contractCrate": {
+            "name": "bettings",
+            "version": "0.0.0",
+            "git_version": "3ddf441-modified"
+        },
+        "framework": {
+            "name": "elrond-wasm",
+            "version": "0.34.0"
+        }
+    },
+    "name": "Bettings",
+    "constructor": {
+        "inputs": [
+            {
+                "name": "mundial_sc",
+                "type": "Address"
+            }
+        ],
+        "outputs": []
+    },
+    "endpoints": [
+        {
+            "name": "createBetting",
+            "mutability": "mutable",
+            "payableInTokens": [
+                "*"
+            ],
+            "inputs": [
+                {
+                    "name": "bet_id",
+                    "type": "u64"
+                },
+                {
+                    "name": "bet_choice",
+                    "type": "bytes"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "createBet",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "token_identifier",
+                    "type": "EgldOrEsdtTokenIdentifier"
+                },
+                {
+                    "name": "starting_timestamp",
+                    "type": "u64"
+                },
+                {
+                    "name": "sport",
+                    "type": "bytes"
+                },
+                {
+                    "name": "competition",
+                    "type": "bytes"
+                },
+                {
+                    "name": "party1",
+                    "type": "bytes"
+                },
+                {
+                    "name": "party2",
+                    "type": "bytes"
+                },
+                {
+                    "name": "description",
+                    "type": "bytes"
+                },
+                {
+                    "name": "betting_options",
+                    "type": "variadic<bytes>",
+                    "multi_arg": true
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "updateBet",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "bet_id",
+                    "type": "u64"
+                },
+                {
+                    "name": "starting_timestamp",
+                    "type": "optional<u64>",
+                    "multi_arg": true
+                },
+                {
+                    "name": "sport",
+                    "type": "optional<bytes>",
+                    "multi_arg": true
+                },
+                {
+                    "name": "competition",
+                    "type": "optional<bytes>",
+                    "multi_arg": true
+                },
+                {
+                    "name": "party1",
+                    "type": "optional<bytes>",
+                    "multi_arg": true
+                },
+                {
+                    "name": "party2",
+                    "type": "optional<bytes>",
+                    "multi_arg": true
+                },
+                {
+                    "name": "description",
+                    "type": "optional<bytes>",
+                    "multi_arg": true
+                },
+                {
+                    "name": "betting_options",
+                    "type": "variadic<bytes>",
+                    "multi_arg": true
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "updateBetStatuses",
+            "mutability": "mutable",
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "name": "addEarner",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "label",
+                    "type": "utf-8 string"
+                },
+                {
+                    "name": "address",
+                    "type": "Address"
+                },
+                {
+                    "name": "percentage",
+                    "type": "u64"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "Option<tuple<Address,u64>>"
+                }
+            ]
+        },
+        {
+            "name": "removeEarner",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "label",
+                    "type": "utf-8 string"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "Option<tuple<Address,u64>>"
+                }
+            ]
+        },
+        {
+            "name": "declareWinningOption",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "bet_id",
+                    "type": "u64"
+                },
+                {
+                    "name": "bet_choice",
+                    "type": "bytes"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "getForceGetRemainingBalance",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "bet_id",
+                    "type": "u64"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "getGetRemainingBalance",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "bet_id",
+                    "type": "u64"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "getEarnersInfo",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "List<tuple<utf-8 string,Address,u64>>"
+                }
+            ]
+        },
+        {
+            "name": "getOddsAndMyBetsInfo",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "address",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "List<tuple<u64,bytes,BigUint,BigUint>>"
+                }
+            ]
+        },
+        {
+            "name": "getEndedBetInfo",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "address",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "List<tuple<u64,Bet,bytes,bytes,BigUint,BigUint>>"
+                }
+            ]
+        },
+        {
+            "name": "getBetsInfo",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "List<tuple<u64,Bet,BetStatus,BigUint>>"
+                }
+            ]
+        },
+        {
+            "name": "getStatsInfo",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "List<tuple<EgldOrEsdtTokenIdentifier,BigUint,BigUint>>"
+                }
+            ]
+        },
+        {
+            "name": "getIsAMundialBetter",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "address",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "bool"
+                }
+            ]
+        },
+        {
+            "name": "getLatestBetId",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "getBetId",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "bet",
+                    "type": "Bet"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "getBetFromId",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "id",
+                    "type": "u64"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "Bet"
+                }
+            ]
+        },
+        {
+            "name": "getBetStatus",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "bet_id",
+                    "type": "u64"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "BetStatus"
+                }
+            ]
+        },
+        {
+            "name": "getBets",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<u64>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "getLiveBets",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<u64>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "getFrozenBets",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<u64>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "getEndedBets",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<u64>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "getBetBetters",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "bet_id",
+                    "type": "u64"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "variadic<Address>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "getBetWinningOption",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "bet_id",
+                    "type": "u64"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "bytes"
+                }
+            ]
+        },
+        {
+            "name": "getBetsCreated",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<Bet>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "getMinimumBet",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "token",
+                    "type": "EgldOrEsdtTokenIdentifier"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "getBetPool",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "bet_id",
+                    "type": "u64"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "getBetPoolPerTeam",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "bet_id",
+                    "type": "u64"
+                },
+                {
+                    "name": "option",
+                    "type": "bytes"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "getBetPoolPortion",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "bet_id",
+                    "type": "u64"
+                },
+                {
+                    "name": "choice",
+                    "type": "bytes"
+                },
+                {
+                    "name": "address",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "getBetPoolRemainingAmount",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "bet_id",
+                    "type": "u64"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "getHasBet",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "address",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "variadic<tuple<u64,bytes>>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "getHasEarned",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "address",
+                    "type": "Address"
+                },
+                {
+                    "name": "token",
+                    "type": "EgldOrEsdtTokenIdentifier"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "getEarners",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<multi<utf-8 string,tuple<Address,u64>>>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "getEarnerHasEarned",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "address",
+                    "type": "Address"
+                },
+                {
+                    "name": "token",
+                    "type": "EgldOrEsdtTokenIdentifier"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "getEarnersTotalPercentage",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "getBetters",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<Address>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "getBetTokens",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<EgldOrEsdtTokenIdentifier>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "getTotalVolume",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "token",
+                    "type": "EgldOrEsdtTokenIdentifier"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "getMundialAddress",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "Address"
+                }
+            ]
+        },
+        {
+            "name": "getIsScPaused",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "bool"
+                }
+            ]
+        },
+        {
+            "name": "pauseSc",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "name": "resumeSc",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "name": "forceRecoverFunds",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "token_identifier",
+                    "type": "EgldOrEsdtTokenIdentifier"
+                },
+                {
+                    "name": "token_nonces",
+                    "type": "List<u64>"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "getWithOwnerRights",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<Address>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "addOwnerRights",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "address",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "bool"
+                }
+            ]
+        },
+        {
+            "name": "removeOwnerRights",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "address",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "bool"
+                }
+            ]
+        },
+        {
+            "name": "getUseEvents",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "bool"
+                }
+            ]
+        }
+    ],
+    "events": [
+        {
+            "identifier": "bet_created",
+            "inputs": [
+                {
+                    "name": "bet_id",
+                    "type": "u64",
+                    "indexed": true
+                },
+                {
+                    "name": "token",
+                    "type": "EgldOrEsdtTokenIdentifier",
+                    "indexed": true
+                },
+                {
+                    "name": "timestamp",
+                    "type": "u64",
+                    "indexed": true
+                },
+                {
+                    "name": "sport",
+                    "type": "bytes",
+                    "indexed": true
+                },
+                {
+                    "name": "comp",
+                    "type": "bytes",
+                    "indexed": true
+                },
+                {
+                    "name": "party1",
+                    "type": "bytes",
+                    "indexed": true
+                },
+                {
+                    "name": "party2",
+                    "type": "bytes",
+                    "indexed": true
+                },
+                {
+                    "name": "options",
+                    "type": "List<bytes>",
+                    "indexed": true
+                }
+            ]
+        },
+        {
+            "identifier": "bet_updated",
+            "inputs": [
+                {
+                    "name": "bet_id",
+                    "type": "u64",
+                    "indexed": true
+                },
+                {
+                    "name": "timestamp",
+                    "type": "u64",
+                    "indexed": true
+                },
+                {
+                    "name": "sport",
+                    "type": "bytes",
+                    "indexed": true
+                },
+                {
+                    "name": "comp",
+                    "type": "bytes",
+                    "indexed": true
+                },
+                {
+                    "name": "party1",
+                    "type": "bytes",
+                    "indexed": true
+                },
+                {
+                    "name": "party2",
+                    "type": "bytes",
+                    "indexed": true
+                },
+                {
+                    "name": "options",
+                    "type": "List<bytes>",
+                    "indexed": true
+                }
+            ]
+        },
+        {
+            "identifier": "payment_received",
+            "inputs": [
+                {
+                    "name": "bet_id",
+                    "type": "u64",
+                    "indexed": true
+                },
+                {
+                    "name": "caller",
+                    "type": "Address",
+                    "indexed": true
+                },
+                {
+                    "name": "token",
+                    "type": "EgldOrEsdtTokenIdentifier",
+                    "indexed": true
+                },
+                {
+                    "name": "nonce",
+                    "type": "u64",
+                    "indexed": true
+                },
+                {
+                    "name": "amount",
+                    "type": "BigUint",
+                    "indexed": true
+                }
+            ]
+        },
+        {
+            "identifier": "amount_split",
+            "inputs": [
+                {
+                    "name": "bet_id",
+                    "type": "u64",
+                    "indexed": true
+                },
+                {
+                    "name": "amount",
+                    "type": "BigUint",
+                    "indexed": true
+                },
+                {
+                    "name": "bet_amount",
+                    "type": "BigUint",
+                    "indexed": true
+                },
+                {
+                    "name": "earners_amount",
+                    "type": "BigUint",
+                    "indexed": true
+                },
+                {
+                    "name": "remaining_amount",
+                    "type": "BigUint",
+                    "indexed": true
+                },
+                {
+                    "name": "bet_pool_remaining_amount",
+                    "type": "BigUint",
+                    "indexed": true
+                }
+            ]
+        },
+        {
+            "identifier": "win_amount_calced",
+            "inputs": [
+                {
+                    "name": "bet_id",
+                    "type": "u64",
+                    "indexed": true
+                },
+                {
+                    "name": "personal_bet",
+                    "type": "BigUint",
+                    "indexed": true
+                },
+                {
+                    "name": "total_winning_bets",
+                    "type": "BigUint",
+                    "indexed": true
+                },
+                {
+                    "name": "total_pool_bets",
+                    "type": "BigUint",
+                    "indexed": true
+                },
+                {
+                    "name": "winning_amount",
+                    "type": "BigUint",
+                    "indexed": true
+                }
+            ]
+        },
+        {
+            "identifier": "winner_paid",
+            "inputs": [
+                {
+                    "name": "bet_id",
+                    "type": "u64",
+                    "indexed": true
+                },
+                {
+                    "name": "bet_choice",
+                    "type": "bytes",
+                    "indexed": true
+                },
+                {
+                    "name": "winner",
+                    "type": "Address",
+                    "indexed": true
+                },
+                {
+                    "name": "token",
+                    "type": "EgldOrEsdtTokenIdentifier",
+                    "indexed": true
+                },
+                {
+                    "name": "payback_amount",
+                    "type": "BigUint",
+                    "indexed": true
+                }
+            ]
+        },
+        {
+            "identifier": "status_changed",
+            "inputs": [
+                {
+                    "name": "bet_id",
+                    "type": "u64",
+                    "indexed": true
+                },
+                {
+                    "name": "old_status",
+                    "type": "utf-8 string",
+                    "indexed": true
+                },
+                {
+                    "name": "new_status",
+                    "type": "utf-8 string",
+                    "indexed": true
+                }
+            ]
+        }
+    ],
+    "hasCallback": false,
+    "types": {
+        "Bet": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "starting_timestamp",
+                    "type": "u64"
+                },
+                {
+                    "name": "sport",
+                    "type": "bytes"
+                },
+                {
+                    "name": "competition",
+                    "type": "bytes"
+                },
+                {
+                    "name": "party1",
+                    "type": "bytes"
+                },
+                {
+                    "name": "party2",
+                    "type": "bytes"
+                },
+                {
+                    "name": "betting_options",
+                    "type": "List<bytes>"
+                },
+                {
+                    "name": "token_identifier",
+                    "type": "EgldOrEsdtTokenIdentifier"
+                },
+                {
+                    "name": "description",
+                    "type": "bytes"
+                }
+            ]
+        },
+        "BetStatus": {
+            "type": "enum",
+            "variants": [
+                {
+                    "name": "Live",
+                    "discriminant": 0
+                },
+                {
+                    "name": "Frozen",
+                    "discriminant": 1
+                },
+                {
+                    "name": "Ended",
+                    "discriminant": 2
+                }
+            ]
+        }
+    }
+}

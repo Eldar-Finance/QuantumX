@@ -1,14 +1,33 @@
-import '../styles/globals.css'
+import "../styles/globals.css";
 
-import { Provider } from 'react-redux'
-import type { AppProps } from 'next/app'
+import { Provider } from "react-redux";
 
-import store from '../app/store'
+import { ChakraProvider } from "@chakra-ui/react";
+import { MetaHead } from "components/MetaHead/MetaHead";
 
-export default function MyApp({ Component, pageProps }: AppProps) {
+import store from "redux/store";
+import customTheme from "theme/chakra";
+
+import { Space_Grotesk } from "@next/font/google";
+
+// If loading a variable font, you don't need to specify the font weight
+const inter = Space_Grotesk({ subsets: ["latin"] });
+
+const QuantumXApp = ({ Component, pageProps }) => {
   return (
     <Provider store={store}>
-      <Component {...pageProps} />
+      <ChakraProvider resetCSS theme={customTheme}>
+        <style jsx global>{`
+          html,
+          body {
+            font-family: ${inter.style.fontFamily} !important;
+          }
+        `}</style>
+        <MetaHead />
+        <Component {...pageProps} />
+      </ChakraProvider>
     </Provider>
-  )
-}
+  );
+};
+
+export default QuantumXApp;

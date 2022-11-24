@@ -1,0 +1,290 @@
+{
+    "buildInfo": {
+        "rustc": {
+            "version": "1.62.0-nightly",
+            "commitHash": "a707f401074bc769bab4efb2bfdde7f6c5a4068d",
+            "commitDate": "2022-04-29",
+            "channel": "Nightly",
+            "short": "rustc 1.62.0-nightly (a707f4010 2022-04-29)"
+        },
+        "contractCrate": {
+            "name": "egld-lkmex-swap",
+            "version": "0.0.0",
+            "git_version": "f407809-modified"
+        },
+        "framework": {
+            "name": "elrond-wasm",
+            "version": "0.31.1"
+        }
+    },
+    "name": "MainModule",
+    "constructor": {
+        "inputs": [
+            {
+                "name": "merge_lkmex_sc_address",
+                "type": "Address"
+            }
+        ],
+        "outputs": []
+    },
+    "endpoints": [
+        {
+            "name": "swap",
+            "mutability": "mutable",
+            "payableInTokens": [
+                "*"
+            ],
+            "inputs": [
+                {
+                    "name": "token_id_to_return",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "min_amount_to_return",
+                    "type": "BigUint"
+                },
+		{
+                    "name": "platform_id",
+                    "type": "BigUint"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "swapEgld",
+            "mutability": "mutable",
+            "payableInTokens": [
+                "EGLD"
+            ],
+            "inputs": [
+                {
+                    "name": "token_id_to_return",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "min_amount_to_return",
+                    "type": "BigUint"
+                },
+		{
+                    "name": "platform_id",
+                    "type": "BigUint"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "get_pairs_with_liquidities",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "List<TokenPairViewOutput>"
+                }
+            ]
+        },
+        {
+            "name": "getTotalTokenIds",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<TokenIdentifier>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "getTotalLiquidityForPair",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "token_pair",
+                    "type": "TokenPair"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "tuple<BigUint,BigUint,BigUint>"
+                }
+            ]
+        },
+        {
+            "name": "getUnlockedLiquidity",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "token_identifier",
+                    "type": "TokenIdentifier"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "enabledSC",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "bool"
+                }
+            ]
+        },
+        {
+            "name": "getTokenFee",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "token_id",
+                    "type": "TokenIdentifier"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "getEnabledToken",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "token_id",
+                    "type": "TokenIdentifier"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "bool"
+                }
+            ]
+        },
+        {
+            "name": "getLkmexNonces",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<u64>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "getMaxSwapAmountForToken",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "token_id",
+                    "type": "TokenIdentifier"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "getAllPairs",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<TokenPair>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "getTokenNonce",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "token_id",
+                    "type": "TokenIdentifier"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "getMergeLkmexScAddress",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "Address"
+                }
+            ]
+        }
+    ],
+    "hasCallback": true,
+    "types": {
+        "TokenPair": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "first_token",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "second_token",
+                    "type": "TokenIdentifier"
+                }
+            ]
+        },
+        "TokenPairViewOutput": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "token1",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "token1_total_liquidity",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "token1_unlocked_liquidity",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "token1_fee",
+                    "type": "u64"
+                },
+                {
+                    "name": "token1_max_swap",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "token2",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "token2_total_liquidity",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "token2_unlocked_liquidity",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "token2_fee",
+                    "type": "u64"
+                },
+                {
+                    "name": "token2_max_swap",
+                    "type": "BigUint"
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,115 @@
+{
+  "buildInfo": {
+    "rustc": {
+      "version": "1.62.0-nightly",
+      "commitHash": "88860d5474a32f507dde8fba8df35fd2064f11b9",
+      "commitDate": "2022-05-09",
+      "channel": "Nightly",
+      "short": "rustc 1.62.0-nightly (88860d547 2022-05-09)"
+    },
+    "contractCrate": {
+      "name": "fake",
+      "version": "0.0.0",
+      "git_version": "743fe28-modified"
+    },
+    "framework": {
+      "name": "elrond-wasm",
+      "version": "0.35.0"
+    }
+  },
+  "name": "Jex",
+  "constructor": {
+    "inputs": [],
+    "outputs": []
+  },
+  "endpoints": [
+    {
+      "name": "offerById",
+      "mutability": "readonly",
+      "inputs": [
+        {
+          "name": "offer_id",
+          "type": "u32"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "Offer"
+        }
+      ]
+    }
+  ],
+  "hasCallback": false,
+  "types": {
+    "Offer": {
+      "type": "struct",
+      "fields": [
+        {
+          "name": "token_a",
+          "type": "TokenIdentifier"
+        },
+        {
+          "name": "token_a_nonce",
+          "type": "u64"
+        },
+        {
+          "name": "token_a_amount",
+          "type": "BigUint"
+        },
+        {
+          "name": "token_b",
+          "type": "TokenIdentifier"
+        },
+        {
+          "name": "token_b_nonce_min",
+          "type": "u64"
+        },
+        {
+          "name": "token_b_nonce_max",
+          "type": "u64"
+        },
+        {
+          "name": "token_b_amount",
+          "type": "BigUint"
+        },
+        {
+          "name": "creator",
+          "type": "Address"
+        },
+        {
+          "name": "status",
+          "type": "OfferStatus"
+        },
+        {
+          "name": "reserved_for",
+          "type": "Option<Address>"
+        },
+        {
+          "name": "min_fill_permille",
+          "type": "u16"
+        },
+        {
+          "name": "sum_fill_permille",
+          "type": "u16"
+        },
+        {
+          "name": "zero",
+          "type": "u64"
+        }
+      ]
+    },
+    "OfferStatus": {
+      "type": "enum",
+      "variants": [
+        {
+          "name": "Open",
+          "discriminant": 0
+        },
+        {
+          "name": "Closed",
+          "discriminant": 1
+        }
+      ]
+    }
+  }
+}
