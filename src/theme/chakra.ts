@@ -28,7 +28,11 @@ const components: ThemeComponents = {
     variants: {
       solid: {
         bg: "main",
-        color: "light.lighter",
+        color: "black.dark",
+        borderRadius: "lg",
+        fontWeight: "500",
+        fontSize: "md",
+
         _hover: {
           bg: "main",
           opacity: "0.8",
@@ -83,7 +87,8 @@ const borderRadius = {
     lg: "15px",
     xl: "20px",
     "2xl": "30px",
-    "3xl": "40px",
+    "3xl": "38px",
+    "4xl": "46px",
     full: "9999px",
   },
 };
@@ -95,8 +100,8 @@ const fontSizes = {
   lg: "18px",
   xl: "22px",
   "2xl": "24px",
-  "3xl": "36px",
-  "4xl": "40px",
+  "3xl": "34px",
+  "4xl": "38px",
   "5xl": "42px",
   "6xl": "50px",
   "7xl": "64px",
@@ -144,6 +149,7 @@ const customTheme = extendTheme({
     black: {
       light: "#242526",
       base: "#151515",
+      baseDark: "#1E1E1E",
       dark: "#000000",
       50: "rgba(0, 0, 0, 0.05)",
       100: "rgba(0, 0, 0, 0.1)",
