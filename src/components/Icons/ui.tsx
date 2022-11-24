@@ -1,5 +1,6 @@
 import { createIcon } from "@chakra-ui/react";
-
+import multiversxLogo from "assets/logos/multiversx.svg";
+import NextImage from "components/NextImage/NextImage";
 // using `path`
 export const DotsIcon = createIcon({
   displayName: "DotsIcon",
@@ -38,3 +39,37 @@ export const BookIcon = createIcon({
     </svg>
   ),
 });
+
+export const ToolIcon = createIcon({
+  displayName: "ToolIcon",
+  viewBox: "0 0 21 21",
+  // path can also be an array of elements, if you have multiple paths, lines, shapes, etc.
+  path: (
+    <svg>
+      <path
+        d="M12.7003 5.29974C12.5171 5.48666 12.4145 5.73798 12.4145 5.99974C12.4145 6.26149 12.5171 6.51281 12.7003 6.69974L14.3003 8.29974C14.4873 8.48296 14.7386 8.58559 15.0003 8.58559C15.2621 8.58559 15.5134 8.48296 15.7003 8.29974L19.4703 4.52974C19.9732 5.64092 20.1254 6.87897 19.9068 8.07888C19.6882 9.27879 19.1091 10.3836 18.2466 11.246C17.3842 12.1084 16.2794 12.6876 15.0795 12.9062C13.8796 13.1248 12.6415 12.9726 11.5303 12.4697L4.62034 19.3797C4.22252 19.7776 3.68295 20.0011 3.12034 20.0011C2.55773 20.0011 2.01817 19.7776 1.62034 19.3797C1.22252 18.9819 0.999023 18.4423 0.999023 17.8797C0.999023 17.3171 1.22252 16.7776 1.62034 16.3797L8.53034 9.46974C8.02751 8.35855 7.87526 7.1205 8.09389 5.92059C8.31251 4.72068 8.89163 3.61589 9.75406 2.75346C10.6165 1.89102 11.7213 1.3119 12.9212 1.09328C14.1211 0.874651 15.3592 1.0269 16.4703 1.52974L12.7103 5.28974L12.7003 5.29974Z"
+        stroke="url(#paint0_linear_157_1825)"
+        stroke-width="1.2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <defs>
+        <linearGradient
+          id="paint0_linear_157_1825"
+          x1="0.999023"
+          y1="0.996094"
+          x2="20.004"
+          y2="20.0011"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stop-color="#31C1D1" />
+          <stop offset="0.0001" stop-color="#2FE6E6" />
+          <stop offset="1" stop-color="#31B1BF" />
+        </linearGradient>
+      </defs>
+    </svg>
+  ),
+});
+export const MultiversxIcon = () => {
+  return <NextImage src={multiversxLogo} alt="" />;
+};

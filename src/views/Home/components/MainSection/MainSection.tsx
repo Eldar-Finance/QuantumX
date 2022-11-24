@@ -1,8 +1,9 @@
-import { Box, Button, Center, Flex, Heading } from "@chakra-ui/react";
+import { Box, Button, Center, Flex, Heading, Text } from "@chakra-ui/react";
 import styled from "@emotion/styled";
 import angleRightIcon from "assets/ui-elemts/angleRight.svg";
 import ActionButton from "components/ActionButton/ActionButton";
-import { BookIcon } from "components/Icons/ui";
+import { BookIcon, MultiversxIcon } from "components/Icons/ui";
+import AmountBox1 from "components/InfoBox/AmountBox1";
 import NextImage from "components/NextImage/NextImage";
 const MainSection = () => {
   return (
@@ -19,7 +20,7 @@ const MainSection = () => {
         Friction-less swaps. Quantum level latency. Next-level interface.
       </Heading>
 
-      <Flex justify={"center"} gap={"30px"}>
+      <Flex justify={"center"} gap={"30px"} mb="60px">
         <ActionButton py="11px" px="20px" borderRadius={"md"}>
           Connect wallet{" "}
           <Box as="span" ml={"10px"}>
@@ -38,6 +39,23 @@ const MainSection = () => {
           Read docs <BookIcon ml={"8px"} />
         </ButtonGradiente>
       </Flex>
+      <Flex gap="20px" mb="30px">
+        <AmountBox1 />
+        <AmountBox1 />
+      </Flex>
+
+      <Center gap="10px">
+        <Text fontSize={"lg"}>built on</Text>
+        <Box>
+          <MultiversxIcon />
+          <Box
+            h="1.5px"
+            w="full"
+            bg="linear-gradient(90deg, rgba(250,0,255,1) 0%, rgba(255,255,255,1) 50%, rgba(0,255,133,1) 100%);"
+            mt="10px"
+          />
+        </Box>
+      </Center>
     </Center>
   );
 };

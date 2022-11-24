@@ -67,8 +67,7 @@ const components: ThemeComponents = {
   Heading: {
     baseStyle: {
       fontWeight: 600,
-      fontFamily:
-        "BR Hendrix, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif",
+      fontFamily: "inherit",
     },
     sizes: {
       xl: {
@@ -89,6 +88,9 @@ const borderRadius = {
     "2xl": "30px",
     "3xl": "38px",
     "4xl": "46px",
+    "5xl": "54px",
+    "6xl": "62px",
+    "7xl": "70px",
     full: "9999px",
   },
 };
@@ -112,17 +114,17 @@ const fontSizes = {
 const customTheme = extendTheme({
   config,
   components,
-  initialColorMode: "light",
+  initialColorMode: "dark",
   useSystemColorMode: false,
   styles: {
     global: (props) => ({
       body: {
         minHeight: "100vh",
         overflowX: "hidden",
-        bg: mode("light.lighter", "dark.baseDark")(props),
+        bg: mode("black.base", "black.base")(props),
         bgSize: "700px",
         backgroundPositionX: "150px",
-        color: mode("dark.darker", "light.lighter")(props),
+        color: mode("white.light", "white.light")(props),
         fontSize: "md",
       },
       "*": {
@@ -133,7 +135,7 @@ const customTheme = extendTheme({
           backgroundColor: mode("light.baseLight", "dark.baseDark")(props),
         },
         "&::-webkit-scrollbar-thumb": {
-          backgroundColor: mode("dark.baseDark", "light.baseLight")(props),
+          backgroundColor: mode("black.light", "white.light")(props),
           borderRadius: 1.5,
         },
         "*::placeholder": {
