@@ -8,10 +8,10 @@ import { MetaHead } from "components/MetaHead/MetaHead";
 import store from "redux/store";
 import customTheme from "theme/chakra";
 
-import { Space_Grotesk } from "@next/font/google";
+import { Roboto_Serif } from "@next/font/google";
 
 // If loading a variable font, you don't need to specify the font weight
-const inter = Space_Grotesk({ subsets: ["latin"] });
+const inter = Roboto_Serif({ subsets: ["latin"] });
 
 const QuantumXApp = ({ Component, pageProps }) => {
   return (
