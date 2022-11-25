@@ -37,7 +37,7 @@ const QuantumXFeatures = () => {
             title="Tools"
             desc="The Ultimate tools forinvestors, traders or fans."
             icon={<ToolIcon fontSize={"24px"} />}
-            buttonText="Create"
+            buttonText="Use"
           />
 
           <IconAndButtonBox
