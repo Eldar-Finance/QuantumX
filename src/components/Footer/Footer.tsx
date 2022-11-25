@@ -14,7 +14,7 @@ const Footer = () => {
       <Box w="full" bottom={0} position="absolute" zIndex={-1}>
         <NextImage src={footerImage} alt="" />
       </Box>
-      <Flex gap={"50px"} mb="40px">
+      <Flex gap={"70px"} mb="40px">
         <SocialBox />
         <SocialBox />
         <SocialBox />

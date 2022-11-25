@@ -12,9 +12,10 @@ const Menu = () => {
       borderRadius={"full"}
     >
       <Box>Dashboard</Box>
-      <Box>Swap</Box>
-      <Box>Proteo Farms</Box>
-      <Box>Dollar Cost-Averaging</Box>
+      <Box>Swap </Box>
+      <Box>Farms</Box>
+      <Box>Pools</Box>
+      <Box>Dollar Cost Averaging </Box>
       <DotsIcon fontSize={"16px"} />
     </Flex>
   );

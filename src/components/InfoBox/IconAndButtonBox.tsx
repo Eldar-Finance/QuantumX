@@ -1,18 +1,34 @@
-import { Box, Center, Text } from "@chakra-ui/react";
+import { Center, Text } from "@chakra-ui/react";
 import ActionButton from "components/ActionButton/ActionButton";
 import Card from "components/Card/Card";
-import { ToolIcon } from "components/Icons/ui";
+import { ReactNode } from "react";
 
-const IconAndButtonBox = () => {
+interface IProps {
+  icon: ReactNode;
+  title: string;
+  desc: string;
+  onClick?: () => void;
+}
+
+const IconAndButtonBox = ({ desc, title, icon, onClick }: IProps) => {
   return (
     <Card as={Center} flexDir="column">
-      <Box bg="black.dark" borderRadius="md" p="13px" mb={"10px"}>
-        <ToolIcon fontSize={"24px"} />
-      </Box>
-      <Text textAlign={"center"} fontWeight="400" mb="20px" color="white.400">
-        Lorem ipsum dolor sit amet consectetur. At in
+      <Center bg="black.dark" borderRadius="md" boxSize={"50px"} mb={"10px"}>
+        {icon}
+      </Center>
+      <Text fontWeight={"500"} fontSize="20px" as="h3" mb="11px">
+        {title}
       </Text>
-      <ActionButton w="150px" py="12px" h="auto">
+      <Text textAlign={"center"} fontWeight="400" mb="20px" color="white.400">
+        {desc}
+      </Text>
+      <ActionButton
+        w="150px"
+        py="12px"
+        h="auto"
+        onClick={onClick}
+        fontWeight="600"
+      >
         Create
       </ActionButton>
     </Card>

@@ -1,4 +1,5 @@
 import { Box, Center, Grid, Heading } from "@chakra-ui/react";
+import { FarmIcon, RocketIcon, SwapIcon, ToolIcon } from "components/Icons/ui";
 import IconAndButtonBox from "components/InfoBox/IconAndButtonBox";
 
 const QuantumXFeatures = () => {
@@ -25,10 +26,33 @@ const QuantumXFeatures = () => {
         </Heading>
 
         <Grid templateColumns={"repeat(4, 1fr)"} gap="20px">
-          <IconAndButtonBox />
-          <IconAndButtonBox />
-          <IconAndButtonBox />
-          <IconAndButtonBox />
+          <IconAndButtonBox
+            title="Tools"
+            desc="The Ultimate tools forinvestors, traders or fans."
+            icon={<ToolIcon fontSize={"24px"} />}
+          />
+
+          <IconAndButtonBox
+            title="Swap"
+            desc="Safe, direct and
+            straightforward Swap
+            of ESDT tokens."
+            icon={<SwapIcon fontSize={"24px"} />}
+          />
+
+          <IconAndButtonBox
+            title="Farms"
+            desc="Access, Manage and Harvest farms
+            instantly."
+            icon={<FarmIcon fontSize={"24px"} />}
+          />
+
+          <IconAndButtonBox
+            title="DCA"
+            desc="One-click Personalised
+            or Predefined DCA Portfolios."
+            icon={<RocketIcon fontSize={"24px"} />}
+          />
         </Grid>
       </Center>
     </Box>
