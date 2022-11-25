@@ -7,10 +7,17 @@ interface IProps {
   icon: ReactNode;
   title: string;
   desc: string;
+  buttonText: string;
   onClick?: () => void;
 }
 
-const IconAndButtonBox = ({ desc, title, icon, onClick }: IProps) => {
+const IconAndButtonBox = ({
+  desc,
+  title,
+  icon,
+  buttonText,
+  onClick,
+}: IProps) => {
   return (
     <Card as={Center} flexDir="column">
       <Center bg="black.dark" borderRadius="md" boxSize={"50px"} mb={"10px"}>
@@ -40,7 +47,7 @@ const IconAndButtonBox = ({ desc, title, icon, onClick }: IProps) => {
         onClick={onClick}
         fontWeight="600"
       >
-        Create
+        {buttonText}
       </ActionButton>
     </Card>
   );

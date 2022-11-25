@@ -37,6 +37,7 @@ const QuantumXFeatures = () => {
             title="Tools"
             desc="The Ultimate tools forinvestors, traders or fans."
             icon={<ToolIcon fontSize={"24px"} />}
+            buttonText="Create"
           />
 
           <IconAndButtonBox
@@ -45,6 +46,7 @@ const QuantumXFeatures = () => {
             straightforward Swap
             of ESDT tokens."
             icon={<SwapIcon fontSize={"24px"} />}
+            buttonText="Swap"
           />
 
           <IconAndButtonBox
@@ -52,6 +54,7 @@ const QuantumXFeatures = () => {
             desc="Access, Manage and Harvest farms
             instantly."
             icon={<FarmIcon fontSize={"24px"} />}
+            buttonText="Farm"
           />
 
           <IconAndButtonBox
@@ -59,6 +62,7 @@ const QuantumXFeatures = () => {
             desc="One-click Personalised
             or Predefined DCA Portfolios."
             icon={<RocketIcon fontSize={"24px"} />}
+            buttonText="Invest"
           />
         </Grid>
       </Center>
