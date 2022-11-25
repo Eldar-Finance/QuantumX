@@ -4,18 +4,18 @@ import IconAndButtonBox from "components/InfoBox/IconAndButtonBox";
 
 const QuantumXFeatures = () => {
   return (
-    <Box px="20px">
+    <Box px={{ xs: "12px", md: "20px" }}>
       <Center
         bg="black.dark"
-        p="70"
+        p={{ xs: "70px 25px", md: "70px" }}
         flexDir={"column"}
         maxW="1320px"
         mx="auto"
-        borderRadius="7xl"
+        borderRadius={{ xs: "3xl", md: "7xl" }}
       >
         <Heading
           as="h5"
-          fontSize={"18px"}
+          fontSize={{ xs: "md", md: "lg" }}
           textAlign="center"
           fontWeight={"400"}
           mb="54px"
@@ -25,7 +25,14 @@ const QuantumXFeatures = () => {
           the power of MultiversX.
         </Heading>
 
-        <Grid templateColumns={"repeat(4, 1fr)"} gap="20px">
+        <Grid
+          templateColumns={{
+            xs: "repeat(1, 1fr)",
+            md: "repeat(2, 1fr)",
+            xl: "repeat(4, 1fr)",
+          }}
+          gap="20px"
+        >
           <IconAndButtonBox
             title="Tools"
             desc="The Ultimate tools forinvestors, traders or fans."

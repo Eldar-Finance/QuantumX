@@ -1,22 +1,38 @@
 // import logo from "assets/logos/quantumx.png";
+import { Box, Center } from "@chakra-ui/react";
 import logo from "assets/logos/quantumx.svg";
 import ActionButton from "components/ActionButton/ActionButton";
 import MyContainer from "components/Container/Container";
 import NextImage from "components/NextImage/NextImage";
+import Link from "next/link";
 import Menu from "./Menu/Menu";
 const Navbar = () => {
   return (
     <MyContainer
       bg="black.light"
-      borderRadius={"3xl"}
-      py="40px"
-      px={"80px"}
+      borderRadius={{ xs: "xl", lg: "3xl" }}
+      py={{ xs: "30px", "2xl": "40px" }}
+      px={{ xs: "30px", lg: "80px" }}
       display="flex"
       justifyContent={"space-between"}
+      fontSize={{ xs: "sm", "2xl": "md" }}
     >
-      <NextImage src={logo} alt="QuantumX" width={128} height={38} />
-      <Menu />
-      <ActionButton w="194px">Connect Wallet</ActionButton>
+      <Center>
+        <Link href={"/"}>
+          <NextImage src={logo} alt="QuantumX" width={128} height={38} />
+        </Link>
+      </Center>
+      <Box display={{ xs: "none", xl: "block" }}>
+        <Menu />
+      </Box>
+      <ActionButton
+        px={{ xs: "30px", "2xl": "40px" }}
+        fontSize={{ xs: "14px", "2xl": "md" }}
+        fontWeight="600"
+        display={{ xs: "none", md: "block" }}
+      >
+        Connect
+      </ActionButton>
     </MyContainer>
   );
 };

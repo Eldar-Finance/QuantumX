@@ -11,7 +11,14 @@ const Layout = ({ children, bg, ...props }: PropsWithChildren<IProps>) => {
   return (
     <Box position={"relative"} pt={"208px"} {...props} h="full" minH="100vh">
       {bg && <ImageBg src={bg} zIndex={-1} />}
-      <Box position={"absolute"} w="full" left={0} right="0" top={"50px"}>
+      <Box
+        position={"absolute"}
+        w="full"
+        left={0}
+        right="0"
+        top={"50px"}
+        px={"30px"}
+      >
         <Navbar />
       </Box>
       {children}

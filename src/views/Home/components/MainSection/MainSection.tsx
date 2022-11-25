@@ -8,7 +8,7 @@ import NextImage from "components/NextImage/NextImage";
 const MainSection = () => {
   return (
     <Center flexDir={"column"} m="auto" maxW={"692px"} textAlign={"center"}>
-      <Heading as="h1" fontSize={"7xl"} mb="30px">
+      <Heading as="h1" fontSize={{ xs: "3xl", md: "7xl" }} mb="30px">
         A dimension in the Multivers only accessible through{" "}
         <Box as="span" bg="main" bgClip={"text"}>
           {" "}
@@ -16,11 +16,16 @@ const MainSection = () => {
         </Box>
       </Heading>
 
-      <Heading as="h4" fontSize={"lg"} mb={"30px"}>
+      <Heading as="h4" fontSize={{ xs: "md", md: "lg" }} mb={"30px"}>
         Friction-less swaps. Quantum level latency. Next-level interface.
       </Heading>
 
-      <Flex justify={"center"} gap={"30px"} mb="60px">
+      <Flex
+        justify={"center"}
+        gap={"30px"}
+        mb="60px"
+        flexDir={{ xs: "column", md: "row" }}
+      >
         <ActionButton py="11px" px="20px" borderRadius={"md"}>
           Connect wallet{" "}
           <Box as="span" ml={"10px"}>
@@ -39,7 +44,7 @@ const MainSection = () => {
           Read docs <BookIcon ml={"8px"} />
         </ButtonGradiente>
       </Flex>
-      <Flex gap="20px" mb="30px">
+      <Flex gap="20px" mb="30px" flexDir={{ xs: "column", md: "row" }}>
         <AmountBox1 />
         <AmountBox1 />
       </Flex>

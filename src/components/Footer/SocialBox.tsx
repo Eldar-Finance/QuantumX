@@ -7,7 +7,9 @@ const SocialBox = () => {
       <Center boxSize={"35px"} bg="black.dark" borderRadius={"md"}>
         <BookIcon />
       </Center>
-      <Text ml="15px">Twitter</Text>
+      <Text ml="15px" fontSize={{ xs: "sm", md: "md" }}>
+        Twitter
+      </Text>
     </Center>
   );
 };

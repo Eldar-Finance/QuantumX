@@ -29,10 +29,10 @@ const components: ThemeComponents = {
       solid: {
         bg: "main",
         color: "black.dark",
-        borderRadius: "lg",
+        borderRadius: "md",
         fontWeight: "500",
-        fontSize: "md",
-
+        fontSize: "inherit",
+        fontFamily: "500",
         _hover: {
           bg: "main",
           opacity: "0.8",

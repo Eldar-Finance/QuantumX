@@ -16,10 +16,21 @@ const IconAndButtonBox = ({ desc, title, icon, onClick }: IProps) => {
       <Center bg="black.dark" borderRadius="md" boxSize={"50px"} mb={"10px"}>
         {icon}
       </Center>
-      <Text fontWeight={"500"} fontSize="20px" as="h3" mb="11px">
+      <Text
+        fontWeight={"500"}
+        fontSize={{ xs: "md", md: "20px" }}
+        as="h3"
+        mb="11px"
+      >
         {title}
       </Text>
-      <Text textAlign={"center"} fontWeight="400" mb="20px" color="white.400">
+      <Text
+        textAlign={"center"}
+        fontWeight="400"
+        mb="20px"
+        color="white.400"
+        fontSize={{ xs: "14px", md: "md" }}
+      >
         {desc}
       </Text>
       <ActionButton
