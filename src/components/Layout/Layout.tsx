@@ -17,7 +17,7 @@ const Layout = ({ children, bg, ...props }: PropsWithChildren<IProps>) => {
         left={0}
         right="0"
         top={"50px"}
-        px={"30px"}
+        px={{ xs: "15px", md: "30px" }}
       >
         <Navbar />
       </Box>

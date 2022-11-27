@@ -9,6 +9,7 @@ const Footer = () => {
 
   return (
     <Center
+      as="footer"
       flexDir={"column"}
       w="full"
       pt={"230px"}
@@ -21,7 +22,12 @@ const Footer = () => {
         position={isLargerThanLg ? "absolute" : "static"}
         zIndex={-1}
       >
-        <NextImage src={footerImage} alt="" fill={!isLargerThanLg} />
+        <NextImage
+          src={footerImage}
+          alt=""
+          fill={!isLargerThanLg}
+          layout={isLargerThanLg && "responsive"}
+        />
       </Box>
       <MyContainer
         justifyContent={"center"}

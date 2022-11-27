@@ -35,6 +35,8 @@ const ModalMenu = ({ onClose }: IProps) => {
       p={0}
       overflow="hidden"
     >
+      <MenuItem href="/farms" name="Pools" onlyMobile />
+      <MenuItem href="/jexpress-swap" name="Dollar Cost Averaging" onlyMobile />
       <MenuItem href="/eLBadges" name="SFT Staking" />
       <MenuItem href="/investor-zone" name="Investors" />
       <MenuItem href="/admin-panel" name="Admin Panel" />

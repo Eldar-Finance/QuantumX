@@ -8,16 +8,17 @@ const Menu = () => {
   const { isOpen, onClose, onOpen, onToggle } = useDisclosure();
   return (
     <Flex
-      px="40px"
+      px={{ xs: "20px", lg: "40px" }}
       py="15px"
       bg="black.baseDark"
-      gap="50px"
+      gap={{ xs: "30px", md: "50px" }}
       alignItems={"center"}
       borderRadius={"full"}
       position="relative"
+      fontSize={{ xs: "xs", md: "inherit" }}
     >
       <Link href={"/"}>
-        <Box fontWeight={"bold"}>Dashboard</Box>
+        <Box color="main">Dashboard</Box>
       </Link>
       <Link href={"/jexpress-swap"}>
         <Box>Swap </Box>
@@ -25,12 +26,17 @@ const Menu = () => {
       <Link href={"/farms"}>
         <Box>Farms</Box>
       </Link>
-      <Link href={"/proteo-elite"}>
-        <Box>Pools</Box>
-      </Link>
-      <Link href={"/eldar-cost-averaging"}>
-        <Box>Dollar Cost Averaging </Box>
-      </Link>
+      <Flex
+        display={{ xs: "none", lg: "flex" }}
+        gap={{ xs: "30px", md: "50px" }}
+      >
+        <Link href={"/proteo-elite"}>
+          <Box>Pools</Box>
+        </Link>
+        <Link href={"/eldar-cost-averaging"}>
+          <Box>Dollar Cost Averaging </Box>
+        </Link>
+      </Flex>
       <DotsIcon cursor={"pointer"} fontSize={"16px"} onClick={onOpen} />
 
       <AnimatePresence>
