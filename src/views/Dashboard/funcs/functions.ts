@@ -113,3 +113,18 @@ export const calculatePriceBreakdown = (
     tradingRewards: trackingRewardsd.toNumber(),
   };
 };
+
+//This function receive a char o string and length. Build a string with the given string repeated length times
+export const createStringWithCharAndLenght = (
+  string: string,
+  length: number
+): string => {
+  const stringArr: string[] = [];
+  for (let index = 0; index < length; index++) {
+    stringArr.push(string);
+  }
+
+  const finalString = stringArr.join("");
+
+  return finalString;
+};

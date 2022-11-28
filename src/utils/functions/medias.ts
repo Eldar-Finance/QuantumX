@@ -1,5 +1,5 @@
 export const noShowMedia = (nft: {
-  media: any[];
+  media?: any[];
   collection: string;
 }): boolean => {
   if (

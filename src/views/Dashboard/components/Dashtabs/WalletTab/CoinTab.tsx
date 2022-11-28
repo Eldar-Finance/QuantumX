@@ -82,7 +82,7 @@ const CoinTab = () => {
   }, [tableData.data, egldData, mexPairs]);
 
   return (
-    <Box w="full" maxW={"700px"} mx="auto" minH="70vh">
+    <Box w="full" maxW={"700px"} mx="auto" minH="70vh" overflow={"auto"}>
       {" "}
       <SearchTable tableData={data} columnsData={tokenColumns} />
     </Box>

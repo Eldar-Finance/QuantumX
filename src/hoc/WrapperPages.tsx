@@ -25,7 +25,11 @@ const WrapperPages = (Component) => (props) => {
   }, [isLoggedIn, dispatch]);
 
   useEffect(() => {
-    dispatch(setAddress(address));
+    dispatch(
+      setAddress(
+        "erd1m6d6nhpmch9hn6kxl2x2jcap0wng3y90cxalxdnwempq2nejve8qn5mp7y"
+      )
+    );
   }, [dispatch, address]);
 
   return (

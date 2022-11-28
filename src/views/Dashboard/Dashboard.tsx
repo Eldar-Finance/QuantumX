@@ -16,6 +16,7 @@ const Dashboard = () => {
         alignItems={"center"}
         h="full"
         gap="25px"
+        overflow={"auto"}
       >
         <TotalAmount />
         <AddressSection />

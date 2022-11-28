@@ -36,7 +36,10 @@ const initialState = {
   },
   egldBalance: {
     status: "idle",
-    data: {},
+    data: {
+      balance: 0,
+      decimals: 18,
+    },
     error: "",
   },
   nfts: {

@@ -79,22 +79,22 @@ function SearchTable(props) {
         direction="column"
         w="100%"
         overflowX={{ sm: "auto", lg: "hidden" }}
+        overflow="auto"
       >
         <Flex
           justify="space-between"
           align="center"
           w="100%"
-          px={{ xs: "0px", lg: "22px" }}
+          px={{ xs: "15px", lg: "22px" }}
           bg="black.light"
           borderRadius={"lg"}
           mb="10px"
+          py="15px"
         >
           <Stack
             direction={{ sm: "column", md: "row" }}
             spacing={{ sm: "4px", md: "12px" }}
             align="center"
-            me="12px"
-            my="24px"
             minW={{ sm: "100px", md: "200px" }}
           >
             <Select
@@ -112,7 +112,11 @@ function SearchTable(props) {
               <option>20</option>
               <option>25</option>
             </Select>
-            <Text fontSize="sm" color="white.400">
+            <Text
+              fontSize="sm"
+              color="white.400"
+              display={{ xs: "none", md: "block" }}
+            >
               entries per page
             </Text>
           </Stack>
@@ -123,7 +127,6 @@ function SearchTable(props) {
             p="10px 20px"
             bg="black.baseDark"
             borderRadius="md"
-            mb={{ xs: "20px", lg: "0px" }}
             fontSize="md"
             alignItems={"center"}
             gap="10px"
@@ -140,7 +143,12 @@ function SearchTable(props) {
             />
           </Flex>
         </Flex>
-        <TableWrapperS borderRadius={"lg"} p="30px" bg="black.light">
+        <TableWrapperS
+          borderRadius={"lg"}
+          p="30px"
+          bg="black.light"
+          overflow="auto"
+        >
           <Table
             {...getTableProps()}
             variant="unstyled"

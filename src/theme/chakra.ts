@@ -136,7 +136,7 @@ const customTheme = extendTheme({
         },
         "&::-webkit-scrollbar-thumb": {
           backgroundColor: mode("black.light", "white.light")(props),
-          borderRadius: 1.5,
+          borderRadius: "15px",
         },
         "*::placeholder": {
           color: "#747A84",

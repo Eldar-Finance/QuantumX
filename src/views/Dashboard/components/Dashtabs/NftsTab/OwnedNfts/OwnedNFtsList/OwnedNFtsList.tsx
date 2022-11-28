@@ -15,7 +15,6 @@ const OwnedNFtsList = ({
   selectedCollection,
   setSelectedCollection,
 }: IProps) => {
-  const [isLargerThanLg] = useMediaQuery(`(min-width: ${breakpoints.lg})`);
   const [isLargerThanTablet] = useMediaQuery(
     `(min-width: ${breakpoints.tablet})`
   );
@@ -24,13 +23,10 @@ const OwnedNFtsList = ({
   if (isLargerThanTablet) {
     rows = 2;
   }
-  if (isLargerThanLg) {
-    rows = 3;
-  }
 
   return (
     <Grid
-      templateColumns={{ xs: "1fr", tablet: "1fr 1fr ", lg: "1fr 1fr 1fr" }}
+      templateColumns={{ xs: "1fr", tablet: "1fr 1fr ", lg: "1fr 1fr" }}
       gap={6}
     >
       {nfts.map((nftsArr, i) => {
@@ -61,7 +57,6 @@ const OwnedNFtsList = ({
                                 nftArr[0].collection === selectedCollection
                             ) || []
                           }
-                          onClose={() => setSelectedCollection("")}
                           selectedCollection={selectedCollection}
                           nftsByCollection={nfts}
                         />
@@ -82,7 +77,6 @@ const OwnedNFtsList = ({
                                 nftArr[0].collection === selectedCollection
                             ) || []
                           }
-                          onClose={() => setSelectedCollection("")}
                           selectedCollection={selectedCollection}
                           nftsByCollection={nfts}
                         />

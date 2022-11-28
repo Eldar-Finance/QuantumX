@@ -1,7 +1,7 @@
 import MyTabs from "components/MyTabs/MyTabs";
 import BuyTab from "./BuyTab/BuyTab";
-import CoinTab from "./CoinTab/CoinTab";
 import OwnedNfts from "./NftsTab/OwnedNfts/OwnedNfts";
+import CoinTab from "./WalletTab/CoinTab";
 
 const Dashtabs = () => {
   return (
@@ -24,7 +24,7 @@ const Dashtabs = () => {
       }}
       tabData={[
         {
-          tabText: "Coin",
+          tabText: "Wallet",
           tabPanel: <CoinTab />,
         },
         {

@@ -12,7 +12,6 @@ import ActionButton from "components/ActionButton/ActionButton";
 
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import { useState } from "react";
 import useSWR from "swr";
 import { IElrondNFT } from "utils/types/elrond.interface";
 
@@ -23,7 +22,6 @@ interface IProps {
 }
 const NftItemFromOwned = ({ nft }: IProps) => {
   const priceColor = useColorModeValue("black.600", "white.400");
-  const [isOpen, setIsOpen] = useState(false);
   const bg = useColorModeValue("lightGray.base", "#202020");
   const { data: nftElrondSwap } = useSWR(nft && nft.identifier, getNftData);
   const { data: count } = useSWR(nft && nft.collection, getCollectionsCount);
