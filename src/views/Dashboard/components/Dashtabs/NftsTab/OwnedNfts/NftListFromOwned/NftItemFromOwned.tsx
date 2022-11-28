@@ -1,0 +1,89 @@
+import {
+  Box,
+  Card,
+  Flex,
+  Link,
+  Text,
+  useColorModeValue,
+} from "@chakra-ui/react";
+import { getCollectionsCount } from "api/rest/elrondApi/collections";
+import { getNftData } from "api/rest/others/Swap";
+import ActionButton from "components/ActionButton/ActionButton";
+
+import dynamic from "next/dynamic";
+import Image from "next/image";
+import { useState } from "react";
+import useSWR from "swr";
+import { IElrondNFT } from "utils/types/elrond.interface";
+
+const SellModal: any = dynamic(() => import("../SellModal/SellModal"));
+
+interface IProps {
+  nft: IElrondNFT;
+}
+const NftItemFromOwned = ({ nft }: IProps) => {
+  const priceColor = useColorModeValue("black.600", "white.400");
+  const [isOpen, setIsOpen] = useState(false);
+  const bg = useColorModeValue("lightGray.base", "#202020");
+  const { data: nftElrondSwap } = useSWR(nft && nft.identifier, getNftData);
+  const { data: count } = useSWR(nft && nft.collection, getCollectionsCount);
+
+  return (
+    <Card pb={4} p={"10px"} bg={bg}>
+      <Box position="relative" borderRadius={"lg"} overflow="hidden">
+        {nft.media && (
+          <Image
+            src={nft.media[0].thumbnailUrl}
+            alt={nft.identifier}
+            width={600}
+            height={600}
+            layout="responsive"
+          />
+        )}
+      </Box>
+      <Box px={3} mt={4}>
+        <Text fontSize={"smaller"} mb={1}>
+          {nft.identifier}
+        </Text>
+        <Flex justifyContent={"space-between"} alignItems="center" mb={1}>
+          {" "}
+          <Text fontSize={"xl"} mr={2}>
+            {" "}
+            {nft.name}
+          </Text>{" "}
+          {/* <IconNext
+            src={twitterImg}
+            width="24px"
+            nextW="20.17px"
+            nextH="16.45px"
+          /> */}
+        </Flex>
+        <Flex justifyContent={"space-between"} mb={3}>
+          {nftElrondSwap && (
+            <Text fontSize={"smaller"} textDecoration="underline">
+              Rank {nftElrondSwap?.rank}
+            </Text>
+          )}
+          {nftElrondSwap && count && (
+            <Text fontSize={"smaller"} color={priceColor}>
+              {nftElrondSwap?.rank} of {count}
+            </Text>
+          )}
+        </Flex>
+        <Link
+          isExternal
+          href={"https://www.newmoon.energy/profile"}
+          _hover={{
+            textDecoration: "none",
+          }}
+        >
+          <ActionButton w="full" py="10px" h={"auto"} fontWeight="500">
+            Sell
+          </ActionButton>
+        </Link>
+      </Box>
+    </Card>
+  );
+};
+
+export default NftItemFromOwned;

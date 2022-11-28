@@ -1,16 +1,24 @@
 import { Box, BoxProps } from "@chakra-ui/react";
+import bg from "assets/home/bg.png";
 import ImageBg from "components/ImageBg/ImageBg";
 import Navbar from "components/Navbar/Navbar";
 import { PropsWithChildren } from "react";
+interface IProps extends BoxProps {}
 
-interface IProps extends BoxProps {
-  bg?: any;
-}
-
-const Layout = ({ children, bg, ...props }: PropsWithChildren<IProps>) => {
+const Layout = ({ children, ...props }: PropsWithChildren<IProps>) => {
   return (
     <Box position={"relative"} pt={"208px"} {...props} h="full" minH="100vh">
-      {bg && <ImageBg src={bg} zIndex={-1} />}
+      <Box
+        position={"fixed"}
+        top={0}
+        left={0}
+        right={0}
+        zIndex={-2}
+        h="100vh"
+        overflow={"hidden"}
+      >
+        <ImageBg src={bg} zIndex={-1} />
+      </Box>
       <Box
         position={"absolute"}
         w="full"

@@ -2,6 +2,7 @@ import { useOutsideClick } from "@chakra-ui/react";
 import Card from "components/Card/Card";
 import { motion } from "framer-motion";
 import { useRef } from "react";
+import { routesArr } from "utils/routes";
 import MenuItem from "./MenuItem";
 
 interface IProps {
@@ -35,11 +36,19 @@ const ModalMenu = ({ onClose }: IProps) => {
       p={0}
       overflow="hidden"
     >
-      <MenuItem href="/farms" name="Pools" onlyMobile />
-      <MenuItem href="/jexpress-swap" name="Dollar Cost Averaging" onlyMobile />
-      <MenuItem href="/eLBadges" name="SFT Staking" />
-      <MenuItem href="/investor-zone" name="Investors" />
-      <MenuItem href="/admin-panel" name="Admin Panel" />
+      {routesArr.map((route) => {
+        if (!route.onModal && !route.onModalAndNavbar) {
+          return null;
+        }
+        return (
+          <MenuItem
+            key={route.path}
+            href={route.path}
+            name={route.name}
+            onlyMobile={route.onModalAndNavbar}
+          />
+        );
+      })}
     </Card>
   );
 };

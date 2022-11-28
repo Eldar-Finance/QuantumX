@@ -1,3 +1,4 @@
+import "@elrondnetwork/dapp-core/dist/index.css";
 import "../styles/globals.css";
 
 import { Provider } from "react-redux";

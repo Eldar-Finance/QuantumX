@@ -1,8 +1,13 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { Action, configureStore, ThunkAction } from "@reduxjs/toolkit";
+import siteSettingsReducer from "./slices/settings/settings-reducer";
+import userAccountReducer from "./slices/userAcount/account-slice";
 
 export function makeStore() {
   return configureStore({
-    reducer: {},
+    reducer: {
+      siteSettings: siteSettingsReducer,
+      userAccount: userAccountReducer,
+    },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({
         serializableCheck: false,
@@ -23,3 +28,14 @@ export const setupStore = (preloadedState) => {
     preloadedState,
   });
 };
+
+export type AppState = ReturnType<typeof store.getState>;
+
+export type AppDispatch = typeof store.dispatch;
+
+export type AppThunk<ReturnType = void> = ThunkAction<
+  ReturnType,
+  AppState,
+  unknown,
+  Action<string>
+>;

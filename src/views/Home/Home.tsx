@@ -1,14 +1,17 @@
 import { Box } from "@chakra-ui/react";
-import bg from "assets/home/bg.png";
 import MyContainer from "components/Container/Container";
 import Footer from "components/Footer/Footer";
+
 import Layout from "components/Layout/Layout";
+import withElronDapp from "hoc/withElronDapp";
+import WrapperPages from "hoc/WrapperPages";
 import InfoText from "./components/InfoText/InfoText";
 import MainSection from "./components/MainSection/MainSection";
 import QuantumXFeatures from "./components/QuantumXFeatures/QuantumXFeatures";
+
 const Home = () => {
   return (
-    <Layout bg={bg}>
+    <Layout>
       <MyContainer>
         <Box mt={{ xs: "50px", "2xl": "94px" }}>
           <MainSection />
@@ -25,4 +28,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default withElronDapp(WrapperPages(Home));

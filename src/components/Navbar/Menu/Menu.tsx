@@ -2,10 +2,14 @@ import { Box, Flex, useDisclosure } from "@chakra-ui/react";
 import { DotsIcon } from "components/Icons/ui";
 import { AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { isActiveRoute, routesArr } from "utils/routes";
 import ModalMenu from "../ModalMenu/ModalMenu";
 
 const Menu = () => {
   const { isOpen, onClose, onOpen, onToggle } = useDisclosure();
+  const location = useRouter().asPath;
+
   return (
     <Flex
       px={{ xs: "20px", lg: "40px" }}
@@ -17,25 +21,33 @@ const Menu = () => {
       position="relative"
       fontSize={{ xs: "xs", md: "inherit" }}
     >
-      <Link href={"/"}>
-        <Box color="main">Dashboard</Box>
-      </Link>
-      <Link href={"/jexpress-swap"}>
-        <Box>Swap </Box>
-      </Link>
-      <Link href={"/farms"}>
-        <Box>Farms</Box>
-      </Link>
+      {routesArr.map((route) => {
+        if (route.onModal || route.onModalAndNavbar) {
+          return null;
+        }
+        const isActive = isActiveRoute(route.path, location);
+        return (
+          <Link href={route.path} key={route.path}>
+            <Box color={isActive && "main"}>{route.name}</Box>
+          </Link>
+        );
+      })}
+
       <Flex
         display={{ xs: "none", lg: "flex" }}
         gap={{ xs: "30px", md: "50px" }}
+        alignItems="center"
       >
-        <Link href={"/proteo-elite"}>
-          <Box>Pools</Box>
-        </Link>
-        <Link href={"/eldar-cost-averaging"}>
-          <Box>Dollar Cost Averaging </Box>
-        </Link>
+        {routesArr.map((route) => {
+          if (!route.onModalAndNavbar) {
+            return null;
+          }
+          return (
+            <Link href={route.path} key={route.path}>
+              <Box>{route.name}</Box>
+            </Link>
+          );
+        })}
       </Flex>
       <DotsIcon cursor={"pointer"} fontSize={"16px"} onClick={onOpen} />
 

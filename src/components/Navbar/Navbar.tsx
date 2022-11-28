@@ -1,13 +1,28 @@
 // import logo from "assets/logos/quantumx.png";
 import { Box, Flex, Icon } from "@chakra-ui/react";
+import { logout, useGetLoginInfo } from "@elrondnetwork/dapp-core";
 import logo from "assets/logos/quantumx.svg";
 import ActionButton from "components/ActionButton/ActionButton";
 import MyContainer from "components/Container/Container";
 import { LightningIcon } from "components/Icons/ui";
 import NextImage from "components/NextImage/NextImage";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { openLogin } from "redux/slices/settings/settings-reducer";
+import { useAppDispatch } from "utils/hooks/redux";
+import { getWebUrl } from "utils/routes";
 import Menu from "./Menu/Menu";
 const Navbar = () => {
+  const dispatch = useAppDispatch();
+  const location = useRouter().asPath;
+  const { isLoggedIn } = useGetLoginInfo();
+
+  const handleLogout = () => {
+    logout(getWebUrl(location));
+  };
+  const handleConnect = () => {
+    dispatch(openLogin(true));
+  };
   return (
     <MyContainer
       bg="black.light"
@@ -29,6 +44,8 @@ const Navbar = () => {
           fontSize={{ xs: "14px", "2xl": "md" }}
           fontWeight="600"
           display={{ xs: "block", md: "none" }}
+          onClick={isLoggedIn ? handleLogout : handleConnect}
+          bg={isLoggedIn ? "danger" : "main"}
         >
           <Icon as={LightningIcon} />
         </ActionButton>
@@ -41,8 +58,11 @@ const Navbar = () => {
         fontSize={{ xs: "14px", "2xl": "md" }}
         fontWeight="600"
         display={{ xs: "none", md: "block" }}
+        onClick={isLoggedIn ? handleLogout : handleConnect}
+        bg={isLoggedIn ? "danger" : "main"}
+        color={isLoggedIn ? "white" : "black"}
       >
-        Connect
+        {isLoggedIn ? "Disconnect" : "Connect"}
       </ActionButton>
     </MyContainer>
   );

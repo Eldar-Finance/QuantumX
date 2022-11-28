@@ -1,7 +1,7 @@
 import {
   extendTheme,
   type ThemeComponents,
-  type ThemeConfig,
+  type ThemeConfig
 } from "@chakra-ui/react";
 import { mode } from "@chakra-ui/theme-tools";
 
@@ -103,8 +103,8 @@ const fontSizes = {
   xl: "22px",
   "2xl": "24px",
   "3xl": "34px",
-  "4xl": "38px",
-  "5xl": "42px",
+  "4xl": "40px",
+  "5xl": "44px",
   "6xl": "50px",
   "7xl": "60px",
   "8xl": "80px",
@@ -175,7 +175,7 @@ const customTheme = extendTheme({
     },
 
     main: "#22F7DD",
-    danger: "#DE3547",
+    danger: "#A04C4C",
   },
 
   breakpoints,
