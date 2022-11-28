@@ -8,7 +8,7 @@ export interface IRoute {
 export const routeNames = {
   home: "/",
   dashboard: "/dashboad",
-  swap: "/jexpress-swap",
+  swap: "/swap",
   farms: "/farms",
   Pools: "/proteo-elite",
   dca: "/dca",

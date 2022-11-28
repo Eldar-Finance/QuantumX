@@ -7,7 +7,13 @@ interface IProps extends BoxProps {}
 
 const Layout = ({ children, ...props }: PropsWithChildren<IProps>) => {
   return (
-    <Box position={"relative"} pt={"208px"} {...props} h="full" minH="100vh">
+    <Box
+      position={"relative"}
+      pt={{ xs: "258px", md: "208px" }}
+      {...props}
+      h="full"
+      minH="100vh"
+    >
       <Box
         position={"fixed"}
         top={0}
