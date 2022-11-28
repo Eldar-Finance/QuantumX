@@ -36,23 +36,23 @@ const components: ThemeComponents = {
         _hover: {
           bg: "main",
           opacity: "0.8",
+          color:"black.dark"
         },
         _active: {
           bg: "main",
           opacity: "0.8",
+        
         },
       },
       outline: {
-        bg: "main",
-        bgClip: "text",
-        borderColor: "#74c0f4",
+        color:"main",
         _hover: {
           bg: "main",
-          color: "light.lighter",
+          color:"black.dark"
         },
         _active: {
           bg: "main",
-          color: "light.lighter",
+          color:"black.dark"
         },
       },
     },

@@ -6,6 +6,7 @@ import {
   TabListProps,
   TabPanel,
   TabPanels,
+  TabProps,
   Tabs,
   Text,
 } from "@chakra-ui/react";
@@ -18,17 +19,19 @@ interface IProps {
 
   tabListProps?: TabListProps;
   tabListWarapperProps?: BoxProps;
-  tabProps?: any;
+  tabsProps?: any;
+  tabProps?: TabProps;
 }
 
 const MyTabs = ({
   tabData,
   tabListProps,
+  tabsProps,
   tabProps,
   tabListWarapperProps,
 }: IProps) => {
   return (
-    <Tabs variant={"unstyled"} isLazy {...tabProps}>
+    <Tabs variant={"unstyled"} isLazy {...tabsProps}>
       <Box overflow={"auto"} {...tabListWarapperProps}>
         <TabList
           bg="black.dark"
@@ -48,6 +51,7 @@ const MyTabs = ({
               px={{ xs: "20px", md: "30px", xl: "40px" }}
               borderRadius={"full"}
               fontWeight="500"
+              {...tabProps}
             >
               <Text>{e.tabText}</Text>
             </Tab>

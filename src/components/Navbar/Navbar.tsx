@@ -27,13 +27,13 @@ const Navbar = () => {
     <MyContainer
       bg="black.light"
       borderRadius={{ xs: "xl", lg: "3xl" }}
-      py={{ xs: "30px", "2xl": "40px" }}
+      py={{ xs: "15px", "2xl": "40px" }}
       px={{ xs: "30px", xl: "80px" }}
       display="flex"
       justifyContent={"space-between"}
       fontSize={{ xs: "sm", "2xl": "md" }}
       flexDir={{ xs: "column", md: "row" }}
-      rowGap={3}
+      rowGap={1.5}
     >
       <Flex w="ful" alignItems={"center"} justifyContent="space-between">
         <Link href={"/"}>
@@ -50,7 +50,7 @@ const Navbar = () => {
           <Icon as={LightningIcon} />
         </ActionButton>
       </Flex>
-      <Box w="fit-content">
+      <Box w="fit-content" m="auto">
         <Menu />
       </Box>
       <ActionButton

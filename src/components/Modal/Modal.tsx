@@ -35,7 +35,7 @@ const MyModal = ({
       >
         <ModalOverlay background={"rgba(0,0,0,0.7)"} {...overlayProps} />
         <ModalContent
-          background={"#0B1426"}
+          background={"black.light"}
           borderRadius="15px"
           width={"90%"}
           {...props}

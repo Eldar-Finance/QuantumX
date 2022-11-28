@@ -1,4 +1,5 @@
 import { Action, configureStore, ThunkAction } from "@reduxjs/toolkit";
+import fastSwapReducer from "./slices/fastSwap/fastSwap";
 import siteSettingsReducer from "./slices/settings/settings-reducer";
 import userAccountReducer from "./slices/userAcount/account-slice";
 
@@ -7,6 +8,7 @@ export function makeStore() {
     reducer: {
       siteSettings: siteSettingsReducer,
       userAccount: userAccountReducer,
+      fastSwap: fastSwapReducer,
     },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({
