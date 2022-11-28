@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import { Text } from "@chakra-ui/react";
 
 const InfoText = () => {

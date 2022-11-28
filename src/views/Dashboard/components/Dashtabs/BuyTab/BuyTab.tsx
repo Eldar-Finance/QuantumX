@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import { Box, Center } from "@chakra-ui/react";
 
 const BuyTab = () => {

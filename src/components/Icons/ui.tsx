@@ -222,6 +222,7 @@ export const CloseIcon = createIcon({
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
+      key={1}
     />,
     <path
       d="M7.5 7.5L22.5 22.5"
@@ -229,6 +230,7 @@ export const CloseIcon = createIcon({
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
+      key={2}
     />,
   ],
 });
@@ -236,18 +238,20 @@ export const LegerIcon = createIcon({
   displayName: "LegerIcon",
   viewBox: "0 0 19 19",
   path: [
-    <path d="M7 0H16C17.6569 0 19 1.34315 19 3V12H7V0Z" fill="white" />,
-    <path d="M4 0H2C0.895431 0 0 0.895431 0 2V4H4V0Z" fill="white" />,
+    <path d="M7 0H16C17.6569 0 19 1.34315 19 3V12H7V0Z" fill="white" key={1} />,
+    <path d="M4 0H2C0.895431 0 0 0.895431 0 2V4H4V0Z" fill="white" key={2} />,
     <path
       d="M0 15L2.78142e-07 17C4.31755e-07 18.1046 0.895431 19 2 19L4 19L4 15L0 15Z"
       fill="white"
+      key={3}
     />,
     <path
       d="M19 15L19 17C19 18.1046 18.1046 19 17 19L15 19L15 15L19 15Z"
       fill="white"
+      key={4}
     />,
-    <path d="M4 8H0V12H4V8Z" fill="white" />,
-    <path d="M12 15H8V19H12V15Z" fill="white" />,
+    <path d="M4 8H0V12H4V8Z" fill="white" key={5} />,
+    <path d="M12 15H8V19H12V15Z" fill="white" key={6} />,
   ],
 });
 export const EyeIcon = createIcon({
@@ -260,6 +264,7 @@ export const EyeIcon = createIcon({
       stroke-width="1.5"
       stroke-linecap="round"
       stroke-linejoin="round"
+      key={1}
     />,
     <path
       d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z"
@@ -267,6 +272,7 @@ export const EyeIcon = createIcon({
       stroke-width="1.5"
       stroke-linecap="round"
       stroke-linejoin="round"
+      key={2}
     />,
   ],
 });
