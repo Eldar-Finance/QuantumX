@@ -1,25 +1,30 @@
-import { Box, Center, Flex } from "@chakra-ui/react";
+import {
+  Box,
+  Card,
+  CardBody,
+  CardHeader,
+  Center,
+  Flex,
+} from "@chakra-ui/react";
 import styled from "@emotion/styled";
-import Card from "components/Card/Card";
-import CardBody from "components/Card/CardBody";
-import CardHeader from "components/Card/CardHeader";
-import LogoImg from "components/LogoImg/LogoImg";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 
 import jexImg from "assets/img/proteo-board/jexpng.png";
 
-import { formatBalance } from "lib/formatBalance";
-import { formatTokenI } from "lib/formatTokenIdentifier";
+import NextImage from "components/NextImage/NextImage";
 import Image from "next/image";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import {
   selectFastSwapTokens,
   selectVolume,
 } from "redux/slices/fastSwap/fastSwap";
 import { fetchVolume } from "redux/slices/fastSwap/funcs";
+import { formatBalance } from "utils/functions/formatBalance";
+import { formatTokenI } from "utils/functions/tokens";
+import { useAppDispatch } from "utils/hooks/redux";
 
 const VolumeCard = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { data: tokens } = useSelector(selectFastSwapTokens);
   const { data: volume } = useSelector(selectVolume);
   useEffect(() => {
@@ -44,15 +49,7 @@ const VolumeCard = () => {
         pt={5}
       >
         <Center w="full" position="absolute">
-          <LogoImg
-            src={jexImg}
-            alt="jexImg"
-            height="85px"
-            mt={"-60px"}
-            imgProps={{
-              w: "85px",
-            }}
-          />
+          <NextImage src={jexImg} alt="jexImg" height={85} width={85} />
         </Center>
         <CardHeader mb={4}></CardHeader>
         <CardBody>
@@ -81,8 +78,8 @@ const VolumeCard = () => {
                   >
                     <Image
                       layout="intrinsic"
-                      width="25px"
-                      height="25px"
+                      width={25}
+                      height={25}
                       src={
                         tokenDetails.assets?.svgUrl ||
                         tokenDetails.assets?.static.src ||
