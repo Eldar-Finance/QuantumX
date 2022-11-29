@@ -316,6 +316,43 @@ export const FallingManIcon = createIcon({
     </defs>,
   ],
 });
+export const SliderIcon = createIcon({
+  displayName: "SliderIcon",
+  viewBox: "0 0 54 32",
+  path: [
+    <rect width="54" height="32" rx="5" fill="#22F7DD" key={1} />,
+    <rect
+      x="17"
+      y="8"
+      width="2"
+      height="16"
+      rx="1"
+      fill="black"
+      fill-opacity="0.1"
+      key={2}
+    />,
+    <rect
+      x="26"
+      y="8"
+      width="2"
+      height="16"
+      rx="1"
+      fill="black"
+      fill-opacity="0.1"
+      key={3}
+    />,
+    <rect
+      x="35"
+      y="8"
+      width="2"
+      height="16"
+      rx="1"
+      fill="black"
+      fill-opacity="0.1"
+      key={4}
+    />,
+  ],
+});
 export const EgldPureLogoIcon = createIcon({
   displayName: "EgldLogoIcon2",
   viewBox: "0 0 100 100",
