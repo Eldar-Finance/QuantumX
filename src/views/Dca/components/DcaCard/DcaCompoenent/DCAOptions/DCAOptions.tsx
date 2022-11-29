@@ -1,0 +1,28 @@
+import { Flex, RadioGroup } from "@chakra-ui/react";
+import DcaOption from "./DcaOption";
+
+const DCAOptions = ({ slectedOption, handleChangeOption }) => {
+  return (
+    <RadioGroup defaultValue={1} value={slectedOption} mb={10}>
+      <Flex flexWrap={"wrap"} justifyContent="center" w="full" gap="10px">
+        <DcaOption
+          text="Safe Eldar Portfolio"
+          value={1}
+          onChange={handleChangeOption}
+        />
+        <DcaOption
+          text="JEX Custom Portfolio"
+          value={4}
+          onChange={handleChangeOption}
+        />
+        <DcaOption
+          text="Custom Portfolio"
+          onChange={handleChangeOption}
+          value={5}
+        />
+      </Flex>
+    </RadioGroup>
+  );
+};
+
+export default DCAOptions;

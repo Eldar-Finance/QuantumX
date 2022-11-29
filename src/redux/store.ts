@@ -1,4 +1,6 @@
 import { Action, configureStore, ThunkAction } from "@reduxjs/toolkit";
+import lkmexAveragingReducer from "./slices/dca/dca-slice";
+import elrondReducer from "./slices/elrond/elrond-slice";
 import fastSwapReducer from "./slices/fastSwap/fastSwap";
 import siteSettingsReducer from "./slices/settings/settings-reducer";
 import userAccountReducer from "./slices/userAcount/account-slice";
@@ -9,6 +11,8 @@ export function makeStore() {
       siteSettings: siteSettingsReducer,
       userAccount: userAccountReducer,
       fastSwap: fastSwapReducer,
+      lkmexAveraging: lkmexAveragingReducer,
+      elrond: elrondReducer,
     },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({

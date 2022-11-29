@@ -12,7 +12,7 @@ import { formatBalance } from "utils/functions/formatBalance";
 import { formatTokenI } from "utils/functions/tokens";
 import { useAppDispatch } from "utils/hooks/redux";
 
-const ClaimSection = ({ tokenWithDeatils }) => {
+const ClaimSection = ({ tokenWithDeatils, position = "absolute" }) => {
   const dispatch = useAppDispatch();
   const { data: claimableTokens } = useSelector(selectClaimable);
   const address = useSelector(selectUserAddress);
@@ -33,7 +33,14 @@ const ClaimSection = ({ tokenWithDeatils }) => {
   };
 
   return (
-    <Center flexDir={"column"} mt={8} position="absolute" top={"60px"} w="full">
+    <Center
+      flexDir={"column"}
+      mt={8}
+      //@ts-ignore
+      position={position || "absolute"}
+      top={"60px"}
+      w="full"
+    >
       {tokens.length === 0 ? (
         <Center as="h3" fontSize="xl" fontWeight={"bold"} mb={2}>
           No tokens to claim yet

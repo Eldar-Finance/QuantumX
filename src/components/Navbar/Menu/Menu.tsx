@@ -42,9 +42,12 @@ const Menu = () => {
           if (!route.onModalAndNavbar) {
             return null;
           }
+
+          const isActive = isActiveRoute(route.path, location);
+
           return (
             <Link href={route.path} key={route.path}>
-              <Box>{route.name}</Box>
+              <Box color={isActive && "main"}>{route.name}</Box>
             </Link>
           );
         })}

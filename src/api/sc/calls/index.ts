@@ -35,7 +35,7 @@ export const ESDTNFTTransfer = async (
       ])
       .build();
 
-    const transactionData = {
+    const transactionData: any = {
       addr: userAddress,
       payload: payload,
       gasL: gasL,
@@ -68,7 +68,7 @@ export const ESDTTransfer = async ({
     ])
     .build();
 
-  const transactionData = {
+  const transactionData: any = {
     addr: contractAddr,
     payload: payload,
     gasL: gasL,
@@ -87,7 +87,7 @@ export const scCall = async (workspace, funcName, args = [], gasLimit) => {
     .setFunction(new ContractFunction(funcName))
     .setArgs(args)
     .build();
-  const transactionData = {
+  const transactionData: any = {
     addr: simpleAddress,
     payload: payload,
     gasL: gasLimit || 200000000,
@@ -112,7 +112,7 @@ export const EGLDPayment = async (
     .setFunction(new ContractFunction(funcName))
     .setArgs(args)
     .build();
-  const transactionData = {
+  const transactionData: any = {
     addr: simpleAddress,
     payload: payload,
     value: amount * EGLD_VAL,
