@@ -10,9 +10,9 @@ const Layout = ({ children, ...props }: PropsWithChildren<IProps>) => {
     <Box
       position={"relative"}
       pt={{ xs: "258px", md: "208px" }}
-      {...props}
       h="full"
       minH="100vh"
+      {...props}
     >
       <Box
         position={"fixed"}

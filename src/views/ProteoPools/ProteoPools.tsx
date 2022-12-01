@@ -21,7 +21,7 @@ const ProteoFarms = () => {
           maxW="1000px"
           mx="auto"
         >
-          <Title title="Farms" />
+          <Title title="Pools" />
           <Flex w="full" justifyContent={"flex-end"} mt="12">
             <Flex gap="20px">
               <Search />

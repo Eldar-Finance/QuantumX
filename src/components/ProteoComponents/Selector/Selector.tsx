@@ -2,8 +2,8 @@ import { ChevronDownIcon } from "@chakra-ui/icons";
 import { Box, Flex, Icon, Text, useOutsideClick } from "@chakra-ui/react";
 import dynamic from "next/dynamic";
 import { useRef, useState } from "react";
-import { getTextBySortKey } from "views/ProteoFarms/functions";
-import { SORTTYPE } from "views/ProteoFarms/types";
+import { getTextBySortKey } from "utils/functions/general";
+import { SORTTYPE } from "utils/types/proteo.interface";
 
 const MinisortModal: any = dynamic(() =>
   import("./MiniSorModal/MiniSortModal")

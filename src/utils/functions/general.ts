@@ -1,4 +1,4 @@
-import { SORTTYPE } from "../types";
+import { SORTTYPE } from "utils/types/proteo.interface";
 
 export const getTextBySortKey = (sortKey: SORTTYPE) => {
   switch (sortKey) {
