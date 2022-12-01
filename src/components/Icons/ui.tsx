@@ -1,5 +1,8 @@
-import { Center, createIcon } from "@chakra-ui/react";
+import { Box, Center, createIcon, Image } from "@chakra-ui/react";
+import EgldLogoImg from "assets/logos/egldlogo.png";
 import multiversxLogo from "assets/logos/multiversx.svg";
+import proteoImg from "assets/logos/proteo.png";
+import wegldlogo from "assets/logos/wegldlogo.svg";
 import searchLogo from "assets/ui-elemts/search.svg";
 import NextImage from "components/NextImage/NextImage";
 // using `path`
@@ -740,3 +743,251 @@ export const EgldlogoIcon = ({ wp = "5px", ...props }) => {
     </Center>
   );
 };
+
+export const EgldlogoIcon2 = ({
+  size = null,
+  wrapperProps = undefined,
+  ...props
+}) => {
+  return (
+    <Box w={size || 4} {...wrapperProps}>
+      <Image
+        as={NextImage}
+        layout="responsive"
+        borderRadius="full"
+        // @ts-ignore
+        src={EgldLogoImg}
+        alt="Egld"
+        {...props}
+      />
+    </Box>
+  );
+};
+export const ProteoIcon = ({
+  size = null,
+  wrapperProps = undefined,
+  ...props
+}) => {
+  return (
+    <Box w={size || 4} {...wrapperProps}>
+      <Image
+        as={NextImage}
+        layout="responsive"
+        borderRadius="full"
+        // @ts-ignore
+        src={proteoImg}
+        alt="Egld"
+        {...props}
+      />
+    </Box>
+  );
+};
+export const WegldlogoIcon = ({ size, wrapperProps, ...props }) => {
+  return (
+    <Box w={size || 4} {...wrapperProps}>
+      <Image
+        as={NextImage}
+        layout="responsive"
+        borderRadius="full"
+        src={wegldlogo}
+        alt="Egld"
+        {...props}
+      />
+    </Box>
+  );
+};
+
+export const UsdclogoIcon = createIcon({
+  displayName: "UsdclogoIcon",
+  viewBox: "0 0 33 34",
+  path: (
+    <svg
+      data-name="86977684-12db-4850-8f30-233a7c267d11"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 2000 2000"
+    >
+      <path
+        d="M1000 2000c554.17 0 1000-445.83 1000-1000S1554.17 0 1000 0 0 445.83 0 1000s445.83 1000 1000 1000z"
+        fill="#2775ca"
+      />
+      <path
+        d="M1275 1158.33c0-145.83-87.5-195.83-262.5-216.66-125-16.67-150-50-150-108.34s41.67-95.83 125-95.83c75 0 116.67 25 137.5 87.5 4.17 12.5 16.67 20.83 29.17 20.83h66.66c16.67 0 29.17-12.5 29.17-29.16v-4.17c-16.67-91.67-91.67-162.5-187.5-170.83v-100c0-16.67-12.5-29.17-33.33-33.34h-62.5c-16.67 0-29.17 12.5-33.34 33.34v95.83c-125 16.67-204.16 100-204.16 204.17 0 137.5 83.33 191.66 258.33 212.5 116.67 20.83 154.17 45.83 154.17 112.5s-58.34 112.5-137.5 112.5c-108.34 0-145.84-45.84-158.34-108.34-4.16-16.66-16.66-25-29.16-25h-70.84c-16.66 0-29.16 12.5-29.16 29.17v4.17c16.66 104.16 83.33 179.16 220.83 200v100c0 16.66 12.5 29.16 33.33 33.33h62.5c16.67 0 29.17-12.5 33.34-33.33v-100c125-20.84 208.33-108.34 208.33-220.84z"
+        fill="#fff"
+      />
+      <path
+        d="M787.5 1595.83c-325-116.66-491.67-479.16-370.83-800 62.5-175 200-308.33 370.83-370.83 16.67-8.33 25-20.83 25-41.67V325c0-16.67-8.33-29.17-25-33.33-4.17 0-12.5 0-16.67 4.16-395.83 125-612.5 545.84-487.5 941.67 75 233.33 254.17 412.5 487.5 487.5 16.67 8.33 33.34 0 37.5-16.67 4.17-4.16 4.17-8.33 4.17-16.66v-58.34c0-12.5-12.5-29.16-25-37.5zM1229.17 295.83c-16.67-8.33-33.34 0-37.5 16.67-4.17 4.17-4.17 8.33-4.17 16.67v58.33c0 16.67 12.5 33.33 25 41.67 325 116.66 491.67 479.16 370.83 800-62.5 175-200 308.33-370.83 370.83-16.67 8.33-25 20.83-25 41.67V1700c0 16.67 8.33 29.17 25 33.33 4.17 0 12.5 0 16.67-4.16 395.83-125 612.5-545.84 487.5-941.67-75-237.5-258.34-416.67-487.5-491.67z"
+        fill="#fff"
+      />
+    </svg>
+  ),
+});
+export const MexlogoIcon = createIcon({
+  displayName: "MexlogoIcon",
+  viewBox: "0 0 198 198",
+  path: (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="198"
+      height="198"
+      viewBox="0 0 198 198"
+      className="expanded"
+    >
+      <defs>
+        <linearGradient
+          id="mex"
+          x1="0.5"
+          x2="0.5"
+          y2="1"
+          gradientUnits="objectBoundingBox"
+        >
+          <stop offset="0" stopColor="#1a45c2" />
+          <stop offset="1" stopColor="#001f9c" />
+        </linearGradient>
+        <linearGradient
+          id="mex-2"
+          x1="0.5"
+          y1="0.491"
+          x2="0.5"
+          y2="0.009"
+          xlinkHref="#mex"
+        />
+      </defs>
+      <g transform="translate(0.237 0.236)">
+        <circle
+          cx="99"
+          cy="99"
+          r="99"
+          transform="translate(-0.237 -0.236)"
+          fill="#fff"
+        />
+        <g transform="translate(56.084 37.645)">
+          <g>
+            <path
+              d="M378.85,152.213l-10.414,48.375H342.182Z"
+              transform="translate(-323.013 -152.213)"
+              fillRule="evenodd"
+              fill="url(#mex)"
+            />
+            <path
+              d="M380.4,271.184l-19.166,25.487H295.04l19.169-25.487Z"
+              transform="translate(-295.04 -222.808)"
+              fill="#1a45c2"
+              fillRule="evenodd"
+            />
+            <path
+              d="M404.314,333.864,367.646,382.24l10.414-48.376Z"
+              transform="translate(-338.123 -260.002)"
+              fillRule="evenodd"
+              fill="url(#mex-2)"
+            />
+          </g>
+        </g>
+      </g>
+    </svg>
+  ),
+});
+export const RidelogoIcon = createIcon({
+  displayName: "RidelogoIcon",
+  viewBox: "0 0 198 198",
+  path: (
+    <svg
+      width="198"
+      height="198"
+      viewBox="0 0 198 198"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g style={{ mixBlendMode: "multiply" }}>
+        <path
+          style={{ mixBlendMode: "multiply" }}
+          d="M99 198C153.676 198 198 153.676 198 99C198 44.3238 153.676 0 99 0C44.3238 0 0 44.3238 0 99C0 153.676 44.3238 198 99 198Z"
+          fill="url(#paint0_linear_101_10)"
+        />
+      </g>
+      <g style={{ mixBlendMode: "multiply" }}>
+        <path
+          style={{ mixBlendMode: "multiply" }}
+          d="M98.9998 178.2C142.741 178.2 178.2 142.741 178.2 99.0001C178.2 55.2591 142.741 19.8 98.9998 19.8C55.2589 19.8 19.7998 55.2591 19.7998 99.0001C19.7998 142.741 55.2589 178.2 98.9998 178.2Z"
+          fill="url(#paint1_radial_101_10)"
+        />
+      </g>
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M85.521 143.355H65.9531L65.9288 108.549H41.25V95.538H65.9198L65.9122 84.8045H41.25V71.7931H65.9032L65.8896 52.2499H106.232C115.255 52.2499 122.751 55.1723 128.66 60.9538C131.946 64.17 134.309 67.7795 135.759 71.7931H155.1V84.8045H137.389C137.179 87.4832 136.641 89.9973 135.775 92.4023C135.373 93.5202 134.946 94.5673 134.497 95.538H155.098V108.549H121.862L121.289 108.858L140.794 143.355H119.956L102.421 111.462H85.521V143.355ZM114.491 90.5599C116.843 88.2727 117.986 85.4773 117.986 82.1736C117.986 78.6157 116.843 75.6933 114.491 73.3427C112.141 71.0554 109.155 69.8484 105.597 69.8484H85.4575V93.9271H105.597C109.155 93.9271 112.141 92.847 114.491 90.5599Z"
+        fill="white"
+      />
+      <defs>
+        <linearGradient
+          id="paint0_linear_101_10"
+          x1="34.375"
+          y1="184.25"
+          x2="206.25"
+          y2="72.875"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#1ACBFC" />
+          <stop offset="1" stopColor="#FF009B" />
+        </linearGradient>
+        <radialGradient
+          id="paint1_radial_101_10"
+          cx="0"
+          cy="0"
+          r="1"
+          gradientUnits="userSpaceOnUse"
+          gradientTransform="translate(39.9666 143.917) rotate(-28.8108) scale(146.463)"
+        >
+          <stop stopColor="#1D15EC" />
+          <stop offset="1" stopColor="#9002AE" />
+        </radialGradient>
+      </defs>
+    </svg>
+  ),
+});
+export const AerologoIcon = createIcon({
+  displayName: "AerologoIcon",
+  viewBox: "0 0 198 198",
+  path: (
+    <svg
+      version="1.1"
+      id="Layer_1"
+      xmlns="http://www.w3.org/2000/svg"
+      x="0px"
+      y="0px"
+      viewBox="0 0 1080 1080"
+      xmlSpace="preserve"
+    >
+      {/* <style type="text/css">
+	.st0{fill:#FFFFFF;stroke:#000000;stroke-width:50;stroke-miterlimit:10;}
+</style> */}
+      <circle
+        className="st0"
+        cx="540.5"
+        cy="539.5"
+        r="506.5"
+        fill="#FFFFFF"
+        stroke="#000000"
+        strokeWidth={"50"}
+        strokeMiterlimit={"10"}
+      />
+      <g>
+        <path
+          d="M283.66,646.63C349,509.73,414.86,372.82,480.2,235.4c2.59-0.52,4.67-0.52,7.26-1.04
+		c35.26,63.79,71.05,127.05,107.35,192.91C481.24,488.99,376.48,558.48,283.66,646.63z"
+        />
+        <path
+          d="M598.44,736.87c-3.63,2.59-6.74,6.22-10.89,7.78c-76.75,31.63-154.02,61.19-236.47,72.6c-22.3,3.11-45.64,2.59-67.42-1.56
+		c-37.34-7.26-51.34-35.26-35.26-70.01c10.37-21.78,24.37-43.04,40.45-61.19c60.67-67.93,134.83-118.76,211.58-166.47
+		c109.94-68.45,226.62-123.94,346.41-173.21c8.3-3.11,16.08-7.26,25.41-11.41c-5.7-10.89-10.37-19.19-14-25.41
+		c30.08,0,59.64,0,89.2,0c0.52,1.04,1.04,2.07,1.56,3.11c-18.67,8.3-37.34,16.59-56.01,24.89
+		c-165.95,72.6-322.56,160.24-462.58,275.89c-23.85,19.71-44.08,43.56-64.82,65.86c-7.26,7.78-12.96,17.63-17.63,27.48
+		c-15.56,33.19-2.59,59.64,33.71,62.75c31.63,2.59,63.79,2.07,94.9-3.11C517.54,758.65,557.99,746.72,598.44,736.87L598.44,736.87z"
+        />
+        <path
+          d="M524.28,571.96c39.41-23.34,74.16-44.6,112.53-67.42c47.71,90.75,93.86,179.43,140.54,268.11
+		c-1.56,1.56-3.11,2.59-4.67,4.15C691.78,709.9,610.37,643,524.28,571.96z"
+        />
+      </g>
+    </svg>
+  ),
+});

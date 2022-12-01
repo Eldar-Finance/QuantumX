@@ -8,6 +8,7 @@ import Selector from "components/ProteoComponents/Selector/Selector";
 import Title from "components/ProteoComponents/Title/Title";
 import withElronDapp from "hoc/withElronDapp";
 import WrapperPages from "hoc/WrapperPages";
+import { proteoPoolsArr } from "./constants";
 
 const ProteoFarms = () => {
   return (
@@ -33,7 +34,7 @@ const ProteoFarms = () => {
             </Flex>
           </Flex>
           <Center mt="50px" w="full">
-            <ProteoFarmsCard />
+            <ProteoFarmsCard proteoArr={proteoPoolsArr} />
           </Center>
         </Flex>
         <ActionModal isOpen={false} onClose={() => console.log("close")} />

@@ -1,12 +1,19 @@
 import { Accordion } from "@chakra-ui/react";
+import { IProteoFarm } from "utils/types/proteo.interface";
 import ProteoFarmItem from "./ProteoFarmItem";
 
-const ProteoFarmsCard = () => {
+interface IProps {
+  proteoArr: IProteoFarm[];
+}
+
+const ProteoFarmsCard = ({ proteoArr }: IProps) => {
+  console.log("proteoArr", proteoArr);
+
   return (
     <Accordion allowMultiple borderRadius={"xl"} overflow="hidden" w="full">
-      <ProteoFarmItem />
-      <ProteoFarmItem />
-      <ProteoFarmItem />
+      {proteoArr.map((pf) => {
+        return <ProteoFarmItem key={pf.stakedCoin} pf={pf} />;
+      })}
     </Accordion>
   );
 };
