@@ -1,11 +1,11 @@
 import { Box, Center, Flex, Text } from "@chakra-ui/react";
 import { proteoEliteWsp } from "api/sc/sc";
 import ActionButton from "components/ActionButton/ActionButton";
+import { coinInfo } from "utils/constants/proteo";
 import { formatBalance } from "utils/functions/formatBalance";
 import { formatTokenI } from "utils/functions/tokens";
 import { useAppSelector } from "utils/hooks/redux";
 import { IProteoFarm } from "utils/types/proteo.interface";
-import { coinInfo } from "views/ProteoFarms/constants";
 
 interface IProps {
   pf: IProteoFarm;
@@ -20,7 +20,7 @@ const Avilable = ({ pf }: IProps) => {
   };
 
   const t = withDrawInfo.data.find((t) => t.tokenI === pf.tokenIdentifier);
-  const token = formatTokenI(t.tokenI);
+  const token = formatTokenI(t?.tokenI);
   return (
     <Box>
       <Flex w="full" justifyContent={"space-between"}>

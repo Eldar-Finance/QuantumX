@@ -1,8 +1,14 @@
 import { QuestionIcon } from "@chakra-ui/icons";
 import { Box, Tooltip } from "@chakra-ui/react";
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 
-const CustomTooltip = ({ children = null, text = "", iconSize = null }) => {
+interface IProps {
+  children?: ReactNode;
+  text: ReactNode;
+  iconSize?: number | string;
+}
+
+const CustomTooltip = ({ children, text, iconSize = null }: IProps) => {
   const [open, setOpen] = useState(false);
   const openTooltip = () => {
     setOpen(true);
@@ -16,7 +22,7 @@ const CustomTooltip = ({ children = null, text = "", iconSize = null }) => {
       hasArrow
       label={text}
       isOpen={open}
-      bg="brand.600"
+      bg="main"
       maxWidth={"250px"}
       aria-label="info tooltip"
       fontWeight={"medium"}

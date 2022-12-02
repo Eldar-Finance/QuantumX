@@ -1,10 +1,10 @@
 import { Flex, Text } from "@chakra-ui/react";
 import tokenLogo from "assets/logos/sproteo.svg";
 import NextImage from "components/NextImage/NextImage";
+import { coinInfo } from "utils/constants/proteo";
 import { formatTokenI } from "utils/functions/tokens";
 import { useAppSelector } from "utils/hooks/redux";
 import { IProteoFarm } from "utils/types/proteo.interface";
-import { coinInfo } from "views/ProteoFarms/constants";
 
 interface IProps {
   pf: IProteoFarm;

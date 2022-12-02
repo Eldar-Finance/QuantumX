@@ -18,7 +18,13 @@ import axiosEldar2 from "api/rest/axiosEldar2";
 import BigNumber from "bignumber.js";
 import ActionButton from "components/ActionButton/ActionButton";
 
-import { PropsWithChildren, useEffect, useRef, useState } from "react";
+import {
+  createContext,
+  PropsWithChildren,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import {
   addDualEarned,
   addsProteoEarned,
@@ -34,11 +40,18 @@ import useGetTokenPrice from "utils/hooks/useGetTokenPrice";
 import { IProteoFarm } from "utils/types/proteo.interface";
 import EarnedRewards from "./EarnedRewards/EarnedRewards";
 import EarnTokens from "./EarnTokens/EarnTokens";
+import StakeUnstake from "./StakeUnstake/StakeUnstake";
 import Avilable from "./Withdraw/Avilable";
 
 interface IProps {
   pf: IProteoFarm;
 }
+
+export const ProteoItemContenxt = createContext({
+  tokenInfo: null,
+  tokenInfo2: null,
+  decimals: 0,
+});
 
 const ProteoFarmItem = ({ pf }: IProps) => {
   const dispatch = useAppDispatch();
@@ -174,130 +187,133 @@ const ProteoFarmItem = ({ pf }: IProps) => {
   const autoHarversIn =
     Number(lastHarvestEpoch) + Number(hc) - Number(currentEpoch);
   return (
-    <AccordionItem w="full">
-      <Box w="full">
-        <AccordionButton
-          py="4"
-          bg="black.baseDark"
-          _hover={{
-            bg: "black.light",
-          }}
-          px="5"
-          w="full"
-        >
-          <Box flex="1" textAlign="left" w="full">
-            <Flex
-              w="full"
-              alignItems={"center"}
-              justifyContent="space-between"
-              pr="8"
-            >
-              <Flex gap="4" alignItems={"center"}>
-                {Icon}
-                <Text fontWeight={"600"}>{pf.stakedCoin}</Text>
-              </Flex>
-              <Flex flexDir={"column"} textAlign="center">
-                <Text color="white.400">Staked Balance</Text>
-                <Text>
-                  {formatBalance({
-                    balance: tokenInfo2?.staked,
-                    decimals: decimals,
-                  })}{" "}
-                  LP ($
-                  {formatBalanceDolar(
-                    { balance: tokenInfo2?.staked, decimals: decimals },
-                    tokenPrice,
-                    true
-                  )}
-                  )
-                </Text>
-              </Flex>
-              <Flex flexDir={"column"} textAlign="center">
-                <Text color="white.400">Apr</Text>
-                <Text>{new BigNumber(apr.apr).toFixed(2, 2)}%</Text>
-              </Flex>
-              <Flex flexDir={"column"} textAlign="center">
-                <Text color="white.400">Total Value Locked</Text>
-                <Text>
-                  $
-                  {formatBalanceDolar(
-                    { balance: tokenInfo?.staked, decimals: decimals },
-                    tokenPrice,
-                    true
-                  )}
-                </Text>
-              </Flex>
-              <EarnTokens pf={pf} />
-            </Flex>
-          </Box>
-          <AccordionIcon color="main" />
-        </AccordionButton>
-      </Box>
-      <AccordionPanel pb={4} w="full" bg="black.base">
-        <Flex w="full" gap={"4"}>
-          {(pf.getFarm || pf.seePair || pf.viewContract) && (
-            <Center flexDir={"column"} fontSize="14px" color="main">
-              <Flex flexDir={"column"} h="fit-content">
-                {pf?.getFarm && (
-                  <Link href={pf.getFarm} isExternal>
-                    Get {pf.stakedCoin} LP <ExternalLinkIcon />
-                  </Link>
-                )}
-
-                {pf?.viewContract && (
-                  <Link href={pf.viewContract} isExternal>
-                    View Contract <ExternalLinkIcon />
-                  </Link>
-                )}
-                {pf?.seePair && (
-                  <Link href={pf.seePair} isExternal>
-                    See Pair Info <ExternalLinkIcon />
-                  </Link>
-                )}
-              </Flex>
-            </Center>
-          )}
-          <Grid flex="1" templateColumns={"1fr 1fr"} gap="4">
-            <PanelBox>
-              <Flex justifyContent={"center"} textAlign={"center"} gap={5}>
-                <EarnedRewards pf={pf} />
-                <Flex flexDir={"column"}>
-                  <Text color="white.400" fontSize={"sm"}>
-                    AUTO HARVEST IN
-                  </Text>
-                  <Center mt="2" gap="3" justifyContent={"space-around"}>
-                    <Flex gap="2" alignItems={"center"}>
-                      <Text>
-                        {typeof autoHarversIn === "number" ? autoHarversIn : 0}{" "}
-                        Days
-                      </Text>{" "}
-                    </Flex>
-                  </Center>
+    <ProteoItemContenxt.Provider
+      value={{
+        tokenInfo,
+        tokenInfo2,
+        decimals,
+      }}
+    >
+      <AccordionItem w="full">
+        <Box w="full">
+          <AccordionButton
+            py="4"
+            bg="black.baseDark"
+            _hover={{
+              bg: "black.light",
+            }}
+            px="5"
+            w="full"
+          >
+            <Box flex="1" textAlign="left" w="full">
+              <Flex
+                w="full"
+                alignItems={"center"}
+                justifyContent="space-between"
+                pr="8"
+              >
+                <Flex gap="4" alignItems={"center"}>
+                  {Icon}
+                  <Text fontWeight={"600"}>{pf.stakedCoin}</Text>
                 </Flex>
+                <Flex flexDir={"column"} textAlign="center">
+                  <Text color="white.400">Staked Balance</Text>
+                  <Text>
+                    {formatBalance({
+                      balance: tokenInfo2?.staked,
+                      decimals: decimals,
+                    })}{" "}
+                    LP ($
+                    {formatBalanceDolar(
+                      { balance: tokenInfo2?.staked, decimals: decimals },
+                      tokenPrice,
+                      true
+                    )}
+                    )
+                  </Text>
+                </Flex>
+                <Flex flexDir={"column"} textAlign="center">
+                  <Text color="white.400">Apr</Text>
+                  <Text>{new BigNumber(apr.apr).toFixed(2, 2)}%</Text>
+                </Flex>
+                <Flex flexDir={"column"} textAlign="center">
+                  <Text color="white.400">Total Value Locked</Text>
+                  <Text>
+                    $
+                    {formatBalanceDolar(
+                      { balance: tokenInfo?.staked, decimals: decimals },
+                      tokenPrice,
+                      true
+                    )}
+                  </Text>
+                </Flex>
+                <EarnTokens pf={pf} />
               </Flex>
-              <Center>
-                {pf.withHarvest && <ActionButton mt={5}>HARVEST</ActionButton>}
-              </Center>
-            </PanelBox>
-            <PanelBox>
-              <Avilable pf={pf} />
-            </PanelBox>
-            <PanelBox gridColumn={"1 / 3"}>
-              <Text color="white.400">STAKE PROTEO-EGLD LP</Text>
+            </Box>
+            <AccordionIcon color="main" />
+          </AccordionButton>
+        </Box>
+        <AccordionPanel pb={4} w="full" bg="black.base">
+          <Flex w="full" gap={"4"}>
+            {(pf.getFarm || pf.seePair || pf.viewContract) && (
+              <Center flexDir={"column"} fontSize="14px" color="main">
+                <Flex flexDir={"column"} h="fit-content">
+                  {pf?.getFarm && (
+                    <Link href={pf.getFarm} isExternal>
+                      Get {pf.stakedCoin} LP <ExternalLinkIcon />
+                    </Link>
+                  )}
 
-              <Flex mt="2" gap="3">
-                <ActionButton variant={"outline"} w="full" maxW={"500px"}>
-                  STAKE LP
-                </ActionButton>
-                <Center flex="1">
-                  <ActionButton>UNSTAKE</ActionButton>
+                  {pf?.viewContract && (
+                    <Link href={pf.viewContract} isExternal>
+                      View Contract <ExternalLinkIcon />
+                    </Link>
+                  )}
+                  {pf?.seePair && (
+                    <Link href={pf.seePair} isExternal>
+                      See Pair Info <ExternalLinkIcon />
+                    </Link>
+                  )}
+                </Flex>
+              </Center>
+            )}
+            <Grid flex="1" templateColumns={"1fr 1fr"} gap="4">
+              <PanelBox>
+                <Flex justifyContent={"center"} textAlign={"center"} gap={5}>
+                  <EarnedRewards pf={pf} />
+                  <Flex flexDir={"column"}>
+                    <Text color="white.400" fontSize={"sm"}>
+                      AUTO HARVEST IN
+                    </Text>
+                    <Center mt="2" gap="3" justifyContent={"space-around"}>
+                      <Flex gap="2" alignItems={"center"}>
+                        <Text>
+                          {typeof autoHarversIn === "number"
+                            ? autoHarversIn
+                            : 0}{" "}
+                          Days
+                        </Text>{" "}
+                      </Flex>
+                    </Center>
+                  </Flex>
+                </Flex>
+                <Center>
+                  {pf.withHarvest && (
+                    <ActionButton mt={5}>HARVEST</ActionButton>
+                  )}
                 </Center>
-              </Flex>
-            </PanelBox>
-          </Grid>
-        </Flex>
-      </AccordionPanel>
-    </AccordionItem>
+              </PanelBox>
+              <PanelBox>
+                <Avilable pf={pf} />
+              </PanelBox>
+              <PanelBox gridColumn={"1 / 3"}>
+                <StakeUnstake pf={pf} />
+              </PanelBox>
+            </Grid>
+          </Flex>
+        </AccordionPanel>
+      </AccordionItem>
+    </ProteoItemContenxt.Provider>
   );
 };
 

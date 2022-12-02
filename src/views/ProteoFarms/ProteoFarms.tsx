@@ -1,7 +1,6 @@
 import { Center, Flex } from "@chakra-ui/react";
 import MyContainer from "components/Container/Container";
 import Layout from "components/Layout/Layout";
-import ActionModal from "components/ProteoComponents/ActionModal/ActionModal";
 import ProteoFarmsCard from "components/ProteoComponents/ProteoFarmsCard/ProteoFarmsCard";
 import Search from "components/ProteoComponents/Search/Search";
 import Selector from "components/ProteoComponents/Selector/Selector";
@@ -63,7 +62,6 @@ const ProteoFarms = () => {
             <ProteoFarmsCard proteoArr={proteoFarmsArr} />
           </Center>
         </Flex>
-        <ActionModal isOpen={false} onClose={() => console.log("close")} />
       </MyContainer>
     </Layout>
   );
