@@ -15,4 +15,5 @@ export interface IProteoFarm {
   tokenRewards?: { name: string; tokenI: string };
   fixedRewards?: number;
   endpointDefinition?: string;
+  withHarvest?: boolean;
 }

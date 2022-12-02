@@ -8,9 +8,35 @@ import Selector from "components/ProteoComponents/Selector/Selector";
 import Title from "components/ProteoComponents/Title/Title";
 import withElronDapp from "hoc/withElronDapp";
 import WrapperPages from "hoc/WrapperPages";
+import { useEffect } from "react";
+import { fetchStats } from "redux/slices/elrond/elrond-slice";
+import {
+  fetchGeneralInfo,
+  fetchIndex,
+  fetchPrice,
+  fetchRanking,
+  fetchUserInfo,
+  fetchWithdrawInfo,
+} from "redux/slices/proteo/funcs";
+import { selectUserAddress } from "redux/slices/userAcount/account-slice";
+import { useAppDispatch, useAppSelector } from "utils/hooks/redux";
 import { proteoFarmsArr } from "./constants";
 
 const ProteoFarms = () => {
+  const dispatch = useAppDispatch();
+  const address = useAppSelector(selectUserAddress);
+  useEffect(() => {
+    if (address) {
+      dispatch(fetchUserInfo(address));
+      dispatch(fetchRanking(address));
+      dispatch(fetchWithdrawInfo(address));
+
+      dispatch(fetchGeneralInfo());
+      dispatch(fetchPrice());
+      dispatch(fetchIndex());
+      dispatch(fetchStats());
+    }
+  }, [address, dispatch]);
   return (
     <Layout pt="150px">
       <MyContainer pb="100px">

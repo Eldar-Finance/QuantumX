@@ -10,7 +10,9 @@ const reducerName = "elrond";
 const initialState = {
   stats: {
     status: "idle",
-    data: [],
+    data: {
+      epoch: 0,
+    },
     error: "",
   },
   economics: {

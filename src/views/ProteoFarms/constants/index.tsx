@@ -1,5 +1,9 @@
 import { toknesID } from "api/net.config";
-import { aeroWegldWsp, zpayEgldEliteDualWsp } from "api/sc/sc";
+import {
+  aeroWegldWsp,
+  proteoEgldEliteWsp,
+  zpayEgldEliteDualWsp,
+} from "api/sc/sc";
 import aeroEgld from "assets/logos/aeroegl.png";
 import aeroImg from "assets/logos/aerologo.svg";
 import zpayImg from "assets/logos/logo.svg";
@@ -24,7 +28,7 @@ export const proteoFarms: {
     hc: 20,
     Icon: <NextImage alt="" src={proteoEgldLpImg} width={45} />,
     stakedCoin: "PROTEOEGLD",
-    wsp: "proteoEgldEliteWsp",
+    wsp: proteoEgldEliteWsp,
     token: "PROTEOEGLDLP",
     aprEndpoint: "/proteoegldapi.php",
     tokenIdentifier: toknesID.proteoEgldLp,

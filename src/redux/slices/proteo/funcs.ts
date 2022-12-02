@@ -128,7 +128,7 @@ export const fetchUserProteo = createAsyncThunk(
 
 export const fetchRanking = createAsyncThunk(
   "proteo/fetchRanking",
-  async (address) => {
+  async (address: string) => {
     const response = await axiosEldar2.get("/rank.php");
 
     waitToResetStatus(resetfetchRanking);

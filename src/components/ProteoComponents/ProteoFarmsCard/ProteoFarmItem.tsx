@@ -34,6 +34,7 @@ import {
 import { useAppDispatch, useAppSelector } from "utils/hooks/redux";
 import useGetTokenPrice from "utils/hooks/useGetTokenPrice";
 import { IProteoFarm } from "utils/types/proteo.interface";
+import EarnedRewards from "./EarnedRewards/EarnedRewards";
 
 interface IProps {
   pf: IProteoFarm;
@@ -167,6 +168,11 @@ const ProteoFarmItem = ({ pf }: IProps) => {
       });
   }, [aprEndpoint]);
 
+  const stats = useAppSelector((state) => state.elrond.stats);
+  const currentEpoch = stats.data.epoch;
+
+  const autoHarversIn =
+    Number(lastHarvestEpoch) + Number(hc) - Number(currentEpoch);
   return (
     <AccordionItem w="full">
       <Box w="full">
@@ -212,7 +218,14 @@ const ProteoFarmItem = ({ pf }: IProps) => {
               </Flex>
               <Flex flexDir={"column"} textAlign="center">
                 <Text color="white.400">Total Value Locked</Text>
-                <Text>$135.000.000</Text>
+                <Text>
+                  $
+                  {formatBalanceDolar(
+                    { balance: tokenInfo?.staked, decimals: decimals },
+                    tokenPrice,
+                    true
+                  )}
+                </Text>
               </Flex>
               <Flex flexDir={"column"} textAlign="center">
                 <Text color="white.400">Earn</Text>
@@ -242,15 +255,24 @@ const ProteoFarmItem = ({ pf }: IProps) => {
           </Center>
           <Grid flex="1" templateColumns={"1fr 1fr"} gap="4">
             <PanelBox>
-              <Text color="white.400">EARNED REWARDS</Text>
-              <Center mt="2" gap="3" justifyContent={"space-around"}>
-                <Flex gap="2" alignItems={"center"}>
-                  <Text>
-                    {formatBalance({ balance: sProteoEarned, decimals: 18 })}
-                  </Text>{" "}
-                  <NextImage src={tokenLogo} alt="" width={30} />
+              <Flex justifyContent={"center"} textAlign={"center"} gap={5}>
+                <EarnedRewards pf={pf} />
+                <Flex flexDir={"column"}>
+                  <Text color="white.400" fontSize={"sm"}>
+                    AUTO HARVEST IN
+                  </Text>
+                  <Center mt="2" gap="3" justifyContent={"space-around"}>
+                    <Flex gap="2" alignItems={"center"}>
+                      <Text>
+                        {typeof autoHarversIn === "number" ? autoHarversIn : 0}{" "}
+                        Days
+                      </Text>{" "}
+                    </Flex>
+                  </Center>
                 </Flex>
-                <ActionButton>HARVEST</ActionButton>
+              </Flex>
+              <Center>
+                {pf.withHarvest && <ActionButton mt={5}>HARVEST</ActionButton>}
               </Center>
             </PanelBox>
             <PanelBox>
