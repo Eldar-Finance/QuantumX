@@ -15,11 +15,9 @@ import {
 } from "@chakra-ui/react";
 import { contractAddr } from "api/net.config";
 import axiosEldar2 from "api/rest/axiosEldar2";
-import tokenLogo from "assets/logos/sproteo.svg";
 import BigNumber from "bignumber.js";
 import ActionButton from "components/ActionButton/ActionButton";
 
-import NextImage from "components/NextImage/NextImage";
 import { PropsWithChildren, useEffect, useRef, useState } from "react";
 import {
   addDualEarned,
@@ -35,6 +33,7 @@ import { useAppDispatch, useAppSelector } from "utils/hooks/redux";
 import useGetTokenPrice from "utils/hooks/useGetTokenPrice";
 import { IProteoFarm } from "utils/types/proteo.interface";
 import EarnedRewards from "./EarnedRewards/EarnedRewards";
+import EarnTokens from "./EarnTokens/EarnTokens";
 
 interface IProps {
   pf: IProteoFarm;
@@ -227,12 +226,7 @@ const ProteoFarmItem = ({ pf }: IProps) => {
                   )}
                 </Text>
               </Flex>
-              <Flex flexDir={"column"} textAlign="center">
-                <Text color="white.400">Earn</Text>
-                <Text>
-                  <NextImage src={tokenLogo} alt="" width={30} />
-                </Text>
-              </Flex>
+              <EarnTokens pf={pf} />
             </Flex>
           </Box>
           <AccordionIcon color="main" />
