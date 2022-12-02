@@ -34,6 +34,7 @@ import useGetTokenPrice from "utils/hooks/useGetTokenPrice";
 import { IProteoFarm } from "utils/types/proteo.interface";
 import EarnedRewards from "./EarnedRewards/EarnedRewards";
 import EarnTokens from "./EarnTokens/EarnTokens";
+import Avilable from "./Withdraw/Avilable";
 
 interface IProps {
   pf: IProteoFarm;
@@ -270,13 +271,7 @@ const ProteoFarmItem = ({ pf }: IProps) => {
               </Center>
             </PanelBox>
             <PanelBox>
-              <Flex w="full" justifyContent={"space-between"}>
-                <Text color="white.400">Avilable to withdraw</Text>
-                <Text>12.24</Text>
-              </Flex>
-              <Center mt="2">
-                <ActionButton>WITHDRAW</ActionButton>
-              </Center>
+              <Avilable pf={pf} />
             </PanelBox>
             <PanelBox gridColumn={"1 / 3"}>
               <Text color="white.400">STAKE PROTEO-EGLD LP</Text>
