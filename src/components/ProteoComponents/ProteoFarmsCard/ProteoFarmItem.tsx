@@ -235,19 +235,28 @@ const ProteoFarmItem = ({ pf }: IProps) => {
       </Box>
       <AccordionPanel pb={4} w="full" bg="black.base">
         <Flex w="full" gap={"4"}>
-          <Center flexDir={"column"} fontSize="14px" color="main">
-            <Flex flexDir={"column"} h="fit-content">
-              <Link>
-                Get Proteo-EGLD LP <ExternalLinkIcon />
-              </Link>
-              <Link>
-                View Contract <ExternalLinkIcon />
-              </Link>
-              <Link>
-                See Pair Info <ExternalLinkIcon />
-              </Link>
-            </Flex>
-          </Center>
+          {(pf.getFarm || pf.seePair || pf.viewContract) && (
+            <Center flexDir={"column"} fontSize="14px" color="main">
+              <Flex flexDir={"column"} h="fit-content">
+                {pf?.getFarm && (
+                  <Link href={pf.getFarm} isExternal>
+                    Get {pf.stakedCoin} LP <ExternalLinkIcon />
+                  </Link>
+                )}
+
+                {pf?.viewContract && (
+                  <Link href={pf.viewContract} isExternal>
+                    View Contract <ExternalLinkIcon />
+                  </Link>
+                )}
+                {pf?.seePair && (
+                  <Link href={pf.seePair} isExternal>
+                    See Pair Info <ExternalLinkIcon />
+                  </Link>
+                )}
+              </Flex>
+            </Center>
+          )}
           <Grid flex="1" templateColumns={"1fr 1fr"} gap="4">
             <PanelBox>
               <Flex justifyContent={"center"} textAlign={"center"} gap={5}>

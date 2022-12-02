@@ -32,6 +32,10 @@ export const proteoFarms: {
     token: "PROTEOEGLDLP",
     aprEndpoint: "/proteoegldapi.php",
     tokenIdentifier: toknesID.proteoEgldLp,
+    getFarm:
+      "https://arda.run/swap?from=single-wallet-&to=lpMaiar-wallet-PROTEOEGLD-baf054",
+    viewContract: "https://explorer.elrond.com/tokens/PROTEOEGLD-baf054",
+    seePair: "https://e-compass.io/maiars/chart/proteo/wegld",
   },
   ZPAYWEGLD: {
     hc: 20,
@@ -43,6 +47,10 @@ export const proteoFarms: {
     tokenIdentifier: toknesID.zpayWegldLp,
     tokenRewards: { name: "ZPAY", tokenI: toknesID.zpay },
     endpointDefinition: "getMyStakedInfoLPDUALFARMS",
+    getFarm:
+      "https://arda.run/swap?from=single-wallet-&to=lpMaiar-wallet-ZPAYWEGLD-34e5c1",
+    viewContract: "https://explorer.elrond.com/tokens/ZPAYWEGLD-34e5c1",
+    seePair: "https://e-compass.io/maiars/chart/zpay/wegld",
   },
   "AERO-EGLD": {
     hc: 20,
@@ -54,6 +62,10 @@ export const proteoFarms: {
     tokenIdentifier: toknesID.aerowegld,
     tokenRewards: { name: "AERO", tokenI: toknesID.aero },
     endpointDefinition: "getMyStakedInfoLPDUALFARMS",
+    getFarm:
+      "https://arda.run/swap?from=single-wallet-&to=lpMaiar-wallet-AEROWEGLD-81cc37",
+    viewContract: "https://explorer.elrond.com/tokens/AEROWEGLD-81cc37",
+    seePair: "https://e-compass.io/maiars/chart/aero/wegld",
   },
 };
 

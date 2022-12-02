@@ -16,4 +16,7 @@ export interface IProteoFarm {
   fixedRewards?: number;
   endpointDefinition?: string;
   withHarvest?: boolean;
+  getFarm?: string;
+  viewContract?: string;
+  seePair?: string;
 }
