@@ -80,6 +80,7 @@ const CoinTab = () => {
     orderData.unshift(EgldData);
     setData(orderData);
   }, [tableData.data, egldData, mexPairs]);
+  console.log("data", data);
 
   return (
     <Box w="full" maxW={"700px"} mx="auto" minH="70vh" overflow={"auto"}>

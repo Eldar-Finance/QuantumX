@@ -15,6 +15,7 @@ export const routeNames = {
   eLBadges: "/eLBadges",
   investors: "/investor-zone",
   admin: "/admin-panel",
+  panel: "/panel",
 };
 
 export const routes: {
@@ -26,6 +27,7 @@ export const routes: {
   eLBadges: IRoute;
   investors: IRoute;
   admin: IRoute;
+  panel: IRoute;
 } = {
   dashboard: {
     path: routeNames.dashboard,
@@ -62,6 +64,11 @@ export const routes: {
   admin: {
     path: routeNames.admin,
     name: "Admin Panel",
+    onModal: true,
+  },
+  panel: {
+    path: routeNames.panel,
+    name: "Quantumn Panel",
     onModal: true,
   },
 };

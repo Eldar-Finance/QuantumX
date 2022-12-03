@@ -164,16 +164,16 @@ function SearchTable(props) {
                   {headerGroup.headers.map((column, index) => (
                     <Th
                       {...column.getHeaderProps(column.getSortByToggleProps())}
-                      pe="0px"
                       key={index}
                     >
                       <Flex
-                        justify="space-between"
+                        justify="center"
                         align="center"
                         fontSize={{ sm: "sm", lg: "md" }}
                         textTransform="capitalize"
                         color="white.400"
                         fontWeight={"400"}
+                        whiteSpace="nowrap"
                       >
                         {column.render("Header")}
                       </Flex>
