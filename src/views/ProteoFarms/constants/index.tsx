@@ -25,7 +25,7 @@ export const proteoFarms: {
     stakedCoin: "RARE-USDC",
     wsp: proteoEgldEliteWsp,
     token: "RAREUSDCLP",
-    // aprEndpoint: "/proteoegldapi.php",
+    aprEndpoint: "/proteoegldapi.php",
     tokenIdentifier: "RAREUSDCLP-4512d",
   },
   "PROTEO-EGLD": {
