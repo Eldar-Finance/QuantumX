@@ -9,7 +9,7 @@ export const routeNames = {
   home: "/",
   dashboard: "/dashboad",
   swap: "/swap",
-  farms: "/proteo-farms",
+  farms: "/farms",
   Pools: "/proteo-pools",
   dca: "/dca",
   eLBadges: "/eLBadges",

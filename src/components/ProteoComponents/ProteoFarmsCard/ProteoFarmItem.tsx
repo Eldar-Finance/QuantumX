@@ -209,12 +209,10 @@ const ProteoFarmItem = ({ pf }: IProps) => {
             fontSize={{ xs: "14px", lg: "md" }}
           >
             <Box flex="1" textAlign="left" w="full">
-              <Flex
+              <Grid
                 w="full"
-                alignItems={"center"}
-                justifyContent="space-between"
-                pr="8"
                 flexDir={{ xs: "column", md: "row" }}
+                templateColumns={{ xs: "1fr", md: "1fr 1fr 1fr 1fr 1fr" }}
               >
                 <Flex gap="4" alignItems={"center"}>
                   {Icon}
@@ -252,7 +250,7 @@ const ProteoFarmItem = ({ pf }: IProps) => {
                   </Text>
                 </Flex>
                 <EarnTokens pf={pf} />
-              </Flex>
+              </Grid>
             </Box>
             <AccordionIcon color="main" />
           </AccordionButton>

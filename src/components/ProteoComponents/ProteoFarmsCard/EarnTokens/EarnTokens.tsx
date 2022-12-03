@@ -1,4 +1,4 @@
-import { Flex, Text } from "@chakra-ui/react";
+import { Center, Flex, Text } from "@chakra-ui/react";
 import tokenLogo from "assets/logos/sproteo.svg";
 import NextImage from "components/NextImage/NextImage";
 import { coinInfo } from "utils/constants/proteo";
@@ -18,14 +18,14 @@ const EarnTokens = ({ pf }: IProps) => {
 
   return (
     <Flex flexDir={"column"} textAlign="center">
-      <Text color="white.400" mb={2}>
+      <Text color="white.400" mb={2} textAlign="center">
         Earn
       </Text>
-      <Flex gap={2}>
+      <Center gap={2}>
         <NextImage src={tokenLogo} alt="" width={30} />
 
         {coinInfo[formatTokenI(dualToken?.rewardsId)]?.logo}
-      </Flex>
+      </Center>
     </Flex>
   );
 };
