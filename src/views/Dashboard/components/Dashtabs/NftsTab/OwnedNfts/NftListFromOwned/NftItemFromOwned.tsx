@@ -48,13 +48,7 @@ const NftItemFromOwned = ({ nft }: IProps) => {
           <Text fontSize={"xl"} mr={2}>
             {" "}
             {nft.name}
-          </Text>{" "}
-          {/* <IconNext
-            src={twitterImg}
-            width="24px"
-            nextW="20.17px"
-            nextH="16.45px"
-          /> */}
+          </Text>
         </Flex>
         <Flex justifyContent={"space-between"} mb={3}>
           {nftElrondSwap && (

@@ -11,7 +11,6 @@ import {
   Grid,
   Link,
   Text,
-  useDisclosure,
 } from "@chakra-ui/react";
 import { contractAddr } from "api/net.config";
 import axiosEldar2 from "api/rest/axiosEldar2";
@@ -69,6 +68,7 @@ const ProteoFarmItem = ({ pf }: IProps) => {
     Icon,
     stakedCoin,
     tokenIdentifier,
+    type,
     decimals,
     wsp,
     hc,
@@ -81,28 +81,12 @@ const ProteoFarmItem = ({ pf }: IProps) => {
     endpointDefinition,
   } = pf;
 
-  const openStake = useDisclosure();
-  const openWithdraw = useDisclosure();
-
-  const [Staked, setStaked] = useState(0);
-  const [sProteoEarned, setSProteoEarned] = useState(0);
   const [lastHarvestEpoch, setLastHarvestEpoch] = useState(0);
-  const [dualEraned, setDualEraned] = useState(0);
 
   const [selectedTokenPrice] = useGetTokenPrice(token);
-  const [rewardsTokenPrice] = useGetTokenPrice(tokenRewards?.name);
   const tokenPrice = customPrice || selectedTokenPrice;
 
   const [apr, setApr] = useState({ apr: 0, epoch: 0 });
-
-  const handleOpenStake = () => {
-    openWithdraw.onClose();
-    openStake.onOpen();
-  };
-  const handleOpenWithdraw = () => {
-    openStake.onClose();
-    openWithdraw.onOpen();
-  };
 
   useEffect(() => {
     if (generalInfoAppData && userInfoAppData.length > 0) {
@@ -123,12 +107,8 @@ const ProteoFarmItem = ({ pf }: IProps) => {
         contractAddr.proteoElite,
         Boolean(tokenRewards)
       ).then((res: any) => {
-        setStaked(res.depositedTokens);
-        setSProteoEarned(res.pendingRewards);
-
         if (tokenRewards) {
           setLastHarvestEpoch(res.lastHarvestEpoch);
-          setDualEraned(res.pendingRewardsDual);
 
           dispatch(
             addDualEarned({
@@ -161,11 +141,12 @@ const ProteoFarmItem = ({ pf }: IProps) => {
               tokenPrice
             ),
             id: stakedCoin,
+            type: type,
           })
         );
       }
     }
-  }, [decimals, dispatch, stakedCoin, tokenInfo, tokenPrice]);
+  }, [decimals, dispatch, stakedCoin, tokenInfo, tokenPrice, type]);
 
   useEffect(() => {
     axiosEldar2
@@ -186,7 +167,7 @@ const ProteoFarmItem = ({ pf }: IProps) => {
   const autoHarversIn =
     Number(lastHarvestEpoch) + Number(hc) - Number(currentEpoch);
 
-  console.log("userInfoAppData", userInfoAppData);
+  console.log("type", type);
 
   return (
     <ProteoItemContenxt.Provider

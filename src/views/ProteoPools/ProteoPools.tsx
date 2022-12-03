@@ -37,7 +37,7 @@ const ProteoFarms = () => {
   }, [address, dispatch]);
 
   return (
-    <Layout pt="150px">
+    <Layout>
       <MyContainer pb="100px">
         <Flex
           w="full"
@@ -47,7 +47,7 @@ const ProteoFarms = () => {
           maxW="1000px"
           mx="auto"
         >
-          <Title title="Pools" />
+          <Title title="Pools" subtitle="Stake in Single Asset (SA) Pools" />
           <Flex w="full" justifyContent={"flex-end"} mt="12">
             <Flex gap="20px">
               <Search />

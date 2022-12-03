@@ -1,9 +1,10 @@
 /* eslint-disable react/no-unescaped-entities */
 import { Box, Center } from "@chakra-ui/react";
+import styled from "@emotion/styled";
 
 const BuyTab = () => {
   return (
-    <Box w="full" h="400px" mb={"100px"}>
+    <WrapperS w="full" h="400px" mb={"100px"}>
       <Center
         maxW={"700px"}
         m="auto"
@@ -21,8 +22,27 @@ const BuyTab = () => {
           Can't load widget
         </iframe>
       </Center>
-    </Box>
+    </WrapperS>
   );
 };
 
 export default BuyTab;
+
+const WrapperS = styled(Box)`
+  .base-style_widget-app-wrapper__o5dp1 {
+    background: #151515;
+  }
+
+  .style_heading__mFYLj.style_size-sm__7zd3F {
+    color: white;
+  }
+
+  .style_checkbox-wrapper__JbGIq.style_size-medium__tlJUf
+    .style_cl-checkbox-label__Kg7M3 {
+    color: white;
+  }
+
+  .style_route-wrapper__qXezp.style_light-gray__hPBEJ {
+    background: #43f7dd;
+  }
+`;

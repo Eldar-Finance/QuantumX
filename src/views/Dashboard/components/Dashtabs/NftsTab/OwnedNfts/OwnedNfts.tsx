@@ -30,7 +30,7 @@ const OwnedNfts = () => {
   }
 
   return (
-    <Box p="10px 30px 60px 30px" borderRadius={"2xl"}>
+    <Box p="10px 30px 60px 30px" borderRadius={"2xl"} w="full">
       <Box position={"relative"} w="full" maxW={"1000px"} m="auto">
         <OwnedNFtsList
           nfts={nftsByCollection}

@@ -28,6 +28,7 @@ const OwnedNFtsList = ({
     <Grid
       templateColumns={{ xs: "1fr", tablet: "1fr 1fr ", lg: "1fr 1fr" }}
       gap={6}
+      w="full"
     >
       {nfts.map((nftsArr, i) => {
         const collection = nftsArr[0].collection;

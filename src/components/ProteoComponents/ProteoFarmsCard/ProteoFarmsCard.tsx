@@ -7,8 +7,6 @@ interface IProps {
 }
 
 const ProteoFarmsCard = ({ proteoArr }: IProps) => {
-  console.log("proteoArr", proteoArr);
-
   return (
     <Accordion allowMultiple borderRadius={"xl"} overflow="hidden" w="full">
       {proteoArr.map((pf) => {

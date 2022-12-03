@@ -20,7 +20,7 @@ const IconAndButtonBox = ({
 }: IProps) => {
   return (
     <Card as={Center} flexDir="column">
-      <Center bg="black.dark" borderRadius="md" boxSize={"50px"} mb={"10px"}>
+      <Center bg="secondary" borderRadius="md" boxSize={"50px"} mb={"10px"}>
         {icon}
       </Center>
       <Text

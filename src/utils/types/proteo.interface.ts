@@ -19,4 +19,5 @@ export interface IProteoFarm {
   getFarm?: string;
   viewContract?: string;
   seePair?: string;
+  type: "pool" | "farm";
 }

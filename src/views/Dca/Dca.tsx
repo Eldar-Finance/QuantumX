@@ -6,7 +6,7 @@ import DcaCard from "./components/DcaCard/DcaCard";
 
 const Dca = () => {
   return (
-    <Layout>
+    <Layout pt={{ xs: "180px", "2xl": "220px" }}>
       <MyContainer
         display={"flex"}
         justifyContent="center"

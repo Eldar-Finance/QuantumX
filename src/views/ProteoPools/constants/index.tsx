@@ -18,6 +18,7 @@ export const proteoPools: {
     customPrice: 1,
     aprEndpoint: "/usdcapi.php",
     tokenIdentifier: toknesID.usdc,
+    type: "pool",
   },
   EGLD: {
     hc: 60,
@@ -27,6 +28,7 @@ export const proteoPools: {
     token: "WEGLD",
     aprEndpoint: "/egldapi.php",
     tokenIdentifier: toknesID.egld,
+    type: "pool",
   },
 };
 

@@ -14,7 +14,6 @@ const EarnTokens = ({ pf }: IProps) => {
   const dualsEarned = useAppSelector((state) => state.proteo.dualsEarned);
 
   const dualToken = dualsEarned.find((t) => t.id === pf.tokenIdentifier);
-  console.log("dualToken", dualToken);
 
   return (
     <Flex flexDir={"column"} textAlign="center">

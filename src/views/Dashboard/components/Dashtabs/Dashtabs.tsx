@@ -9,6 +9,9 @@ const Dashtabs = () => {
       tabListProps={{
         overflow: "auto",
       }}
+      tabsProps={{
+        w: "full",
+      }}
       tabListWarapperProps={{
         mb: 10,
         display: "flex",

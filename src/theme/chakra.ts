@@ -161,6 +161,7 @@ const customTheme = extendTheme({
       500: "rgba(0, 0, 0, 0.5)",
       600: "rgba(0, 0, 0, 0.6)",
     },
+  
     white: {
       light: "#fff",
       base: "#",
@@ -173,7 +174,8 @@ const customTheme = extendTheme({
       500: "rgba(255, 255, 255, 0.5)",
       600: "rgba(255, 255, 255, 0.6)",
     },
-
+    
+    scondary:"#232526",
     main: "#22F7DD",
     danger: "#A04C4C",
   },

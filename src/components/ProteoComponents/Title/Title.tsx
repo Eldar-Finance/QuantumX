@@ -5,9 +5,10 @@ import { useAppSelector } from "utils/hooks/redux";
 
 interface IProps {
   title: string;
+  subtitle: string;
 }
 
-const Title = ({ title }: IProps) => {
+const Title = ({ title, subtitle }: IProps) => {
   const totalTvlInEldarFarms = useAppSelector(
     (state) => state.proteo.totalTvlInEldarFarms
   );
@@ -21,6 +22,8 @@ const Title = ({ title }: IProps) => {
       });
       setTotalVl(_totalVl);
     }
+
+    return () => {};
   }, [totalTvlInEldarFarms]);
 
   return (
@@ -30,7 +33,7 @@ const Title = ({ title }: IProps) => {
         {title}
       </Heading>
       <Text fontSize={"md"} color="white.400" mb="10">
-        Stake Liquidity Pool (LP) tokens
+        {subtitle}
       </Text>
       <Center
         px="6"

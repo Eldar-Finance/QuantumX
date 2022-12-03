@@ -27,6 +27,7 @@ export const proteoFarms: {
     token: "RAREUSDCLP",
     aprEndpoint: "/proteoegldapi.php",
     tokenIdentifier: "RAREUSDCLP-4512d",
+    type: "farm",
   },
   "PROTEO-EGLD": {
     hc: 20,
@@ -40,6 +41,7 @@ export const proteoFarms: {
       "https://arda.run/swap?from=single-wallet-&to=lpMaiar-wallet-PROTEOEGLD-baf054",
     viewContract: "https://explorer.elrond.com/tokens/PROTEOEGLD-baf054",
     seePair: "https://e-compass.io/maiars/chart/proteo/wegld",
+    type: "farm",
   },
   ZPAYWEGLD: {
     hc: 20,
@@ -55,6 +57,7 @@ export const proteoFarms: {
       "https://arda.run/swap?from=single-wallet-&to=lpMaiar-wallet-ZPAYWEGLD-34e5c1",
     viewContract: "https://explorer.elrond.com/tokens/ZPAYWEGLD-34e5c1",
     seePair: "https://e-compass.io/maiars/chart/zpay/wegld",
+    type: "farm",
   },
   "AERO-EGLD": {
     hc: 20,
@@ -70,6 +73,7 @@ export const proteoFarms: {
       "https://arda.run/swap?from=single-wallet-&to=lpMaiar-wallet-AEROWEGLD-81cc37",
     viewContract: "https://explorer.elrond.com/tokens/AEROWEGLD-81cc37",
     seePair: "https://e-compass.io/maiars/chart/aero/wegld",
+    type: "farm",
   },
 };
 

@@ -18,7 +18,6 @@ export const panelColumns = [
     accessor: "id",
     Cell: ({ row }) => {
       const data: ITableData = row.original;
-      console.log("data id", data.id);
 
       return <Flex justify={"center"}>{data.id}</Flex>;
     },

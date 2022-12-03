@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
   fetchApr,
   fetchEliteWallets,
@@ -145,6 +145,7 @@ const initialState = {
   },
 
   totalTvlInEldarFarms: [],
+  tvlType: "",
   sProteoEarned: [],
   dualsEarned: [],
 };
@@ -195,13 +196,26 @@ export const proteo = createSlice({
     resetfetchListOfBlacklisted: (state) => {
       state.blackList.status = "idle";
     },
-    addTvlInEldarFarm: (state, action) => {
+    addTvlInEldarFarm: (
+      state,
+      action: PayloadAction<{
+        id: string;
+        balance: number;
+        type: "pool" | "farm";
+      }>
+    ) => {
+      console.log("addTvlInEldarFarm type", action.payload.type);
+
+      if (state.tvlType !== action.payload.type) {
+        state.totalTvlInEldarFarms = [];
+      }
       if (
         state.totalTvlInEldarFarms.findIndex(
           (tvl) => tvl.id === action.payload.id
         ) === -1
       ) {
         if (action.payload.balance !== 0) {
+          state.tvlType = action.payload.type;
           state.totalTvlInEldarFarms = [
             ...state.totalTvlInEldarFarms,
             action.payload,
@@ -209,6 +223,7 @@ export const proteo = createSlice({
         }
       }
     },
+
     addsProteoEarned: (state, action) => {
       if (
         state.sProteoEarned.findIndex(

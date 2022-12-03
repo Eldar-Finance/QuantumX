@@ -40,7 +40,9 @@ const OwnedNFItem = ({ selected, collection, onClick, nftsArr }: IProps) => {
           />
         )}
       </Center>
-      <Text fontSize={"lg"}>{formatTokenI(collection)}</Text>
+      <Text fontSize={"lg"} color={selected ? "black" : "white"}>
+        {formatTokenI(collection)}
+      </Text>
     </Flex>
   );
 };
