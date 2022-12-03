@@ -37,7 +37,7 @@ const ProteoFarms = () => {
     }
   }, [address, dispatch]);
   return (
-    <Layout pt="150px">
+    <Layout pt="180px">
       <MyContainer pb="100px">
         <Flex
           w="full"

@@ -204,6 +204,7 @@ const ProteoFarmItem = ({ pf }: IProps) => {
             }}
             px="5"
             w="full"
+            fontSize={{ xs: "14px", lg: "md" }}
           >
             <Box flex="1" textAlign="left" w="full">
               <Flex
@@ -211,6 +212,7 @@ const ProteoFarmItem = ({ pf }: IProps) => {
                 alignItems={"center"}
                 justifyContent="space-between"
                 pr="8"
+                flexDir={{ xs: "column", md: "row" }}
               >
                 <Flex gap="4" alignItems={"center"}>
                   {Icon}
@@ -254,7 +256,7 @@ const ProteoFarmItem = ({ pf }: IProps) => {
           </AccordionButton>
         </Box>
         <AccordionPanel pb={4} w="full" bg="black.base">
-          <Flex w="full" gap={"4"}>
+          <Flex w="full" gap={"4"} flexDir={{ xs: "column", md: "row" }}>
             {(pf.getFarm || pf.seePair || pf.viewContract) && (
               <Center flexDir={"column"} fontSize="14px" color="main">
                 <Flex flexDir={"column"} h="fit-content">
@@ -277,7 +279,11 @@ const ProteoFarmItem = ({ pf }: IProps) => {
                 </Flex>
               </Center>
             )}
-            <Grid flex="1" templateColumns={"1fr 1fr"} gap="4">
+            <Grid
+              flex="1"
+              templateColumns={{ xs: "1fr", md: "1fr 1fr" }}
+              gap="4"
+            >
               <PanelBox>
                 <Flex justifyContent={"center"} textAlign={"center"} gap={5}>
                   <EarnedRewards pf={pf} />
@@ -306,7 +312,7 @@ const ProteoFarmItem = ({ pf }: IProps) => {
               <PanelBox>
                 <Avilable pf={pf} />
               </PanelBox>
-              <PanelBox gridColumn={"1 / 3"}>
+              <PanelBox gridColumn={{ xs: "auto", md: "1 / 3" }}>
                 <StakeUnstake pf={pf} />
               </PanelBox>
             </Grid>
