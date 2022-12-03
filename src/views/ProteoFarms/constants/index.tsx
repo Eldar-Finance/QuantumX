@@ -6,7 +6,6 @@ import {
 } from "api/sc/sc";
 import aeroEgld from "assets/logos/aeroegl.png";
 import proteoEgldLpImg from "assets/logos/proteolp.png";
-import rareUsdc from "assets/logos/rare-usdc.png";
 
 import zpayWegldImg from "assets/logos/zpaywegld.png";
 import NextImage from "components/NextImage/NextImage";
@@ -16,18 +15,18 @@ import { IProteoFarm } from "utils/types/proteo.interface";
 export const proteoFarms: {
   ZPAYWEGLD: IProteoFarm;
   "AERO-EGLD": IProteoFarm;
-  "RARE-USDC": IProteoFarm;
+  // "RARE-USDC": IProteoFarm;
   "PROTEO-EGLD": IProteoFarm;
 } = {
-  "RARE-USDC": {
-    hc: 20,
-    Icon: <NextImage alt="" src={rareUsdc} width={45} />,
-    stakedCoin: "RARE-USDC",
-    wsp: proteoEgldEliteWsp,
-    token: "RAREUSDCLP",
-    aprEndpoint: "/proteoegldapi.php",
-    tokenIdentifier: "RAREUSDCLP-4512d",
-  },
+  // "RARE-USDC": {
+  //   hc: 20,
+  //   Icon: <NextImage alt="" src={rareUsdc} width={45} />,
+  //   stakedCoin: "RARE-USDC",
+  //   wsp: proteoEgldEliteWsp,
+  //   token: "RAREUSDCLP",
+  //   aprEndpoint: "/proteoegldapi.php",
+  //   tokenIdentifier: "RAREUSDCLP-4512d",
+  // },
   "PROTEO-EGLD": {
     hc: 20,
     Icon: <NextImage alt="" src={proteoEgldLpImg} width={45} />,

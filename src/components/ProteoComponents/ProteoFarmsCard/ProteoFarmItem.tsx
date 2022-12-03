@@ -68,6 +68,7 @@ const ProteoFarmItem = ({ pf }: IProps) => {
   const {
     Icon,
     stakedCoin,
+    tokenIdentifier,
     decimals,
     wsp,
     hc,
@@ -106,16 +107,14 @@ const ProteoFarmItem = ({ pf }: IProps) => {
   useEffect(() => {
     if (generalInfoAppData && userInfoAppData.length > 0) {
       const info = generalInfoAppData.tokensInfo.find(
-        (ti) => ti.tokenI.split("-")[0] === stakedCoin
+        (ti) => ti.tokenI === tokenIdentifier
       );
-      const info2 = userInfoAppData.find(
-        (ti) => ti.tokenI.split("-")[0] === stakedCoin
-      );
+      const info2 = userInfoAppData.find((ti) => ti.tokenI === tokenIdentifier);
 
       setTokenInfo(info);
       setTokenInfo2(info2);
     }
-  }, [stakedCoin, generalInfoAppData, userInfoAppData]);
+  }, [stakedCoin, generalInfoAppData, userInfoAppData, tokenIdentifier]);
 
   useEffect(() => {
     if (wsp && tokenInfo) {
@@ -186,6 +185,9 @@ const ProteoFarmItem = ({ pf }: IProps) => {
 
   const autoHarversIn =
     Number(lastHarvestEpoch) + Number(hc) - Number(currentEpoch);
+
+  console.log("userInfoAppData", userInfoAppData);
+
   return (
     <ProteoItemContenxt.Provider
       value={{
