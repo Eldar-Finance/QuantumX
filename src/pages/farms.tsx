@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import ProteoFarms from "views/ProteoFarms/ProteoFarms";
+import ProteoFarms from "views/Farms/Farms";
 const ProteoFarmsPage: NextPage = () => {
   return <ProteoFarms />
 };

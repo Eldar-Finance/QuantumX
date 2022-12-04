@@ -6,9 +6,12 @@ interface IProps {
   proteoArr: IProteoFarm[];
 }
 
-const ProteoFarmsCard = ({ proteoArr }: IProps) => {
+const FarmsCard = ({ proteoArr }: IProps) => {
   return (
     <Accordion allowMultiple borderRadius={"xl"} overflow="hidden" w="full">
+      {proteoArr.map((pf) => {
+        return <ProteoFarmItem key={pf.stakedCoin} pf={pf} />;
+      })}
       {proteoArr.map((pf) => {
         return <ProteoFarmItem key={pf.stakedCoin} pf={pf} />;
       })}
@@ -16,4 +19,4 @@ const ProteoFarmsCard = ({ proteoArr }: IProps) => {
   );
 };
 
-export default ProteoFarmsCard;
+export default FarmsCard;

@@ -37,10 +37,10 @@ import {
 import { useAppDispatch, useAppSelector } from "utils/hooks/redux";
 import useGetTokenPrice from "utils/hooks/useGetTokenPrice";
 import { IProteoFarm } from "utils/types/proteo.interface";
-import EarnedRewards from "./EarnedRewards/EarnedRewards";
-import EarnTokens from "./EarnTokens/EarnTokens";
-import StakeUnstake from "./StakeUnstake/StakeUnstake";
-import Avilable from "./Withdraw/Avilable";
+import EarnedRewards from "./Proteo/EarnedRewards/EarnedRewards";
+import EarnTokens from "./Proteo/EarnTokens/EarnTokens";
+import StakeUnstake from "./Proteo/StakeUnstake/StakeUnstake";
+import Avilable from "./Proteo/Withdraw/Avilable";
 
 interface IProps {
   pf: IProteoFarm;

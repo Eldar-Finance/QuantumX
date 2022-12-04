@@ -1,10 +1,10 @@
 import { Center, Flex } from "@chakra-ui/react";
 import MyContainer from "components/Container/Container";
+import ProteoFarmsCard from "components/Farms/FarmsCard/FarmsCard";
+import Search from "components/Farms/Search/Search";
+import Selector from "components/Farms/Selector/Selector";
+import Title from "components/Farms/Title/Title";
 import Layout from "components/Layout/Layout";
-import ProteoFarmsCard from "components/ProteoComponents/ProteoFarmsCard/ProteoFarmsCard";
-import Search from "components/ProteoComponents/Search/Search";
-import Selector from "components/ProteoComponents/Selector/Selector";
-import Title from "components/ProteoComponents/Title/Title";
 import withElronDapp from "hoc/withElronDapp";
 import WrapperPages from "hoc/WrapperPages";
 import { useEffect } from "react";
@@ -19,9 +19,8 @@ import {
 } from "redux/slices/proteo/funcs";
 import { selectUserAddress } from "redux/slices/userAcount/account-slice";
 import { useAppDispatch, useAppSelector } from "utils/hooks/redux";
-import { proteoFarmsArr } from "./constants";
-
-const ProteoFarms = () => {
+import { proteoPoolsArr } from "./constants";
+const Pools = () => {
   const dispatch = useAppDispatch();
   const address = useAppSelector(selectUserAddress);
   useEffect(() => {
@@ -36,6 +35,7 @@ const ProteoFarms = () => {
       dispatch(fetchStats());
     }
   }, [address, dispatch]);
+
   return (
     <Layout>
       <MyContainer pb="100px">
@@ -47,7 +47,7 @@ const ProteoFarms = () => {
           maxW="1000px"
           mx="auto"
         >
-          <Title title="Farms" subtitle="Stake Liquidity Pool (LP) tokens" />
+          <Title title="Pools" subtitle="Stake in Single Asset (SA) Pools" />
           <Flex w="full" justifyContent={"flex-end"} mt="12">
             <Flex gap="20px">
               <Search />
@@ -59,7 +59,7 @@ const ProteoFarms = () => {
             </Flex>
           </Flex>
           <Center mt="50px" w="full">
-            <ProteoFarmsCard proteoArr={proteoFarmsArr} />
+            <ProteoFarmsCard proteoArr={proteoPoolsArr} />
           </Center>
         </Flex>
       </MyContainer>
@@ -67,4 +67,4 @@ const ProteoFarms = () => {
   );
 };
 
-export default withElronDapp(WrapperPages(ProteoFarms));
+export default withElronDapp(WrapperPages(Pools));

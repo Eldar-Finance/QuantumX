@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 import { useState } from "react";
 import { formatBalance } from "utils/functions/formatBalance";
 import { IProteoFarm } from "utils/types/proteo.interface";
-import { ProteoItemContenxt } from "../ProteoFarmItem";
+import { ProteoItemContenxt } from "../../ProteoFarmItem";
 
 const StakeModal: any = dynamic(() => import("./StakeModal"));
 const UnstakeModal: any = dynamic(() => import("./UnstkeModal"));
