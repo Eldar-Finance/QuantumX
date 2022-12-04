@@ -13,7 +13,11 @@ const AllActions = ({ handleView, farm }: IProps) => {
     <>
       <ModalHeader>Farm Actions</ModalHeader>
       <ModalBody mb={5}>
-        <Grid templateColumns={"1fr 1fr"} textAlign="center" gap={5}>
+        <Grid
+          templateColumns={{ xs: "1fr", md: "1fr 1fr" }}
+          textAlign="center"
+          gap={5}
+        >
           <PanelBox
             display={"flex"}
             flexDir="column"
