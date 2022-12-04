@@ -10,7 +10,7 @@
         "contractCrate": {
             "name": "farms",
             "version": "0.0.0",
-            "git_version": "84a92e0-modified"
+            "git_version": "23e666b-modified"
         },
         "framework": {
             "name": "elrond-wasm",
@@ -64,8 +64,20 @@
             "outputs": []
         },
         {
+            "name": "becomeCreator",
+            "mutability": "mutable",
+            "payableInTokens": [
+                "*"
+            ],
+            "inputs": [],
+            "outputs": []
+        },
+        {
             "name": "createFarm",
             "mutability": "mutable",
+            "payableInTokens": [
+                "*"
+            ],
             "inputs": [
                 {
                     "name": "staking_token",
@@ -74,6 +86,18 @@
                 {
                     "name": "reward_token",
                     "type": "EgldOrEsdtTokenIdentifier"
+                },
+                {
+                    "name": "unbonding_period",
+                    "type": "u64"
+                },
+                {
+                    "name": "early_unbonding_fee",
+                    "type": "u64"
+                },
+                {
+                    "name": "rewards_fee",
+                    "type": "u64"
                 }
             ],
             "outputs": []
@@ -81,6 +105,9 @@
         {
             "name": "depositRewards",
             "mutability": "mutable",
+            "payableInTokens": [
+                "*"
+            ],
             "inputs": [
                 {
                     "name": "farm_id",
@@ -98,8 +125,158 @@
             "mutability": "mutable",
             "inputs": [
                 {
+                    "name": "farm_id",
+                    "type": "BigUint"
+                },
+                {
                     "name": "epochs",
                     "type": "u64"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "setEarlyUnbondingFee",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "farm_id",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "fee",
+                    "type": "u64"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "setRewardsFee",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "farm_id",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "fee",
+                    "type": "u64"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "deleteFarm",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "farm_id",
+                    "type": "BigUint"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "setFee",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "fee",
+                    "type": "u64"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "setCreatorCharge",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "amount",
+                    "type": "BigUint"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "setFarmCreationCharge",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "amount",
+                    "type": "BigUint"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "addWhitelistedStakedTokens",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "tokens",
+                    "type": "variadic<EgldOrEsdtTokenIdentifier>",
+                    "multi_arg": true
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "removeWhitelistedStakedTokens",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "tokens",
+                    "type": "variadic<EgldOrEsdtTokenIdentifier>",
+                    "multi_arg": true
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "addWhitelistedRewardTokens",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "tokens",
+                    "type": "variadic<EgldOrEsdtTokenIdentifier>",
+                    "multi_arg": true
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "removeWhitelistedRewardTokens",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "tokens",
+                    "type": "variadic<EgldOrEsdtTokenIdentifier>",
+                    "multi_arg": true
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "forceAddCreator",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "address",
+                    "type": "Address"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "forceRemoveCreator",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "address",
+                    "type": "Address"
                 }
             ],
             "outputs": []
@@ -137,7 +314,23 @@
             "inputs": [],
             "outputs": [
                 {
-                    "type": "variadic<tuple<Farm,u64>>",
+                    "type": "variadic<tuple<Farm,List<u64>>>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "getCreatorTable",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "address",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "variadic<tuple<Farm,List<u64>>>",
                     "multi_result": true
                 }
             ]
@@ -153,12 +346,65 @@
             ]
         },
         {
-            "name": "unbondingPeriod",
+            "name": "fee",
             "mutability": "readonly",
             "inputs": [],
             "outputs": [
                 {
                     "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "creatorCharge",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "farmCreationCharge",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "whitelistedStakedTokens",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<EgldOrEsdtTokenIdentifier>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "whitelistedRewardTokens",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<EgldOrEsdtTokenIdentifier>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "farmCreators",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<Address>",
+                    "multi_result": true
                 }
             ]
         },
@@ -185,6 +431,51 @@
             "outputs": [
                 {
                     "type": "Farm"
+                }
+            ]
+        },
+        {
+            "name": "unbondingPeriod",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "farm_id",
+                    "type": "BigUint"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "earlyUnbondingFee",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "farm_id",
+                    "type": "BigUint"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "rewardsFee",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "farm_id",
+                    "type": "BigUint"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "u64"
                 }
             ]
         },
@@ -469,11 +760,15 @@
                     "type": "BigUint"
                 },
                 {
+                    "name": "creator",
+                    "type": "Address"
+                },
+                {
                     "name": "creation_epoch",
                     "type": "u64"
                 },
                 {
-                    "name": "staking_token",
+                    "name": "staked_token",
                     "type": "EgldOrEsdtTokenIdentifier"
                 },
                 {

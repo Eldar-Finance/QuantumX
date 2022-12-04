@@ -5,12 +5,10 @@ import {
   AccordionPanel,
   Box,
   BoxProps,
-  Center,
   Flex,
   Grid,
   Text,
 } from "@chakra-ui/react";
-import ActionButton from "components/ActionButton/ActionButton";
 import NextImage from "components/NextImage/NextImage";
 
 import { createContext, PropsWithChildren } from "react";
@@ -25,6 +23,7 @@ import useGetElrondToken from "utils/hooks/useGetElrondToken";
 import EarnedRewards from "./Farms2/EarnedRewards/EarnedRewards";
 import EarnTokens from "./Farms2/EarnTokens/EarnTokens";
 import StakeUnstake from "./Farms2/StakeUnstake/StakeUnstake";
+import Avilable from "./Farms2/Withdraw/Avilable";
 
 interface IProps {
   farm: IScFarmItem;
@@ -40,6 +39,8 @@ export const ProteoItemContenxt = createContext({
 const Farms2Item = ({ farm, farmUserInfo }: IProps) => {
   const { token: rewardsToken } = useGetElrondToken(farm.farm.rewardToken);
   const { token: stakingToken } = useGetElrondToken(farm.farm.stakingToken);
+
+  console.log("stakingToken", stakingToken);
 
   return (
     <AccordionItem w="full">
@@ -61,10 +62,13 @@ const Farms2Item = ({ farm, farmUserInfo }: IProps) => {
               templateColumns={{ xs: "1fr", md: "1fr 1fr 1fr 1fr 1fr" }}
             >
               <Flex gap="4" alignItems={"center"}>
-                {stakingToken?.assets?.pngUrl && (
+                {(stakingToken?.assets?.pngUrl ||
+                  stakingToken?.assets?.svgUrl) && (
                   <NextImage
                     alt=""
-                    src={stakingToken.assets.pngUrl}
+                    src={
+                      stakingToken.assets.pngUrl || stakingToken?.assets?.svgUrl
+                    }
                     height={27}
                     width={27}
                   />
@@ -77,13 +81,13 @@ const Farms2Item = ({ farm, farmUserInfo }: IProps) => {
               <Flex flexDir={"column"} textAlign="center">
                 <Text color="white.400">Staked Balance</Text>
                 <Text>
-                  {formatBalance({ balance: farmUserInfo.stakedBalance })} (${" "}
+                  {formatBalance({ balance: farmUserInfo?.stakedBalance })} (${" "}
                   {formatBalanceDolar(
                     {
-                      balance: farmUserInfo.stakedBalance,
+                      balance: farmUserInfo?.stakedBalance,
                       decimals: stakingToken.decimals,
                     },
-                    40
+                    stakingToken?.price
                   )}
                   )
                 </Text>
@@ -101,7 +105,7 @@ const Farms2Item = ({ farm, farmUserInfo }: IProps) => {
                       balance: farm.stakedBalance,
                       decimals: stakingToken.decimals,
                     },
-                    40
+                    stakingToken?.price
                   )}
                 </Text>
               </Flex>
@@ -115,14 +119,14 @@ const Farms2Item = ({ farm, farmUserInfo }: IProps) => {
         <Grid flex="1" templateColumns={{ xs: "1fr", md: "1fr 1fr" }} gap="4">
           <PanelBox>
             <Flex justifyContent={"center"} textAlign={"center"} gap={5}>
-              <EarnedRewards farm={farm} />
+              <EarnedRewards farm={farm} userFarmInfo={farmUserInfo} />
             </Flex>
-            <Center>
-              <ActionButton mt={5}>HARVEST</ActionButton>
-            </Center>
           </PanelBox>
 
           <PanelBox>
+            <Avilable farm={farm} userFarmInfo={farmUserInfo} />
+          </PanelBox>
+          <PanelBox gridColumn={"1/3"}>
             <StakeUnstake farm={farm} />
           </PanelBox>
         </Grid>

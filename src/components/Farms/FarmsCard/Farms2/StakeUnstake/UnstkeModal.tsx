@@ -11,38 +11,30 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { scCall } from "api/sc/calls";
-import { proteoEliteWsp } from "api/sc/sc";
 import ActionButton from "components/ActionButton/ActionButton";
 import MyModal from "components/Modal/Modal";
 import { useFormik } from "formik";
 import { formatBalance, setElrondBalance } from "utils/functions/formatBalance";
-import {
-  getBigerTime,
-  getFeeBasedInEpoch,
-  transfromTime,
-} from "utils/functions/general";
 import { formatTokenI } from "utils/functions/tokens";
-import { IScFarmItem } from "utils/types/sc.interface";
+import { IElrondToken } from "utils/types/elrond.interface";
+import { IScFarmItem, IScUserFarmInfo } from "utils/types/sc.interface";
 import * as yup from "yup";
 
 interface IProps {
   isOpen: boolean;
   onClose: () => void;
   farm: IScFarmItem;
-  token: any;
-  tokenInfo2: any;
-  epochPassedFromStake: number;
+  userFarmItem: IScUserFarmInfo;
+  token?: IElrondToken;
 }
 
 const UnstakeModal = ({
-  tokenInfo2,
-  token,
-  epochPassedFromStake,
+  userFarmItem,
   farm,
   isOpen,
+  token,
   onClose,
 }: IProps) => {
-  const fee = getFeeBasedInEpoch(epochPassedFromStake);
   const validationSchema = yup.object({
     amount: yup
       .number()
@@ -50,8 +42,8 @@ const UnstakeModal = ({
       .max(
         formatBalance(
           {
-            balance: tokenInfo2?.staked,
-            decimals: token.decimals,
+            balance: userFarmItem?.stakedBalance,
+            decimals: token?.decimals,
           },
           true
         )
@@ -64,14 +56,13 @@ const UnstakeModal = ({
     validationSchema: validationSchema,
     onSubmit: async (values: any) => {
       const BigNumber = (await import("bignumber.js")).default;
-      const BytesValue = (await import("@elrondnetwork/erdjs/out")).BytesValue;
       const BigUIntValue = (await import("@elrondnetwork/erdjs/out"))
         .BigUIntValue;
       scCall(
-        proteoEliteWsp,
+        "farms2",
         "unstake",
         [
-          BytesValue.fromUTF8(token.identifier),
+          new BigUIntValue(new BigNumber(farm.farm.farmId)),
           new BigUIntValue(
             new BigNumber(setElrondBalance(values.amount, token.decimals))
           ),
@@ -82,10 +73,10 @@ const UnstakeModal = ({
   });
 
   const handleMax = (percent) => {
-    if (tokenInfo2) {
+    if (userFarmItem) {
       const max = formatBalance(
         {
-          balance: tokenInfo2.staked,
+          balance: userFarmItem.stakedBalance,
           decimals: token.decimals,
         },
         true
@@ -96,13 +87,6 @@ const UnstakeModal = ({
     }
   };
 
-  const remainigTime = getBigerTime(
-    transfromTime(tokenInfo2?.remainingTime).days,
-    transfromTime(tokenInfo2?.remainingTime).hours,
-    transfromTime(tokenInfo2?.remainingTime).min,
-    transfromTime(tokenInfo2?.remainingTime).secs
-  );
-
   return (
     <MyModal bg="black.baseDark" isOpen={isOpen} onClose={onClose}>
       <form onSubmit={formik.handleSubmit}>
@@ -110,7 +94,7 @@ const UnstakeModal = ({
           <Flex justifyContent={"space-between"} alignItems="center">
             <Heading fontSize={"md"}>
               {" "}
-              Stake {formatTokenI(farm.farm.stakingToken)}
+              Unstake {formatTokenI(farm.farm.stakingToken)}
             </Heading>{" "}
             <ActionButton aria-label="close" bg="transparent" onClick={onClose}>
               <CloseIcon color="main" fontSize={"12px"} cursor="pointer" />
@@ -124,8 +108,8 @@ const UnstakeModal = ({
               <Text>
                 Staked:{" "}
                 {formatBalance({
-                  balance: tokenInfo2?.staked,
-                  decimals: token.decimals,
+                  balance: userFarmItem?.stakedBalance,
+                  decimals: token?.decimals,
                 })}
               </Text>
             </Flex>
@@ -166,7 +150,7 @@ const UnstakeModal = ({
             w="full"
             maxW={"180px"}
             type="submit"
-            disabled={!formik.isValid || tokenInfo2?.remainingTime > 0}
+            disabled={!formik.isValid}
           >
             Confirm
           </ActionButton>

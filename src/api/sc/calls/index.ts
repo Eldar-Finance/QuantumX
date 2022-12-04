@@ -6,7 +6,7 @@ import {
   ContractFunction,
   TransactionPayload,
 } from "@elrondnetwork/erdjs/out";
-import { EGLD_VAL, getInterface, sendTransaction } from "api/sc/sc";
+import { EGLD_VAL, getInterface, sendTransaction, WspTypes } from "api/sc/sc";
 import BigNumber from "bignumber.js";
 
 export const ESDTNFTTransfer = async (
@@ -76,7 +76,12 @@ export const ESDTTransfer = async ({
   return await sendTransaction(transactionData);
 };
 
-export const scCall = async (workspace, funcName, args = [], gasLimit) => {
+export const scCall = async (
+  workspace: WspTypes,
+  funcName: string,
+  args: any = [],
+  gasLimit?: number
+) => {
   let { simpleAddress } = getInterface(workspace);
 
   if (simpleAddress === "") {
@@ -96,7 +101,7 @@ export const scCall = async (workspace, funcName, args = [], gasLimit) => {
 };
 
 export const EGLDPayment = async (
-  workspace,
+  workspace: WspTypes,
   funcName,
   amount,
   args = [],

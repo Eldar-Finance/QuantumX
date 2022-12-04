@@ -33,7 +33,7 @@ const FarmsCard = ({ proteoArr, othersArr = null }: IProps) => {
           })}
         </>
       )}
-      <Farms2Item
+      {/* <Farms2Item
         farm={{
           apr: 150,
           farm: {
@@ -51,7 +51,7 @@ const FarmsCard = ({ proteoArr, othersArr = null }: IProps) => {
           stakedBalance: 40000000000000,
           unboundingRewards: 84650000000000,
         }}
-      />
+      /> */}
     </Accordion>
   );
 };

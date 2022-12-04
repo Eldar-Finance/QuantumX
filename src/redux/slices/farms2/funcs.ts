@@ -14,15 +14,17 @@ export const fetchAllFarms = createAsyncThunk(
     const allFarms: IScFarmItem[] = scFirstValue.map((farm: any) => {
       return {
         farm: {
-          farmId: farm.field0,
-          creationEpoch: farm.field0,
-          stakingToken: farm.field0,
-          rewardToken: farm.field0,
+          farmId: farm.field0.id.toNumber(),
+          creationEpoch: farm.field0.creation_epoch.toNumber(),
+          stakingToken: farm.field0.staked_token,
+          rewardToken: farm.field0.reward_token,
+          creator: farm.field0.creator.bech32(),
         },
         stakedBalance: farm.field1.toNumber(),
         apr: farm.field2.toNumber(),
       };
     });
+
     return allFarms;
   }
 );
@@ -34,6 +36,7 @@ export const fetchUSerFarmInfo = createAsyncThunk(
     ]);
 
     const scFirstValue = scRes.firstValue.valueOf();
+    console.log("fetchUSerFarmInfo", scFirstValue);
 
     const allFarms: IScUserFarmInfo[] = scFirstValue.map((farmInfo) => {
       const data: IScUserFarmInfo = {

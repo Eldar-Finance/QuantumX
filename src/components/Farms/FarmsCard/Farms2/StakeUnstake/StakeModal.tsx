@@ -10,12 +10,17 @@ import {
   ModalHeader,
   Text,
 } from "@chakra-ui/react";
+import { BigIntValue } from "@elrondnetwork/erdjs/out";
+import { contractAddr } from "api/net.config";
+import { EGLDPayment, ESDTTransfer } from "api/sc/calls";
+import BigNumber from "bignumber.js";
 import ActionButton from "components/ActionButton/ActionButton";
 import MyModal from "components/Modal/Modal";
 import { useFormik } from "formik";
 import { formatBalance } from "utils/functions/formatBalance";
 import { formatTokenI } from "utils/functions/tokens";
 import useGetUserTokens from "utils/hooks/useGetUserTokens";
+import { IElrondToken } from "utils/types/elrond.interface";
 import { IScFarmItem } from "utils/types/sc.interface";
 import * as yup from "yup";
 
@@ -23,11 +28,10 @@ interface IProps {
   isOpen: boolean;
   onClose: () => void;
   farm: IScFarmItem;
-  max: number;
-  token: any;
+  token: IElrondToken;
 }
 
-const StakeModal = ({ isOpen, onClose, max, farm, token }: IProps) => {
+const StakeModal = ({ isOpen, onClose, farm, token }: IProps) => {
   const [tokens, userToken] = useGetUserTokens(farm.farm.stakingToken);
   const validationSchema = yup.object({
     amount: yup
@@ -42,12 +46,12 @@ const StakeModal = ({ isOpen, onClose, max, farm, token }: IProps) => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      /*    if (pf.stakedCoin === "EGLD") {
+      if (farm.farm.stakingToken === "EGLD") {
         EGLDPayment(
-          proteoEliteWsp,
+          "farms2",
           "stake",
           Number(values.amount),
-          [],
+          [new BigIntValue(new BigNumber(farm.farm.farmId))],
           50000000
         );
       } else {
@@ -55,10 +59,11 @@ const StakeModal = ({ isOpen, onClose, max, farm, token }: IProps) => {
           funcName: "stake",
           token: { identifier: token.identifier, decimals: token.decimals },
           val: Number(values.amount),
-          contractAddr: contractAddr.proteoElite,
+          args: [new BigIntValue(new BigNumber(farm.farm.farmId))],
+          contractAddr: contractAddr.farms2,
           gasL: 50000000,
         });
-      } */
+      }
     },
   });
   const handleAmount = (percent: number) => {
@@ -66,15 +71,7 @@ const StakeModal = ({ isOpen, onClose, max, farm, token }: IProps) => {
       const userTokenAmount = formatBalance(userToken, true);
       const userRealAmount = percent * userTokenAmount;
 
-      if (max === 0) {
-        formik.setFieldValue("amount", userRealAmount, false);
-      } else {
-        if (max > userTokenAmount) {
-          formik.setFieldValue("amount", userRealAmount, false);
-        } else {
-          formik.setFieldValue("amount", max, false);
-        }
-      }
+      formik.setFieldValue("amount", userRealAmount, false);
     }
   };
   return (
@@ -126,7 +123,7 @@ const StakeModal = ({ isOpen, onClose, max, farm, token }: IProps) => {
             w="full"
             maxW={"180px"}
             onClick={onClose}
-            disabled={!formik.isValid || max === 0}
+            disabled={!formik.isValid}
           >
             Cancel
           </ActionButton>

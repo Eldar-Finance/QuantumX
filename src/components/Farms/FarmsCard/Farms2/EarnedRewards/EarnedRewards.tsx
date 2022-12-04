@@ -1,13 +1,15 @@
 import { Center, Flex, Text } from "@chakra-ui/react";
 import NextImage from "components/NextImage/NextImage";
+import { formatBalance } from "utils/functions/formatBalance";
 import useGetElrondToken from "utils/hooks/useGetElrondToken";
-import { IScFarmItem } from "utils/types/sc.interface";
+import { IScFarmItem, IScUserFarmInfo } from "utils/types/sc.interface";
 
 interface IProps {
   farm: IScFarmItem;
+  userFarmInfo: IScUserFarmInfo;
 }
 
-const EarnedRewards = ({ farm }: IProps) => {
+const EarnedRewards = ({ farm, userFarmInfo }: IProps) => {
   const { token: rewardsToken } = useGetElrondToken(farm.farm.rewardToken);
 
   return (
@@ -17,7 +19,12 @@ const EarnedRewards = ({ farm }: IProps) => {
       </Text>
       <Center mt="2" gap="3" justifyContent={"space-around"} flexDir="column">
         <Flex gap="2" alignItems={"center"}>
-          <Text>69</Text>{" "}
+          <Text>
+            {formatBalance({
+              balance: userFarmInfo?.earnedRewards,
+              decimals: rewardsToken.decimals,
+            })}
+          </Text>{" "}
           {rewardsToken?.assets?.svgUrl && (
             <NextImage
               src={rewardsToken.assets.svgUrl}
