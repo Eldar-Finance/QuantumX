@@ -48,14 +48,6 @@ const Swap = () => {
                   </Box>
                 ),
               },
-              {
-                tabText: "Swap Lp",
-                tabPanel: <SwapCard />,
-              },
-              {
-                tabText: "LKMEX Swap",
-                tabPanel: <SwapCard />,
-              },
             ]}
           />
         </Card>

@@ -6,7 +6,7 @@ const QuantumXFeatures = () => {
   return (
     <Box px={{ xs: "12px", md: "20px" }}>
       <Center
-        bg="black.dark"
+        bg="secondary"
         p={{ xs: "70px 25px", md: "70px" }}
         flexDir={"column"}
         maxW="1320px"

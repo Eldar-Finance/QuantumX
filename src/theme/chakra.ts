@@ -175,7 +175,7 @@ const customTheme = extendTheme({
       600: "rgba(255, 255, 255, 0.6)",
     },
     
-    scondary:"#232526",
+    secondary:"#232526",
     main: "#22F7DD",
     danger: "#A04C4C",
   },

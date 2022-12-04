@@ -40,10 +40,10 @@ export const scQuery = async (
   }
 };
 export const scSimpleQuery = async (
-  scAddress = "",
-  funcName = "",
-  args = [],
-  pureReturn
+  scAddress: string,
+  funcName: string,
+  args: any[] = [],
+  pureReturn: boolean = false
 ) => {
   try {
     const contractAddress = new Address(scAddress);
