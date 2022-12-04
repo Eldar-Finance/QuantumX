@@ -10,29 +10,25 @@ import {
   ModalHeader,
   Text,
 } from "@chakra-ui/react";
-import { contractAddr } from "api/net.config";
-import { EGLDPayment, ESDTTransfer } from "api/sc/calls";
-import { proteoEliteWsp } from "api/sc/sc";
 import ActionButton from "components/ActionButton/ActionButton";
-import CustomTooltip from "components/CustomTooltip/CustomTooltip";
 import MyModal from "components/Modal/Modal";
 import { useFormik } from "formik";
 import { formatBalance } from "utils/functions/formatBalance";
-import { haveMaxLimit } from "utils/functions/proteo";
+import { formatTokenI } from "utils/functions/tokens";
 import useGetUserTokens from "utils/hooks/useGetUserTokens";
-import { IProteoFarm } from "utils/types/farms.interface";
+import { IScFarmItem } from "utils/types/sc.interface";
 import * as yup from "yup";
 
 interface IProps {
   isOpen: boolean;
   onClose: () => void;
-  pf: IProteoFarm;
+  farm: IScFarmItem;
   max: number;
   token: any;
 }
 
-const StakeModal = ({ isOpen, onClose, max, pf, token }: IProps) => {
-  const [tokens, userToken] = useGetUserTokens(pf.tokenIdentifier);
+const StakeModal = ({ isOpen, onClose, max, farm, token }: IProps) => {
+  const [tokens, userToken] = useGetUserTokens(farm.farm.stakingToken);
   const validationSchema = yup.object({
     amount: yup
       .number()
@@ -46,7 +42,7 @@ const StakeModal = ({ isOpen, onClose, max, pf, token }: IProps) => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      if (pf.stakedCoin === "EGLD") {
+      /*    if (pf.stakedCoin === "EGLD") {
         EGLDPayment(
           proteoEliteWsp,
           "stake",
@@ -62,7 +58,7 @@ const StakeModal = ({ isOpen, onClose, max, pf, token }: IProps) => {
           contractAddr: contractAddr.proteoElite,
           gasL: 50000000,
         });
-      }
+      } */
     },
   });
   const handleAmount = (percent: number) => {
@@ -86,7 +82,10 @@ const StakeModal = ({ isOpen, onClose, max, pf, token }: IProps) => {
       <form onSubmit={formik.handleSubmit}>
         <ModalHeader>
           <Flex justifyContent={"space-between"} alignItems="center">
-            <Heading fontSize={"md"}> Stake {pf.stakedCoin}</Heading>{" "}
+            <Heading fontSize={"md"}>
+              {" "}
+              Stake {formatTokenI(farm.farm.stakingToken)}
+            </Heading>{" "}
             <ActionButton aria-label="close" bg="transparent" onClick={onClose}>
               <CloseIcon color="main" fontSize={"12px"} cursor="pointer" />
             </ActionButton>
@@ -109,7 +108,9 @@ const StakeModal = ({ isOpen, onClose, max, pf, token }: IProps) => {
                 value={formik.values.amount}
                 onChange={formik.handleChange}
               />{" "}
-              <Text fontSize={"14px"}>{pf?.stakedCoin}-LP</Text>
+              <Text fontSize={"14px"}>
+                {formatTokenI(farm?.farm.stakingToken)}-LP
+              </Text>
             </Flex>
             <Flex justifyContent={"flex-end"} gap="1">
               <AmountBox percent={25} onClick={() => handleAmount(0.25)} />
@@ -117,38 +118,6 @@ const StakeModal = ({ isOpen, onClose, max, pf, token }: IProps) => {
               <AmountBox percent={75} onClick={() => handleAmount(0.75)} />
               <AmountBox percent={100} onClick={() => handleAmount(1)} />
             </Flex>
-            {pf.stakedCoin === "PROTEOEGLD" && (
-              <Flex
-                justifyContent={"flex-end"}
-                alignItems="center"
-                color="gray.500"
-                fontSize={"sm"}
-                mt={2}
-              >
-                <CustomTooltip
-                  iconSize={"14"}
-                  text={
-                    <Box>
-                      <Text mb={1} fontWeight="bold">
-                        Withdrawing Fees
-                      </Text>
-                      <Text mb={1}>
-                        Fees are changing from 0 to 3% according to new
-                        deposits.
-                      </Text>
-                      <Text mb={1}>
-                        Check the fee live every time you want to withdraw.
-                      </Text>
-                      <Text mb={1} fontWeight="bold">
-                        Depositing resets the timer
-                      </Text>
-                    </Box>
-                  }
-                />
-
-                <Text ml={1}>Info about fees for withdrawing</Text>
-              </Flex>
-            )}
           </Box>
         </ModalBody>
         <ModalFooter justifyContent={"center"} gap="6" flexWrap={"wrap"}>
@@ -157,9 +126,7 @@ const StakeModal = ({ isOpen, onClose, max, pf, token }: IProps) => {
             w="full"
             maxW={"180px"}
             onClick={onClose}
-            disabled={
-              !formik.isValid || (max === 0 && !haveMaxLimit(pf.stakedCoin))
-            }
+            disabled={!formik.isValid || max === 0}
           >
             Cancel
           </ActionButton>

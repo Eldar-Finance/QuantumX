@@ -1,7 +1,6 @@
 import { CloseIcon } from "@chakra-ui/icons";
 import {
   Box,
-  Button,
   Divider,
   Flex,
   Heading,
@@ -22,14 +21,14 @@ import {
   getFeeBasedInEpoch,
   transfromTime,
 } from "utils/functions/general";
-import { haveMaxLimit } from "utils/functions/proteo";
-import { IProteoFarm } from "utils/types/farms.interface";
+import { formatTokenI } from "utils/functions/tokens";
+import { IScFarmItem } from "utils/types/sc.interface";
 import * as yup from "yup";
 
 interface IProps {
   isOpen: boolean;
   onClose: () => void;
-  pf: IProteoFarm;
+  farm: IScFarmItem;
   token: any;
   tokenInfo2: any;
   epochPassedFromStake: number;
@@ -39,7 +38,7 @@ const UnstakeModal = ({
   tokenInfo2,
   token,
   epochPassedFromStake,
-  pf,
+  farm,
   isOpen,
   onClose,
 }: IProps) => {
@@ -104,13 +103,15 @@ const UnstakeModal = ({
     transfromTime(tokenInfo2?.remainingTime).secs
   );
 
-  const isLp = haveMaxLimit(pf.stakedCoin);
   return (
     <MyModal bg="black.baseDark" isOpen={isOpen} onClose={onClose}>
       <form onSubmit={formik.handleSubmit}>
         <ModalHeader>
           <Flex justifyContent={"space-between"} alignItems="center">
-            <Heading fontSize={"md"}> Stake {pf.stakedCoin}</Heading>{" "}
+            <Heading fontSize={"md"}>
+              {" "}
+              Stake {formatTokenI(farm.farm.stakingToken)}
+            </Heading>{" "}
             <ActionButton aria-label="close" bg="transparent" onClick={onClose}>
               <CloseIcon color="main" fontSize={"12px"} cursor="pointer" />
             </ActionButton>
@@ -137,7 +138,9 @@ const UnstakeModal = ({
                 value={formik.values.amount}
                 onChange={formik.handleChange}
               />{" "}
-              <Text fontSize={"14px"}>{pf?.stakedCoin}-LP</Text>
+              <Text fontSize={"14px"}>
+                {formatTokenI(farm.farm.stakingToken)}-LP
+              </Text>
             </Flex>
             <Flex justifyContent={"flex-end"} gap="1">
               <AmountBox percent={25} onClick={() => handleMax(0.25)} />
@@ -145,36 +148,6 @@ const UnstakeModal = ({
               <AmountBox percent={75} onClick={() => handleMax(0.75)} />
               <AmountBox percent={100} onClick={() => handleMax(1)} />
             </Flex>
-            {isLp && (
-              <Flex w="full" justifyContent={"flex-end"}>
-                {fee !== null && (
-                  <Button
-                    mt={2}
-                    as={Box}
-                    textTransform={"uppercase"}
-                    background={"red.500"}
-                    variant={"solid"}
-                    fontSize={"x-small"}
-                    height={"25px"}
-                    width={"auto"}
-                    minWidth={"unset"}
-                    padding={"5px 10px"}
-                    h="auto"
-                    fontWeight={"400"}
-                    color={"gray.200"}
-                    mr={1}
-                    _hover={{
-                      background: "red.500",
-                    }}
-                    _active={{
-                      background: "red.500",
-                    }}
-                  >
-                    {fee} % Fee
-                  </Button>
-                )}
-              </Flex>
-            )}
           </Box>
         </ModalBody>
         <ModalFooter justifyContent={"center"} gap="6" flexWrap={"wrap"}>

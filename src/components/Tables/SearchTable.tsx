@@ -301,27 +301,27 @@ function SearchTable(props) {
 export default SearchTable;
 
 const TableWrapperS = styled(Box)`
-  tr:nth-child(n) td:first-child {
+  tr:nth-of-type(n) td:first-child {
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
     padding-left: 20px;
     width: 100%;
     padding-right: 40px;
   }
-  tr:nth-child(n) td:last-child {
+  tr:nth-of-type(n) td:last-child {
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
     padding-right: 48px;
     padding-left: 40px;
   }
-  tr:nth-child(n) th:first-child {
+  tr:nth-of-type(n) th:first-child {
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
     padding-left: 20px;
     width: 100%;
     padding-right: 40px;
   }
-  tr:nth-child(n) th:last-child {
+  tr:nth-of-type(n) th:last-child {
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
     padding-right: 48px;

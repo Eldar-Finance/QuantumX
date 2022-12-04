@@ -10,7 +10,7 @@ import proteoEgldLpImg from "assets/logos/proteolp.png";
 import zpayWegldImg from "assets/logos/zpaywegld.png";
 import NextImage from "components/NextImage/NextImage";
 
-import { IProteoFarm } from "utils/types/proteo.interface";
+import { IProteoFarm } from "utils/types/farms.interface";
 
 export const proteoFarms: {
   ZPAYWEGLD: IProteoFarm;

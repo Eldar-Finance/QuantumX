@@ -85,7 +85,38 @@ export const sendMultipleTransactions = async ({
   return res;
 };
 
-export const getInterface = (workspace) => {
+export type WspTypes =
+  | "refeldars"
+  | "rewards"
+  | "crowdfunding"
+  | "lottery"
+  | "test"
+  | "lkmerge"
+  | "faucet"
+  | "rps"
+  | "rpsRewards"
+  | "dca"
+  | "egldLkmexSwap"
+  | "sftsRewards"
+  | "mundialBet"
+  | "bettings"
+  | "proteoElite"
+  | "fastp2pSwap"
+  | "jexSwap"
+  | "jex"
+  | "farms2"
+  | "usdcProteo"
+  | "proteoEgldNonElite"
+  | "zpayEgldEliteDual"
+  | "egldProteo"
+  | "kroUsdcEliteDual"
+  | "zpayEgldNonEliteDual"
+  | "kroUsdcNonEliteDual"
+  | "proteoEgldElite"
+  | "rideFarmWsp"
+  | "aeroWegld";
+
+export const getInterface = (workspace: WspTypes) => {
   let address = null;
   let abiUrl = "";
   let implementsInterfaces = "";
@@ -196,7 +227,12 @@ export const getInterface = (workspace) => {
       implementsInterfaces = "Jex";
 
       break;
-
+    case farms2Wsp:
+      simpleAddress = contractAddr.farms2;
+      address = new Address(simpleAddress);
+      abiUrl = abiPath + "/farms.abi.json";
+      implementsInterfaces = "Farms";
+      break;
     // proteo farms
     case usdcProteoWsp:
       simpleAddress = contractAddr.usdcProteo;
@@ -271,6 +307,7 @@ export const getInterface = (workspace) => {
       abiUrl = abiPath + "/jex.abi.json";
       implementsInterfaces = "Jex";
       break;
+
     default:
       break;
   }
@@ -296,6 +333,7 @@ export const proteoEliteWsp = "proteoElite";
 export const fastp2pSwapWsp = "fastp2pSwap";
 export const jexSwapWsp = "jexSwap";
 export const jexWsp = "jex";
+export const farms2Wsp = "farms2";
 
 // proteo farms
 export const usdcProteoWsp = "usdcProteo";

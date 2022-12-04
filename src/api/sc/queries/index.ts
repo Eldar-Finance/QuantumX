@@ -7,13 +7,13 @@ import {
   SmartContractAbi,
 } from "@elrondnetwork/erdjs/out";
 import axios from "axios";
-import { getInterface, provider } from "../sc";
+import { getInterface, provider, WspTypes } from "../sc";
 
 export const scQuery = async (
-  workspace = "",
+  workspace: WspTypes,
   funcName = "",
   args = [],
-  endpointDef
+  endpointDef?: string
 ) => {
   try {
     const { address, abiUrl, implementsInterfaces } = getInterface(workspace);

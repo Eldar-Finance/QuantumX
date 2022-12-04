@@ -1,11 +1,11 @@
 import { Box, Center, Flex, Text } from "@chakra-ui/react";
 import { proteoEliteWsp } from "api/sc/sc";
 import ActionButton from "components/ActionButton/ActionButton";
-import { coinInfo } from "utils/constants/proteo";
+import { coinInfo } from "utils/constants/farms";
 import { formatBalance } from "utils/functions/formatBalance";
 import { formatTokenI } from "utils/functions/tokens";
 import { useAppSelector } from "utils/hooks/redux";
-import { IProteoFarm } from "utils/types/proteo.interface";
+import { IProteoFarm } from "utils/types/farms.interface";
 
 interface IProps {
   pf: IProteoFarm;

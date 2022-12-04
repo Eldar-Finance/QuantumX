@@ -35,3 +35,5 @@ export const coinInfo = {
     logo: <RidelogoIcon fontSize={"27px"} />,
   },
 };
+
+export const farmsLogos = {};

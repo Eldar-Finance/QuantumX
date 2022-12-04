@@ -3,7 +3,7 @@ import { Box, Flex, Icon, Text, useOutsideClick } from "@chakra-ui/react";
 import dynamic from "next/dynamic";
 import { useRef, useState } from "react";
 import { getTextBySortKey } from "utils/functions/general";
-import { SORTTYPE } from "utils/types/proteo.interface";
+import { SORTTYPE } from "utils/types/farms.interface";
 
 const MinisortModal: any = dynamic(() =>
   import("./MiniSorModal/MiniSortModal")

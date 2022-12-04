@@ -1,19 +1,20 @@
-import { Box, Center, Flex, Text } from "@chakra-ui/react";
+import { Center, Flex, Text } from "@chakra-ui/react";
 import ActionButton from "components/ActionButton/ActionButton";
 import dynamic from "next/dynamic";
 import { useState } from "react";
 import { formatBalance } from "utils/functions/formatBalance";
-import { IProteoFarm } from "utils/types/farms.interface";
+import { formatTokenI } from "utils/functions/tokens";
+import { IScFarmItem } from "utils/types/sc.interface";
 import { ProteoItemContenxt } from "../../ProteoFarmItem";
 
 const StakeModal: any = dynamic(() => import("./StakeModal"));
 const UnstakeModal: any = dynamic(() => import("./UnstkeModal"));
 
 interface IProps {
-  pf: IProteoFarm;
+  farm: IScFarmItem;
 }
 
-const StakeUnstake = ({ pf }: IProps) => {
+const StakeUnstake = ({ farm }: IProps) => {
   const [openStake, setOpenStake] = useState(false);
   const [openUnstakeStake, setOpenUnstakeStake] = useState(false);
 
@@ -23,9 +24,11 @@ const StakeUnstake = ({ pf }: IProps) => {
         const { tokenInfo, tokenInfo2, decimals } = value;
 
         return (
-          <Box>
-            <Text color="white.400">STAKE {pf.stakedCoin} LP</Text>
-            <Flex mt="2" gap="3">
+          <Flex h="full" flexDir={"column"}>
+            <Text color="white.400">
+              STAKE {formatTokenI(farm.farm.stakingToken)} LP
+            </Text>
+            <Flex mt="2" gap="3" flex={1} alignItems="center">
               <ActionButton
                 onClick={() => setOpenStake((s) => !s)}
                 variant={"outline"}
@@ -42,7 +45,7 @@ const StakeUnstake = ({ pf }: IProps) => {
             </Flex>
             {openStake && (
               <StakeModal
-                pf={pf}
+                farm={farm}
                 isOpen={openStake}
                 onClose={() => setOpenStake((s) => !s)}
                 max={formatBalance(
@@ -57,12 +60,12 @@ const StakeUnstake = ({ pf }: IProps) => {
                 epochPassedFromStake={tokenInfo?.epoch}
                 token={{ identifier: tokenInfo?.tokenI, decimals: decimals }}
                 tokenInfo2={tokenInfo2}
-                pf={pf}
+                farm={farm}
                 isOpen={openUnstakeStake}
                 onClose={() => setOpenUnstakeStake((s) => !s)}
               />
             )}
-          </Box>
+          </Flex>
         );
       }}
     </ProteoItemContenxt.Consumer>

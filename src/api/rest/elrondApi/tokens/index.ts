@@ -1,4 +1,5 @@
 import axiosEldron from "api/rest/axiosEldron";
+import { IElrondToken } from "utils/types/elrond.interface";
 
 // export const getFromAllTokens = async () => {
 //   return await axiosEldron.get("/tokens?size=10000");
@@ -10,7 +11,7 @@ export const getFromAllTokens = async ({
   identifiers = undefined,
   search = undefined,
 }) => {
-  return await axiosEldron.get("/tokens", {
+  return await axiosEldron.get<IElrondToken[]>("/tokens", {
     params: {
       identifier,
       identifiers,
@@ -19,4 +20,10 @@ export const getFromAllTokens = async ({
       search,
     },
   });
+};
+
+export const getTokenPrice = async (identifier: string) => {
+  const res = axiosEldron.get<number>(`/tokens/${identifier}?fields=price`);
+
+  return (await res).data;
 };

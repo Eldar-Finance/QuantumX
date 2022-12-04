@@ -30,6 +30,7 @@ export const contractAddress = {
   mundialBet: "erd1qqqqqqqqqqqqqpgq3k2wt4wy37ewtxzas5ttrzmnl72j7myj64qsk3zrls",
   bettings: "erd1qqqqqqqqqqqqqpgqlfzlazg4uda3q4qks9xqpyvl6xtmwyf264qswnxd9f",
   proteoElite: "erd1qqqqqqqqqqqqqpgqt49p56vqpam9ftw28kvd26cqmy28u8ka64qsl3vrmz",
+  farms2: "erd1qqqqqqqqqqqqqpgqpk46s94qjvyqy8ync8dphcx9fz7nk7f2u7zspgvplv",
 
   // proteo farms
   usdcProteo: "erd1qqqqqqqqqqqqqpgqtnupupgumhzaw7yyg80z5agy6hp8ratlznyqrvhhf0",

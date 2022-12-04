@@ -36,7 +36,7 @@ import {
 } from "utils/functions/formatBalance";
 import { useAppDispatch, useAppSelector } from "utils/hooks/redux";
 import useGetTokenPrice from "utils/hooks/useGetTokenPrice";
-import { IProteoFarm } from "utils/types/proteo.interface";
+import { IProteoFarm } from "utils/types/farms.interface";
 import EarnedRewards from "./Proteo/EarnedRewards/EarnedRewards";
 import EarnTokens from "./Proteo/EarnTokens/EarnTokens";
 import StakeUnstake from "./Proteo/StakeUnstake/StakeUnstake";
@@ -166,8 +166,6 @@ const ProteoFarmItem = ({ pf }: IProps) => {
 
   const autoHarversIn =
     Number(lastHarvestEpoch) + Number(hc) - Number(currentEpoch);
-
-  console.log("type", type);
 
   return (
     <ProteoItemContenxt.Provider

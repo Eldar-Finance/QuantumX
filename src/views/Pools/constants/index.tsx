@@ -2,7 +2,7 @@ import { toknesID } from "api/net.config";
 import { egldProteoWsp, usdcProteoWsp } from "api/sc/sc";
 import { EgldlogoIcon2, UsdclogoIcon } from "components/Icons/ui";
 
-import { IProteoFarm } from "utils/types/proteo.interface";
+import { IProteoFarm } from "utils/types/farms.interface";
 
 export const proteoPools: {
   USDC: IProteoFarm;

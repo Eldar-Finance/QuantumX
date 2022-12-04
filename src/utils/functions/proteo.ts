@@ -1,4 +1,4 @@
-import { noMaxTokens } from "utils/constants/proteo";
+import { noMaxTokens } from "utils/constants/farms";
 
 export const getFeeBasedInEpoch = (epoch) => {
   if (epoch === undefined || epoch === null) {

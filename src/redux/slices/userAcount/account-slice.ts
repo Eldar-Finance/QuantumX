@@ -5,7 +5,6 @@ import { getRealBalance } from "utils/functions/formatBalance";
 import {
   fetcEldarTransactions,
   fetchEgld,
-  fetchEgldByLkmex,
   fetchEldarNfts,
   fetchListedTokens,
   fetchMexPairs,
@@ -347,79 +346,7 @@ export const userAccount = createSlice({
       .addCase(fetchEldarNfts.rejected, (state, action) => {
         state.eldarNfts.status = "failed";
         state.eldarNfts.error = action.error.message;
-      })
-      // fetchEgldByLkmex
-      .addCase(fetchEgldByLkmex.pending, (state) => {
-        state.egldByLkmex.status = "loading";
-      })
-      .addCase(fetchEgldByLkmex.fulfilled, (state, action: any) => {
-        state.egldByLkmex.status = "succeeded";
-        state.egldByLkmex.data = action.payload;
-      })
-      .addCase(fetchEgldByLkmex.rejected, (state, action) => {
-        state.egldByLkmex.status = "failed";
-        state.egldByLkmex.error = action.error.message;
       });
-    /*  // fetchLkmexLkmexFarms
-      .addCase(fetchLkmexLkmexFarms.pending, (state) => {
-        state.userFarms.lkmexLkmex.status = "loading";
-      })
-      .addCase(fetchLkmexLkmexFarms.fulfilled, (state, action) => {
-        state.userFarms.lkmexLkmex.status = "succeeded";
-        state.userFarms.lkmexLkmex.data = action.payload;
-      })
-      .addCase(fetchLkmexLkmexFarms.rejected, (state, action) => {
-        state.userFarms.lkmexLkmex.status = "failed";
-        state.userFarms.lkmexLkmex.error = action.error.message;
-      })
-      // fetchLkmexMexFarms
-      .addCase(fetchLkmexMexFarms.pending, (state) => {
-        state.userFarms.lkmexMex.status = "loading";
-      })
-      .addCase(fetchLkmexMexFarms.fulfilled, (state, action) => {
-        state.userFarms.lkmexMex.status = "succeeded";
-        state.userFarms.lkmexMex.data = action.payload;
-      })
-      .addCase(fetchLkmexMexFarms.rejected, (state, action) => {
-        state.userFarms.lkmexMex.status = "failed";
-        state.userFarms.lkmexMex.error = action.error.message;
-      })
-      // fetchMexMexFarms
-      .addCase(fetchMexMexFarms.pending, (state) => {
-        state.userFarms.mexMex.status = "loading";
-      })
-      .addCase(fetchMexMexFarms.fulfilled, (state, action) => {
-        state.userFarms.mexMex.status = "succeeded";
-        state.userFarms.mexMex.data = action.payload;
-      })
-      .addCase(fetchMexMexFarms.rejected, (state, action) => {
-        state.userFarms.mexMex.status = "failed";
-        state.userFarms.mexMex.error = action.error.message;
-      })
-      // fetchMexLkmexFarms
-      .addCase(fetchMexLkmexFarms.pending, (state) => {
-        state.userFarms.mexLkmex.status = "loading";
-      })
-      .addCase(fetchMexLkmexFarms.fulfilled, (state, action) => {
-        state.userFarms.mexLkmex.status = "succeeded";
-        state.userFarms.mexLkmex.data = action.payload;
-      })
-      .addCase(fetchMexLkmexFarms.rejected, (state, action) => {
-        state.userFarms.mexLkmex.status = "failed";
-        state.userFarms.mexLkmex.error = action.error.message;
-      })
-      // fetchTopNftCollection
-      .addCase(fetchTopNftCollection.pending, (state) => {
-        state.topNftCollection.status = "loading";
-      })
-      .addCase(fetchTopNftCollection.fulfilled, (state, action) => {
-        state.topNftCollection.status = "succeeded";
-        state.topNftCollection.data = action.payload;
-      })
-      .addCase(fetchTopNftCollection.rejected, (state, action) => {
-        state.topNftCollection.status = "failed";
-        state.topNftCollection.error = action.error.message;
-      }); */
   },
 });
 

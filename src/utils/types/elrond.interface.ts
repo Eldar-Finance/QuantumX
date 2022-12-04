@@ -1,4 +1,8 @@
-type ElrondType = "NonFungibleESDT" | "SemiFungibleESDT" | "MetaESDT ";
+type ElrondType =
+  | "NonFungibleESDT"
+  | "SemiFungibleESDT"
+  | "MetaESDT "
+  | "FungibleESDT";
 
 interface IElrondSocial {
   blog?: string;
@@ -158,4 +162,42 @@ export interface IElrondEconomics {
   topUpApr: number;
   baseApr: number;
   tokenMarketCap: number;
+}
+
+export interface IElrondToken {
+  type: ElrondType;
+  identifier: string;
+  name: string;
+  ticker: string;
+  owner: string;
+  decimals: number;
+  isPaused: boolean;
+  assets: {
+    website: string;
+    description: string;
+    status: string;
+    pngUrl: string;
+    svgUrl: string;
+    social: {
+      email: string;
+      twitter: string;
+      whitepaper: string;
+      coingecko: string;
+      discord: string;
+      telegram: string;
+    };
+  };
+  transactions: number;
+  accounts: number;
+  canUpgrade: boolean;
+  canMint: boolean;
+  canBurn: boolean;
+  canChangeOwner: boolean;
+  canPause: boolean;
+  canFreeze: boolean;
+  canWipe: boolean;
+  price: number;
+  marketCap: number;
+  supply: string;
+  circulatingSupply: string;
 }

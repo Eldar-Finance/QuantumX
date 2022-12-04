@@ -10,7 +10,6 @@ import {
   getEldarTransactions,
   getTransactionsToEldar,
 } from "api/rest/elrondApi/transactions";
-import { getEgldByLkmex } from "api/sc/queries/tokens";
 
 import { Address, AddressValue } from "@elrondnetwork/erdjs/out";
 import { scQuery } from "api/sc/queries";
@@ -19,7 +18,6 @@ import {
   executeFetch,
   waitToResetStatus,
 } from "utils/functions/chacheReduxState";
-import { getRealBalance } from "utils/functions/formatBalance";
 import {
   reducerName,
   resetAllTokens,
@@ -156,176 +154,6 @@ export const fetchEldarNfts = createAsyncThunk(
     condition: (arg1, api) => executeFetch(arg1, api, reducerName, "eldarNfts"),
   }
 );
-export const fetchEgldByLkmex = createAsyncThunk(
-  "userAccount/fetchEgldByLkmex",
-  async (lkmexAmount) => {
-    const response = await getEgldByLkmex(lkmexAmount);
-    // @ts-ignore
-    const hexVal = Buffer.from(response.values[2], "base64").toString("hex");
-    const decoded = parseInt(hexVal, 16);
-
-    return getRealBalance(decoded);
-  }
-  // {
-  //   condition: (arg1, api) =>
-  //     executeFetch(arg1, api, reducerName, "egldByLkmex"),
-  // }
-);
-// export const fetchLkmexLkmexFarms = createAsyncThunk(
-//   "userAccount/fetchLkmexLkmexFarms",
-//   async (nfts:{attributes:string}[]) => {
-//     const nft = nfts.find((nft) => isCorrectLkmexFarm("MEXFARML", nft));
-//     // const nft = nfts.find((nft) => nft.collection === "LKFARM-9d1ea8");
-//     if (nft) {
-//       const attr = nft.attributes;
-//       const utf8Attr = Buffer.from(attr, "base64").toString("utf-8");
-//       const attrArray = utf8Attr.substring(4).split("-");
-//       const farmPart1 = attrArray[0];
-//       const farmPart2 = attrArray[1].substring(0, 6);
-
-//       const farmJoined = farmPart1 + "-" + farmPart2;
-//       const hexAttr = Buffer.from(attr, "base64").toString("hex");
-
-//       if (hexAttr) {
-//         const keyMatched = getStrBetweenStrs(
-//           hexAttr,
-//           "0000000000",
-//           "0000000",
-//           6
-//         );
-//         const res = await getTokensByNfts(
-//           "erd1qqqqqqqqqqqqqpgqrc4pg2xarca9z34njcxeur622qmfjp8w2jps89fxnl",
-//           `${farmJoined}-${keyMatched}`
-//         );
-//         const data = res.data;
-//         const earningsRes = await getUserFarmEarnings2(
-//           data.balance,
-//           data.attributes,
-//           "erd1qqqqqqqqqqqqqpgq7qhsw8kffad85jtt79t9ym0a4ycvan9a2jps0zkpen"
-//         );
-//         const hexNumer = Buffer.from(earningsRes.values[0], "base64").toString(
-//           "hex"
-//         );
-//         const num = parseInt(hexNumer, 16);
-//         waitToResetStatus(resetfetchLkmexLkmexFarms);
-//         return num;
-//       }
-//     }
-//   },
-//   {
-//     condition: (arg1, api) =>
-//       executeFetch(arg1, api, reducerName, "userFarms", "lkmexLkmex"),
-//   }
-// );
-// export const fetchLkmexMexFarms = createAsyncThunk(
-//   "userAccount/fetchLkmexMexFarms",
-//   async (nfts) => {
-//     const nft = nfts.find((nft) => isCorrectLkmexFarm("MEXFARM", nft));
-//     // const nft = nfts.find((nft) => nft.collection === "LKFARM-9d1ea8");
-//     if (nft) {
-//       const attr = nft.attributes;
-//       const utf8Attr = Buffer.from(attr, "base64").toString("utf-8");
-//       const attrArray = utf8Attr.substring(4).split("-");
-//       const farmPart1 = attrArray[0];
-//       const farmPart2 = attrArray[1].substring(0, 6);
-
-//       const farmJoined = farmPart1 + "-" + farmPart2;
-//       const hexAttr = Buffer.from(attr, "base64").toString("hex");
-//       if (hexAttr) {
-//         const keyMatched = getStrBetweenStrs(
-//           hexAttr,
-//           "0000000000",
-//           "0000000",
-//           6
-//         );
-//         const res = await getTokensByNfts(
-//           "erd1qqqqqqqqqqqqqpgqrc4pg2xarca9z34njcxeur622qmfjp8w2jps89fxnl",
-//           `${farmJoined}-${keyMatched}`
-//         );
-//         const data = res.data;
-//         const earningsRes = await getUserFarmEarnings2(
-//           data.balance,
-//           data.attributes,
-//           "erd1qqqqqqqqqqqqqpgqe9v45fnpkv053fj0tk7wvnkred9pms892jps9lkqrn"
-//         );
-//         const hexNumer = Buffer.from(earningsRes.values[0], "base64").toString(
-//           "hex"
-//         );
-//         const num = parseInt(hexNumer, 16);
-//         waitToResetStatus(resetfetchLkmexMexFarms);
-
-//         return num;
-//       }
-//     }
-//   },
-//   {
-//     condition: (arg1, api) =>
-//       executeFetch(arg1, api, reducerName, "userFarms", "lkmexMex"),
-//   }
-// );
-// export const fetchMexMexFarms = createAsyncThunk(
-//   "userAccount/fetchMexMexFarms",
-//   async (nfts) => {
-//     const nft = nfts.find((nft) => nft.collection === "MEXFARM-5d1dbb");
-//     if (nft) {
-//       const earningsRes = await getUserFarmEarnings2(
-//         nft.balance,
-//         nft.attributes,
-//         "erd1qqqqqqqqqqqqqpgqe9v45fnpkv053fj0tk7wvnkred9pms892jps9lkqrn"
-//       );
-//       const hexNumer = Buffer.from(earningsRes.values[0], "base64").toString(
-//         "hex"
-//       );
-//       const num = parseInt(hexNumer, 16);
-//       waitToResetStatus(resetfetchMexMexFarms);
-
-//       return num;
-//     }
-//   },
-//   {
-//     condition: (arg1, api) =>
-//       executeFetch(arg1, api, reducerName, "userFarms", "mexMex"),
-//   }
-// );
-// export const fetchMexLkmexFarms = createAsyncThunk(
-//   "userAccount/fetchMexLkmexFarms",
-//   async (nfts) => {
-//     const nft = nfts.find((nft) => nft.collection === "MEXFARML-28d646");
-//     if (nft) {
-//       const earningsRes = await getUserFarmEarnings2(
-//         nft.balance,
-//         nft.attributes,
-//         "erd1qqqqqqqqqqqqqpgq7qhsw8kffad85jtt79t9ym0a4ycvan9a2jps0zkpen"
-//       );
-//       const hexNumer = Buffer.from(earningsRes.values[0], "base64").toString(
-//         "hex"
-//       );
-//       const num = parseInt(hexNumer, 16);
-//       waitToResetStatus(resetfetchMexLkmexFarms);
-
-//       return num;
-//     }
-//   },
-//   {
-//     condition: (arg1, api) =>
-//       executeFetch(arg1, api, reducerName, "userFarms", "mexLkmex"),
-//   }
-// );
-// export const fetchTopNftCollection = createAsyncThunk(
-//   "userAccount/fetchTopNftCollection",
-//   async () => {
-//     const response = await axios.get(
-//       "https://admin.21gramsbox.gr/eldar/rank2.php"
-//     );
-//     waitToResetStatus(resetfetchTopNftCollection);
-//     const data = response.data;
-//     return data;
-//   },
-//   {
-//     condition: (arg1, api) =>
-//       executeFetch(arg1, api, reducerName, "topNftCollection"),
-//   }
-// );
 
 export const fetchProteoFarms = async (scInfo, userAddress, dual) => {
   let data = {};
