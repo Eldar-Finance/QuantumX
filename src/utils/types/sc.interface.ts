@@ -1,10 +1,12 @@
+export interface IScFarm2 {
+  farmId: number;
+  creationEpoch: number;
+  stakingToken: string;
+  rewardToken: string;
+  creator: string;
+}
 export interface IScFarmItem {
-  farm: {
-    farmId: number;
-    creationEpoch: number;
-    stakingToken: string;
-    rewardToken: string;
-  };
+  farm: IScFarm2;
   stakedBalance: number;
   apr: number;
 }
@@ -15,4 +17,11 @@ export interface IScUserFarmInfo {
   harvestableRewards: number;
   earnedRewards: number;
   unboundingRewards: number;
+}
+export interface IScPanelFarms {
+  farm: IScFarm2;
+  lastReawardEpoch: number;
+  earlyUnbondingFee: number;
+  rewardsFee: number;
+  unbondingPeriod: number;
 }

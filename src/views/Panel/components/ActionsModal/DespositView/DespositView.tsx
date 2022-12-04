@@ -11,8 +11,10 @@ import {
   Text,
 } from "@chakra-ui/react";
 import ActionButton from "components/ActionButton/ActionButton";
-import MyModal from "components/Modal/Modal";
 import { useFormik } from "formik";
+import useGetElrondToken from "utils/hooks/useGetElrondToken";
+import { IScFarm2 } from "utils/types/sc.interface";
+import { depositRewards } from "views/Panel/scServices";
 import * as yup from "yup";
 
 const validationSchema = yup.object({
@@ -21,11 +23,12 @@ const validationSchema = yup.object({
 });
 
 interface IProps {
-  isOpen: boolean;
   onClose: () => void;
+  farm: IScFarm2;
 }
 
-const DespositModal = ({ isOpen, onClose }: IProps) => {
+const DepositView = ({ onClose, farm }: IProps) => {
+  const { token } = useGetElrondToken(farm.rewardToken);
   const formik = useFormik({
     initialValues: {
       days: "",
@@ -33,12 +36,14 @@ const DespositModal = ({ isOpen, onClose }: IProps) => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      console.log(values);
+      if (token) {
+        depositRewards(token, farm.farmId, values.days, values.amount);
+      }
     },
   });
 
   return (
-    <MyModal bg="black.baseDark" isOpen={isOpen} onClose={onClose}>
+    <>
       <form onSubmit={formik.handleSubmit}>
         <ModalHeader>
           <Flex justifyContent={"space-between"} alignItems="center">
@@ -74,7 +79,7 @@ const DespositModal = ({ isOpen, onClose }: IProps) => {
                   name="amount"
                   onChange={formik.handleChange}
                 />{" "}
-                <Text fontSize={"14px"}>EGLD</Text>
+                <Text fontSize={"14px"}>{token.ticker}</Text>
               </Flex>
             </Box>
           </Flex>
@@ -100,8 +105,8 @@ const DespositModal = ({ isOpen, onClose }: IProps) => {
           </ActionButton>
         </ModalFooter>
       </form>
-    </MyModal>
+    </>
   );
 };
 
-export default DespositModal;
+export default DepositView;

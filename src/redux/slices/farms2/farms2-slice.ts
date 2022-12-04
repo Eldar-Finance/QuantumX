@@ -1,8 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AppState } from "redux/store";
 import { STATUS } from "utils/types/core.interface";
-import { IScFarmItem, IScUserFarmInfo } from "utils/types/sc.interface";
-import { fetchAllFarms, fetchUSerFarmInfo } from "./funcs";
+import {
+  IScFarmItem,
+  IScPanelFarms,
+  IScUserFarmInfo,
+} from "utils/types/sc.interface";
+import { fetchAllFarms, fetchCreatorsFarms, fetchUSerFarmInfo } from "./funcs";
 
 export interface Farms2State {
   allFarms: {
@@ -15,6 +19,11 @@ export interface Farms2State {
     data: IScUserFarmInfo[];
     error: string;
   };
+  creatorsFarms: {
+    status: STATUS;
+    data: IScPanelFarms[];
+    error: string;
+  };
 }
 
 const initialState: Farms2State = {
@@ -24,6 +33,11 @@ const initialState: Farms2State = {
     error: "",
   },
   userFarmsInfo: {
+    data: [],
+    status: "idle",
+    error: "",
+  },
+  creatorsFarms: {
     data: [],
     status: "idle",
     error: "",
@@ -65,6 +79,21 @@ export const generalSlice = createSlice({
       .addCase(fetchUSerFarmInfo.rejected, (state, action) => {
         state.userFarmsInfo.status = "failed";
         state.userFarmsInfo.error = action.error.message;
+      })
+      // fetchUSerFarmInfo
+      .addCase(fetchCreatorsFarms.pending, (state) => {
+        state.creatorsFarms.status = "loading";
+      })
+      .addCase(
+        fetchCreatorsFarms.fulfilled,
+        (state, action: PayloadAction<IScPanelFarms[]>) => {
+          state.creatorsFarms.status = "succeeded";
+          state.creatorsFarms.data = action.payload;
+        }
+      )
+      .addCase(fetchCreatorsFarms.rejected, (state, action) => {
+        state.creatorsFarms.status = "failed";
+        state.creatorsFarms.error = action.error.message;
       });
   },
 });
@@ -72,6 +101,8 @@ export const generalSlice = createSlice({
 export const {} = generalSlice.actions;
 
 export const selectAllFarms2 = (state: AppState) => state.farms2.allFarms;
+export const selectCreatorsFarms = (state: AppState) =>
+  state.farms2.creatorsFarms;
 export const selectUserFarms2Info = (state: AppState) =>
   state.farms2.userFarmsInfo;
 export default generalSlice.reducer;

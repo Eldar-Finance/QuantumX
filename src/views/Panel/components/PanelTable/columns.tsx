@@ -1,36 +1,31 @@
-import { Flex } from "@chakra-ui/react";
+import { Flex, Icon } from "@chakra-ui/react";
 import ActionButton from "components/ActionButton/ActionButton";
-import dynamic from "next/dynamic";
+import { ToolIcon } from "components/Icons/ui";
 import { useState } from "react";
+import { formatTokenI } from "utils/functions/tokens";
+import { IScPanelFarms } from "utils/types/sc.interface";
 
-import { ITableData } from "views/Panel/types";
-
-const UnboundingModal: any = dynamic(() =>
-  import("../UnboundingModal/UnboundingModal")
-);
-const DespositModal: any = dynamic(() =>
-  import("../DespositModal/DespositModal")
-);
+import ActionsModal from "../ActionsModal/ActionsModal";
 
 export const panelColumns = [
   {
     Header: "Pool/Farm id",
     accessor: "id",
     Cell: ({ row }) => {
-      const data: ITableData = row.original;
+      const data: IScPanelFarms = row.original;
 
-      return <Flex justify={"center"}>{data.id}</Flex>;
+      return <Flex justify={"center"}>{data.farm.farmId}</Flex>;
     },
   },
   {
     Header: "Staked Token",
     accessor: "stakedToken",
     Cell: ({ row }) => {
-      const data: ITableData = row.original;
+      const data: IScPanelFarms = row.original;
 
       return (
         <Flex display={"flex"} alignItems={"center"} justify={"center"}>
-          {data.stakedToken}
+          {formatTokenI(data.farm.stakingToken)}
         </Flex>
       );
     },
@@ -39,51 +34,40 @@ export const panelColumns = [
     Header: "Reward Token",
     accessor: "rewardsToken",
     Cell: ({ row }) => {
-      const data: ITableData = row.original;
-      return <Flex justify={"center"}>{data.rewardsToken}</Flex>;
+      const data: IScPanelFarms = row.original;
+      return (
+        <Flex justify={"center"}> {formatTokenI(data.farm.rewardToken)}</Flex>
+      );
     },
   },
   {
     Header: "Reward Until",
     accessor: "date",
     Cell: ({ row }) => {
-      const data: ITableData = row.original;
-      return <Flex justify={"center"}>{data.date}</Flex>;
+      const data: IScPanelFarms = row.original;
+      return <Flex justify={"center"}> {data.lastReawardEpoch}</Flex>;
     },
   },
   {
     Header: "Actions",
     accessor: "",
     Cell: ({ row }) => {
-      const [openUnboundmodal, setopenUnboundmodal] = useState(false);
-      const handleToggleUnbounding = () => {
-        setopenUnboundmodal((s) => !s);
+      const data: IScPanelFarms = row.original;
+      const [openModal, setopenModal] = useState(false);
+      const handleOpenModal = () => {
+        setopenModal((s) => !s);
       };
-      const [openDepositdmodal, setopenDepositmodal] = useState(false);
-      const handleToggleDeposit = () => {
-        setopenDepositmodal((s) => !s);
-      };
+
       return (
         <Flex flexDir={"column"} gap={4}>
-          <ActionButton onClick={handleToggleUnbounding}>
-            Set Unbound
+          <ActionButton onClick={handleOpenModal}>
+            <Icon as={ToolIcon} />
           </ActionButton>
-          <ActionButton onClick={handleToggleDeposit}>
-            Deposit Rewards
-          </ActionButton>
-
-          {openUnboundmodal && (
-            <UnboundingModal
-              isOpen={openUnboundmodal}
-              onClose={handleToggleUnbounding}
-            />
-          )}
-          {openDepositdmodal && (
-            <DespositModal
-              isOpen={openDepositdmodal}
-              onClose={handleToggleDeposit}
-            />
-          )}
+          <ActionsModal
+            isOpen={openModal}
+            onClose={handleOpenModal}
+            farm={data.farm}
+          />
         </Flex>
       );
     },

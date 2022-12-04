@@ -11,8 +11,9 @@ import {
   Text,
 } from "@chakra-ui/react";
 import ActionButton from "components/ActionButton/ActionButton";
-import MyModal from "components/Modal/Modal";
 import { useFormik } from "formik";
+import { IScFarm2 } from "utils/types/sc.interface";
+import { setUnbondingPeriod } from "views/Panel/scServices";
 import * as yup from "yup";
 
 const validationSchema = yup.object({
@@ -20,23 +21,23 @@ const validationSchema = yup.object({
 });
 
 interface IProps {
-  isOpen: boolean;
   onClose: () => void;
+  farm: IScFarm2;
 }
 
-const UnboundingModal = ({ isOpen, onClose }: IProps) => {
+const UnboundingView = ({ onClose, farm }: IProps) => {
   const formik = useFormik({
     initialValues: {
       days: "",
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      console.log(values);
+      setUnbondingPeriod(farm.farmId, values.days);
     },
   });
 
   return (
-    <MyModal bg="black.baseDark" isOpen={isOpen} onClose={onClose}>
+    <>
       <form onSubmit={formik.handleSubmit}>
         <ModalHeader>
           <Flex justifyContent={"space-between"} alignItems="center">
@@ -84,8 +85,8 @@ const UnboundingModal = ({ isOpen, onClose }: IProps) => {
           </ActionButton>
         </ModalFooter>
       </form>
-    </MyModal>
+    </>
   );
 };
 
-export default UnboundingModal;
+export default UnboundingView;

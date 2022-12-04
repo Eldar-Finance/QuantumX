@@ -1,7 +1,11 @@
 import { Address, AddressValue } from "@elrondnetwork/erdjs/out";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { scQuery } from "api/sc/queries";
-import { IScFarmItem, IScUserFarmInfo } from "utils/types/sc.interface";
+import {
+  IScFarmItem,
+  IScPanelFarms,
+  IScUserFarmInfo,
+} from "utils/types/sc.interface";
 
 export const fetchAllFarms = createAsyncThunk(
   "farms2/fetchAllFarms",
@@ -9,7 +13,6 @@ export const fetchAllFarms = createAsyncThunk(
     const scRes = await scQuery("farms2", "getAllFarms");
 
     const scFirstValue = scRes.firstValue.valueOf();
-    console.log("fetchAllFarms", scFirstValue);
 
     const allFarms: IScFarmItem[] = scFirstValue.map((farm: any) => {
       return {
@@ -36,7 +39,6 @@ export const fetchUSerFarmInfo = createAsyncThunk(
     ]);
 
     const scFirstValue = scRes.firstValue.valueOf();
-    console.log("fetchUSerFarmInfo", scFirstValue);
 
     const allFarms: IScUserFarmInfo[] = scFirstValue.map((farmInfo) => {
       const data: IScUserFarmInfo = {
@@ -49,5 +51,34 @@ export const fetchUSerFarmInfo = createAsyncThunk(
       return data;
     });
     return allFarms;
+  }
+);
+export const fetchCreatorsFarms = createAsyncThunk(
+  "farms2/fetchCreatorsFarms",
+  async (address: string) => {
+    const scRes = await scQuery("farms2", "getCreatorTable", [
+      new AddressValue(new Address(address)),
+    ]);
+
+    const scFirstValue = scRes.firstValue.valueOf();
+
+    const creatorFarms: IScPanelFarms[] = scFirstValue.map((farm) => {
+      const data: IScPanelFarms = {
+        farm: {
+          farmId: farm.field0.id.toNumber(),
+          creationEpoch: farm.field0.creation_epoch.toNumber(),
+          stakingToken: farm.field0.staked_token,
+          rewardToken: farm.field0.reward_token,
+          creator: farm.field0.creator.bech32(),
+        },
+        lastReawardEpoch: farm.field1[0].toNumber(),
+        earlyUnbondingFee: farm.field1[1].toNumber(),
+        rewardsFee: farm.field1[2].toNumber(),
+        unbondingPeriod: farm.field1[3].toNumber(),
+      };
+      return data;
+    });
+
+    return creatorFarms;
   }
 );
