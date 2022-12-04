@@ -68,7 +68,7 @@ export const routes: {
   },
   panel: {
     path: routeNames.panel,
-    name: "Quantumn Panel",
+    name: "Quantum Panel",
     onModal: true,
   },
 };

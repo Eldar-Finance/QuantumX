@@ -37,10 +37,7 @@ export const ProteoItemContenxt = createContext({
 });
 
 const Farms2Item = ({ farm, farmUserInfo }: IProps) => {
-  const { token: rewardsToken } = useGetElrondToken(farm.farm.rewardToken);
   const { token: stakingToken } = useGetElrondToken(farm.farm.stakingToken);
-
-  console.log("stakingToken", stakingToken);
 
   return (
     <AccordionItem w="full">
@@ -127,7 +124,7 @@ const Farms2Item = ({ farm, farmUserInfo }: IProps) => {
             <Avilable farm={farm} userFarmInfo={farmUserInfo} />
           </PanelBox>
           <PanelBox gridColumn={"1/3"}>
-            <StakeUnstake farm={farm} />
+            <StakeUnstake farm={farm} userFarmItem={farmUserInfo} />
           </PanelBox>
         </Grid>
       </AccordionPanel>

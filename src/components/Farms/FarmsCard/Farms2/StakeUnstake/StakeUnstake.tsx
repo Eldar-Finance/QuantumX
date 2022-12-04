@@ -4,16 +4,17 @@ import dynamic from "next/dynamic";
 import { useState } from "react";
 import { formatTokenI } from "utils/functions/tokens";
 import useGetElrondToken from "utils/hooks/useGetElrondToken";
-import { IScFarmItem } from "utils/types/sc.interface";
+import { IScFarmItem, IScUserFarmInfo } from "utils/types/sc.interface";
 
 const StakeModal: any = dynamic(() => import("./StakeModal"));
 const UnstakeModal: any = dynamic(() => import("./UnstkeModal"));
 
 interface IProps {
   farm: IScFarmItem;
+  userFarmItem: IScUserFarmInfo;
 }
 
-const StakeUnstake = ({ farm }: IProps) => {
+const StakeUnstake = ({ farm, userFarmItem }: IProps) => {
   const [openStake, setOpenStake] = useState(false);
   const [openUnstakeStake, setOpenUnstakeStake] = useState(false);
   const { token: rewardsToken } = useGetElrondToken(farm.farm.rewardToken);
@@ -51,6 +52,7 @@ const StakeUnstake = ({ farm }: IProps) => {
       {openUnstakeStake && (
         <UnstakeModal
           token={rewardsToken}
+          userFarmItem={userFarmItem}
           farm={farm}
           isOpen={openUnstakeStake}
           onClose={() => setOpenUnstakeStake((s) => !s)}
