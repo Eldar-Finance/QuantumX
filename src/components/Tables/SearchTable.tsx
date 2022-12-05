@@ -192,7 +192,7 @@ function SearchTable(props) {
                       return (
                         <Td
                           {...cell.getCellProps()}
-                          px={{ xs: "10px !important", md: "auto" }}
+                          px={{ xs: "10px !important", md: "20px !important" }}
                           key={index}
                           bg="black.baseDark"
                         >
