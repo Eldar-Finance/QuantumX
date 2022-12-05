@@ -20,6 +20,7 @@ import MyModal from "components/Modal/Modal";
 import { useFormik } from "formik";
 import { useState } from "react";
 import { formatBalance } from "utils/functions/formatBalance";
+import { preventExponetialNotation } from "utils/functions/numbers";
 import { formatTokenI } from "utils/functions/tokens";
 import useGetUserTokens from "utils/hooks/useGetUserTokens";
 import { IElrondToken } from "utils/types/elrond.interface";
@@ -83,8 +84,9 @@ const StakeModal = ({ isOpen, onClose, farm, token }: IProps) => {
     if (userToken) {
       const userTokenAmount = formatBalance(userToken, true);
       const userRealAmount = percent * userTokenAmount;
+      const finalAmount = preventExponetialNotation(userRealAmount);
 
-      formik.setFieldValue("amount", userRealAmount, false);
+      formik.setFieldValue("amount", finalAmount, false);
     }
   };
   return (

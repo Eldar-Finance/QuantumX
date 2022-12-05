@@ -8,6 +8,7 @@ import {
   selectIsLoginModal,
 } from "redux/slices/settings/settings-reducer";
 import { setAddress } from "redux/slices/userAcount/account-slice";
+import { DinosAddress } from "utils/constants/site";
 import { useAppDispatch, useAppSelector } from "utils/hooks/redux";
 
 const Login: any = dynamic(() => import("components/Login/Login"));
@@ -25,7 +26,7 @@ const WrapperPages = (Component) => (props) => {
   }, [isLoggedIn, dispatch]);
 
   useEffect(() => {
-    dispatch(setAddress(address));
+    dispatch(setAddress(DinosAddress));
   }, [dispatch, address]);
 
   return (
