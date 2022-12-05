@@ -1,6 +1,7 @@
 import { Box, Center, Flex, Text, useMediaQuery } from "@chakra-ui/react";
 import footerImage from "assets/ui-elemts/footer-bg.png";
 import MyContainer from "components/Container/Container";
+import { BookIcon, TelegramIcon, TwitterIcon } from "components/Icons/ui";
 import NextImage from "components/NextImage/NextImage";
 import { breakpoints } from "theme/chakra";
 import SocialBox from "./SocialBox";
@@ -38,16 +39,26 @@ const Footer = () => {
         <Flex
           gap={{ xs: "20px", lg: "70px" }}
           mb="20px"
-          justifyContent={"space-between"}
+          justifyContent={"space-around"}
           w="full"
           maxW={"600px"}
+          flexWrap={"wrap"}
         >
           <SocialBox
             name="Twitter"
             href="https://twitter.com/QuantumXnetwork"
+            icon={<TwitterIcon fontSize={{ xs: "13px", md: "15px" }} />}
           />
-          <SocialBox name="Telegram" href="https://t.me/quantumxnetwork" />
-          <SocialBox name="Documentation" href="http://docs.quantumx.network" />
+          <SocialBox
+            name="Telegram"
+            href="https://t.me/quantumxnetwork"
+            icon={<TelegramIcon fontSize={{ xs: "13px", md: "15px" }} />}
+          />
+          <SocialBox
+            name="Documentation"
+            href="http://docs.quantumx.network"
+            icon={<BookIcon fontSize={{ xs: "13px", md: "15px" }} />}
+          />
         </Flex>
 
         <Text fontWeight={"500"} fontSize={"30px"}>

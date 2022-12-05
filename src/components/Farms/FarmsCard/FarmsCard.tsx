@@ -33,25 +33,6 @@ const FarmsCard = ({ proteoArr, othersArr = null }: IProps) => {
           })}
         </>
       )}
-      {/* <Farms2Item
-        farm={{
-          apr: 150,
-          farm: {
-            creationEpoch: 180,
-            farmId: 15,
-            rewardToken: "SUPER-507aa6",
-            stakingToken: "AERO-458bbf",
-          },
-          stakedBalance: 140000000000000000000,
-        }}
-        farmUserInfo={{
-          earnedRewards: 450000000000000,
-          farmId: 15,
-          harvestableRewards: 8000000000000,
-          stakedBalance: 40000000000000,
-          unboundingRewards: 84650000000000,
-        }}
-      /> */}
     </Accordion>
   );
 };

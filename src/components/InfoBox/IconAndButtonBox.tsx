@@ -1,6 +1,7 @@
 import { Center, Text } from "@chakra-ui/react";
 import ActionButton from "components/ActionButton/ActionButton";
 import Card from "components/Card/Card";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import { ReactNode } from "react";
 
@@ -35,11 +36,13 @@ const IconAndButtonBox = ({ desc, title, icon, buttonText, href }: IProps) => {
       >
         {desc}
       </Text>
-      <Link href={href}>
-        <ActionButton w="150px" py="12px" h="auto" fontWeight="600">
-          {buttonText}
-        </ActionButton>
-      </Link>
+      <motion.button whileHover={{ scale: 1.05 }}>
+        <Link href={href}>
+          <ActionButton w="150px" py="12px" h="auto" fontWeight="600">
+            {buttonText}
+          </ActionButton>
+        </Link>
+      </motion.button>
     </Card>
   );
 };

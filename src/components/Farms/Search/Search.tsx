@@ -1,7 +1,11 @@
 import { Search2Icon } from "@chakra-ui/icons";
 import { Flex, Icon, Input } from "@chakra-ui/react";
 
-const Search = () => {
+interface IProps {
+  onChange: (q: string) => void;
+}
+
+const Search = ({ onChange }: IProps) => {
   return (
     <Flex
       py={2}
@@ -17,6 +21,7 @@ const Search = () => {
         placeholder="Name, Token ID..."
         variant={"unstyled"}
         fontSize="sm"
+        onChange={(e) => onChange(e.target.value)}
       />
     </Flex>
   );

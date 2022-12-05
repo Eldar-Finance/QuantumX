@@ -17,6 +17,7 @@ export const scQuery = async (
 ) => {
   try {
     const { address, abiUrl, implementsInterfaces } = getInterface(workspace);
+
     const response = await axios.get(abiUrl);
     const abiRegistry = await AbiRegistry.create(response.data);
     const abi = new SmartContractAbi(abiRegistry, [implementsInterfaces]);
@@ -36,7 +37,7 @@ export const scQuery = async (
 
     return data;
   } catch (error) {
-    console.log("query error : ", error);
+    console.log(`query error for ${funcName}  : `, error);
   }
 };
 export const scSimpleQuery = async (

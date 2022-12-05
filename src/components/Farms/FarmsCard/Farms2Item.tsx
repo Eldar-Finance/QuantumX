@@ -11,14 +11,16 @@ import {
 } from "@chakra-ui/react";
 import NextImage from "components/NextImage/NextImage";
 
-import { createContext, PropsWithChildren } from "react";
+import { createContext, PropsWithChildren, useEffect } from "react";
 import { IScFarmItem, IScUserFarmInfo } from "utils/types/sc.interface";
 
+import { addTvlInEldarFarm } from "redux/slices/proteo/proteo";
 import {
   formatBalance,
   formatBalanceDolar,
 } from "utils/functions/formatBalance";
 import { formatTokenI } from "utils/functions/tokens";
+import { useAppDispatch } from "utils/hooks/redux";
 import useGetElrondToken from "utils/hooks/useGetElrondToken";
 import EarnedRewards from "./Farms2/EarnedRewards/EarnedRewards";
 import EarnTokens from "./Farms2/EarnTokens/EarnTokens";
@@ -38,6 +40,28 @@ export const ProteoItemContenxt = createContext({
 
 const Farms2Item = ({ farm, farmUserInfo }: IProps) => {
   const { token: stakingToken } = useGetElrondToken(farm.farm.stakingToken);
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(
+      addTvlInEldarFarm({
+        balance: formatBalanceDolar(
+          {
+            balance: farm.stakedBalance,
+            decimals: stakingToken.decimals,
+          },
+          stakingToken?.price
+        ),
+        id: farm.farm.stakingToken,
+        type: "farm",
+      })
+    );
+  }, [
+    dispatch,
+    farm.farm.stakingToken,
+    farm.stakedBalance,
+    stakingToken.decimals,
+    stakingToken?.price,
+  ]);
 
   return (
     <AccordionItem w="full">

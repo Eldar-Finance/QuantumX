@@ -65,14 +65,14 @@ export const routes: {
     onModal: true,
     soon: true,
   },
-  admin: {
-    path: routeNames.admin,
-    name: "Admin Panel",
-    onModal: true,
-  },
   panel: {
     path: routeNames.panel,
     name: "Quantum Panel",
+    onModal: true,
+  },
+  admin: {
+    path: routeNames.admin,
+    name: "Admin Panel",
     onModal: true,
     forAdmins: true,
   },

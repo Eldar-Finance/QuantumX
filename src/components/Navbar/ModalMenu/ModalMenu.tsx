@@ -14,7 +14,6 @@ interface IProps {
 
 const ModalMenu = ({ onClose }: IProps) => {
   const address = useAppSelector(selectUserAddress);
-  console.log("address", address);
   const ref = useRef();
   useOutsideClick({
     ref: ref,

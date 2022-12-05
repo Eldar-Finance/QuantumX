@@ -9,7 +9,7 @@ const Layout = ({ children, ...props }: PropsWithChildren<IProps>) => {
   return (
     <Box
       position={"relative"}
-      pt={{ xs: "180px", "2xl": "248px" }}
+      pt={{ xs: "210px", md: "180px", "2xl": "248px" }}
       h="full"
       minH="100vh"
       {...props}

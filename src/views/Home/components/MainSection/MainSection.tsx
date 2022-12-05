@@ -5,10 +5,12 @@ import angleRightIcon from "assets/ui-elemts/angleRight.svg";
 import ActionButton from "components/ActionButton/ActionButton";
 import { BookIcon, MultiversxIcon } from "components/Icons/ui";
 import NextImage from "components/NextImage/NextImage";
+import { motion } from "framer-motion";
 import { openLogin } from "redux/slices/settings/settings-reducer";
 import { useAppDispatch } from "utils/hooks/redux";
 import LockedInFarms from "./LockedInFarms/LockedInFarms";
 import LockedInPools from "./LockedInPools/LockedInPools";
+
 const MainSection = () => {
   const dispatch = useAppDispatch();
   const { isLoggedIn } = useGetLoginInfo();
@@ -18,17 +20,20 @@ const MainSection = () => {
   };
   return (
     <Center flexDir={"column"} m="auto" maxW={"692px"} textAlign={"center"}>
-      <Heading as="h1" fontSize={{ xs: "3xl", md: "7xl" }} mb="30px">
-        A dimension in the Multivers only accessible through{" "}
-        <Box as="span" bg="main" bgClip={"text"}>
-          {" "}
-          DeFi magic.
-        </Box>
-      </Heading>
-
-      <Heading as="h4" fontSize={{ xs: "md", md: "lg" }} mb={"30px"}>
-        Friction-less swaps. Quantum level latency. Next-level interface.
-      </Heading>
+      <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}>
+        <Heading as="h1" fontSize={{ xs: "3xl", md: "7xl" }} mb="30px">
+          A dimension in the Multivers only accessible through{" "}
+          <Box as="span" bg="main" bgClip={"text"}>
+            {" "}
+            DeFi magic.
+          </Box>
+        </Heading>
+      </motion.div>
+      <motion.div initial={{ y: 20 }} whileInView={{ y: 0 }}>
+        <Heading as="h4" fontSize={{ xs: "md", md: "lg" }} mb={"30px"}>
+          Friction-less swaps. Quantum level latency. Next-level interface.
+        </Heading>
+      </motion.div>
 
       <Flex
         justify={"center"}
@@ -37,38 +42,46 @@ const MainSection = () => {
         flexDir={{ xs: "column", md: "row" }}
       >
         {!isLoggedIn && (
-          <ActionButton
-            py="11px"
-            px="20px"
-            borderRadius={"md"}
-            onClick={handleConnect}
-          >
-            Connect wallet{" "}
-            <Box as="span" ml={"10px"}>
-              {" "}
-              <NextImage src={angleRightIcon} alt="" />
-            </Box>
-          </ActionButton>
+          <motion.div initial={{ x: -25 }} whileInView={{ x: 0 }}>
+            <ActionButton
+              py="11px"
+              px="20px"
+              borderRadius={"md"}
+              onClick={handleConnect}
+            >
+              Connect wallet{" "}
+              <Box as="span" ml={"10px"}>
+                {" "}
+                <NextImage src={angleRightIcon} alt="" />
+              </Box>
+            </ActionButton>
+          </motion.div>
         )}
-        <Link href="https://docs.quantumx.network">
-          <ButtonGradiente
-            py="11px"
-            px="22px"
-            borderRadius={"md"}
-            color="main"
-            bg="black.baseDark"
-            backdropFilter={"blur(1.5px)"}
-            _hover={{
-              color: "main",
-            }}
-          >
-            Read docs <BookIcon ml={"8px"} />
-          </ButtonGradiente>
-        </Link>
+        <motion.div initial={{ x: 25 }} whileInView={{ x: 0 }}>
+          <Link href="https://docs.quantumx.network">
+            <ButtonGradiente
+              py="11px"
+              px="22px"
+              borderRadius={"md"}
+              color="main"
+              bg="black.baseDark"
+              backdropFilter={"blur(1.5px)"}
+              _hover={{
+                color: "main",
+              }}
+            >
+              Read docs <BookIcon ml={"8px"} />
+            </ButtonGradiente>
+          </Link>
+        </motion.div>
       </Flex>
       <Flex gap="20px" mb="30px" flexDir={{ xs: "column", md: "row" }}>
-        <LockedInFarms />
-        <LockedInPools />
+        <motion.div initial={{ y: 25 }} whileInView={{ y: 0 }}>
+          <LockedInFarms />
+        </motion.div>
+        <motion.div initial={{ y: 25 }} whileInView={{ y: 0 }}>
+          <LockedInPools />
+        </motion.div>
       </Flex>
 
       <Center gap="10px">

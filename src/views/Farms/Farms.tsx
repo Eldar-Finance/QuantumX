@@ -2,12 +2,11 @@ import { Center, Flex } from "@chakra-ui/react";
 import MyContainer from "components/Container/Container";
 import FarmsCard from "components/Farms/FarmsCard/FarmsCard";
 import Search from "components/Farms/Search/Search";
-import Selector from "components/Farms/Selector/Selector";
 import Title from "components/Farms/Title/Title";
 import Layout from "components/Layout/Layout";
 import withElronDapp from "hoc/withElronDapp";
 import WrapperPages from "hoc/WrapperPages";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { fetchStats } from "redux/slices/elrond/elrond-slice";
 import {
@@ -24,6 +23,7 @@ import {
   fetchWithdrawInfo,
 } from "redux/slices/proteo/funcs";
 import { selectUserAddress } from "redux/slices/userAcount/account-slice";
+import { formatTokenI } from "utils/functions/tokens";
 import { useAppDispatch, useAppSelector } from "utils/hooks/redux";
 import { proteoFarmsArr } from "./constants";
 
@@ -32,6 +32,12 @@ const Farms = () => {
   const address = useAppSelector(selectUserAddress);
   const farms2 = useSelector(selectAllFarms2);
   const userFarm2Info = useSelector(selectUserFarms2Info);
+
+  const [farms2ToSearch, setFarms2ToSearch] = useState(farms2.data);
+  const [proteoFarmsArrToSearch, setproteoFarmsArrToSearch] = useState(
+    proteoFarmsArr
+  );
+
   useEffect(() => {
     if (address) {
       //farms from proteo
@@ -50,6 +56,40 @@ const Farms = () => {
       dispatch(fetchStats());
     }
   }, [address, dispatch]);
+
+  useEffect(() => {
+    if (farms2.data) {
+      setFarms2ToSearch(farms2.data);
+    }
+  }, [farms2.data]);
+
+  const handleSearch = (query: string) => {
+    console.log(query);
+    if (query === "") {
+      setFarms2ToSearch(farms2.data);
+      setproteoFarmsArrToSearch(proteoFarmsArr);
+    } else {
+      const newFarm2 = farms2.data.filter((farm) => {
+        return (
+          formatTokenI(farm.farm.stakingToken)
+            .toString()
+            .toLowerCase()
+            .indexOf(query.toLowerCase()) > -1
+        );
+      });
+      const newProteoFarms = proteoFarmsArr.filter((farm) => {
+        return (
+          farm.stakedCoin
+            .toString()
+            .toLowerCase()
+            .indexOf(query.toLowerCase()) > -1
+        );
+      });
+
+      setFarms2ToSearch(newFarm2);
+      setproteoFarmsArrToSearch(newProteoFarms);
+    }
+  };
   return (
     <Layout>
       <MyContainer pb="100px">
@@ -64,19 +104,19 @@ const Farms = () => {
           <Title title="Farms" subtitle="Stake Liquidity Pool (LP) tokens" />
           <Flex w="full" justifyContent={"flex-end"} mt="12">
             <Flex gap="20px">
-              <Search />
-              <Selector
+              <Search onChange={handleSearch} />
+              {/* <Selector
                 onchange={(e) => console.log(e)}
                 sortKey="new"
                 sorts={["new", "amount"]}
-              />
+              /> */}
             </Flex>
           </Flex>
           <Center mt="50px" w="full">
             <FarmsCard
-              proteoArr={proteoFarmsArr}
+              proteoArr={proteoFarmsArrToSearch}
               othersArr={{
-                allFarms: farms2.data,
+                allFarms: farms2ToSearch,
                 userFarmInfo: userFarm2Info.data,
               }}
             />
