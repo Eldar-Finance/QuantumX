@@ -1,6 +1,7 @@
 import { Address, AddressValue } from "@elrondnetwork/erdjs/out";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { scQuery } from "api/sc/queries";
+import { formatBalance } from "utils/functions/formatBalance";
 import {
   IScFarmItem,
   IScPanelFarms,
@@ -72,10 +73,18 @@ export const fetchCreatorsFarms = createAsyncThunk(
           creator: farm.field0.creator.bech32(),
         },
         lastReawardEpoch: farm.field1[0].toNumber(),
-        earlyUnbondingFee: farm.field1[1].toNumber(),
-        rewardsFee: farm.field1[2].toNumber(),
+        earlyUnbondingFee: formatBalance(
+          { balance: farm.field1[1].toNumber(), decimals: 2 },
+          true
+        ),
+        rewardsFee: formatBalance(
+          { balance: farm.field1[2].toNumber(), decimals: 2 },
+          true
+        ),
         unbondingPeriod: farm.field1[3].toNumber(),
       };
+      console.log("data", data);
+
       return data;
     });
 

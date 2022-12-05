@@ -1,12 +1,12 @@
 import { Box, Grid, ModalBody, ModalHeader, Text } from "@chakra-ui/react";
 import ActionButton from "components/ActionButton/ActionButton";
 import PanelBox from "components/PanelBox/PanelBox";
-import { IScFarm2 } from "utils/types/sc.interface";
+import { IScPanelFarms } from "utils/types/sc.interface";
 import { deleteFarm } from "views/Panel/scServices";
 
 interface IProps {
   handleView: (view: number) => void;
-  farm: IScFarm2;
+  farm: IScPanelFarms;
 }
 const AllActions = ({ handleView, farm }: IProps) => {
   return (
@@ -24,8 +24,8 @@ const AllActions = ({ handleView, farm }: IProps) => {
             justifyContent={"center"}
             alignItems="center"
           >
-            <Text>Rewards Harvested Fee : 0%</Text>
-            <Text mb={3}>Early Unbound Fee : 3%</Text>
+            <Text>Rewards Harvested Fee : {farm.rewardsFee}%</Text>
+            <Text mb={3}>Early Unbound Fee : {farm.earlyUnbondingFee}%</Text>
 
             <ActionButton onClick={() => handleView(1)}>Edit Fees</ActionButton>
           </PanelBox>
@@ -35,7 +35,7 @@ const AllActions = ({ handleView, farm }: IProps) => {
             justifyContent={"center"}
             alignItems="center"
           >
-            <Text flex={1}>Unbounding Period: 3 Days</Text>
+            <Text flex={1}>Unbounding Period: {farm.unbondingPeriod} Days</Text>
 
             <ActionButton onClick={() => handleView(2)}>
               Set Unbound
@@ -51,7 +51,10 @@ const AllActions = ({ handleView, farm }: IProps) => {
               Delete the farm (Fund will be automatically return to stakers)
             </Text>
 
-            <ActionButton bg="danger" onClick={() => deleteFarm(farm.farmId)}>
+            <ActionButton
+              bg="danger"
+              onClick={() => deleteFarm(farm.farm.farmId)}
+            >
               Cancel Farm
             </ActionButton>
           </PanelBox>

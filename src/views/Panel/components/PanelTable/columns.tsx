@@ -66,7 +66,7 @@ export const panelColumns = [
           <ActionsModal
             isOpen={openModal}
             onClose={handleOpenModal}
-            farm={data.farm}
+            farm={data}
           />
         </Flex>
       );
