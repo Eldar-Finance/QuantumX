@@ -1,0 +1,53 @@
+{
+  "name": "QuantumX - Friction-less swaps. Quantum level latency",
+  "short_name": "QuantumX",
+  "theme_color": "#22F7DD",
+  "background_color": "#232526",
+  "display": "fullscreen",
+  "orientation": "portrait",
+  "scope": "/",
+  "start_url": "/",
+  "icons": [
+    {
+      "src": "logo.svg",
+      "sizes": "72x72",
+      "type": "image/png"
+    },
+    {
+      "src": "logo.svg",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "logo.svg",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "logo.svg",
+      "sizes": "144x144",
+      "type": "image/png"
+    },
+    {
+      "src": "logo.svg",
+      "sizes": "152x152",
+      "type": "image/png"
+    },
+    {
+      "src": "logo.svg",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "logo.svg",
+      "sizes": "384x384",
+      "type": "image/png"
+    },
+    {
+      "src": "logo.svg",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "splash_pages": null
+}
