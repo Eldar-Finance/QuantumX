@@ -11,15 +11,17 @@ import {
 } from "@chakra-ui/react";
 import NextImage from "components/NextImage/NextImage";
 
-import { createContext, PropsWithChildren, useEffect } from "react";
+import { createContext, PropsWithChildren, useEffect, useState } from "react";
 import { IScFarmItem, IScUserFarmInfo } from "utils/types/sc.interface";
 
+import { getLpTokenPrice } from "api/rest/elrondApi/tokens";
 import { addTvlInEldarFarm } from "redux/slices/proteo/proteo";
 import {
   formatBalance,
   formatBalanceDolar,
   formatNumber,
 } from "utils/functions/formatBalance";
+import { preventExponetialNotation } from "utils/functions/numbers";
 import { formatTokenI } from "utils/functions/tokens";
 import { useAppDispatch } from "utils/hooks/redux";
 import useGetElrondToken from "utils/hooks/useGetElrondToken";
@@ -43,7 +45,12 @@ export const ProteoItemContenxt = createContext({
 const Farms2Item = ({ farm, farmUserInfo }: IProps) => {
   const { token: stakingToken } = useGetElrondToken(farm.farm.stakingToken);
   const { token: rewardToken } = useGetElrondToken(farm.farm.rewardToken);
+  const [lpPrice, setLpPrice] = useState(0);
   const dispatch = useAppDispatch();
+  const { logo, name, lpToken2, scFarmAddress } = farms2Data[
+    formatTokenI(farm.farm.stakingToken)
+  ];
+
   useEffect(() => {
     dispatch(
       addTvlInEldarFarm({
@@ -66,9 +73,17 @@ const Farms2Item = ({ farm, farmUserInfo }: IProps) => {
     stakingToken?.price,
   ]);
 
-  console.log("stakedbalance", farm.stakedBalance);
+  useEffect(() => {
+    getLpTokenPrice(scFarmAddress, lpToken2, farm.farm.stakingToken).then(
+      (res) => {
+        setLpPrice(res);
+      }
+    );
+  }, [farm.farm.rewardToken, farm.farm.stakingToken, lpToken2, scFarmAddress]);
 
+  const price = stakingToken?.price || lpPrice;
   let apr: string = "-";
+
   if (
     stakingToken &&
     rewardToken &&
@@ -77,19 +92,25 @@ const Farms2Item = ({ farm, farmUserInfo }: IProps) => {
   ) {
     apr =
       formatNumber(
-        (formatBalanceDolar(
-          { balance: farm.stakedBalance, decimals: stakingToken.decimals },
-          stakingToken.price
-        ) /
-          formatBalanceDolar(
-            { balance: farm.totalRewardsLeft, decimals: rewardToken.decimals },
+        preventExponetialNotation(
+          (formatBalanceDolar(
+            {
+              balance: farm.totalRewardsLeft,
+              decimals: rewardToken.decimals,
+            },
             rewardToken.price
-          )) *
-          100
+          ) /
+            formatBalanceDolar(
+              {
+                balance: farm.stakedBalance,
+                decimals: stakingToken.decimals,
+              },
+              price
+            )) *
+            100
+        ).toString()
       ) + "%";
   }
-
-  const { logo, name } = farms2Data[formatTokenI(farm.farm.stakingToken)];
 
   return (
     <AccordionItem w="full">
@@ -136,7 +157,8 @@ const Farms2Item = ({ farm, farmUserInfo }: IProps) => {
                       balance: farmUserInfo?.stakedBalance,
                       decimals: stakingToken.decimals,
                     },
-                    stakingToken?.price
+                    price,
+                    true
                   )}
                   )
                 </Text>
@@ -156,7 +178,8 @@ const Farms2Item = ({ farm, farmUserInfo }: IProps) => {
                       balance: farm.stakedBalance,
                       decimals: stakingToken.decimals,
                     },
-                    stakingToken?.price
+                    price,
+                    true
                   )}
                 </Text>
               </Flex>

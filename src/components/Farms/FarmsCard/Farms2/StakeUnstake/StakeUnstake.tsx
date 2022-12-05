@@ -35,7 +35,10 @@ const StakeUnstake = ({ farm, userFarmItem }: IProps) => {
           STAKE LP
         </ActionButton>
         <Center flex="1">
-          <ActionButton onClick={() => setOpenUnstakeStake((s) => !s)}>
+          <ActionButton
+            onClick={() => setOpenUnstakeStake((s) => !s)}
+            // disabled={farm.farm === 0}
+          >
             UNSTAKE
           </ActionButton>
         </Center>

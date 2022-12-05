@@ -25,7 +25,7 @@ export const fetchAllFarms = createAsyncThunk(
           creator: farm.field0.creator.bech32(),
         },
         stakedBalance: farm.field1.toNumber(),
-        apr: farm.field2.toNumber(),
+        totalRewardsLeft: farm.field2.toNumber(),
       };
     });
 

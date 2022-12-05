@@ -80,5 +80,9 @@ export const farms2Data = {
   RAREUSDC: {
     logo: rareUsdcImage,
     name: "RAREUSDCLP",
+    lpToken1: toknesID.rare,
+    lpToken2: toknesID.usdc,
+    scFarmAddress:
+      "erd1qqqqqqqqqqqqqpgqjz5k2a7ed2xtd0d92zt0j8e7aap70y7g2jpsjz5z4r",
   },
 };
