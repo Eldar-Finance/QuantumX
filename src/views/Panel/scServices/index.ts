@@ -53,7 +53,10 @@ export async function depositRewards(
       "farms2",
       "depositRewards",
       Number(amount),
-      [new BigIntValue(new BigNumber(farmId))],
+      [
+        new BigIntValue(new BigNumber(farmId)),
+        new BigIntValue(new BigNumber(epochs)),
+      ],
       50000000
     );
   } else {
@@ -61,7 +64,10 @@ export async function depositRewards(
       funcName: "depositRewards",
       token: { identifier: token.identifier, decimals: token.decimals },
       val: Number(amount),
-      args: [new BigIntValue(new BigNumber(farmId))],
+      args: [
+        new BigIntValue(new BigNumber(farmId)),
+        new BigIntValue(new BigNumber(epochs)),
+      ],
       contractAddr: contractAddr.farms2,
       gasL: 50000000,
     });

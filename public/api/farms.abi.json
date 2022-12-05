@@ -10,7 +10,7 @@
         "contractCrate": {
             "name": "farms",
             "version": "0.0.0",
-            "git_version": "23e666b-modified"
+            "git_version": "8b82dc7-modified"
         },
         "framework": {
             "name": "elrond-wasm",
@@ -276,6 +276,38 @@
             "inputs": [
                 {
                     "name": "address",
+                    "type": "Address"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "forceCreateFarm",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "staking_token",
+                    "type": "EgldOrEsdtTokenIdentifier"
+                },
+                {
+                    "name": "reward_token",
+                    "type": "EgldOrEsdtTokenIdentifier"
+                },
+                {
+                    "name": "unbonding_period",
+                    "type": "u64"
+                },
+                {
+                    "name": "early_unbonding_fee",
+                    "type": "u64"
+                },
+                {
+                    "name": "rewards_fee",
+                    "type": "u64"
+                },
+                {
+                    "name": "creator",
                     "type": "Address"
                 }
             ],
@@ -747,6 +779,76 @@
                     "type": "bool"
                 }
             ]
+        },
+        {
+            "name": "earners",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<multi<bytes,tuple<Address,u64>>>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "earnerHasEarned",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "address",
+                    "type": "Address"
+                },
+                {
+                    "name": "token",
+                    "type": "EgldOrEsdtTokenIdentifier"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "earnersTotalPercentage",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "addEarner",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "label",
+                    "type": "bytes"
+                },
+                {
+                    "name": "address",
+                    "type": "Address"
+                },
+                {
+                    "name": "percentage",
+                    "type": "u64"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "removeEarner",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "label",
+                    "type": "bytes"
+                }
+            ],
+            "outputs": []
         }
     ],
     "events": [],
