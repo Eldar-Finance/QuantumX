@@ -63,3 +63,8 @@ outline: none;
 .dapp-core-ui-component.modal .card-title{
   padding: 8px 8px 0 8px;
 }
+
+a:hover{
+  text-decoration: none !important;
+  
+}

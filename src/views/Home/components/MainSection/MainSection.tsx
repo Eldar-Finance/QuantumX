@@ -1,11 +1,21 @@
-import { Box, Button, Center, Flex, Heading, Text } from "@chakra-ui/react";
+import { Box, Center, Flex, Heading, Link, Text } from "@chakra-ui/react";
+import { useGetLoginInfo } from "@elrondnetwork/dapp-core";
 import styled from "@emotion/styled";
 import angleRightIcon from "assets/ui-elemts/angleRight.svg";
 import ActionButton from "components/ActionButton/ActionButton";
 import { BookIcon, MultiversxIcon } from "components/Icons/ui";
-import AmountBox1 from "components/InfoBox/AmountBox1";
 import NextImage from "components/NextImage/NextImage";
+import { openLogin } from "redux/slices/settings/settings-reducer";
+import { useAppDispatch } from "utils/hooks/redux";
+import LockedInFarms from "./LockedInFarms/LockedInFarms";
+import LockedInPools from "./LockedInPools/LockedInPools";
 const MainSection = () => {
+  const dispatch = useAppDispatch();
+  const { isLoggedIn } = useGetLoginInfo();
+
+  const handleConnect = () => {
+    dispatch(openLogin(true));
+  };
   return (
     <Center flexDir={"column"} m="auto" maxW={"692px"} textAlign={"center"}>
       <Heading as="h1" fontSize={{ xs: "3xl", md: "7xl" }} mb="30px">
@@ -26,27 +36,39 @@ const MainSection = () => {
         mb="60px"
         flexDir={{ xs: "column", md: "row" }}
       >
-        <ActionButton py="11px" px="20px" borderRadius={"md"}>
-          Connect wallet{" "}
-          <Box as="span" ml={"10px"}>
-            {" "}
-            <NextImage src={angleRightIcon} alt="" />
-          </Box>
-        </ActionButton>
-        <ButtonGradiente
-          py="11px"
-          px="22px"
-          borderRadius={"md"}
-          color="main"
-          bg="black.baseDark"
-          backdropFilter={"blur(1.5px)"}
-        >
-          Read docs <BookIcon ml={"8px"} />
-        </ButtonGradiente>
+        {!isLoggedIn && (
+          <ActionButton
+            py="11px"
+            px="20px"
+            borderRadius={"md"}
+            onClick={handleConnect}
+          >
+            Connect wallet{" "}
+            <Box as="span" ml={"10px"}>
+              {" "}
+              <NextImage src={angleRightIcon} alt="" />
+            </Box>
+          </ActionButton>
+        )}
+        <Link href="https://docs.quantumx.network">
+          <ButtonGradiente
+            py="11px"
+            px="22px"
+            borderRadius={"md"}
+            color="main"
+            bg="black.baseDark"
+            backdropFilter={"blur(1.5px)"}
+            _hover={{
+              color: "main",
+            }}
+          >
+            Read docs <BookIcon ml={"8px"} />
+          </ButtonGradiente>
+        </Link>
       </Flex>
       <Flex gap="20px" mb="30px" flexDir={{ xs: "column", md: "row" }}>
-        <AmountBox1 />
-        <AmountBox1 />
+        <LockedInFarms />
+        <LockedInPools />
       </Flex>
 
       <Center gap="10px">
@@ -67,7 +89,7 @@ const MainSection = () => {
 
 export default MainSection;
 
-const ButtonGradiente = styled(Button)`
+const ButtonGradiente = styled(ActionButton)`
   box-shadow: 0 0 6px 0 rgba(157, 96, 212, 0.5);
   border: solid 1px transparent;
   background-image: linear-gradient(

@@ -5,11 +5,20 @@ import Footer from "components/Footer/Footer";
 import Layout from "components/Layout/Layout";
 import withElronDapp from "hoc/withElronDapp";
 import WrapperPages from "hoc/WrapperPages";
+import { useEffect } from "react";
+import { fetchAllFarms } from "redux/slices/farms2/funcs";
+import { fetchGeneralInfo } from "redux/slices/proteo/funcs";
+import { useAppDispatch } from "utils/hooks/redux";
 import InfoText from "./components/InfoText/InfoText";
 import MainSection from "./components/MainSection/MainSection";
 import QuantumXFeatures from "./components/QuantumXFeatures/QuantumXFeatures";
 
 const Home = () => {
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(fetchAllFarms());
+    dispatch(fetchGeneralInfo());
+  }, [dispatch]);
   return (
     <Layout>
       <MyContainer>

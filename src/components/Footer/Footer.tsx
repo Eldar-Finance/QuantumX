@@ -42,9 +42,12 @@ const Footer = () => {
           w="full"
           maxW={"600px"}
         >
-          <SocialBox />
-          <SocialBox />
-          <SocialBox />
+          <SocialBox
+            name="Twitter"
+            href="https://twitter.com/QuantumXnetwork"
+          />
+          <SocialBox name="Telegram" href="https://t.me/quantumxnetwork" />
+          <SocialBox name="Documentation" href="http://docs.quantumx.network" />
         </Flex>
 
         <Text fontWeight={"500"} fontSize={"30px"}>

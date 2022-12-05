@@ -1,6 +1,7 @@
 import { Center, Text } from "@chakra-ui/react";
 import ActionButton from "components/ActionButton/ActionButton";
 import Card from "components/Card/Card";
+import Link from "next/link";
 import { ReactNode } from "react";
 
 interface IProps {
@@ -8,16 +9,10 @@ interface IProps {
   title: string;
   desc: string;
   buttonText: string;
-  onClick?: () => void;
+  href: string;
 }
 
-const IconAndButtonBox = ({
-  desc,
-  title,
-  icon,
-  buttonText,
-  onClick,
-}: IProps) => {
+const IconAndButtonBox = ({ desc, title, icon, buttonText, href }: IProps) => {
   return (
     <Card as={Center} flexDir="column">
       <Center bg="secondary" borderRadius="md" boxSize={"50px"} mb={"10px"}>
@@ -40,15 +35,11 @@ const IconAndButtonBox = ({
       >
         {desc}
       </Text>
-      <ActionButton
-        w="150px"
-        py="12px"
-        h="auto"
-        onClick={onClick}
-        fontWeight="600"
-      >
-        {buttonText}
-      </ActionButton>
+      <Link href={href}>
+        <ActionButton w="150px" py="12px" h="auto" fontWeight="600">
+          {buttonText}
+        </ActionButton>
+      </Link>
     </Card>
   );
 };

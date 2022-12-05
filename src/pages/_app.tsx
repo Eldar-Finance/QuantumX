@@ -24,7 +24,7 @@ const QuantumXApp = ({ Component, pageProps }) => {
             font-family: ${inter.style.fontFamily} !important;
           }
         `}</style>
-        <MetaHead />
+        <MetaHead metaTitle="QuantumX - Friction-less swaps. Quantum level latency" />
         <Component {...pageProps} />
       </ChakraProvider>
     </Provider>

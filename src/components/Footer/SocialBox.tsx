@@ -1,16 +1,23 @@
-import { Center, Text } from "@chakra-ui/react";
+import { Center, Link, Text } from "@chakra-ui/react";
 import { BookIcon } from "components/Icons/ui";
 
-const SocialBox = () => {
+interface IProps {
+  href: string;
+  name: string;
+}
+
+const SocialBox = ({ href, name }: IProps) => {
   return (
-    <Center>
-      <Center boxSize={"35px"} bg="black.dark" borderRadius={"md"}>
-        <BookIcon />
+    <Link href={href} isExternal>
+      <Center>
+        <Center boxSize={"35px"} bg="black.dark" borderRadius={"md"}>
+          <BookIcon />
+        </Center>
+        <Text ml="15px" fontSize={{ xs: "sm", md: "md" }}>
+          {name}
+        </Text>
       </Center>
-      <Text ml="15px" fontSize={{ xs: "sm", md: "md" }}>
-        Twitter
-      </Text>
-    </Center>
+    </Link>
   );
 };
 

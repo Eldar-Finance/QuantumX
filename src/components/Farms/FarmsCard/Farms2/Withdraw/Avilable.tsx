@@ -23,7 +23,7 @@ const Avilable = ({ farm, userFarmInfo }: IProps) => {
   return (
     <Box>
       <Flex w="full" justifyContent={"space-between"}>
-        <Text color="white.400">Avilable to withdraw</Text>
+        <Text color="white.400">Available to withdraw</Text>
         <Flex alignItems={"center"} gap={2}>
           <Text>
             {formatBalance({

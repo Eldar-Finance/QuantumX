@@ -38,19 +38,11 @@ const WhatGet = ({ tokensData, handleSubmit }) => {
           Select up to 5 tokens
         </Text>
         <Center width={"full"} flexDirection="column">
-          <CheckboxGroup
-            colorScheme="green"
-            onChange={handleChange}
-            value={selectedValues}
-          >
+          <CheckboxGroup onChange={handleChange} value={selectedValues}>
             <Grid templateColumns={"1fr 1fr"} columnGap="4">
               {tokensData.map((el, i) => {
                 return (
-                  <Checkbox
-                    value={el.identifier}
-                    key={el.identifier}
-                    colorScheme="brand"
-                  >
+                  <Checkbox value={el.identifier} key={el.identifier}>
                     <RowItem key={el.identifier} token={el} />
                   </Checkbox>
                 );
@@ -67,7 +59,6 @@ const WhatGet = ({ tokensData, handleSubmit }) => {
       </ModalBody>
       <ModalFooter mb={3} flexDirection="column">
         <ActionButton
-          colorScheme="blue"
           mr={3}
           fontSize={"xl"}
           onClick={onSubmit}
@@ -75,10 +66,6 @@ const WhatGet = ({ tokensData, handleSubmit }) => {
           borderRadius="8px"
           height="50px"
           textTransform="uppercase"
-          background="rgba(0,0,0,0.5)"
-          _hover={{
-            background: "rgba(0,0,0,0.7)",
-          }}
         >
           CONFIRM
         </ActionButton>

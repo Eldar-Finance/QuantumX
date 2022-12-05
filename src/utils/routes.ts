@@ -4,6 +4,8 @@ export interface IRoute {
   onModal?: boolean;
   onModalAndNavbar?: boolean;
   outMenu?: boolean;
+  soon?: boolean;
+  forAdmins?: boolean;
 }
 export const routeNames = {
   home: "/",
@@ -55,11 +57,13 @@ export const routes: {
     path: routeNames.eLBadges,
     name: "SFT Staking",
     onModal: true,
+    soon: true,
   },
   investors: {
     path: routeNames.investors,
     name: "Investors",
     onModal: true,
+    soon: true,
   },
   admin: {
     path: routeNames.admin,
@@ -70,6 +74,7 @@ export const routes: {
     path: routeNames.panel,
     name: "Quantum Panel",
     onModal: true,
+    forAdmins: true,
   },
 };
 

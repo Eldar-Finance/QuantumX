@@ -2,6 +2,9 @@ import { useOutsideClick } from "@chakra-ui/react";
 import Card from "components/Card/Card";
 import { motion } from "framer-motion";
 import { useRef } from "react";
+import { selectUserAddress } from "redux/slices/userAcount/account-slice";
+import { admins } from "utils/constants/site";
+import { useAppSelector } from "utils/hooks/redux";
 import { routesArr } from "utils/routes";
 import MenuItem from "./MenuItem";
 
@@ -10,6 +13,8 @@ interface IProps {
 }
 
 const ModalMenu = ({ onClose }: IProps) => {
+  const address = useAppSelector(selectUserAddress);
+  console.log("address", address);
   const ref = useRef();
   useOutsideClick({
     ref: ref,
@@ -40,11 +45,18 @@ const ModalMenu = ({ onClose }: IProps) => {
         if (!route.onModal && !route.onModalAndNavbar) {
           return null;
         }
+
+        if (route.forAdmins) {
+          if (!admins.includes(address)) {
+            return null;
+          }
+        }
         return (
           <MenuItem
             key={route.path}
             href={route.path}
             name={route.name}
+            soon={route.soon}
             onlyMobile={route.onModalAndNavbar}
           />
         );

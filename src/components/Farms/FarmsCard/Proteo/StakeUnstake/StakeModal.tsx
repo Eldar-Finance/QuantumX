@@ -10,6 +10,7 @@ import {
   ModalHeader,
   Text,
 } from "@chakra-ui/react";
+import { transactionServices } from "@elrondnetwork/dapp-core";
 import { contractAddr } from "api/net.config";
 import { EGLDPayment, ESDTTransfer } from "api/sc/calls";
 import { proteoEliteWsp } from "api/sc/sc";
@@ -17,6 +18,7 @@ import ActionButton from "components/ActionButton/ActionButton";
 import CustomTooltip from "components/CustomTooltip/CustomTooltip";
 import MyModal from "components/Modal/Modal";
 import { useFormik } from "formik";
+import { useState } from "react";
 import { formatBalance } from "utils/functions/formatBalance";
 import { haveMaxLimit } from "utils/functions/proteo";
 import useGetUserTokens from "utils/hooks/useGetUserTokens";
@@ -39,15 +41,24 @@ const StakeModal = ({ isOpen, onClose, max, pf, token }: IProps) => {
       .required()
       .max(formatBalance(userToken, true)),
   });
+  const [sessionId, setSessionId] = useState();
+  const onSuccess = () => {
+    window.location.reload();
+  };
+  const transactionStatus = transactionServices.useTrackTransactionStatus({
+    transactionId: sessionId,
+    onSuccess: onSuccess,
+  });
 
   const formik = useFormik({
     initialValues: {
       amount: "",
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
+      let res = null;
       if (pf.stakedCoin === "EGLD") {
-        EGLDPayment(
+        res = await EGLDPayment(
           proteoEliteWsp,
           "stake",
           Number(values.amount),
@@ -55,7 +66,7 @@ const StakeModal = ({ isOpen, onClose, max, pf, token }: IProps) => {
           50000000
         );
       } else {
-        ESDTTransfer({
+        res = await ESDTTransfer({
           funcName: "stake",
           token: { identifier: token.identifier, decimals: token.decimals },
           val: Number(values.amount),
@@ -63,6 +74,8 @@ const StakeModal = ({ isOpen, onClose, max, pf, token }: IProps) => {
           gasL: 50000000,
         });
       }
+
+      setSessionId(res);
     },
   });
   const handleAmount = (percent: number) => {

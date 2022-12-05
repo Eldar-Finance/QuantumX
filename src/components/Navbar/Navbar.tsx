@@ -26,7 +26,7 @@ const Navbar = () => {
   return (
     <MyContainer
       bg="black.light"
-      borderRadius={{ xs: "xl", lg: "3xl" }}
+      borderRadius={{ xs: "xl", "2xl": "3xl" }}
       py={{ xs: "15px", "2xl": "40px" }}
       px={{ xs: "30px", xl: "80px" }}
       display="flex"

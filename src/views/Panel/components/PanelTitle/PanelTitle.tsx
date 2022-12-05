@@ -4,7 +4,7 @@ const PanelTitle = () => {
   return (
     <Heading as="h1" fontSize={"4xl"}>
       {" "}
-      Quantumn Panel
+      Quantum Panel
     </Heading>
   );
 };

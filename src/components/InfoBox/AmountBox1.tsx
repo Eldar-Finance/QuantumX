@@ -1,7 +1,13 @@
 import { Center, Text } from "@chakra-ui/react";
 import styled from "@emotion/styled";
+import { formatNumber } from "utils/functions/formatBalance";
 
-const AmountBox1 = () => {
+interface IProps {
+  value: number;
+  type: "FARMS" | "POOLS";
+}
+
+const AmountBox1 = ({ type, value }: IProps) => {
   return (
     <GradientBox
       p="25px"
@@ -10,7 +16,8 @@ const AmountBox1 = () => {
       borderRadius={"xl"}
     >
       <Text color="main">TOTAL VALUE LOCKED</Text>
-      <Text>$ 129,355,689</Text>
+      <Text color="main">{type}</Text>
+      <Text>$ {formatNumber(value)}</Text>
     </GradientBox>
   );
 };

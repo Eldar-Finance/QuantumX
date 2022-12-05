@@ -1,6 +1,7 @@
 import { Box, Center, Grid, Heading } from "@chakra-ui/react";
 import { FarmIcon, RocketIcon, SwapIcon, ToolIcon } from "components/Icons/ui";
 import IconAndButtonBox from "components/InfoBox/IconAndButtonBox";
+import { routeNames } from "utils/routes";
 
 const QuantumXFeatures = () => {
   return (
@@ -34,6 +35,7 @@ const QuantumXFeatures = () => {
           gap="20px"
         >
           <IconAndButtonBox
+            href={routeNames.dashboard}
             title="Tools"
             desc="The Ultimate tools forinvestors, traders or fans."
             icon={<ToolIcon fontSize={"24px"} />}
@@ -41,6 +43,7 @@ const QuantumXFeatures = () => {
           />
 
           <IconAndButtonBox
+            href={routeNames.swap}
             title="Swap"
             desc="Safe, direct and
             straightforward Swap
@@ -50,6 +53,7 @@ const QuantumXFeatures = () => {
           />
 
           <IconAndButtonBox
+            href={routeNames.farms}
             title="Farms"
             desc="Access, Manage and Harvest farms
             instantly."
@@ -58,6 +62,7 @@ const QuantumXFeatures = () => {
           />
 
           <IconAndButtonBox
+            href={routeNames.dca}
             title="DCA"
             desc="One-click Personalised
             or Predefined DCA Portfolios."

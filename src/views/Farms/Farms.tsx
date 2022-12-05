@@ -38,13 +38,13 @@ const Farms = () => {
       dispatch(fetchUserInfo(address));
       dispatch(fetchRanking(address));
       dispatch(fetchWithdrawInfo(address));
-      dispatch(fetchAllFarms());
       dispatch(fetchPrice());
       dispatch(fetchIndex());
+      dispatch(fetchGeneralInfo());
 
       //farms from oteher farms (Quantumn smart constract)
       dispatch(fetchUSerFarmInfo(address));
-      dispatch(fetchGeneralInfo());
+      dispatch(fetchAllFarms());
 
       //elrond network
       dispatch(fetchStats());

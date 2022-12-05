@@ -10,6 +10,7 @@ import {
   ModalHeader,
   Text,
 } from "@chakra-ui/react";
+import { transactionServices } from "@elrondnetwork/dapp-core";
 import { BigIntValue } from "@elrondnetwork/erdjs/out";
 import { contractAddr } from "api/net.config";
 import { EGLDPayment, ESDTTransfer } from "api/sc/calls";
@@ -17,6 +18,7 @@ import BigNumber from "bignumber.js";
 import ActionButton from "components/ActionButton/ActionButton";
 import MyModal from "components/Modal/Modal";
 import { useFormik } from "formik";
+import { useState } from "react";
 import { formatBalance } from "utils/functions/formatBalance";
 import { formatTokenI } from "utils/functions/tokens";
 import useGetUserTokens from "utils/hooks/useGetUserTokens";
@@ -40,14 +42,24 @@ const StakeModal = ({ isOpen, onClose, farm, token }: IProps) => {
       .max(formatBalance(userToken, true)),
   });
 
+  const [sessionId, setSessionId] = useState();
+  const onSuccess = () => {
+    window.location.reload();
+  };
+  const transactionStatus = transactionServices.useTrackTransactionStatus({
+    transactionId: sessionId,
+    onSuccess: onSuccess,
+  });
+
   const formik = useFormik({
     initialValues: {
       amount: "",
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
+      let res = null;
       if (farm.farm.stakingToken === "EGLD") {
-        EGLDPayment(
+        res = await EGLDPayment(
           "farms2",
           "stake",
           Number(values.amount),
@@ -55,7 +67,7 @@ const StakeModal = ({ isOpen, onClose, farm, token }: IProps) => {
           50000000
         );
       } else {
-        ESDTTransfer({
+        res = await ESDTTransfer({
           funcName: "stake",
           token: { identifier: token.identifier, decimals: token.decimals },
           val: Number(values.amount),
@@ -64,6 +76,7 @@ const StakeModal = ({ isOpen, onClose, farm, token }: IProps) => {
           gasL: 50000000,
         });
       }
+      setSessionId(res);
     },
   });
   const handleAmount = (percent: number) => {
