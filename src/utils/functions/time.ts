@@ -47,3 +47,8 @@ export const transfromTime = (sec) => {
     days,
   };
 };
+
+// this function receive elrond epoch and return how many days until that epoch
+export const getRemainingDaysFromEpochs = (epoch: number) => {
+  //   const currentEpoch = await;
+};
