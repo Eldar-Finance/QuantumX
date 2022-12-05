@@ -104,7 +104,7 @@ const Login = ({ isLoginOpen }) => {
             />
           </Flex>
           <Flex flexDir={"column"} alignItems="center" gap={"10px"}>
-            <LoginMethod onClick={handleClose}>
+            <LoginMethod>
               {" "}
               <DappUI.ExtensionLoginButton
                 callbackRoute={routeNames.home}
@@ -113,7 +113,7 @@ const Login = ({ isLoginOpen }) => {
                 className="DappUIButton"
               />
             </LoginMethod>
-            <LoginMethod onClick={handleClose}>
+            <LoginMethod>
               <DappUI.WalletConnectLoginButton
                 callbackRoute={routeNames.home}
                 shouldRenderDefaultCss={false}
@@ -121,7 +121,7 @@ const Login = ({ isLoginOpen }) => {
                 className="DappUIButton"
               />
             </LoginMethod>
-            <LoginMethod onClick={handleClose}>
+            <LoginMethod>
               <DappUI.WebWalletLoginButton
                 callbackRoute={routeNames.home}
                 shouldRenderDefaultCss={false}
@@ -129,7 +129,7 @@ const Login = ({ isLoginOpen }) => {
                 className="DappUIButton"
               />
             </LoginMethod>
-            <LoginMethod onClick={handleClose}>
+            <LoginMethod>
               {" "}
               <DappUI.LedgerLoginButton
                 callbackRoute={routeNames.home}
@@ -167,7 +167,7 @@ const Login = ({ isLoginOpen }) => {
 
 export default Login;
 
-const LoginMethod = ({ children, onClick }) => {
+const LoginMethod = ({ children, onClick = undefined }) => {
   const bg = useColorModeValue("lightGray.lighter", "#202020");
   return (
     <Flex
