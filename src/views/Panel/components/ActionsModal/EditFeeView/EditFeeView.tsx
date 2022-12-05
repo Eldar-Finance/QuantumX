@@ -43,7 +43,6 @@ const EditFeeView = ({ onClose, farm }: IProps) => {
     },
     validationSchema: valUnbound,
     onSubmit: (values) => {
-      console.log(values);
       setEarlyUnbodingFee(farm.farmId, values.unboundingFee);
     },
   });
@@ -56,8 +55,6 @@ const EditFeeView = ({ onClose, farm }: IProps) => {
       setRewardsFee(farm.farmId, values.harvestFee);
     },
   });
-
-  // console.log("formikHarvest", formikHarvest.values);
 
   return (
     <>

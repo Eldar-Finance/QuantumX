@@ -83,7 +83,6 @@ export const fetchCreatorsFarms = createAsyncThunk(
         ),
         unbondingPeriod: farm.field1[3].toNumber(),
       };
-      console.log("data", data);
 
       return data;
     });

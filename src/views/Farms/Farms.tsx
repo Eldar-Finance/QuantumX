@@ -64,7 +64,6 @@ const Farms = () => {
   }, [farms2.data]);
 
   const handleSearch = (query: string) => {
-    console.log(query);
     if (query === "") {
       setFarms2ToSearch(farms2.data);
       setproteoFarmsArrToSearch(proteoFarmsArr);

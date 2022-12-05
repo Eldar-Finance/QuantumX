@@ -51,7 +51,6 @@ const Pools = () => {
   // }, [farms2.data]);
 
   const handleSearch = (query: string) => {
-    console.log(query);
     if (query === "") {
       setproteoPoolsArrToSearch(proteoPoolsArr);
     } else {

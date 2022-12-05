@@ -15,8 +15,6 @@ const Panel = () => {
   const address = useSelector(selectUserAddress);
   useEffect(() => {
     if (address) {
-      console.log("address", address);
-
       dispatch(fetchCreatorsFarms(address));
     }
   }, [address, dispatch]);

@@ -39,10 +39,6 @@ const LockedInPools = () => {
                 { balance: tokenInfo?.staked, decimals: decimals },
                 tokenPrice
               );
-
-              console.log("tokenPrice", tokenPrice);
-              console.log("tokenInfo?.staked", tokenInfo?.staked);
-              console.log("totalLockedonProteoFarms", totalLockedonProteoFarms);
             }
           }
         }

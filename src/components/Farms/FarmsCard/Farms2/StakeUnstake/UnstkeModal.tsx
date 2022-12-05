@@ -86,7 +86,6 @@ const UnstakeModal = ({
       formik.setFieldValue("amount", realmax, false);
     }
   };
-  console.log("userFarmItem?.stakedBalance", userFarmItem?.stakedBalance);
 
   return (
     <MyModal bg="black.baseDark" isOpen={isOpen} onClose={onClose}>

@@ -204,8 +204,6 @@ export const proteo = createSlice({
         type: "pool" | "farm";
       }>
     ) => {
-      console.log("addTvlInEldarFarm type", action.payload.type);
-
       if (state.tvlType !== action.payload.type) {
         state.totalTvlInEldarFarms = [];
       }
