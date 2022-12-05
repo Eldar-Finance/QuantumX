@@ -1,4 +1,4 @@
-import { Box, Center, createIcon, Image } from "@chakra-ui/react";
+import { Box, Center, createIcon, IconProps, Image } from "@chakra-ui/react";
 import EgldLogoImg from "assets/logos/egldlogo.png";
 import multiversxLogo from "assets/logos/multiversx.svg";
 import proteoImg from "assets/logos/proteo.png";
@@ -774,7 +774,12 @@ export const SearchIcon = () => {
 export const MultiversxIcon = () => {
   return <NextImage src={multiversxLogo} alt="" />;
 };
-export const EgldlogoIcon = ({ wp = "5px", ...props }) => {
+
+interface IEgldlogoIconProps extends IconProps {
+  wp: any;
+}
+
+export const EgldlogoIcon = ({ wp = "5px", ...props }: IEgldlogoIconProps) => {
   return (
     <Center p={wp} bg="white" borderRadius={"full"}>
       <EgldPureLogoIcon {...props} />
