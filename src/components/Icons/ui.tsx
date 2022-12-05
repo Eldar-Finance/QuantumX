@@ -776,7 +776,7 @@ export const MultiversxIcon = () => {
 };
 
 interface IEgldlogoIconProps extends IconProps {
-  wp: any;
+  wp?: any;
 }
 
 export const EgldlogoIcon = ({ wp = "5px", ...props }: IEgldlogoIconProps) => {
