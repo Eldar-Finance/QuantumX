@@ -10,6 +10,7 @@ import proteoEgldLpImg from "assets/logos/proteolp.png";
 import zpayWegldImg from "assets/logos/zpaywegld.png";
 import NextImage from "components/NextImage/NextImage";
 
+import rareUsdcImage from "assets/logos/rare-usdc.png";
 import { IProteoFarm } from "utils/types/farms.interface";
 
 export const proteoFarms: {
@@ -74,3 +75,10 @@ const getProteFarmsArr = () => {
 };
 
 export const proteoFarmsArr: IProteoFarm[] = getProteFarmsArr();
+
+export const farms2Data = {
+  RAREUSDC: {
+    logo: rareUsdcImage,
+    name: "RAREUSDCLP",
+  },
+};

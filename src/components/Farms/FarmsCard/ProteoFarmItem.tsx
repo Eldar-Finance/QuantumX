@@ -214,7 +214,9 @@ const ProteoFarmItem = ({ pf }: IProps) => {
                   </Text>
                 </Flex>
                 <Flex flexDir={"column"} textAlign="center">
-                  <Text color="white.400">Apr</Text>
+                  <Text color="white.400" textTransform={"uppercase"}>
+                    Apr
+                  </Text>
                   <Text>{new BigNumber(apr.apr).toFixed(2, 2)}%</Text>
                 </Flex>
                 <Flex flexDir={"column"} textAlign="center">
