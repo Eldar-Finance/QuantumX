@@ -17,12 +17,12 @@ import ActionButton from "components/ActionButton/ActionButton";
 import MyModal from "components/Modal/Modal";
 import { useFormik } from "formik";
 import { formatBalance, setElrondBalance } from "utils/functions/formatBalance";
+import { haveMaxLimit } from "utils/functions/proteo";
 import {
   getBigerTime,
   getFeeBasedInEpoch,
   transfromTime,
-} from "utils/functions/general";
-import { haveMaxLimit } from "utils/functions/proteo";
+} from "utils/functions/time";
 import { IProteoFarm } from "utils/types/farms.interface";
 import * as yup from "yup";
 

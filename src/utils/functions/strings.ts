@@ -1,3 +1,5 @@
+import { SORTTYPE } from "utils/types/farms.interface";
+
 export const cutText = (
   mainText: string,
   length: number = 15
@@ -9,4 +11,16 @@ export const cutText = (
     return [mainText, false];
   }
   return [mainText.slice(0, length) + " ...", true];
+};
+
+export const getTextBySortKey = (sortKey: SORTTYPE) => {
+  switch (sortKey) {
+    case "new":
+      return "New";
+    case "amount":
+      return "Amount";
+
+    default:
+      return "";
+  }
 };

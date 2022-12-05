@@ -58,3 +58,11 @@ export const buildUrlToCollectionPage = (
     ? process.env.NEXT_PUBLIC_HOST + "collections/" + collectionIdentifier
     : "collections/" + collectionIdentifier;
 };
+
+export const getParamFromUrl = (paramName: string) => {
+  if (typeof window !== "undefined") {
+    const url = new URL(window.location.href);
+    const params = new URLSearchParams(url.search);
+    return params.get(paramName);
+  }
+};

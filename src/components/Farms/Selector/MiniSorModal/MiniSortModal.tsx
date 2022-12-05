@@ -1,5 +1,5 @@
 import { Box, BoxProps } from "@chakra-ui/react";
-import { getTextBySortKey } from "utils/functions/general";
+import { getTextBySortKey } from "utils/functions/strings";
 import { SORTTYPE } from "utils/types/farms.interface";
 
 interface IProps extends BoxProps {

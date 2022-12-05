@@ -19,7 +19,7 @@ const EGLDField = ({ value, onChange, balance }) => {
         borderRadius={"lg"}
       >
         <Center>
-          <EgldlogoIcon size={"20px"} />
+          <EgldlogoIcon fontSize={"20px"} />
           <Text fontWeight={"400"} ml={"10px"}>
             EGLD
           </Text>

@@ -42,7 +42,12 @@ const Avilable = ({ farm, userFarmInfo }: IProps) => {
         </Flex>
       </Flex>
       <Center mt="2">
-        <ActionButton onClick={handleHarvest}>HARVEST</ActionButton>
+        <ActionButton
+          onClick={handleHarvest}
+          disabled={userFarmInfo?.harvestableRewards === 0}
+        >
+          HARVEST
+        </ActionButton>
       </Center>
     </Box>
   );

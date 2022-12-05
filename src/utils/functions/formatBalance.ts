@@ -1,6 +1,5 @@
 import BigNumber from "bignumber.js";
-import { numberWithCommas } from "./numbers";
-import { preventExponetialNotation } from "./preventExponetialNotation";
+import { numberWithCommas, preventExponetialNotation } from "./numbers";
 
 export const formatBalance = (
   token: { balance: string | number; decimals?: number; withDots?: boolean },

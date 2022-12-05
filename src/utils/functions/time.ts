@@ -1,17 +1,3 @@
-import { SORTTYPE } from "utils/types/farms.interface";
-
-export const getTextBySortKey = (sortKey: SORTTYPE) => {
-  switch (sortKey) {
-    case "new":
-      return "New";
-    case "amount":
-      return "Amount";
-
-    default:
-      return "";
-  }
-};
-
 export const getFeeBasedInEpoch = (epoch) => {
   if (epoch === undefined || epoch === null) {
     return null;
