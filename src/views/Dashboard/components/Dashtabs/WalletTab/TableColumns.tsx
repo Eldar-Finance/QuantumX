@@ -32,7 +32,7 @@ export const tokenColumns = [
             )}
           </Box>
           <Text
-            fontSize="18px"
+            fontSize={{ xs: "sm", md: "18px" }}
             fontWeight="500"
             textTransform={"uppercase"}
             display={"flex"}
@@ -52,7 +52,7 @@ export const tokenColumns = [
 
       return (
         <Flex
-          fontSize="18px"
+          fontSize={{ xs: "sm", md: "18px" }}
           display={"flex"}
           width={"max-content"}
           alignItems={"center"}
@@ -74,7 +74,7 @@ export const tokenColumns = [
       const token = row.original;
       return (
         <Flex
-          fontSize="18px"
+          fontSize={{ xs: "sm", md: "18px" }}
           flexDir={"column"}
           textAlign={"left"}
           fontWeight="500"

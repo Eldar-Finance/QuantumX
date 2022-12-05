@@ -145,7 +145,7 @@ function SearchTable(props) {
         </Flex>
         <TableWrapperS
           borderRadius={"lg"}
-          p="30px"
+          p={{ xs: "30px 10px", md: "30px" }}
           bg="black.light"
           overflow="auto"
         >
@@ -163,11 +163,11 @@ function SearchTable(props) {
                 <Tr {...headerGroup.getHeaderGroupProps()} key={index}>
                   {headerGroup.headers.map((column, index) => (
                     <Th
+                      px={{ xs: "10px !important", md: "auto" }}
                       {...column.getHeaderProps(column.getSortByToggleProps())}
                       key={index}
                     >
                       <Flex
-                        justify="center"
                         align="center"
                         fontSize={{ sm: "sm", lg: "md" }}
                         textTransform="capitalize"
@@ -192,8 +192,7 @@ function SearchTable(props) {
                       return (
                         <Td
                           {...cell.getCellProps()}
-                          padding={{ xs: "20px 0px 12px 0px ", md: "12px" }}
-                          paddingLeft={"8px"}
+                          px={{ xs: "10px !important", md: "auto" }}
                           key={index}
                           bg="black.baseDark"
                         >
