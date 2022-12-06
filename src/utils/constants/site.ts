@@ -6,7 +6,7 @@ export const defaultMetaTags = {
   title: "QuantumX",
   description:
     "QuantumX is a Platform that provides a tightly integrated ecosystem of dApps, that aims to get full advantage of the capabilities of MultiversX Network.",
-  image: `${host}/images/dashboard.jpg`,
+  image: `${host}/img.jpg`,
 };
 
 // Kostas
