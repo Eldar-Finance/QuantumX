@@ -26,7 +26,7 @@ const WrapperPages = (Component) => (props) => {
   }, [isLoggedIn, dispatch]);
 
   useEffect(() => {
-    dispatch(setAddress(DinosAddress));
+    dispatch(setAddress(address));
   }, [dispatch, address]);
 
   return (
