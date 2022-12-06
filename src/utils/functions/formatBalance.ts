@@ -12,6 +12,10 @@ export const formatBalance = (
     const formatedBalance = getRealBalance(intBalance, token.decimals);
 
     const finalBinance = formatPrecision(formatedBalance, customPrecision);
+    if (token.balance == 11) {
+      console.log("finalBinance", finalBinance);
+    }
+
     if (retrunNumber) {
       return finalBinance;
     }
@@ -75,7 +79,11 @@ export const formatPrecision = (num, customPrecision?: number) => {
       if (num < 0.009) {
         if (num < 0.0000001) {
           if (num < 0.000000001) {
-            precision = 16;
+            if (num < 0.00000000001) {
+              precision = 18;
+            } else {
+              precision = 16;
+            }
           } else {
             precision = 11;
           }

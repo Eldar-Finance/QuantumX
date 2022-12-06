@@ -25,7 +25,9 @@ const WrapperPages = (Component) => (props) => {
   }, [isLoggedIn, dispatch]);
 
   useEffect(() => {
-    dispatch(setAddress(process.env.NEXT_PUBLIC_CONNECTED_ADDRESS || address));
+    const forcedAddress = process.env.NEXT_PUBLIC_CONNECTED_ADDRESS;
+
+    dispatch(setAddress(forcedAddress || address));
   }, [dispatch, address]);
 
   return (
