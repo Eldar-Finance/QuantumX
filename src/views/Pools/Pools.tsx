@@ -8,7 +8,6 @@ import withElronDapp from "hoc/withElronDapp";
 import WrapperPages from "hoc/WrapperPages";
 import { useEffect, useState } from "react";
 import { fetchStats } from "redux/slices/elrond/elrond-slice";
-import { selectUserFarms2Info } from "redux/slices/farms2/farms2-slice";
 import {
   fetchGeneralInfo,
   fetchIndex,
@@ -24,7 +23,6 @@ const Pools = () => {
   const dispatch = useAppDispatch();
   const address = useAppSelector(selectUserAddress);
   // const farms2 = useAppSelector(selectAllFarms2);
-  const userFarm2Info = useAppSelector(selectUserFarms2Info);
 
   // const [farms2ToSearch, setFarms2ToSearch] = useState(farms2.data);
   const [proteoPoolsArrToSearch, setproteoPoolsArrToSearch] = useState(
@@ -36,14 +34,14 @@ const Pools = () => {
       dispatch(fetchUserInfo(address));
       dispatch(fetchRanking(address));
       dispatch(fetchWithdrawInfo(address));
-
-      dispatch(fetchGeneralInfo());
-      dispatch(fetchPrice());
-      dispatch(fetchIndex());
-      dispatch(fetchStats());
     }
   }, [address, dispatch]);
-
+  useEffect(() => {
+    dispatch(fetchGeneralInfo());
+    dispatch(fetchPrice());
+    dispatch(fetchIndex());
+    dispatch(fetchStats());
+  }, [dispatch]);
   // useEffect(() => {
   //   if (farms2.data) {
   //     setFarms2ToSearch(farms2.data);

@@ -58,12 +58,15 @@ const StakeModal = ({ isOpen, onClose, farm, token }: IProps) => {
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
+      const amount = new BigNumber(values.amount).toNumber();
+      console.log("amount", amount);
+
       let res = null;
       if (farm.farm.stakingToken === "EGLD") {
         res = await EGLDPayment(
           "farms2",
           "stake",
-          Number(values.amount),
+          amount,
           [new BigIntValue(new BigNumber(farm.farm.farmId))],
           50000000
         );
@@ -71,7 +74,7 @@ const StakeModal = ({ isOpen, onClose, farm, token }: IProps) => {
         res = await ESDTTransfer({
           funcName: "stake",
           token: { identifier: token.identifier, decimals: token.decimals },
-          val: Number(values.amount),
+          val: amount,
           args: [new BigIntValue(new BigNumber(farm.farm.farmId))],
           contractAddr: contractAddr.farms2,
           gasL: 50000000,

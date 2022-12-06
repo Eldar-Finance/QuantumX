@@ -44,19 +44,21 @@ const Farms = () => {
       dispatch(fetchUserInfo(address));
       dispatch(fetchRanking(address));
       dispatch(fetchWithdrawInfo(address));
-      dispatch(fetchPrice());
-      dispatch(fetchIndex());
-      dispatch(fetchGeneralInfo());
 
       //farms from oteher farms (Quantumn smart constract)
       dispatch(fetchUSerFarmInfo(address));
-      dispatch(fetchAllFarms());
-
-      //elrond network
-      dispatch(fetchStats());
     }
   }, [address, dispatch]);
 
+  useEffect(() => {
+    dispatch(fetchPrice());
+    dispatch(fetchIndex());
+    dispatch(fetchGeneralInfo());
+    dispatch(fetchAllFarms());
+
+    //elrond network
+    dispatch(fetchStats());
+  }, [dispatch]);
   useEffect(() => {
     if (farms2.data) {
       setFarms2ToSearch(farms2.data);

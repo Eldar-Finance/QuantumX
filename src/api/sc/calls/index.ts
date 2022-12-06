@@ -58,11 +58,13 @@ export const ESDTTransfer = async ({
   const tokenIdentifier = token.identifier;
   const multiplyier = Math.pow(10, token.decimals || 18);
   const finalValue = realValue || Number(val) * multiplyier;
+
+  const bgFinalValue = new BigNumber(finalValue).toFixed(0);
   const payload = TransactionPayload.contractCall()
     .setFunction(new ContractFunction("ESDTTransfer"))
     .setArgs([
       BytesValue.fromUTF8(tokenIdentifier),
-      new BigUIntValue(new BigNumber(finalValue)),
+      new BigUIntValue(new BigNumber(bgFinalValue)),
       BytesValue.fromUTF8(funcName),
       ...args,
     ])
