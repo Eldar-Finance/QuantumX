@@ -16,9 +16,12 @@ interface IProps {
 const Avilable = ({ farm, userFarmInfo }: IProps) => {
   const { token: rewardsToken } = useGetElrondToken(farm.farm.rewardToken);
   const handleHarvest = () => {
-    scCall("farms2", "harvest", [
-      new BigUIntValue(new BigNumber(farm.farm.farmId)),
-    ]);
+    scCall(
+      "farms2",
+      "harvest",
+      [new BigUIntValue(new BigNumber(farm.farm.farmId))],
+      50000000
+    );
   };
   return (
     <Box>

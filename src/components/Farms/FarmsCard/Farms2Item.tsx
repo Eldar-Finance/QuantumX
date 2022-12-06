@@ -200,7 +200,7 @@ const Farms2Item = ({ farm, farmUserInfo }: IProps) => {
           <PanelBox>
             <Avilable farm={farm} userFarmInfo={farmUserInfo} />
           </PanelBox>
-          <PanelBox gridColumn={"1/3"}>
+          <PanelBox gridColumn={{ xs: "auto", md: "1/3" }}>
             <StakeUnstake farm={farm} userFarmItem={farmUserInfo} />
           </PanelBox>
         </Grid>

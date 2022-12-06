@@ -68,7 +68,7 @@ const UnstakeModal = ({
             new BigNumber(setElrondBalance(values.amount, token.decimals))
           ),
         ],
-        70000000
+        50000000
       );
     },
   });
