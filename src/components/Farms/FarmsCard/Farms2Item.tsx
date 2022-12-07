@@ -164,16 +164,19 @@ const Farms2Item = ({ farm, farmUserInfo }: IProps) => {
               <Flex flexDir={"column"} textAlign="center">
                 <Text color="white.400">Staked Balance</Text>
                 <Text>
-                  {formatBalance({ balance: farmUserInfo?.stakedBalance })} (${" "}
-                  {formatBalanceDolar(
-                    {
-                      balance: farmUserInfo?.stakedBalance,
-                      decimals: stakingToken.decimals,
-                    },
-                    price,
-                    true
-                  )}
-                  )
+                  {formatBalance({ balance: farmUserInfo?.stakedBalance })}{" "}
+                  <Box as="span" whiteSpace={"nowrap"}>
+                    (${" "}
+                    {formatBalanceDolar(
+                      {
+                        balance: farmUserInfo?.stakedBalance,
+                        decimals: stakingToken.decimals,
+                      },
+                      price,
+                      true
+                    )}
+                    )
+                  </Box>
                 </Text>
               </Flex>
               <Flex flexDir={"column"} textAlign="center">
