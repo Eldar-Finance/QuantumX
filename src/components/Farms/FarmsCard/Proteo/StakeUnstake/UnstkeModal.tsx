@@ -104,7 +104,7 @@ const UnstakeModal = ({
     transfromTime(tokenInfo2?.remainingTime).secs
   );
 
-  const isLp = haveMaxLimit(pf.stakedCoin);
+  const isLp = haveMaxLimit(pf.token);
   return (
     <MyModal bg="black.baseDark" isOpen={isOpen} onClose={onClose}>
       <form onSubmit={formik.handleSubmit}>
@@ -119,7 +119,7 @@ const UnstakeModal = ({
         <Divider />
         <ModalBody>
           <Box bg="black.base" p="5" borderRadius={"xl"}>
-            <Flex mb="2">
+            <Flex mb="2" justifyContent={"space-between"}>
               <Text>
                 Staked:{" "}
                 {formatBalance({
@@ -127,6 +127,36 @@ const UnstakeModal = ({
                   decimals: token.decimals,
                 })}
               </Text>
+              {isLp && (
+                <Flex justifyContent={"flex-end"}>
+                  {fee !== null && (
+                    <Button
+                      mt={2}
+                      as={Box}
+                      textTransform={"uppercase"}
+                      background={"red.500"}
+                      variant={"solid"}
+                      fontSize={"x-small"}
+                      height={"25px"}
+                      width={"auto"}
+                      minWidth={"unset"}
+                      padding={"5px 10px"}
+                      h="auto"
+                      fontWeight={"400"}
+                      color={"gray.200"}
+                      mr={1}
+                      _hover={{
+                        background: "red.500",
+                      }}
+                      _active={{
+                        background: "red.500",
+                      }}
+                    >
+                      {fee} % Fee
+                    </Button>
+                  )}
+                </Flex>
+              )}
             </Flex>
             <Flex mb="3">
               <Input
@@ -145,36 +175,6 @@ const UnstakeModal = ({
               <AmountBox percent={75} onClick={() => handleMax(0.75)} />
               <AmountBox percent={100} onClick={() => handleMax(1)} />
             </Flex>
-            {isLp && (
-              <Flex w="full" justifyContent={"flex-end"}>
-                {fee !== null && (
-                  <Button
-                    mt={2}
-                    as={Box}
-                    textTransform={"uppercase"}
-                    background={"red.500"}
-                    variant={"solid"}
-                    fontSize={"x-small"}
-                    height={"25px"}
-                    width={"auto"}
-                    minWidth={"unset"}
-                    padding={"5px 10px"}
-                    h="auto"
-                    fontWeight={"400"}
-                    color={"gray.200"}
-                    mr={1}
-                    _hover={{
-                      background: "red.500",
-                    }}
-                    _active={{
-                      background: "red.500",
-                    }}
-                  >
-                    {fee} % Fee
-                  </Button>
-                )}
-              </Flex>
-            )}
           </Box>
         </ModalBody>
         <ModalFooter justifyContent={"center"} gap="6" flexWrap={"wrap"}>
