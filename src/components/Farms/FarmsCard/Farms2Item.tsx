@@ -91,7 +91,6 @@ const Farms2Item = ({ farm, farmUserInfo }: IProps) => {
   }, [farm.farm.rewardToken, farm.farm.stakingToken, lpToken2, scFarmAddress]);
 
   const price = stakingToken?.price || lpPrice;
-  console.log("stats", stats);
 
   let apr: string = "-";
   if (

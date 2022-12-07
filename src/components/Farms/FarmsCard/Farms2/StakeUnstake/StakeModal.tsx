@@ -59,7 +59,6 @@ const StakeModal = ({ isOpen, onClose, farm, token }: IProps) => {
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       const amount = new BigNumber(values.amount).toNumber();
-      console.log("amount", amount);
 
       let res = null;
       if (farm.farm.stakingToken === "EGLD") {
