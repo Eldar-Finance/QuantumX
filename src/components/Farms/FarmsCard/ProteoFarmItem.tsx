@@ -34,6 +34,7 @@ import {
   formatBalance,
   formatBalanceDolar,
 } from "utils/functions/formatBalance";
+import { haveMaxLimit } from "utils/functions/proteo";
 import { useAppDispatch, useAppSelector } from "utils/hooks/redux";
 import useGetTokenPrice from "utils/hooks/useGetTokenPrice";
 import { IProteoFarm } from "utils/types/farms.interface";
@@ -166,6 +167,7 @@ const ProteoFarmItem = ({ pf }: IProps) => {
 
   const autoHarversIn =
     Number(lastHarvestEpoch) + Number(hc) - Number(currentEpoch);
+  const isLp = haveMaxLimit(pf.token);
 
   return (
     <ProteoItemContenxt.Provider
@@ -204,7 +206,7 @@ const ProteoFarmItem = ({ pf }: IProps) => {
                       balance: tokenInfo2?.staked,
                       decimals: decimals,
                     })}{" "}
-                    LP ($
+                    {isLp && "LP"} ($
                     {formatBalanceDolar(
                       { balance: tokenInfo2?.staked, decimals: decimals },
                       tokenPrice,

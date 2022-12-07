@@ -3,7 +3,8 @@ import ActionButton from "components/ActionButton/ActionButton";
 import CustomTooltip from "components/CustomTooltip/CustomTooltip";
 import dynamic from "next/dynamic";
 import { useState } from "react";
-import { formatBalance } from "utils/functions/formatBalance";
+import { formatBalance, formatNumber } from "utils/functions/formatBalance";
+import { haveMaxLimit } from "utils/functions/proteo";
 import { IProteoFarm } from "utils/types/farms.interface";
 import { ProteoItemContenxt } from "../../ProteoFarmItem";
 
@@ -25,7 +26,55 @@ const StakeUnstake = ({ pf }: IProps) => {
 
         return (
           <Box>
-            <Text color="white.400">STAKE {pf.stakedCoin} LP</Text>
+            <Flex w="full">
+              <Flex justifyContent={"space-between"} w="full">
+                <Text color="white.400">STAKE {pf.stakedCoin} LP</Text>
+                {!haveMaxLimit(pf.token) && (
+                  <Flex
+                    alignItems={{ xs: "center", md: "flex-end" }}
+                    flexDir="column"
+                    mr={{ xs: 0, md: 3 }}
+                    mb={3}
+                    w={{ xs: "full", md: "auto" }}
+                    fontSize="sm"
+                  >
+                    <Text textAlign={"center"}>
+                      {formatBalance({
+                        balance: tokenInfo?.staked,
+                        decimals: decimals,
+                      })}{" "}
+                      /{" "}
+                      {formatBalance({
+                        balance: tokenInfo?.staked + tokenInfo?.avilableToStake,
+                        decimals: decimals,
+                      })}{" "}
+                      {pf.stakedCoin} Staked
+                    </Text>
+
+                    <Text textAlign={"center"} w="full">
+                      (
+                      {formatNumber(
+                        (formatBalance(
+                          { balance: tokenInfo?.staked, decimals: decimals },
+                          true
+                        ) /
+                          formatBalance(
+                            {
+                              balance:
+                                tokenInfo?.staked + tokenInfo?.avilableToStake,
+                              decimals: decimals,
+                            },
+                            true
+                          )) *
+                          100
+                      )}{" "}
+                      %)
+                    </Text>
+                  </Flex>
+                )}
+              </Flex>
+              <Flex w="full"></Flex>
+            </Flex>
             <Flex mt="2" gap="3">
               <Center w="full">
                 <ActionButton
