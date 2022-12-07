@@ -15,7 +15,10 @@ import { createContext, PropsWithChildren, useEffect, useState } from "react";
 import { IScFarmItem, IScUserFarmInfo } from "utils/types/sc.interface";
 
 import { getLpTokenPrice } from "api/rest/elrondApi/tokens";
+import { fetchLastRewardedEpoch } from "api/sc/queries/farms2";
+import { selectElrondStats } from "redux/slices/elrond/elrond-slice";
 import { addTvlInEldarFarm } from "redux/slices/proteo/proteo";
+import useSWR from "swr";
 import {
   formatBalance,
   formatBalanceDolar,
@@ -23,7 +26,7 @@ import {
 } from "utils/functions/formatBalance";
 import { preventExponetialNotation } from "utils/functions/numbers";
 import { formatTokenI } from "utils/functions/tokens";
-import { useAppDispatch } from "utils/hooks/redux";
+import { useAppDispatch, useAppSelector } from "utils/hooks/redux";
 import useGetElrondToken from "utils/hooks/useGetElrondToken";
 import { farms2Data } from "views/Farms/constants";
 import EarnedRewards from "./Farms2/EarnedRewards/EarnedRewards";
@@ -45,6 +48,12 @@ export const ProteoItemContenxt = createContext({
 const Farms2Item = ({ farm, farmUserInfo }: IProps) => {
   const { token: stakingToken } = useGetElrondToken(farm.farm.stakingToken);
   const { token: rewardToken } = useGetElrondToken(farm.farm.rewardToken);
+  const { data: lastRewardedEpoch } = useSWR<number>(
+    //@ts-ignore
+    farm.farm.farmId,
+    fetchLastRewardedEpoch
+  );
+  const { data: stats } = useAppSelector(selectElrondStats);
   const [lpPrice, setLpPrice] = useState(0);
   const dispatch = useAppDispatch();
   const { logo, name, lpToken2, scFarmAddress } = farms2Data[
@@ -82,18 +91,21 @@ const Farms2Item = ({ farm, farmUserInfo }: IProps) => {
   }, [farm.farm.rewardToken, farm.farm.stakingToken, lpToken2, scFarmAddress]);
 
   const price = stakingToken?.price || lpPrice;
-  let apr: string = "-";
+  console.log("stats", stats);
 
+  let apr: string = "-";
   if (
     stakingToken &&
     rewardToken &&
+    lastRewardedEpoch &&
     farm.totalRewardsLeft > 0 &&
     farm.stakedBalance > 0
   ) {
+    const epochDifference = lastRewardedEpoch - stats.epoch;
     apr =
       formatNumber(
         preventExponetialNotation(
-          (formatBalanceDolar(
+          ((formatBalanceDolar(
             {
               balance: farm.totalRewardsLeft,
               decimals: rewardToken.decimals,
@@ -107,7 +119,9 @@ const Farms2Item = ({ farm, farmUserInfo }: IProps) => {
               },
               price
             )) *
-            100
+            100 *
+            365) /
+            epochDifference
         ).toString()
       ) + "%";
   }
