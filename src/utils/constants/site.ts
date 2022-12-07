@@ -3,9 +3,10 @@ export const host = process.env.NEXT_PUBLIC_HOST;
 
 // HTML metata and og tags, default values for MetaHead.tsx component
 export const defaultMetaTags = {
-  title: "QuantumX",
+  title:
+    "QuantumX Network - Friction-less swaps. Quantum level latency. Next-level interface.",
   description:
-    "QuantumX is a Platform that provides a tightly integrated ecosystem of dApps, that aims to get full advantage of the capabilities of MultiversX Network.",
+    "QuantumX's goal is to create dApps that provide true value to their users, by combining traditional DEFI investing methods with real world applications.",
   image: `${host}/img.jpg`,
 };
 
