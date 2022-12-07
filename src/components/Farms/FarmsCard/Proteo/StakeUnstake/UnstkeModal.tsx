@@ -110,7 +110,7 @@ const UnstakeModal = ({
       <form onSubmit={formik.handleSubmit}>
         <ModalHeader>
           <Flex justifyContent={"space-between"} alignItems="center">
-            <Heading fontSize={"md"}> Stake {pf.stakedCoin}</Heading>{" "}
+            <Heading fontSize={"md"}> Unstake {pf.stakedCoin}</Heading>{" "}
             <ActionButton aria-label="close" bg="transparent" onClick={onClose}>
               <CloseIcon color="main" fontSize={"12px"} cursor="pointer" />
             </ActionButton>
