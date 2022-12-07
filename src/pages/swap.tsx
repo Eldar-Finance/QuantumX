@@ -1,7 +1,17 @@
-import type { NextPage } from "next";
+import { MetaHead } from "components/MetaHead/MetaHead";
 import Swap from "views/Swap/Swap";
-const SwapPage: NextPage = () => {
-  return <Swap />
+const SwapPage = () => {
+  return (
+    <>
+      <MetaHead
+        metaTitle="QuantumX Swap"
+        metaDescription="QuantumX - xExchnage or P2P Swaps"
+        metaImage="/images/swap.png"
+      />
+
+      <Swap />
+    </>
+  );
 };
 
 export default SwapPage;
