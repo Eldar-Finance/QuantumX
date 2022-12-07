@@ -1,10 +1,19 @@
-import { Box, Center, createIcon, IconProps, Image } from "@chakra-ui/react";
+import {
+  Box,
+  Center,
+  createIcon,
+  Flex,
+  IconProps,
+  Image,
+} from "@chakra-ui/react";
 import EgldLogoImg from "assets/logos/egldlogo.png";
+import MexLockdLogoImg from "assets/logos/lkmexlogocopy.png";
 import multiversxLogo from "assets/logos/multiversx.svg";
 import proteoImg from "assets/logos/proteo.png";
 import wegldlogo from "assets/logos/wegldlogo.svg";
 import searchLogo from "assets/ui-elemts/search.svg";
 import NextImage from "components/NextImage/NextImage";
+
 // using `path`
 export const DotsIcon = createIcon({
   displayName: "DotsIcon",
@@ -784,6 +793,16 @@ export const EgldlogoIcon = ({ wp = "5px", ...props }: IEgldlogoIconProps) => {
     <Center p={wp} bg="white" borderRadius={"full"}>
       <EgldPureLogoIcon {...props} />
     </Center>
+  );
+};
+
+export const MexlockIcon = ({ size, ...props }) => {
+  return (
+    <Flex width={"fit-content"} marginRight={3} {...props}>
+      <Box w={size || 4} borderRadius="full">
+        <NextImage layout="responsive" src={MexLockdLogoImg} alt="LkMex" />
+      </Box>
+    </Flex>
   );
 };
 
