@@ -11,10 +11,9 @@ import {
 } from "@chakra-ui/react";
 import NextImage from "components/NextImage/NextImage";
 
-import { createContext, PropsWithChildren, useEffect, useState } from "react";
+import { createContext, PropsWithChildren, useEffect } from "react";
 import { IScFarmItem, IScUserFarmInfo } from "utils/types/sc.interface";
 
-import { getLpTokenPrice } from "api/rest/elrondApi/tokens";
 import { fetchLastRewardedEpoch } from "api/sc/queries/farms2";
 import { selectElrondStats } from "redux/slices/elrond/elrond-slice";
 import { addTvlInEldarFarm } from "redux/slices/proteo/proteo";
@@ -28,6 +27,7 @@ import { preventExponetialNotation } from "utils/functions/numbers";
 import { formatTokenI } from "utils/functions/tokens";
 import { useAppDispatch, useAppSelector } from "utils/hooks/redux";
 import useGetElrondToken from "utils/hooks/useGetElrondToken";
+import useGetLpTokenPrice from "utils/hooks/useGetLpTokenPrice";
 import { farms2Data } from "views/Farms/constants";
 import EarnedRewards from "./Farms2/EarnedRewards/EarnedRewards";
 import EarnTokens from "./Farms2/EarnTokens/EarnTokens";
@@ -53,12 +53,16 @@ const Farms2Item = ({ farm, farmUserInfo }: IProps) => {
     farm.farm.farmId,
     fetchLastRewardedEpoch
   );
-  const { data: stats } = useAppSelector(selectElrondStats);
-  const [lpPrice, setLpPrice] = useState(0);
-  const dispatch = useAppDispatch();
   const { logo, name, lpToken2, scFarmAddress } = farms2Data[
     formatTokenI(farm.farm.stakingToken)
   ];
+  const { data: stats } = useAppSelector(selectElrondStats);
+  const lpPrice = useGetLpTokenPrice(
+    scFarmAddress,
+    lpToken2,
+    farm.farm.stakingToken
+  );
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(
@@ -68,7 +72,7 @@ const Farms2Item = ({ farm, farmUserInfo }: IProps) => {
             balance: farm.stakedBalance,
             decimals: stakingToken.decimals,
           },
-          stakingToken?.price
+          lpPrice
         ),
         id: farm.farm.stakingToken,
         type: "farm",
@@ -78,17 +82,9 @@ const Farms2Item = ({ farm, farmUserInfo }: IProps) => {
     dispatch,
     farm.farm.stakingToken,
     farm.stakedBalance,
+    lpPrice,
     stakingToken.decimals,
-    stakingToken?.price,
   ]);
-
-  useEffect(() => {
-    getLpTokenPrice(scFarmAddress, lpToken2, farm.farm.stakingToken).then(
-      (res) => {
-        setLpPrice(res);
-      }
-    );
-  }, [farm.farm.rewardToken, farm.farm.stakingToken, lpToken2, scFarmAddress]);
 
   const price = stakingToken?.price || lpPrice;
 
