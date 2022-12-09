@@ -15,10 +15,10 @@ import { IProteoFarm } from "utils/types/farms.interface";
 
 export const proteoFarms: {
   ZPAYWEGLD: IProteoFarm;
-  "AERO-EGLD": IProteoFarm;
-  "PROTEO-EGLD": IProteoFarm;
+  AEROWEGLD: IProteoFarm;
+  PROTEOEGLDLP: IProteoFarm;
 } = {
-  "PROTEO-EGLD": {
+  PROTEOEGLDLP: {
     hc: 20,
     Icon: <NextImage alt="" src={proteoEgldLpImg} width={45} />,
     stakedCoin: "PROTEO-EGLD",
@@ -48,7 +48,7 @@ export const proteoFarms: {
     seePair: "https://e-compass.io/maiars/chart/zpay/wegld",
     type: "farm",
   },
-  "AERO-EGLD": {
+  AEROWEGLD: {
     hc: 20,
     Icon: <NextImage alt="" src={aeroEgld} width={45} />,
     stakedCoin: "AERO-WEGLD",
