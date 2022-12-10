@@ -9,6 +9,7 @@ interface IProps {
 
 const EarnTokens = ({ farm }: IProps) => {
   const { token: rewardsToken } = useGetElrondToken(farm.farm.rewardToken);
+  console.log("rewardsToken", rewardsToken);
 
   return (
     <Flex flexDir={"column"} textAlign="center">
@@ -16,10 +17,10 @@ const EarnTokens = ({ farm }: IProps) => {
         Earn
       </Text>
       <Center gap={2}>
-        {rewardsToken?.assets?.pngUrl && (
+        {rewardsToken?.assets?.svgUrl && (
           <NextImage
             alt=""
-            src={rewardsToken.assets.pngUrl}
+            src={rewardsToken.assets.svgUrl}
             height={27}
             width={27}
           />

@@ -10,9 +10,10 @@ interface IProps {
     allFarms: IScFarmItem[];
     userFarmInfo: IScUserFarmInfo[];
   };
+  isPool?: boolean;
 }
 
-const FarmsCard = ({ proteoArr, othersArr = null }: IProps) => {
+const FarmsCard = ({ proteoArr, isPool, othersArr = null }: IProps) => {
   return (
     <Accordion allowMultiple borderRadius={"xl"} overflow="hidden" w="full">
       {proteoArr.map((pf) => {
@@ -28,6 +29,7 @@ const FarmsCard = ({ proteoArr, othersArr = null }: IProps) => {
                 farmUserInfo={othersArr.userFarmInfo.find(
                   (userFarm) => userFarm.farmId === f.farm.farmId
                 )}
+                logoSize={isPool ? 45 : 27}
               />
             );
           })}

@@ -37,6 +37,7 @@ import Avilable from "./Farms2/Withdraw/Avilable";
 interface IProps {
   farm: IScFarmItem;
   farmUserInfo: IScUserFarmInfo;
+  logoSize?: number;
 }
 
 export const ProteoItemContenxt = createContext({
@@ -45,7 +46,7 @@ export const ProteoItemContenxt = createContext({
   decimals: 0,
 });
 
-const Farms2Item = ({ farm, farmUserInfo }: IProps) => {
+const Farms2Item = ({ farm, logoSize, farmUserInfo }: IProps) => {
   const { token: stakingToken } = useGetElrondToken(farm.farm.stakingToken);
   const { token: rewardToken } = useGetElrondToken(farm.farm.rewardToken);
   const { data: lastRewardedEpoch } = useSWR<number>(
@@ -150,14 +151,14 @@ const Farms2Item = ({ farm, farmUserInfo }: IProps) => {
                     src={
                       stakingToken.assets.pngUrl || stakingToken?.assets?.svgUrl
                     }
-                    height={27}
-                    width={27}
+                    height={logoSize || 27}
+                    width={logoSize || 27}
                   />
                 ) : (
                   <NextImage src={logo} alt="rareusdc" height={45} width={45} />
                 )}
 
-                <Text fontWeight={"600"}>{name}</Text>
+                <Text fontWeight={"600"}>{name || stakingToken.name}</Text>
               </Flex>
               <Flex flexDir={"column"} textAlign="center">
                 <Text color="white.400">Staked Balance</Text>

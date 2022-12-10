@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { fetchStats } from "redux/slices/elrond/elrond-slice";
 import {
-  selectAllFarms2,
+  selectFarms,
   selectUserFarms2Info,
 } from "redux/slices/farms2/farms2-slice";
 import { fetchAllFarms, fetchUSerFarmInfo } from "redux/slices/farms2/funcs";
@@ -30,10 +30,10 @@ import { proteoFarmsArr } from "./constants";
 const Farms = () => {
   const dispatch = useAppDispatch();
   const address = useAppSelector(selectUserAddress);
-  const farms2 = useSelector(selectAllFarms2);
   const userFarm2Info = useSelector(selectUserFarms2Info);
+  const farms2 = useSelector(selectFarms);
 
-  const [farms2ToSearch, setFarms2ToSearch] = useState(farms2.data);
+  const [farms2ToSearch, setFarms2ToSearch] = useState(farms2);
   const [proteoFarmsArrToSearch, setproteoFarmsArrToSearch] = useState(
     proteoFarmsArr
   );
@@ -60,17 +60,17 @@ const Farms = () => {
     dispatch(fetchStats());
   }, [dispatch]);
   useEffect(() => {
-    if (farms2.data) {
-      setFarms2ToSearch(farms2.data);
+    if (farms2) {
+      setFarms2ToSearch(farms2);
     }
-  }, [farms2.data]);
+  }, [farms2]);
 
   const handleSearch = (query: string) => {
     if (query === "") {
-      setFarms2ToSearch(farms2.data);
+      setFarms2ToSearch(farms2);
       setproteoFarmsArrToSearch(proteoFarmsArr);
     } else {
-      const newFarm2 = farms2.data.filter((farm) => {
+      const newFarm2 = farms2.filter((farm) => {
         return (
           formatTokenI(farm.farm.stakingToken)
             .toString()

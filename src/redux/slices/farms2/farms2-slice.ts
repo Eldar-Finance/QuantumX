@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { toknesID } from "api/net.config";
 import { AppState } from "redux/store";
 import { STATUS } from "utils/types/core.interface";
 import {
@@ -101,6 +102,14 @@ export const generalSlice = createSlice({
 export const {} = generalSlice.actions;
 
 export const selectAllFarms2 = (state: AppState) => state.farms2.allFarms;
+export const selectFarms = (state: AppState) =>
+  state.farms2.allFarms.data.filter(
+    (farm) => farm.farm.stakingToken !== toknesID.rare
+  );
+export const selectPools = (state: AppState) =>
+  state.farms2.allFarms.data.filter(
+    (farm) => farm.farm.stakingToken === toknesID.rare
+  );
 export const selectCreatorsFarms = (state: AppState) =>
   state.farms2.creatorsFarms;
 export const selectUserFarms2Info = (state: AppState) =>
