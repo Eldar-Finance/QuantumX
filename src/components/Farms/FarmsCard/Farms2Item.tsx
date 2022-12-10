@@ -55,7 +55,9 @@ const Farms2Item = ({ farm, farmUserInfo }: IProps) => {
   );
   const { logo, name, lpToken2, scFarmAddress } = farms2Data[
     formatTokenI(farm.farm.stakingToken)
-  ];
+  ]
+    ? farms2Data[formatTokenI(farm.farm.stakingToken)]
+    : { logo: "", name: "", lpToken2: "", scFarmAddress: "" };
   const { data: stats } = useAppSelector(selectElrondStats);
   const lpPrice = useGetLpTokenPrice(
     scFarmAddress,
