@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { admins } from "utils/constants/site";
 
 import { getRealBalance } from "utils/functions/formatBalance";
 
@@ -114,11 +115,11 @@ export const userAccount = createSlice({
   initialState,
   reducers: {
     setAddress: (state, action) => {
-      // if (addressAdmin.find((addr) => addr === action.payload)) {
-      //   state.isAdmin = true;
-      // } else {
-      //   state.isAdmin = false;
-      // }
+      if (admins.find((addr) => addr === action.payload)) {
+        state.isAdmin = true;
+      } else {
+        state.isAdmin = false;
+      }
       state.connectedAddress = action.payload;
     },
     setTotalBalance: (state, action) => {

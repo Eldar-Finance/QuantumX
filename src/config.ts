@@ -107,4 +107,5 @@ export const TOKENS_ID = {
   crt: "CRT-52decf",
   koson: "KOSON-5dd4fa",
   wegld: "WEGLD-bd4d79",
+  rare: "RARE-99e8b0",
 };

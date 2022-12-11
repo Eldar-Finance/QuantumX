@@ -2,7 +2,6 @@
 /* eslint-disable @next/next/next-script-for-ga */
 import { Head, Html, Main, NextScript } from "next/document";
 import Script from "next/script";
-import React from "react";
 const MyDocument = () => {
   return (
     <Html lang="en" dir="ltr" prefix="og: https://ogp.me/ns#">
@@ -23,6 +22,20 @@ const MyDocument = () => {
       gtag('config', 'G-VKFT6SXBQ0');
       `}
         </Script>
+
+        <link rel="manifest" href="/manifest.json" />
+        <link
+          href="/icons/favicon-16x16.png"
+          rel="icon"
+          type="image/png"
+          sizes="16x16"
+        />
+        <link
+          href="/icons/favicon-32x32.png"
+          rel="icon"
+          type="image/png"
+          sizes="32x32"
+        />
       </Head>
 
       <body>

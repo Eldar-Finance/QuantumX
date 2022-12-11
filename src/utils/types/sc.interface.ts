@@ -8,7 +8,7 @@ export interface IScFarm2 {
 export interface IScFarmItem {
   farm: IScFarm2;
   stakedBalance: number;
-  apr: number;
+  totalRewardsLeft: number;
 }
 
 export interface IScUserFarmInfo {

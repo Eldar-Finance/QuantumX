@@ -14,14 +14,21 @@ import NextImage from "components/NextImage/NextImage";
 import { createContext, PropsWithChildren, useEffect } from "react";
 import { IScFarmItem, IScUserFarmInfo } from "utils/types/sc.interface";
 
+import { fetchLastRewardedEpoch } from "api/sc/queries/farms2";
+import { selectElrondStats } from "redux/slices/elrond/elrond-slice";
 import { addTvlInEldarFarm } from "redux/slices/proteo/proteo";
+import useSWR from "swr";
 import {
   formatBalance,
   formatBalanceDolar,
+  formatNumber,
 } from "utils/functions/formatBalance";
+import { preventExponetialNotation } from "utils/functions/numbers";
 import { formatTokenI } from "utils/functions/tokens";
-import { useAppDispatch } from "utils/hooks/redux";
+import { useAppDispatch, useAppSelector } from "utils/hooks/redux";
 import useGetElrondToken from "utils/hooks/useGetElrondToken";
+import useGetLpTokenPrice from "utils/hooks/useGetLpTokenPrice";
+import { farms2Data } from "views/Farms/constants";
 import EarnedRewards from "./Farms2/EarnedRewards/EarnedRewards";
 import EarnTokens from "./Farms2/EarnTokens/EarnTokens";
 import StakeUnstake from "./Farms2/StakeUnstake/StakeUnstake";
@@ -30,6 +37,7 @@ import Avilable from "./Farms2/Withdraw/Avilable";
 interface IProps {
   farm: IScFarmItem;
   farmUserInfo: IScUserFarmInfo;
+  logoSize?: number;
 }
 
 export const ProteoItemContenxt = createContext({
@@ -38,9 +46,27 @@ export const ProteoItemContenxt = createContext({
   decimals: 0,
 });
 
-const Farms2Item = ({ farm, farmUserInfo }: IProps) => {
+const Farms2Item = ({ farm, logoSize, farmUserInfo }: IProps) => {
   const { token: stakingToken } = useGetElrondToken(farm.farm.stakingToken);
+  const { token: rewardToken } = useGetElrondToken(farm.farm.rewardToken);
+  const { data: lastRewardedEpoch } = useSWR<number>(
+    //@ts-ignore
+    farm.farm.farmId,
+    fetchLastRewardedEpoch
+  );
+  const { logo, name, lpToken2, scFarmAddress } = farms2Data[
+    formatTokenI(farm.farm.stakingToken)
+  ]
+    ? farms2Data[formatTokenI(farm.farm.stakingToken)]
+    : { logo: "", name: "", lpToken2: "", scFarmAddress: "" };
+  const { data: stats } = useAppSelector(selectElrondStats);
+  const lpPrice = useGetLpTokenPrice(
+    scFarmAddress,
+    lpToken2,
+    farm.farm.stakingToken
+  );
   const dispatch = useAppDispatch();
+
   useEffect(() => {
     dispatch(
       addTvlInEldarFarm({
@@ -49,7 +75,7 @@ const Farms2Item = ({ farm, farmUserInfo }: IProps) => {
             balance: farm.stakedBalance,
             decimals: stakingToken.decimals,
           },
-          stakingToken?.price
+          lpPrice
         ),
         id: farm.farm.stakingToken,
         type: "farm",
@@ -59,9 +85,44 @@ const Farms2Item = ({ farm, farmUserInfo }: IProps) => {
     dispatch,
     farm.farm.stakingToken,
     farm.stakedBalance,
+    lpPrice,
     stakingToken.decimals,
-    stakingToken?.price,
   ]);
+
+  const price = stakingToken?.price || lpPrice;
+
+  let apr: string = "-";
+  if (
+    stakingToken &&
+    rewardToken &&
+    lastRewardedEpoch &&
+    farm.totalRewardsLeft > 0 &&
+    farm.stakedBalance > 0
+  ) {
+    const epochDifference = lastRewardedEpoch - stats.epoch;
+    apr =
+      formatNumber(
+        preventExponetialNotation(
+          ((formatBalanceDolar(
+            {
+              balance: farm.totalRewardsLeft,
+              decimals: rewardToken.decimals,
+            },
+            rewardToken.price
+          ) /
+            formatBalanceDolar(
+              {
+                balance: farm.stakedBalance,
+                decimals: stakingToken.decimals,
+              },
+              price
+            )) *
+            100 *
+            365) /
+            epochDifference
+        ).toString()
+      ) + "%";
+  }
 
   return (
     <AccordionItem w="full">
@@ -83,39 +144,45 @@ const Farms2Item = ({ farm, farmUserInfo }: IProps) => {
               templateColumns={{ xs: "1fr", md: "1fr 1fr 1fr 1fr 1fr" }}
             >
               <Flex gap="4" alignItems={"center"}>
-                {(stakingToken?.assets?.pngUrl ||
-                  stakingToken?.assets?.svgUrl) && (
+                {stakingToken?.assets?.pngUrl ||
+                stakingToken?.assets?.svgUrl ? (
                   <NextImage
                     alt=""
                     src={
                       stakingToken.assets.pngUrl || stakingToken?.assets?.svgUrl
                     }
-                    height={27}
-                    width={27}
+                    height={logoSize || 27}
+                    width={logoSize || 27}
                   />
+                ) : (
+                  <NextImage src={logo} alt="rareusdc" height={45} width={45} />
                 )}
 
-                <Text fontWeight={"600"}>
-                  {formatTokenI(farm.farm.stakingToken)}
-                </Text>
+                <Text fontWeight={"600"}>{name || stakingToken.name}</Text>
               </Flex>
               <Flex flexDir={"column"} textAlign="center">
                 <Text color="white.400">Staked Balance</Text>
                 <Text>
-                  {formatBalance({ balance: farmUserInfo?.stakedBalance })} (${" "}
-                  {formatBalanceDolar(
-                    {
-                      balance: farmUserInfo?.stakedBalance,
-                      decimals: stakingToken.decimals,
-                    },
-                    stakingToken?.price
-                  )}
-                  )
+                  {formatBalance({ balance: farmUserInfo?.stakedBalance })}{" "}
+                  <Box as="span" whiteSpace={"nowrap"}>
+                    (${" "}
+                    {formatBalanceDolar(
+                      {
+                        balance: farmUserInfo?.stakedBalance,
+                        decimals: stakingToken.decimals,
+                      },
+                      price,
+                      true
+                    )}
+                    )
+                  </Box>
                 </Text>
               </Flex>
               <Flex flexDir={"column"} textAlign="center">
-                <Text color="white.400">Apr</Text>
-                <Text>{farm.apr} %</Text>
+                <Text textTransform={"uppercase"} color="white.400">
+                  Apr
+                </Text>
+                <Text>{apr}</Text>
               </Flex>
               <Flex flexDir={"column"} textAlign="center">
                 <Text color="white.400">Total Value Locked</Text>
@@ -126,7 +193,8 @@ const Farms2Item = ({ farm, farmUserInfo }: IProps) => {
                       balance: farm.stakedBalance,
                       decimals: stakingToken.decimals,
                     },
-                    stakingToken?.price
+                    price,
+                    true
                   )}
                 </Text>
               </Flex>
@@ -147,7 +215,7 @@ const Farms2Item = ({ farm, farmUserInfo }: IProps) => {
           <PanelBox>
             <Avilable farm={farm} userFarmInfo={farmUserInfo} />
           </PanelBox>
-          <PanelBox gridColumn={"1/3"}>
+          <PanelBox gridColumn={{ xs: "auto", md: "1/3" }}>
             <StakeUnstake farm={farm} userFarmItem={farmUserInfo} />
           </PanelBox>
         </Grid>

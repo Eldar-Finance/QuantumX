@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { getEconomics, getNetworkStats } from "api/rest/elrondApi/network";
+import { AppState } from "redux/store";
 import {
   executeFetch,
   waitToResetStatus,
@@ -82,6 +83,8 @@ export const elrond = createSlice({
       });
   },
 });
+
+export const selectElrondStats = (state: AppState) => state.elrond.stats;
 
 // Action creators are generated for each case reducer function
 export const { resetFetchStats, resetFetcheconomics } = elrond.actions;

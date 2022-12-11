@@ -21,10 +21,25 @@ export const MetaHead = memo(
         <link rel="preconnect" href="https://egld.community/" />
         <title key="titleTag">{title}</title>
 
-        <link rel="canonical" href={canonicalURL} />
-        <meta charSet="utf-8" key="utf-8" />
+        <link rel="manifest" href="/manifest.json" />
+        <link
+          href="/icons/favicon-16x16.png"
+          rel="icon"
+          type="image/png"
+          sizes="16x16"
+        />
+        <link
+          href="/icons/favicon-32x32.png"
+          rel="icon"
+          type="image/png"
+          sizes="32x32"
+        />
+        <link rel="apple-touch-icon" href="/apple-icon.png"></link>
+        <meta name="theme-color" content="#317EFB" />
         <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon.png" />
+        <link rel="canonical" href={canonicalURL} />
+        <meta charSet="utf-8" key="utf-8" />
         <meta key="REPLY-TO" name="REPLY-TO" content="team@eldar.finance" />
         <meta key="author" name="author" content="Armando Martin" />
         <meta key="copyright" name="copyright" content="Eldar team" />

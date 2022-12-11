@@ -15,6 +15,7 @@ import ActionButton from "components/ActionButton/ActionButton";
 import MyModal from "components/Modal/Modal";
 import { useFormik } from "formik";
 import { formatBalance, setElrondBalance } from "utils/functions/formatBalance";
+import { preventExponetialNotation } from "utils/functions/numbers";
 import { formatTokenI } from "utils/functions/tokens";
 import { IElrondToken } from "utils/types/elrond.interface";
 import { IScFarmItem, IScUserFarmInfo } from "utils/types/sc.interface";
@@ -67,7 +68,7 @@ const UnstakeModal = ({
             new BigNumber(setElrondBalance(values.amount, token.decimals))
           ),
         ],
-        70000000
+        50000000
       );
     },
   });
@@ -82,8 +83,9 @@ const UnstakeModal = ({
         true
       );
       const realmax = percent * max;
+      const finalAmount = preventExponetialNotation(realmax);
 
-      formik.setFieldValue("amount", realmax, false);
+      formik.setFieldValue("amount", finalAmount, false);
     }
   };
 

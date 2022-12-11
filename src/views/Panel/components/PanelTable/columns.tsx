@@ -14,7 +14,7 @@ export const panelColumns = [
     Cell: ({ row }) => {
       const data: IScPanelFarms = row.original;
 
-      return <Flex justify={"center"}>{data.farm.farmId}</Flex>;
+      return <Flex>{data.farm.farmId}</Flex>;
     },
   },
   {
@@ -44,8 +44,8 @@ export const panelColumns = [
     Header: "Reward Until",
     accessor: "date",
     Cell: ({ row }) => {
-      const data: IScPanelFarms = row.original;
-      return <Flex justify={"center"}> {data.lastReawardEpoch}</Flex>;
+      const data = row.original;
+      return <Flex justify={"center"}> {data.days}</Flex>;
     },
   },
   {

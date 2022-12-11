@@ -20,6 +20,7 @@ import MyModal from "components/Modal/Modal";
 import { useFormik } from "formik";
 import { useState } from "react";
 import { formatBalance } from "utils/functions/formatBalance";
+import { preventExponetialNotation } from "utils/functions/numbers";
 import { formatTokenI } from "utils/functions/tokens";
 import useGetUserTokens from "utils/hooks/useGetUserTokens";
 import { IElrondToken } from "utils/types/elrond.interface";
@@ -57,12 +58,14 @@ const StakeModal = ({ isOpen, onClose, farm, token }: IProps) => {
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
+      const amount = new BigNumber(values.amount).toNumber();
+
       let res = null;
       if (farm.farm.stakingToken === "EGLD") {
         res = await EGLDPayment(
           "farms2",
           "stake",
-          Number(values.amount),
+          amount,
           [new BigIntValue(new BigNumber(farm.farm.farmId))],
           50000000
         );
@@ -70,7 +73,7 @@ const StakeModal = ({ isOpen, onClose, farm, token }: IProps) => {
         res = await ESDTTransfer({
           funcName: "stake",
           token: { identifier: token.identifier, decimals: token.decimals },
-          val: Number(values.amount),
+          val: amount,
           args: [new BigIntValue(new BigNumber(farm.farm.farmId))],
           contractAddr: contractAddr.farms2,
           gasL: 50000000,
@@ -83,8 +86,9 @@ const StakeModal = ({ isOpen, onClose, farm, token }: IProps) => {
     if (userToken) {
       const userTokenAmount = formatBalance(userToken, true);
       const userRealAmount = percent * userTokenAmount;
+      const finalAmount = preventExponetialNotation(userRealAmount);
 
-      formik.setFieldValue("amount", userRealAmount, false);
+      formik.setFieldValue("amount", finalAmount, false);
     }
   };
   return (

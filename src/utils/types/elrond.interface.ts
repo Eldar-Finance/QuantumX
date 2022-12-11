@@ -163,6 +163,16 @@ export interface IElrondEconomics {
   baseApr: number;
   tokenMarketCap: number;
 }
+export interface IElrondStats {
+  shards: number;
+  blocks: number;
+  accounts: number;
+  transactions: number;
+  refreshRate: number;
+  epoch: number;
+  roundsPassed: number;
+  roundsPerEpoch: number;
+}
 
 export interface IElrondToken {
   type: ElrondType;

@@ -12,6 +12,7 @@ export const formatBalance = (
     const formatedBalance = getRealBalance(intBalance, token.decimals);
 
     const finalBinance = formatPrecision(formatedBalance, customPrecision);
+
     if (retrunNumber) {
       return finalBinance;
     }
@@ -40,8 +41,10 @@ export const formatBalanceDolar = (
     const intBalanceDolar = intBalance * Number(price);
     const formatedBalance = getRealBalance(intBalanceDolar, token.decimals);
     const finalBinance = formatPrecision(formatedBalance);
+    const withoutExponential = preventExponetialNotation(finalBinance);
+
     if (toString) {
-      return numberWithCommas(finalBinance);
+      return numberWithCommas(withoutExponential);
     }
     return finalBinance;
   }
@@ -73,7 +76,11 @@ export const formatPrecision = (num, customPrecision?: number) => {
       if (num < 0.009) {
         if (num < 0.0000001) {
           if (num < 0.000000001) {
-            precision = 16;
+            if (num < 0.00000000001) {
+              precision = 18;
+            } else {
+              precision = 16;
+            }
           } else {
             precision = 11;
           }
@@ -97,7 +104,7 @@ export const formatPrecision = (num, customPrecision?: number) => {
   return parseInt(String(num * exp), 10) / exp;
 };
 
-export const formatNumber = (number?: number) => {
+export const formatNumber = (number?: number | string) => {
   if (!number && number !== 0) {
     return null;
   }

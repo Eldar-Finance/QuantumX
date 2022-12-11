@@ -57,7 +57,6 @@ export const routes: {
     path: routeNames.eLBadges,
     name: "SFT Staking",
     onModal: true,
-    soon: true,
   },
   investors: {
     path: routeNames.investors,

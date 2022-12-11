@@ -10,14 +10,15 @@ import proteoEgldLpImg from "assets/logos/proteolp.png";
 import zpayWegldImg from "assets/logos/zpaywegld.png";
 import NextImage from "components/NextImage/NextImage";
 
+import rareUsdcImage from "assets/logos/rare-usdc.png";
 import { IProteoFarm } from "utils/types/farms.interface";
 
 export const proteoFarms: {
   ZPAYWEGLD: IProteoFarm;
-  "AERO-EGLD": IProteoFarm;
-  "PROTEO-EGLD": IProteoFarm;
+  AEROWEGLD: IProteoFarm;
+  PROTEOEGLDLP: IProteoFarm;
 } = {
-  "PROTEO-EGLD": {
+  PROTEOEGLDLP: {
     hc: 20,
     Icon: <NextImage alt="" src={proteoEgldLpImg} width={45} />,
     stakedCoin: "PROTEO-EGLD",
@@ -47,7 +48,7 @@ export const proteoFarms: {
     seePair: "https://e-compass.io/maiars/chart/zpay/wegld",
     type: "farm",
   },
-  "AERO-EGLD": {
+  AEROWEGLD: {
     hc: 20,
     Icon: <NextImage alt="" src={aeroEgld} width={45} />,
     stakedCoin: "AERO-WEGLD",
@@ -74,3 +75,14 @@ const getProteFarmsArr = () => {
 };
 
 export const proteoFarmsArr: IProteoFarm[] = getProteFarmsArr();
+
+export const farms2Data = {
+  RAREUSDC: {
+    logo: rareUsdcImage,
+    name: "RAREUSDCLP",
+    lpToken1: toknesID.rare,
+    lpToken2: toknesID.usdc,
+    scFarmAddress:
+      "erd1qqqqqqqqqqqqqpgqjz5k2a7ed2xtd0d92zt0j8e7aap70y7g2jpsjz5z4r",
+  },
+};

@@ -1,13 +1,14 @@
 import { getEconomics } from "api/rest/elrondApi/network";
-import { getFromAllTokens } from "api/rest/elrondApi/tokens";
+import { getFromAllTokens, getLpTokenPrice } from "api/rest/elrondApi/tokens";
 import { getMaiarTokens } from "api/rest/others/MaiarTokens";
 import AmountBox1 from "components/InfoBox/AmountBox1";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { selectAllFarms2 } from "redux/slices/farms2/farms2-slice";
 import { formatBalanceDolar } from "utils/functions/formatBalance";
+import { formatTokenI } from "utils/functions/tokens";
 import { useAppDispatch, useAppSelector } from "utils/hooks/redux";
-import { proteoFarmsArr } from "views/Farms/constants";
+import { farms2Data, proteoFarmsArr } from "views/Farms/constants";
 
 const LockedInFarms = () => {
   const dispatch = useAppDispatch();
@@ -22,6 +23,7 @@ const LockedInFarms = () => {
       if (generalInfoAppData && farms2.data) {
         let totalLockedonProteoFarms = 0;
 
+        // get amount locked on proteo farms in dollars
         for (let i = 0; i < proteoFarmsArr.length; i++) {
           const pf = proteoFarmsArr[i];
 
@@ -45,6 +47,7 @@ const LockedInFarms = () => {
           }
         }
 
+        // get amount locked on quantumn sc farms in dollars
         for (let i = 0; i < farms2.data.length; i++) {
           const farm = farms2.data[i];
 
@@ -79,15 +82,23 @@ const LockedInFarms = () => {
 
           const stakingToken = manualData || dataApi;
 
+          const { lpToken2, scFarmAddress } = farms2Data[
+            formatTokenI(farm.farm.stakingToken)
+          ];
+          const lpPrice = await getLpTokenPrice(
+            scFarmAddress,
+            lpToken2,
+            farm.farm.stakingToken
+          );
+
           totalLockedonProteoFarms += formatBalanceDolar(
             {
               balance: farm.stakedBalance,
               decimals: stakingToken.decimals,
             },
-            stakingToken?.price
+            lpPrice
           );
         }
-
         setTotalValueLocked(totalLockedonProteoFarms);
       }
     };
