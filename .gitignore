@@ -42,3 +42,4 @@ public/workbox-327c579b.js.map
 public/workbox-327c579b.js
 public/sw.js.map
 src/api/net.config.ts
+.env
