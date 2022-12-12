@@ -28,7 +28,9 @@ const StakeUnstake = ({ pf }: IProps) => {
           <Box>
             <Flex w="full">
               <Flex justifyContent={"space-between"} w="full">
-                <Text color="white.400">STAKE {pf.stakedCoin} LP</Text>
+                <Text color="white.400">
+                  STAKE {pf.stakedCoin} {pf.type !== "pool" && "LP"}
+                </Text>
                 {!haveMaxLimit(pf.token) && (
                   <Flex
                     alignItems={{ xs: "center", md: "flex-end" }}
@@ -83,7 +85,7 @@ const StakeUnstake = ({ pf }: IProps) => {
                   w="full"
                   maxW={"500px"}
                 >
-                  STAKE LP
+                  STAKE {pf.type !== "pool" && "LP"}
                 </ActionButton>
               </Center>
               <Center flexDir={"column"} w="full">

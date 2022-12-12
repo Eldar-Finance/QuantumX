@@ -167,7 +167,10 @@ const UnstakeModal = ({
                 value={formik.values.amount}
                 onChange={formik.handleChange}
               />{" "}
-              <Text fontSize={"14px"}>{pf?.stakedCoin}-LP</Text>
+              <Text fontSize={"14px"}>
+                {pf?.stakedCoin}
+                {pf.type !== "pool" && "-LP"}
+              </Text>
             </Flex>
             <Flex justifyContent={"flex-end"} gap="1">
               <AmountBox percent={25} onClick={() => handleMax(0.25)} />
