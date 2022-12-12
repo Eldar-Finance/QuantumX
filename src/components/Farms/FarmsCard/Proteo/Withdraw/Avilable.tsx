@@ -36,7 +36,9 @@ const Avilable = ({ pf }: IProps) => {
         </Flex>
       </Flex>
       <Center mt="2">
-        <ActionButton onClick={handleWithDraw}>WITHDRAW</ActionButton>
+        <ActionButton onClick={() => handleWithDraw(t?.tokenI)}>
+          WITHDRAW
+        </ActionButton>
       </Center>
     </Box>
   );
