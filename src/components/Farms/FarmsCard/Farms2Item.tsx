@@ -38,6 +38,7 @@ interface IProps {
   farm: IScFarmItem;
   farmUserInfo: IScUserFarmInfo;
   logoSize?: number;
+  isPool?: boolean;
 }
 
 export const ProteoItemContenxt = createContext({
@@ -46,7 +47,7 @@ export const ProteoItemContenxt = createContext({
   decimals: 0,
 });
 
-const Farms2Item = ({ farm, logoSize, farmUserInfo }: IProps) => {
+const Farms2Item = ({ farm, logoSize, isPool, farmUserInfo }: IProps) => {
   const { token: stakingToken } = useGetElrondToken(farm.farm.stakingToken);
   const { token: rewardToken } = useGetElrondToken(farm.farm.rewardToken);
   const { data: lastRewardedEpoch } = useSWR<number>(
@@ -216,7 +217,11 @@ const Farms2Item = ({ farm, logoSize, farmUserInfo }: IProps) => {
             <Avilable farm={farm} userFarmInfo={farmUserInfo} />
           </PanelBox>
           <PanelBox gridColumn={{ xs: "auto", md: "1/3" }}>
-            <StakeUnstake farm={farm} userFarmItem={farmUserInfo} />
+            <StakeUnstake
+              farm={farm}
+              userFarmItem={farmUserInfo}
+              isPool={isPool}
+            />
           </PanelBox>
         </Grid>
       </AccordionPanel>

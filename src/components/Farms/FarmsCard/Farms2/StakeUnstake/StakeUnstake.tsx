@@ -12,9 +12,10 @@ const UnstakeModal: any = dynamic(() => import("./UnstkeModal"));
 interface IProps {
   farm: IScFarmItem;
   userFarmItem: IScUserFarmInfo;
+  isPool?: boolean;
 }
 
-const StakeUnstake = ({ farm, userFarmItem }: IProps) => {
+const StakeUnstake = ({ farm, userFarmItem, isPool }: IProps) => {
   const [openStake, setOpenStake] = useState(false);
   const [openUnstakeStake, setOpenUnstakeStake] = useState(false);
   const { token: rewardsToken } = useGetElrondToken(farm.farm.rewardToken);
@@ -23,7 +24,7 @@ const StakeUnstake = ({ farm, userFarmItem }: IProps) => {
   return (
     <Flex h="full" flexDir={"column"}>
       <Text color="white.400">
-        STAKE {formatTokenI(farm.farm.stakingToken)} LP
+        STAKE {formatTokenI(farm.farm.stakingToken)} {!isPool && "LP"}
       </Text>
       <Flex mt="2" gap="3" flex={1} alignItems="center">
         <ActionButton
@@ -32,7 +33,7 @@ const StakeUnstake = ({ farm, userFarmItem }: IProps) => {
           w="full"
           maxW={"500px"}
         >
-          STAKE LP
+          STAKE {!isPool && "LP"}
         </ActionButton>
         <Center flex="1">
           <ActionButton
@@ -49,6 +50,7 @@ const StakeUnstake = ({ farm, userFarmItem }: IProps) => {
           isOpen={openStake}
           onClose={() => setOpenStake((s) => !s)}
           token={stakingToken}
+          isPool={isPool}
         />
       )}
 
@@ -57,6 +59,7 @@ const StakeUnstake = ({ farm, userFarmItem }: IProps) => {
           token={rewardsToken}
           userFarmItem={userFarmItem}
           farm={farm}
+          isPool={isPool}
           isOpen={openUnstakeStake}
           onClose={() => setOpenUnstakeStake((s) => !s)}
         />

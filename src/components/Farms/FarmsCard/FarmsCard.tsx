@@ -29,6 +29,7 @@ const FarmsCard = ({ proteoArr, isPool, othersArr = null }: IProps) => {
                 farmUserInfo={othersArr.userFarmInfo.find(
                   (userFarm) => userFarm.farmId === f.farm.farmId
                 )}
+                isPool={isPool}
                 logoSize={isPool ? 45 : 27}
               />
             );

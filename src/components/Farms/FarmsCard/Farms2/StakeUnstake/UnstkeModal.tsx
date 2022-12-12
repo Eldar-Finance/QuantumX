@@ -23,6 +23,7 @@ import * as yup from "yup";
 
 interface IProps {
   isOpen: boolean;
+  isPool?: boolean;
   onClose: () => void;
   farm: IScFarmItem;
   userFarmItem: IScUserFarmInfo;
@@ -32,6 +33,7 @@ interface IProps {
 const UnstakeModal = ({
   userFarmItem,
   farm,
+  isPool,
   isOpen,
   token,
   onClose,
@@ -125,7 +127,8 @@ const UnstakeModal = ({
                 onChange={formik.handleChange}
               />{" "}
               <Text fontSize={"14px"}>
-                {formatTokenI(farm.farm.stakingToken)}-LP
+                {formatTokenI(farm.farm.stakingToken)}
+                {!isPool && "-LP"}
               </Text>
             </Flex>
             <Flex justifyContent={"flex-end"} gap="1">

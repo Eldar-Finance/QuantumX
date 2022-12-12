@@ -9,7 +9,6 @@ interface IProps {
 
 const EarnTokens = ({ farm }: IProps) => {
   const { token: rewardsToken } = useGetElrondToken(farm.farm.rewardToken);
-  console.log("rewardsToken", rewardsToken);
 
   return (
     <Flex flexDir={"column"} textAlign="center">

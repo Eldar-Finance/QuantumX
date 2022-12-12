@@ -29,12 +29,13 @@ import * as yup from "yup";
 
 interface IProps {
   isOpen: boolean;
+  isPool?: boolean;
   onClose: () => void;
   farm: IScFarmItem;
   token: IElrondToken;
 }
 
-const StakeModal = ({ isOpen, onClose, farm, token }: IProps) => {
+const StakeModal = ({ isOpen, onClose, farm, isPool, token }: IProps) => {
   const [tokens, userToken] = useGetUserTokens(farm.farm.stakingToken);
   const validationSchema = yup.object({
     amount: yup
@@ -123,7 +124,8 @@ const StakeModal = ({ isOpen, onClose, farm, token }: IProps) => {
                 onChange={formik.handleChange}
               />{" "}
               <Text fontSize={"14px"}>
-                {formatTokenI(farm?.farm.stakingToken)}-LP
+                {formatTokenI(farm?.farm.stakingToken)}
+                {!isPool && "-LP"}
               </Text>
             </Flex>
             <Flex justifyContent={"flex-end"} gap="1">
