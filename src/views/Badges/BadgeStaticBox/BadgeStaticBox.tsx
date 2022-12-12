@@ -11,7 +11,13 @@ const BadgeStaticBox = ({ title, content, ...props }) => {
       <Text fontSize={"12px"} color="gray.500" whiteSpace={"nowrap"}>
         {title}
       </Text>
-      <Box as="span" fontSize={"xl"} fontWeight="bold" whiteSpace={"nowrap"}>
+      <Box
+        as="span"
+        fontSize={"xl"}
+        fontWeight="bold"
+        whiteSpace={"nowrap"}
+        color="white"
+      >
         {content}
       </Box>
     </Center>

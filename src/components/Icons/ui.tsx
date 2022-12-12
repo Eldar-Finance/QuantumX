@@ -7,8 +7,8 @@ import {
   Image,
 } from "@chakra-ui/react";
 import EgldLogoImg from "assets/logos/egldlogo.png";
-import MexLockdLogoImg from "assets/logos/lkmexlogocopy.png";
 import multiversxLogo from "assets/logos/multiversx.svg";
+import MexLockdLogoImg from "assets/logos/newlkmex.svg";
 import proteoImg from "assets/logos/proteo.png";
 import wegldlogo from "assets/logos/wegldlogo.svg";
 import searchLogo from "assets/ui-elemts/search.svg";
