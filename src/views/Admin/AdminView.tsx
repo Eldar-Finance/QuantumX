@@ -9,6 +9,7 @@ import Layout from "components/Layout/Layout";
 import MyTabs from "components/MyTabs/MyTabs";
 import withElronDapp from "hoc/withElronDapp";
 import { useAppSelector } from "utils/hooks/redux";
+import ElBadges from "./Views/Badges/ElBadges/ElBadges";
 
 const DCAAdmin: any = dynamic(() => import("./Views/DCAAdmin/DCAAdmin"));
 const ProteoElite: any = dynamic(() =>
@@ -63,6 +64,14 @@ const AdminView = () => {
               tabPanel: (
                 <LayOut>
                   <FastSwap />
+                </LayOut>
+              ),
+            },
+            {
+              tabText: "Rewards",
+              tabPanel: (
+                <LayOut>
+                  <ElBadges />
                 </LayOut>
               ),
             },

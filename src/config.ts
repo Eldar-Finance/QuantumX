@@ -94,6 +94,7 @@ export const allowAddress = [
 ];
 
 export const TOKENS_ID = {
+  mex: "MEX-455c57",
   lkmex: "LKMEX-aab910",
   sProteo: "SPROTEO-c2dffe",
   egld: "EGLD",
