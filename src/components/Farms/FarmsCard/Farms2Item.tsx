@@ -66,8 +66,8 @@ const Farms2Item = ({ farm, logoSize, isPool, farmUserInfo }: IProps) => {
     lpToken2,
     farm.farm.stakingToken
   );
+  const price = stakingToken?.price || lpPrice;
   const dispatch = useAppDispatch();
-
   useEffect(() => {
     dispatch(
       addTvlInEldarFarm({
@@ -76,21 +76,20 @@ const Farms2Item = ({ farm, logoSize, isPool, farmUserInfo }: IProps) => {
             balance: farm.stakedBalance,
             decimals: stakingToken.decimals,
           },
-          lpPrice
+          price
         ),
         id: farm.farm.stakingToken,
-        type: "farm",
+        type: isPool ? "pool" : "farm",
       })
     );
   }, [
     dispatch,
     farm.farm.stakingToken,
     farm.stakedBalance,
-    lpPrice,
+    isPool,
+    price,
     stakingToken.decimals,
   ]);
-
-  const price = stakingToken?.price || lpPrice;
 
   let apr: string = "-";
   if (
