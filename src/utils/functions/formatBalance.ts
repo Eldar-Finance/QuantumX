@@ -116,7 +116,11 @@ export const setElrondBalance = (
   decimals: number = 18
 ): number => {
   try {
-    return amount * Math.pow(10, decimals);
+    const elrondBalance = amount * Math.pow(10, decimals);
+    const noDecimalsElrondBalance = Number(
+      new BigNumber(elrondBalance).toFixed(0)
+    );
+    return noDecimalsElrondBalance;
   } catch (err) {
     return 0;
   }

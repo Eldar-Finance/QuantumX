@@ -61,6 +61,7 @@ const UnstakeModal = ({
       const BigNumber = (await import("bignumber.js")).default;
       const BigUIntValue = (await import("@elrondnetwork/erdjs/out"))
         .BigUIntValue;
+
       scCall(
         "farms2",
         "unstake",
