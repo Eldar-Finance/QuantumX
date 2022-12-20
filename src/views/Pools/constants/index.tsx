@@ -6,7 +6,7 @@ import { IProteoFarm } from "utils/types/farms.interface";
 
 export const proteoPools: {
   USDC: IProteoFarm;
-  EGLD: IProteoFarm;
+  WEGLD: IProteoFarm;
 } = {
   USDC: {
     hc: 60,
@@ -20,7 +20,7 @@ export const proteoPools: {
     tokenIdentifier: toknesID.usdc,
     type: "pool",
   },
-  EGLD: {
+  WEGLD: {
     hc: 60,
     Icon: <EgldlogoIcon2 size={"45px"} wrapperProps={{ mr: "2" }} />,
     stakedCoin: "EGLD",
