@@ -1,3 +1,4 @@
+import { toknesID } from "api/net.config";
 import { getEconomics } from "api/rest/elrondApi/network";
 import { getFromAllTokens } from "api/rest/elrondApi/tokens";
 import useSWR from "swr";
@@ -37,6 +38,14 @@ const useGetElrondToken = (tokenIdeniifer: string) => {
         circulatingSupply: egldData.data.circulatingSupply,
       };
     }
+  }
+  if (tokenIdeniifer === toknesID.prick) {
+    manualData = {
+      ...dataApi,
+      assets: {
+        svgUrl: "/images/prick.png",
+      },
+    };
   }
 
   const finalDAta: IElrondToken = manualData || dataApi;

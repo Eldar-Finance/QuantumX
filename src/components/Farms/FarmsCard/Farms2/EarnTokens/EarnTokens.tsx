@@ -20,8 +20,8 @@ const EarnTokens = ({ farm }: IProps) => {
           <NextImage
             alt=""
             src={rewardsToken.assets.svgUrl}
-            height={27}
-            width={27}
+            height={30}
+            width={30}
           />
         )}
       </Center>
