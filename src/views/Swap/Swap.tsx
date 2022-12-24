@@ -1,4 +1,5 @@
-import { Box, Card } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
+import Card from "components/Card/Card";
 import MyContainer from "components/Container/Container";
 
 import Layout from "components/Layout/Layout";

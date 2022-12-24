@@ -75,6 +75,7 @@ const components: ThemeComponents = {
       },
     },
   },
+ 
 };
 
 const borderRadius = {
