@@ -1,31 +1,13 @@
 import { Box, Center, Heading, Text } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
 import { formatNumber } from "utils/functions/formatBalance";
-import { useAppSelector } from "utils/hooks/redux";
 
 interface IProps {
   title: string;
   subtitle: string;
+  amount: number;
 }
 
-const Title = ({ title, subtitle }: IProps) => {
-  const totalTvlInEldarFarms = useAppSelector(
-    (state) => state.proteo.totalTvlInEldarFarms
-  );
-  const [totalVl, setTotalVl] = useState(0);
-
-  useEffect(() => {
-    let _totalVl = 0;
-    if (totalTvlInEldarFarms.length > 0) {
-      totalTvlInEldarFarms.forEach((vl) => {
-        _totalVl += vl.balance;
-      });
-      setTotalVl(_totalVl);
-    }
-
-    return () => {};
-  }, [totalTvlInEldarFarms]);
-
+const Title = ({ title, subtitle, amount }: IProps) => {
   return (
     <Box textAlign={"center"}>
       {" "}
@@ -49,7 +31,7 @@ const Title = ({ title, subtitle }: IProps) => {
           Total value Locked on Farms
         </Heading>
         <Text fontSize={"2xl"} fontWeight="600">
-          ${formatNumber(totalVl)}
+          ${formatNumber(amount)}
         </Text>
       </Center>
     </Box>

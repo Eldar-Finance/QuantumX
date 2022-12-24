@@ -23,7 +23,7 @@ export const proteoFarms: {
     Icon: <NextImage alt="" src={proteoEgldLpImg} width={45} />,
     stakedCoin: "PROTEO-EGLD",
     wsp: proteoEgldEliteWsp,
-    token: "PROTEOEGLDLP",
+    token: "PROTEOEGLD",
     aprEndpoint: "/proteoegldapi.php",
     tokenIdentifier: toknesID.proteoEgldLp,
     getFarm:

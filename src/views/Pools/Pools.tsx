@@ -25,6 +25,7 @@ import {
 import { selectUserAddress } from "redux/slices/userAcount/account-slice";
 import { formatTokenI } from "utils/functions/tokens";
 import { useAppDispatch, useAppSelector } from "utils/hooks/redux";
+import useGetTotalValuePools from "utils/hooks/useGetTotalValuePools";
 import { proteoPoolsArr } from "./constants";
 const Pools = () => {
   const dispatch = useAppDispatch();
@@ -36,6 +37,8 @@ const Pools = () => {
   const [proteoPoolsArrToSearch, setproteoPoolsArrToSearch] = useState(
     proteoPoolsArr
   );
+
+  const totalValueLocked = useGetTotalValuePools();
 
   useEffect(() => {
     if (address) {
@@ -102,7 +105,11 @@ const Pools = () => {
           maxW="1000px"
           mx="auto"
         >
-          <Title title="Pools" subtitle="Stake in Single Asset (SA) Pools" />
+          <Title
+            title="Pools"
+            subtitle="Stake in Single Asset (SA) Pools"
+            amount={totalValueLocked}
+          />
           <Flex w="full" justifyContent={"flex-end"} mt="12">
             <Flex gap="20px">
               <Search onChange={handleSearch} />

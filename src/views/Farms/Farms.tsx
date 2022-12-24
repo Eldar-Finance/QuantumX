@@ -25,6 +25,7 @@ import {
 import { selectUserAddress } from "redux/slices/userAcount/account-slice";
 import { formatTokenI } from "utils/functions/tokens";
 import { useAppDispatch, useAppSelector } from "utils/hooks/redux";
+import useGetTotalValueInFarms from "utils/hooks/useGetTotalValueInFarms";
 import { proteoFarmsArr } from "./constants";
 
 const Farms = () => {
@@ -91,6 +92,9 @@ const Farms = () => {
       setproteoFarmsArrToSearch(newProteoFarms);
     }
   };
+
+  const totalValueLocked = useGetTotalValueInFarms();
+
   return (
     <Layout>
       <MyContainer pb="100px">
@@ -102,7 +106,11 @@ const Farms = () => {
           maxW="1000px"
           mx="auto"
         >
-          <Title title="Farms" subtitle="Stake Liquidity Pool (LP) tokens" />
+          <Title
+            title="Farms"
+            subtitle="Stake Liquidity Pool (LP) tokens"
+            amount={totalValueLocked}
+          />
           <Flex w="full" justifyContent={"flex-end"} mt="12">
             <Flex gap="20px">
               <Search onChange={handleSearch} />

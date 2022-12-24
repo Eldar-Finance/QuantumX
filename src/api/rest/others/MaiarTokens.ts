@@ -7,7 +7,7 @@ const axiosMaiarTokens = axios.create({
 
 export default axiosMaiarTokens;
 
-export const getMaiarTokens = async (fsym, tsym) => {
+export const getMaiarTokens = async ([fsym, tsym]) => {
   if (fsym === "USDC" && tsym === "USDC") {
     return Promise.resolve({
       data: {

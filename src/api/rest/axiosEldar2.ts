@@ -5,3 +5,8 @@ const axiosEldar2 = axios.create({
 });
 
 export default axiosEldar2;
+
+export const fetchApr = async (aprEndpoint) => {
+  const res = await axiosEldar2.get(aprEndpoint);
+  return res.data;
+};

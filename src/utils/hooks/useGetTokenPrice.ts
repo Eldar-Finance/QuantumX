@@ -1,17 +1,21 @@
 import { getMaiarTokens } from "api/rest/others/MaiarTokens";
-import { useEffect, useState } from "react";
-
+import useSwr from "swr";
+import { useGetFarmsLpPrices } from "./useGetFarmsLpPrices";
 const useGetTokenPrice = (token, secondToken = "USDC") => {
-  const [tokenPrice, setTokenPrice] = useState(0);
+  const { prices } = useGetFarmsLpPrices();
+  const { data, error } = useSwr([token, secondToken], getMaiarTokens);
 
-  useEffect(() => {
-    if (token) {
-      getMaiarTokens(token, secondToken).then((res) => {
-        setTokenPrice(Number(res.data.value));
-      });
+  let tokenPrice = 0;
+
+  if (data) {
+    tokenPrice = data.data.value;
+  }
+  if (error && secondToken === "USDC") {
+    const price = prices?.find((item) => item.token === token);
+    if (price) {
+      tokenPrice = Number(price.price);
     }
-  }, [token, secondToken]);
-
+  }
   return [tokenPrice];
 };
 

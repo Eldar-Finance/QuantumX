@@ -13,23 +13,14 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { contractAddr } from "api/net.config";
-import axiosEldar2 from "api/rest/axiosEldar2";
+import { fetchApr } from "api/rest/axiosEldar2";
 import BigNumber from "bignumber.js";
 import ActionButton from "components/ActionButton/ActionButton";
 
-import {
-  createContext,
-  PropsWithChildren,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
-import {
-  addDualEarned,
-  addsProteoEarned,
-  addTvlInEldarFarm,
-} from "redux/slices/proteo/proteo";
+import { createContext, PropsWithChildren, useEffect, useState } from "react";
+import { addDualEarned, addsProteoEarned } from "redux/slices/proteo/proteo";
 import { fetchProteoFarms } from "redux/slices/userAcount/funcs";
+import useSwr from "swr";
 import {
   formatBalance,
   formatBalanceDolar,
@@ -42,7 +33,6 @@ import EarnedRewards from "./Proteo/EarnedRewards/EarnedRewards";
 import EarnTokens from "./Proteo/EarnTokens/EarnTokens";
 import StakeUnstake from "./Proteo/StakeUnstake/StakeUnstake";
 import Avilable from "./Proteo/Withdraw/Avilable";
-
 interface IProps {
   pf: IProteoFarm;
 }
@@ -54,17 +44,6 @@ export const ProteoItemContenxt = createContext({
 });
 
 const ProteoFarmItem = ({ pf }: IProps) => {
-  const dispatch = useAppDispatch();
-  const { data } = useAppSelector((state) => state.proteo.generalInfoApp);
-  const generalInfoAppData = data;
-  const userInfoAppData = useAppSelector(
-    (state) => state.proteo.userInfoApp.data
-  );
-  const [tokenInfo, setTokenInfo] = useState<any>();
-  const [tokenInfo2, setTokenInfo2] = useState<any>();
-
-  const render = useRef(0);
-
   const {
     Icon,
     stakedCoin,
@@ -82,24 +61,25 @@ const ProteoFarmItem = ({ pf }: IProps) => {
     endpointDefinition,
   } = pf;
 
+  const dispatch = useAppDispatch();
+  const { data } = useAppSelector((state) => state.proteo.generalInfoApp);
+  const generalInfoAppData = data;
+  const userInfoAppData = useAppSelector(
+    (state) => state.proteo.userInfoApp.data
+  );
+  const { data: aprData } = useSwr(aprEndpoint, fetchApr);
+
   const [lastHarvestEpoch, setLastHarvestEpoch] = useState(0);
 
   const [selectedTokenPrice] = useGetTokenPrice(token);
   const tokenPrice = customPrice || selectedTokenPrice;
 
-  const [apr, setApr] = useState({ apr: 0, epoch: 0 });
-
-  useEffect(() => {
-    if (generalInfoAppData && userInfoAppData.length > 0) {
-      const info = generalInfoAppData.tokensInfo.find(
-        (ti) => ti.tokenI === tokenIdentifier
-      );
-      const info2 = userInfoAppData.find((ti) => ti.tokenI === tokenIdentifier);
-
-      setTokenInfo(info);
-      setTokenInfo2(info2);
-    }
-  }, [stakedCoin, generalInfoAppData, userInfoAppData, tokenIdentifier]);
+  const tokenInfo = generalInfoAppData?.tokensInfo.find(
+    (ti) => ti.tokenI === tokenIdentifier
+  );
+  const tokenInfo2 = userInfoAppData?.find(
+    (ti) => ti.tokenI === tokenIdentifier
+  );
 
   useEffect(() => {
     if (wsp && tokenInfo) {
@@ -131,36 +111,7 @@ const ProteoFarmItem = ({ pf }: IProps) => {
     }
   }, [dispatch, tokenInfo, wsp, endpointDefinition, tokenRewards]);
 
-  useEffect(() => {
-    if (tokenInfo && tokenInfo.staked !== 0) {
-      render.current++;
-      if (render.current !== 0) {
-        dispatch(
-          addTvlInEldarFarm({
-            balance: formatBalanceDolar(
-              { balance: tokenInfo?.staked, decimals: decimals },
-              tokenPrice
-            ),
-            id: stakedCoin,
-            type: type,
-          })
-        );
-      }
-    }
-  }, [decimals, dispatch, stakedCoin, tokenInfo, tokenPrice, type]);
-
-  useEffect(() => {
-    axiosEldar2
-      .get(aprEndpoint)
-      .then((res) => {
-        if (res.data) {
-          setApr(res.data[res.data.length - 1]);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [aprEndpoint]);
+  useEffect(() => {}, [aprEndpoint]);
 
   const stats = useAppSelector((state) => state.elrond.stats);
   const currentEpoch = stats.data.epoch;
@@ -169,6 +120,10 @@ const ProteoFarmItem = ({ pf }: IProps) => {
     Number(lastHarvestEpoch) + Number(hc) - Number(currentEpoch);
   const isLp = haveMaxLimit(pf.token);
 
+  let apr = 0;
+  if (aprData) {
+    apr = aprData[aprData.length - 1].apr;
+  }
   return (
     <ProteoItemContenxt.Provider
       value={{
@@ -219,7 +174,7 @@ const ProteoFarmItem = ({ pf }: IProps) => {
                   <Text color="white.400" textTransform={"uppercase"}>
                     Apr
                   </Text>
-                  <Text>{new BigNumber(apr.apr).toFixed(2, 2)}%</Text>
+                  <Text>{new BigNumber(apr).toFixed(2, 2)}%</Text>
                 </Flex>
                 <Flex flexDir={"column"} textAlign="center">
                   <Text color="white.400">Total Value Locked</Text>
