@@ -31,18 +31,16 @@ const BadgesStatics = () => {
     let lkmexClaimable = 0;
 
     const _claimableLkmexArr = claimableRewards.filter(
-      (token) => token.tokenI === toknesID.lkmex
+      (token) => token.tokenI === toknesID.mex
     );
 
     _claimableLkmexArr.forEach((lkmex) => {
       lkmexClaimable += lkmex.value;
     });
 
-    const _claimedLkmex = claimedRewards.find(
-      (t) => t.tokenI === toknesID.lkmex
-    );
+    const _claimedLkmex = claimedRewards.find((t) => t.tokenI === toknesID.mex);
     const _totalPaidLkmex = totalRewardsRewards.find(
-      (t) => t.tokenI === toknesID.lkmex
+      (t) => t.tokenI === toknesID.mex
     );
 
     if (lkmexClaimable) {
