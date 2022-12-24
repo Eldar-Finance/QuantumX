@@ -58,12 +58,17 @@ const BadgesCard = () => {
               as="h2"
               fontWeight={"extrabold"}
               display={{ xs: "none", md: "block" }}
+              color="white"
             >
               Staking
             </Text>
           </Box>
           <HStack spacing={{ xs: "10px", movil: "20px", md: "40px" }}>
-            <Text fontSize={{ xs: "lg", md: "xl" }} whiteSpace="nowrap">
+            <Text
+              fontSize={{ xs: "lg", md: "xl" }}
+              whiteSpace="nowrap"
+              color="white"
+            >
               Buy on
             </Text>
             <Link
