@@ -1,7 +1,9 @@
 import { Center, Flex, Text } from "@chakra-ui/react";
+import { getNetworkStats } from "api/rest/elrondApi/network";
 import ActionButton from "components/ActionButton/ActionButton";
 import dynamic from "next/dynamic";
 import { useState } from "react";
+import useSWR from "swr";
 import { formatTokenI } from "utils/functions/tokens";
 import useGetElrondToken from "utils/hooks/useGetElrondToken";
 import { IScFarmItem, IScUserFarmInfo } from "utils/types/sc.interface";
@@ -20,6 +22,15 @@ const StakeUnstake = ({ farm, userFarmItem, isPool }: IProps) => {
   const [openUnstakeStake, setOpenUnstakeStake] = useState(false);
   const { token: rewardsToken } = useGetElrondToken(farm.farm.rewardToken);
   const { token: stakingToken } = useGetElrondToken(farm.farm.stakingToken);
+  const { data: statsRes } = useSWR("/stats", getNetworkStats);
+
+  const currentEpoch = statsRes?.data?.epoch;
+
+  let disableUnstake = false;
+  const epochDiffrence = currentEpoch - farm.farm.creationEpoch;
+  if (epochDiffrence <= 3) {
+    disableUnstake = true;
+  }
 
   return (
     <Flex h="full" flexDir={"column"}>
@@ -35,13 +46,18 @@ const StakeUnstake = ({ farm, userFarmItem, isPool }: IProps) => {
         >
           STAKE {!isPool && "LP"}
         </ActionButton>
-        <Center flex="1">
+        <Center flex="1" flexDir={"column"}>
           <ActionButton
             onClick={() => setOpenUnstakeStake((s) => !s)}
-            // disabled={farm.farm === 0}
+            disabled={disableUnstake}
           >
             UNSTAKE
           </ActionButton>
+          {disableUnstake && (
+            <Text fontSize={"smaller"} mt={1}>
+              {3 - epochDiffrence} days remaining to unstake
+            </Text>
+          )}
         </Center>
       </Flex>
       {openStake && (

@@ -9,7 +9,7 @@ import { panelColumns } from "./columns";
 
 const PanelTable = () => {
   const tableData: IScPanelFarms[] = useSelector(selectCreatorsFarms).data;
-  const { data: statsRes } = useSWR({}, getNetworkStats);
+  const { data: statsRes } = useSWR("/stats", getNetworkStats);
 
   const currentEpoch = statsRes?.data?.epoch;
 
