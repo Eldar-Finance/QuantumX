@@ -209,7 +209,7 @@ const fetch = async (portfolioData, resetState) => {
       if (myToken.api) {
         return axios.post(myToken.api.url, myToken.api.data);
       }
-      return getMaiarTokens(token.ticker, "WEGLD");
+      return getMaiarTokens([token.ticker, "WEGLD"]);
     })
   );
 
