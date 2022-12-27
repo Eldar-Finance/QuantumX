@@ -55,7 +55,7 @@ const StakeUnstake = ({ farm, userFarmItem, isPool }: IProps) => {
           </ActionButton>
           {disableUnstake && (
             <Text fontSize={"smaller"} mt={1}>
-              {3 - epochDiffrence} days remaining to unstake
+              {epochDiffrence} days remaining to unstake
             </Text>
           )}
         </Center>

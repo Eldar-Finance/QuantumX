@@ -87,7 +87,6 @@ const useGetTotalValueInFarms = () => {
           }
 
           const stakingToken = manualData || dataApi;
-          console.log("farm.farm.stakingToken", farm.farm.stakingToken);
 
           const { lpToken2, scFarmAddress } = farms2Data[
             formatTokenI(farm.farm.stakingToken)
