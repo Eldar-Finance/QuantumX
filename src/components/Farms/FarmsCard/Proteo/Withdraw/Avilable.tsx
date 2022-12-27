@@ -5,6 +5,7 @@ import { coinInfo } from "utils/constants/farms";
 import { formatBalance } from "utils/functions/formatBalance";
 import { formatTokenI } from "utils/functions/tokens";
 import { useAppSelector } from "utils/hooks/redux";
+import useLogin from "utils/hooks/useLogin";
 import { IProteoFarm } from "utils/types/farms.interface";
 
 interface IProps {
@@ -13,6 +14,7 @@ interface IProps {
 
 const Avilable = ({ pf }: IProps) => {
   const withDrawInfo = useAppSelector((state) => state.proteo.withDrawInfo);
+  const { isLoggedIn, handleLogin } = useLogin();
   const handleWithDraw = async (tokenI) => {
     const scCall = (await import("api/sc/calls")).scCall;
     const BytesValue = (await import("@elrondnetwork/erdjs/out")).BytesValue;
@@ -20,6 +22,7 @@ const Avilable = ({ pf }: IProps) => {
   };
 
   const t = withDrawInfo.data.find((t) => t.tokenI === pf.tokenIdentifier);
+
   const token = formatTokenI(t?.tokenI);
   return (
     <Box>
@@ -36,7 +39,9 @@ const Avilable = ({ pf }: IProps) => {
         </Flex>
       </Flex>
       <Center mt="2">
-        <ActionButton onClick={() => handleWithDraw(t?.tokenI)}>
+        <ActionButton
+          onClick={isLoggedIn ? () => handleWithDraw(t?.tokenI) : handleLogin}
+        >
           WITHDRAW
         </ActionButton>
       </Center>

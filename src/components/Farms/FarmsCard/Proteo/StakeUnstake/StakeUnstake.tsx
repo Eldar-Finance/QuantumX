@@ -122,7 +122,13 @@ const StakeUnstake = ({ pf }: IProps) => {
                 </Flex>
 
                 <Center flex="1">
-                  <ActionButton onClick={() => setOpenUnstakeStake((s) => !s)}>
+                  <ActionButton
+                    onClick={
+                      isLoggedIn
+                        ? () => setOpenUnstakeStake((s) => !s)
+                        : handleLogin
+                    }
+                  >
                     UNSTAKE
                   </ActionButton>
                 </Center>
