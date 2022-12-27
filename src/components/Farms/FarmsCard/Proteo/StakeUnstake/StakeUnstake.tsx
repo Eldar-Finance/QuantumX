@@ -5,6 +5,7 @@ import dynamic from "next/dynamic";
 import { useState } from "react";
 import { formatBalance, formatNumber } from "utils/functions/formatBalance";
 import { haveMaxLimit } from "utils/functions/proteo";
+import useLogin from "utils/hooks/useLogin";
 import { IProteoFarm } from "utils/types/farms.interface";
 import { ProteoItemContenxt } from "../../ProteoFarmItem";
 
@@ -18,7 +19,10 @@ interface IProps {
 const StakeUnstake = ({ pf }: IProps) => {
   const [openStake, setOpenStake] = useState(false);
   const [openUnstakeStake, setOpenUnstakeStake] = useState(false);
-
+  const { isLoggedIn, handleLogin } = useLogin();
+  const handleOpenStake = () => {
+    setOpenStake((s) => !s);
+  };
   return (
     <ProteoItemContenxt.Consumer>
       {(value) => {
@@ -80,7 +84,7 @@ const StakeUnstake = ({ pf }: IProps) => {
             <Flex mt="2" gap="3">
               <Center w="full">
                 <ActionButton
-                  onClick={() => setOpenStake((s) => !s)}
+                  onClick={isLoggedIn ? handleOpenStake : handleLogin}
                   variant={"outline"}
                   w="full"
                   maxW={"500px"}

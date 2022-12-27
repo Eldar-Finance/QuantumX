@@ -20,6 +20,8 @@ export function makeStore() {
       farms2: farms2Reducer,
       eldarSfts: eldarSftsReducer,
     },
+    devTools: process.env.NODE_ENV === "production" ? false : true,
+
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({
         serializableCheck: false,
