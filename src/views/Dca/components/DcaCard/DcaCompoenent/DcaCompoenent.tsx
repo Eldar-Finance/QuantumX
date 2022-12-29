@@ -72,6 +72,10 @@ const DcaCompoenent = () => {
         return new BigNumber(realAmount).toFixed(0);
       });
 
+      // console.log("tokensIdentifiers", tokensIdentifiers);
+      // console.log("amountArr", amountArr);
+      // console.log("egldPercentsAmounts", egldPercentsAmounts);
+
       const encodeIndent = tokensIdentifiers.map((ident) => {
         return new TokenIdentifierValue(ident);
       });
@@ -108,6 +112,8 @@ const DcaCompoenent = () => {
         if (!token) {
           return null;
         }
+        console.log("token", token);
+
         return getDcaAmount(value, token);
       });
       const amountArr = dataModal.map((token) => {

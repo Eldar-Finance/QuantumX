@@ -1,11 +1,5 @@
-import {
-  Card,
-  CardBody,
-  CardHeader,
-  Center,
-  Flex,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Center, Flex, Text } from "@chakra-ui/react";
+import Card from "components/Card/Card";
 import { EgldlogoIcon } from "components/Icons/ui";
 
 import {
@@ -22,7 +16,7 @@ const TotalLCACard = () => {
 
   return (
     <Card borderRadius={{ xs: "3xl", md: "6xl" }} bg="black.light">
-      <CardHeader>
+      <Box>
         <Text
           fontSize={"2xl"}
           as="h2"
@@ -32,8 +26,8 @@ const TotalLCACard = () => {
         >
           Total LCA Volume
         </Text>
-      </CardHeader>
-      <CardBody>
+      </Box>
+      <Box>
         <Center w={"full"} pb={5}>
           <Flex flexDir={"column"} mr={3} alignItems="flex-end">
             <Text fontSize={"3xl"} fontWeight="bold">
@@ -51,7 +45,7 @@ const TotalLCACard = () => {
           </Flex>
           <EgldlogoIcon wp="15px" fontSize={"65px"} />
         </Center>
-      </CardBody>
+      </Box>
     </Card>
   );
 };
