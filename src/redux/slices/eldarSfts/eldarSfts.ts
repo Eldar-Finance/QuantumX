@@ -134,7 +134,7 @@ export const eldarSfts = createSlice({
         if (action.payload[0]) {
           const clamable = action.payload[0];
           const lkmexClaimableArr = clamable.filter(
-            (token) => token.tokenI === toknesID.lkmex
+            (token) => token.tokenI === toknesID.mex
           );
           if (lkmexClaimableArr) {
             let lkmexClaimable = 0;

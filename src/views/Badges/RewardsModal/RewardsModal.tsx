@@ -41,7 +41,6 @@ const RewardsModal = ({ isOpen, onClose, rewards }) => {
       </ModalBody>
       <ModalFooter mb={3} flexDirection="column">
         <ActionButton
-          colorScheme="blue"
           mr={3}
           onClick={onClose}
           fontSize={"xl"}
@@ -49,10 +48,6 @@ const RewardsModal = ({ isOpen, onClose, rewards }) => {
           borderRadius="8px"
           height="50px"
           textTransform="uppercase"
-          background="rgba(0,0,0,0.5)"
-          _hover={{
-            background: "rgba(0,0,0,0.7)",
-          }}
         >
           Close
         </ActionButton>

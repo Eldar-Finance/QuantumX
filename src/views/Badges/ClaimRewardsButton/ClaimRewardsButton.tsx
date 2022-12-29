@@ -8,12 +8,14 @@ import { isArray } from "lodash";
 import { memo, useState } from "react";
 import { getRealBalance } from "utils/functions/formatBalance";
 import { getReturnedDataOfscCall } from "utils/functions/helpers";
+import { useAppSelector } from "utils/hooks/redux";
 import RewardsModal from "../RewardsModal/RewardsModal";
 
 const ClaimRewardsButton = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [rewards, setRewards] = useState([]);
   const [sessionId, setSessionId] = useState<string>();
+  const isRewards = useAppSelector((state) => state.eldarSfts.isLkmexRewards);
   const onSuccess = async () => {
     if (
       transactionStatus.transactions &&
@@ -54,8 +56,7 @@ const ClaimRewardsButton = () => {
         px={6}
         mb={4}
         onClick={handleClaimRewards}
-        // disabled={!isLkmexRewards}
-        disabled={true}
+        disabled={!isRewards}
       >
         Claim
       </ActionButton>
