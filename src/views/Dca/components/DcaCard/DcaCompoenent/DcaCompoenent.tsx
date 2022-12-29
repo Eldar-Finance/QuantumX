@@ -112,7 +112,6 @@ const DcaCompoenent = () => {
         if (!token) {
           return null;
         }
-        console.log("token", token);
 
         return getDcaAmount(value, token);
       });
