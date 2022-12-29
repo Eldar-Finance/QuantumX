@@ -26,7 +26,7 @@ const CurrencyModal = ({ isOpen, onClose, handleClickToken, field }) => {
 
   React.useEffect(() => {
     const allowTokenToSwap = tokens.filter((token) => {
-      if (field === "from") {
+      if (field === "from" || field === "to") {
         if (token.identifier === toknesID.egld) {
           return false;
         } else {
@@ -117,13 +117,10 @@ const CurrencyModal = ({ isOpen, onClose, handleClickToken, field }) => {
               <Text>Token Name</Text>
               <IconButton
                 aria-label="Invert Order"
-                p={1}
                 background={"gray.800"}
                 borderRadius={"5px"}
                 height={"auto"}
-                width={"auto"}
-                minWidth={"0"}
-                textColor={"gray.300"}
+                textColor={"gray.200"}
                 _hover={{
                   background: "none",
                   outline: "none",
@@ -135,9 +132,9 @@ const CurrencyModal = ({ isOpen, onClose, handleClickToken, field }) => {
                 onClick={handleOrder}
               >
                 {order === "desc" ? (
-                  <ArrowDownIcon color="inherit" fontSize={"xs"} />
+                  <ArrowDownIcon color="inherit" fontSize={"md"} />
                 ) : (
-                  <ArrowUpIcon color="inherit" fontSize={"xs"} />
+                  <ArrowUpIcon color="inherit" fontSize={"md"} />
                 )}
               </IconButton>
             </Flex>
