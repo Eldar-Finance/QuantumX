@@ -27,8 +27,10 @@ const StakeUnstake = ({ farm, userFarmItem, isPool }: IProps) => {
   const currentEpoch = statsRes?.data?.epoch;
 
   let disableUnstake = false;
-  const epochDiffrence = currentEpoch - farm.farm.creationEpoch;
-  if (epochDiffrence <= 3) {
+  const epochDiffrence = userFarmItem?.unboundingEpoch
+    ? currentEpoch - userFarmItem.unboundingEpoch
+    : 777;
+  if (epochDiffrence <= 0 || userFarmItem?.stakedBalance === 0) {
     disableUnstake = true;
   }
 
@@ -53,9 +55,9 @@ const StakeUnstake = ({ farm, userFarmItem, isPool }: IProps) => {
           >
             UNSTAKE
           </ActionButton>
-          {disableUnstake && (
+          {disableUnstake && epochDiffrence !== 777 && (
             <Text fontSize={"smaller"} mt={1}>
-              {epochDiffrence} days remaining to unstake
+              {Math.abs(epochDiffrence)} days remaining to unstake
             </Text>
           )}
         </Center>

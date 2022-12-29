@@ -16,7 +16,7 @@ export interface IScUserFarmInfo {
   stakedBalance: number;
   harvestableRewards: number;
   earnedRewards: number;
-  unboundingRewards: number;
+  unboundingEpoch: number;
 }
 export interface IScPanelFarms {
   farm: IScFarm2;

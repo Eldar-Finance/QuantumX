@@ -47,7 +47,7 @@ export const fetchUSerFarmInfo = createAsyncThunk(
         stakedBalance: farmInfo[1].toNumber(),
         harvestableRewards: farmInfo[2].toNumber(),
         earnedRewards: farmInfo[3].toNumber(),
-        unboundingRewards: farmInfo[4].toNumber(),
+        unboundingEpoch: farmInfo[4].toNumber(),
       };
       return data;
     });
