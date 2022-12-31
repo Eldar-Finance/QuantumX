@@ -74,7 +74,7 @@ const StakeUnstake = ({ farm, userFarmItem, isPool }: IProps) => {
 
       {openUnstakeStake && (
         <UnstakeModal
-          token={rewardsToken}
+          token={stakingToken}
           userFarmItem={userFarmItem}
           farm={farm}
           isPool={isPool}
