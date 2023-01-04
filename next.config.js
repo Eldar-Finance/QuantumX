@@ -10,7 +10,7 @@ module.exports = withPWA({
       "media.elrond.com",
       "devnet-media.elrond.com",
       "localhost",
-      "https://www.quantumx.network/",
+      "https://www.quantumx.network",
       process.env.NEXT_PUBLIC_HOST,
     ],
   },
