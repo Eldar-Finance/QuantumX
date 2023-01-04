@@ -68,7 +68,7 @@ export const network = {
   name: "Mainnet",
   egldLabel: "EGLD",
   walletAddress: "https://wallet.elrond.com",
-  apiAddress: "http://api.multiversx.com",
+  apiAddress: "https://api.multiversx.com",
   gatewayAddress: "https://gateway.elrond.com",
   explorerAddress: "http://explorer.elrond.com",
   graphQlAddress: "https://exchange-graph.elrond.com/graphql",
