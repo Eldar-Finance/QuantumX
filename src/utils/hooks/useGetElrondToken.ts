@@ -2,6 +2,7 @@ import { toknesID } from "api/net.config";
 import { getEconomics } from "api/rest/elrondApi/network";
 import { getFromAllTokens } from "api/rest/elrondApi/tokens";
 import useSWR from "swr";
+import { host } from "utils/constants/site";
 import { IElrondToken } from "utils/types/elrond.interface";
 
 const useGetElrondToken = (tokenIdeniifer: string) => {
@@ -51,7 +52,7 @@ const useGetElrondToken = (tokenIdeniifer: string) => {
     manualData = {
       ...dataApi,
       assets: {
-        svgUrl: "/images/bear.png",
+        svgUrl: host + "/images/bear.png",
       },
     };
   }
