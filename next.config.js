@@ -6,12 +6,6 @@ const withPWA = require("next-pwa")({
 
 module.exports = withPWA({
   images: {
-    domains: [
-      "media.elrond.com",
-      "devnet-media.elrond.com",
-      "localhost",
-      "https://www.quantumx.network",
-      process.env.NEXT_PUBLIC_HOST,
-    ],
+    domains: ["media.elrond.com", "devnet-media.elrond.com"],
   },
 });
