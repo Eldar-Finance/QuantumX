@@ -13,6 +13,7 @@ export const routeNames = {
   swap: "/swap",
   farms: "/farms",
   Pools: "/pools",
+  hub: "/hub",
   dca: "/dca",
   eLBadges: "/eLBadges",
   investors: "/investor-zone",
@@ -25,6 +26,7 @@ export const routes: {
   swap: IRoute;
   farms: IRoute;
   pools: IRoute;
+  hub: IRoute;
   dca: IRoute;
   eLBadges: IRoute;
   investors: IRoute;
@@ -48,10 +50,15 @@ export const routes: {
     name: "Pools",
     onModalAndNavbar: true,
   },
+  hub: {
+    path: routeNames.hub,
+    name: "Hub",
+    onModalAndNavbar: true,
+  },
   dca: {
     path: routeNames.dca,
     name: "Dollar Cost Averaging",
-    onModalAndNavbar: true,
+    onModal: true,
   },
   eLBadges: {
     path: routeNames.eLBadges,
