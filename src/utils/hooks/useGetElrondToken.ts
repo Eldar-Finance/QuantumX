@@ -47,6 +47,14 @@ const useGetElrondToken = (tokenIdeniifer: string) => {
       },
     };
   }
+  if (tokenIdeniifer === toknesID.bear) {
+    manualData = {
+      ...dataApi,
+      assets: {
+        svgUrl: "/images/bear.png",
+      },
+    };
+  }
 
   const finalDAta: IElrondToken = manualData || dataApi;
   return {

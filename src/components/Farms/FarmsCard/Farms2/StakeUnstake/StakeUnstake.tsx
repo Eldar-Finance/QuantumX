@@ -34,6 +34,8 @@ const StakeUnstake = ({ farm, userFarmItem, isPool }: IProps) => {
     disableUnstake = true;
   }
 
+  let hasuserStaked = userFarmItem.stakedBalance > 0;
+
   return (
     <Flex h="full" flexDir={"column"}>
       <Text color="white.400">
@@ -55,7 +57,7 @@ const StakeUnstake = ({ farm, userFarmItem, isPool }: IProps) => {
           >
             UNSTAKE
           </ActionButton>
-          {disableUnstake && epochDiffrence !== 777 && (
+          {hasuserStaked && disableUnstake && epochDiffrence !== 777 && (
             <Text fontSize={"smaller"} mt={1}>
               {Math.abs(epochDiffrence)} days remaining to unstake
             </Text>
@@ -74,7 +76,7 @@ const StakeUnstake = ({ farm, userFarmItem, isPool }: IProps) => {
 
       {openUnstakeStake && (
         <UnstakeModal
-          token={rewardsToken}
+          token={stakingToken}
           userFarmItem={userFarmItem}
           farm={farm}
           isPool={isPool}

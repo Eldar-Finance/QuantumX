@@ -68,13 +68,13 @@ const DcaCompoenent = () => {
       fastSwapInJex(finalOrders, contractAddr.fastp2pswap);
     } else {
       const amountArr = tokensByEgldPercent.map((amount) => {
+        console.log("amount", amount);
+
         const realAmount = amount - (amount * SLIPAGE) / 100;
+        console.log("realAmount", realAmount);
+
         return new BigNumber(realAmount).toFixed(0);
       });
-
-      // console.log("tokensIdentifiers", tokensIdentifiers);
-      // console.log("amountArr", amountArr);
-      // console.log("egldPercentsAmounts", egldPercentsAmounts);
 
       const encodeIndent = tokensIdentifiers.map((ident) => {
         return new TokenIdentifierValue(ident);
@@ -95,7 +95,7 @@ const DcaCompoenent = () => {
           new List(new ListType(new BigUIntType()), encodeAmount),
           new List(new ListType(new BigUIntType()), encodeMinAmount),
         ],
-        95000000
+        150000000
       );
     }
   };

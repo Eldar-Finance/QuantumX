@@ -68,7 +68,7 @@ export const network = {
   name: "Mainnet",
   egldLabel: "EGLD",
   walletAddress: "https://wallet.elrond.com",
-  apiAddress: "https://api.elrond.com",
+  apiAddress: "https://api.multiversx.com",
   gatewayAddress: "https://gateway.elrond.com",
   explorerAddress: "http://explorer.elrond.com",
   graphQlAddress: "https://exchange-graph.elrond.com/graphql",
@@ -110,4 +110,5 @@ export const TOKENS_ID = {
   wegld: "WEGLD-bd4d79",
   rare: "RARE-99e8b0",
   prick: "PRICK-744592",
+  bear: "BEAR-f9c271",
 };
