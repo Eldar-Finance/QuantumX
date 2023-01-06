@@ -1,6 +1,8 @@
 import { Box, Center, Flex, Text } from "@chakra-ui/react";
 import { BigUIntValue } from "@elrondnetwork/erdjs/out";
+import { toknesID } from "api/net.config";
 import { scCall } from "api/sc/calls";
+import bearImage from "assets/logos/bear.png";
 import BigNumber from "bignumber.js";
 import ActionButton from "components/ActionButton/ActionButton";
 import NextImage from "components/NextImage/NextImage";
@@ -23,6 +25,13 @@ const Avilable = ({ farm, userFarmInfo }: IProps) => {
       50000000
     );
   };
+
+  let manualImage = null;
+
+  if (farm.farm.rewardToken === toknesID.bear) {
+    manualImage = bearImage;
+  }
+
   return (
     <Box>
       <Flex w="full" justifyContent={"space-between"}>
@@ -34,13 +43,19 @@ const Avilable = ({ farm, userFarmInfo }: IProps) => {
               decimals: rewardsToken?.decimals,
             })}
           </Text>
-          {rewardsToken?.assets?.pngUrl && (
-            <NextImage
-              alt=""
-              src={rewardsToken.assets.pngUrl}
-              width={27}
-              height={27}
-            />
+          {manualImage ? (
+            <NextImage alt="" src={manualImage} height={30} width={30} />
+          ) : (
+            <>
+              {rewardsToken?.assets?.pngUrl && (
+                <NextImage
+                  alt=""
+                  src={rewardsToken.assets.pngUrl}
+                  width={27}
+                  height={27}
+                />
+              )}
+            </>
           )}
         </Flex>
       </Flex>
