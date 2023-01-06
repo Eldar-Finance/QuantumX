@@ -11,7 +11,7 @@ const NftList = () => {
         iamge={srbImage}
         text={
           <Text>
-            Pay 5 SBEAR <br /> Get a random SRB
+            Pay 5 $BEAR <br /> Get a random SRB
           </Text>
         }
         onSubmit={onSubmit}
@@ -21,7 +21,7 @@ const NftList = () => {
         onSubmit={onSubmit}
         text={
           <Text>
-            Pay 1 SPRICK <br /> Get an Abominator
+            Pay 1 $PRICK <br /> Get an Abominator
           </Text>
         }
       />
