@@ -3,10 +3,10 @@ import { Center, Heading } from "@chakra-ui/react";
 const TitleSection = () => {
   return (
     <Center textAlign={"center"} flexDir="column">
-      <Heading mb={8} fontWeight="900" fontSize={"4xl"}>
+      <Heading mb={8} as="h1" fontSize={"3xl"}>
         QuantumXHub
       </Heading>
-      <Heading fontSize={"xl"} color="white.600">
+      <Heading fontSize={"md"} color="white.400">
         An exlusive NFT Minter for teams to leverage their projects
       </Heading>
     </Center>
