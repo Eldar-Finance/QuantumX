@@ -211,3 +211,75 @@ export interface IElrondToken {
   supply: string;
   circulatingSupply: string;
 }
+
+export interface IElrondAccountToken {
+  type: ElrondType;
+  identifier: string;
+  name: string;
+  ticker: string;
+  owner: string;
+  decimals: number;
+  isPaused: boolean;
+  assets: {
+    website: string;
+    description: string;
+    status: string;
+    pngUrl: string;
+    svgUrl: string;
+    social: {
+      email: string;
+      twitter: string;
+      whitepaper: string;
+      coingecko: string;
+      discord: string;
+      telegram: string;
+    };
+  };
+  transactions: number;
+  accounts: number;
+  canUpgrade: boolean;
+  canMint: boolean;
+  canBurn: boolean;
+  canChangeOwner: boolean;
+  canPause: boolean;
+  canFreeze: boolean;
+  canWipe: boolean;
+  price: number;
+  marketCap: number;
+  supply: string;
+  circulatingSupply: string;
+
+  minted: string;
+  burnt: string;
+  initialMinted: string;
+
+  timestamp: number;
+  balance: string;
+  valueUsd: number;
+  attributes: string;
+}
+
+export interface IElrondUserAccount {
+  address: string;
+  balance: string;
+  nonce: number;
+  shard: number;
+  assets?: any;
+  code?: string;
+  codeHash?: string;
+  rootHash?: string;
+  txCount: number;
+  scrCount: number;
+  username?: string;
+  developerReward?: string;
+  ownerAddress?: string;
+  deployedAt?: number;
+  isUpgradeable?: boolean;
+  isReadable?: boolean;
+  isPayable?: boolean;
+  isPayableBySmartContract?: boolean;
+  scamInfo?: {
+    type: number;
+    info: string;
+  };
+}

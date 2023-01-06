@@ -28,3 +28,11 @@ export interface IElrondnftswapNFT {
   rarityScore: number;
   rank: number;
 }
+
+export interface ISmartSwapData {
+  token1: string;
+  token2: string;
+  amountsend: string;
+  amountReceiv: string;
+  smartcontract: string;
+}
