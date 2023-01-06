@@ -5,7 +5,6 @@ import NftCard from "../NftCard/NftCard";
 
 const NftList = () => {
   const onSubmit = () => {};
-
   return (
     <Center flexWrap={"wrap"} gap={12} mt={8}>
       <NftCard
