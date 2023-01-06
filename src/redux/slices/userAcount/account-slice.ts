@@ -236,7 +236,8 @@ export const userAccount = createSlice({
       })
       .addCase(fetchEgld.fulfilled, (state, action) => {
         state.egldBalance.status = "succeeded";
-        state.egldBalance.data = action.payload;
+        const data = { balance: Number(action.payload.balance), decimals: 18 };
+        state.egldBalance.data = data;
       })
       .addCase(fetchEgld.rejected, (state, action) => {
         state.egldBalance.status = "failed";
