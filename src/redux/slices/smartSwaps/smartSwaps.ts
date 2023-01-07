@@ -25,7 +25,15 @@ const initialState: ISmartSwapState = {
     value: null,
     token: "EGLD",
   },
-  tokens: ["EGLD", toknesID.usdc, toknesID.wegld, toknesID.crt, toknesID.rare],
+  tokens: [
+    "EGLD",
+    toknesID.usdc,
+    toknesID.wegld,
+    toknesID.crt,
+    toknesID.rare,
+    toknesID.proteo,
+    toknesID.kro,
+  ],
 };
 
 export const smartSwap = createSlice({

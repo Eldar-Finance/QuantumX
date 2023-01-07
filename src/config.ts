@@ -112,4 +112,5 @@ export const TOKENS_ID = {
   rare: "RARE-99e8b0",
   prick: "PRICK-744592",
   bear: "BEAR-f9c271",
+  kro: "KRO-df97ec",
 };
