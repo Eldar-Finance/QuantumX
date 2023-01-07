@@ -51,10 +51,11 @@ const SwapButton = ({ disableButton, swapInfo, ...props }: IProps) => {
         const amountWithSlipage = new BigNumber(item.amountReceivDec)
           .multipliedBy(1)
           .dividedBy(100)
-          .toFixed(0);
+          .toNumber();
+
         const finalAmount = new BigNumber(item.amountReceivDec)
           .minus(amountWithSlipage)
-          .toFixed();
+          .toFixed(0);
         console.log("finalAmount", finalAmount);
 
         return [
