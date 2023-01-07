@@ -143,7 +143,7 @@ export const wrapEgldAndEsdtTranfer = async (
   funcName: string,
   args: any[] = [],
   scAddress: string,
-  gasL: number = 30000000
+  gasL: number = 90000000
 ) => {
   const sender = store.getState().userAccount.connectedAddress;
   const value = new BigNumber(egldAmount).multipliedBy(EGLD_VAL).toFixed(0);
@@ -200,7 +200,7 @@ export const EsdtTranferAndUnwrapEgld = async (
   funcName: string,
   args: any[] = [],
   scAddress: string,
-  gasL: number = 30000000
+  gasL: number = 90000000
 ) => {
   const sender = store.getState().userAccount.connectedAddress;
 
@@ -251,7 +251,7 @@ export const EsdtTranferAndUnwrapEgld = async (
     value: 0,
     receiver: new Address(contractAddr.wrapEgld),
     data: payload2,
-    gasLimit: gasL,
+    gasLimit: 30000000,
     chainID: ChainId,
   });
 

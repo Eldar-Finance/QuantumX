@@ -46,6 +46,7 @@ const SwapButton = ({ disableButton, swapInfo, ...props }: IProps) => {
 
   const handleSwap = async () => {
     if (swapInfo && swapInfo.length > 0 && fromElrondToken) {
+      const gas = 90000000;
       const dataToSend = swapInfo.flatMap((item) => {
         const amountWithSlipage = new BigNumber(item.amountReceivDec)
           .multipliedBy(1)
@@ -69,7 +70,8 @@ const SwapButton = ({ disableButton, swapInfo, ...props }: IProps) => {
           Number(fromToken.value),
           "swap",
           dataToSend,
-          contractAddr.smartSwap
+          contractAddr.smartSwap,
+          gas
         );
       } else {
         if (toField.token === "EGLD") {
@@ -79,7 +81,8 @@ const SwapButton = ({ disableButton, swapInfo, ...props }: IProps) => {
             swapInfo[swapInfo.length - 1].amountReceiv,
             "swap",
             dataToSend,
-            contractAddr.smartSwap
+            contractAddr.smartSwap,
+            gas
           );
         } else {
           return await ESDTTransfer({
@@ -88,6 +91,7 @@ const SwapButton = ({ disableButton, swapInfo, ...props }: IProps) => {
             val: Number(fromToken.value),
             contractAddr: contractAddr.smartSwap,
             args: dataToSend,
+            gasL: gas,
           });
         }
       }
