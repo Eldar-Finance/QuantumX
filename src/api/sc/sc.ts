@@ -114,7 +114,8 @@ export type WspTypes =
   | "kroUsdcNonEliteDual"
   | "proteoEgldElite"
   | "rideFarmWsp"
-  | "aeroWegld";
+  | "aeroWegld"
+  | "smartSwap";
 
 export const getInterface = (workspace: WspTypes) => {
   let address = null;
@@ -307,6 +308,12 @@ export const getInterface = (workspace: WspTypes) => {
       abiUrl = abiPath + "/jex.abi.json";
       implementsInterfaces = "Jex";
       break;
+    case smartSwapWsp:
+      simpleAddress = contractAddr.smartSwap;
+      address = new Address(simpleAddress);
+      abiUrl = abiPath + "/smartswaps.abi.json";
+      implementsInterfaces = "SmartSwaps";
+      break;
 
     default:
       break;
@@ -334,6 +341,7 @@ export const fastp2pSwapWsp = "fastp2pSwap";
 export const jexSwapWsp = "jexSwap";
 export const jexWsp = "jex";
 export const farms2Wsp = "farms2";
+export const smartSwapWsp = "smartSwap";
 
 // proteo farms
 export const usdcProteoWsp = "usdcProteo";

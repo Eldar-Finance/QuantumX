@@ -23,7 +23,7 @@ const initialState: ISmartSwapState = {
   },
   toField: {
     value: null,
-    token: toknesID.usdc,
+    token: toknesID.ride,
   },
   tokens: [toknesID.usdc, toknesID.wegld, toknesID.crt, toknesID.rare],
 };

@@ -1,17 +1,36 @@
 import { ButtonProps } from "@chakra-ui/react";
 import { transactionServices } from "@elrondnetwork/dapp-core";
+import {
+  Address,
+  AddressValue,
+  BigUIntValue,
+  BytesValue,
+} from "@elrondnetwork/erdjs/out";
+import { contractAddr } from "api/net.config";
+import { ESDTTransfer } from "api/sc/calls";
+import BigNumber from "bignumber.js";
 import ActionButton from "components/ActionButton/ActionButton";
 import { useState } from "react";
+import { selectFromField } from "redux/slices/smartSwaps/smartSwaps";
+import { selectUserAddress } from "redux/slices/userAcount/account-slice";
+import { setElrondBalance } from "utils/functions/formatBalance";
 
 import { useAppSelector } from "utils/hooks/redux";
+import useGetElrondToken from "utils/hooks/useGetElrondToken";
+import { ISmartSwapData } from "utils/types/others.interface";
 
 interface IProps extends ButtonProps {
   disableButton?: boolean;
+  swapInfo?: ISmartSwapData[];
 }
 
-const SwapButton = ({ disableButton, ...props }: IProps) => {
-  const toValue = useAppSelector((state) => state.smartSwap.toField.value);
+const SwapButton = ({ disableButton, swapInfo, ...props }: IProps) => {
   const [sessionId, setSessionId] = useState<string>();
+  const address = useAppSelector(selectUserAddress);
+  const toField = useAppSelector((state) => state.smartSwap.toField);
+  const fromToken = useAppSelector(selectFromField);
+  const { token: fromElrondToken } = useGetElrondToken(fromToken.token);
+  const { token: toElrondToken } = useGetElrondToken(toField.token);
 
   const txs = transactionServices.useTrackTransactionStatus({
     transactionId: sessionId,
@@ -22,7 +41,35 @@ const SwapButton = ({ disableButton, ...props }: IProps) => {
     },
   });
 
-  const handleSwap = async () => {};
+  const handleSwap = async () => {
+    if (swapInfo && swapInfo.length > 0 && fromElrondToken) {
+      const dataToSend = swapInfo.map((item) => {
+        return [
+          new AddressValue(new Address(item.smartcontract)),
+          BytesValue.fromUTF8("swapTokensFixedInput"),
+          BytesValue.fromUTF8(item.token2),
+          new BigUIntValue(
+            new BigNumber(
+              setElrondBalance(
+                Number(item.amountReceiv),
+                toElrondToken.decimals
+              )
+            )
+          ),
+        ];
+      });
+
+      console.log("dataToSend", dataToSend);
+
+      ESDTTransfer({
+        funcName: "swap",
+        token: fromElrondToken,
+        val: Number(fromToken.value),
+        contractAddr: contractAddr.smartSwap,
+        args: [],
+      });
+    }
+  };
 
   return (
     <ActionButton
@@ -35,7 +82,7 @@ const SwapButton = ({ disableButton, ...props }: IProps) => {
       onClick={handleSwap}
       {...props}
     >
-      {toValue ? "Swap" : "Enter an amount"}
+      {toField.value ? "Swap" : "Enter an amount"}
     </ActionButton>
   );
 };
