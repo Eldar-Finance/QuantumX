@@ -7,7 +7,11 @@ import {
   BytesValue,
 } from "@elrondnetwork/erdjs/out";
 import { contractAddr } from "api/net.config";
-import { ESDTTransfer, wrapEgldAndEsdtTranfer } from "api/sc/calls";
+import {
+  EsdtTranferAndUnwrapEgld,
+  ESDTTransfer,
+  wrapEgldAndEsdtTranfer,
+} from "api/sc/calls";
 import BigNumber from "bignumber.js";
 import ActionButton from "components/ActionButton/ActionButton";
 import { useState } from "react";
@@ -68,13 +72,24 @@ const SwapButton = ({ disableButton, swapInfo, ...props }: IProps) => {
           contractAddr.smartSwap
         );
       } else {
-        return await ESDTTransfer({
-          funcName: "swap",
-          token: fromElrondToken,
-          val: Number(fromToken.value),
-          contractAddr: contractAddr.smartSwap,
-          args: dataToSend,
-        });
+        if (toField.token === "EGLD") {
+          return await EsdtTranferAndUnwrapEgld(
+            fromElrondToken,
+            Number(fromToken.value),
+            swapInfo[swapInfo.length - 1].amountReceiv,
+            "swap",
+            dataToSend,
+            contractAddr.smartSwap
+          );
+        } else {
+          return await ESDTTransfer({
+            funcName: "swap",
+            token: fromElrondToken,
+            val: Number(fromToken.value),
+            contractAddr: contractAddr.smartSwap,
+            args: dataToSend,
+          });
+        }
       }
     }
   };

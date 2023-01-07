@@ -19,11 +19,11 @@ interface ISmartSwapState {
 const initialState: ISmartSwapState = {
   fromField: {
     value: null,
-    token: "EGLD",
+    token: toknesID.ride,
   },
   toField: {
     value: null,
-    token: toknesID.ride,
+    token: "EGLD",
   },
   tokens: ["EGLD", toknesID.usdc, toknesID.wegld, toknesID.crt, toknesID.rare],
 };
