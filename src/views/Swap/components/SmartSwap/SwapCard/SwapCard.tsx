@@ -117,6 +117,7 @@ const SwapCard = () => {
               bg={"black.dark"}
               color="main"
               py="20px"
+              swapInfo={data}
               // disableButton={disableButton}
             />
           </Flex>
