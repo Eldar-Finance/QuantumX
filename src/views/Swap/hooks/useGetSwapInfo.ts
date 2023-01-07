@@ -1,3 +1,4 @@
+import { toknesID } from "api/net.config";
 import { fetchSmartSwap } from "api/rest/others/EldarSolutions";
 
 import useSWR from "swr";
@@ -10,7 +11,9 @@ const useGetSwapInfo = (
   const [value] = useDebounce(fromTokenValue, 800);
 
   const { data, error, isLoading } = useSWR(
-    fromToken && fromTokenValue && toToken ? [fromToken, value, toToken] : null,
+    fromToken && fromTokenValue && toToken
+      ? [fromToken === "EGLD" ? toknesID.wegld : fromToken, value, toToken]
+      : null,
     fetchSmartSwap
   );
 

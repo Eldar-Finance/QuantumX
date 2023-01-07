@@ -4,10 +4,19 @@ import {
   BigUIntValue,
   BytesValue,
   ContractFunction,
+  Transaction,
   TransactionPayload,
 } from "@elrondnetwork/erdjs/out";
-import { EGLD_VAL, getInterface, sendTransaction, WspTypes } from "api/sc/sc";
+import { ChainId, toknesID } from "api/net.config";
+import {
+  EGLD_VAL,
+  getInterface,
+  sendMultipleTransactions,
+  sendTransaction,
+  WspTypes,
+} from "api/sc/sc";
 import BigNumber from "bignumber.js";
+import store from "redux/store";
 
 export const ESDTNFTTransfer = async (
   funcName = "",
@@ -127,4 +136,57 @@ export const EGLDPayment = async (
   };
 
   return await sendTransaction(transactionData);
+};
+
+export const wrapEgldAndEsdtTranfer = async (
+  egldAmount: number | string,
+  funcName: string,
+  args: any[] = [],
+  scAddress: string,
+  gasL: number = 30000000
+) => {
+  const sender = store.getState().userAccount.connectedAddress;
+  const value = new BigNumber(egldAmount).multipliedBy(EGLD_VAL).toFixed(0);
+
+  //wrap egld
+  let { simpleAddress } = getInterface("wrapEgld");
+
+  const payload = TransactionPayload.contractCall()
+    .setFunction(new ContractFunction("wrapEgld"))
+    .setArgs([])
+    .build();
+
+  const tx1 = new Transaction({
+    sender: new Address(sender),
+    value: value,
+    receiver: new Address(simpleAddress),
+    data: payload,
+    gasLimit: 8000000,
+    chainID: ChainId,
+  });
+
+  //esdt transfer
+
+  const tokenIdentifier = toknesID.wegld;
+
+  const payload2 = TransactionPayload.contractCall()
+    .setFunction(new ContractFunction("ESDTTransfer"))
+    .setArgs([
+      BytesValue.fromUTF8(tokenIdentifier),
+      new BigUIntValue(new BigNumber(value)),
+      BytesValue.fromUTF8(funcName),
+      ...args,
+    ])
+    .build();
+
+  const tx2 = new Transaction({
+    sender: new Address(sender),
+    value: 0,
+    receiver: new Address(scAddress),
+    data: payload2,
+    gasLimit: gasL,
+    chainID: ChainId,
+  });
+
+  return await sendMultipleTransactions({ txs: [tx1, tx2] });
 };

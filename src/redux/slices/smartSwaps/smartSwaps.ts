@@ -19,13 +19,13 @@ interface ISmartSwapState {
 const initialState: ISmartSwapState = {
   fromField: {
     value: null,
-    token: toknesID.wegld,
+    token: "EGLD",
   },
   toField: {
     value: null,
     token: toknesID.ride,
   },
-  tokens: [toknesID.usdc, toknesID.wegld, toknesID.crt, toknesID.rare],
+  tokens: ["EGLD", toknesID.usdc, toknesID.wegld, toknesID.crt, toknesID.rare],
 };
 
 export const smartSwap = createSlice({

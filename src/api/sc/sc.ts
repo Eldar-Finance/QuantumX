@@ -67,6 +67,12 @@ export const sendMultipleTransactions = async ({
   errorMessage,
   successMessage,
   transactionDuration,
+}: {
+  txs: any;
+  processingMessage?: string;
+  errorMessage?: string;
+  successMessage?: string;
+  transactionDuration?: number;
 }) => {
   await refreshAccount();
 
@@ -115,7 +121,8 @@ export type WspTypes =
   | "proteoEgldElite"
   | "rideFarmWsp"
   | "aeroWegld"
-  | "smartSwap";
+  | "smartSwap"
+  | "wrapEgld";
 
 export const getInterface = (workspace: WspTypes) => {
   let address = null;
@@ -314,6 +321,12 @@ export const getInterface = (workspace: WspTypes) => {
       abiUrl = abiPath + "/smartswaps.abi.json";
       implementsInterfaces = "SmartSwaps";
       break;
+    case wrapEgldpWsp:
+      simpleAddress = contractAddr.wrapEgld;
+      address = new Address(simpleAddress);
+      abiUrl = abiPath + "";
+      implementsInterfaces = "";
+      break;
 
     default:
       break;
@@ -342,6 +355,7 @@ export const jexSwapWsp = "jexSwap";
 export const jexWsp = "jex";
 export const farms2Wsp = "farms2";
 export const smartSwapWsp = "smartSwap";
+export const wrapEgldpWsp = "wrapEgld";
 
 // proteo farms
 export const usdcProteoWsp = "usdcProteo";

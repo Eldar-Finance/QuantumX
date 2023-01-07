@@ -34,5 +34,6 @@ export interface ISmartSwapData {
   token2: string;
   amountsend: string;
   amountReceiv: string;
+  amountReceivDec: string;
   smartcontract: string;
 }
