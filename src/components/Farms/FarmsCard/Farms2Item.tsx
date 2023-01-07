@@ -99,29 +99,32 @@ const Farms2Item = ({ farm, logoSize, isPool, farmUserInfo }: IProps) => {
     farm.totalRewardsLeft > 0 &&
     farm.stakedBalance > 0
   ) {
-    const epochDifference = lastRewardedEpoch - stats.epoch;
-    apr =
-      formatNumber(
-        preventExponetialNotation(
-          ((formatBalanceDolar(
-            {
-              balance: farm.totalRewardsLeft,
-              decimals: rewardToken.decimals,
-            },
-            rewardToken.price
-          ) /
-            formatBalanceDolar(
+    const epochDifference = lastRewardedEpoch + 1 - stats.epoch;
+
+    if (epochDifference > 0) {
+      apr =
+        formatNumber(
+          preventExponetialNotation(
+            ((formatBalanceDolar(
               {
-                balance: farm.stakedBalance,
-                decimals: stakingToken.decimals,
+                balance: farm.totalRewardsLeft,
+                decimals: rewardToken.decimals,
               },
-              price
-            )) *
-            100 *
-            365) /
-            epochDifference
-        ).toString()
-      ) + "%";
+              rewardToken.price
+            ) /
+              formatBalanceDolar(
+                {
+                  balance: farm.stakedBalance,
+                  decimals: stakingToken.decimals,
+                },
+                price
+              )) *
+              100 *
+              365) /
+              epochDifference
+          ).toString()
+        ) + "%";
+    }
   }
 
   return (

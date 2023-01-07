@@ -34,7 +34,7 @@ const StakeUnstake = ({ farm, userFarmItem, isPool }: IProps) => {
     disableUnstake = true;
   }
 
-  let hasuserStaked = userFarmItem.stakedBalance > 0;
+  let hasuserStaked = userFarmItem?.stakedBalance > 0;
 
   return (
     <Flex h="full" flexDir={"column"}>
