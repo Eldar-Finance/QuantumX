@@ -7,7 +7,7 @@ import {
   Transaction,
   TransactionPayload,
 } from "@elrondnetwork/erdjs/out";
-import { ChainId, contractAddr, toknesID } from "api/net.config";
+import { ChainId, toknesID } from "api/net.config";
 import {
   EGLD_VAL,
   getInterface,
@@ -17,6 +17,7 @@ import {
 } from "api/sc/sc";
 import BigNumber from "bignumber.js";
 import store from "redux/store";
+import { getScOfWrapedEgld } from "utils/functions/helpers";
 
 export const ESDTNFTTransfer = async (
   funcName = "",
@@ -195,7 +196,9 @@ export const wrapEgldAndEsdtTranfer = async (
   const value = new BigNumber(egldAmount).multipliedBy(EGLD_VAL).toFixed(0);
 
   //wrap egld
-  let { simpleAddress } = getInterface("wrapEgld");
+  const shard = store.getState().userAccount.connectedShard;
+  const wrapContractBasedOnShard = getScOfWrapedEgld(shard);
+  console.log("wrapContractBasedOnShard", wrapContractBasedOnShard);
 
   const payload = TransactionPayload.contractCall()
     .setFunction(new ContractFunction("wrapEgld"))
@@ -205,7 +208,7 @@ export const wrapEgldAndEsdtTranfer = async (
   const tx1 = new Transaction({
     sender: new Address(sender),
     value: value,
-    receiver: new Address(simpleAddress),
+    receiver: new Address(wrapContractBasedOnShard),
     data: payload,
     gasLimit: 30000000,
     chainID: ChainId,
@@ -276,6 +279,8 @@ export const EsdtTranferAndUnwrapEgld = async (
   });
 
   //uwwrap wegld
+  const shard = store.getState().userAccount.connectedShard;
+  const wrapContractBasedOnShard = getScOfWrapedEgld(shard);
 
   const wegldAmountToSend = Number(wegldAmount) * EGLD_VAL;
 
@@ -295,7 +300,7 @@ export const EsdtTranferAndUnwrapEgld = async (
   const tx2 = new Transaction({
     sender: new Address(sender),
     value: 0,
-    receiver: new Address(contractAddr.wrapEgld),
+    receiver: new Address(wrapContractBasedOnShard),
     data: payload2,
     gasLimit: 30000000,
     chainID: ChainId,

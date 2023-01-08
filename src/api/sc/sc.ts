@@ -122,7 +122,9 @@ export type WspTypes =
   | "rideFarmWsp"
   | "aeroWegld"
   | "smartSwap"
-  | "wrapEgld";
+  | "wrapEgld"
+  | "wrapEgldShard1"
+  | "wrapEgldShard2";
 
 export const getInterface = (workspace: WspTypes) => {
   let address = null;
@@ -327,6 +329,18 @@ export const getInterface = (workspace: WspTypes) => {
       abiUrl = abiPath + "";
       implementsInterfaces = "";
       break;
+    case wrapEgldpWspShard1:
+      simpleAddress = contractAddr.wrapEgldShar1;
+      address = new Address(simpleAddress);
+      abiUrl = abiPath + "";
+      implementsInterfaces = "";
+      break;
+    case wrapEgldpWspShard2:
+      simpleAddress = contractAddr.wrapEgldShar2;
+      address = new Address(simpleAddress);
+      abiUrl = abiPath + "";
+      implementsInterfaces = "";
+      break;
 
     default:
       break;
@@ -356,6 +370,8 @@ export const jexWsp = "jex";
 export const farms2Wsp = "farms2";
 export const smartSwapWsp = "smartSwap";
 export const wrapEgldpWsp = "wrapEgld";
+export const wrapEgldpWspShard1 = "wrapEgldShard1";
+export const wrapEgldpWspShard2 = "wrapEgldShard2";
 
 // proteo farms
 export const usdcProteoWsp = "usdcProteo";

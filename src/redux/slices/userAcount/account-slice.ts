@@ -107,6 +107,7 @@ const initialState = {
 
   totalBalance: 0,
   connectedAddress: "",
+  connectedShard: 1,
   isAdmin: false,
 };
 
@@ -121,6 +122,9 @@ export const userAccount = createSlice({
         state.isAdmin = false;
       }
       state.connectedAddress = action.payload;
+    },
+    setShard: (state, action) => {
+      state.connectedShard = action.payload;
     },
     setTotalBalance: (state, action) => {
       state.totalBalance = action.payload;
@@ -362,6 +366,7 @@ export const selectUserAccountData = (state) => state.userAccount.tableData;
 // Action creators are generated for each case reducer function
 export const {
   setAddress,
+  setShard,
   setTotalBalance,
   resetTableDataStatus,
   resetEgldBalance,
