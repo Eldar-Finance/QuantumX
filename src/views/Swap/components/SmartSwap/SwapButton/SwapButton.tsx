@@ -49,7 +49,7 @@ const SwapButton = ({ disableButton, swapInfo, ...props }: IProps) => {
       const gas = 90000000;
       const dataToSend = swapInfo.flatMap((item) => {
         const amountWithSlipage = new BigNumber(item.amountReceivDec)
-          .multipliedBy(1)
+          .multipliedBy(2.5)
           .dividedBy(100)
           .toNumber();
 
