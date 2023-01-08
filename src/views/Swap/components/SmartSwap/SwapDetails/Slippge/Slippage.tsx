@@ -74,7 +74,6 @@ const Slippage = () => {
                 }}
                 onChange={(e) => handleUpdateSlippage(Number(e.target.value))}
               />
-              <Center px={3}>%</Center>
             </Flex>
           </Flex>
         </Box>
