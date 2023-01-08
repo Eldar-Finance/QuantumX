@@ -6,8 +6,9 @@ import {
   BigUIntValue,
   BytesValue,
 } from "@elrondnetwork/erdjs/out";
-import { contractAddr } from "api/net.config";
+import { contractAddr, toknesID } from "api/net.config";
 import {
+  EGLDPayment,
   EsdtTranferAndUnwrapEgld,
   ESDTTransfer,
   wrapEgldAndEsdtTranfer,
@@ -69,34 +70,59 @@ const SwapButton = ({ disableButton, swapInfo, ...props }: IProps) => {
         ];
       });
 
-      if (fromToken.token === "EGLD") {
-        return await wrapEgldAndEsdtTranfer(
+      // if user want EGLD -> WEGLD
+      if (fromToken.token === "EGLD" && toField.token === toknesID.wegld) {
+        const res = await EGLDPayment(
+          contractAddr.wrapEgldShar1,
+          "wrapEgld",
           Number(fromToken.value),
-          "swap",
-          dataToSend,
-          contractAddr.smartSwap,
-          gas
+          [],
+          60000000
         );
       } else {
-        if (toField.token === "EGLD") {
-          return await EsdtTranferAndUnwrapEgld(
-            fromElrondToken,
-            Number(fromToken.value),
-            swapInfo[swapInfo.length - 1].amountReceiv,
-            "swap",
-            dataToSend,
-            contractAddr.smartSwap,
-            gas
-          );
-        } else {
-          return await ESDTTransfer({
-            funcName: "swap",
-            token: fromElrondToken,
+        // if user want WEGLD -> EGLD
+        if (fromToken.token === toknesID.wegld && toField.token === "EGLD") {
+          const res = await ESDTTransfer({
+            funcName: "unwrapEgld",
             val: Number(fromToken.value),
-            contractAddr: contractAddr.smartSwap,
-            args: dataToSend,
-            gasL: gas,
+            token: fromElrondToken,
+            contractAddr: contractAddr.wrapEgldShar1,
+            gasL: 60000000,
           });
+        } else {
+          // if User want to send EGLD
+          if (fromToken.token === "EGLD") {
+            return await wrapEgldAndEsdtTranfer(
+              Number(fromToken.value),
+              "swap",
+              dataToSend,
+              contractAddr.smartSwap,
+              gas
+            );
+          } else {
+            // if User want to receive EGLD
+            if (toField.token === "EGLD") {
+              return await EsdtTranferAndUnwrapEgld(
+                fromElrondToken,
+                Number(fromToken.value),
+                swapInfo[swapInfo.length - 1].amountReceiv,
+                "swap",
+                dataToSend,
+                contractAddr.smartSwap,
+                gas
+              );
+            } else {
+              // is user is going to swap 2 tokens
+              return await ESDTTransfer({
+                funcName: "swap",
+                token: fromElrondToken,
+                val: Number(fromToken.value),
+                contractAddr: contractAddr.smartSwap,
+                args: dataToSend,
+                gasL: gas,
+              });
+            }
+          }
         }
       }
     }
