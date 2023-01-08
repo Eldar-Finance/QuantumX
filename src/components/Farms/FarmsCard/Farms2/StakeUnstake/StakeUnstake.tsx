@@ -33,7 +33,6 @@ const StakeUnstake = ({ farm, userFarmItem, isPool }: IProps) => {
   if (epochDiffrence <= 0 || userFarmItem?.stakedBalance === 0) {
     disableUnstake = true;
   }
-
   let hasuserStaked = userFarmItem?.stakedBalance > 0;
 
   return (
