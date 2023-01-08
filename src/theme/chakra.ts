@@ -32,7 +32,7 @@ const components: ThemeComponents = {
         borderRadius: "md",
         fontWeight: "500",
         fontSize: "inherit",
-        fontFamily: "500",
+        fontFamily: "inherit",
         _hover: {
           bg: "main",
           opacity: "0.8",
@@ -99,6 +99,7 @@ const borderRadius = {
 const fontSizes = {
   xs: "10px",
   sm: "12px",
+  lsm:"14px",
   md: "16px",
   lg: "20px",
   xl: "22px",

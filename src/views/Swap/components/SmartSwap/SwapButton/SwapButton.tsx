@@ -1,0 +1,147 @@
+import { ButtonProps } from "@chakra-ui/react";
+import { transactionServices } from "@elrondnetwork/dapp-core";
+import {
+  Address,
+  AddressValue,
+  BigUIntValue,
+  BytesValue,
+} from "@elrondnetwork/erdjs/out";
+import { contractAddr, toknesID } from "api/net.config";
+import {
+  EGLDPayment,
+  EsdtTranferAndUnwrapEgld,
+  ESDTTransfer,
+  wrapEgldAndEsdtTranfer,
+} from "api/sc/calls";
+import BigNumber from "bignumber.js";
+import ActionButton from "components/ActionButton/ActionButton";
+import { useState } from "react";
+import {
+  selectFromField,
+  selectSlippage,
+} from "redux/slices/smartSwaps/smartSwaps";
+
+import { useAppSelector } from "utils/hooks/redux";
+import useGetElrondToken from "utils/hooks/useGetElrondToken";
+import { ISmartSwapData } from "utils/types/others.interface";
+
+interface IProps extends ButtonProps {
+  disableButton?: boolean;
+  swapInfo?: ISmartSwapData[];
+}
+
+const SLIPAGE = 2.5;
+
+const SwapButton = ({ disableButton, swapInfo, ...props }: IProps) => {
+  const [sessionId, setSessionId] = useState<string>();
+  const slipapge = useAppSelector(selectSlippage);
+
+  const toField = useAppSelector((state) => state.smartSwap.toField);
+  const fromToken = useAppSelector(selectFromField);
+  const { token: fromElrondToken } = useGetElrondToken(fromToken.token);
+
+  const txs = transactionServices.useTrackTransactionStatus({
+    transactionId: sessionId,
+    onSuccess: (txI) => {
+      if (window) {
+        window.location.reload();
+      }
+    },
+  });
+
+  const handleSwap = async () => {
+    if (swapInfo && swapInfo.length > 0 && fromElrondToken) {
+      const gas = 90000000;
+      const dataToSend = swapInfo.flatMap((item) => {
+        const amountWithSlipage = new BigNumber(item.amountReceivDec)
+          .multipliedBy(slipapge)
+          .dividedBy(100)
+          .toNumber();
+
+        const finalAmount = new BigNumber(item.amountReceivDec)
+          .minus(amountWithSlipage)
+          .toFixed(0);
+
+        return [
+          new AddressValue(new Address(item.smartcontract)),
+          BytesValue.fromUTF8("swapTokensFixedInput"),
+          BytesValue.fromUTF8(item.token2),
+          new BigUIntValue(new BigNumber(finalAmount)),
+        ];
+      });
+
+      // if user want EGLD -> WEGLD
+      if (fromToken.token === "EGLD" && toField.token === toknesID.wegld) {
+        const res = await EGLDPayment(
+          contractAddr.wrapEgldShar1,
+          "wrapEgld",
+          Number(fromToken.value),
+          [],
+          60000000
+        );
+      } else {
+        // if user want WEGLD -> EGLD
+        if (fromToken.token === toknesID.wegld && toField.token === "EGLD") {
+          const res = await ESDTTransfer({
+            funcName: "unwrapEgld",
+            val: Number(fromToken.value),
+            token: fromElrondToken,
+            contractAddr: contractAddr.wrapEgldShar1,
+            gasL: 60000000,
+          });
+        } else {
+          // if User want to send EGLD
+          if (fromToken.token === "EGLD") {
+            return await wrapEgldAndEsdtTranfer(
+              Number(fromToken.value),
+              "swap",
+              dataToSend,
+              contractAddr.smartSwap,
+              gas
+            );
+          } else {
+            // if User want to receive EGLD
+            if (toField.token === "EGLD") {
+              return await EsdtTranferAndUnwrapEgld(
+                fromElrondToken,
+                Number(fromToken.value),
+                swapInfo[swapInfo.length - 1].amountReceiv,
+                "swap",
+                dataToSend,
+                contractAddr.smartSwap,
+                gas
+              );
+            } else {
+              // is user is going to swap 2 tokens
+              return await ESDTTransfer({
+                funcName: "swap",
+                token: fromElrondToken,
+                val: Number(fromToken.value),
+                contractAddr: contractAddr.smartSwap,
+                args: dataToSend,
+                gasL: gas,
+              });
+            }
+          }
+        }
+      }
+    }
+  };
+
+  return (
+    <ActionButton
+      mt={8}
+      height={"auto"}
+      variant={"ghost"}
+      borderRadius={"12px"}
+      padding={"20px"}
+      width={"full"}
+      onClick={handleSwap}
+      {...props}
+    >
+      {toField.value ? "Swap" : "Enter an amount"}
+    </ActionButton>
+  );
+};
+
+export default SwapButton;

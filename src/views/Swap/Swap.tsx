@@ -6,7 +6,8 @@ import Layout from "components/Layout/Layout";
 import MyTabs from "components/MyTabs/MyTabs";
 import withElronDapp from "hoc/withElronDapp";
 import WrapperPages from "hoc/WrapperPages";
-import SwapCard from "./components/SwapP2P/SwapCard/SwapCard";
+import SwapCard from "./components/SmartSwap/SwapCard/SwapCard";
+import SwapCard2 from "./components/SwapP2P/SwapCard/SwapCard";
 import WrapEgld from "./components/SwapP2P/WrapEgld/WrapEgld";
 
 const Swap = () => {
@@ -23,6 +24,8 @@ const Swap = () => {
           bg="black.light"
           p={{ xs: "20px", md: "56px" }}
           borderRadius={{ xs: "xl", md: "4xl" }}
+          border={"1px solid"}
+          borderColor={"main"}
         >
           <MyTabs
             tabListProps={{
@@ -41,11 +44,15 @@ const Swap = () => {
             }}
             tabData={[
               {
+                tabText: "Smart Swap",
+                tabPanel: <SwapCard />,
+              },
+              {
                 tabText: "P2P Swap",
                 tabPanel: (
                   <Box>
                     <WrapEgld />
-                    <SwapCard />{" "}
+                    <SwapCard2 />{" "}
                   </Box>
                 ),
               },

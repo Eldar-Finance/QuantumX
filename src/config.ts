@@ -31,9 +31,14 @@ export const contractAddress = {
   bettings: "erd1qqqqqqqqqqqqqpgqlurcw7hy586qrwutvqz5g6fhfqhjms7x64qstjk25q",
   proteoElite: "erd1qqqqqqqqqqqqqpgq2ntt20af2emxtyy9g7uzsusr3zf5zknn64qsxjqggw",
   jexSawp: "erd1qqqqqqqqqqqqqpgqawkm2tlyyz6vtg02fcr5w02dyejp8yrw0y8qlucnj2",
-  wrapEgld: "erd1qqqqqqqqqqqqqpgqmuk0q2saj0mgutxm4teywre6dl8wqf58xamqdrukln",
+  wrapEgld: "erd1qqqqqqqqqqqqqpgqvc7gdl0p4s97guh498wgz75k8sav6sjfjlwqh679jy",
+  wrapEgldShar1:
+    "erd1qqqqqqqqqqqqqpgqhe8t5jewej70zupmh44jurgn29psua5l2jps3ntjj3",
+  wrapEgldShar2:
+    "erd1qqqqqqqqqqqqqpgqmuk0q2saj0mgutxm4teywre6dl8wqf58xamqdrukln",
   fastp2pswap: "erd1qqqqqqqqqqqqqpgq3gz6kc7q5zm2zdluhtcn8g0fg8vwyxvk64qsu8p6ja",
   farms2: "erd1qqqqqqqqqqqqqpgql6dxenaameqn2uyyru3nmmpf7e95zmlxu7zskzpdcw",
+  smartSwap: "erd1qqqqqqqqqqqqqpgqlhan0n8ny7ajlufn8l2zc6zlu8k44u6hu7zsdvzy24",
 
   // proteo farms
   usdcProteo: "erd1qqqqqqqqqqqqqpgq3lh80a92d49am3t2pfzheapdxtykzt5kznyqsjhfrx",
@@ -111,4 +116,5 @@ export const TOKENS_ID = {
   rare: "RARE-99e8b0",
   prick: "PRICK-744592",
   bear: "BEAR-f9c271",
+  kro: "KRO-df97ec",
 };

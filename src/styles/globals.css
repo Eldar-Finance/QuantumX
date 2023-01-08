@@ -68,3 +68,7 @@ a:hover{
   text-decoration: none !important;
   
 }
+
+ul{
+  list-style: none;
+}

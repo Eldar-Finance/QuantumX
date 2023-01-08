@@ -91,7 +91,7 @@ export const fetchEgld = createAsyncThunk(
     const response = await getEgldBalance(address);
     waitToResetStatus(resetEgldBalance);
 
-    return response.data;
+    return response;
   },
   {
     condition: (arg1, api) =>

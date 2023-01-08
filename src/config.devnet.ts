@@ -30,8 +30,10 @@ export const contractAddress = {
   mundialBet: "erd1qqqqqqqqqqqqqpgq3k2wt4wy37ewtxzas5ttrzmnl72j7myj64qsk3zrls",
   bettings: "erd1qqqqqqqqqqqqqpgqlfzlazg4uda3q4qks9xqpyvl6xtmwyf264qswnxd9f",
   proteoElite: "erd1qqqqqqqqqqqqqpgqt49p56vqpam9ftw28kvd26cqmy28u8ka64qsl3vrmz",
-  farms2: "erd1qqqqqqqqqqqqqpgqpk46s94qjvyqy8ync8dphcx9fz7nk7f2u7zspgvplv",
+  wrapEgld: "erd1qqqqqqqqqqqqqpgq7ykazrzd905zvnlr88dpfw06677lxe9w0n4suz00uh",
 
+  farms2: "erd1qqqqqqqqqqqqqpgqpk46s94qjvyqy8ync8dphcx9fz7nk7f2u7zspgvplv",
+  smartSwap: "erd1qqqqqqqqqqqqqpgqc44hejn5vy7kdxrlv7munsc24aed6n62u7zskdc6hq",
   // proteo farms
   usdcProteo: "erd1qqqqqqqqqqqqqpgqtnupupgumhzaw7yyg80z5agy6hp8ratlznyqrvhhf0",
   proteoEgldNonElite:
@@ -72,7 +74,7 @@ export const network = {
   name: "Devnet",
   egldLabel: "xEGLD",
   walletAddress: "https://devnet-wallet.elrond.com",
-  apiAddress: "https://devnet-api.elrond.com",
+  apiAddress: "https://devnet-api.multiversx.com",
   gatewayAddress: "https://devnet-gateway.elrond.com",
   explorerAddress: "http://devnet-explorer.elrond.com",
   graphQlAddress: "https://devnet-exchange-graph.elrond.com/graphql",
@@ -87,6 +89,7 @@ export const TOKENS_ID = {
   egld: "EGLD",
   usdc: "USDC-8d4068",
   proteoEgldLp: "PROTEOEGLD-8b31a0",
-  ride: "RWD-0a074a",
+  ride: "RIDE-6e4c49",
   egldRideLp: " EGLDRIDE-3263c5",
+  wegld: "WEGLD-d7c6bb",
 };

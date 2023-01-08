@@ -6,6 +6,7 @@ import farms2Reducer from "./slices/farms2/farms2-slice";
 import fastSwapReducer from "./slices/fastSwap/fastSwap";
 import proteoReducer from "./slices/proteo/proteo";
 import siteSettingsReducer from "./slices/settings/settings-reducer";
+import smartSwapReducer from "./slices/smartSwaps/smartSwaps";
 import userAccountReducer from "./slices/userAcount/account-slice";
 
 export function makeStore() {
@@ -14,6 +15,7 @@ export function makeStore() {
       siteSettings: siteSettingsReducer,
       userAccount: userAccountReducer,
       fastSwap: fastSwapReducer,
+      smartSwap: smartSwapReducer,
       lkmexAveraging: lkmexAveragingReducer,
       elrond: elrondReducer,
       proteo: proteoReducer,

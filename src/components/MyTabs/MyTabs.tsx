@@ -34,7 +34,7 @@ const MyTabs = ({
     <Tabs variant={"unstyled"} isLazy {...tabsProps}>
       <Box overflow={"auto"} {...tabListWarapperProps}>
         <TabList
-          bg="secondary"
+          bg="black"
           w="fit-content"
           borderRadius={"full"}
           {...tabListProps}
