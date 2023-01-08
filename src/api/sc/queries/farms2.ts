@@ -6,6 +6,6 @@ export const fetchLastRewardedEpoch = async <T>(farmId: number) => {
   const res = await scQuery("farms2", "lastRewardedEpoch", [
     new BigUIntValue(new BigNumber(farmId)),
   ]);
-  const data: T = res?.firstValue.valueOf();
+  const data: T = res?.firstValue.valueOf().toNumber();
   return data;
 };
