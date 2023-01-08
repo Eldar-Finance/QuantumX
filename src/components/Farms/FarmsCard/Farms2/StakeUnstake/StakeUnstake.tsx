@@ -20,7 +20,6 @@ interface IProps {
 const StakeUnstake = ({ farm, userFarmItem, isPool }: IProps) => {
   const [openStake, setOpenStake] = useState(false);
   const [openUnstakeStake, setOpenUnstakeStake] = useState(false);
-  const { token: rewardsToken } = useGetElrondToken(farm.farm.rewardToken);
   const { token: stakingToken } = useGetElrondToken(farm.farm.stakingToken);
   const { data: statsRes } = useSWR("/stats", getNetworkStats);
 
