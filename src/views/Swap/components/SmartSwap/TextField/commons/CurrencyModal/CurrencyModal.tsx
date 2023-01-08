@@ -20,7 +20,7 @@ import useGetMultipleElrondTokens from "utils/hooks/useGetMultipleElrondTokens";
 
 const CurrencyModal = ({ isOpen, onClose, handleClickToken, field }) => {
   const [order, setOrder] = React.useState<"desc" | "asc">("desc");
-  const tokens = useAppSelector((state) => state.smartSwap.tokens);
+  const tokens = useAppSelector((state) => state.smartSwap.tokens.data);
   const { tokens: elrondTokens } = useGetMultipleElrondTokens(tokens);
   const [tokenList, setTokenList] = React.useState([]);
 

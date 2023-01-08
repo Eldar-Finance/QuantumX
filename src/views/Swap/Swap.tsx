@@ -24,6 +24,8 @@ const Swap = () => {
           bg="black.light"
           p={{ xs: "20px", md: "56px" }}
           borderRadius={{ xs: "xl", md: "4xl" }}
+          border={"1px solid"}
+          borderColor={"main"}
         >
           <MyTabs
             tabListProps={{

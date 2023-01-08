@@ -15,8 +15,10 @@ import {
 import BigNumber from "bignumber.js";
 import ActionButton from "components/ActionButton/ActionButton";
 import { useState } from "react";
-import { selectFromField } from "redux/slices/smartSwaps/smartSwaps";
-import { selectUserAddress } from "redux/slices/userAcount/account-slice";
+import {
+  selectFromField,
+  selectSlippage,
+} from "redux/slices/smartSwaps/smartSwaps";
 
 import { useAppSelector } from "utils/hooks/redux";
 import useGetElrondToken from "utils/hooks/useGetElrondToken";
@@ -27,13 +29,15 @@ interface IProps extends ButtonProps {
   swapInfo?: ISmartSwapData[];
 }
 
+const SLIPAGE = 2.5;
+
 const SwapButton = ({ disableButton, swapInfo, ...props }: IProps) => {
   const [sessionId, setSessionId] = useState<string>();
-  const address = useAppSelector(selectUserAddress);
+  const slipapge = useAppSelector(selectSlippage);
+
   const toField = useAppSelector((state) => state.smartSwap.toField);
   const fromToken = useAppSelector(selectFromField);
   const { token: fromElrondToken } = useGetElrondToken(fromToken.token);
-  const { token: toElrondToken } = useGetElrondToken(toField.token);
 
   const txs = transactionServices.useTrackTransactionStatus({
     transactionId: sessionId,
@@ -49,7 +53,7 @@ const SwapButton = ({ disableButton, swapInfo, ...props }: IProps) => {
       const gas = 90000000;
       const dataToSend = swapInfo.flatMap((item) => {
         const amountWithSlipage = new BigNumber(item.amountReceivDec)
-          .multipliedBy(2.5)
+          .multipliedBy(slipapge)
           .dividedBy(100)
           .toNumber();
 

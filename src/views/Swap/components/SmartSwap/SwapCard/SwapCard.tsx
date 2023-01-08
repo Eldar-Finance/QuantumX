@@ -5,6 +5,7 @@ import TextField from "../TextField/TextField";
 
 import { ExchangeIcon } from "components/Icons/ui";
 import { useEffect } from "react";
+import { FetchWhitelistedTokens } from "redux/slices/smartSwaps/funcs";
 import {
   excahngeFields,
   selectFromField,
@@ -27,17 +28,16 @@ const SwapCard = () => {
     dispatch(setFromTokenValue(token));
   };
 
-  const { data, isLoading } = useGetSwapInfo(
-    fromToken.token,
-    toToken.token,
-    fromToken.value === "" ? "0" : fromToken.value
-  );
+  const { data, isLoading } = useGetSwapInfo();
 
   useEffect(() => {
     if (data) {
       dispatch(setToTokenValue(data[data.length - 1].amountReceiv));
     }
   }, [data, dispatch]);
+  useEffect(() => {
+    dispatch(FetchWhitelistedTokens());
+  }, [dispatch]);
 
   const handleOnSelectFromToken = (token) => {
     dispatch(setFromToken(token.identifier));
@@ -78,7 +78,6 @@ const SwapCard = () => {
                 handleClickToken={handleOnSelectFromToken}
                 onClickMaxtoken={handleMaxFromField}
                 field={fromToken}
-                borderColored
               />
               <Center position={"absolute"} bottom={"-20px"} zIndex={2}>
                 <IconButton

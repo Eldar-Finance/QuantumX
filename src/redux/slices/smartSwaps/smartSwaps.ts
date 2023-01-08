@@ -1,6 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { toknesID } from "api/net.config";
 import { AppState } from "redux/store";
+import { STATUS } from "utils/types/core.interface";
+import { FetchWhitelistedTokens } from "./funcs";
 
 export const reducerName = "smartSwap";
 
@@ -13,27 +15,29 @@ interface ISmartSwapState {
     value: string | null;
     token: string | null;
   };
-  tokens: string[];
+  tokens: {
+    status: STATUS;
+    data: string[];
+    error: string;
+  };
+  slippage: number;
 }
 
 const initialState: ISmartSwapState = {
   fromField: {
     value: null,
-    token: toknesID.ride,
+    token: "EGLD",
   },
   toField: {
     value: null,
-    token: "EGLD",
+    token: toknesID.usdc,
   },
-  tokens: [
-    "EGLD",
-    toknesID.usdc,
-    toknesID.wegld,
-    toknesID.crt,
-    toknesID.rare,
-    toknesID.proteo,
-    toknesID.kro,
-  ],
+  tokens: {
+    status: "idle",
+    data: [],
+    error: "",
+  },
+  slippage: 1,
 };
 
 export const smartSwap = createSlice({
@@ -57,6 +61,24 @@ export const smartSwap = createSlice({
       state.toField = state.fromField;
       state.fromField = temp;
     },
+    updateSlippage: (state, action) => {
+      state.slippage = action.payload;
+    },
+  },
+  extraReducers(builder) {
+    builder
+      // FetchWhitelistedTokens
+      .addCase(FetchWhitelistedTokens.pending, (state) => {
+        state.tokens.status = "loading";
+      })
+      .addCase(FetchWhitelistedTokens.fulfilled, (state, action) => {
+        state.tokens.status = "succeeded";
+        state.tokens.data = action.payload;
+      })
+      .addCase(FetchWhitelistedTokens.rejected, (state, action) => {
+        state.tokens.status = "failed";
+        state.tokens.error = action.error.message;
+      });
   },
 });
 
@@ -69,7 +91,7 @@ export const selectFromTokenValue = (state: AppState) =>
   state.smartSwap.fromField.value;
 export const selectToTokenValue = (state: AppState) =>
   state.smartSwap.toField.value;
-
+export const selectSlippage = (state: AppState) => state.smartSwap.slippage;
 // Action creators are generated for each case reducer function
 export const {
   setFromTokenValue,
@@ -77,6 +99,7 @@ export const {
   setFromToken,
   setToToken,
   excahngeFields,
+  updateSlippage,
 } = smartSwap.actions;
 
 export default smartSwap.reducer;

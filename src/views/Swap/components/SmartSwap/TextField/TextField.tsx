@@ -17,7 +17,6 @@ interface IProps extends InputProps {
     value?: string;
   };
   sxProps?: any;
-  borderColored?: boolean;
   isLoadingAmount?: boolean;
 }
 
@@ -29,7 +28,6 @@ const TextField = ({
   isMaxToken,
   field,
 
-  borderColored,
   sxProps,
   isLoadingAmount,
   ...props
@@ -46,7 +44,7 @@ const TextField = ({
       px={4}
       borderRadius={"20px"}
       border={"1px solid"}
-      borderColor={borderColored ? "main" : "transparent"}
+      borderColor={"main"}
       sx={sxProps}
       position={"relative"}
       bg="scondary"
