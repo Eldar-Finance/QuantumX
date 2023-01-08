@@ -3,6 +3,7 @@ import { Box, Center, Flex, IconButton } from "@chakra-ui/react";
 import SwapButton from "../SwapButton/SwapButton";
 import TextField from "../TextField/TextField";
 
+import BigNumber from "bignumber.js";
 import { ExchangeIcon } from "components/Icons/ui";
 import { useEffect } from "react";
 import { FetchWhitelistedTokens } from "redux/slices/smartSwaps/funcs";
@@ -32,7 +33,11 @@ const SwapCard = () => {
 
   useEffect(() => {
     if (data) {
-      dispatch(setToTokenValue(data[data.length - 1].amountReceiv));
+      dispatch(
+        setToTokenValue(
+          new BigNumber(data[data.length - 1].amountReceiv).toFixed(4)
+        )
+      );
     }
   }, [data, dispatch]);
   useEffect(() => {
