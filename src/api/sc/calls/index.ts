@@ -207,7 +207,7 @@ export const wrapEgldAndEsdtTranfer = async (
     value: value,
     receiver: new Address(simpleAddress),
     data: payload,
-    gasLimit: 8000000,
+    gasLimit: 30000000,
     chainID: ChainId,
   });
 
