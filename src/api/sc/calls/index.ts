@@ -55,6 +55,52 @@ export const ESDTNFTTransfer = async (
     console.log("error", error);
   }
 };
+export const MultiESDTNFTTransfer = async (
+  wsp: WspTypes,
+  funcName: string,
+  nfts: {
+    collection: string;
+    nonce: number;
+    value: number;
+  }[],
+  args: any[] = [],
+  gasL: number = 100000000
+) => {
+  try {
+    const userAddress = store.getState().userAccount.connectedAddress;
+    let { simpleAddress } = getInterface(wsp);
+
+    const data = nfts.flatMap((nft) => {
+      const nftData = [
+        BytesValue.fromUTF8(nft.collection), // <token identifier in hexadecimal encoding>
+        new BigUIntValue(new BigNumber(nft.nonce)), // <token nonce in hexadecimal encoding>
+        new BigUIntValue(new BigNumber(nft.value * EGLD_VAL)), //<token quantity to transfer in hexadecimal encoding>
+      ];
+      return nftData;
+    });
+
+    const payload = TransactionPayload.contractCall()
+      .setFunction(new ContractFunction("MultiESDTNFTTransfer"))
+      .setArgs([
+        new AddressValue(new Address(simpleAddress)), // <receiver bytes in hexadecimal encoding>
+        new BigUIntValue(new BigNumber(nfts.length)), //<number of tokens to transfer in hexadecimal encoding>
+        [...data],
+        BytesValue.fromUTF8(funcName),
+        ...args,
+      ])
+      .build();
+
+    const transactionData: any = {
+      addr: userAddress,
+      payload: payload,
+      gasL: gasL,
+    };
+
+    return await sendTransaction(transactionData);
+  } catch (error) {
+    console.log("error", error);
+  }
+};
 export const ESDTTransfer = async ({
   funcName,
   token,

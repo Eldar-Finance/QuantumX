@@ -49,14 +49,13 @@ const SwapButton = ({ disableButton, swapInfo, ...props }: IProps) => {
       const gas = 90000000;
       const dataToSend = swapInfo.flatMap((item) => {
         const amountWithSlipage = new BigNumber(item.amountReceivDec)
-          .multipliedBy(2)
+          .multipliedBy(1)
           .dividedBy(100)
           .toNumber();
 
         const finalAmount = new BigNumber(item.amountReceivDec)
           .minus(amountWithSlipage)
           .toFixed(0);
-        console.log("finalAmount", finalAmount);
 
         return [
           new AddressValue(new Address(item.smartcontract)),

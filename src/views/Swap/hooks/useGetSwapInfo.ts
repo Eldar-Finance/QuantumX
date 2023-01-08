@@ -12,7 +12,11 @@ const useGetSwapInfo = (
 
   const { data, error, isLoading } = useSWR(
     fromToken && fromTokenValue && toToken
-      ? [fromToken === "EGLD" ? toknesID.wegld : fromToken, value, toToken]
+      ? [
+          fromToken === "EGLD" ? toknesID.wegld : fromToken,
+          value,
+          toToken === "EGLD" ? toknesID.wegld : toToken,
+        ]
       : null,
     fetchSmartSwap
   );
