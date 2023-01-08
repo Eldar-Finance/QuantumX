@@ -26,8 +26,8 @@ const Slippage = () => {
 
         <Box>
           <Text color="white.500" mb={3}>
-            Your transaction will revert if the output amount is more than 1%
-            below the one displayed.
+            Your transaction will revert if the output amount is more than{" "}
+            {slipapge}% below the one displayed.
           </Text>
 
           <Flex w="full" gap={2} flexDir={{ xs: "column", tablet: "row" }}>
