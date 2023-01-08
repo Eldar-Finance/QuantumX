@@ -30,17 +30,19 @@ const Slippage = () => {
             below the one displayed.
           </Text>
 
-          <Flex w="full" gap={2}>
-            {slippageSlecctions.map((slippageOption) => {
-              return (
-                <SlippageBox
-                  key={slippageOption}
-                  slippage={slippageOption}
-                  active={slippageOption === slipapge}
-                  onClick={() => handleUpdateSlippage(slippageOption)}
-                />
-              );
-            })}
+          <Flex w="full" gap={2} flexDir={{ xs: "column", tablet: "row" }}>
+            <Flex gap={2}>
+              {slippageSlecctions.map((slippageOption) => {
+                return (
+                  <SlippageBox
+                    key={slippageOption}
+                    slippage={slippageOption}
+                    active={slippageOption === slipapge}
+                    onClick={() => handleUpdateSlippage(slippageOption)}
+                  />
+                );
+              })}
+            </Flex>
 
             <Flex
               border={"1px solid"}
@@ -53,6 +55,7 @@ const Slippage = () => {
                 outline={"none"}
                 border="none"
                 placeholder="Custom"
+                py={2}
                 _active={{
                   outline: "none",
                   border: "none",
