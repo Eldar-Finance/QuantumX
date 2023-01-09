@@ -26,7 +26,7 @@ export const routes: {
   swap: IRoute;
   farms: IRoute;
   pools: IRoute;
-  // hub: IRoute;
+  hub: IRoute;
   dca: IRoute;
   eLBadges: IRoute;
   investors: IRoute;
@@ -50,11 +50,11 @@ export const routes: {
     name: "Pools",
     onModalAndNavbar: true,
   },
-  // hub: {
-  //   path: routeNames.hub,
-  //   name: "Hub",
-  //   onModalAndNavbar: true,
-  // },
+  hub: {
+    path: routeNames.hub,
+    name: "Hub",
+    onModalAndNavbar: true,
+  },
   dca: {
     path: routeNames.dca,
     name: "Dollar Cost Averaging",

@@ -4,6 +4,7 @@ import eldarSftsReducer from "./slices/eldarSfts/eldarSfts";
 import elrondReducer from "./slices/elrond/elrond-slice";
 import farms2Reducer from "./slices/farms2/farms2-slice";
 import fastSwapReducer from "./slices/fastSwap/fastSwap";
+import hubReducer from "./slices/hub/hub-slice";
 import proteoReducer from "./slices/proteo/proteo";
 import siteSettingsReducer from "./slices/settings/settings-reducer";
 import smartSwapReducer from "./slices/smartSwaps/smartSwaps";
@@ -21,6 +22,7 @@ export function makeStore() {
       proteo: proteoReducer,
       farms2: farms2Reducer,
       eldarSfts: eldarSftsReducer,
+      hub: hubReducer,
     },
     devTools: process.env.NODE_ENV === "production" ? false : true,
 

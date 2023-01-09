@@ -25,3 +25,11 @@ export interface IScPanelFarms {
   rewardsFee: number;
   unbondingPeriod: number;
 }
+
+export interface IHubOffer {
+  id: number;
+  collection: string;
+  cost: string;
+  available: number;
+  withdrawable: string;
+}
