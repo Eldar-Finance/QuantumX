@@ -20,11 +20,11 @@ const NftList = () => {
   if (!offers || !tokens) return null;
 
   const offer1 = {
-    ...offers[0],
+    ...offers[1],
     elrondToken: tokens.find((t) => t.identifier === offers[0].token),
   };
   const offer2 = {
-    ...offers[1],
+    ...offers[0],
     elrondToken: tokens.find((t) => t.identifier === offers[1].token),
   };
 
