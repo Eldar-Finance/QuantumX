@@ -17,8 +17,6 @@ const NftList = () => {
     offers ? [offers[0].token, offers[1].token] : []
   );
 
-  console.log("offers", offers);
-
   if (!offers || !tokens) return null;
 
   const offer1 = {
@@ -30,15 +28,12 @@ const NftList = () => {
     elrondToken: tokens.find((t) => t.identifier === offers[1].token),
   };
 
-  console.log("offer2", offer2);
-
   const handleSubmitHubOffer = (offer) => {
     const funcName = "buyNft";
     // const token = {
     //   decimals:0,
     //   identifier:""
     // }
-    console.log("offer2.price", offer2.price);
     if (offer.token === "EGLD") {
       EGLDPayment(
         "hubWsp",

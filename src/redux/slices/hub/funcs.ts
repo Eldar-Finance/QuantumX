@@ -12,7 +12,6 @@ export const fetchCreatorInfo = createAsyncThunk(
       new AddressValue(new Address(address)),
     ]);
     const { firstValue } = response;
-    console.log("firstValue", firstValue.valueOf());
 
     const data: IHubCreatorInfo[] = firstValue
       .valueOf()

@@ -3,7 +3,6 @@ import { fetchScHubOffers } from "../services";
 
 const useGetOffers = () => {
   const { data, isLoading, error } = useSWR("getAllOffers", fetchScHubOffers);
-  console.log("error", error);
 
   return {
     offers: data,

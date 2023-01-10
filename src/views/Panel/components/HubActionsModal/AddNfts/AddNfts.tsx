@@ -23,7 +23,6 @@ interface IProps {
 }
 
 const AddNfts = ({ collection, id, onClose }: IProps) => {
-  console.log("collection", collection);
   const [selectedNFTs, setSelectedNFTs] = useState<IElrondNFT[]>([]);
   const { nfts } = useGetUserNfts(collection);
 

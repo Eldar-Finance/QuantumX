@@ -6,8 +6,6 @@ import useGetSwapInfo from "views/Swap/hooks/useGetSwapInfo";
 const SwapRoute = () => {
   const { data, isLoading } = useGetSwapInfo();
 
-  console.log("data", data);
-
   const routes = data
     ? data.map((swapData) => {
         return {

@@ -13,8 +13,6 @@ const useGetUserNfts = (collections?: string) => {
     getNfts
   );
 
-  console.log("data", data);
-
   return {
     nfts: data,
     isLoading: !error && !data,

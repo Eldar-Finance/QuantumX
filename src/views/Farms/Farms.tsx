@@ -114,11 +114,6 @@ const Farms = () => {
           <Flex w="full" justifyContent={"flex-end"} mt="12">
             <Flex gap="20px">
               <Search onChange={handleSearch} />
-              {/* <Selector
-                onchange={(e) => console.log(e)}
-                sortKey="new"
-                sorts={["new", "amount"]}
-              /> */}
             </Flex>
           </Flex>
           <Center mt="50px" w="full">

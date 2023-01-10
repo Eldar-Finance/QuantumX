@@ -9,8 +9,6 @@ const useGetNfts = (identifiers?: string) => {
     getNFTs
   );
 
-  console.log("data", data);
-
   return {
     nfts: data,
     isLoading: isLoading,

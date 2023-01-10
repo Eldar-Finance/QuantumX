@@ -7,7 +7,6 @@ export const FetchWhitelistedTokens = createAsyncThunk(
   async () => {
     const response = await scQuery("smartSwap", "whitelistedTokens");
     const { firstValue } = response;
-    console.log("firstValue", firstValue.valueOf());
 
     const data = firstValue;
 

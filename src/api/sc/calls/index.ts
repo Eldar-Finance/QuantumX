@@ -79,7 +79,6 @@ export const MultiESDTNFTTransfer = async (
       ];
       return nftData;
     });
-    console.log("args", args);
 
     const payload = TransactionPayload.contractCall()
       .setFunction(new ContractFunction("MultiESDTNFTTransfer"))
@@ -115,7 +114,6 @@ export const ESDTTransfer = async ({
   const tokenIdentifier = token.identifier;
   const multiplyier = Math.pow(10, token.decimals || 18);
   const finalValue = realValue || Number(val) * multiplyier;
-  console.log("realValue", realValue);
 
   const bgFinalValue = new BigNumber(finalValue).toFixed(0);
   const payload = TransactionPayload.contractCall()
@@ -173,8 +171,6 @@ export const EGLDPayment = async (
     simpleAddress = workspace;
   }
 
-  console.log("amount", amount);
-
   const payload = TransactionPayload.contractCall()
     .setFunction(new ContractFunction(funcName))
     .setArgs(args)
@@ -202,8 +198,6 @@ export const wrapEgldAndEsdtTranfer = async (
   //wrap egld
   const shard = store.getState().userAccount.connectedShard;
   const wrapContractBasedOnShard = getScOfWrapedEgld(shard);
-  console.log("wrapContractBasedOnShard", wrapContractBasedOnShard);
-
   const payload = TransactionPayload.contractCall()
     .setFunction(new ContractFunction("wrapEgld"))
     .setArgs([])
