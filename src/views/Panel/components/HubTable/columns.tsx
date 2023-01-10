@@ -1,5 +1,8 @@
-import { CloseIcon } from "@chakra-ui/icons";
+import { DeleteIcon } from "@chakra-ui/icons";
 import { Flex } from "@chakra-ui/react";
+import { BigUIntValue } from "@elrondnetwork/erdjs/out";
+import { scCall } from "api/sc/calls";
+import BigNumber from "bignumber.js";
 import ActionButton from "components/ActionButton/ActionButton";
 import { useState } from "react";
 import { IHubCreatorInfo } from "utils/types/sc.interface";
@@ -80,6 +83,19 @@ export const hubColumns = [
         setopenModal((s) => !s);
       };
 
+      const handleWithdraw = () => {
+        scCall("hubWsp", "withdrawFunds", [
+          new BigUIntValue(new BigNumber(data.id)),
+        ]);
+      };
+      const handleDelete = () => {
+        scCall(
+          "hubWsp",
+          "deleteOffer",
+          new BigUIntValue(new BigNumber(data.id))
+        );
+      };
+
       return (
         <>
           <Flex alignItems={"center"} gap={3}>
@@ -87,10 +103,12 @@ export const hubColumns = [
               <ActionButton onClick={handleOpenModal}>
                 Add/Remove NFTs
               </ActionButton>
-              <ActionButton>Withdaw funds</ActionButton>
+              <ActionButton onClick={handleWithdraw}>
+                Withdraw funds
+              </ActionButton>
             </Flex>
-            <ActionButton>
-              <CloseIcon />
+            <ActionButton onClick={handleDelete}>
+              <DeleteIcon />
             </ActionButton>
           </Flex>
 
