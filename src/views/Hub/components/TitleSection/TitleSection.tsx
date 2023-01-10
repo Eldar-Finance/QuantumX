@@ -7,7 +7,7 @@ const TitleSection = () => {
         QuantumXHub
       </Heading>
       <Heading fontSize={"md"} color="white.400">
-        An exlusive NFT Minter for teams to leverage their projects
+        An exclusive NFT Minter for teams to leverage their projects
       </Heading>
     </Center>
   );

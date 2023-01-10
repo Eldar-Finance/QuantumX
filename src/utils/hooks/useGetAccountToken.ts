@@ -41,6 +41,8 @@ const useGetAccountToken = (identifier: string) => {
     getEgldBalance
   );
 
+  console.log("elrondTokenData", elrondTokenData);
+
   const data =
     identifier === "EGLD"
       ? { identifier, nonce: 0, balance: "0", decimals: 18, ...egldData }
