@@ -21,11 +21,11 @@ const NftList = () => {
 
   const offer1 = {
     ...offers[1],
-    elrondToken: tokens.find((t) => t.identifier === offers[0].token),
+    elrondToken: tokens.find((t) => t.identifier === offers[1].token),
   };
   const offer2 = {
     ...offers[0],
-    elrondToken: tokens.find((t) => t.identifier === offers[1].token),
+    elrondToken: tokens.find((t) => t.identifier === offers[0].token),
   };
 
   const handleSubmitHubOffer = (offer) => {
