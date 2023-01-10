@@ -48,15 +48,13 @@ const AddNfts = ({ collection, id, onClose }: IProps) => {
     MultiESDTNFTTransfer(
       "hubWsp",
       "depositNfts",
-      selectedNFTs.map(
-        (nft) => {
-          return {
-            ...nft,
-            value: 1,
-          };
-        },
-        [new BigIntValue(new BigNumber(id))]
-      )
+      selectedNFTs.map((nft) => {
+        return {
+          ...nft,
+          value: 1,
+        };
+      }),
+      [new BigIntValue(new BigNumber(id))]
     );
   };
   return (
