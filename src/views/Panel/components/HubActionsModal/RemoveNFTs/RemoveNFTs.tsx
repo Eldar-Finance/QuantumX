@@ -24,9 +24,10 @@ interface IProps {
   collection: string;
   id: number;
   nonces: number[];
+  view: number;
 }
 
-const RemoveNFTs = ({ collection, nonces, id, onClose }: IProps) => {
+const RemoveNFTs = ({ collection, nonces, view, id, onClose }: IProps) => {
   const [selectedNFTs, setSelectedNFTs] = useState<IElrondNFT[]>([]);
   const nftsInScArr: string[] = nonces.map((nonce) =>
     createIndentifierByCollectionAndNonce(collection, nonce)
@@ -53,6 +54,10 @@ const RemoveNFTs = ({ collection, nonces, id, onClose }: IProps) => {
       ...selectedNFTs.map((nft) => new BigUIntValue(new BigNumber(nft.nonce))),
     ]);
   };
+
+  if (view !== 2) {
+    return null;
+  }
   return (
     <>
       <ModalHeader>

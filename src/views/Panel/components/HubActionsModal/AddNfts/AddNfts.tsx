@@ -20,15 +20,12 @@ interface IProps {
   onClose: () => void;
   collection: string;
   id: number;
+  view: number;
 }
 
-const AddNfts = ({ collection, id, onClose }: IProps) => {
+const AddNfts = ({ collection, id, onClose, view }: IProps) => {
   const [selectedNFTs, setSelectedNFTs] = useState<IElrondNFT[]>([]);
   const { nfts } = useGetUserNfts(collection);
-
-  if (!nfts) {
-    return null;
-  }
 
   const handleSelectNft = (nft: IElrondNFT) => {
     if (
@@ -57,6 +54,13 @@ const AddNfts = ({ collection, id, onClose }: IProps) => {
       [new BigIntValue(new BigNumber(id))]
     );
   };
+
+  if (!nfts) {
+    return null;
+  }
+
+  if (view !== 1) return null;
+
   return (
     <>
       <ModalHeader>
