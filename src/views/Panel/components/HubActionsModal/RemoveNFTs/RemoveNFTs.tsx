@@ -81,6 +81,9 @@ const RemoveNFTs = ({ collection, nonces, view, id, onClose }: IProps) => {
                 <Text>There was an error</Text>
               ) : (
                 <>
+                  {nfts.length === 0 && (
+                    <Text textAlign={"center"}>No nfts to remove</Text>
+                  )}
                   {nfts.map((nft) => {
                     return (
                       <Flex
