@@ -6,6 +6,7 @@ import {
   Heading,
   ModalBody,
   ModalHeader,
+  Text,
 } from "@chakra-ui/react";
 import { BigIntValue } from "@elrondnetwork/erdjs/out";
 import { MultiESDTNFTTransfer } from "api/sc/calls";
@@ -76,6 +77,11 @@ const AddNfts = ({ collection, id, onClose, view }: IProps) => {
       <Divider />
       <ModalBody mt="3">
         <Center w="full" mb={8} gap={4} flexWrap="wrap">
+          {nfts.length === 0 && (
+            <Text textAlign={"center"}>
+              No nfts for collection {collection}
+            </Text>
+          )}
           {nfts.map((nft) => {
             return (
               <Flex
