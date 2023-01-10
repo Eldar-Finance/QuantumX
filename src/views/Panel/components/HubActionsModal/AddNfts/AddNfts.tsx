@@ -71,7 +71,7 @@ const AddNfts = ({ collection, id, onClose }: IProps) => {
       </ModalHeader>
       <Divider />
       <ModalBody mt="3">
-        <Center w="full" mb={8} gap={4}>
+        <Center w="full" mb={8} gap={4} flexWrap="wrap">
           {nfts.map((nft) => {
             return (
               <Flex
