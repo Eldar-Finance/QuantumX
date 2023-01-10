@@ -4,6 +4,8 @@ export const formatTokenI = (tokenIdentifier: string): string => {
   if (!tokenIdentifier) {
     return "";
   }
+  console.log("formatTokenI tokenIdentifier", tokenIdentifier);
+
   return tokenIdentifier.split("-")[0];
 };
 

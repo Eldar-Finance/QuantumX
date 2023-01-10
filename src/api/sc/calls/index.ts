@@ -115,6 +115,7 @@ export const ESDTTransfer = async ({
   const tokenIdentifier = token.identifier;
   const multiplyier = Math.pow(10, token.decimals || 18);
   const finalValue = realValue || Number(val) * multiplyier;
+  console.log("realValue", realValue);
 
   const bgFinalValue = new BigNumber(finalValue).toFixed(0);
   const payload = TransactionPayload.contractCall()
@@ -171,6 +172,8 @@ export const EGLDPayment = async (
   if (simpleAddress === "") {
     simpleAddress = workspace;
   }
+
+  console.log("amount", amount);
 
   const payload = TransactionPayload.contractCall()
     .setFunction(new ContractFunction(funcName))

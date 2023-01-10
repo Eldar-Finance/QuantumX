@@ -26,16 +26,18 @@ export interface IScPanelFarms {
   unbondingPeriod: number;
 }
 
-export interface IHubCreatorInfo {
+export interface IHubOffer {
   id: number;
   collection: string;
   creator: string;
   price: number;
   token: string;
+}
+export interface IHubCreatorInfo extends IHubOffer {
   withdrawableFounds: number;
   nftsNonces: number[];
 }
-export interface IHubOffer {
-  id: number;
-  avilableNfts: number;
+
+export interface IHubAvilableOffers extends IHubOffer {
+  numberOfAvilableNfts: number;
 }
