@@ -1,28 +1,34 @@
 import { Box } from "@chakra-ui/react";
 import SearchTable from "components/Tables/SearchTable";
-import { IHubOffer } from "utils/types/sc.interface";
-import { hubColumns } from "./columns";
-
-const tableData: IHubOffer[] = [
-  {
-    id: 1,
-    collection: "Bear-1f32",
-    available: 100,
-    withdrawable: "2500 RARE",
-    cost: "100 RARE",
-  },
-  {
-    id: 2,
-    collection: "EAPES-3941",
-    available: 98,
-    withdrawable: "2 EGLD",
-    cost: "1 EGLD",
-  },
-];
+import { useEffect } from "react";
+import { fetchCreatorInfo } from "redux/slices/hub/funcs";
+import { selectHubCreatorsInfo } from "redux/slices/hub/hub-slice";
+import { formatTokenI } from "utils/functions/tokens";
+import { useAppDispatch, useAppSelector } from "utils/hooks/redux";
+import { hubColumns, IHubCreatorTableInfo } from "./columns";
 
 const HubTable = () => {
+  const dispatch = useAppDispatch();
+  const { data } = useAppSelector(selectHubCreatorsInfo);
+  useEffect(() => {
+    dispatch(fetchCreatorInfo());
+  }, [dispatch]);
+
+  const tableData: IHubCreatorTableInfo[] = data.map((creatorInfo) => {
+    const data: IHubCreatorTableInfo = {
+      available: creatorInfo.nftsNonces.length,
+      collection: creatorInfo.collection,
+      cost: `${creatorInfo.price} ${formatTokenI(creatorInfo.token)}`,
+      id: creatorInfo.id,
+      withdrawable: `${creatorInfo.withdrawableFounds} ${formatTokenI(
+        creatorInfo.token
+      )}`,
+    };
+
+    return data;
+  });
   return (
-    <Box w="full" maxW={"1000px"} mx="auto" minH="70vh" overflow={"auto"}>
+    <Box w="full" maxW={"1100px"} mx="auto" minH="70vh" overflow={"auto"}>
       <SearchTable tableData={tableData} columnsData={hubColumns} />
     </Box>
   );

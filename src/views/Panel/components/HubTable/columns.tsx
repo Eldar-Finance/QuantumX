@@ -1,14 +1,21 @@
 import { CloseIcon } from "@chakra-ui/icons";
 import { Flex } from "@chakra-ui/react";
 import ActionButton from "components/ActionButton/ActionButton";
-import { IHubOffer } from "utils/types/sc.interface";
+
+export interface IHubCreatorTableInfo {
+  id: number;
+  collection: string;
+  cost: string;
+  available: number;
+  withdrawable: string;
+}
 
 export const hubColumns = [
   {
     Header: "OfferID",
     accessor: "id",
     Cell: ({ row }) => {
-      const data: IHubOffer = row.original;
+      const data: IHubCreatorTableInfo = row.original;
       return <Flex>{data.id}</Flex>;
     },
   },
@@ -16,7 +23,7 @@ export const hubColumns = [
     Header: "NFT Collection",
     accessor: "collection",
     Cell: ({ row }) => {
-      const data: IHubOffer = row.original;
+      const data: IHubCreatorTableInfo = row.original;
 
       return (
         <Flex
@@ -34,7 +41,7 @@ export const hubColumns = [
     Header: "Cost",
     accessor: "cost",
     Cell: ({ row }) => {
-      const data: IHubOffer = row.original;
+      const data: IHubCreatorTableInfo = row.original;
       return (
         <Flex justify={"center"} whiteSpace="nowrap">
           {" "}
@@ -47,7 +54,7 @@ export const hubColumns = [
     Header: "Avilable NFTs",
     accessor: "available",
     Cell: ({ row }) => {
-      const data: IHubOffer = row.original;
+      const data: IHubCreatorTableInfo = row.original;
       return <Flex justify={"center"}> {data.available}</Flex>;
     },
   },
@@ -55,7 +62,7 @@ export const hubColumns = [
     Header: "Withdrawable Funds",
     accessor: "withdrawable",
     Cell: ({ row }) => {
-      const data: IHubOffer = row.original;
+      const data: IHubCreatorTableInfo = row.original;
       return <Flex justify={"center"}> {data.withdrawable}</Flex>;
     },
   },
@@ -63,7 +70,7 @@ export const hubColumns = [
     Header: "Actions",
     accessor: "",
     Cell: ({ row }) => {
-      const data: IHubOffer = row.original;
+      const data: IHubCreatorTableInfo = row.original;
 
       return (
         <Flex alignItems={"center"} gap={3}>

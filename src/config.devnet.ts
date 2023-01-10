@@ -31,6 +31,7 @@ export const contractAddress = {
   bettings: "erd1qqqqqqqqqqqqqpgqlfzlazg4uda3q4qks9xqpyvl6xtmwyf264qswnxd9f",
   proteoElite: "erd1qqqqqqqqqqqqqpgqt49p56vqpam9ftw28kvd26cqmy28u8ka64qsl3vrmz",
   wrapEgld: "erd1qqqqqqqqqqqqqpgq7ykazrzd905zvnlr88dpfw06677lxe9w0n4suz00uh",
+  hub: "erd1qqqqqqqqqqqqqpgqq4ens8kf4knm8arzyfdut0akxf74pq5qu7zssh8q99",
 
   farms2: "erd1qqqqqqqqqqqqqpgqpk46s94qjvyqy8ync8dphcx9fz7nk7f2u7zspgvplv",
   smartSwap: "erd1qqqqqqqqqqqqqpgqc44hejn5vy7kdxrlv7munsc24aed6n62u7zskdc6hq",

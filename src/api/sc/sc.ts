@@ -124,7 +124,8 @@ export type WspTypes =
   | "smartSwap"
   | "wrapEgld"
   | "wrapEgldShard1"
-  | "wrapEgldShard2";
+  | "wrapEgldShard2"
+  | "hubWsp";
 
 export const getInterface = (workspace: WspTypes) => {
   let address = null;
@@ -341,6 +342,12 @@ export const getInterface = (workspace: WspTypes) => {
       abiUrl = abiPath + "";
       implementsInterfaces = "";
       break;
+    case hub:
+      simpleAddress = contractAddr.hub;
+      address = new Address(simpleAddress);
+      abiUrl = abiPath + "/nfthub.abi.json";
+      implementsInterfaces = "NftHub";
+      break;
 
     default:
       break;
@@ -372,6 +379,7 @@ export const smartSwapWsp = "smartSwap";
 export const wrapEgldpWsp = "wrapEgld";
 export const wrapEgldpWspShard1 = "wrapEgldShard1";
 export const wrapEgldpWspShard2 = "wrapEgldShard2";
+export const hub = "hubWsp";
 
 // proteo farms
 export const usdcProteoWsp = "usdcProteo";
