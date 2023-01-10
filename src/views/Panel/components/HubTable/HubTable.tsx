@@ -23,6 +23,7 @@ const HubTable = () => {
       withdrawable: `${creatorInfo.withdrawableFounds} ${formatTokenI(
         creatorInfo.token
       )}`,
+      hub: creatorInfo,
     };
 
     return data;

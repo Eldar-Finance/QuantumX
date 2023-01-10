@@ -1,6 +1,9 @@
 import { CloseIcon } from "@chakra-ui/icons";
 import { Flex } from "@chakra-ui/react";
 import ActionButton from "components/ActionButton/ActionButton";
+import { useState } from "react";
+import { IHubCreatorInfo } from "utils/types/sc.interface";
+import HubActionModal from "../HubActionsModal/HubActionModa";
 
 export interface IHubCreatorTableInfo {
   id: number;
@@ -8,6 +11,7 @@ export interface IHubCreatorTableInfo {
   cost: string;
   available: number;
   withdrawable: string;
+  hub: IHubCreatorInfo;
 }
 
 export const hubColumns = [
@@ -71,17 +75,31 @@ export const hubColumns = [
     accessor: "",
     Cell: ({ row }) => {
       const data: IHubCreatorTableInfo = row.original;
+      const [openModal, setopenModal] = useState(false);
+      const handleOpenModal = () => {
+        setopenModal((s) => !s);
+      };
 
       return (
-        <Flex alignItems={"center"} gap={3}>
-          <Flex flexDir={"column"} gap={4}>
-            <ActionButton>Add/Remove NFTs</ActionButton>
-            <ActionButton>Withdaw funds</ActionButton>
+        <>
+          <Flex alignItems={"center"} gap={3}>
+            <Flex flexDir={"column"} gap={4}>
+              <ActionButton onClick={handleOpenModal}>
+                Add/Remove NFTs
+              </ActionButton>
+              <ActionButton>Withdaw funds</ActionButton>
+            </Flex>
+            <ActionButton>
+              <CloseIcon />
+            </ActionButton>
           </Flex>
-          <ActionButton>
-            <CloseIcon />
-          </ActionButton>
-        </Flex>
+
+          <HubActionModal
+            isOpen={openModal}
+            onClose={handleOpenModal}
+            hubInfo={data.hub}
+          />
+        </>
       );
     },
   },

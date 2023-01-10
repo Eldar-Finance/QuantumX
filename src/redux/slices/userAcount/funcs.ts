@@ -102,13 +102,13 @@ export const fetchNfts = createAsyncThunk(
   "userAccount/fetchNfts",
   async (address: string) => {
     const responseSize = 200;
-    let response = await getNfts(address);
-    if (response.data.length === responseSize) {
-      response = await getNfts(address);
+    let response = await getNfts({ address });
+    if (response.length === responseSize) {
+      response = await getNfts({ address });
     }
     // waitToResetStatus(resetNfts);
 
-    return response.data;
+    return response;
   }
   // {
   //   condition: (arg1, api) => executeFetch(arg1, api, reducerName, "nfts"),
@@ -143,12 +143,12 @@ export const fetcTransactionsToEldar = createAsyncThunk(
 export const fetchEldarNfts = createAsyncThunk(
   "userAccount/fetchEldarNfts",
   async () => {
-    const response = await getNfts(
-      "erd1d4y74h60k79nr7jpqkt3ktp7pr55wjwnxfn7dtadraq6hfjwrxks02l37k"
-    );
+    const response = await getNfts({
+      address: "erd1d4y74h60k79nr7jpqkt3ktp7pr55wjwnxfn7dtadraq6hfjwrxks02l37k",
+    });
     waitToResetStatus(resetEldarNfts);
 
-    return response.data;
+    return response;
   },
   {
     condition: (arg1, api) => executeFetch(arg1, api, reducerName, "eldarNfts"),

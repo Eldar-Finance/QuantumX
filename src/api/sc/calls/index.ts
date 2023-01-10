@@ -79,13 +79,14 @@ export const MultiESDTNFTTransfer = async (
       ];
       return nftData;
     });
+    console.log("data", data);
 
     const payload = TransactionPayload.contractCall()
       .setFunction(new ContractFunction("MultiESDTNFTTransfer"))
       .setArgs([
         new AddressValue(new Address(simpleAddress)), // <receiver bytes in hexadecimal encoding>
         new BigUIntValue(new BigNumber(nfts.length)), //<number of tokens to transfer in hexadecimal encoding>
-        [...data],
+        ...data,
         BytesValue.fromUTF8(funcName),
         ...args,
       ])
