@@ -2,7 +2,6 @@ import { Address, AddressValue } from "@elrondnetwork/erdjs/out";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { scQuery } from "api/sc/queries";
 import store from "redux/store";
-import { DinosAddress } from "utils/constants/site";
 import { IHubCreatorInfo } from "utils/types/sc.interface";
 
 export const fetchCreatorInfo = createAsyncThunk(
@@ -10,7 +9,7 @@ export const fetchCreatorInfo = createAsyncThunk(
   async () => {
     const address = store.getState().userAccount.connectedAddress;
     const response = await scQuery("hubWsp", "getCreatorTable", [
-      new AddressValue(new Address(DinosAddress)),
+      new AddressValue(new Address(address)),
     ]);
     const { firstValue } = response;
     console.log("firstValue", firstValue.valueOf());
