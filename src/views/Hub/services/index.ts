@@ -3,6 +3,7 @@ import { IHubAvilableOffers } from "utils/types/sc.interface";
 
 export const fetchScHubOffers = async () => {
   const res = await scQuery("hubWsp", "getAllOffers");
+  console.log("res.firstValue", res.firstValue.valueOf());
   const data: IHubAvilableOffers[] = res.firstValue
     .valueOf()
     .map((offer: any) => {
