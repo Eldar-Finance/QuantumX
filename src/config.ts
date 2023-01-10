@@ -39,6 +39,7 @@ export const contractAddress = {
   fastp2pswap: "erd1qqqqqqqqqqqqqpgq3gz6kc7q5zm2zdluhtcn8g0fg8vwyxvk64qsu8p6ja",
   farms2: "erd1qqqqqqqqqqqqqpgql6dxenaameqn2uyyru3nmmpf7e95zmlxu7zskzpdcw",
   smartSwap: "erd1qqqqqqqqqqqqqpgqlhan0n8ny7ajlufn8l2zc6zlu8k44u6hu7zsdvzy24",
+  hub: "erd1qqqqqqqqqqqqqpgqq4ens8kf4knm8arzyfdut0akxf74pq5qu7zssh8q99",
 
   // proteo farms
   usdcProteo: "erd1qqqqqqqqqqqqqpgq3lh80a92d49am3t2pfzheapdxtykzt5kznyqsjhfrx",

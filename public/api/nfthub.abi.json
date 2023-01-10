@@ -212,25 +212,27 @@
             "outputs": []
         },
         {
-            "name": "forceAddCreator",
+            "name": "forceAddCreators",
             "onlyOwner": true,
             "mutability": "mutable",
             "inputs": [
                 {
-                    "name": "address",
-                    "type": "Address"
+                    "name": "addresses",
+                    "type": "variadic<Address>",
+                    "multi_arg": true
                 }
             ],
             "outputs": []
         },
         {
-            "name": "forceRemoveCreator",
+            "name": "forceRemoveCreators",
             "onlyOwner": true,
             "mutability": "mutable",
             "inputs": [
                 {
-                    "name": "address",
-                    "type": "Address"
+                    "name": "addresses",
+                    "type": "variadic<Address>",
+                    "multi_arg": true
                 }
             ],
             "outputs": []
