@@ -4,6 +4,7 @@ import SwipeableViews from "react-swipeable-views";
 import { IHubCreatorInfo } from "utils/types/sc.interface";
 import AddNfts from "./AddNfts/AddNfts";
 import AllActions from "./AllActions/AllActions";
+import RemoveNFTs from "./RemoveNFTs/RemoveNFTs";
 
 interface IProps {
   isOpen: boolean;
@@ -24,6 +25,12 @@ const HubActionModal = ({ hubInfo, isOpen, onClose }: IProps) => {
           onClose={() => handleView(0)}
           collection={hubInfo.collection}
           id={hubInfo.id}
+        />
+        <RemoveNFTs
+          collection={hubInfo.collection}
+          id={hubInfo.id}
+          onClose={() => handleView(0)}
+          nonces={hubInfo.nftsNonces}
         />
       </SwipeableViews>
     </MyModal>
