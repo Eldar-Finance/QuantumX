@@ -67,7 +67,7 @@ const RemoveNFTs = ({ collection, nonces, id, onClose }: IProps) => {
       </ModalHeader>
       <Divider />
       <ModalBody mt="3">
-        <Center w="full" mb={8} gap={4} minH="200px">
+        <Center w="full" mb={8} gap={4} minH="200px" flexWrap={"wrap"}>
           {isLoading ? (
             <Spinner />
           ) : (

@@ -18,7 +18,7 @@ const HubActionModal = ({ hubInfo, isOpen, onClose }: IProps) => {
     setView(view);
   };
   return (
-    <MyModal isOpen={isOpen} onClose={onClose} size={"4xl"}>
+    <MyModal isOpen={isOpen} onClose={onClose} size={"4xl"} isCentered={false}>
       <SwipeableViews index={view} onChangeIndex={handleView}>
         <AllActions handleView={handleView} />
         <AddNfts
