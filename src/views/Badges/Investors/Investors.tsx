@@ -6,26 +6,67 @@ import {
   Center,
   Flex,
   Text,
+  useDisclosure,
 } from "@chakra-ui/react";
+import { transactionServices } from "@elrondnetwork/dapp-core";
 import { scCall } from "api/sc/calls";
+import { sftsRewardsWsp } from "api/sc/sc";
 import ActionButton from "components/ActionButton/ActionButton";
+import { isArray } from "lodash";
 import Image from "next/image";
+import { useState } from "react";
 import { formatBalance } from "utils/functions/formatBalance";
+import { getReturnedDataOfscCall } from "utils/functions/helpers";
 import useGetElrondToken from "utils/hooks/useGetElrondToken";
 import useGetEarluSupporterInfo from "../hooks/useGetEarluSupporterInfo";
+import RewardsModal from "../SftsStaking/components/RewardsModal/RewardsModal";
 // import LogoImg from "components/LogoImg/LogoImg";
 
 const InvestorsCard = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [rewards, setRewards] = useState([]);
+  const [sessionId, setSessionId] = useState<string>();
+
   const { rewardsInfo } = useGetEarluSupporterInfo();
 
-  const handleClaim = () => {
-    scCall("sftsRewards", "claimInvestorRewards");
+  const handleClaim = async () => {
+    const res = await scCall("sftsRewards", "claimInvestorRewards");
+    setSessionId(res.sessionId);
   };
 
   const userCanClaim = rewardsInfo?.claimable.reduce(
     (acc, current) => acc || current.amount > 0,
     false
   );
+
+  const onSuccess = async () => {
+    if (
+      transactionStatus.transactions &&
+      isArray(transactionStatus.transactions) &&
+      transactionStatus.transactions[0].hash
+    ) {
+      const txHash = transactionStatus.transactions[0].hash;
+      const res: any = await getReturnedDataOfscCall(
+        sftsRewardsWsp,
+        txHash,
+        "claimInvestorRewards"
+      );
+      if (res.returnCode.text === "ok") {
+        const data = res.firstValue.backingCollection.items.map((struct) => {
+          return {
+            tokenI: struct.getFieldValue("field0"),
+            value: struct.getFieldValue("field1").toNumber(),
+          };
+        });
+        onOpen();
+        setRewards(data);
+      }
+    }
+  };
+  const transactionStatus = transactionServices.useTrackTransactionStatus({
+    transactionId: sessionId,
+    onSuccess: onSuccess,
+  });
   return (
     <Card px={5} bg="secondary" w="full">
       <CardHeader flexDir="column">
@@ -90,6 +131,7 @@ const InvestorsCard = () => {
           </CardBody>
         </Card>
       </CardBody>
+      <RewardsModal rewards={rewards} onClose={onClose} isOpen={isOpen} />
     </Card>
   );
 };

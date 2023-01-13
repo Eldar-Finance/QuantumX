@@ -9,9 +9,13 @@ import {
 } from "@chakra-ui/react";
 import ActionButton from "components/ActionButton/ActionButton";
 import MyModal from "components/Modal/Modal";
-import { formatPrecision } from "utils/functions/formatBalance";
+import { formatBalance } from "utils/functions/formatBalance";
+import { formatTokenI } from "utils/functions/tokens";
+import useGetElrondToken from "utils/hooks/useGetElrondToken";
 
 const RewardsModal = ({ isOpen, onClose, rewards }) => {
+  console.log("RewardsModal", rewards);
+
   return (
     <MyModal isOpen={isOpen} onClose={onClose} py={0}>
       <ModalHeader borderRadius="1.5rem 1.5rem 0 0">
@@ -21,20 +25,8 @@ const RewardsModal = ({ isOpen, onClose, rewards }) => {
       <ModalBody pt={2}>
         <Center width={"full"} flexDirection="column">
           <Box>
-            {rewards.map((sftReward, i) => {
-              return (
-                <Box
-                  key={i}
-                  textAlign={"center"}
-                  mb={1}
-                  width={"100%"}
-                  fontSize="2xl"
-                  fontWeight="bold"
-                >
-                  {formatPrecision(sftReward.value)}{" "}
-                  {sftReward.tokenI.split("-")[0]}
-                </Box>
-              );
+            {rewards.map((sftReward) => {
+              return <SftReward key={sftReward.tokenI} sftReward={sftReward} />;
             })}
           </Box>
         </Center>
@@ -57,3 +49,22 @@ const RewardsModal = ({ isOpen, onClose, rewards }) => {
 };
 
 export default RewardsModal;
+
+const SftReward = ({ sftReward }) => {
+  console.log("sftReward", sftReward);
+
+  const { token } = useGetElrondToken(sftReward.tokenI);
+  if (!token) return null;
+  return (
+    <Box
+      textAlign={"center"}
+      mb={1}
+      width={"100%"}
+      fontSize="2xl"
+      fontWeight="bold"
+    >
+      {formatBalance({ balance: sftReward.value, decimals: token?.decimals })}{" "}
+      {formatTokenI(sftReward.tokenI)}
+    </Box>
+  );
+};
