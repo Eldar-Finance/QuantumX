@@ -79,7 +79,7 @@ const BadgesStatics = () => {
             title={" My Staked Badges"}
             content={`${sftsInStaking}  Badges`}
           />
-          <Center flexDir={"column"}>
+          <Center flexDir={"column"} justifyContent="flex-start" mr={2}>
             <Text fontSize={"12px"} color="gray.500" whiteSpace={"nowrap"}>
               You have earned
             </Text>
@@ -97,7 +97,7 @@ const BadgesStatics = () => {
               </>
             )}
           </Center>
-          <Center flexDir={"column"}>
+          <Center flexDir={"column"} justifyContent="flex-start">
             <Text fontSize={"12px"} color="gray.500" whiteSpace={"nowrap"}>
               Available for claim
             </Text>
