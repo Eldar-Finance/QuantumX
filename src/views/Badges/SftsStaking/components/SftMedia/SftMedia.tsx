@@ -65,12 +65,14 @@ const SftMedia = ({ sft, removeBottomText }: IProps) => {
           overflow="hidden"
           // {...videoProps}
         >
-          <NextImage
-            src={sft.media[0].thumbnailUrl}
-            alt={sft.name}
-            width={240}
-            height={240}
-          />
+          {sft?.media && (
+            <NextImage
+              src={sft.media[0].thumbnailUrl}
+              alt={sft.name}
+              width={240}
+              height={240}
+            />
+          )}
         </Box>
         {!removeBottomText && (
           <Flex justifyContent={"center"} fontWeight="bold">
