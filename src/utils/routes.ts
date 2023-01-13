@@ -15,7 +15,7 @@ export const routeNames = {
   Pools: "/pools",
   hub: "/hub",
   dca: "/dca",
-  eLBadges: "/eLBadges",
+  rewards: "/qrewards",
   admin: "/admin-panel",
   panel: "/panel",
 };
@@ -27,7 +27,7 @@ export const routes: {
   pools: IRoute;
   hub: IRoute;
   dca: IRoute;
-  eLBadges: IRoute;
+  rewards: IRoute;
   admin: IRoute;
   panel: IRoute;
 } = {
@@ -58,8 +58,8 @@ export const routes: {
     name: "Dollar Cost Averaging",
     onModal: true,
   },
-  eLBadges: {
-    path: routeNames.eLBadges,
+  rewards: {
+    path: routeNames.rewards,
     name: "QuantumX Rewards",
     onModal: true,
   },
