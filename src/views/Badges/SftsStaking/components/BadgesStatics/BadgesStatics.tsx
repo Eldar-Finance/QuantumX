@@ -99,7 +99,7 @@ const BadgesStatics = () => {
           </Center>
           <Center flexDir={"column"} justifyContent="flex-start">
             <Text fontSize={"12px"} color="gray.500" whiteSpace={"nowrap"}>
-              Available for claim
+              Available to claim
             </Text>
             {stfsRewards?.claimable && (
               <>
