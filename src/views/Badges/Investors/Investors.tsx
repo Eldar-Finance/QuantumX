@@ -9,10 +9,14 @@ import {
 } from "@chakra-ui/react";
 import ActionButton from "components/ActionButton/ActionButton";
 import { MexlockIcon } from "components/Icons/ui";
+import useGetEarluSupporterInfo from "../hooks/useGetEarluSupporterInfo";
 import BadgeStaticBox from "../SftsStaking/components/BadgeStaticBox/BadgeStaticBox";
 // import LogoImg from "components/LogoImg/LogoImg";
 
 const InvestorsCard = () => {
+  const data = useGetEarluSupporterInfo();
+  // console.log("data", data);
+
   return (
     <Card px={5} bg="secondary" w="full">
       <CardHeader flexDir="column">

@@ -41,3 +41,8 @@ export interface IHubCreatorInfo extends IHubOffer {
 export interface IHubAvilableOffers extends IHubOffer {
   numberOfAvilableNfts: number;
 }
+
+export interface IScInvestorRewards {
+  claimable: any[];
+  claimed: any[];
+}
