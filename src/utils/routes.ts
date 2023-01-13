@@ -16,7 +16,6 @@ export const routeNames = {
   hub: "/hub",
   dca: "/dca",
   eLBadges: "/eLBadges",
-  investors: "/investor-zone",
   admin: "/admin-panel",
   panel: "/panel",
 };
@@ -29,7 +28,6 @@ export const routes: {
   hub: IRoute;
   dca: IRoute;
   eLBadges: IRoute;
-  investors: IRoute;
   admin: IRoute;
   panel: IRoute;
 } = {
@@ -62,15 +60,10 @@ export const routes: {
   },
   eLBadges: {
     path: routeNames.eLBadges,
-    name: "SFT Staking",
+    name: "QuantumX Rewards",
     onModal: true,
   },
-  investors: {
-    path: routeNames.investors,
-    name: "Investors",
-    onModal: true,
-    soon: true,
-  },
+
   panel: {
     path: routeNames.panel,
     name: "Quantum Panel",

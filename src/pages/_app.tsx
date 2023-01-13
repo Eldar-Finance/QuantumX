@@ -10,7 +10,6 @@ import store from "redux/store";
 import customTheme from "theme/chakra";
 
 import { Manrope } from "@next/font/google";
-import { SWRDevTools } from "swr-devtools";
 
 // If loading a variable font, you don't need to specify the font weight
 const inter = Manrope({ subsets: ["latin"] });
@@ -18,18 +17,16 @@ const inter = Manrope({ subsets: ["latin"] });
 const QuantumXApp = ({ Component, pageProps }) => {
   return (
     <Provider store={store}>
-      <SWRDevTools>
-        <ChakraProvider resetCSS theme={customTheme}>
-          <style jsx global>{`
-            html,
-            body {
-              font-family: ${inter.style.fontFamily} !important;
-            }
-          `}</style>
-          <MetaHead metaTitle="QuantumX - Friction-less swaps. Quantum level latency" />
-          <Component {...pageProps} />
-        </ChakraProvider>
-      </SWRDevTools>
+      <ChakraProvider resetCSS theme={customTheme}>
+        <style jsx global>{`
+          html,
+          body {
+            font-family: ${inter.style.fontFamily} !important;
+          }
+        `}</style>
+        <MetaHead metaTitle="QuantumX - Friction-less swaps. Quantum level latency" />
+        <Component {...pageProps} />
+      </ChakraProvider>
     </Provider>
   );
 };
