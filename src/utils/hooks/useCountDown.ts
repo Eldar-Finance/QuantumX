@@ -72,7 +72,6 @@ const useCountDown = (unixEndDate: number, strigUtcDate: string = null) => {
       });
     } else {
       clearInterval(timer);
-      console.log("count down onver");
     }
   };
 

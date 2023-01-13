@@ -48,6 +48,7 @@ const BadgesCard = () => {
   const [countdownTimer] = useCountDown(stakingNumbers.timeToRetriveSft);
   const { days, hours, mins, secs } = countdownTimer;
   const biggerTime = getBigerTime(days, hours, mins, secs);
+
   return (
     <Card px={5} bg="secondary">
       <CardHeader mb={3} flexDir="column">
@@ -126,7 +127,11 @@ const BadgesCard = () => {
                 />
               </Center>
               {isStakerUser ? (
-                <Flex justifyContent={"space-around"} flexWrap="wrap">
+                <Flex
+                  justifyContent={"space-around"}
+                  flexWrap="wrap"
+                  alignItems={"center"}
+                >
                   {sftsInStaking.map((sft) => {
                     if (sft.amount === 0) {
                       return null;
@@ -150,6 +155,7 @@ const BadgesCard = () => {
                     }
 
                     const parseSft = {
+                      collection: sft.tokenI,
                       balance: sft.amount,
                       name: name,
                       nonce: sft.nonce,
@@ -162,6 +168,11 @@ const BadgesCard = () => {
                         videoProps={{
                           w: { xs: "200px", md: "300px" },
                           height: { xs: "110px", md: "167px" },
+                        }}
+                        imageProps={{
+                          w: "240px",
+                          h: "240px",
+                          // height: { xs: "110px", md: "167px" },
                         }}
                       />
                     );
@@ -186,9 +197,11 @@ const BadgesCard = () => {
                   )}
                 </Box>
               )}
-              {isStakerUser && <UnStakeButton />}
+              {isStakerUser && <UnStakeButton mb={3} />}
               {(isUserSftsInUnlocking || isSftsClaimable) && (
-                <ClaimSftsButton disabled={!isSftsClaimable} />
+                <ClaimSftsButton
+                  disabled={!isSftsClaimable && !isUserSftsInUnlocking}
+                />
               )}
             </Box>
           </CardBody>

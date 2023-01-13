@@ -15,7 +15,7 @@ const UnStakeModal = ({ isOpen, onClose, onClick }) => {
           textAlign="center"
           mb={2}
         >
-          Unstake sfts info !
+          Unstake SFTs info!
         </Text>
         <Text
           fontSize={"sm"}
@@ -25,8 +25,8 @@ const UnStakeModal = ({ isOpen, onClose, onClick }) => {
           mb={5}
         >
           {" "}
-          All your sfts will be unstaked but will remain locked for a period of
-          10 days until you can press Retrieve SFTs.{" "}
+          All your SFTs will be unstaked but they will remain locked for a
+          period of 10 days until you will be able to retrieve them.{" "}
         </Text>
 
         <Flex

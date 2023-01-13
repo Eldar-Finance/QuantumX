@@ -7,7 +7,6 @@ import {
   executeFetch,
   waitToResetStatus,
 } from "utils/functions/chacheReduxState";
-import { getRealBalance } from "utils/functions/formatBalance";
 
 import {
   reducerName,
@@ -79,7 +78,7 @@ export const fetchSftsRewards = createAsyncThunk(
       return list.backingCollection.items.map((struct) => {
         return {
           tokenI: struct.getFieldValue("field0"),
-          value: getRealBalance(struct.getFieldValue("field1").toNumber()),
+          value: struct.getFieldValue("field1").toNumber(),
         };
       });
     });

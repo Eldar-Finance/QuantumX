@@ -1,11 +1,11 @@
 {
     "buildInfo": {
         "rustc": {
-            "version": "1.62.0-nightly",
-            "commitHash": "88860d5474a32f507dde8fba8df35fd2064f11b9",
-            "commitDate": "2022-05-09",
+            "version": "1.67.0-nightly",
+            "commitHash": "b7bc90fea3b441234a84b49fdafeb75815eebbab",
+            "commitDate": "2022-11-21",
             "channel": "Nightly",
-            "short": "rustc 1.62.0-nightly (88860d547 2022-05-09)"
+            "short": "rustc 1.67.0-nightly (b7bc90fea 2022-11-21)"
         },
         "contractCrate": {
             "name": "sft-rewards-sc",
@@ -13,7 +13,7 @@
         },
         "framework": {
             "name": "elrond-wasm",
-            "version": "0.33.1"
+            "version": "0.38.0"
         }
     },
     "name": "SftRewards",
@@ -51,6 +51,12 @@
             ]
         },
         {
+            "name": "claimSfts",
+            "mutability": "mutable",
+            "inputs": [],
+            "outputs": []
+        },
+        {
             "name": "claimRewards",
             "mutability": "mutable",
             "inputs": [],
@@ -61,10 +67,29 @@
             ]
         },
         {
-            "name": "claimSfts",
+            "name": "claimInvestorRewards",
             "mutability": "mutable",
             "inputs": [],
-            "outputs": []
+            "outputs": [
+                {
+                    "type": "List<tuple<TokenIdentifier,BigUint>>"
+                }
+            ]
+        },
+        {
+            "name": "retrieveInvestorRewards",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "address",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "List<List<tuple<TokenIdentifier,BigUint>>>"
+                }
+            ]
         },
         {
             "name": "getRetrieveRewardsViews",
@@ -112,11 +137,191 @@
             ]
         },
         {
-            "name": "forceRecoverAll",
+            "name": "getIsSftStaker",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "address",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "bool"
+                }
+            ]
+        },
+        {
+            "name": "getStakingTierForFee",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "address",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "List<u64>"
+                }
+            ]
+        },
+        {
+            "name": "allowedSftsWithNonces",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<tuple<TokenIdentifier,u64>>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "addSfts",
             "onlyOwner": true,
             "mutability": "mutable",
-            "inputs": [],
+            "inputs": [
+                {
+                    "name": "sfts",
+                    "type": "variadic<TokenIdentifier>",
+                    "multi_arg": true
+                }
+            ],
             "outputs": []
+        },
+        {
+            "name": "removeSfts",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "sfts",
+                    "type": "variadic<TokenIdentifier>",
+                    "multi_arg": true
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "addSftNonces",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "sft",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "nonces",
+                    "type": "variadic<u64>",
+                    "multi_arg": true
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "removeSftNonces",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "sft",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "nonces",
+                    "type": "variadic<u64>",
+                    "multi_arg": true
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "addInvestors",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "addresses",
+                    "type": "variadic<Address>",
+                    "multi_arg": true
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "removeInvestors",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "addresses",
+                    "type": "variadic<Address>",
+                    "multi_arg": true
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "sfts",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<TokenIdentifier>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "sftNonces",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "sft",
+                    "type": "TokenIdentifier"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "variadic<u64>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "investors",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<Address>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "getRewardsTokens",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<tuple<TokenIdentifier,u64>>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "getStakers",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<Address>",
+                    "multi_result": true
+                }
+            ]
         },
         {
             "name": "getRewardsId",
@@ -201,7 +406,7 @@
             ]
         },
         {
-            "name": "claimableReward",
+            "name": "claimableRewards",
             "mutability": "readonly",
             "inputs": [
                 {
@@ -211,6 +416,10 @@
                 {
                     "name": "token_id",
                     "type": "TokenIdentifier"
+                },
+                {
+                    "name": "nonce",
+                    "type": "u64"
                 }
             ],
             "outputs": [
@@ -303,13 +512,44 @@
             ]
         },
         {
-            "name": "getRewardsTokens",
+            "name": "investorClaimableRewards",
             "mutability": "readonly",
-            "inputs": [],
+            "inputs": [
+                {
+                    "name": "address",
+                    "type": "Address"
+                },
+                {
+                    "name": "token",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "nonce",
+                    "type": "u64"
+                }
+            ],
             "outputs": [
                 {
-                    "type": "variadic<TokenIdentifier>",
-                    "multi_result": true
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "investorClaimedReward",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "address",
+                    "type": "Address"
+                },
+                {
+                    "name": "token",
+                    "type": "TokenIdentifier"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "BigUint"
                 }
             ]
         },
@@ -325,17 +565,6 @@
             "outputs": [
                 {
                     "type": "BigUint"
-                }
-            ]
-        },
-        {
-            "name": "getStakers",
-            "mutability": "readonly",
-            "inputs": [],
-            "outputs": [
-                {
-                    "type": "variadic<Address>",
-                    "multi_result": true
                 }
             ]
         },

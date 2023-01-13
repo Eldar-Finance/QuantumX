@@ -1,10 +1,19 @@
-import { EldarSftCollection } from "api/net.config";
 import { useEffect, useState } from "react";
 import { fetchNfts } from "redux/slices/userAcount/funcs";
+import useSWR from "swr";
+import { IElrondNFT } from "utils/types/elrond.interface";
+import { fetchAllowedSfts } from "views/Badges/services";
 import { useAppDispatch, useAppSelector } from "./redux";
 
 const useGetEldarSfts = (initialValue = undefined) => {
-  const nfts = useAppSelector((state) => state.userAccount.nfts.data);
+  const nfts: IElrondNFT[] = useAppSelector(
+    (state) => state.userAccount.nfts.data
+  );
+  const { data: sftsAllowed, isLoading, error } = useSWR(
+    "sftsRewards:allowedSftsWithNonces",
+    fetchAllowedSfts
+  );
+
   const connectedAddress = useAppSelector(
     (state) => state.userAccount.connectedAddress
   );
@@ -17,18 +26,18 @@ const useGetEldarSfts = (initialValue = undefined) => {
     }
   }, [dispatch, connectedAddress]);
   useEffect(() => {
-    if (nfts.length > 0) {
+    if (sftsAllowed && nfts.length > 0) {
       const sftsList = [];
 
       nfts.forEach((nft) => {
-        if (nft.collection === EldarSftCollection) {
+        if (sftsAllowed.includes(nft.identifier)) {
           sftsList.push(nft);
         }
       });
 
       setSfts(sftsList);
     }
-  }, [nfts]);
+  }, [nfts, sftsAllowed]);
 
   return [sfts, setSfts];
 };

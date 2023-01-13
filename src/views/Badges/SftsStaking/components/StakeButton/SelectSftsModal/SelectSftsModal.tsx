@@ -10,8 +10,8 @@ import {
 import ActionButton from "components/ActionButton/ActionButton";
 import MyModal from "components/Modal/Modal";
 import { useState } from "react";
-import SFtsItem from "views/Badges/SFtsItem/SFtsItem";
-import SFtToSelect from "views/Badges/SFtToSelect/SFtToSelect";
+import SFtsItem from "views/Badges/SftsStaking/components/SFtsItem/SFtsItem";
+import SFtToSelect from "views/Badges/SftsStaking/components/SFtToSelect/SFtToSelect";
 
 const SelectSftsModal = ({ isOpenModal, onCloseModal, onConfirm, sfts }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();

@@ -9,7 +9,7 @@ import {
 import { fetchTokens } from "redux/slices/userAcount/funcs";
 import { useAppDispatch } from "./redux";
 
-const useGetUserTokens = (indentifier) => {
+const useGetUserTokens = (indentifier?: string) => {
   const dispatch = useAppDispatch();
   const tokensData = useSelector(selectUserTokens);
   const addrees = useSelector(selectUserAddress);

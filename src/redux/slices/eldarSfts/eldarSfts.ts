@@ -68,10 +68,15 @@ export const eldarSfts = createSlice({
         state.eldarSftsWithStatus.status = "succeeded";
 
         const data = action.payload;
-        const InStakingPeriod = [data[0], data[1], data[2]];
-        const InUnlockingPeriod = [data[3], data[4], data[5]];
-        const Claimable = [data[6], data[7], data[8]];
-        const Claimed = [data[9], data[10], data[11]];
+
+        const InStakingPeriod = data.filter(
+          (item) => item.status === "InStakingPeriod"
+        );
+        const InUnlockingPeriod = data.filter(
+          (item) => item.status === "InUnlockingPeriod"
+        );
+        const Claimable = data.filter((item) => item.status === "Claimable");
+        const Claimed = data.filter((item) => item.status === "Claimed");
 
         state.eldarSftsWithStatus.data.InStakingPeriod = InStakingPeriod;
 
@@ -81,24 +86,25 @@ export const eldarSfts = createSlice({
 
         state.eldarSftsWithStatus.data.Claimed = Claimed;
 
-        const isStakerUser =
-          InStakingPeriod[0].amount > 0 ||
-          InStakingPeriod[1].amount > 0 ||
-          InStakingPeriod[2].amount > 0;
+        // determinate if the amount of InStakingPeriod object is not 0
+        const isStakerUser = InStakingPeriod.reduce(
+          (acc, current) => acc || current.amount > 0,
+          false
+        );
 
         state.isStakerUser = isStakerUser;
 
-        const isInUnlockingPeriod =
-          InUnlockingPeriod[0].amount > 0 ||
-          InUnlockingPeriod[1].amount > 0 ||
-          InUnlockingPeriod[2].amount > 0;
+        const isInUnlockingPeriod = InUnlockingPeriod.reduce(
+          (acc, current) => acc || current.amount > 0,
+          false
+        );
 
         state.isUserSftsInUnlocking = isInUnlockingPeriod;
 
-        const isSftsClaimable =
-          Claimable[0].amount > 0 ||
-          Claimable[1].amount > 0 ||
-          Claimable[2].amount > 0;
+        const isSftsClaimable = Claimable.reduce(
+          (acc, current) => acc || current.amount > 0,
+          false
+        );
 
         state.isSftsClaimable = isSftsClaimable;
       })
