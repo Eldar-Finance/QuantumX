@@ -17,10 +17,6 @@ import useGetEarluSupporterInfo from "../hooks/useGetEarluSupporterInfo";
 
 const InvestorsCard = () => {
   const { rewardsInfo } = useGetEarluSupporterInfo();
-  // console.log("data", data);
-
-  if (!rewardsInfo?.claimable || !rewardsInfo?.claimed) return null;
-  console.log("rewardsInfo", rewardsInfo);
 
   const handleClaim = () => {
     scCall("sftsRewards", "claimInvestorRewards");
@@ -51,29 +47,37 @@ const InvestorsCard = () => {
                 <Text fontSize={"12px"} color="gray.500" whiteSpace={"nowrap"}>
                   You have earned
                 </Text>
-                {rewardsInfo.claimed.map((claimedReward) => {
-                  return (
-                    <EarlyInvestorRewards
-                      amount={claimedReward.amount}
-                      token={claimedReward.token}
-                      key={claimedReward.token}
-                    />
-                  );
-                })}
+                {rewardsInfo?.claimable && (
+                  <>
+                    {rewardsInfo.claimed.map((claimedReward) => {
+                      return (
+                        <EarlyInvestorRewards
+                          amount={claimedReward.amount}
+                          token={claimedReward.token}
+                          key={claimedReward.token}
+                        />
+                      );
+                    })}
+                  </>
+                )}
               </Center>
               <Center flexDir={"column"}>
                 <Text fontSize={"12px"} color="gray.500" whiteSpace={"nowrap"}>
                   Avilabel for claim
                 </Text>
-                {rewardsInfo.claimable.map((claimableReward) => {
-                  return (
-                    <EarlyInvestorRewards
-                      amount={claimableReward.amount}
-                      token={claimableReward.token}
-                      key={claimableReward.token}
-                    />
-                  );
-                })}
+                {rewardsInfo?.claimable && (
+                  <>
+                    {rewardsInfo.claimable.map((claimableReward) => {
+                      return (
+                        <EarlyInvestorRewards
+                          amount={claimableReward.amount}
+                          token={claimableReward.token}
+                          key={claimableReward.token}
+                        />
+                      );
+                    })}
+                  </>
+                )}
               </Center>
             </Flex>
           </CardBody>

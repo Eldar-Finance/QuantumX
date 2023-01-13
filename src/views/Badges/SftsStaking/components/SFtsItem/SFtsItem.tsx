@@ -1,5 +1,5 @@
-import { Box, Flex, Text } from "@chakra-ui/react";
-import VideoBackground from "components/VideoBackground/VideoBackground";
+import { Box } from "@chakra-ui/react";
+import SftMedia from "../SftMedia/SftMedia";
 
 const SFtsItem = ({
   onClick = undefined,
@@ -39,22 +39,7 @@ const SFtsItem = ({
       position="relative"
       zIndex={1}
     >
-      <Box
-        w={"240px"}
-        height="130px"
-        mb={3}
-        position="relative"
-        borderRadius={"12px"}
-        {...videoProps}
-      >
-        <VideoBackground bgCard={badgeVideo} />
-      </Box>
-
-      <Flex justifyContent={"center"} fontWeight="bold">
-        <Text mb={2}>
-          {sft.balance}x {badgeName}
-        </Text>
-      </Flex>
+      <SftMedia sft={sft} />
     </Box>
   );
 };
