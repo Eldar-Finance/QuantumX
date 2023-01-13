@@ -11,8 +11,6 @@ const SFtsItem = ({
   videoProps = undefined,
   imageProps = undefined,
 }) => {
-  console.log("sft", sft);
-
   const isBadge = sft.collection === EldarSftCollection;
 
   const { nfts } = useGetNfts(
@@ -20,7 +18,6 @@ const SFtsItem = ({
       ? null
       : createIndentifierByCollectionAndNonce(sft.collection, sft.nonce)
   );
-  console.log("nfts", nfts);
 
   return (
     <Center

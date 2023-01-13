@@ -68,7 +68,6 @@ export const eldarSfts = createSlice({
         state.eldarSftsWithStatus.status = "succeeded";
 
         const data = action.payload;
-        console.log("dfts", data);
 
         const InStakingPeriod = data.filter(
           (item) => item.status === "InStakingPeriod"

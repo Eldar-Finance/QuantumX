@@ -48,7 +48,6 @@ export const fetchAllowedSfts = async () => {
   const finalData: string[] = data.map((sftInfo) => {
     return createIndentifierByCollectionAndNonce(sftInfo.token, sftInfo.nonce);
   });
-  console.log("finalData", finalData);
 
   return finalData;
 };

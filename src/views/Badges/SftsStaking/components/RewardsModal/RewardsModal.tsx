@@ -14,8 +14,6 @@ import { formatTokenI } from "utils/functions/tokens";
 import useGetElrondToken from "utils/hooks/useGetElrondToken";
 
 const RewardsModal = ({ isOpen, onClose, rewards }) => {
-  console.log("RewardsModal", rewards);
-
   return (
     <MyModal isOpen={isOpen} onClose={onClose} py={0}>
       <ModalHeader borderRadius="1.5rem 1.5rem 0 0">
@@ -51,8 +49,6 @@ const RewardsModal = ({ isOpen, onClose, rewards }) => {
 export default RewardsModal;
 
 const SftReward = ({ sftReward }) => {
-  console.log("sftReward", sftReward);
-
   const { token } = useGetElrondToken(sftReward.tokenI);
   if (!token) return null;
   return (

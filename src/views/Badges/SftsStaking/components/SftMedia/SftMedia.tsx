@@ -17,8 +17,6 @@ const SftMedia = ({
   videoProps,
   imageProps,
 }: IProps) => {
-  console.log("sft", sft);
-
   if (!sft) {
     return null;
   }
