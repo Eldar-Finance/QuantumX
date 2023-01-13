@@ -99,7 +99,7 @@ const BadgesStatics = () => {
           </Center>
           <Center flexDir={"column"}>
             <Text fontSize={"12px"} color="gray.500" whiteSpace={"nowrap"}>
-              Avilabel for claim
+              Available for claim
             </Text>
             {stfsRewards?.claimable && (
               <>
