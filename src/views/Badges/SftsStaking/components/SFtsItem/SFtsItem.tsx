@@ -1,4 +1,4 @@
-import { Box } from "@chakra-ui/react";
+import { Center } from "@chakra-ui/react";
 import { EldarSftCollection } from "api/net.config";
 import { createIndentifierByCollectionAndNonce } from "utils/functions/tokens";
 import useGetNfts from "utils/hooks/useGetNfts";
@@ -23,7 +23,8 @@ const SFtsItem = ({
   console.log("nfts", nfts);
 
   return (
-    <Box
+    <Center
+      flexDir={"column"}
       mb={8}
       px={1}
       cursor="pointer"
@@ -40,7 +41,7 @@ const SFtsItem = ({
         videoProps={videoProps}
         imageProps={imageProps}
       />
-    </Box>
+    </Center>
   );
 };
 
