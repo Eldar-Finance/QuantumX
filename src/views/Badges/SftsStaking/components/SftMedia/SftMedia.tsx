@@ -7,11 +7,11 @@ import { IElrondNFT } from "utils/types/elrond.interface";
 interface IProps {
   sft: IElrondNFT;
   removeBottomText?: boolean;
+  videoProps?: any;
 }
 
-const SftMedia = ({ sft, removeBottomText }: IProps) => {
+const SftMedia = ({ sft, removeBottomText, videoProps }: IProps) => {
   const isBadge = sft.collection === EldarSftCollection;
-  console.log("sft", sft);
 
   if (isBadge) {
     let badgeVideo = "";
@@ -42,7 +42,7 @@ const SftMedia = ({ sft, removeBottomText }: IProps) => {
           mb={3}
           position="relative"
           borderRadius={"12px"}
-          // {...videoProps}
+          {...videoProps}
         >
           <VideoBackground bgCard={badgeVideo} />
         </Box>

@@ -39,7 +39,7 @@ const SFtsItem = ({
       position="relative"
       zIndex={1}
     >
-      <SftMedia sft={sft} />
+      <SftMedia sft={sft} videoProps={videoProps} />
     </Box>
   );
 };

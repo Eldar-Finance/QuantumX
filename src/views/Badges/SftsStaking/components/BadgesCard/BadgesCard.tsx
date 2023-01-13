@@ -149,6 +149,7 @@ const BadgesCard = () => {
                       default:
                         break;
                     }
+                    console.log("sft", sft);
 
                     const parseSft = {
                       collection: EldarSftCollection,
@@ -188,7 +189,7 @@ const BadgesCard = () => {
                   )}
                 </Box>
               )}
-              {isStakerUser && <UnStakeButton />}
+              {isStakerUser && <UnStakeButton mb={3} />}
               {(isUserSftsInUnlocking || isSftsClaimable) && (
                 <ClaimSftsButton disabled={!isSftsClaimable} />
               )}

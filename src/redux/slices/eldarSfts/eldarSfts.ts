@@ -68,6 +68,7 @@ export const eldarSfts = createSlice({
         state.eldarSftsWithStatus.status = "succeeded";
 
         const data = action.payload;
+
         const InStakingPeriod = [data[0], data[1], data[2]];
         const InUnlockingPeriod = [data[3], data[4], data[5]];
         const Claimable = [data[6], data[7], data[8]];

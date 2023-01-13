@@ -47,7 +47,7 @@ const InvestorsCard = () => {
                 <Text fontSize={"12px"} color="gray.500" whiteSpace={"nowrap"}>
                   You have earned
                 </Text>
-                {rewardsInfo?.claimable && (
+                {rewardsInfo?.claimed && (
                   <>
                     {rewardsInfo.claimed.map((claimedReward) => {
                       return (

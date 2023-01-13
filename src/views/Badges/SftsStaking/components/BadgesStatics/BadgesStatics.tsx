@@ -1,9 +1,10 @@
-import { Center, Flex, Text } from "@chakra-ui/react";
+import { Box, Center, Flex, Spinner, Text } from "@chakra-ui/react";
 import { toknesID } from "api/net.config";
-import { MexlockIcon } from "components/Icons/ui";
+import Image from "next/image";
 import { memo, useEffect, useState } from "react";
 import { formatBalance } from "utils/functions/formatBalance";
 import { useAppSelector } from "utils/hooks/redux";
+import useGetElrondToken from "utils/hooks/useGetElrondToken";
 import BadgeStaticBox from "../BadgeStaticBox/BadgeStaticBox";
 
 const BadgesStatics = () => {
@@ -61,6 +62,7 @@ const BadgesStatics = () => {
     });
     setSftsInStaking(_sftsInStaking);
   }, [InStakingPeriod]);
+
   return (
     <Flex
       justifyContent={{ xs: "center", lg: "space-between" }}
@@ -69,34 +71,50 @@ const BadgesStatics = () => {
       mb={6}
       flexDir={{ xs: "column", lg: "row" }}
     >
-      <Flex alignItems={"center"} flexWrap="wrap">
+      <Flex alignItems={"flex-start"} flexWrap="wrap">
         <Flex flexDir={{ xs: "column", md: "row" }}>
           <BadgeStaticBox
+            alignItems={"flex-start"}
+            justifyContent="flex-start"
             title={" My Staked Badges"}
             content={`${sftsInStaking}  Badges`}
           />
-          <BadgeStaticBox
-            title={"You have earned"}
-            content={
-              <Center>
-                <Text mr={2}>
-                  {formatBalance({ balance: claimedLkmex, decimals: 0 })}
-                </Text>
-                <MexlockIcon size={"24px"} />
-              </Center>
-            }
-          />
-          <BadgeStaticBox
-            title={"Available for claim"}
-            content={
-              <Center>
-                <Text mr={2}>
-                  {formatBalance({ balance: claimableLkmex, decimals: 0 })}
-                </Text>
-                <MexlockIcon size={"24px"} />
-              </Center>
-            }
-          />
+          <Center flexDir={"column"}>
+            <Text fontSize={"12px"} color="gray.500" whiteSpace={"nowrap"}>
+              You have earned
+            </Text>
+            {stfsRewards?.claimed && (
+              <>
+                {stfsRewards.claimed.map((claimedReward) => {
+                  return (
+                    <StaticInfo
+                      amount={claimedReward.value}
+                      token={claimedReward.tokenI}
+                      key={claimedReward.token}
+                    />
+                  );
+                })}
+              </>
+            )}
+          </Center>
+          <Center flexDir={"column"}>
+            <Text fontSize={"12px"} color="gray.500" whiteSpace={"nowrap"}>
+              Avilabel for claim
+            </Text>
+            {stfsRewards?.claimable && (
+              <>
+                {stfsRewards.claimable.map((claimableReward) => {
+                  return (
+                    <StaticInfo
+                      amount={claimableReward.value}
+                      token={claimableReward.tokenI}
+                      key={claimableReward.token}
+                    />
+                  );
+                })}
+              </>
+            )}
+          </Center>
         </Flex>
       </Flex>
       <Flex
@@ -107,20 +125,67 @@ const BadgesStatics = () => {
           title={"Total Badges Staked"}
           content={`${totalStaked} Badges`}
         />
-        <BadgeStaticBox
-          title={"Paid out"}
-          content={
-            <Center>
-              <Text mr={2}>
-                {formatBalance({ balance: totalPaidLkmex, decimals: 0 })}
-              </Text>
-              <MexlockIcon size={"24px"} />
-            </Center>
-          }
-        />
+        <Center flexDir={"column"}>
+          <Text fontSize={"12px"} color="gray.500" whiteSpace={"nowrap"} mb={2}>
+            Paid out
+          </Text>
+          {stfsRewards?.totalRewards && (
+            <>
+              {stfsRewards?.totalRewards.map((r) => {
+                return (
+                  <StaticInfo amount={r.value} token={r.tokenI} key={r.token} />
+                );
+              })}
+            </>
+          )}
+        </Center>
       </Flex>
     </Flex>
   );
 };
 
 export default memo(BadgesStatics);
+
+const StaticInfo = ({ token, amount }) => {
+  const { token: elrondToken, isLoading } = useGetElrondToken(token);
+  return (
+    <Center
+      flexDir={"column"}
+      justifyContent="flex-start"
+      px={3}
+      mb={1}
+      alignItems={{ xs: "center", md: "flex-start" }}
+    >
+      <Box
+        as="span"
+        fontSize={"xl"}
+        fontWeight="bold"
+        whiteSpace={"nowrap"}
+        color="white"
+      >
+        <Center textAlign={"center"}>
+          {isLoading ? (
+            <Spinner />
+          ) : (
+            <>
+              <Text mr={2} w="full" textAlign={"center"}>
+                {formatBalance({
+                  balance: amount,
+                  decimals: elrondToken.decimals,
+                })}
+              </Text>
+              {elrondToken?.assets?.svgUrl && (
+                <Image
+                  src={elrondToken.assets.svgUrl}
+                  alt={elrondToken.ticker}
+                  width={24}
+                  height={24}
+                />
+              )}
+            </>
+          )}
+        </Center>
+      </Box>
+    </Center>
+  );
+};
