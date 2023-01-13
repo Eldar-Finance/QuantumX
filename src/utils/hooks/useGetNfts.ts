@@ -3,9 +3,11 @@ import useSWR from "swr";
 
 const useGetNfts = (identifiers?: string) => {
   const { data, error, isLoading } = useSWR(
-    {
-      identifiers,
-    },
+    identifiers
+      ? {
+          identifiers,
+        }
+      : null,
     getNFTs
   );
 

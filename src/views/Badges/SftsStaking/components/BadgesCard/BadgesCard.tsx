@@ -10,7 +10,6 @@ import {
   Spinner,
   Text,
 } from "@chakra-ui/react";
-import { EldarSftCollection } from "api/net.config";
 import img3 from "assets/eldar-badges/frameit_logo.svg";
 import img1 from "assets/eldar-badges/logo1.png";
 import img2 from "assets/eldar-badges/logo2.png";
@@ -49,6 +48,7 @@ const BadgesCard = () => {
   const [countdownTimer] = useCountDown(stakingNumbers.timeToRetriveSft);
   const { days, hours, mins, secs } = countdownTimer;
   const biggerTime = getBigerTime(days, hours, mins, secs);
+
   return (
     <Card px={5} bg="secondary">
       <CardHeader mb={3} flexDir="column">
@@ -127,7 +127,11 @@ const BadgesCard = () => {
                 />
               </Center>
               {isStakerUser ? (
-                <Flex justifyContent={"space-around"} flexWrap="wrap">
+                <Flex
+                  justifyContent={"space-around"}
+                  flexWrap="wrap"
+                  alignItems={"center"}
+                >
                   {sftsInStaking.map((sft) => {
                     if (sft.amount === 0) {
                       return null;
@@ -149,10 +153,9 @@ const BadgesCard = () => {
                       default:
                         break;
                     }
-                    console.log("sft", sft);
 
                     const parseSft = {
-                      collection: EldarSftCollection,
+                      collection: sft.tokenI,
                       balance: sft.amount,
                       name: name,
                       nonce: sft.nonce,
@@ -165,6 +168,11 @@ const BadgesCard = () => {
                         videoProps={{
                           w: { xs: "200px", md: "300px" },
                           height: { xs: "110px", md: "167px" },
+                        }}
+                        imageProps={{
+                          w: "240px",
+                          h: "240px",
+                          // height: { xs: "110px", md: "167px" },
                         }}
                       />
                     );
@@ -191,7 +199,9 @@ const BadgesCard = () => {
               )}
               {isStakerUser && <UnStakeButton mb={3} />}
               {(isUserSftsInUnlocking || isSftsClaimable) && (
-                <ClaimSftsButton disabled={!isSftsClaimable} />
+                <ClaimSftsButton
+                  disabled={!isSftsClaimable && !isUserSftsInUnlocking}
+                />
               )}
             </Box>
           </CardBody>

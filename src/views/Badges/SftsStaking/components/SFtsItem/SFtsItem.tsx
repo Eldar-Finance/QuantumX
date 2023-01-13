@@ -1,4 +1,7 @@
 import { Box } from "@chakra-ui/react";
+import { EldarSftCollection } from "api/net.config";
+import { createIndentifierByCollectionAndNonce } from "utils/functions/tokens";
+import useGetNfts from "utils/hooks/useGetNfts";
 import SftMedia from "../SftMedia/SftMedia";
 
 const SFtsItem = ({
@@ -6,26 +9,19 @@ const SFtsItem = ({
   sft,
   isHoverEffect = true,
   videoProps = undefined,
+  imageProps = undefined,
 }) => {
-  let badgeVideo = "";
-  let badgeName = "";
-  switch (sft.nonce) {
-    case 1:
-      badgeVideo = "/video/ezgif.com-gif-maker.mp4";
-      badgeName = "Marble Gold Badge";
-      break;
-    case 2:
-      badgeVideo = "/video/ezgif.com-gif-maker2.mp4";
-      badgeName = "Marble Silver Badge";
-      break;
-    case 3:
-      badgeVideo = "/video/ezgif.com-gif-maker3.mp4";
-      badgeName = "Rose Gold Badge";
-      break;
+  console.log("sft", sft);
 
-    default:
-      break;
-  }
+  const isBadge = sft.collection === EldarSftCollection;
+
+  const { nfts } = useGetNfts(
+    isBadge
+      ? null
+      : createIndentifierByCollectionAndNonce(sft.collection, sft.nonce)
+  );
+  console.log("nfts", nfts);
+
   return (
     <Box
       mb={8}
@@ -39,7 +35,11 @@ const SFtsItem = ({
       position="relative"
       zIndex={1}
     >
-      <SftMedia sft={sft} videoProps={videoProps} />
+      <SftMedia
+        sft={isBadge ? sft : nfts ? nfts[0] : null}
+        videoProps={videoProps}
+        imageProps={imageProps}
+      />
     </Box>
   );
 };

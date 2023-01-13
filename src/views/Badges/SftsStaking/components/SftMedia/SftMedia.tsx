@@ -8,9 +8,20 @@ interface IProps {
   sft: IElrondNFT;
   removeBottomText?: boolean;
   videoProps?: any;
+  imageProps?: any;
 }
 
-const SftMedia = ({ sft, removeBottomText, videoProps }: IProps) => {
+const SftMedia = ({
+  sft,
+  removeBottomText,
+  videoProps,
+  imageProps,
+}: IProps) => {
+  console.log("sft", sft);
+
+  if (!sft) {
+    return null;
+  }
   const isBadge = sft.collection === EldarSftCollection;
 
   if (isBadge) {
@@ -64,7 +75,7 @@ const SftMedia = ({ sft, removeBottomText, videoProps }: IProps) => {
           position="relative"
           borderRadius={"12px"}
           overflow="hidden"
-          // {...videoProps}
+          {...imageProps}
         >
           {sft?.media && (
             <NextImage
