@@ -19,7 +19,7 @@ const InvestorsCard = () => {
   const { rewardsInfo } = useGetEarluSupporterInfo();
   // console.log("data", data);
 
-  if (rewardsInfo === null) return null;
+  if (!rewardsInfo?.claimable || !rewardsInfo?.claimed) return null;
   console.log("rewardsInfo", rewardsInfo);
 
   const handleClaim = () => {
