@@ -43,6 +43,12 @@ export interface IHubAvilableOffers extends IHubOffer {
 }
 
 export interface IScInvestorRewards {
-  claimable: any[];
-  claimed: any[];
+  claimable: {
+    token: string;
+    amount: number;
+  }[];
+  claimed: {
+    token: string;
+    amount: number;
+  }[];
 }

@@ -8,14 +8,18 @@ import {
   Text,
 } from "@chakra-ui/react";
 import ActionButton from "components/ActionButton/ActionButton";
-import { MexlockIcon } from "components/Icons/ui";
+import Image from "next/image";
+import { formatBalance } from "utils/functions/formatBalance";
+import useGetElrondToken from "utils/hooks/useGetElrondToken";
 import useGetEarluSupporterInfo from "../hooks/useGetEarluSupporterInfo";
-import BadgeStaticBox from "../SftsStaking/components/BadgeStaticBox/BadgeStaticBox";
 // import LogoImg from "components/LogoImg/LogoImg";
 
 const InvestorsCard = () => {
-  const data = useGetEarluSupporterInfo();
+  const { rewardsInfo } = useGetEarluSupporterInfo();
   // console.log("data", data);
+
+  if (rewardsInfo === null) return null;
+  console.log("rewardsInfo", rewardsInfo);
 
   return (
     <Card px={5} bg="secondary" w="full">
@@ -39,31 +43,33 @@ const InvestorsCard = () => {
           <CardBody>
             <Flex gap={"25px"} alignItems="center">
               <ActionButton>Claim</ActionButton>
-              <Center>
-                <BadgeStaticBox
-                  title={"You have earned"}
-                  content={
-                    <Center textAlign={"center"}>
-                      <Text mr={2} w="full" textAlign={"center"}>
-                        {556500000}
-                      </Text>
-                      <MexlockIcon size={"24px"} />
-                    </Center>
-                  }
-                />
+              <Center flexDir={"column"}>
+                <Text fontSize={"12px"} color="gray.500" whiteSpace={"nowrap"}>
+                  You have earned
+                </Text>
+                {rewardsInfo.claimed.map((claimedReward) => {
+                  return (
+                    <EarlyInvestorRewards
+                      amount={claimedReward.amount}
+                      token={claimedReward.token}
+                      key={claimedReward.token}
+                    />
+                  );
+                })}
               </Center>
-              <Center>
-                <BadgeStaticBox
-                  title={"Avilabel for claim"}
-                  content={
-                    <Center textAlign={"center"}>
-                      <Text mr={2} w="full" textAlign={"center"}>
-                        {556500000}
-                      </Text>
-                      <MexlockIcon size={"24px"} />
-                    </Center>
-                  }
-                />
+              <Center flexDir={"column"}>
+                <Text fontSize={"12px"} color="gray.500" whiteSpace={"nowrap"}>
+                  Avilabel for claim
+                </Text>
+                {rewardsInfo.claimable.map((claimableReward) => {
+                  return (
+                    <EarlyInvestorRewards
+                      amount={claimableReward.amount}
+                      token={claimableReward.token}
+                      key={claimableReward.token}
+                    />
+                  );
+                })}
               </Center>
             </Flex>
           </CardBody>
@@ -74,3 +80,37 @@ const InvestorsCard = () => {
 };
 
 export default InvestorsCard;
+
+const EarlyInvestorRewards = ({ token, amount }) => {
+  const { token: elrondToken } = useGetElrondToken(token);
+  return (
+    <Center
+      flexDir={"column"}
+      px={3}
+      mb={1}
+      alignItems={{ xs: "center", md: "flex-start" }}
+    >
+      <Box
+        as="span"
+        fontSize={"xl"}
+        fontWeight="bold"
+        whiteSpace={"nowrap"}
+        color="white"
+      >
+        <Center textAlign={"center"}>
+          <Text mr={2} w="full" textAlign={"center"}>
+            {formatBalance({ balance: amount, decimals: elrondToken.decimals })}
+          </Text>
+          {elrondToken?.assets?.svgUrl && (
+            <Image
+              src={elrondToken.assets.svgUrl}
+              alt={elrondToken.ticker}
+              width={24}
+              height={24}
+            />
+          )}
+        </Center>
+      </Box>
+    </Center>
+  );
+};

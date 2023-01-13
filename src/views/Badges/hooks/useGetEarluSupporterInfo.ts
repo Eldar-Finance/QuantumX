@@ -8,7 +8,7 @@ const useGetEarluSupporterInfo = () => {
   );
 
   return {
-    offers: data,
+    rewardsInfo: data,
     isLoading: isLoading,
     error: error,
   };
