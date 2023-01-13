@@ -10,6 +10,7 @@ import {
   Spinner,
   Text,
 } from "@chakra-ui/react";
+import { EldarSftCollection } from "api/net.config";
 import img3 from "assets/eldar-badges/frameit_logo.svg";
 import img1 from "assets/eldar-badges/logo1.png";
 import img2 from "assets/eldar-badges/logo2.png";
@@ -150,6 +151,7 @@ const BadgesCard = () => {
                     }
 
                     const parseSft = {
+                      collection: EldarSftCollection,
                       balance: sft.amount,
                       name: name,
                       nonce: sft.nonce,

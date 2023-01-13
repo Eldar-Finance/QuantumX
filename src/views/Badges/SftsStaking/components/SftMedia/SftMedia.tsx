@@ -11,6 +11,7 @@ interface IProps {
 
 const SftMedia = ({ sft, removeBottomText }: IProps) => {
   const isBadge = sft.collection === EldarSftCollection;
+  console.log("sft", sft);
 
   if (isBadge) {
     let badgeVideo = "";
