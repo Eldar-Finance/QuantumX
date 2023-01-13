@@ -126,7 +126,7 @@ const BadgesStatics = () => {
           content={`${totalStaked} Badges`}
         />
         <Center flexDir={"column"}>
-          <Text fontSize={"12px"} color="gray.500" whiteSpace={"nowrap"} mb={2}>
+          <Text fontSize={"12px"} color="gray.500" whiteSpace={"nowrap"}>
             Paid out
           </Text>
           {stfsRewards?.totalRewards && (

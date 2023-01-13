@@ -63,7 +63,7 @@ const InvestorsCard = () => {
               </Center>
               <Center flexDir={"column"}>
                 <Text fontSize={"12px"} color="gray.500" whiteSpace={"nowrap"}>
-                  Avilabel for claim
+                  Available to claim
                 </Text>
                 {rewardsInfo?.claimable && (
                   <>
