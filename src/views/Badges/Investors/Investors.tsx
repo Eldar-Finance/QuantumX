@@ -7,6 +7,7 @@ import {
   Flex,
   Text,
 } from "@chakra-ui/react";
+import { scCall } from "api/sc/calls";
 import ActionButton from "components/ActionButton/ActionButton";
 import Image from "next/image";
 import { formatBalance } from "utils/functions/formatBalance";
@@ -21,6 +22,9 @@ const InvestorsCard = () => {
   if (rewardsInfo === null) return null;
   console.log("rewardsInfo", rewardsInfo);
 
+  const handleClaim = () => {
+    scCall("sftsRewards", "claimInvestorRewards");
+  };
   return (
     <Card px={5} bg="secondary" w="full">
       <CardHeader flexDir="column">
@@ -42,7 +46,7 @@ const InvestorsCard = () => {
         <Card bg="black.baseDark">
           <CardBody>
             <Flex gap={"25px"} alignItems="center">
-              <ActionButton>Claim</ActionButton>
+              <ActionButton onClick={handleClaim}>Claim</ActionButton>
               <Center flexDir={"column"}>
                 <Text fontSize={"12px"} color="gray.500" whiteSpace={"nowrap"}>
                   You have earned
