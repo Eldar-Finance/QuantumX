@@ -21,6 +21,11 @@ const InvestorsCard = () => {
   const handleClaim = () => {
     scCall("sftsRewards", "claimInvestorRewards");
   };
+
+  const userCanClaim = rewardsInfo?.claimable.reduce(
+    (acc, current) => acc || current.amount > 0,
+    false
+  );
   return (
     <Card px={5} bg="secondary" w="full">
       <CardHeader flexDir="column">
@@ -42,7 +47,9 @@ const InvestorsCard = () => {
         <Card bg="black.baseDark">
           <CardBody>
             <Flex gap={"25px"} alignItems="center">
-              <ActionButton onClick={handleClaim}>Claim</ActionButton>
+              <ActionButton onClick={handleClaim} disabled={!userCanClaim}>
+                Claim
+              </ActionButton>
               <Center flexDir={"column"}>
                 <Text fontSize={"12px"} color="gray.500" whiteSpace={"nowrap"}>
                   You have earned

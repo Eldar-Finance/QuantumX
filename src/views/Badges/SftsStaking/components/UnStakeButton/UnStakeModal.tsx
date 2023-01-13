@@ -15,7 +15,7 @@ const UnStakeModal = ({ isOpen, onClose, onClick }) => {
           textAlign="center"
           mb={2}
         >
-          Unstake sfts info !
+          Unstake SFTs info!
         </Text>
         <Text
           fontSize={"sm"}
