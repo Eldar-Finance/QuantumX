@@ -6,7 +6,6 @@ import ActionButton from "components/ActionButton/ActionButton";
 import { isArray } from "lodash";
 
 import { memo, useState } from "react";
-import { getRealBalance } from "utils/functions/formatBalance";
 import { getReturnedDataOfscCall } from "utils/functions/helpers";
 import { useAppSelector } from "utils/hooks/redux";
 import RewardsModal from "../RewardsModal/RewardsModal";
@@ -32,7 +31,7 @@ const ClaimRewardsButton = () => {
         const data = res.firstValue.backingCollection.items.map((struct) => {
           return {
             tokenI: struct.getFieldValue("field0"),
-            value: getRealBalance(struct.getFieldValue("field1").toNumber()),
+            value: struct.getFieldValue("field1").toNumber(),
           };
         });
         onOpen();
