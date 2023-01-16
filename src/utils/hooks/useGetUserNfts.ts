@@ -5,16 +5,21 @@ import { useAppSelector } from "./redux";
 
 const useGetUserNfts = (collections?: string) => {
   const address = useAppSelector(selectUserAddress);
+  console.log("address", address);
+
   const { data, error } = useSWR(
-    {
-      address: address,
-      parameters: { collections: collections },
-    },
-    getNfts
+    address
+      ? {
+          address: address,
+          parameters: { collections: collections },
+        }
+      : null,
+    getNfts,
+    {}
   );
 
   return {
-    nfts: data,
+    nfts: data || [],
     isLoading: !error && !data,
     isError: error,
   };
