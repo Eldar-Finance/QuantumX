@@ -21,7 +21,7 @@ const NftList = () => {
         {!isLoading && nfts.length === 0 && (
           <Center flexDir={"column"}>
             <Text fontSize={"xl"} mt={10} mb={6}>
-              You don't have a QuantumXhero Yet...
+              You don't have a QuantumXHeroes NFT yet...
             </Text>
 
             <HStack spacing={{ xs: "10px", movil: "20px", md: "40px" }}>
