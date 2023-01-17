@@ -34,7 +34,7 @@ const SFtsItem = ({
       zIndex={1}
     >
       <SftMedia
-        sft={isBadge ? sft : nfts ? nfts[0] : null}
+        sft={isBadge ? sft : nfts ? { ...nfts[0], balance: sft.balance } : null}
         videoProps={videoProps}
         imageProps={imageProps}
       />

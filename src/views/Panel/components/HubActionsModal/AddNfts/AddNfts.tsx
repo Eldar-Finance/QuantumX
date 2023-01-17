@@ -6,6 +6,7 @@ import {
   Heading,
   ModalBody,
   ModalHeader,
+  Text,
 } from "@chakra-ui/react";
 import { BigIntValue } from "@elrondnetwork/erdjs/out";
 import { MultiESDTNFTTransfer } from "api/sc/calls";
@@ -20,15 +21,12 @@ interface IProps {
   onClose: () => void;
   collection: string;
   id: number;
+  view: number;
 }
 
-const AddNfts = ({ collection, id, onClose }: IProps) => {
+const AddNfts = ({ collection, id, onClose, view }: IProps) => {
   const [selectedNFTs, setSelectedNFTs] = useState<IElrondNFT[]>([]);
   const { nfts } = useGetUserNfts(collection);
-
-  if (!nfts) {
-    return null;
-  }
 
   const handleSelectNft = (nft: IElrondNFT) => {
     if (
@@ -57,6 +55,13 @@ const AddNfts = ({ collection, id, onClose }: IProps) => {
       [new BigIntValue(new BigNumber(id))]
     );
   };
+
+  if (!nfts) {
+    return null;
+  }
+
+  if (view !== 1) return null;
+
   return (
     <>
       <ModalHeader>
@@ -71,7 +76,12 @@ const AddNfts = ({ collection, id, onClose }: IProps) => {
       </ModalHeader>
       <Divider />
       <ModalBody mt="3">
-        <Center w="full" mb={8} gap={4}>
+        <Center w="full" mb={8} gap={4} flexWrap="wrap">
+          {nfts.length === 0 && (
+            <Text textAlign={"center"}>
+              No nfts for collection {collection}
+            </Text>
+          )}
           {nfts.map((nft) => {
             return (
               <Flex

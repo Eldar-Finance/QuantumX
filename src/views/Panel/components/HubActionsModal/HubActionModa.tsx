@@ -17,20 +17,23 @@ const HubActionModal = ({ hubInfo, isOpen, onClose }: IProps) => {
   const handleView = (view: number) => {
     setView(view);
   };
+
   return (
-    <MyModal isOpen={isOpen} onClose={onClose} size={"4xl"}>
+    <MyModal isOpen={isOpen} onClose={onClose} size={"4xl"} isCentered={false}>
       <SwipeableViews index={view} onChangeIndex={handleView}>
         <AllActions handleView={handleView} />
         <AddNfts
           onClose={() => handleView(0)}
           collection={hubInfo.collection}
           id={hubInfo.id}
+          view={view}
         />
         <RemoveNFTs
           collection={hubInfo.collection}
           id={hubInfo.id}
           onClose={() => handleView(0)}
           nonces={hubInfo.nftsNonces}
+          view={view}
         />
       </SwipeableViews>
     </MyModal>

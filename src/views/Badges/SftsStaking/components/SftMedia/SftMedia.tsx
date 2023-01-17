@@ -86,7 +86,9 @@ const SftMedia = ({
         </Box>
         {!removeBottomText && (
           <Flex justifyContent={"center"} fontWeight="bold">
-            <Text mb={2}>1x {sft.name}</Text>
+            <Text mb={2}>
+              {sft.balance}x {sft.name}
+            </Text>
           </Flex>
         )}
       </>

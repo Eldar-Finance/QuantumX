@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { toknesID } from "api/net.config";
 
 import {
   fetchRetrieveNrOfSftsPerStatus,
@@ -138,17 +137,10 @@ export const eldarSfts = createSlice({
         state.stfsRewards.data.totalRewards = action.payload[2];
 
         if (action.payload[0]) {
-          const clamable = action.payload[0];
-          const lkmexClaimableArr = clamable.filter(
-            (token) => token.tokenI === toknesID.mex
+          state.isLkmexRewards = action.payload[0].reduce(
+            (acc, current) => acc || current.value > 0,
+            false
           );
-          if (lkmexClaimableArr) {
-            let lkmexClaimable = 0;
-            lkmexClaimableArr.forEach((lkmex) => {
-              lkmexClaimable += lkmex.value;
-            });
-            state.isLkmexRewards = lkmexClaimable > 0;
-          }
         }
       })
       .addCase(fetchSftsRewards.rejected, (state, action) => {

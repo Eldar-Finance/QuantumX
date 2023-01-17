@@ -89,11 +89,9 @@ export const hubColumns = [
         ]);
       };
       const handleDelete = () => {
-        scCall(
-          "hubWsp",
-          "deleteOffer",
-          new BigUIntValue(new BigNumber(data.id))
-        );
+        scCall("hubWsp", "deleteOffer", [
+          new BigUIntValue(new BigNumber(data.id)),
+        ]);
       };
 
       return (
