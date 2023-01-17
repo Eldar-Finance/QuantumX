@@ -1,9 +1,11 @@
+import { DeleteIcon } from "@chakra-ui/icons";
 import { Flex, Icon } from "@chakra-ui/react";
 import ActionButton from "components/ActionButton/ActionButton";
 import { ToolIcon } from "components/Icons/ui";
 import { useState } from "react";
 import { formatTokenI } from "utils/functions/tokens";
 import { IScPanelFarms } from "utils/types/sc.interface";
+import { deleteFarm } from "views/Panel/scServices/farmsCalls";
 
 import ActionsModal from "../ActionsModal/ActionsModal";
 
@@ -62,6 +64,12 @@ export const panelColumns = [
         <Flex flexDir={"column"} gap={4}>
           <ActionButton onClick={handleOpenModal}>
             <Icon as={ToolIcon} />
+          </ActionButton>
+          <ActionButton
+            onClick={() => deleteFarm(data.farm.farmId)}
+            bg="danger"
+          >
+            <Icon as={DeleteIcon} />
           </ActionButton>
           <ActionsModal
             isOpen={openModal}

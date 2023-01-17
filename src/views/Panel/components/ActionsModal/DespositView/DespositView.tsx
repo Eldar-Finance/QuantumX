@@ -14,7 +14,7 @@ import ActionButton from "components/ActionButton/ActionButton";
 import { useFormik } from "formik";
 import useGetElrondToken from "utils/hooks/useGetElrondToken";
 import { IScFarm2 } from "utils/types/sc.interface";
-import { depositRewards } from "views/Panel/scServices";
+import { depositRewards } from "views/Panel/scServices/farmsCalls";
 import * as yup from "yup";
 
 const validationSchema = yup.object({

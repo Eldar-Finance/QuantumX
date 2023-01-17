@@ -2,7 +2,7 @@ import { Box, Grid, ModalBody, ModalHeader, Text } from "@chakra-ui/react";
 import ActionButton from "components/ActionButton/ActionButton";
 import PanelBox from "components/PanelBox/PanelBox";
 import { IScPanelFarms } from "utils/types/sc.interface";
-import { deleteFarm } from "views/Panel/scServices";
+import { deleteFarm } from "views/Panel/scServices/farmsCalls";
 
 interface IProps {
   handleView: (view: number) => void;

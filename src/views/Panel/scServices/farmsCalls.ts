@@ -1,4 +1,8 @@
-import { BigIntValue, BigUIntValue } from "@elrondnetwork/erdjs/out";
+import {
+  BigIntValue,
+  BigUIntValue,
+  BytesValue,
+} from "@elrondnetwork/erdjs/out";
 import { contractAddr } from "api/net.config";
 import { EGLDPayment, ESDTTransfer, scCall } from "api/sc/calls";
 import BigNumber from "bignumber.js";
@@ -74,4 +78,32 @@ export async function depositRewards(
   }
 
   return res;
+}
+export async function becomeCreator(fee) {
+  EGLDPayment("farms2", "becomeCreator", fee, [], 10000000);
+}
+
+export async function createFarm(
+  fee,
+  farm = {
+    stakingTokenI: "",
+    rewardTokenI: "",
+    unbondingPeriod: "",
+    unbondingFee: "",
+    harvestFee: "",
+  }
+) {
+  EGLDPayment(
+    "farms2",
+    "createFarm",
+    fee,
+    [
+      BytesValue.fromUTF8(farm.stakingTokenI),
+      BytesValue.fromUTF8(farm.rewardTokenI),
+      new BigUIntValue(new BigNumber(farm.unbondingPeriod)),
+      new BigUIntValue(new BigNumber(farm.unbondingFee)),
+      new BigUIntValue(new BigNumber(farm.harvestFee)),
+    ],
+    10000000
+  );
 }

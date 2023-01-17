@@ -13,7 +13,10 @@ import {
 import ActionButton from "components/ActionButton/ActionButton";
 import { useFormik } from "formik";
 import { IScFarm2 } from "utils/types/sc.interface";
-import { setEarlyUnbodingFee, setRewardsFee } from "views/Panel/scServices";
+import {
+  setEarlyUnbodingFee,
+  setRewardsFee,
+} from "views/Panel/scServices/farmsCalls";
 import * as yup from "yup";
 
 const valUnbound = yup.object({
