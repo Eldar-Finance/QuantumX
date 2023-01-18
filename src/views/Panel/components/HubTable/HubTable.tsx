@@ -1,4 +1,4 @@
-import { Box } from "@chakra-ui/react";
+import { Box, Center, Spinner, Text } from "@chakra-ui/react";
 import SearchTable from "components/Tables/SearchTable";
 import { useEffect } from "react";
 import { fetchCreatorInfo } from "redux/slices/hub/funcs";
@@ -10,7 +10,7 @@ import { hubColumns, IHubCreatorTableInfo } from "./columns";
 
 const HubTable = () => {
   const dispatch = useAppDispatch();
-  const { data } = useAppSelector(selectHubCreatorsInfo);
+  const { data, status } = useAppSelector(selectHubCreatorsInfo);
   useEffect(() => {
     dispatch(fetchCreatorInfo());
   }, [dispatch]);
@@ -35,7 +35,19 @@ const HubTable = () => {
   });
   return (
     <Box w="full" maxW={"1100px"} mx="auto" minH="70vh" overflow={"auto"}>
-      <SearchTable tableData={tableData} columnsData={hubColumns} />
+      {status === "loading" ? (
+        <Center mt={10}>
+          <Spinner />
+        </Center>
+      ) : (
+        <>
+          {status === "succeeded" && tableData.length === 0 ? (
+            <Text textAlign={"center"}>Access is temporarily restricted.</Text>
+          ) : (
+            <SearchTable tableData={tableData} columnsData={hubColumns} />
+          )}
+        </>
+      )}
     </Box>
   );
 };

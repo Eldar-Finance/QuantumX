@@ -22,12 +22,11 @@ const BecomeCreator = () => {
             One time fee of {formatBalance({ balance: fees.creator })} EGLD
           </Text>
           <Text>Unlock Quantum Panel</Text>
-          <Text>1 Free Staking Pool/Farm Creation</Text>
           <Text>Unlimited QuantumX Team Support</Text>
         </Flex>
         <Text mb={16}>
-          Every extra pool/farm cost{" "}
-          {formatBalance({ balance: fees.farmCreation })} EGLD
+          Every pool/farm costs {formatBalance({ balance: fees.farmCreation })}{" "}
+          EGLD
         </Text>
         <ActionButton
           w="full"
