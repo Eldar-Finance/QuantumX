@@ -62,7 +62,6 @@ export const fetchCreatorsFarms = createAsyncThunk(
     ]);
 
     const scFirstValue = scRes.firstValue.valueOf();
-    console.log("scFirstValue", scFirstValue);
 
     const creatorFarms: IScPanelFarms[] = scFirstValue.map((farm) => {
       const data: IScPanelFarms = {

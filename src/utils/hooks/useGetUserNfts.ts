@@ -5,8 +5,6 @@ import { useAppSelector } from "./redux";
 
 const useGetUserNfts = (collections?: string) => {
   const address = useAppSelector(selectUserAddress);
-  console.log("address", address);
-
   const { data, error } = useSWR(
     address
       ? {
