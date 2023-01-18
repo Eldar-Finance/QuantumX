@@ -18,3 +18,13 @@ export const fetchFarmsFees = async () => {
     };
   }
 };
+
+export const fetchIsFarmCreator = async () => {
+  const res = await scQuery("farms2", "farmCreators");
+  let data = res?.firstValue?.valueOf();
+  if (data) {
+    data = data.map((creator) => creator.bech32());
+  }
+
+  return data as string[];
+};

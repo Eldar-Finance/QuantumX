@@ -1,4 +1,4 @@
-import { Box, Flex, useDisclosure } from "@chakra-ui/react";
+import { Box, Center, Flex, Spinner, useDisclosure } from "@chakra-ui/react";
 import { getNetworkStats } from "api/rest/elrondApi/network";
 import ActionButton from "components/ActionButton/ActionButton";
 import SearchTable from "components/Tables/SearchTable";
@@ -11,6 +11,7 @@ import { selectUserAddress } from "redux/slices/userAcount/account-slice";
 import useSWR from "swr";
 import { useAppDispatch } from "utils/hooks/redux";
 import { IScPanelFarms } from "utils/types/sc.interface";
+import useGetFarmCreators from "views/Panel/hooks/useGetFarmCreators";
 import BecomeCreator from "./BecomeCreator";
 import { panelColumns } from "./columns";
 
@@ -18,6 +19,7 @@ const NewFarmModal: any = dynamic(() => import("./NewFarmModal"));
 
 const PanelTable = () => {
   const dispatch = useAppDispatch();
+  const { creators, isLoading } = useGetFarmCreators();
   const address = useSelector(selectUserAddress);
   const { onToggle, isOpen } = useDisclosure();
   useEffect(() => {
@@ -31,12 +33,21 @@ const PanelTable = () => {
 
   const currentEpoch = statsRes?.data?.epoch;
 
+  const isCreator = Boolean(
+    creators.find((creatorAddress) => creatorAddress === address)
+  );
+
+  if (!isCreator && !isLoading) {
+    return <BecomeCreator />;
+  }
+
   return (
     <Box w="full" maxW={"1000px"} mx="auto" minH="70vh" overflow={"auto"}>
-      {creatorsInfo.status === "succeeded" && tableData.length === 0 && (
-        <BecomeCreator />
-      )}
-      {tableData.length > 0 && (
+      {isLoading ? (
+        <Center>
+          <Spinner />
+        </Center>
+      ) : (
         <Box>
           <Flex justifyContent={"flex-end"} mb={4}>
             <ActionButton onClick={onToggle}>new poo/farm</ActionButton>
