@@ -45,7 +45,7 @@ const NewFarmModal = ({ isOpen, onClose }: IProps) => {
     validationSchema: newFarmSchema,
     onSubmit: (values) => {
       console.log(values);
-      createFarm(formatBalance({ balance: fees.farmCreation }), values);
+      createFarm(formatBalance({ balance: fees.farmCreation }, true), values);
     },
   });
 

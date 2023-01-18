@@ -1,10 +1,11 @@
 import { Box, Center, Flex, Heading, Text } from "@chakra-ui/react";
 import ActionButton from "components/ActionButton/ActionButton";
+import { formatBalance } from "utils/functions/formatBalance";
 import useGetFarmsFees from "views/Panel/hooks/useGetFarmsFees";
 import { becomeCreator } from "views/Panel/scServices/farmsCalls";
 
 const BecomeCreator = () => {
-  const fess = useGetFarmsFees();
+  const { fees } = useGetFarmsFees();
   return (
     <Center textAlign={"center"}>
       <Box
@@ -17,13 +18,24 @@ const BecomeCreator = () => {
       >
         <Heading mb={8}>Become QCreator</Heading>
         <Flex gap={4} flexDir="column" mb={12}>
-          <Text>One time fee of 25 EGLD</Text>
+          <Text>
+            One time fee of {formatBalance({ balance: fees.creator })} EGLD
+          </Text>
           <Text>Unlock Quantum Panel</Text>
           <Text>1 Free Staking Pool/Farm Creation</Text>
           <Text>Unlimited QuantumX Team Support</Text>
         </Flex>
-        <Text mb={16}>Every extra pool/farm cost 5 EGLD</Text>
-        <ActionButton w="full" fontWeight={"bold"} onClick={becomeCreator}>
+        <Text mb={16}>
+          Every extra pool/farm cost{" "}
+          {formatBalance({ balance: fees.farmCreation })} EGLD
+        </Text>
+        <ActionButton
+          w="full"
+          fontWeight={"bold"}
+          onClick={() =>
+            becomeCreator(formatBalance({ balance: fees.creator }, true))
+          }
+        >
           Become Creator
         </ActionButton>
       </Box>
