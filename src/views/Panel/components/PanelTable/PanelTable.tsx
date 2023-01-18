@@ -50,7 +50,7 @@ const PanelTable = () => {
       ) : (
         <Box>
           <Flex justifyContent={"flex-end"} mb={4}>
-            <ActionButton onClick={onToggle}>new poo/farm</ActionButton>
+            <ActionButton onClick={onToggle}>New pool/farm</ActionButton>
           </Flex>
           <SearchTable
             tableData={tableData.map((creatorFarm) => {

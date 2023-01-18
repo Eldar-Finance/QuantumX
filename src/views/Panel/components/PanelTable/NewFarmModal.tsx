@@ -3,6 +3,8 @@ import {
   Box,
   Divider,
   Flex,
+  FormControl,
+  FormLabel,
   Heading,
   Input,
   ModalBody,
@@ -62,66 +64,107 @@ const NewFarmModal = ({ isOpen, onClose }: IProps) => {
         </ModalHeader>
         <Divider />
         <ModalBody display={"flex"} flexDir="column" gap={4} mt={5}>
-          <Box bg="black.base" p="2" px={5} borderRadius={"md"}>
-            <Flex>
-              <Input
-                variant={"unstyled"}
-                placeholder="Identifier of token to stake"
-                flex="1"
-                name="stakingTokenI"
-                value={formik.values.stakingTokenI}
-                onChange={formik.handleChange}
-              />{" "}
-            </Flex>
-          </Box>
-          <Box bg="black.base" p="2" px={5} borderRadius={"md"}>
-            <Flex>
-              <Input
-                variant={"unstyled"}
-                placeholder="Identifier of rewards token"
-                flex="1"
-                name="rewardTokenI"
-                value={formik.values.rewardTokenI}
-                onChange={formik.handleChange}
-              />{" "}
-            </Flex>
-          </Box>
-          <Box bg="black.base" p="2" px={5} borderRadius={"md"}>
-            <Flex>
-              <Input
-                variant={"unstyled"}
-                placeholder="Unbonding Period in epochs (Number only)"
-                flex="1"
-                name="unbondingPeriod"
-                value={formik.values.unbondingPeriod}
-                onChange={formik.handleChange}
-              />{" "}
-            </Flex>
-          </Box>
-          <Box bg="black.base" p="2" px={5} borderRadius={"md"}>
-            <Flex>
-              <Input
-                variant={"unstyled"}
-                placeholder="Unbonding Fee (Number oNLY)"
-                flex="1"
-                name="unbondingFee"
-                value={formik.values.unbondingFee}
-                onChange={formik.handleChange}
-              />{" "}
-            </Flex>
-          </Box>
-          <Box bg="black.base" p="2" px={5} borderRadius={"md"}>
-            <Flex>
-              <Input
-                variant={"unstyled"}
-                placeholder="Harvest Fee (Number oNLY)"
-                flex="1"
-                name="harvestFee"
-                value={formik.values.harvestFee}
-                onChange={formik.handleChange}
-              />{" "}
-            </Flex>
-          </Box>
+          <FormControl>
+            <FormLabel mb={1}>Staked Token</FormLabel>
+            <Input
+              p="2"
+              pl={6}
+              placeholder="Example: RARE-99e8b0"
+              flex="1"
+              name="stakingTokenI"
+              bg="black.base"
+              borderRadius={"md"}
+              value={formik.values.stakingTokenI}
+              onChange={formik.handleChange}
+              isInvalid={
+                formik.touched.stakingTokenI &&
+                Boolean(formik.errors.stakingTokenI)
+              }
+            />{" "}
+          </FormControl>
+          <FormControl>
+            <FormLabel mb={1}>Reward Token</FormLabel>
+            <Input
+              p="2"
+              pl={6}
+              placeholder="Example: RARE-99e8b0"
+              flex="1"
+              name="rewardTokenI"
+              bg="black.base"
+              borderRadius={"md"}
+              value={formik.values.rewardTokenI}
+              onChange={formik.handleChange}
+              isInvalid={
+                formik.touched.rewardTokenI &&
+                Boolean(formik.errors.rewardTokenI)
+              }
+            />{" "}
+          </FormControl>
+
+          <FormControl>
+            <FormLabel mb={1}>Unbonding Period</FormLabel>
+            <Input
+              p="2"
+              pl={6}
+              placeholder="Example: 3"
+              flex="1"
+              name="unbondingPeriod"
+              bg="black.base"
+              borderRadius={"md"}
+              value={formik.values.unbondingPeriod}
+              onChange={formik.handleChange}
+              isInvalid={
+                formik.touched.unbondingPeriod &&
+                Boolean(formik.errors.unbondingPeriod)
+              }
+            />{" "}
+          </FormControl>
+
+          <FormControl
+            isInvalid={
+              formik.touched.unbondingFee && Boolean(formik.errors.unbondingFee)
+            }
+          >
+            <FormLabel mb={1}>Unbonding Fee</FormLabel>
+
+            <Box>
+              <Flex>
+                <Input
+                  p="2"
+                  pl={6}
+                  placeholder="Example: 3"
+                  flex="1"
+                  name="unbondingFee"
+                  value={formik.values.unbondingFee}
+                  onChange={formik.handleChange}
+                  bg="black.base"
+                  borderRadius={"md"}
+                  isInvalid={
+                    formik.touched.unbondingFee &&
+                    Boolean(formik.errors.unbondingFee)
+                  }
+                />{" "}
+              </Flex>
+            </Box>
+          </FormControl>
+
+          <FormControl>
+            <FormLabel mb={1}>Harvest Fee</FormLabel>
+            <Input
+              p="2"
+              pl={6}
+              placeholder="Example: 3"
+              flex="1"
+              name="harvestFee"
+              value={formik.values.harvestFee}
+              bg="black.base"
+              borderRadius={"md"}
+              onChange={formik.handleChange}
+              isInvalid={
+                formik.touched.harvestFee && Boolean(formik.errors.harvestFee)
+              }
+            />{" "}
+          </FormControl>
         </ModalBody>
         <ModalFooter justifyContent={"center"} gap="6" flexWrap={"wrap"}>
           <ActionButton w="full" type="submit">
