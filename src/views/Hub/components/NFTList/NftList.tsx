@@ -19,6 +19,8 @@ const NftList = () => {
 
   if (!offers || !tokens) return null;
 
+  console.log("offers", offers);
+  console.log("tokens", tokens);
   const offer1 = {
     ...offers[1],
     elrondToken: tokens.find((t) => t.identifier === offers[1].token),
@@ -64,7 +66,7 @@ const NftList = () => {
             {formatBalance(
               {
                 balance: offer1.price,
-                decimals: offer1.elrondToken.decimals,
+                decimals: offer1.elrondToken?.decimals,
               },
               false,
               8
@@ -84,7 +86,7 @@ const NftList = () => {
             Pay{" "}
             {formatBalance({
               balance: offer2.price,
-              decimals: offer2.elrondToken.decimals,
+              decimals: offer2.elrondToken?.decimals,
             })}{" "}
             {formatTokenI(offer2.token)} <br /> Get an Abominator
           </Text>
