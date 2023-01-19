@@ -1,20 +1,31 @@
 /* eslint-disable react/no-unescaped-entities */
 import { Center, HStack, Link, Text } from "@chakra-ui/react";
+import { contractAddr } from "api/net.config";
+import { ESDTNFTTransfer } from "api/sc/calls";
 import img3 from "assets/eldar-badges/frameit_logo.svg";
 import img2 from "assets/eldar-badges/logo2.png";
 import NextImage from "components/NextImage/NextImage";
+import { selectUserAddress } from "redux/slices/userAcount/account-slice";
+import { useAppSelector } from "utils/hooks/redux";
 import useGetUserNfts from "utils/hooks/useGetUserNfts";
 import NftCard from "../NftCard/NftCard";
 const QuantumxHeroCollection = "QXHR-9b0bc6";
 const NftList = () => {
-  const handleUpgrade = () => {};
+  const address = useAppSelector(selectUserAddress);
+  const handleUpgrade = (nft) => {
+    ESDTNFTTransfer("upgradeHero", address, 1, nft, contractAddr.upgradeHero);
+  };
   const { nfts, isLoading } = useGetUserNfts(QuantumxHeroCollection);
   return (
     <Center w="full">
       <Center flexWrap={"wrap"} gap={12} mt={8} maxW={"1100px"}>
         {nfts.map((nft) => {
           return (
-            <NftCard key={nft.identifier} onSubmit={handleUpgrade} nft={nft} />
+            <NftCard
+              key={nft.identifier}
+              onSubmit={() => handleUpgrade(nft)}
+              nft={nft}
+            />
           );
         })}
 
