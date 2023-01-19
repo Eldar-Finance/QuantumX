@@ -111,8 +111,6 @@ const ProteoFarmItem = ({ pf }: IProps) => {
     }
   }, [dispatch, tokenInfo, wsp, endpointDefinition, tokenRewards]);
 
-  useEffect(() => {}, [aprEndpoint]);
-
   const stats = useAppSelector((state) => state.elrond.stats);
   const currentEpoch = stats.data.epoch;
 
@@ -124,6 +122,9 @@ const ProteoFarmItem = ({ pf }: IProps) => {
   if (aprData) {
     apr = aprData[aprData.length - 1].apr;
   }
+
+  console.log("tokenInfo2?.staked", tokenInfo2?.staked);
+
   return (
     <ProteoItemContenxt.Provider
       value={{

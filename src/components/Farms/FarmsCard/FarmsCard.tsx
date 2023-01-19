@@ -1,7 +1,6 @@
 import { Accordion } from "@chakra-ui/react";
 import { IProteoFarm } from "utils/types/farms.interface";
 import { IScFarmItem, IScUserFarmInfo } from "utils/types/sc.interface";
-import Farms2Item from "./Farms2Item";
 import ProteoFarmItem from "./ProteoFarmItem";
 
 interface IProps {
@@ -19,7 +18,7 @@ const FarmsCard = ({ proteoArr, isPool, othersArr = null }: IProps) => {
       {proteoArr.map((pf) => {
         return <ProteoFarmItem key={pf.stakedCoin} pf={pf} />;
       })}
-      {othersArr && (
+      {/* {othersArr && (
         <>
           {othersArr.allFarms.map((f) => {
             return (
@@ -35,7 +34,7 @@ const FarmsCard = ({ proteoArr, isPool, othersArr = null }: IProps) => {
             );
           })}
         </>
-      )}
+      )} */}
     </Accordion>
   );
 };

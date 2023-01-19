@@ -13,7 +13,7 @@ export const useGetFarmsLpPrices = () => {
     };
   });
   return {
-    prices: finalData,
+    prices: finalData || [],
     isLoading,
     isError: error,
   };

@@ -46,7 +46,7 @@ const useGetMultipleElrondTokens = (tokensIdentifiers: string[]) => {
   }
 
   return {
-    tokens: finalData,
+    tokens: finalData || [],
     isLoading: !error && !data,
     isError: error,
   };
