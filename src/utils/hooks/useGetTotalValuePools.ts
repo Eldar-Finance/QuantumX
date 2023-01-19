@@ -44,7 +44,7 @@ const useGetTotalValuePools = () => {
               (token) => token.identifier === tokenIdentifier
             );
 
-            let tokenPrice = stakingToken.price;
+            let tokenPrice = stakingToken?.price || 0;
 
             if (tokenInfo && tokenInfo.staked !== 0) {
               totalLockedonProteoFarms += formatBalanceDolar(
