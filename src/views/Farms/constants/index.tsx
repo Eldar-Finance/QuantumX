@@ -88,7 +88,7 @@ export const farms2Data = {
   },
   ESTARUSDC: {
     logo: estarusdcImage,
-    name: "ESTARTUSDCLP",
+    name: "ESTARUSDCLP",
     lpToken1: toknesID.estar,
     lpToken2: toknesID.usdc,
     scFarmAddress: "",
