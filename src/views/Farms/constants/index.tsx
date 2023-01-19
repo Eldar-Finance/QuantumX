@@ -10,6 +10,7 @@ import proteoEgldLpImg from "assets/logos/proteolp.png";
 import zpayWegldImg from "assets/logos/zpaywegld.png";
 import NextImage from "components/NextImage/NextImage";
 
+import estarusdcImage from "assets/logos/estarusdc.png";
 import rareUsdcImage from "assets/logos/rare-usdc.png";
 import { IProteoFarm } from "utils/types/farms.interface";
 
@@ -84,5 +85,12 @@ export const farms2Data = {
     lpToken2: toknesID.usdc,
     scFarmAddress:
       "erd1qqqqqqqqqqqqqpgqjz5k2a7ed2xtd0d92zt0j8e7aap70y7g2jpsjz5z4r",
+  },
+  ESTARUSDC: {
+    logo: estarusdcImage,
+    name: "ESTARTUSDCLP",
+    lpToken1: toknesID.estar,
+    lpToken2: toknesID.usdc,
+    scFarmAddress: "",
   },
 };

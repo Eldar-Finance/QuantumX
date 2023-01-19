@@ -118,4 +118,5 @@ export const TOKENS_ID = {
   prick: "PRICK-744592",
   bear: "BEAR-f9c271",
   kro: "KRO-df97ec",
+  estar: "ESTAR-461bab",
 };

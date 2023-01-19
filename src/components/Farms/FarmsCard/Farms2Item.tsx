@@ -93,6 +93,7 @@ const Farms2Item = ({ farm, logoSize, isPool, farmUserInfo }: IProps) => {
 
   let apr: string = "-";
   if (
+    price &&
     stakingToken &&
     rewardToken &&
     lastRewardedEpoch &&

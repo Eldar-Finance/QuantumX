@@ -3,7 +3,21 @@ import useSwr from "swr";
 import { useGetFarmsLpPrices } from "./useGetFarmsLpPrices";
 const useGetTokenPrice = (token, secondToken = "USDC") => {
   const { prices } = useGetFarmsLpPrices();
-  const { data, error } = useSwr([token, secondToken], getMaiarTokens);
+  const { data, error } = useSwr([token, secondToken], getMaiarTokens, {
+    onErrorRetry: (error, key, config, revalidate, { retryCount }) => {
+      console.log(error);
+      console.log("key", key);
+
+      // Never retry on 400.
+      if (error.response.status === 400) return;
+
+      // Only retry up to 10 times.
+      if (retryCount >= 2) return;
+
+      // Retry after 5 seconds.
+      setTimeout(() => revalidate({ retryCount }), 5000);
+    },
+  });
 
   let tokenPrice = 0;
 
