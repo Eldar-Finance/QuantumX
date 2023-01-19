@@ -13,7 +13,16 @@ const QuantumxHeroCollection = "QXHR-9b0bc6";
 const NftList = () => {
   const address = useAppSelector(selectUserAddress);
   const handleUpgrade = (nft) => {
-    ESDTNFTTransfer("upgradeHero", address, 1, nft, contractAddr.upgradeHero);
+    ESDTNFTTransfer(
+      "upgradeHero",
+      address,
+      1,
+      nft,
+      contractAddr.upgradeHero,
+      20000000,
+      [],
+      1
+    );
   };
   const { nfts, isLoading } = useGetUserNfts(QuantumxHeroCollection);
   return (
