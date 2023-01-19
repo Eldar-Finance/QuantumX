@@ -8,7 +8,7 @@ import TitleSection from "./components/TitleSection/TitleSection";
 
 const Heroes = () => {
   return (
-    <Layout>
+    <Layout pb={20}>
       <MyContainer>
         <TitleSection />
         <Box>
