@@ -25,9 +25,9 @@ export const ESDTNFTTransfer = async (
   value = 0,
   token,
   contractAddr = "",
-  gasL = 200000000,
+  gasL: number = 200000000,
   args = [],
-  finalTokenValue
+  finalTokenValue?: number | string
 ) => {
   try {
     const tokenId = token.collection;
