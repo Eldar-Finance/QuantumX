@@ -27,7 +27,7 @@ import { preventExponetialNotation } from "utils/functions/numbers";
 import { formatTokenI } from "utils/functions/tokens";
 import { useAppDispatch, useAppSelector } from "utils/hooks/redux";
 import useGetElrondToken from "utils/hooks/useGetElrondToken";
-import useGetLpTokenPrice from "utils/hooks/useGetLpTokenPrice";
+import useGetTokenPrice from "utils/hooks/useGetTokenPrice";
 import { farms2Data } from "views/Farms/constants";
 import EarnedRewards from "./Farms2/EarnedRewards/EarnedRewards";
 import EarnTokens from "./Farms2/EarnTokens/EarnTokens";
@@ -61,12 +61,8 @@ const Farms2Item = ({ farm, logoSize, isPool, farmUserInfo }: IProps) => {
     ? farms2Data[formatTokenI(farm.farm.stakingToken)]
     : { logo: "", name: "", lpToken2: "", scFarmAddress: "" };
   const { data: stats } = useAppSelector(selectElrondStats);
-  const lpPrice = useGetLpTokenPrice(
-    scFarmAddress,
-    lpToken2,
-    farm.farm.stakingToken
-  );
-  const price = stakingToken?.price || lpPrice;
+
+  const [price] = useGetTokenPrice(farm.farm.stakingToken);
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(
@@ -90,6 +86,14 @@ const Farms2Item = ({ farm, logoSize, isPool, farmUserInfo }: IProps) => {
     price,
     stakingToken.decimals,
   ]);
+
+  // if (farm.farm.rewardToken === "PRICK-744592") {
+  //   console.log("farm", farm);
+  //   console.log("farmUserInfo", farmUserInfo);
+  //   console.log("rewardToken", rewardToken);
+  //   console.log("stakingToken", stakingToken);
+  //   console.log("---------------------------");
+  // }
 
   let apr: string = "-";
   if (

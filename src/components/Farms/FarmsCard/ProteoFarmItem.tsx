@@ -71,7 +71,7 @@ const ProteoFarmItem = ({ pf }: IProps) => {
 
   const [lastHarvestEpoch, setLastHarvestEpoch] = useState(0);
 
-  const [selectedTokenPrice] = useGetTokenPrice(token);
+  const [selectedTokenPrice] = useGetTokenPrice(tokenIdentifier);
   const tokenPrice = customPrice || selectedTokenPrice;
 
   const tokenInfo = generalInfoAppData?.tokensInfo.find(
@@ -122,8 +122,6 @@ const ProteoFarmItem = ({ pf }: IProps) => {
   if (aprData) {
     apr = aprData[aprData.length - 1].apr;
   }
-
-  console.log("tokenInfo2?.staked", tokenInfo2?.staked);
 
   return (
     <ProteoItemContenxt.Provider

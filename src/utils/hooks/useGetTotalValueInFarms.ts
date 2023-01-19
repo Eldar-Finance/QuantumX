@@ -86,7 +86,7 @@ const useGetTotalValueInFarms = () => {
       }
     };
     func();
-  }, [farms2, generalInfoAppData]);
+  }, [farms2, generalInfoAppData, lpPrices, tokens]);
 
   return totalValueLocked;
 };

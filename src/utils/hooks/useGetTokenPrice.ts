@@ -1,31 +1,24 @@
-import { getMaiarTokens } from "api/rest/others/MaiarTokens";
-import useSwr from "swr";
+import { formatTokenI } from "utils/functions/tokens";
+import useGetElrondToken from "./useGetElrondToken";
 import { useGetFarmsLpPrices } from "./useGetFarmsLpPrices";
-const useGetTokenPrice = (token, secondToken = "USDC") => {
-  const { prices } = useGetFarmsLpPrices();
-  const { data, error } = useSwr([token, secondToken], getMaiarTokens, {
-    onErrorRetry: (error, key, config, revalidate, { retryCount }) => {
-      console.log(error);
-      console.log("key", key);
+const useGetTokenPrice = (tokenIdentifier) => {
+  const { prices: lpPrices, isLoading } = useGetFarmsLpPrices();
+  const isLpPrice = Boolean(
+    lpPrices.find((lpToken) => lpToken.token === formatTokenI(tokenIdentifier))
+  );
 
-      // Never retry on 400.
-      if (error.response.status === 400) return;
-
-      // Only retry up to 10 times.
-      if (retryCount >= 2) return;
-
-      // Retry after 5 seconds.
-      setTimeout(() => revalidate({ retryCount }), 5000);
-    },
-  });
-
+  const { token } = useGetElrondToken(
+    isLpPrice || isLoading ? null : tokenIdentifier
+  );
   let tokenPrice = 0;
 
-  if (data) {
-    tokenPrice = data.data.value;
+  if (token) {
+    tokenPrice = token.price;
   }
-  if (error && secondToken === "USDC") {
-    const price = prices?.find((item) => item.token === token);
+  if (isLpPrice) {
+    const price = lpPrices?.find(
+      (item) => item.token === formatTokenI(tokenIdentifier)
+    );
     if (price) {
       tokenPrice = Number(price.price);
     }
