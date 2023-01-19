@@ -19,8 +19,6 @@ const NftList = () => {
 
   if (!offers || !tokens) return null;
 
-  console.log("offers", offers);
-  console.log("tokens", tokens);
   const offer1 = {
     ...offers[1],
     elrondToken: tokens.find((t) => t.identifier === offers[1].token),
