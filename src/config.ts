@@ -41,6 +41,8 @@ export const contractAddress = {
   smartSwap: "erd1qqqqqqqqqqqqqpgqlhan0n8ny7ajlufn8l2zc6zlu8k44u6hu7zsdvzy24",
   hub: "erd1qqqqqqqqqqqqqpgqd56kc3pgra3epm7h78czzkm0zlal3agcu7zsjcps8c",
   upgradeHero: "erd1qqqqqqqqqqqqqpgqfr69nye37kwcjlxqv652k555jyw0uaegu7zs5rlw9f",
+  xoxnoSrbPool:
+    "erd1qqqqqqqqqqqqqpgqvpkd3g3uwludduv3797j54qt6c888wa59w2shntt6z",
   // proteo farms
   usdcProteo: "erd1qqqqqqqqqqqqqpgq3lh80a92d49am3t2pfzheapdxtykzt5kznyqsjhfrx",
   proteoEgldNonElite:

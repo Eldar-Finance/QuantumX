@@ -125,6 +125,7 @@ export type WspTypes =
   | "wrapEgld"
   | "wrapEgldShard1"
   | "wrapEgldShard2"
+  | "xoxnoSrbPoolsInfoWsp"
   | "hubWsp";
 
 export const getInterface = (workspace: WspTypes) => {
@@ -347,6 +348,12 @@ export const getInterface = (workspace: WspTypes) => {
       address = new Address(simpleAddress);
       abiUrl = abiPath + "/nfthub.abi.json";
       implementsInterfaces = "NftHub";
+      break;
+    case "xoxnoSrbPoolsInfoWsp":
+      simpleAddress = contractAddr.xoxnoSrbPool;
+      address = new Address(simpleAddress);
+      abiUrl = abiPath + "/xoxno_srb_pool_info.json";
+      implementsInterfaces = "XoxnoSrbPool";
       break;
 
     default:

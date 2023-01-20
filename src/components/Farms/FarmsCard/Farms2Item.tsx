@@ -29,6 +29,7 @@ import { useAppDispatch, useAppSelector } from "utils/hooks/redux";
 import useGetElrondToken from "utils/hooks/useGetElrondToken";
 import useGetTokenPrice from "utils/hooks/useGetTokenPrice";
 import { farms2Data } from "views/Farms/constants";
+import useCanUsePool7 from "views/Pools/hooks/useCanUsePool7";
 import EarnedRewards from "./Farms2/EarnedRewards/EarnedRewards";
 import EarnTokens from "./Farms2/EarnTokens/EarnTokens";
 import StakeUnstake from "./Farms2/StakeUnstake/StakeUnstake";
@@ -87,13 +88,9 @@ const Farms2Item = ({ farm, logoSize, isPool, farmUserInfo }: IProps) => {
     stakingToken.decimals,
   ]);
 
-  // if (farm.farm.rewardToken === "PRICK-744592") {
-  //   console.log("farm", farm);
-  //   console.log("farmUserInfo", farmUserInfo);
-  //   console.log("rewardToken", rewardToken);
-  //   console.log("stakingToken", stakingToken);
-  //   console.log("---------------------------");
-  // }
+  // only for srb farm
+  const { canUsePool } = useCanUsePool7(farm.farm.farmId);
+  console.log("canUsePool", canUsePool);
 
   let apr: string = "-";
   if (

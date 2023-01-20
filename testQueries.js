@@ -6,17 +6,18 @@ var {
   SmartContract,
   SmartContractAbi,
   Address,
+  AddressValue,
 } = require("@elrondnetwork/erdjs/out");
 var {
   ProxyNetworkProvider,
 } = require("@elrondnetwork/erdjs-network-providers/out");
-var abiFile = require("./public/api/sft-rewards-sc.abi.json");
+var abiFile = require("./public/api/test.abi.json");
 
 const provider = new ProxyNetworkProvider("https://api.multiversx.com", {
   timeout: 30000,
 });
 
-const scQuery = async (
+export const scQuery = async (
   funcName = "",
   args = [],
   scAddress,
@@ -51,11 +52,17 @@ const scQuery = async (
 };
 
 scQuery(
-  "getStakers",
-  [],
-  "erd1qqqqqqqqqqqqqpgqldzu3c9aczuyk2kzjn9aalfm9tkjeyml64qszqhpek",
+  "getWalletPools",
+  [
+    new AddressValue(
+      new Address(
+        "erd1vdd9044vpt3wq0wtr4aa02kvqkmn3y4nqr3x7tuvda5uv5kya8ms359c36"
+      )
+    ),
+  ],
+  "erd1qqqqqqqqqqqqqpgqvpkd3g3uwludduv3797j54qt6c888wa59w2shntt6z",
   abiFile,
-  "SftRewards"
+  "Template"
 ).then((res) => {
-  console.log(res.firstValue.valueOf());
+  console.log("res ", res?.firstValue?.valueOf());
 });
