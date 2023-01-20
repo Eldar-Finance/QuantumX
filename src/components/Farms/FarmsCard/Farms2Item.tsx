@@ -228,6 +228,11 @@ const Farms2Item = ({ farm, logoSize, isPool, farmUserInfo }: IProps) => {
             />
           </PanelBox>
         </Grid>
+        {!canUsePool && farm.farm.farmId === 7 && (
+          <Text textAlign={"center"} mt={4}>
+            You must be a staker of SRB-61daf7.
+          </Text>
+        )}
       </AccordionPanel>
     </AccordionItem>
   );

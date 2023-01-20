@@ -9,12 +9,11 @@
         },
         "contractCrate": {
             "name": "farms",
-            "version": "0.0.0",
-            "git_version": "1584c7e-modified"
+            "version": "0.0.0"
         },
         "framework": {
             "name": "elrond-wasm",
-            "version": "0.35.0"
+            "version": "0.38.0"
         }
     },
     "name": "Farms",
@@ -273,6 +272,17 @@
             "outputs": []
         },
         {
+            "name": "setXoxnoAddress",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "address",
+                    "type": "Address"
+                }
+            ],
+            "outputs": []
+        },
+        {
             "name": "forceAddCreator",
             "onlyOwner": true,
             "mutability": "mutable",
@@ -337,8 +347,8 @@
                     "type": "Address"
                 },
                 {
-                    "name": "farm",
-                    "type": "Farm"
+                    "name": "farm_id",
+                    "type": "BigUint"
                 }
             ],
             "outputs": [
@@ -413,6 +423,38 @@
             ]
         },
         {
+            "name": "isSrbStaker",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "address",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "bool"
+                }
+            ]
+        },
+        {
+            "name": "getRareStakers",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "ids",
+                    "type": "variadic<BigUint>",
+                    "multi_arg": true
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "variadic<Address>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
             "name": "farmsLatestId",
             "mutability": "readonly",
             "inputs": [],
@@ -481,6 +523,16 @@
             "outputs": [
                 {
                     "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "xoxnoAddress",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "Address"
                 }
             ]
         },
