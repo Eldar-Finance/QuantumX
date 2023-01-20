@@ -1,4 +1,6 @@
 import { Accordion } from "@chakra-ui/react";
+import { useRouter } from "next/dist/client/router";
+import { useEffect, useState } from "react";
 import { IProteoFarm } from "utils/types/farms.interface";
 import { IScFarmItem, IScUserFarmInfo } from "utils/types/sc.interface";
 import Farms2Item from "./Farms2Item";
@@ -14,8 +16,28 @@ interface IProps {
 }
 
 const FarmsCard = ({ proteoArr, isPool, othersArr = null }: IProps) => {
+  const router = useRouter();
+  const [accordionIndex, setAccordionIndex] = useState<number[]>([]);
+
+  useEffect(() => {
+    if (router.query.index) {
+      setAccordionIndex([parseInt(router.query.index as string)]);
+    }
+  }, [router]);
+
+  const handleChangePoolIndex = (indeces: number[]) => {
+    setAccordionIndex(indeces);
+  };
+
   return (
-    <Accordion allowMultiple borderRadius={"xl"} overflow="hidden" w="full">
+    <Accordion
+      allowMultiple
+      borderRadius={"xl"}
+      overflow="hidden"
+      w="full"
+      index={accordionIndex}
+      onChange={handleChangePoolIndex}
+    >
       {proteoArr.map((pf) => {
         return <ProteoFarmItem key={pf.stakedCoin} pf={pf} />;
       })}

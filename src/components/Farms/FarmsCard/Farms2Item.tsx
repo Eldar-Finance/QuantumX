@@ -90,7 +90,6 @@ const Farms2Item = ({ farm, logoSize, isPool, farmUserInfo }: IProps) => {
 
   // only for srb farm
   const { canUsePool } = useCanUsePool7(farm.farm.farmId);
-  console.log("canUsePool", canUsePool);
 
   let apr: string = "-";
   if (
