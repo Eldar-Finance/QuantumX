@@ -25,7 +25,7 @@ const AllActions = ({ handleView, farm }: IProps) => {
             alignItems="center"
           >
             <Text>Rewards Harvested Fee : {farm.rewardsFee}%</Text>
-            <Text mb={3}>Early Unbound Fee : {farm.earlyUnbondingFee}%</Text>
+            <Text mb={3}>Early Unbonding Fee : {farm.earlyUnbondingFee}%</Text>
 
             <ActionButton onClick={() => handleView(1)}>Edit Fees</ActionButton>
           </PanelBox>
@@ -35,7 +35,7 @@ const AllActions = ({ handleView, farm }: IProps) => {
             justifyContent={"center"}
             alignItems="center"
           >
-            <Text flex={1}>Unbounding Period: {farm.unbondingPeriod} Days</Text>
+            <Text flex={1}>Unbonding Period: {farm.unbondingPeriod} Days</Text>
 
             <ActionButton onClick={() => handleView(2)}>
               Set Unbonding period

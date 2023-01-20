@@ -18,7 +18,9 @@ export async function deleteFarm(farmId: number) {
 export async function setRewardsFee(farmId: number, fee: number | string) {
   const res = await scCall("farms2", "setRewardsFee", [
     new BigUIntValue(new BigNumber(farmId)),
-    new BigUIntValue(new BigNumber(fee)),
+    new BigUIntValue(
+      new BigNumber(new BigNumber(fee).multipliedBy(100).toFixed(0))
+    ),
   ]);
 
   return res;
@@ -29,7 +31,9 @@ export async function setEarlyUnbodingFee(
 ) {
   const res = await scCall("farms2", "setEarlyUnbondingFee", [
     new BigUIntValue(new BigNumber(farmId)),
-    new BigUIntValue(new BigNumber(fee)),
+    new BigUIntValue(
+      new BigNumber(new BigNumber(fee).multipliedBy(100).toFixed(0))
+    ),
   ]);
 
   return res;
@@ -101,8 +105,16 @@ export async function createFarm(
       BytesValue.fromUTF8(farm.stakingTokenI),
       BytesValue.fromUTF8(farm.rewardTokenI),
       new BigUIntValue(new BigNumber(farm.unbondingPeriod)),
-      new BigUIntValue(new BigNumber(farm.unbondingFee)),
-      new BigUIntValue(new BigNumber(farm.harvestFee)),
+      new BigUIntValue(
+        new BigNumber(
+          new BigNumber(farm.unbondingFee).multipliedBy(100).toFixed(0)
+        )
+      ),
+      new BigUIntValue(
+        new BigNumber(
+          new BigNumber(farm.harvestFee).multipliedBy(100).toFixed(0)
+        )
+      ),
     ],
     10000000
   );

@@ -64,7 +64,7 @@ const NftList = () => {
             {formatBalance(
               {
                 balance: offer1.price,
-                decimals: offer1.elrondToken.decimals,
+                decimals: offer1.elrondToken?.decimals,
               },
               false,
               8
@@ -84,7 +84,7 @@ const NftList = () => {
             Pay{" "}
             {formatBalance({
               balance: offer2.price,
-              decimals: offer2.elrondToken.decimals,
+              decimals: offer2.elrondToken?.decimals,
             })}{" "}
             {formatTokenI(offer2.token)} <br /> Get an Abominator
           </Text>
