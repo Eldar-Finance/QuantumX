@@ -7,6 +7,8 @@ import {
   FormLabel,
   Heading,
   Input,
+  InputGroup,
+  InputRightAddon,
   ModalBody,
   ModalFooter,
   ModalHeader,
@@ -102,21 +104,24 @@ const NewFarmModal = ({ isOpen, onClose }: IProps) => {
 
           <FormControl>
             <FormLabel mb={1}>Unbonding Period</FormLabel>
-            <Input
-              p="2"
-              pl={6}
-              placeholder="Example: 3"
-              flex="1"
-              name="unbondingPeriod"
-              bg="black.base"
-              borderRadius={"md"}
-              value={formik.values.unbondingPeriod}
-              onChange={formik.handleChange}
-              isInvalid={
-                formik.touched.unbondingPeriod &&
-                Boolean(formik.errors.unbondingPeriod)
-              }
-            />{" "}
+            <InputGroup>
+              <Input
+                p="2"
+                pl={6}
+                placeholder="Example: 3"
+                flex="1"
+                name="unbondingPeriod"
+                bg="black.base"
+                borderRadius={"md"}
+                value={formik.values.unbondingPeriod}
+                onChange={formik.handleChange}
+                isInvalid={
+                  formik.touched.unbondingPeriod &&
+                  Boolean(formik.errors.unbondingPeriod)
+                }
+              />{" "}
+              <InputRightAddon>Days</InputRightAddon>
+            </InputGroup>
           </FormControl>
 
           <FormControl
@@ -128,41 +133,47 @@ const NewFarmModal = ({ isOpen, onClose }: IProps) => {
 
             <Box>
               <Flex>
-                <Input
-                  p="2"
-                  pl={6}
-                  placeholder="Example: 3"
-                  flex="1"
-                  name="unbondingFee"
-                  value={formik.values.unbondingFee}
-                  onChange={formik.handleChange}
-                  bg="black.base"
-                  borderRadius={"md"}
-                  isInvalid={
-                    formik.touched.unbondingFee &&
-                    Boolean(formik.errors.unbondingFee)
-                  }
-                />{" "}
+                <InputGroup>
+                  <Input
+                    p="2"
+                    pl={6}
+                    placeholder="Example: 3"
+                    flex="1"
+                    name="unbondingFee"
+                    value={formik.values.unbondingFee}
+                    onChange={formik.handleChange}
+                    bg="black.base"
+                    borderRadius={"md"}
+                    isInvalid={
+                      formik.touched.unbondingFee &&
+                      Boolean(formik.errors.unbondingFee)
+                    }
+                  />{" "}
+                  <InputRightAddon>%</InputRightAddon>
+                </InputGroup>
               </Flex>
             </Box>
           </FormControl>
 
           <FormControl>
             <FormLabel mb={1}>Harvest Fee</FormLabel>
-            <Input
-              p="2"
-              pl={6}
-              placeholder="Example: 3"
-              flex="1"
-              name="harvestFee"
-              value={formik.values.harvestFee}
-              bg="black.base"
-              borderRadius={"md"}
-              onChange={formik.handleChange}
-              isInvalid={
-                formik.touched.harvestFee && Boolean(formik.errors.harvestFee)
-              }
-            />{" "}
+            <InputGroup>
+              <Input
+                p="2"
+                pl={6}
+                placeholder="Example: 3"
+                flex="1"
+                name="harvestFee"
+                value={formik.values.harvestFee}
+                bg="black.base"
+                borderRadius={"md"}
+                onChange={formik.handleChange}
+                isInvalid={
+                  formik.touched.harvestFee && Boolean(formik.errors.harvestFee)
+                }
+              />{" "}
+              <InputRightAddon>%</InputRightAddon>
+            </InputGroup>
           </FormControl>
         </ModalBody>
         <ModalFooter justifyContent={"center"} gap="6" flexWrap={"wrap"}>
