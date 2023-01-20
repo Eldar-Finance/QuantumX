@@ -105,8 +105,16 @@ export async function createFarm(
       BytesValue.fromUTF8(farm.stakingTokenI),
       BytesValue.fromUTF8(farm.rewardTokenI),
       new BigUIntValue(new BigNumber(farm.unbondingPeriod)),
-      new BigUIntValue(new BigNumber(farm.unbondingFee)),
-      new BigUIntValue(new BigNumber(farm.harvestFee)),
+      new BigUIntValue(
+        new BigNumber(
+          new BigNumber(farm.unbondingFee).multipliedBy(100).toFixed(0)
+        )
+      ),
+      new BigUIntValue(
+        new BigNumber(
+          new BigNumber(farm.harvestFee).multipliedBy(100).toFixed(0)
+        )
+      ),
     ],
     10000000
   );
