@@ -42,7 +42,7 @@ const UnboundingView = ({ onClose, farm }: IProps) => {
         <ModalHeader>
           <Flex justifyContent={"space-between"} alignItems="center">
             <Heading fontSize={"md"} textTransform="uppercase">
-              Set unbounding period
+              Set Unbonding period
             </Heading>{" "}
             <ActionButton aria-label="close" bg="transparent" onClick={onClose}>
               <CloseIcon color="main" fontSize={"12px"} cursor="pointer" />

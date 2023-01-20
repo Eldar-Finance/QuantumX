@@ -38,7 +38,7 @@ const AllActions = ({ handleView, farm }: IProps) => {
             <Text flex={1}>Unbounding Period: {farm.unbondingPeriod} Days</Text>
 
             <ActionButton onClick={() => handleView(2)}>
-              Set Unbound
+              Set Unbonding period
             </ActionButton>
           </PanelBox>
           <PanelBox
@@ -48,14 +48,14 @@ const AllActions = ({ handleView, farm }: IProps) => {
             alignItems="center"
           >
             <Text flex={1}>
-              Delete the farm (Fund will be automatically return to stakers)
+              Delete the farm (funds will be automatically returned to stakers)
             </Text>
 
             <ActionButton
               bg="danger"
               onClick={() => deleteFarm(farm.farm.farmId)}
             >
-              Cancel Farm
+              Delete Farm
             </ActionButton>
           </PanelBox>
           <PanelBox
@@ -67,7 +67,8 @@ const AllActions = ({ handleView, farm }: IProps) => {
             <Box flex={1} mb={3}>
               <Text>Deposit rewards for the period you want.</Text>
               <Text>
-                You will no be able to deposit rewards until this period ends
+                Every new deposit will place the rewards exactly after the
+                previous one.
               </Text>
             </Box>
 
