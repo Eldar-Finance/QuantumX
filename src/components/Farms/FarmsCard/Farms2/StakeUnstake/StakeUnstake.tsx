@@ -7,6 +7,7 @@ import useSWR from "swr";
 import { formatTokenI } from "utils/functions/tokens";
 import useGetElrondToken from "utils/hooks/useGetElrondToken";
 import { IScFarmItem, IScUserFarmInfo } from "utils/types/sc.interface";
+import useCanUsePool7 from "views/Pools/hooks/useCanUsePool7";
 
 const StakeModal: any = dynamic(() => import("./StakeModal"));
 const UnstakeModal: any = dynamic(() => import("./UnstkeModal"));
@@ -22,14 +23,20 @@ const StakeUnstake = ({ farm, userFarmItem, isPool }: IProps) => {
   const [openUnstakeStake, setOpenUnstakeStake] = useState(false);
   const { token: stakingToken } = useGetElrondToken(farm.farm.stakingToken);
   const { data: statsRes } = useSWR("/stats", getNetworkStats);
+  const { canUsePool } = useCanUsePool7(farm.farm.farmId);
 
   const currentEpoch = statsRes?.data?.epoch;
 
   let disableUnstake = false;
+
   const epochDiffrence = userFarmItem?.unboundingEpoch
     ? currentEpoch - userFarmItem.unboundingEpoch
     : 777;
-  if (epochDiffrence <= 0 || userFarmItem?.stakedBalance === 0) {
+  if (
+    epochDiffrence <= 0 ||
+    userFarmItem?.stakedBalance === 0 ||
+    (!canUsePool && farm.farm.farmId === 7)
+  ) {
     disableUnstake = true;
   }
   let hasuserStaked = userFarmItem?.stakedBalance > 0;
@@ -45,6 +52,7 @@ const StakeUnstake = ({ farm, userFarmItem, isPool }: IProps) => {
           variant={"outline"}
           w="full"
           maxW={"500px"}
+          disabled={!canUsePool && farm.farm.farmId === 7}
         >
           STAKE {!isPool && "LP"}
         </ActionButton>

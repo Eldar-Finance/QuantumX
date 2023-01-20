@@ -9,6 +9,7 @@ import NextImage from "components/NextImage/NextImage";
 import { formatBalance } from "utils/functions/formatBalance";
 import useGetElrondToken from "utils/hooks/useGetElrondToken";
 import { IScFarmItem, IScUserFarmInfo } from "utils/types/sc.interface";
+import useCanUsePool7 from "views/Pools/hooks/useCanUsePool7";
 
 interface IProps {
   farm: IScFarmItem;
@@ -17,6 +18,8 @@ interface IProps {
 
 const Avilable = ({ farm, userFarmInfo }: IProps) => {
   const { token: rewardsToken } = useGetElrondToken(farm.farm.rewardToken);
+  const { canUsePool } = useCanUsePool7(farm.farm.farmId);
+
   const handleHarvest = () => {
     scCall(
       "farms2",
@@ -62,7 +65,10 @@ const Avilable = ({ farm, userFarmInfo }: IProps) => {
       <Center mt="2">
         <ActionButton
           onClick={handleHarvest}
-          disabled={userFarmInfo?.harvestableRewards === 0}
+          disabled={
+            userFarmInfo?.harvestableRewards === 0 ||
+            (!canUsePool && farm.farm.farmId === 7)
+          }
         >
           HARVEST
         </ActionButton>
