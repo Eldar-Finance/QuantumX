@@ -3,8 +3,10 @@ import { getNetworkStats } from "api/rest/elrondApi/network";
 import ActionButton from "components/ActionButton/ActionButton";
 import dynamic from "next/dynamic";
 import { useState } from "react";
+import { selectUserAddress } from "redux/slices/userAcount/account-slice";
 import useSWR from "swr";
 import { formatTokenI } from "utils/functions/tokens";
+import { useAppSelector } from "utils/hooks/redux";
 import useGetElrondToken from "utils/hooks/useGetElrondToken";
 import { IScFarmItem, IScUserFarmInfo } from "utils/types/sc.interface";
 import useCanUsePool7 from "views/Pools/hooks/useCanUsePool7";
@@ -24,7 +26,7 @@ const StakeUnstake = ({ farm, userFarmItem, isPool }: IProps) => {
   const { token: stakingToken } = useGetElrondToken(farm.farm.stakingToken);
   const { data: statsRes } = useSWR("/stats", getNetworkStats);
   const { canUsePool } = useCanUsePool7(farm.farm.farmId);
-
+  const address = useAppSelector(selectUserAddress);
   const currentEpoch = statsRes?.data?.epoch;
 
   let disableUnstake = false;
@@ -37,7 +39,7 @@ const StakeUnstake = ({ farm, userFarmItem, isPool }: IProps) => {
     userFarmItem?.stakedBalance === 0 ||
     (!canUsePool && farm.farm.farmId === 7)
   ) {
-    disableUnstake = true;
+    disableUnstake = true && address !== farm.farm.creator;
   }
   let hasuserStaked = userFarmItem?.stakedBalance > 0;
 
