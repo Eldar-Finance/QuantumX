@@ -132,11 +132,20 @@ const UnstakeModal = ({
                 {!isPool && "-LP"}
               </Text>
             </Flex>
-            <Flex justifyContent={"flex-end"} gap="1">
-              <AmountBox percent={25} onClick={() => handleMax(0.25)} />
-              <AmountBox percent={50} onClick={() => handleMax(0.5)} />
-              <AmountBox percent={75} onClick={() => handleMax(0.75)} />
-              <AmountBox percent={100} onClick={() => handleMax(1)} />
+            <Flex
+              justifyContent={"space-between"}
+              gap="1"
+              alignItems={"flex-end"}
+            >
+              <Text fontSize={"sm"} color="darkgray">
+                Fee : 5%
+              </Text>
+              <Flex gap={1}>
+                <AmountBox percent={25} onClick={() => handleMax(0.25)} />
+                <AmountBox percent={50} onClick={() => handleMax(0.5)} />
+                <AmountBox percent={75} onClick={() => handleMax(0.75)} />
+                <AmountBox percent={100} onClick={() => handleMax(1)} />
+              </Flex>
             </Flex>
           </Box>
         </ModalBody>

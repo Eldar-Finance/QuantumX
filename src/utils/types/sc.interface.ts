@@ -52,3 +52,9 @@ export interface IScInvestorRewards {
     amount: number;
   }[];
 }
+
+export interface ISCFarms2Fees {
+  farmId: number;
+  earlyUnbondingFee: number;
+  harvestFee: number;
+}
