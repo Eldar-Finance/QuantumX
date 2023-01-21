@@ -39,6 +39,7 @@ const StakeUnstake = ({ farm, userFarmItem, isPool }: IProps) => {
     userFarmItem?.stakedBalance === 0 ||
     (!canUsePool && farm.farm.farmId === 7)
   ) {
+    // if user is creator not disable unstake
     disableUnstake = true && address !== farm.farm.creator;
   }
   let hasuserStaked = userFarmItem?.stakedBalance > 0;
