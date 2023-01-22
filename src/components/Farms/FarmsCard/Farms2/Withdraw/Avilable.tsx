@@ -8,6 +8,7 @@ import ActionButton from "components/ActionButton/ActionButton";
 import NextImage from "components/NextImage/NextImage";
 import { formatBalance } from "utils/functions/formatBalance";
 import useGetElrondToken from "utils/hooks/useGetElrondToken";
+import useGetQuantumxFarmsFees from "utils/hooks/useGetQuantumxFarmsFees";
 import { IScFarmItem, IScUserFarmInfo } from "utils/types/sc.interface";
 import useCanUsePool7 from "views/Pools/hooks/useCanUsePool7";
 
@@ -19,6 +20,7 @@ interface IProps {
 const Avilable = ({ farm, userFarmInfo }: IProps) => {
   const { token: rewardsToken } = useGetElrondToken(farm.farm.rewardToken);
   const { canUsePool } = useCanUsePool7(farm.farm.farmId);
+  const { farmFee } = useGetQuantumxFarmsFees(farm.farm.farmId);
 
   const handleHarvest = () => {
     scCall(
@@ -62,17 +64,26 @@ const Avilable = ({ farm, userFarmInfo }: IProps) => {
           )}
         </Flex>
       </Flex>
-      <Center mt="2">
-        <ActionButton
-          onClick={handleHarvest}
-          disabled={
-            userFarmInfo?.harvestableRewards === 0 ||
-            (!canUsePool && farm.farm.farmId === 7)
-          }
-        >
-          HARVEST
-        </ActionButton>
-      </Center>
+      <Flex flexDir={"column"}>
+        <Center mt="2">
+          <ActionButton
+            onClick={handleHarvest}
+            disabled={
+              userFarmInfo?.harvestableRewards === 0 ||
+              (!canUsePool && farm.farm.farmId === 7)
+            }
+          >
+            HARVEST
+          </ActionButton>
+        </Center>
+        <Flex justify={"flex-end"}>
+          {farmFee && (
+            <Text fontSize={"sm"} color="darkgray">
+              Fee : {farmFee.harvestFee}%
+            </Text>
+          )}
+        </Flex>
+      </Flex>
     </Box>
   );
 };

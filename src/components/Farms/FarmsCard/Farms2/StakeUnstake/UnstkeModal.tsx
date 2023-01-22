@@ -93,8 +93,6 @@ const UnstakeModal = ({
     }
   };
 
-  console.log("farmFee", farmFee);
-
   return (
     <MyModal bg="black.baseDark" isOpen={isOpen} onClose={onClose}>
       <form onSubmit={formik.handleSubmit}>
