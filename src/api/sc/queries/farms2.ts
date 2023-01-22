@@ -19,15 +19,13 @@ export const fetchFarmsFees = async (): Promise<ISCFarms2Fees[]> => {
   if (firstValue) {
     data = firstValue.map((feeInfo) => {
       const feeData: ISCFarms2Fees = {
-        earlyUnbondingFee: 5,
-        farmId: 2,
-        harvestFee: 3,
+        farmId: feeInfo[0].toNumber(),
+        earlyUnbondingFee: new BigNumber(feeInfo[1]).dividedBy(100).toNumber(),
+        harvestFee: new BigNumber(feeInfo[2]).dividedBy(100).toNumber(),
       };
       return feeData;
     });
   }
-
-  console.log("firstValue", firstValue);
 
   return data;
 };

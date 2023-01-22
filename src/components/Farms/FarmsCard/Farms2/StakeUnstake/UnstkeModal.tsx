@@ -39,7 +39,7 @@ const UnstakeModal = ({
   token,
   onClose,
 }: IProps) => {
-  const {} = useGetQuantumxFarmsFees();
+  const { farmFee } = useGetQuantumxFarmsFees(farm.farm.farmId);
   const validationSchema = yup.object({
     amount: yup
       .number()
@@ -93,6 +93,8 @@ const UnstakeModal = ({
     }
   };
 
+  console.log("farmFee", farmFee);
+
   return (
     <MyModal bg="black.baseDark" isOpen={isOpen} onClose={onClose}>
       <form onSubmit={formik.handleSubmit}>
@@ -138,9 +140,13 @@ const UnstakeModal = ({
               gap="1"
               alignItems={"flex-end"}
             >
-              <Text fontSize={"sm"} color="darkgray">
-                Fee : 5%
-              </Text>
+              <Flex>
+                {farmFee && (
+                  <Text fontSize={"sm"} color="darkgray">
+                    Fee : {farmFee.earlyUnbondingFee}%
+                  </Text>
+                )}
+              </Flex>
               <Flex gap={1}>
                 <AmountBox percent={25} onClick={() => handleMax(0.25)} />
                 <AmountBox percent={50} onClick={() => handleMax(0.5)} />
