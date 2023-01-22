@@ -17,6 +17,7 @@ import { useFormik } from "formik";
 import { formatBalance, setElrondBalance } from "utils/functions/formatBalance";
 import { preventExponetialNotation } from "utils/functions/numbers";
 import { formatTokenI } from "utils/functions/tokens";
+import useGetQuantumxFarmsFees from "utils/hooks/useGetQuantumxFarmsFees";
 import { IElrondToken } from "utils/types/elrond.interface";
 import { IScFarmItem, IScUserFarmInfo } from "utils/types/sc.interface";
 import * as yup from "yup";
@@ -38,6 +39,7 @@ const UnstakeModal = ({
   token,
   onClose,
 }: IProps) => {
+  const {} = useGetQuantumxFarmsFees();
   const validationSchema = yup.object({
     amount: yup
       .number()
@@ -75,7 +77,6 @@ const UnstakeModal = ({
       );
     },
   });
-
   const handleMax = (percent) => {
     if (userFarmItem) {
       const max = formatBalance(

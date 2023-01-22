@@ -369,6 +369,17 @@
             ]
         },
         {
+            "name": "getFarmFees",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<List<BigUint>>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
             "name": "getUserInfo",
             "mutability": "readonly",
             "inputs": [

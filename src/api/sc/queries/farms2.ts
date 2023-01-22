@@ -27,5 +27,7 @@ export const fetchFarmsFees = async (): Promise<ISCFarms2Fees[]> => {
     });
   }
 
+  console.log("firstValue", firstValue);
+
   return data;
 };
