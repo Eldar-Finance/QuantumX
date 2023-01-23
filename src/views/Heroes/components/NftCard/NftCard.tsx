@@ -29,6 +29,7 @@ const NftCard = ({ onSubmit, nft }: IProps) => {
         fontWeight="900"
         onClick={onSubmit}
         disabled={nft.nonce >= 303}
+        // disabled={true}
       >
         Upgrade
       </ActionButton>
