@@ -8,7 +8,6 @@ import ActionButton from "components/ActionButton/ActionButton";
 import NextImage from "components/NextImage/NextImage";
 import { formatBalance } from "utils/functions/formatBalance";
 import useGetElrondToken from "utils/hooks/useGetElrondToken";
-import useGetQuantumxFarmsFees from "utils/hooks/useGetQuantumxFarmsFees";
 import { IScFarmItem, IScUserFarmInfo } from "utils/types/sc.interface";
 import useCanUsePool7 from "views/Pools/hooks/useCanUsePool7";
 
@@ -20,8 +19,6 @@ interface IProps {
 const Avilable = ({ farm, userFarmInfo }: IProps) => {
   const { token: rewardsToken } = useGetElrondToken(farm.farm.rewardToken);
   const { canUsePool } = useCanUsePool7(farm.farm.farmId);
-  const { farmFee } = useGetQuantumxFarmsFees(farm.farm.farmId);
-
   const handleHarvest = () => {
     scCall(
       "farms2",
@@ -76,13 +73,7 @@ const Avilable = ({ farm, userFarmInfo }: IProps) => {
             HARVEST
           </ActionButton>
         </Center>
-        <Flex justify={"flex-end"}>
-          {farmFee && (
-            <Text fontSize={"sm"} color="darkgray">
-              Fee : {farmFee.harvestFee}%
-            </Text>
-          )}
-        </Flex>
+        <Flex justify={"flex-end"}></Flex>
       </Flex>
     </Box>
   );

@@ -5,8 +5,10 @@ import dynamic from "next/dynamic";
 import { useState } from "react";
 import { selectUserAddress } from "redux/slices/userAcount/account-slice";
 import useSWR from "swr";
+import { getBigerTime } from "utils/functions/time";
 import { formatTokenI } from "utils/functions/tokens";
 import { useAppSelector } from "utils/hooks/redux";
+import useCountDown from "utils/hooks/useCountDown";
 import useGetElrondToken from "utils/hooks/useGetElrondToken";
 import { IScFarmItem, IScUserFarmInfo } from "utils/types/sc.interface";
 import useCanUsePool7 from "views/Pools/hooks/useCanUsePool7";
@@ -20,6 +22,35 @@ interface IProps {
   isPool?: boolean;
 }
 
+const useGetFarmTimeForUnstake = (statsRes, userFarmItem) => {
+  const currentEpoch = statsRes?.data?.epoch;
+  const roundsPerEpoch = statsRes?.data?.roundsPerEpoch;
+  const roundsPassed = statsRes?.data?.roundsPassed;
+  const remainingRounds =
+    roundsPerEpoch && roundsPassed ? roundsPerEpoch - roundsPassed : 0;
+  const remainingSeconds = remainingRounds * 6;
+  const epochDiffrence = userFarmItem?.unboundingEpoch
+    ? currentEpoch - userFarmItem.unboundingEpoch
+    : 777;
+
+  const today = new Date();
+  const unstakeDate = new Date(
+    today.getTime() +
+      remainingSeconds * 1000 +
+      Math.abs(epochDiffrence) * 86400000
+  );
+
+  const [countdownTimer] = useCountDown(
+    Math.floor(unstakeDate.getTime() / 1000),
+    undefined,
+    true
+  );
+  const { days, hours, mins, secs } = countdownTimer;
+  const biggerTime = getBigerTime(days, hours, mins, secs);
+
+  return biggerTime;
+};
+
 const StakeUnstake = ({ farm, userFarmItem, isPool }: IProps) => {
   const [openStake, setOpenStake] = useState(false);
   const [openUnstakeStake, setOpenUnstakeStake] = useState(false);
@@ -29,11 +60,14 @@ const StakeUnstake = ({ farm, userFarmItem, isPool }: IProps) => {
   const address = useAppSelector(selectUserAddress);
   const currentEpoch = statsRes?.data?.epoch;
 
-  let disableUnstake = false;
-
   const epochDiffrence = userFarmItem?.unboundingEpoch
     ? currentEpoch - userFarmItem.unboundingEpoch
     : 777;
+
+  const timeToUnstake = useGetFarmTimeForUnstake(statsRes, userFarmItem);
+
+  let disableUnstake = false;
+
   if (
     epochDiffrence <= 0 ||
     userFarmItem?.stakedBalance === 0 ||
@@ -68,7 +102,7 @@ const StakeUnstake = ({ farm, userFarmItem, isPool }: IProps) => {
           </ActionButton>
           {hasuserStaked && disableUnstake && epochDiffrence !== 777 && (
             <Text fontSize={"smaller"} mt={1}>
-              {Math.abs(epochDiffrence)} days remaining to unstake
+              {timeToUnstake} remaining to unstake
             </Text>
           )}
         </Center>

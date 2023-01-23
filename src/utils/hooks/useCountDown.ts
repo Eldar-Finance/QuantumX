@@ -10,7 +10,11 @@ const initialCountdownTimer = {
 
 const finalDate = moment.utc("04 31 2022 07:00 pm", "MM-DD-YYYY hh:mm A");
 
-const useCountDown = (unixEndDate: number, strigUtcDate: string = null) => {
+const useCountDown = (
+  unixEndDate: number,
+  strigUtcDate: string = null,
+  onlyOnce: boolean = false
+) => {
   const [initialCountdownSettings, setInitialCountdownSettings] = useState({
     dateValue: "",
     timeValue: "",
@@ -42,20 +46,26 @@ const useCountDown = (unixEndDate: number, strigUtcDate: string = null) => {
   });
 
   useEffect(() => {
-    let timer = null;
+    if (!onlyOnce) {
+      let timer = null;
 
-    if (initialCountdownSettings.unixEndDate) {
-      timer = setInterval(
-        () => playTimer(initialCountdownSettings.unixEndDate, timer),
-        1000
-      );
+      if (initialCountdownSettings.unixEndDate) {
+        timer = setInterval(
+          () => playTimer(initialCountdownSettings.unixEndDate, timer),
+          1000
+        );
+      }
+
+      return () => {
+        clearInterval(timer);
+        timer = null;
+      };
+    } else {
+      if (initialCountdownSettings.unixEndDate) {
+        playTimer(initialCountdownSettings.unixEndDate, null);
+      }
     }
-
-    return () => {
-      clearInterval(timer);
-      timer = null;
-    };
-  }, [initialCountdownSettings.unixEndDate]);
+  }, [initialCountdownSettings.unixEndDate, onlyOnce]);
 
   const playTimer = (currentUnixEndDate, timer) => {
     const distance = currentUnixEndDate - moment().format("X");
