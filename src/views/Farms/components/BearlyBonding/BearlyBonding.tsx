@@ -17,7 +17,7 @@ const BearlyBonding = () => {
   if (!tokens) return null;
   return (
     <Card>
-      <Grid templateColumns={"2fr 1fr"} gap={20}>
+      <Grid templateColumns={{ xs: "1fr", tablet: "2fr 1fr" }} gap={20}>
         <Flex flexDir={"column"} w="full">
           <Flex w="full" justify={"space-between"} mb={10}>
             <Flex alignItems={"center"} gap={3}>
