@@ -145,7 +145,7 @@ const UnstakeModal = ({
                   epochDiffrence <= 0 &&
                   farmFee.earlyUnbondingFee > 0 && (
                     <Text fontSize={"sm"} color="darkgray">
-                      Fee : {farmFee.earlyUnbondingFee}%
+                      ⚠️ Fee : {farmFee.earlyUnbondingFee}%
                     </Text>
                   )}
               </Flex>
