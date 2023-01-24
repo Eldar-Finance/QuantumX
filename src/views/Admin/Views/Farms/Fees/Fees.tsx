@@ -1,0 +1,30 @@
+import { Box, Divider, SimpleGrid } from "@chakra-ui/react";
+import CurrentFees from "./CurrentFees/CurrentFees";
+import SetFee from "./SetFee/SetFee";
+
+const Fees = () => {
+  return (
+    <Box w="full">
+      <CurrentFees />
+      <Divider mt={6} mb={4} />
+
+      <SimpleGrid columns={{ xs: 1, lg: 3 }} gap={14}>
+        <SetFee feeLabel="general" title="General Fee" scFunc="setFee" />
+        <SetFee
+          feeLabel="creator"
+          title="Creator Fee"
+          scFunc="setCreatorCharge"
+          isAmount
+        />
+        <SetFee
+          feeLabel="creation"
+          title="Farm Creation Fee"
+          scFunc="setFarmCreationCharge"
+          isAmount
+        />
+      </SimpleGrid>
+    </Box>
+  );
+};
+
+export default Fees;

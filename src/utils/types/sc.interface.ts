@@ -58,3 +58,9 @@ export interface ISCFarms2Fees {
   earlyUnbondingFee: number;
   harvestFee: number;
 }
+
+export interface IScFarms2EarnerInfo {
+  name: string;
+  address: string;
+  percent: number;
+}

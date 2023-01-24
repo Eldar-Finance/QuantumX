@@ -10,6 +10,7 @@ import MyTabs from "components/MyTabs/MyTabs";
 import withElronDapp from "hoc/withElronDapp";
 import { useAppSelector } from "utils/hooks/redux";
 import ElBadges from "./Views/Badges/ElBadges/ElBadges";
+import Farms from "./Views/Farms/Farms";
 import SmartSwap from "./Views/Swap/SmarSwap";
 
 const DCAAdmin: any = dynamic(() => import("./Views/DCAAdmin/DCAAdmin"));
@@ -43,6 +44,14 @@ const AdminView = () => {
             w: "full",
           }}
           tabData={[
+            {
+              tabText: "Farms",
+              tabPanel: (
+                <LayOut>
+                  <Farms />
+                </LayOut>
+              ),
+            },
             {
               tabText: "Swap",
               tabPanel: (
