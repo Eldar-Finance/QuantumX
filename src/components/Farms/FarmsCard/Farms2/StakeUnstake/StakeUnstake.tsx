@@ -10,6 +10,7 @@ import { formatTokenI } from "utils/functions/tokens";
 import { useAppSelector } from "utils/hooks/redux";
 import useCountDown from "utils/hooks/useCountDown";
 import useGetElrondToken from "utils/hooks/useGetElrondToken";
+import useGetQuantumxFarmsFees from "utils/hooks/useGetQuantumxFarmsFees";
 import { IScFarmItem, IScUserFarmInfo } from "utils/types/sc.interface";
 import useCanUsePool7 from "views/Pools/hooks/useCanUsePool7";
 
@@ -59,6 +60,7 @@ const StakeUnstake = ({ farm, userFarmItem, isPool }: IProps) => {
   const { canUsePool } = useCanUsePool7(farm.farm.farmId);
   const address = useAppSelector(selectUserAddress);
   const currentEpoch = statsRes?.data?.epoch;
+  const { farmFee } = useGetQuantumxFarmsFees(farm.farm.farmId);
 
   const epochDiffrence = userFarmItem?.unboundingEpoch
     ? currentEpoch - userFarmItem.unboundingEpoch
@@ -69,7 +71,7 @@ const StakeUnstake = ({ farm, userFarmItem, isPool }: IProps) => {
   let disableUnstake = false;
 
   if (
-    epochDiffrence <= 0 ||
+    (epochDiffrence <= 0 && farmFee?.earlyUnbondingFee === 0) ||
     userFarmItem?.stakedBalance === 0 ||
     (!canUsePool && farm.farm.farmId === 7)
   ) {

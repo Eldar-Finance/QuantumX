@@ -1,6 +1,7 @@
 import { scQuery } from "api/sc/queries";
 import { IScFarms2EarnerInfo } from "utils/types/sc.interface";
 
+//queries
 export const fetchEarnersInfo = async () => {
   const response = await scQuery("farms2", "getEarnersInfo");
   const { firstValue } = response;
@@ -22,3 +23,5 @@ export const fetchFarmsWhitelistedTokens = async (key: string) => {
   const data: string[] = firstValue.valueOf();
   return data;
 };
+
+//calls

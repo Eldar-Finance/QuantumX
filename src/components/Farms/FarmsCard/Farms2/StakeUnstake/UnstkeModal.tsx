@@ -28,12 +28,14 @@ interface IProps {
   onClose: () => void;
   farm: IScFarmItem;
   userFarmItem: IScUserFarmInfo;
+  epochDiffrence: number;
   token?: IElrondToken;
 }
 
 const UnstakeModal = ({
   userFarmItem,
   farm,
+  epochDiffrence,
   isPool,
   isOpen,
   token,
@@ -139,11 +141,13 @@ const UnstakeModal = ({
               alignItems={"flex-end"}
             >
               <Flex>
-                {farmFee && (
-                  <Text fontSize={"sm"} color="darkgray">
-                    Fee : {farmFee.earlyUnbondingFee}%
-                  </Text>
-                )}
+                {epochDiffrence &&
+                  epochDiffrence <= 0 &&
+                  farmFee.earlyUnbondingFee > 0 && (
+                    <Text fontSize={"sm"} color="darkgray">
+                      Fee : {farmFee.earlyUnbondingFee}%
+                    </Text>
+                  )}
               </Flex>
               <Flex gap={1}>
                 <AmountBox percent={25} onClick={() => handleMax(0.25)} />
