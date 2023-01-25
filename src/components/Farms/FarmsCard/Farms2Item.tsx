@@ -27,7 +27,6 @@ import { preventExponetialNotation } from "utils/functions/numbers";
 import { formatTokenI } from "utils/functions/tokens";
 import { useAppDispatch, useAppSelector } from "utils/hooks/redux";
 import useGetElrondToken from "utils/hooks/useGetElrondToken";
-import useGetTokenPrice from "utils/hooks/useGetTokenPrice";
 import { farms2Data } from "views/Farms/constants";
 import useCanUsePool7 from "views/Pools/hooks/useCanUsePool7";
 import EarnedRewards from "./Farms2/EarnedRewards/EarnedRewards";
@@ -39,7 +38,9 @@ interface IProps {
   farm: IScFarmItem;
   farmUserInfo: IScUserFarmInfo;
   logoSize?: number;
+  stakedTokenPrice: number;
   isPool?: boolean;
+  tvl: number;
 }
 
 export const ProteoItemContenxt = createContext({
@@ -48,7 +49,14 @@ export const ProteoItemContenxt = createContext({
   decimals: 0,
 });
 
-const Farms2Item = ({ farm, logoSize, isPool, farmUserInfo }: IProps) => {
+const Farms2Item = ({
+  farm,
+  logoSize,
+  isPool,
+  farmUserInfo,
+  stakedTokenPrice,
+  tvl,
+}: IProps) => {
   const { token: stakingToken } = useGetElrondToken(farm.farm.stakingToken);
   const { token: rewardToken } = useGetElrondToken(farm.farm.rewardToken);
   const { data: lastRewardedEpoch } = useSWR<number>(
@@ -56,14 +64,12 @@ const Farms2Item = ({ farm, logoSize, isPool, farmUserInfo }: IProps) => {
     farm.farm.farmId,
     fetchLastRewardedEpoch
   );
-  const { logo, name, lpToken2, scFarmAddress } = farms2Data[
-    formatTokenI(farm.farm.stakingToken)
-  ]
+  const { logo, name } = farms2Data[formatTokenI(farm.farm.stakingToken)]
     ? farms2Data[formatTokenI(farm.farm.stakingToken)]
-    : { logo: "", name: "", lpToken2: "", scFarmAddress: "" };
+    : { logo: "", name: "" };
   const { data: stats } = useAppSelector(selectElrondStats);
 
-  const [price] = useGetTokenPrice(farm.farm.stakingToken);
+  const price = stakedTokenPrice;
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(
@@ -190,17 +196,7 @@ const Farms2Item = ({ farm, logoSize, isPool, farmUserInfo }: IProps) => {
               </Flex>
               <Flex flexDir={"column"} textAlign="center">
                 <Text color="white.400">Total Value Locked</Text>
-                <Text>
-                  ${" "}
-                  {formatBalanceDolar(
-                    {
-                      balance: farm.stakedBalance,
-                      decimals: stakingToken.decimals,
-                    },
-                    price,
-                    true
-                  )}
-                </Text>
+                <Text>$ {formatNumber(tvl)}</Text>
               </Flex>
               <EarnTokens farm={farm} />
             </Grid>
