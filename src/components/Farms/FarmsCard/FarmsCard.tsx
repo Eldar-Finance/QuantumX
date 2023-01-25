@@ -1,8 +1,6 @@
 import { Accordion } from "@chakra-ui/react";
 import { useRouter } from "next/dist/client/router";
 import { useEffect, useState } from "react";
-import { orderSimpleData } from "utils/functions/array";
-import { formatBalanceDolar } from "utils/functions/formatBalance";
 import { getSortedFarm } from "utils/functions/proteo";
 import { useAppSelector } from "utils/hooks/redux";
 import useGetMultipleElrondTokens from "utils/hooks/useGetMultipleElrondTokens";
@@ -55,90 +53,6 @@ const FarmsCard = ({ proteoArr, isPool, othersArr = null }: IProps) => {
     }
   }, [router]);
 
-  useEffect(() => {
-    if (tokenPrices || tokens || proteoArr || othersArr || generalFarmsData) {
-      // let tvls: IFarmWithTvl[] = [];
-      // calc total value locked for proteo farms
-
-      //proteo farm token info []
-      const prteoTokenInfo = proteoArr.map((pf) => {
-        const { tokenIdentifier } = pf; // get static data of proteo farm (token idenfier)
-
-        // find from the sc the info about the farm with the token idenfier
-        const tokenInfo = generalFarmsData?.tokensInfo.find(
-          (ti) => ti.tokenI === tokenIdentifier
-        );
-
-        // return an array of tokenns infos
-        return { ...tokenInfo, pf: pf } as { staked?: number; tokenI; pf: any };
-      });
-
-      // now we can calc the total locked balance
-      const proteoFarmTotalLockedBalanceArr: IFarmWithTvl[] = prteoTokenInfo.map(
-        (tinfo) => {
-          const decimals =
-            tokens.find((t) => t.identifier === tinfo?.tokenI)?.decimals || 0;
-          const tokenPrice =
-            tokenPrices.find((tp) => tp.tokenI === tinfo?.tokenI)?.price || 0;
-          const totalLocked = formatBalanceDolar(
-            { balance: tinfo?.staked, decimals: decimals },
-            tokenPrice
-          );
-
-          return {
-            tokenI: tinfo?.tokenI,
-            totalLocked: totalLocked,
-            stakedTokenPrice: tokenPrice,
-            stakedTokenDecimals: decimals,
-            type: "proteo",
-            farm: tinfo.pf,
-          };
-        }
-      );
-      // now I have all proteo farms total locked balance in dollars in an array (proteoFarmTotalLockedBalanceArr)
-
-      /* --------------------------------- */
-
-      // calculate farms2 total value locked
-      const farms2TotalLockedBalanceArr: IFarmWithTvl[] = othersArr.allFarms.map(
-        (farm) => {
-          const decimals =
-            tokens.find((t) => t.identifier === farm.farm.stakingToken)
-              ?.decimals || 0;
-          const tokenPrice =
-            tokenPrices.find((tp) => tp.tokenI === farm.farm.stakingToken)
-              ?.price || 0;
-
-          const totalLocked = formatBalanceDolar(
-            { balance: farm.stakedBalance, decimals: decimals },
-            tokenPrice
-          );
-          const totalLockedBalance: IFarmWithTvl = {
-            stakedTokenDecimals: decimals,
-            stakedTokenPrice: tokenPrice,
-            tokenI: farm.farm.stakingToken,
-            totalLocked: totalLocked,
-            type: "farms2",
-            farm: farm,
-          };
-          return totalLockedBalance;
-        }
-      );
-
-      // combine 2 arrays
-
-      const tvls: IFarmWithTvl[] = [
-        ...proteoFarmTotalLockedBalanceArr,
-        ...farms2TotalLockedBalanceArr,
-      ];
-
-      const sortedTvls = orderSimpleData(tvls, "totalLocked", "desc");
-      console.log("me ejecuto");
-
-      // setFarmStored(sortedTvls);
-    }
-  }, [tokenPrices, tokens, proteoArr, othersArr, generalFarmsData]);
-
   const handleChangePoolIndex = (indeces: number[]) => {
     setAccordionIndex(indeces);
   };
@@ -150,8 +64,6 @@ const FarmsCard = ({ proteoArr, isPool, othersArr = null }: IProps) => {
     othersArr,
     generalFarmsData
   );
-
-  console.log("farmStored", farmStored);
 
   return (
     <Accordion
