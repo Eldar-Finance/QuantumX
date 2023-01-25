@@ -89,9 +89,9 @@ const FarmsCard = ({ proteoArr, isPool, othersArr = null }: IProps) => {
               key={farm.farm.farmId}
               farm={farm.farm}
               tvl={farm.totalLocked}
-              farmUserInfo={othersArr.userFarmInfo.find(
-                (userFarm) => userFarm.farmId === farm.farm.farmId
-              )}
+              farmUserInfo={othersArr.userFarmInfo.find((userFarm) => {
+                return userFarm.farmId === farm.farm.farm.farmId;
+              })}
               stakedTokenPrice={farm.stakedTokenPrice}
               isPool={isPool}
               logoSize={isPool ? 45 : 27}
