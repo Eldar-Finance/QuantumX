@@ -40,6 +40,7 @@ export const fetchUSerFarmInfo = createAsyncThunk(
     ]);
 
     const scFirstValue = scRes.firstValue.valueOf();
+    console.log("scFirstValue", scFirstValue);
 
     const allFarms: IScUserFarmInfo[] = scFirstValue.map((farmInfo) => {
       const data: IScUserFarmInfo = {

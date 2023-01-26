@@ -83,8 +83,9 @@
                     "type": "EgldOrEsdtTokenIdentifier"
                 },
                 {
-                    "name": "reward_token",
-                    "type": "EgldOrEsdtTokenIdentifier"
+                    "name": "opt_reward_token",
+                    "type": "optional<EgldOrEsdtTokenIdentifier>",
+                    "multi_arg": true
                 },
                 {
                     "name": "unbonding_period",
@@ -115,6 +116,11 @@
                 {
                     "name": "duration",
                     "type": "u64"
+                },
+                {
+                    "name": "opt_use_now",
+                    "type": "optional<bool>",
+                    "multi_arg": true
                 }
             ],
             "outputs": []
@@ -283,13 +289,44 @@
             "outputs": []
         },
         {
+            "name": "addFarmsForSrbStakers",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "farms",
+                    "type": "variadic<BigUint>",
+                    "multi_arg": true
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "removeFarmsForSrbStakers",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "farms",
+                    "type": "variadic<BigUint>",
+                    "multi_arg": true
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "claimFees",
+            "mutability": "mutable",
+            "inputs": [],
+            "outputs": []
+        },
+        {
             "name": "forceAddCreator",
             "onlyOwner": true,
             "mutability": "mutable",
             "inputs": [
                 {
-                    "name": "address",
-                    "type": "Address"
+                    "name": "addresses",
+                    "type": "variadic<Address>",
+                    "multi_arg": true
                 }
             ],
             "outputs": []
@@ -300,8 +337,9 @@
             "mutability": "mutable",
             "inputs": [
                 {
-                    "name": "address",
-                    "type": "Address"
+                    "name": "addresses",
+                    "type": "variadic<Address>",
+                    "multi_arg": true
                 }
             ],
             "outputs": []
@@ -316,8 +354,9 @@
                     "type": "EgldOrEsdtTokenIdentifier"
                 },
                 {
-                    "name": "reward_token",
-                    "type": "EgldOrEsdtTokenIdentifier"
+                    "name": "opt_reward_token",
+                    "type": "optional<EgldOrEsdtTokenIdentifier>",
+                    "multi_arg": true
                 },
                 {
                     "name": "unbonding_period",
@@ -353,7 +392,8 @@
             ],
             "outputs": [
                 {
-                    "type": "BigUint"
+                    "type": "variadic<tuple<EgldOrEsdtTokenIdentifier,BigUint>>",
+                    "multi_result": true
                 }
             ]
         },
@@ -390,7 +430,7 @@
             ],
             "outputs": [
                 {
-                    "type": "variadic<List<BigUint>>",
+                    "type": "variadic<tuple<List<BigUint>,List<EgldOrEsdtTokenIdentifier>,List<BigUint>,List<BigUint>>>",
                     "multi_result": true
                 }
             ]
@@ -461,6 +501,22 @@
             "outputs": [
                 {
                     "type": "variadic<Address>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "getStakersReport",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "id",
+                    "type": "BigUint"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "variadic<tuple<Address,List<BigUint>>>",
                     "multi_result": true
                 }
             ]
@@ -554,6 +610,17 @@
             "outputs": [
                 {
                     "type": "variadic<Address>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "farmsForSrbStakers",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<BigUint>",
                     "multi_result": true
                 }
             ]
@@ -711,6 +778,60 @@
             ]
         },
         {
+            "name": "multifarmRewardTokens",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "farm_id",
+                    "type": "BigUint"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "variadic<EgldOrEsdtTokenIdentifier>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "multifarmDailyRewards",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "farm_id",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "token",
+                    "type": "EgldOrEsdtTokenIdentifier"
+                },
+                {
+                    "name": "epoch",
+                    "type": "u64"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "tempRewards",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "token",
+                    "type": "EgldOrEsdtTokenIdentifier"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
             "name": "userStakingRecords",
             "mutability": "readonly",
             "inputs": [
@@ -841,6 +962,48 @@
             ]
         },
         {
+            "name": "userMultifarmRewardsHarvested",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "address",
+                    "type": "Address"
+                },
+                {
+                    "name": "farm_id",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "token",
+                    "type": "EgldOrEsdtTokenIdentifier"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "totalMultifarmRewardsHarvested",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "farm_id",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "token",
+                    "type": "EgldOrEsdtTokenIdentifier"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
             "name": "getIsScPaused",
             "mutability": "readonly",
             "inputs": [],
@@ -917,6 +1080,25 @@
                 {
                     "type": "variadic<multi<bytes,tuple<Address,u64>>>",
                     "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "earnerClaimable",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "address",
+                    "type": "Address"
+                },
+                {
+                    "name": "token",
+                    "type": "EgldOrEsdtTokenIdentifier"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "BigUint"
                 }
             ]
         },
