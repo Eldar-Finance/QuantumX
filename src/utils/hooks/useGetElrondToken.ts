@@ -58,7 +58,7 @@ const useGetElrondToken = (tokenIdeniifer: string) => {
 
   const finalDAta: IElrondToken = manualData || dataApi;
   return {
-    token: finalDAta,
+    token: finalDAta || null,
     isLoading: !error && !data,
     isError: error,
   };

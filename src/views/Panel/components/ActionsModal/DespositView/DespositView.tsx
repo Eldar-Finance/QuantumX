@@ -46,10 +46,11 @@ interface IProps {
 
 const DepositView = ({ onClose, farm }: IProps) => {
   const { token } = useGetElrondToken(farm.rewardToken);
-  const isOneToken = Boolean(token);
+  const isOneToken = Boolean(farm.rewardToken !== "");
 
-  const [alltokens] = useGetUserTokens();
+  const [alltokens] = useGetUserTokens(null, true);
   const [selectedTokenId, setSelectedTokenId] = useState<number>(-1);
+
   const formik = useFormik<{
     days: "";
     BypassLastRewardedEpoch: boolean;
@@ -108,9 +109,7 @@ const DepositView = ({ onClose, farm }: IProps) => {
     formik.setFieldValue("tokens", values);
   };
 
-  console.log("selectedTokenId", selectedTokenId);
-  console.log("token", token);
-  console.log("values", formik.values);
+  console.log("farm.rewardToken", farm);
   return (
     <>
       {/* @ts-ignore */}
