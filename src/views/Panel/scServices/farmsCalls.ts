@@ -1,4 +1,8 @@
-import { BigUIntValue, BooleanValue, BytesValue } from "@elrondnetwork/erdjs/out";
+import {
+  BigUIntValue,
+  BooleanValue,
+  BytesValue,
+} from "@elrondnetwork/erdjs/out";
 import {
   EGLDPayment,
   MultESDTNFTTranferOrEgldPayment,
@@ -70,7 +74,7 @@ export async function depositRewards(
   const arg = [
     new BigUIntValue(new BigNumber(farmId)),
     new BigUIntValue(new BigNumber(epochs)),
-    new BooleanValue(bypass)
+    new BooleanValue(bypass),
   ];
   res = MultESDTNFTTranferOrEgldPayment(
     "farms2",
@@ -94,6 +98,7 @@ export async function createFarm(
     unbondingPeriod: "",
     unbondingFee: "",
     harvestFee: "",
+    allowMultipleRewardsTokens: true,
   }
 ) {
   EGLDPayment(
@@ -102,7 +107,9 @@ export async function createFarm(
     fee,
     [
       BytesValue.fromUTF8(farm.stakingTokenI),
-      BytesValue.fromUTF8(farm.rewardTokenI),
+      BytesValue.fromUTF8(
+        farm.allowMultipleRewardsTokens ? "" : farm.rewardTokenI
+      ),
       new BigUIntValue(new BigNumber(farm.unbondingPeriod)),
       new BigUIntValue(
         new BigNumber(

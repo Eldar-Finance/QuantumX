@@ -1,6 +1,7 @@
 import { CloseIcon } from "@chakra-ui/icons";
 import {
   Box,
+  Checkbox,
   Divider,
   Flex,
   FormControl,
@@ -24,10 +25,11 @@ import * as yup from "yup";
 
 const newFarmSchema = yup.object().shape({
   stakingTokenI: yup.string().required("Staking token is required"),
-  rewardTokenI: yup.string().required("Reward token is required"),
+  rewardTokenI: yup.string(),
   unbondingPeriod: yup.number().required("Unbonding period is required"),
   unbondingFee: yup.number().required("Unbonding fee is required"),
   harvestFee: yup.number().required("Harvest fee is required"),
+  allowMultipleRewardsTokens: yup.boolean(),
 });
 
 interface IProps {
@@ -45,6 +47,7 @@ const NewFarmModal = ({ isOpen, onClose }: IProps) => {
       unbondingPeriod: "",
       unbondingFee: "",
       harvestFee: "",
+      allowMultipleRewardsTokens: true,
     },
     validationSchema: newFarmSchema,
     onSubmit: (values) => {
@@ -83,24 +86,36 @@ const NewFarmModal = ({ isOpen, onClose }: IProps) => {
               }
             />{" "}
           </FormControl>
-          <FormControl>
-            <FormLabel mb={1}>Reward Token</FormLabel>
-            <Input
-              p="2"
-              pl={6}
-              placeholder="Example: RARE-99e8b0"
-              flex="1"
-              name="rewardTokenI"
-              bg="black.base"
-              borderRadius={"md"}
-              value={formik.values.rewardTokenI}
-              onChange={formik.handleChange}
-              isInvalid={
-                formik.touched.rewardTokenI &&
-                Boolean(formik.errors.rewardTokenI)
-              }
-            />{" "}
-          </FormControl>
+          <Checkbox
+            colorScheme="blue"
+            defaultChecked
+            onChange={formik.handleChange}
+            name="allowMultipleRewardsTokens"
+          >
+            Allow multiple reward tokens
+          </Checkbox>
+          {!formik.values.allowMultipleRewardsTokens && (
+            <FormControl>
+              <FormLabel mb={1}>Reward Token</FormLabel>
+              <Input
+                p="2"
+                pl={6}
+                placeholder="Example: RARE-99e8b0"
+                flex="1"
+                name="rewardTokenI"
+                bg="black.base"
+                borderRadius={"md"}
+                value={formik.values.rewardTokenI}
+                onChange={formik.handleChange}
+                isInvalid={
+                  formik.touched.rewardTokenI &&
+                  Boolean(formik.errors.rewardTokenI)
+                }
+              />{" "}
+            </FormControl>
+          )}
+
+          <Divider />
 
           <FormControl>
             <FormLabel mb={1}>Unbonding Period</FormLabel>
