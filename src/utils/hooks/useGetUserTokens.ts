@@ -32,6 +32,9 @@ const useGetUserTokens = (indentifier?: string) => {
       ticker: "EGLD",
       name: "EGLD",
       decimals: 18,
+      assets: {
+        svgUrl: "/images/egld.svg",
+      },
       balance: acc.account.balance,
     });
     if (indentifier) {

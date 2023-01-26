@@ -1,11 +1,11 @@
+import { BigUIntValue, BooleanValue, BytesValue } from "@elrondnetwork/erdjs/out";
 import {
-  BigIntValue,
-  BigUIntValue,
-  BytesValue,
-} from "@elrondnetwork/erdjs/out";
-import { contractAddr } from "api/net.config";
-import { EGLDPayment, ESDTTransfer, scCall } from "api/sc/calls";
+  EGLDPayment,
+  MultESDTNFTTranferOrEgldPayment,
+  scCall,
+} from "api/sc/calls";
 import BigNumber from "bignumber.js";
+import { setElrondBalance } from "utils/functions/formatBalance";
 import { IElrondToken } from "utils/types/elrond.interface";
 
 export async function deleteFarm(farmId: number) {
@@ -50,36 +50,35 @@ export async function setUnbondingPeriod(
   return res;
 }
 export async function depositRewards(
-  token: IElrondToken,
+  tokensInfo: { tokenDetail: IElrondToken; amount: number | string }[],
   farmId: number,
   epochs: number | string,
-  amount: number | string
+  bypass?: boolean
 ) {
   let res = null;
-  if (token.identifier === "EGLD") {
-    res = await EGLDPayment(
-      "farms2",
-      "depositRewards",
-      Number(amount),
-      [
-        new BigIntValue(new BigNumber(farmId)),
-        new BigIntValue(new BigNumber(epochs)),
-      ],
-      50000000
-    );
-  } else {
-    res = await ESDTTransfer({
-      funcName: "depositRewards",
-      token: { identifier: token.identifier, decimals: token.decimals },
-      val: Number(amount),
-      args: [
-        new BigIntValue(new BigNumber(farmId)),
-        new BigIntValue(new BigNumber(epochs)),
-      ],
-      contractAddr: contractAddr.farms2,
-      gasL: 50000000,
-    });
-  }
+
+  const tokensToSend = tokensInfo.map((ti) => {
+    const data = {
+      identifier: ti.tokenDetail.identifier,
+      nonce: 0,
+      amount: setElrondBalance(Number(ti.amount), ti.tokenDetail.decimals),
+    };
+
+    return data;
+  });
+
+  const arg = [
+    new BigUIntValue(new BigNumber(farmId)),
+    new BigUIntValue(new BigNumber(epochs)),
+    new BooleanValue(bypass)
+  ];
+  res = MultESDTNFTTranferOrEgldPayment(
+    "farms2",
+    "depositRewards",
+    tokensToSend,
+    arg,
+    50000000
+  );
 
   return res;
 }

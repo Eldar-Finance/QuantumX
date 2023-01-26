@@ -12,6 +12,7 @@ const TokenItem = ({ token, onClick, showIdent, showBalance, hoverBg }) => {
       }}
       justifyContent={showBalance && "space-between"}
       onClick={() => onClick(token)}
+      borderRadius="md"
     >
       <Flex>
         <Box mr={4}>

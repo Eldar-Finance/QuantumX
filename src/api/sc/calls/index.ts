@@ -59,7 +59,7 @@ export const ESDTNFTTransfer = async (
 export const MultiESDTNFTTransfer = async (
   wsp: WspTypes,
   funcName: string,
-  nfts: {
+  tokens: {
     collection: string;
     nonce: number;
     value: number;
@@ -71,7 +71,7 @@ export const MultiESDTNFTTransfer = async (
     const userAddress = store.getState().userAccount.connectedAddress;
     let { simpleAddress } = getInterface(wsp);
 
-    const data = nfts.flatMap((nft) => {
+    const data = tokens.flatMap((nft) => {
       const nftData = [
         BytesValue.fromUTF8(nft.collection), // <token identifier in hexadecimal encoding>
         new BigUIntValue(new BigNumber(nft.nonce)), // <token nonce in hexadecimal encoding>
@@ -84,7 +84,7 @@ export const MultiESDTNFTTransfer = async (
       .setFunction(new ContractFunction("MultiESDTNFTTransfer"))
       .setArgs([
         new AddressValue(new Address(simpleAddress)), // <receiver bytes in hexadecimal encoding>
-        new BigUIntValue(new BigNumber(nfts.length)), //<number of tokens to transfer in hexadecimal encoding>
+        new BigUIntValue(new BigNumber(tokens.length)), //<number of tokens to transfer in hexadecimal encoding>
         ...data,
         BytesValue.fromUTF8(funcName),
         ...args,
@@ -102,6 +102,7 @@ export const MultiESDTNFTTransfer = async (
     console.log("error", error);
   }
 };
+
 export const ESDTTransfer = async ({
   funcName,
   token,
@@ -158,6 +159,40 @@ export const scCall = async (
   return await sendTransaction(transactionData);
 };
 
+// need to check if works (is not used yet)
+export const MultiEgldPayment = async (
+  workspace: WspTypes,
+  funcName: string,
+  egldAmounts: number[],
+  args: any[],
+  gasLimit?: number
+) => {
+  const transactions = [];
+  const sender = store.getState().userAccount.connectedAddress;
+  const senderAddress = new Address(sender);
+  const { simpleAddress: scAddress } = getInterface(workspace);
+  const receiverAddress = new Address(scAddress);
+
+  egldAmounts.forEach((amount) => {
+    const payload = TransactionPayload.contractCall()
+      .setFunction(new ContractFunction(funcName))
+      .setArgs(args)
+      .build();
+
+    const tx = new Transaction({
+      sender: senderAddress,
+      value: amount * EGLD_VAL,
+      receiver: receiverAddress,
+      data: payload,
+      gasLimit: gasLimit || 200000000,
+      chainID: ChainId,
+    });
+
+    transactions.push(tx);
+  });
+
+  return await sendMultipleTransactions({ txs: transactions });
+};
 export const EGLDPayment = async (
   workspace: WspTypes,
   funcName,
@@ -184,7 +219,79 @@ export const EGLDPayment = async (
 
   return await sendTransaction(transactionData);
 };
+export const MultESDTNFTTranferOrEgldPayment = async (
+  workspace: WspTypes,
+  funcName: string,
+  tokens: {
+    identifier: string;
+    nonce: number;
+    amount: number;
+  }[],
+  args: any[],
+  gasLimit
+) => {
+  const transactions = [];
+  const sender = store.getState().userAccount.connectedAddress;
+  const senderAddress = new Address(sender);
+  const { simpleAddress: scAddress } = getInterface(workspace);
+  const receiverAddress = new Address(scAddress);
 
+  const egldPaymentTokens = tokens.filter(
+    (token) => token.identifier === "EGLD"
+  );
+  const ohterTokens = tokens.filter((token) => token.identifier !== "EGLD");
+
+  console.log("egldPaymentTokens", egldPaymentTokens);
+  console.log("ohterTokens", ohterTokens);
+
+  egldPaymentTokens.forEach((token) => {
+    const payload = TransactionPayload.contractCall()
+      .setFunction(new ContractFunction(funcName))
+      .setArgs(args)
+      .build();
+
+    const tx = new Transaction({
+      sender: senderAddress,
+      value: token.amount * EGLD_VAL,
+      receiver: receiverAddress,
+      data: payload,
+      gasLimit: gasLimit || 200000000,
+      chainID: ChainId,
+    });
+
+    transactions.push(tx);
+  });
+
+  const esdtTokensData = ohterTokens.flatMap((nft) => {
+    const nftData = [
+      BytesValue.fromUTF8(nft.identifier), // <token identifier in hexadecimal encoding>
+      new BigUIntValue(new BigNumber(nft.nonce)), // <token nonce in hexadecimal encoding>
+      new BigUIntValue(new BigNumber(nft.amount)), //<token quantity to transfer in hexadecimal encoding>
+    ];
+    return nftData;
+  });
+
+  const payload = TransactionPayload.contractCall()
+    .setFunction(new ContractFunction("MultiESDTNFTTransfer"))
+    .setArgs([
+      new AddressValue(receiverAddress), // <receiver bytes in hexadecimal encoding>
+      new BigUIntValue(new BigNumber(tokens.length)), //<number of tokens to transfer in hexadecimal encoding>
+      ...esdtTokensData,
+      BytesValue.fromUTF8(funcName),
+      ...args,
+    ])
+    .build();
+  const esdtTranferTx = new Transaction({
+    sender: senderAddress,
+    value: 0,
+    receiver: receiverAddress,
+    data: payload,
+    gasLimit: gasLimit || 200000000,
+    chainID: ChainId,
+  });
+  transactions.push(esdtTranferTx);
+  return await sendMultipleTransactions({ txs: transactions });
+};
 export const wrapEgldAndEsdtTranfer = async (
   egldAmount: number | string,
   funcName: string,
