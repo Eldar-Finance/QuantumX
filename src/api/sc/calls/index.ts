@@ -286,7 +286,7 @@ export const MultESDTNFTTranferOrEgldPayment = async (
     const esdtTranferTx = new Transaction({
       sender: senderAddress,
       value: 0,
-      receiver: receiverAddress,
+      receiver: senderAddress,
       data: payload,
       gasLimit: gasLimit || 200000000,
       chainID: ChainId,
