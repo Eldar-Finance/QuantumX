@@ -252,7 +252,7 @@ export const MultESDTNFTTranferOrEgldPayment = async (
 
     const tx = new Transaction({
       sender: senderAddress,
-      value: token.amount * EGLD_VAL,
+      value: token.amount,
       receiver: receiverAddress,
       data: payload,
       gasLimit: gasLimit || 200000000,
@@ -261,6 +261,7 @@ export const MultESDTNFTTranferOrEgldPayment = async (
 
     transactions.push(tx);
   });
+  console.log("transactions", transactions);
 
   const esdtTokensData = ohterTokens.flatMap((nft) => {
     const nftData = [
@@ -271,25 +272,28 @@ export const MultESDTNFTTranferOrEgldPayment = async (
     return nftData;
   });
 
-  const payload = TransactionPayload.contractCall()
-    .setFunction(new ContractFunction("MultiESDTNFTTransfer"))
-    .setArgs([
-      new AddressValue(receiverAddress), // <receiver bytes in hexadecimal encoding>
-      new BigUIntValue(new BigNumber(tokens.length)), //<number of tokens to transfer in hexadecimal encoding>
-      ...esdtTokensData,
-      BytesValue.fromUTF8(funcName),
-      ...args,
-    ])
-    .build();
-  const esdtTranferTx = new Transaction({
-    sender: senderAddress,
-    value: 0,
-    receiver: receiverAddress,
-    data: payload,
-    gasLimit: gasLimit || 200000000,
-    chainID: ChainId,
-  });
-  transactions.push(esdtTranferTx);
+  if (esdtTokensData.length > 0) {
+    const payload = TransactionPayload.contractCall()
+      .setFunction(new ContractFunction("MultiESDTNFTTransfer"))
+      .setArgs([
+        new AddressValue(receiverAddress), // <receiver bytes in hexadecimal encoding>
+        new BigUIntValue(new BigNumber(tokens.length)), //<number of tokens to transfer in hexadecimal encoding>
+        ...esdtTokensData,
+        BytesValue.fromUTF8(funcName),
+        ...args,
+      ])
+      .build();
+    const esdtTranferTx = new Transaction({
+      sender: senderAddress,
+      value: 0,
+      receiver: receiverAddress,
+      data: payload,
+      gasLimit: gasLimit || 200000000,
+      chainID: ChainId,
+    });
+    transactions.push(esdtTranferTx);
+  }
+
   return await sendMultipleTransactions({ txs: transactions });
 };
 export const wrapEgldAndEsdtTranfer = async (

@@ -46,6 +46,8 @@ interface IProps {
 
 const DepositView = ({ onClose, farm }: IProps) => {
   const { token } = useGetElrondToken(farm.rewardToken);
+  const isOneToken = Boolean(token);
+
   const [alltokens] = useGetUserTokens();
   const [selectedTokenId, setSelectedTokenId] = useState<number>(-1);
   const formik = useFormik<{
@@ -77,11 +79,11 @@ const DepositView = ({ onClose, farm }: IProps) => {
   });
 
   useEffect(() => {
-    if (token) {
+    if (isOneToken) {
       formik.setFieldValue(`tokens.0.tokenDetail`, token);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [token]);
+  }, [isOneToken, token]);
 
   const handleSelectToken = (selectedToken: IElrondToken) => {
     formik.setFieldValue(
@@ -109,7 +111,6 @@ const DepositView = ({ onClose, farm }: IProps) => {
   console.log("selectedTokenId", selectedTokenId);
   console.log("token", token);
   console.log("values", formik.values);
-  const isOneToken = Boolean(token);
   return (
     <>
       {/* @ts-ignore */}
