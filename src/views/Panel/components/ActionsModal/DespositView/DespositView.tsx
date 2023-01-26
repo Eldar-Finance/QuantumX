@@ -46,7 +46,7 @@ interface IProps {
 
 const DepositView = ({ onClose, farm }: IProps) => {
   const { token } = useGetElrondToken(farm.rewardToken);
-  const isOneToken = Boolean(farm.rewardToken !== "");
+  const isOneToken = farm.rewardToken !== "";
 
   const [alltokens] = useGetUserTokens(null, true);
   const [selectedTokenId, setSelectedTokenId] = useState<number>(-1);
