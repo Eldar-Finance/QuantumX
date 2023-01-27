@@ -1,4 +1,6 @@
+import { BigUIntValue } from "@elrondnetwork/erdjs/out";
 import { scQuery } from "api/sc/queries";
+import BigNumber from "bignumber.js";
 
 export const fetchFarmsFees = async () => {
   const res = await scQuery("farms2", "getFees");
@@ -25,6 +27,16 @@ export const fetchIsFarmCreator = async () => {
   if (data) {
     data = data.map((creator) => creator.bech32());
   }
+
+  return data as string[];
+};
+export const fetchStakersReport = async ([key, id]: [string, number]) => {
+  const res = await scQuery("farms2", "getStakersReport", [
+    new BigUIntValue(new BigNumber(id)),
+  ]);
+  let data = res?.firstValue?.valueOf();
+
+  console.log("data", data);
 
   return data as string[];
 };

@@ -8,7 +8,11 @@ import {
   selectFarms,
   selectUserFarms2Info,
 } from "redux/slices/farms2/farms2-slice";
-import { fetchAllFarms, fetchUSerFarmInfo } from "redux/slices/farms2/funcs";
+import {
+  fetchAllFarms,
+  fetchUSerFarmInfo,
+  fetchUSerRewardsInfo,
+} from "redux/slices/farms2/funcs";
 import {
   fetchGeneralInfo,
   fetchIndex,
@@ -42,6 +46,7 @@ const FarmsList = () => {
 
       //farms from oteher farms (Quantumn smart constract)
       dispatch(fetchUSerFarmInfo(address));
+      dispatch(fetchUSerRewardsInfo(address));
     }
   }, [address, dispatch]);
 

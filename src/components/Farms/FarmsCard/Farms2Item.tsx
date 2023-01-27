@@ -50,6 +50,7 @@ export const ProteoItemContenxt = createContext({
 
 const Farms2Item = ({ farm, logoSize, isPool, farmUserInfo }: IProps) => {
   const { token: stakingToken } = useGetElrondToken(farm.farm.stakingToken);
+
   const { token: rewardToken } = useGetElrondToken(farm.farm.rewardToken);
   const { data: lastRewardedEpoch } = useSWR<number>(
     //@ts-ignore

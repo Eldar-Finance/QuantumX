@@ -1,14 +1,14 @@
-import { DeleteIcon } from "@chakra-ui/icons";
+import { HamburgerIcon } from "@chakra-ui/icons";
 import { Flex, Icon } from "@chakra-ui/react";
 import ActionButton from "components/ActionButton/ActionButton";
 import { ToolIcon } from "components/Icons/ui";
+import dynamic from "next/dynamic";
 import { useState } from "react";
 import { formatTokenI } from "utils/functions/tokens";
 import { IScPanelFarms } from "utils/types/sc.interface";
-import { deleteFarm } from "views/Panel/scServices/farmsCalls";
 
-import ActionsModal from "../ActionsModal/ActionsModal";
-
+const ActionsModal: any = dynamic(() => import("../ActionsModal/ActionsModal"));
+const ReporModal: any = dynamic(() => import("../ReporModal/ReporModal"));
 export const panelColumns = [
   {
     Header: "Pool/Farm id",
@@ -56,8 +56,12 @@ export const panelColumns = [
     Cell: ({ row }) => {
       const data: IScPanelFarms = row.original;
       const [openModal, setopenModal] = useState(false);
+      const [openReportInfo, setOpenReportInfo] = useState(false);
       const handleOpenModal = () => {
         setopenModal((s) => !s);
+      };
+      const handleOpenReportModal = () => {
+        setOpenReportInfo((s) => !s);
       };
 
       return (
@@ -65,17 +69,23 @@ export const panelColumns = [
           <ActionButton onClick={handleOpenModal}>
             <Icon as={ToolIcon} />
           </ActionButton>
-          <ActionButton
-            onClick={() => deleteFarm(data.farm.farmId)}
-            bg="danger"
-          >
-            <Icon as={DeleteIcon} />
+          <ActionButton onClick={handleOpenReportModal}>
+            <Icon as={HamburgerIcon} />
           </ActionButton>
-          <ActionsModal
-            isOpen={openModal}
-            onClose={handleOpenModal}
-            farm={data}
-          />
+          {openModal && (
+            <ActionsModal
+              isOpen={openModal}
+              onClose={handleOpenModal}
+              farm={data}
+            />
+          )}
+          {openReportInfo && (
+            <ReporModal
+              isOpen={openReportInfo}
+              onClose={handleOpenModal}
+              farmId={data.farm.farmId}
+            />
+          )}
         </Flex>
       );
     },
