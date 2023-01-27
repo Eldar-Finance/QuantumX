@@ -6,7 +6,6 @@ import {
   IScFarmItem,
   IScPanelFarms,
   IScUserFarmInfo,
-  IScUserFarmRewards,
 } from "utils/types/sc.interface";
 
 export const fetchAllFarms = createAsyncThunk(
@@ -60,7 +59,7 @@ export const fetchUSerRewardsInfo = createAsyncThunk(
     const scFirstValue = scRes.firstValue.valueOf();
     console.log("fetchUSerRewardsInfo", scFirstValue);
 
-    const allFarms: IScUserFarmRewards[] = [];
+    const allFarms = [];
     return allFarms;
   }
 );
