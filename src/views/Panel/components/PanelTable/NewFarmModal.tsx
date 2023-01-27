@@ -47,7 +47,7 @@ const NewFarmModal = ({ isOpen, onClose }: IProps) => {
       unbondingPeriod: "",
       unbondingFee: "",
       harvestFee: "",
-      allowMultipleRewardsTokens: true,
+      allowMultipleRewardsTokens: false,
     },
     validationSchema: newFarmSchema,
     onSubmit: (values) => {
@@ -88,7 +88,6 @@ const NewFarmModal = ({ isOpen, onClose }: IProps) => {
           </FormControl>
           <Checkbox
             colorScheme="blue"
-            defaultChecked
             onChange={formik.handleChange}
             name="allowMultipleRewardsTokens"
           >

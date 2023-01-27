@@ -186,7 +186,22 @@ const DepositView = ({ onClose, farm }: IProps) => {
                 </Box>
               );
             })}
-            <Center mt={3}>
+            {isOneToken ? null : (
+              <>
+                <Center w="full" mt={3}>
+                  <ActionButton
+                    aria-label="add field"
+                    onClick={addField}
+                    borderRadius={"full"}
+                    h="45px"
+                    w="45px"
+                  >
+                    <Icon as={PlusSquareIcon} fontSize="20px" />
+                  </ActionButton>
+                </Center>
+              </>
+            )}
+            <Center my={6}>
               <Checkbox
                 name="BypassLastRewardedEpoch"
                 onChange={formik.handleChange}
@@ -198,24 +213,17 @@ const DepositView = ({ onClose, farm }: IProps) => {
               </Checkbox>
             </Center>
           </Flex>
-          {isOneToken ? null : (
-            <>
-              <Center w="full" my={6}>
-                <ActionButton
-                  aria-label="add field"
-                  onClick={addField}
-                  borderRadius={"full"}
-                  h="45px"
-                  w="45px"
-                >
-                  <Icon as={PlusSquareIcon} fontSize="20px" />
-                </ActionButton>
-              </Center>
-            </>
-          )}
+
           {selectedTokenId !== -1 ? (
             <TokenList
-              tokens={alltokens}
+              tokens={alltokens.filter(
+                (userToken) =>
+                  formik.values.tokens
+                    .filter((t) => Boolean(t.tokenDetail))
+                    .findIndex(
+                      (t) => t.tokenDetail.identifier === userToken.identifier
+                    ) === -1
+              )}
               handleClickToken={handleSelectToken}
               hoverBg="black.base"
             />
