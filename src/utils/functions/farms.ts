@@ -1,5 +1,10 @@
 import { IFarmWithTvl } from "components/Farms/FarmsCard/FarmsCard";
 import { noMaxTokens } from "utils/constants/farms";
+import { IElrondToken } from "utils/types/elrond.interface";
+import {
+  IScFarm2RewardsLeft,
+  IScMultiFarmsRewardsLeft,
+} from "utils/types/sc.interface";
 import { orderSimpleData } from "./array";
 import { formatBalanceDolar, formatNumber } from "./formatBalance";
 import { preventExponetialNotation } from "./numbers";
@@ -118,44 +123,100 @@ export const aprFarms = (
   price,
   stakingToken,
   lastRewardedEpoch,
-  rewardToken,
+  rewardTokens,
   farm,
-  stats
+  stats,
+  type: "single" | "multi" = "single",
+  multifarmRewardsLeft: IScMultiFarmsRewardsLeft
 ) => {
   let apr: string = "-";
+  console.log("price", price);
+  console.log("stakingToken", stakingToken);
+  console.log("lastRewardedEpoch", lastRewardedEpoch);
+  console.log("rewardTokens", rewardTokens);
+  console.log("farm", farm);
+  console.log("stats", stats);
+  console.log("type", type);
+  console.log("multifarmRewardsLeft", multifarmRewardsLeft);
   if (
     price &&
     stakingToken &&
-    rewardToken &&
+    rewardTokens &&
     lastRewardedEpoch &&
     farm.totalRewardsLeft > 0 &&
     farm.stakedBalance > 0
   ) {
+    console.log("inside apr");
+
     const epochDifference = lastRewardedEpoch + 1 - stats.epoch;
 
     if (epochDifference > 0) {
-      apr =
-        formatNumber(
-          preventExponetialNotation(
-            ((formatBalanceDolar(
-              {
-                balance: farm.totalRewardsLeft,
-                decimals: rewardToken.decimals,
-              },
-              rewardToken.price
-            ) /
-              formatBalanceDolar(
+      if (type === "single") {
+        apr =
+          formatNumber(
+            preventExponetialNotation(
+              ((formatBalanceDolar(
                 {
-                  balance: farm.stakedBalance,
-                  decimals: stakingToken.decimals,
+                  balance: farm.totalRewardsLeft,
+                  decimals: rewardTokens.decimals,
                 },
-                price
-              )) *
-              100 *
-              365) /
-              epochDifference
-          ).toString()
-        ) + "%";
+                rewardTokens.price
+              ) /
+                formatBalanceDolar(
+                  {
+                    balance: farm.stakedBalance,
+                    decimals: stakingToken.decimals,
+                  },
+                  price
+                )) *
+                100 *
+                365) /
+                epochDifference
+            ).toString()
+          ) + "%";
+      } else {
+        if (multifarmRewardsLeft) {
+          const rewardLeftTokens = rewardTokens as IElrondToken[];
+
+          const rewardsLeftDolarAmount = rewardLeftTokens.reduce(
+            (acc, token) => {
+              const tokenRewardsLeft: IScFarm2RewardsLeft = multifarmRewardsLeft.rewardsLeft.find(
+                (r) => r.token === token.identifier
+              );
+              return (
+                acc +
+                formatBalanceDolar(
+                  {
+                    balance: tokenRewardsLeft.amount,
+                    decimals: token.decimals,
+                  },
+                  token.price
+                )
+              );
+            },
+            0
+          );
+
+          apr =
+            formatNumber(
+              preventExponetialNotation(
+                ((rewardsLeftDolarAmount /
+                  formatBalanceDolar(
+                    {
+                      balance: farm.stakedBalance,
+                      decimals: stakingToken.decimals,
+                    },
+                    price
+                  )) *
+                  100 *
+                  365) /
+                  epochDifference
+              ).toString()
+            ) + "%";
+
+          console.log("rewardsLeftDolarAmount", rewardsLeftDolarAmount);
+        }
+      }
     }
   }
   return apr;

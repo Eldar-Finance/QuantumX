@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import { fetchStats } from "redux/slices/elrond/elrond-slice";
 import {
   fetchAllFarms,
+  fetchMultiFarms2RewardsLeft,
   fetchUSerFarmInfo,
   fetchUSerRewardsInfo,
 } from "redux/slices/farms2/funcs";
@@ -53,6 +54,7 @@ const Farms = () => {
     dispatch(fetchPrice());
     dispatch(fetchIndex());
     dispatch(fetchGeneralInfo());
+    dispatch(fetchMultiFarms2RewardsLeft());
 
     //elrond network
     dispatch(fetchStats());

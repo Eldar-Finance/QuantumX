@@ -403,6 +403,17 @@
             ]
         },
         {
+            "name": "getMultifarmsRewardsLeft",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<tuple<BigUint,List<EsdtTokenPayment>>>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
             "name": "getFarmFees",
             "mutability": "readonly",
             "inputs": [],
@@ -1167,6 +1178,23 @@
     "events": [],
     "hasCallback": false,
     "types": {
+        "EsdtTokenPayment": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "token_identifier",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "token_nonce",
+                    "type": "u64"
+                },
+                {
+                    "name": "amount",
+                    "type": "BigUint"
+                }
+            ]
+        },
         "Farm": {
             "type": "struct",
             "fields": [

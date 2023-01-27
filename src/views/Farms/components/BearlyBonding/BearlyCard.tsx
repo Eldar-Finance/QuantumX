@@ -22,20 +22,23 @@ import { useAppSelector } from "utils/hooks/redux";
 import useGetElrondToken from "utils/hooks/useGetElrondToken";
 import useGetMultipleElrondTokens from "utils/hooks/useGetMultipleElrondTokens";
 import useGetTokenPrice from "utils/hooks/useGetTokenPrice";
-import { IScFarmItem } from "utils/types/sc.interface";
+import {
+  IScFarmItem,
+  IScMultiFarmsRewardsLeft,
+} from "utils/types/sc.interface";
 import useCanUsePool7 from "views/Pools/hooks/useCanUsePool7";
 interface IProps {
   farm: IScFarmItem;
+  multifarmRewardsLeft?: IScMultiFarmsRewardsLeft;
 }
 
-const BearlyCard = ({ farm }: IProps) => {
+const BearlyCard = ({ farm, multifarmRewardsLeft }: IProps) => {
   const userFarm2Info = useAppSelector(selectUserFarms2Info);
   const userFarm2Rewards = useAppSelector(selectUserFarms2Rewards);
   const { token: stakingToken } = useGetElrondToken(farm.farm.stakingToken);
   const userRewardsForThisFarm = userFarm2Rewards.data.filter(
     (f) => f.farmId === farm.farm.farmId
   );
-  console.log("userFarm2Info", userFarm2Info);
 
   const userFarmInfoForThisFarm = userFarm2Info.data.find(
     (fi) => fi.farmId === farm.farm.farmId
@@ -43,6 +46,9 @@ const BearlyCard = ({ farm }: IProps) => {
 
   const { tokens } = useGetMultipleElrondTokens(
     userRewardsForThisFarm.map((f) => f.rewardToken)
+  );
+  const { tokens: rewardsTokens } = useGetMultipleElrondTokens(
+    multifarmRewardsLeft.rewardsLeft.map((f) => f.token)
   );
   const [staingTokenPrice] = useGetTokenPrice(farm.farm.stakingToken);
   const { data: lastRewardedEpoch } = useSWR<number>(
@@ -56,9 +62,11 @@ const BearlyCard = ({ farm }: IProps) => {
     staingTokenPrice,
     stakingToken,
     lastRewardedEpoch,
-    0,
+    rewardsTokens,
     farm,
-    stats
+    stats,
+    "multi",
+    multifarmRewardsLeft
   );
 
   const handleHarvest = () => {
@@ -70,7 +78,6 @@ const BearlyCard = ({ farm }: IProps) => {
     );
   };
   const { canUsePool } = useCanUsePool7(farm.farm.farmId);
-  console.log("stakingToken", stakingToken);
 
   if (!userFarmInfoForThisFarm) {
     return null;
@@ -161,7 +168,6 @@ const BearlyCard = ({ farm }: IProps) => {
               const rewardInfo = userRewardsForThisFarm.find(
                 (r) => r.rewardToken === token.identifier
               );
-              console.log("token", token);
 
               return (
                 <Flex key={token.identifier} w="full" justify={"space-around"}>

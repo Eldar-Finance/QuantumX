@@ -30,6 +30,17 @@ export interface IScPanelFarms {
   unbondingPeriod: number;
 }
 
+export interface IScFarm2RewardsLeft {
+  token: string;
+  nonce: number;
+  amount: number;
+}
+
+export interface IScMultiFarmsRewardsLeft {
+  farmId: number;
+  rewardsLeft: IScFarm2RewardsLeft[];
+}
+
 export interface IHubOffer {
   id: number;
   collection: string;

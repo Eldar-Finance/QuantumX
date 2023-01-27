@@ -3,6 +3,7 @@ import { AppState } from "redux/store";
 import { STATUS } from "utils/types/core.interface";
 import {
   IScFarmItem,
+  IScMultiFarmsRewardsLeft,
   IScPanelFarms,
   IScUserFarmInfo,
   IScUserFarmRewards,
@@ -10,6 +11,7 @@ import {
 import {
   fetchAllFarms,
   fetchCreatorsFarms,
+  fetchMultiFarms2RewardsLeft,
   fetchUSerFarmInfo,
   fetchUSerRewardsInfo,
 } from "./funcs";
@@ -37,6 +39,11 @@ export interface Farms2State {
     data: IScPanelFarms[];
     error: string;
   };
+  multiFarmsRewardsLeft: {
+    status: STATUS;
+    data: IScMultiFarmsRewardsLeft[];
+    error: string;
+  };
 }
 
 const initialState: Farms2State = {
@@ -58,6 +65,11 @@ const initialState: Farms2State = {
     error: "",
   },
   creatorsFarms: {
+    data: [],
+    status: "idle",
+    error: "",
+  },
+  multiFarmsRewardsLeft: {
     data: [],
     status: "idle",
     error: "",
@@ -138,6 +150,21 @@ export const generalSlice = createSlice({
       .addCase(fetchCreatorsFarms.rejected, (state, action) => {
         state.creatorsFarms.status = "failed";
         state.creatorsFarms.error = action.error.message;
+      })
+      // fetchMultiFarms2RewardsLeft
+      .addCase(fetchMultiFarms2RewardsLeft.pending, (state) => {
+        state.multiFarmsRewardsLeft.status = "loading";
+      })
+      .addCase(
+        fetchMultiFarms2RewardsLeft.fulfilled,
+        (state, action: PayloadAction<IScMultiFarmsRewardsLeft[]>) => {
+          state.multiFarmsRewardsLeft.status = "succeeded";
+          state.multiFarmsRewardsLeft.data = action.payload;
+        }
+      )
+      .addCase(fetchMultiFarms2RewardsLeft.rejected, (state, action) => {
+        state.multiFarmsRewardsLeft.status = "failed";
+        state.multiFarmsRewardsLeft.error = action.error.message;
       });
   },
 });
@@ -153,5 +180,6 @@ export const selectUserFarms2Info = (state: AppState) =>
   state.farms2.userFarmsInfo;
 export const selectUserFarms2Rewards = (state: AppState) =>
   state.farms2.userRewards;
-
+export const selectMultiFarms2RewardsLeft = (state: AppState) =>
+  state.farms2.multiFarmsRewardsLeft;
 export default generalSlice.reducer;
