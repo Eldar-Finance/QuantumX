@@ -7,11 +7,7 @@ const useGetStakersReport = (id: number) => {
   );
 
   return {
-    fees: data || {
-      earners: 0,
-      creator: 0,
-      farmCreation: 0,
-    },
+    report: data || [],
     isLoading: isLoading,
     error: error,
   };

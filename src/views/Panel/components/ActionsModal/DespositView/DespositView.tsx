@@ -34,7 +34,7 @@ const validationSchema = yup.object({
       amount: yup
         .number()
         .required("Amount is required")
-        .min(1, "Amount must be greater than 0"),
+        .min(0, "Amount must be greater than 0"),
     })
   ),
 });
@@ -109,7 +109,6 @@ const DepositView = ({ onClose, farm }: IProps) => {
     formik.setFieldValue("tokens", values);
   };
 
-  console.log("farm.rewardToken", farm);
   return (
     <>
       {/* @ts-ignore */}

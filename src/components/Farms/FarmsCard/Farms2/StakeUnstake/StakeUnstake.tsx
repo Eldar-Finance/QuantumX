@@ -21,6 +21,7 @@ interface IProps {
   farm: IScFarmItem;
   userFarmItem: IScUserFarmInfo;
   isPool?: boolean;
+  isBearly?: boolean;
 }
 
 const useGetFarmTimeForUnstake = (statsRes, userFarmItem) => {
@@ -52,7 +53,7 @@ const useGetFarmTimeForUnstake = (statsRes, userFarmItem) => {
   return biggerTime;
 };
 
-const StakeUnstake = ({ farm, userFarmItem, isPool }: IProps) => {
+const StakeUnstake = ({ farm, userFarmItem, isPool, isBearly }: IProps) => {
   const [openStake, setOpenStake] = useState(false);
   const [openUnstakeStake, setOpenUnstakeStake] = useState(false);
   const { token: stakingToken } = useGetElrondToken(farm.farm.stakingToken);
@@ -81,24 +82,25 @@ const StakeUnstake = ({ farm, userFarmItem, isPool }: IProps) => {
   let hasuserStaked = userFarmItem?.stakedBalance > 0;
 
   return (
-    <Flex h="full" flexDir={"column"}>
+    <Flex h="full" flexDir={"column"} w="full">
       <Text color="white.400">
         STAKE {formatTokenI(farm.farm.stakingToken)} {!isPool && "LP"}
       </Text>
-      <Flex mt="2" gap="3" flex={1} alignItems="center">
+      <Flex mt="2" gap="3" flex={1} alignItems="center" w="full">
         <ActionButton
           onClick={() => setOpenStake((s) => !s)}
           variant={"outline"}
           w="full"
-          maxW={"500px"}
+          maxW={"50%"}
           disabled={!canUsePool && farm.farm.farmId === 7}
         >
           STAKE {!isPool && "LP"}
         </ActionButton>
-        <Center flex="1" flexDir={"column"}>
+        <Center flex="1" flexDir={"column"} w="full" maxW={"50%"}>
           <ActionButton
             onClick={() => setOpenUnstakeStake((s) => !s)}
             disabled={disableUnstake}
+            w={isBearly ? "full" : "50%"}
           >
             UNSTAKE
           </ActionButton>

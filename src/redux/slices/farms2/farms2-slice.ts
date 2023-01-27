@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { toknesID } from "api/net.config";
 import { AppState } from "redux/store";
 import { STATUS } from "utils/types/core.interface";
 import {
@@ -19,6 +18,8 @@ export interface Farms2State {
   allFarms: {
     status: STATUS;
     data: IScFarmItem[];
+    pools: IScFarmItem[];
+    farms: IScFarmItem[];
     error: string;
   };
   userFarmsInfo: {
@@ -41,6 +42,8 @@ export interface Farms2State {
 const initialState: Farms2State = {
   allFarms: {
     data: [],
+    pools: [],
+    farms: [],
     status: "idle",
     error: "",
   },
@@ -73,9 +76,18 @@ export const generalSlice = createSlice({
       })
       .addCase(
         fetchAllFarms.fulfilled,
-        (state, action: PayloadAction<IScFarmItem[]>) => {
+        (
+          state,
+          action: PayloadAction<{
+            allFarms: IScFarmItem[];
+            pools: IScFarmItem[];
+            farms: IScFarmItem[];
+          }>
+        ) => {
           state.allFarms.status = "succeeded";
-          state.allFarms.data = action.payload;
+          state.allFarms.data = action.payload.allFarms;
+          state.allFarms.pools = action.payload.pools;
+          state.allFarms.farms = action.payload.farms;
         }
       )
       .addCase(fetchAllFarms.rejected, (state, action) => {
@@ -133,14 +145,8 @@ export const generalSlice = createSlice({
 export const {} = generalSlice.actions;
 
 export const selectAllFarms2 = (state: AppState) => state.farms2.allFarms;
-export const selectFarms = (state: AppState) =>
-  state.farms2.allFarms.data.filter(
-    (farm) => farm.farm.stakingToken !== toknesID.wegld
-  );
-export const selectPools = (state: AppState) =>
-  state.farms2.allFarms.data.filter(
-    (farm) => farm.farm.stakingToken === toknesID.wegld
-  );
+export const selectFarms = (state: AppState) => state.farms2.allFarms.farms;
+export const selectPools = (state: AppState) => state.farms2.allFarms.pools;
 export const selectCreatorsFarms = (state: AppState) =>
   state.farms2.creatorsFarms;
 export const selectUserFarms2Info = (state: AppState) =>

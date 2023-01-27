@@ -1,7 +1,7 @@
 import { Accordion } from "@chakra-ui/react";
 import { useRouter } from "next/dist/client/router";
 import { useEffect, useState } from "react";
-import { getSortedFarm } from "utils/functions/proteo";
+import { getSortedFarm } from "utils/functions/farms";
 import { useAppSelector } from "utils/hooks/redux";
 import useGetMultipleElrondTokens from "utils/hooks/useGetMultipleElrondTokens";
 import useGetMultiplePrices from "utils/hooks/useGetMultiplePrices";

@@ -22,12 +22,12 @@ import { fetchLastRewardedEpoch } from "api/sc/queries/farms2";
 import { selectElrondStats } from "redux/slices/elrond/elrond-slice";
 import { addTvlInEldarFarm } from "redux/slices/proteo/proteo";
 import useSWR from "swr";
+import { aprFarms } from "utils/functions/farms";
 import {
   formatBalance,
   formatBalanceDolar,
   formatNumber,
 } from "utils/functions/formatBalance";
-import { preventExponetialNotation } from "utils/functions/numbers";
 import { formatTokenI } from "utils/functions/tokens";
 import { useAppDispatch, useAppSelector } from "utils/hooks/redux";
 import useGetElrondToken from "utils/hooks/useGetElrondToken";
@@ -104,42 +104,14 @@ const Farms2Item = ({
   // only for srb farm
   const { canUsePool } = useCanUsePool7(farm.farm.farmId);
 
-  let apr: string = "-";
-  if (
-    price &&
-    stakingToken &&
-    rewardToken &&
-    lastRewardedEpoch &&
-    farm.totalRewardsLeft > 0 &&
-    farm.stakedBalance > 0
-  ) {
-    const epochDifference = lastRewardedEpoch + 1 - stats.epoch;
-
-    if (epochDifference > 0) {
-      apr =
-        formatNumber(
-          preventExponetialNotation(
-            ((formatBalanceDolar(
-              {
-                balance: farm.totalRewardsLeft,
-                decimals: rewardToken.decimals,
-              },
-              rewardToken.price
-            ) /
-              formatBalanceDolar(
-                {
-                  balance: farm.stakedBalance,
-                  decimals: stakingToken.decimals,
-                },
-                price
-              )) *
-              100 *
-              365) /
-              epochDifference
-          ).toString()
-        ) + "%";
-    }
-  }
+  const apr: string = aprFarms(
+    price,
+    stakingToken,
+    lastRewardedEpoch,
+    rewardToken,
+    farm,
+    stats
+  );
 
   return (
     <AccordionItem w="full">

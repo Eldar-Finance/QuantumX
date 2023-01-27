@@ -23,7 +23,7 @@ export const getTokensByNfts = async (address, nfts) => {
   return await axiosEldron.get(`/accounts/${address}/nfts/${nfts}`);
 };
 export const getMexPairs = async () => {
-  return await axiosEldron.get("/mex-pairs");
+  return await axiosEldron.get("/mex/pairs?size=150");
 };
 export const getEgldBalance = async (address): Promise<IElrondUserAccount> => {
   const res = await axiosEldron.get<IElrondUserAccount>(`/accounts/${address}`);

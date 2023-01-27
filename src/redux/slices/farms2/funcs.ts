@@ -11,7 +11,7 @@ import {
 
 export const fetchAllFarms = createAsyncThunk(
   "farms2/fetchAllFarms",
-  async () => {
+  async (mexPairs: any[]) => {
     const scRes = await scQuery("farms2", "getAllFarms");
 
     const scFirstValue = scRes.firstValue.valueOf();
@@ -30,8 +30,23 @@ export const fetchAllFarms = createAsyncThunk(
         totalRewardsLeft: farm.field2.toNumber(),
       };
     });
+    console.log("mexPairs", mexPairs);
 
-    return allFarms;
+    return {
+      allFarms,
+      pools: allFarms.filter(
+        (farm) =>
+          mexPairs.findIndex(
+            (mexPair) => mexPair.id === farm.farm.stakingToken
+          ) === -1
+      ),
+      farms: allFarms.filter(
+        (farm) =>
+          mexPairs.findIndex(
+            (mexPair) => mexPair.id === farm.farm.stakingToken
+          ) !== -1
+      ),
+    };
   }
 );
 export const fetchUSerFarmInfo = createAsyncThunk(

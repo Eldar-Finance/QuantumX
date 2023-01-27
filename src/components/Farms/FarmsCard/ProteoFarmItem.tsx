@@ -21,12 +21,12 @@ import { createContext, PropsWithChildren, useEffect, useState } from "react";
 import { addDualEarned, addsProteoEarned } from "redux/slices/proteo/proteo";
 import { fetchProteoFarms } from "redux/slices/userAcount/funcs";
 import useSwr from "swr";
+import { haveMaxLimit } from "utils/functions/farms";
 import {
   formatBalance,
   formatBalanceDolar,
   formatNumber,
 } from "utils/functions/formatBalance";
-import { haveMaxLimit } from "utils/functions/proteo";
 import { useAppDispatch, useAppSelector } from "utils/hooks/redux";
 import useGetTokenPrice from "utils/hooks/useGetTokenPrice";
 import { IProteoFarm } from "utils/types/farms.interface";

@@ -16,8 +16,8 @@ import { proteoEliteWsp } from "api/sc/sc";
 import ActionButton from "components/ActionButton/ActionButton";
 import MyModal from "components/Modal/Modal";
 import { useFormik } from "formik";
+import { haveMaxLimit } from "utils/functions/farms";
 import { formatBalance, setElrondBalance } from "utils/functions/formatBalance";
-import { haveMaxLimit } from "utils/functions/proteo";
 import {
   getBigerTime,
   getFeeBasedInEpoch,

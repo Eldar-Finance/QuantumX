@@ -68,3 +68,11 @@ export interface IScFarms2EarnerInfo {
   address: string;
   percent: number;
 }
+export interface IScFarms2StakersReport {
+  staker: string;
+  stakedAmount: number;
+  lastStake: number;
+  lastUnstake: number;
+  lastHarvest: number;
+  rewardsHarvested: number;
+}

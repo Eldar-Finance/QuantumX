@@ -1,7 +1,8 @@
 import { IFarmWithTvl } from "components/Farms/FarmsCard/FarmsCard";
 import { noMaxTokens } from "utils/constants/farms";
 import { orderSimpleData } from "./array";
-import { formatBalanceDolar } from "./formatBalance";
+import { formatBalanceDolar, formatNumber } from "./formatBalance";
+import { preventExponetialNotation } from "./numbers";
 
 export const getFeeBasedInEpoch = (epoch) => {
   if (epoch === undefined || epoch === null) {
@@ -111,4 +112,51 @@ export const getSortedFarm = (
   return sortedTvls;
 
   // setFarmStored(sortedTvls);
+};
+
+export const aprFarms = (
+  price,
+  stakingToken,
+  lastRewardedEpoch,
+  rewardToken,
+  farm,
+  stats
+) => {
+  let apr: string = "-";
+  if (
+    price &&
+    stakingToken &&
+    rewardToken &&
+    lastRewardedEpoch &&
+    farm.totalRewardsLeft > 0 &&
+    farm.stakedBalance > 0
+  ) {
+    const epochDifference = lastRewardedEpoch + 1 - stats.epoch;
+
+    if (epochDifference > 0) {
+      apr =
+        formatNumber(
+          preventExponetialNotation(
+            ((formatBalanceDolar(
+              {
+                balance: farm.totalRewardsLeft,
+                decimals: rewardToken.decimals,
+              },
+              rewardToken.price
+            ) /
+              formatBalanceDolar(
+                {
+                  balance: farm.stakedBalance,
+                  decimals: stakingToken.decimals,
+                },
+                price
+              )) *
+              100 *
+              365) /
+              epochDifference
+          ).toString()
+        ) + "%";
+    }
+  }
+  return apr;
 };
