@@ -313,12 +313,6 @@
             "outputs": []
         },
         {
-            "name": "claimFees",
-            "mutability": "mutable",
-            "inputs": [],
-            "outputs": []
-        },
-        {
             "name": "forceAddCreator",
             "onlyOwner": true,
             "mutability": "mutable",
@@ -420,7 +414,7 @@
             ]
         },
         {
-            "name": "getUserInfo",
+            "name": "getUserFarmInfo",
             "mutability": "readonly",
             "inputs": [
                 {
@@ -430,7 +424,23 @@
             ],
             "outputs": [
                 {
-                    "type": "variadic<tuple<List<BigUint>,List<EgldOrEsdtTokenIdentifier>,List<BigUint>,List<BigUint>>>",
+                    "type": "variadic<multi<BigUint,BigUint,BigUint>>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "getUserRewardsInfo",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "address",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "variadic<multi<BigUint,EgldOrEsdtTokenIdentifier,BigUint,BigUint>>",
                     "multi_result": true
                 }
             ]
@@ -1080,25 +1090,6 @@
                 {
                     "type": "variadic<multi<bytes,tuple<Address,u64>>>",
                     "multi_result": true
-                }
-            ]
-        },
-        {
-            "name": "earnerClaimable",
-            "mutability": "readonly",
-            "inputs": [
-                {
-                    "name": "address",
-                    "type": "Address"
-                },
-                {
-                    "name": "token",
-                    "type": "EgldOrEsdtTokenIdentifier"
-                }
-            ],
-            "outputs": [
-                {
-                    "type": "BigUint"
                 }
             ]
         },

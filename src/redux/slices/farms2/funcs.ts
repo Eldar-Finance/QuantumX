@@ -6,6 +6,7 @@ import {
   IScFarmItem,
   IScPanelFarms,
   IScUserFarmInfo,
+  IScUserFarmRewards,
 } from "utils/types/sc.interface";
 
 export const fetchAllFarms = createAsyncThunk(
@@ -14,6 +15,7 @@ export const fetchAllFarms = createAsyncThunk(
     const scRes = await scQuery("farms2", "getAllFarms");
 
     const scFirstValue = scRes.firstValue.valueOf();
+    console.log("fetchAllFarms", scFirstValue);
 
     const allFarms: IScFarmItem[] = scFirstValue.map((farm: any) => {
       return {
@@ -35,23 +37,37 @@ export const fetchAllFarms = createAsyncThunk(
 export const fetchUSerFarmInfo = createAsyncThunk(
   "farms2/fetchUSerFarmInfo",
   async (address: string) => {
-    const scRes = await scQuery("farms2", "getUserInfo", [
+    const scRes = await scQuery("farms2", "getUserFarmInfo", [
       new AddressValue(new Address(address)),
     ]);
 
     const scFirstValue = scRes.firstValue.valueOf();
-    console.log("scFirstValue", scFirstValue);
+    console.log("getUserFarmInfo", scFirstValue);
 
     const allFarms: IScUserFarmInfo[] = scFirstValue.map((farmInfo) => {
       const data: IScUserFarmInfo = {
-        farmId: farmInfo[0].toNumber(),
-        stakedBalance: farmInfo[1].toNumber(),
-        harvestableRewards: farmInfo[2].toNumber(),
-        earnedRewards: farmInfo[3].toNumber(),
-        unboundingEpoch: farmInfo[4].toNumber(),
+        farmId: farmInfo.field0[0].toNumber(),
+        stakedBalance: farmInfo.field0[0].toNumber(),
+        unboundingEpoch: farmInfo.field0[0].toNumber(),
       };
       return data;
     });
+    return allFarms;
+  }
+);
+export const fetchUSerRewardsInfo = createAsyncThunk(
+  "farms2/fetchUSerRewardsInfo",
+  async (address: string) => {
+    console.log("call fetchUSerRewardsInfo");
+
+    const scRes = await scQuery("farms2", "getUserRewardsInfo", [
+      new AddressValue(new Address(address)),
+    ]);
+
+    const scFirstValue = scRes.firstValue.valueOf();
+    console.log("fetchUSerRewardsInfo", scFirstValue);
+
+    const allFarms: IScUserFarmRewards[] = [];
     return allFarms;
   }
 );
