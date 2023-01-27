@@ -75,15 +75,17 @@ const BearlyCard = ({ farm }: IProps) => {
       <Grid templateColumns={{ xs: "1fr", tablet: "2fr 1fr" }} gap={20}>
         <Flex flexDir={"column"} w="full">
           <Flex w="full" justify={"space-between"} mb={10}>
-            <Flex alignItems={"center"} gap={3}>
-              <NextImage
-                alt=""
-                src={stakingToken.assets?.svgUrl}
-                height={55}
-                width={55}
-              />
-              <Text fontWeight={"600"}> {stakingToken.name}</Text>
-            </Flex>
+            {stakingToken && (
+              <Flex alignItems={"center"} gap={3}>
+                <NextImage
+                  alt=""
+                  src={stakingToken.assets?.svgUrl}
+                  height={55}
+                  width={55}
+                />
+                <Text fontWeight={"600"}> {stakingToken.name}</Text>
+              </Flex>
+            )}
             <Flex flexDir={"column"} align="center"></Flex>
           </Flex>
           <Center flexDir={"column"} gap={6} mb={10} fontSize={"lg"} flex={1}>

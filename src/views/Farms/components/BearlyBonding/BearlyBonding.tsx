@@ -10,7 +10,7 @@ const BearlyBonding = () => {
   });
 
   return (
-    <Stack>
+    <Stack spacing={10}>
       {bearlyFarms.map((farm) => {
         return <BearlyCard key={farm.farm.farmId} farm={farm} />;
       })}
