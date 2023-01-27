@@ -2,7 +2,11 @@ import { Accordion } from "@chakra-ui/react";
 import { useRouter } from "next/dist/client/router";
 import { useEffect, useState } from "react";
 import { IProteoFarm } from "utils/types/farms.interface";
-import { IScFarmItem, IScUserFarmInfo } from "utils/types/sc.interface";
+import {
+  IScFarmItem,
+  IScUserFarmInfo,
+  IScUserFarmRewards,
+} from "utils/types/sc.interface";
 import Farms2Item from "./Farms2Item";
 import ProteoFarmItem from "./ProteoFarmItem";
 
@@ -11,6 +15,7 @@ interface IProps {
   othersArr?: {
     allFarms: IScFarmItem[];
     userFarmInfo: IScUserFarmInfo[];
+    userFarm2Rewards: IScUserFarmRewards[];
   };
   isPool?: boolean;
 }
@@ -49,6 +54,9 @@ const FarmsCard = ({ proteoArr, isPool, othersArr = null }: IProps) => {
                 key={f.farm.farmId}
                 farm={f}
                 farmUserInfo={othersArr.userFarmInfo.find(
+                  (userFarm) => userFarm.farmId === f.farm.farmId
+                )}
+                farmUserRewards={othersArr.userFarm2Rewards.filter(
                   (userFarm) => userFarm.farmId === f.farm.farmId
                 )}
                 isPool={isPool}

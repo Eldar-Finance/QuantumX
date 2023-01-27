@@ -424,7 +424,7 @@
             ],
             "outputs": [
                 {
-                    "type": "variadic<multi<BigUint,BigUint,BigUint>>",
+                    "type": "variadic<List<BigUint>>",
                     "multi_result": true
                 }
             ]
@@ -440,7 +440,7 @@
             ],
             "outputs": [
                 {
-                    "type": "variadic<multi<BigUint,EgldOrEsdtTokenIdentifier,BigUint,BigUint>>",
+                    "type": "variadic<tuple<EgldOrEsdtTokenIdentifier,List<BigUint>>>",
                     "multi_result": true
                 }
             ]

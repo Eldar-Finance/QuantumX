@@ -6,6 +6,7 @@ import {
   IScFarmItem,
   IScPanelFarms,
   IScUserFarmInfo,
+  IScUserFarmRewards,
 } from "utils/types/sc.interface";
 
 export const fetchAllFarms = createAsyncThunk(
@@ -41,26 +42,39 @@ export const fetchUSerFarmInfo = createAsyncThunk(
     ]);
 
     const scFirstValue = scRes.firstValue.valueOf();
-    console.log("getUserFarmInfo", scFirstValue);
 
-    const allFarms: IScUserFarmInfo[] = [];
+    const allFarms: IScUserFarmInfo[] = scFirstValue.map((farm) => {
+      const data: IScUserFarmInfo = {
+        farmId: farm[0].toNumber(),
+        stakedBalance: farm[1].toNumber(),
+        unboundingEpoch: farm[2].toNumber(),
+      };
+      return data;
+    });
+
     return allFarms;
   }
 );
 export const fetchUSerRewardsInfo = createAsyncThunk(
   "farms2/fetchUSerRewardsInfo",
   async (address: string) => {
-    console.log("call fetchUSerRewardsInfo");
-
     const scRes = await scQuery("farms2", "getUserRewardsInfo", [
       new AddressValue(new Address(address)),
     ]);
 
     const scFirstValue = scRes.firstValue.valueOf();
-    console.log("fetchUSerRewardsInfo", scFirstValue);
 
-    const allFarms = [];
-    return allFarms;
+    const userRewards: IScUserFarmRewards[] = scFirstValue.map((rewards) => {
+      const data: IScUserFarmRewards = {
+        rewardToken: rewards.field0,
+        farmId: rewards.field1[0].toNumber(),
+        harvestableAmount: rewards.field1[1].toNumber(),
+        earnedAmount: rewards.field1[2].toNumber(),
+      };
+      return data;
+    });
+
+    return userRewards;
   }
 );
 export const fetchCreatorsFarms = createAsyncThunk(

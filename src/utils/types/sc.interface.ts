@@ -14,22 +14,14 @@ export interface IScFarmItem {
 export interface IScUserFarmInfo {
   farmId: number;
   stakedBalance: number;
-  harvestableRewards: number;
-  earnedRewards: number;
   unboundingEpoch: number;
 }
-
-// export interface IScUserFarmInfo {
-//   farmId: number;
-//   stakedBalance: number;
-//   unboundingEpoch: number;
-// }
-// export interface IScUserFarmRewards {
-//   farmId: number;
-//   rewardToken: string[];
-//   harvestableAmount: number[];
-//   earnedAmount: number[];
-// }
+export interface IScUserFarmRewards {
+  rewardToken: string;
+  farmId: number;
+  harvestableAmount: number;
+  earnedAmount: number;
+}
 export interface IScPanelFarms {
   farm: IScFarm2;
   lastReawardEpoch: number;

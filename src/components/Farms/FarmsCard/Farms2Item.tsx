@@ -12,7 +12,11 @@ import {
 import NextImage from "components/NextImage/NextImage";
 
 import { createContext, PropsWithChildren, useEffect } from "react";
-import { IScFarmItem, IScUserFarmInfo } from "utils/types/sc.interface";
+import {
+  IScFarmItem,
+  IScUserFarmInfo,
+  IScUserFarmRewards,
+} from "utils/types/sc.interface";
 
 import { fetchLastRewardedEpoch } from "api/sc/queries/farms2";
 import { selectElrondStats } from "redux/slices/elrond/elrond-slice";
@@ -38,6 +42,7 @@ import Avilable from "./Farms2/Withdraw/Avilable";
 interface IProps {
   farm: IScFarmItem;
   farmUserInfo: IScUserFarmInfo;
+  farmUserRewards: IScUserFarmRewards[];
   logoSize?: number;
   isPool?: boolean;
 }
@@ -48,7 +53,13 @@ export const ProteoItemContenxt = createContext({
   decimals: 0,
 });
 
-const Farms2Item = ({ farm, logoSize, isPool, farmUserInfo }: IProps) => {
+const Farms2Item = ({
+  farm,
+  logoSize,
+  isPool,
+  farmUserInfo,
+  farmUserRewards,
+}: IProps) => {
   const { token: stakingToken } = useGetElrondToken(farm.farm.stakingToken);
 
   const { token: rewardToken } = useGetElrondToken(farm.farm.rewardToken);
@@ -203,7 +214,7 @@ const Farms2Item = ({ farm, logoSize, isPool, farmUserInfo }: IProps) => {
                   )}
                 </Text>
               </Flex>
-              <EarnTokens farm={farm} />
+              <EarnTokens userRewards={farmUserRewards} />
             </Grid>
           </Box>
           <AccordionIcon color="main" />

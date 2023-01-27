@@ -7,6 +7,7 @@ import { fetchStats } from "redux/slices/elrond/elrond-slice";
 import {
   selectFarms,
   selectUserFarms2Info,
+  selectUserFarms2Rewards,
 } from "redux/slices/farms2/farms2-slice";
 import {
   fetchAllFarms,
@@ -30,6 +31,7 @@ const FarmsList = () => {
   const dispatch = useAppDispatch();
   const address = useAppSelector(selectUserAddress);
   const userFarm2Info = useSelector(selectUserFarms2Info);
+  const userFarm2Rewards = useSelector(selectUserFarms2Rewards);
   const farms2 = useSelector(selectFarms);
 
   const [farms2ToSearch, setFarms2ToSearch] = useState(farms2);
@@ -105,6 +107,7 @@ const FarmsList = () => {
           othersArr={{
             allFarms: farms2ToSearch,
             userFarmInfo: userFarm2Info.data,
+            userFarm2Rewards: userFarm2Rewards.data,
           }}
         />
       </Center>

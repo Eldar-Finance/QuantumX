@@ -6,8 +6,14 @@ import {
   IScFarmItem,
   IScPanelFarms,
   IScUserFarmInfo,
+  IScUserFarmRewards,
 } from "utils/types/sc.interface";
-import { fetchAllFarms, fetchCreatorsFarms, fetchUSerFarmInfo } from "./funcs";
+import {
+  fetchAllFarms,
+  fetchCreatorsFarms,
+  fetchUSerFarmInfo,
+  fetchUSerRewardsInfo,
+} from "./funcs";
 
 export interface Farms2State {
   allFarms: {
@@ -18,6 +24,11 @@ export interface Farms2State {
   userFarmsInfo: {
     status: STATUS;
     data: IScUserFarmInfo[];
+    error: string;
+  };
+  userRewards: {
+    status: STATUS;
+    data: IScUserFarmRewards[];
     error: string;
   };
   creatorsFarms: {
@@ -34,6 +45,11 @@ const initialState: Farms2State = {
     error: "",
   },
   userFarmsInfo: {
+    data: [],
+    status: "idle",
+    error: "",
+  },
+  userRewards: {
     data: [],
     status: "idle",
     error: "",
@@ -78,6 +94,21 @@ export const generalSlice = createSlice({
         }
       )
       .addCase(fetchUSerFarmInfo.rejected, (state, action) => {
+        state.userRewards.status = "failed";
+        state.userRewards.error = action.error.message;
+      })
+      // fetchUSerRewardsInfo
+      .addCase(fetchUSerRewardsInfo.pending, (state) => {
+        state.userRewards.status = "loading";
+      })
+      .addCase(
+        fetchUSerRewardsInfo.fulfilled,
+        (state, action: PayloadAction<IScUserFarmRewards[]>) => {
+          state.userRewards.status = "succeeded";
+          state.userRewards.data = action.payload;
+        }
+      )
+      .addCase(fetchUSerRewardsInfo.rejected, (state, action) => {
         state.userFarmsInfo.status = "failed";
         state.userFarmsInfo.error = action.error.message;
       })
@@ -114,4 +145,7 @@ export const selectCreatorsFarms = (state: AppState) =>
   state.farms2.creatorsFarms;
 export const selectUserFarms2Info = (state: AppState) =>
   state.farms2.userFarmsInfo;
+export const selectUserFarms2Rewards = (state: AppState) =>
+  state.farms2.userRewards;
+
 export default generalSlice.reducer;
