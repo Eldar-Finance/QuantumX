@@ -31,7 +31,6 @@ import { preventExponetialNotation } from "utils/functions/numbers";
 import { formatTokenI } from "utils/functions/tokens";
 import { useAppDispatch, useAppSelector } from "utils/hooks/redux";
 import useGetElrondToken from "utils/hooks/useGetElrondToken";
-import useGetTokenPrice from "utils/hooks/useGetTokenPrice";
 import { farms2Data } from "views/Farms/constants";
 import useCanUsePool7 from "views/Pools/hooks/useCanUsePool7";
 import EarnedRewards from "./Farms2/EarnedRewards/EarnedRewards";
@@ -44,7 +43,9 @@ interface IProps {
   farmUserInfo: IScUserFarmInfo;
   farmUserRewards: IScUserFarmRewards[];
   logoSize?: number;
+  stakedTokenPrice: number;
   isPool?: boolean;
+  tvl: number;
 }
 
 export const ProteoItemContenxt = createContext({
@@ -59,6 +60,8 @@ const Farms2Item = ({
   isPool,
   farmUserInfo,
   farmUserRewards,
+  stakedTokenPrice,
+  tvl,
 }: IProps) => {
   const { token: stakingToken } = useGetElrondToken(farm.farm.stakingToken);
 
@@ -68,14 +71,12 @@ const Farms2Item = ({
     farm.farm.farmId,
     fetchLastRewardedEpoch
   );
-  const { logo, name, lpToken2, scFarmAddress } = farms2Data[
-    formatTokenI(farm.farm.stakingToken)
-  ]
+  const { logo, name } = farms2Data[formatTokenI(farm.farm.stakingToken)]
     ? farms2Data[formatTokenI(farm.farm.stakingToken)]
-    : { logo: "", name: "", lpToken2: "", scFarmAddress: "" };
+    : { logo: "", name: "" };
   const { data: stats } = useAppSelector(selectElrondStats);
 
-  const [price] = useGetTokenPrice(farm.farm.stakingToken);
+  const price = stakedTokenPrice;
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(
@@ -202,17 +203,7 @@ const Farms2Item = ({
               </Flex>
               <Flex flexDir={"column"} textAlign="center">
                 <Text color="white.400">Total Value Locked</Text>
-                <Text>
-                  ${" "}
-                  {formatBalanceDolar(
-                    {
-                      balance: farm.stakedBalance,
-                      decimals: stakingToken.decimals,
-                    },
-                    price,
-                    true
-                  )}
-                </Text>
+                <Text>$ {formatNumber(tvl)}</Text>
               </Flex>
               <EarnTokens userRewards={farmUserRewards} />
             </Grid>

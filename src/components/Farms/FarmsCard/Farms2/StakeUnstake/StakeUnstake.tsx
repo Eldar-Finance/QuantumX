@@ -127,6 +127,7 @@ const StakeUnstake = ({ farm, userFarmItem, isPool }: IProps) => {
           isPool={isPool}
           isOpen={openUnstakeStake}
           onClose={() => setOpenUnstakeStake((s) => !s)}
+          epochDiffrence={epochDiffrence}
         />
       )}
     </Flex>
