@@ -83,6 +83,9 @@ const useGetTotalValueInFarms = () => {
           );
         }
         setTotalValueLocked(totalLockedonProteoFarms);
+
+        console.log("generalInfoAppData", generalInfoAppData);
+        console.log("farms2", farms2);
       }
     };
     func();

@@ -135,11 +135,11 @@ export const {} = generalSlice.actions;
 export const selectAllFarms2 = (state: AppState) => state.farms2.allFarms;
 export const selectFarms = (state: AppState) =>
   state.farms2.allFarms.data.filter(
-    (farm) => farm.farm.stakingToken !== toknesID.rare
+    (farm) => farm.farm.stakingToken !== toknesID.wegld
   );
 export const selectPools = (state: AppState) =>
   state.farms2.allFarms.data.filter(
-    (farm) => farm.farm.stakingToken === toknesID.rare
+    (farm) => farm.farm.stakingToken === toknesID.wegld
   );
 export const selectCreatorsFarms = (state: AppState) =>
   state.farms2.creatorsFarms;

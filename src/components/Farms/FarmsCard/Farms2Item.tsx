@@ -172,7 +172,7 @@ const Farms2Item = ({
                     width={logoSize || 27}
                   />
                 ) : (
-                  <NextImage src={logo} alt="rareusdc" height={45} width={45} />
+                  <NextImage src={logo} alt="logo" height={45} width={45} />
                 )}
 
                 <Text fontWeight={"600"}>{name || stakingToken.name}</Text>
