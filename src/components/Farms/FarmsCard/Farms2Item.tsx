@@ -215,12 +215,12 @@ const Farms2Item = ({
         <Grid flex="1" templateColumns={{ xs: "1fr", md: "1fr 1fr" }} gap="4">
           <PanelBox>
             <Flex justifyContent={"center"} textAlign={"center"} gap={5}>
-              <EarnedRewards farm={farm} userFarmInfo={farmUserInfo} />
+              <EarnedRewards userRewards={farmUserRewards} />
             </Flex>
           </PanelBox>
 
           <PanelBox>
-            <Avilable farm={farm} userFarmInfo={farmUserInfo} />
+            <Avilable farm={farm} userFarmRewards={farmUserRewards} />
           </PanelBox>
           <PanelBox gridColumn={{ xs: "auto", md: "1/3" }}>
             <StakeUnstake

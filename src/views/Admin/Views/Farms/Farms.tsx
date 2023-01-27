@@ -2,7 +2,6 @@ import { Box, Flex, Grid, useDisclosure, VStack } from "@chakra-ui/react";
 import ActionButton from "components/ActionButton/ActionButton";
 import NewFarmModal from "views/Panel/components/PanelTable/NewFarmModal";
 import AddEarner from "./AddEarner/AddEarner";
-import ClaimFeeButton from "./ClaimFee/ClaimFee";
 import Creators from "./Creators/Creators";
 import EarnersTable from "./EarnersTable/EarnersTable";
 import Fees from "./Fees/Fees";
@@ -28,7 +27,7 @@ const Farms = () => {
               <ActionButton onClick={onToggle} my={4}>
                 New Pool/Farm
               </ActionButton>
-              <ClaimFeeButton />
+              {/* <ClaimFeeButton /> */}
             </Flex>
           </Flex>
 

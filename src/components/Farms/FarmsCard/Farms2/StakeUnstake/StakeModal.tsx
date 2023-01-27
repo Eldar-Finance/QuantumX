@@ -36,13 +36,16 @@ interface IProps {
 }
 
 const StakeModal = ({ isOpen, onClose, farm, isPool, token }: IProps) => {
-  const [tokens, userToken] = useGetUserTokens(farm.farm.stakingToken);
+  const [_, userToken]: any = useGetUserTokens(farm.farm.stakingToken);
+  console.log("arm.farm.stakingToken", farm.farm.stakingToken);
+
   const validationSchema = yup.object({
     amount: yup
       .number()
       .required()
       .max(formatBalance(userToken, true)),
   });
+  console.log("userToken", userToken);
 
   const [sessionId, setSessionId] = useState();
   const onSuccess = () => {
@@ -111,7 +114,7 @@ const StakeModal = ({ isOpen, onClose, farm, isPool, token }: IProps) => {
           <Box bg="black.base" p="5" borderRadius={"xl"}>
             <Flex mb="2">
               <Text>
-                Balance: {formatBalance(userToken)} {userToken?.name}
+                Balance: {formatBalance(userToken)} {userToken?.ticker}
               </Text>
             </Flex>
             <Flex mb="3">

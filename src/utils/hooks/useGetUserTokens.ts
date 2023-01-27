@@ -7,6 +7,7 @@ import {
   selectUserTokens,
 } from "redux/slices/userAcount/account-slice";
 import { fetchTokens } from "redux/slices/userAcount/funcs";
+import { IELrondTOkenWithBalance } from "utils/types/elrond.interface";
 import { useAppDispatch } from "./redux";
 
 const useGetUserTokens = (indentifier?: string, onlyEsdt?: boolean) => {
@@ -16,8 +17,8 @@ const useGetUserTokens = (indentifier?: string, onlyEsdt?: boolean) => {
   const acc = useGetAccountInfo();
 
   const userTokens = tokensData.allTokens;
-  const [tokens, setTokens] = useState([]);
-  const [token, setToken] = useState<any>();
+  const [tokens, setTokens] = useState<IELrondTOkenWithBalance[]>([]);
+  const [token, setToken] = useState<IELrondTOkenWithBalance>();
 
   useEffect(() => {
     if (addrees) {
