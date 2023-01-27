@@ -11,7 +11,7 @@ import {
 
 export const fetchAllFarms = createAsyncThunk(
   "farms2/fetchAllFarms",
-  async (mexPairs: any[]) => {
+  async (mexPairs?: any[]) => {
     const scRes = await scQuery("farms2", "getAllFarms");
 
     const scFirstValue = scRes.firstValue.valueOf();
@@ -34,18 +34,22 @@ export const fetchAllFarms = createAsyncThunk(
 
     return {
       allFarms,
-      pools: allFarms.filter(
-        (farm) =>
-          mexPairs.findIndex(
-            (mexPair) => mexPair.id === farm.farm.stakingToken
-          ) === -1
-      ),
-      farms: allFarms.filter(
-        (farm) =>
-          mexPairs.findIndex(
-            (mexPair) => mexPair.id === farm.farm.stakingToken
-          ) !== -1
-      ),
+      pools: mexPairs
+        ? allFarms.filter(
+            (farm) =>
+              mexPairs.findIndex(
+                (mexPair) => mexPair.id === farm.farm.stakingToken
+              ) === -1
+          )
+        : [],
+      farms: mexPairs
+        ? allFarms.filter(
+            (farm) =>
+              mexPairs.findIndex(
+                (mexPair) => mexPair.id === farm.farm.stakingToken
+              ) !== -1
+          )
+        : [],
     };
   }
 );

@@ -16,7 +16,7 @@ import QuantumXFeatures from "./components/QuantumXFeatures/QuantumXFeatures";
 const Home = () => {
   const dispatch = useAppDispatch();
   useEffect(() => {
-    dispatch(fetchAllFarms());
+    dispatch(fetchAllFarms([]));
     dispatch(fetchGeneralInfo());
   }, [dispatch]);
   return (
