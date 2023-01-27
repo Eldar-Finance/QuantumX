@@ -35,6 +35,8 @@ const BearlyCard = ({ farm }: IProps) => {
   const userRewardsForThisFarm = userFarm2Rewards.data.filter(
     (f) => f.farmId === farm.farm.farmId
   );
+  console.log("userFarm2Info", userFarm2Info);
+
   const userFarmInfoForThisFarm = userFarm2Info.data.find(
     (fi) => fi.farmId === farm.farm.farmId
   );
@@ -70,6 +72,9 @@ const BearlyCard = ({ farm }: IProps) => {
   const { canUsePool } = useCanUsePool7(farm.farm.farmId);
   console.log("stakingToken", stakingToken);
 
+  if (!userFarmInfoForThisFarm) {
+    return null;
+  }
   return (
     <Card>
       <Grid templateColumns={{ xs: "1fr", tablet: "2fr 1fr" }} gap={20}>
