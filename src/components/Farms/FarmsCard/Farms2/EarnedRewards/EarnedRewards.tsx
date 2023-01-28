@@ -2,21 +2,17 @@ import { Center, Flex, Text } from "@chakra-ui/react";
 import NextImage from "components/NextImage/NextImage";
 import { formatBalance } from "utils/functions/formatBalance";
 import useGetMultipleElrondTokens from "utils/hooks/useGetMultipleElrondTokens";
-import {
-  IScFarm2RewardsLeft,
-  IScUserFarmRewards,
-} from "utils/types/sc.interface";
+import { IScUserFarmRewards } from "utils/types/sc.interface";
 
 interface IProps {
   userRewards: IScUserFarmRewards[];
-  multifarmRewardsLeft: IScFarm2RewardsLeft[];
+  multifarmRewardsLeft: string[];
 }
 
 const EarnedRewards = ({ userRewards, multifarmRewardsLeft }: IProps) => {
   const { tokens: rewardsTokens } = useGetMultipleElrondTokens(
-    userRewards.map((r) => r.rewardToken)
+    multifarmRewardsLeft
   );
-  console.log("rewardsTokens", rewardsTokens);
 
   return (
     <Flex flexDir={"column"}>
@@ -27,7 +23,6 @@ const EarnedRewards = ({ userRewards, multifarmRewardsLeft }: IProps) => {
         const rewardInfo = userRewards.find(
           (r) => r.rewardToken === rewardsToken.identifier
         );
-        console.log("rewardInfo", rewardInfo);
 
         return (
           <Center

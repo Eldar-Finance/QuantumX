@@ -132,8 +132,12 @@ const Farms2Item = ({
       stats
     );
   }
+  if (farm.farm.farmId === 5) {
+    console.log("farm", farm);
+    console.log("multifarmRewardsLeft", multifarmRewardsLeft);
 
-  console.log("farmUserRewards", farmUserRewards);
+    console.log("farmUserRewards", farmUserRewards);
+  }
 
   return (
     <AccordionItem w="full">
@@ -203,9 +207,11 @@ const Farms2Item = ({
                 <Text>$ {formatNumber(tvl)}</Text>
               </Flex>
               <EarnTokens
-                userRewardsTokensIdentifiers={farmUserRewards.map(
-                  (mfr) => mfr.rewardToken
-                )}
+                userRewardsTokensIdentifiers={
+                  farm.farm.rewardToken === ""
+                    ? multifarmRewardsLeft.map((r) => r.token)
+                    : [farm.farm.rewardToken]
+                }
               />
             </Grid>
           </Box>
@@ -218,7 +224,11 @@ const Farms2Item = ({
             <Flex justifyContent={"center"} textAlign={"center"} gap={5}>
               <EarnedRewards
                 userRewards={farmUserRewards}
-                multifarmRewardsLeft={multifarmRewardsLeft}
+                multifarmRewardsLeft={
+                  farm.farm.rewardToken === ""
+                    ? multifarmRewardsLeft.map((r) => r.token)
+                    : [farm.farm.rewardToken]
+                }
               />
             </Flex>
           </PanelBox>

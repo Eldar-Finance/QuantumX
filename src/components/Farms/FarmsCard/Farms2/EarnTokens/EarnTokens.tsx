@@ -13,6 +13,7 @@ const EarnTokens = ({ userRewardsTokensIdentifiers }: IProps) => {
     userRewardsTokensIdentifiers
   );
   console.log("userRewardsTokensIdentifiers", userRewardsTokensIdentifiers);
+  console.log("rewardsTokens", rewardsTokens);
 
   let manualImage = null;
 
