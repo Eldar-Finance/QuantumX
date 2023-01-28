@@ -79,6 +79,7 @@ export const fetchUSerRewardsInfo = createAsyncThunk(
     ]);
 
     const scFirstValue = scRes.firstValue.valueOf();
+    console.log("scFirstValue", scFirstValue);
 
     const userRewards: IScUserFarmRewards[] = scFirstValue.map((rewards) => {
       const data: IScUserFarmRewards = {
