@@ -48,7 +48,9 @@ const BearlyCard = ({ farm, multifarmRewardsLeft }: IProps) => {
     userRewardsForThisFarm.map((f) => f.rewardToken)
   );
   const { tokens: rewardsTokens } = useGetMultipleElrondTokens(
-    multifarmRewardsLeft.rewardsLeft.map((f) => f.token)
+    multifarmRewardsLeft
+      ? multifarmRewardsLeft.rewardsLeft.map((f) => f.token)
+      : []
   );
   const [staingTokenPrice] = useGetTokenPrice(farm.farm.stakingToken);
   const { data: lastRewardedEpoch } = useSWR<number>(
@@ -164,7 +166,7 @@ const BearlyCard = ({ farm, multifarmRewardsLeft }: IProps) => {
             gap={3}
             pb={6}
           >
-            {tokens.map((token) => {
+            {rewardsTokens.map((token) => {
               const rewardInfo = userRewardsForThisFarm.find(
                 (r) => r.rewardToken === token.identifier
               );
@@ -180,7 +182,7 @@ const BearlyCard = ({ farm, multifarmRewardsLeft }: IProps) => {
 
                   <Text fontSize={"2xl"} fontWeight="bold">
                     {formatBalance({
-                      balance: rewardInfo.harvestableAmount,
+                      balance: rewardInfo?.harvestableAmount,
                       decimals: token.decimals,
                     })}
                   </Text>

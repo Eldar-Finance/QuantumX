@@ -104,7 +104,7 @@ const Farms2Item = ({
   // only for srb farm
   const { canUsePool } = useCanUsePool7(farm.farm.farmId);
 
-  const apr: string = aprFarms(
+  let apr: string = aprFarms(
     price,
     stakingToken,
     lastRewardedEpoch,

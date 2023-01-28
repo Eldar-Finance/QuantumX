@@ -127,23 +127,16 @@ export const aprFarms = (
   farm,
   stats,
   type: "single" | "multi" = "single",
-  multifarmRewardsLeft: IScMultiFarmsRewardsLeft
+  multifarmRewardsLeft: IScMultiFarmsRewardsLeft = undefined
 ) => {
   let apr: string = "-";
-  console.log("price", price);
-  console.log("stakingToken", stakingToken);
-  console.log("lastRewardedEpoch", lastRewardedEpoch);
-  console.log("rewardTokens", rewardTokens);
-  console.log("farm", farm);
-  console.log("stats", stats);
-  console.log("type", type);
-  console.log("multifarmRewardsLeft", multifarmRewardsLeft);
+
   if (
     price &&
     stakingToken &&
     rewardTokens &&
     lastRewardedEpoch &&
-    farm.totalRewardsLeft > 0 &&
+    (farm.totalRewardsLeft > 0 || type === "multi") &&
     farm.stakedBalance > 0
   ) {
     console.log("inside apr");
