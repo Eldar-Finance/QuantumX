@@ -1,6 +1,7 @@
 import { Accordion } from "@chakra-ui/react";
 import { useRouter } from "next/dist/client/router";
 import { useEffect, useState } from "react";
+import { selectMultiFarms2RewardsLeft } from "redux/slices/farms2/farms2-slice";
 import { getSortedFarm } from "utils/functions/farms";
 import { useAppSelector } from "utils/hooks/redux";
 import useGetMultipleElrondTokens from "utils/hooks/useGetMultipleElrondTokens";
@@ -38,6 +39,9 @@ const FarmsCard = ({ proteoArr, isPool, othersArr = null }: IProps) => {
   const [accordionIndex, setAccordionIndex] = useState<number[]>([]);
   const { data: generalFarmsData } = useAppSelector(
     (state) => state.proteo.generalInfoApp
+  );
+  const { data: multifarmRewardsLeft } = useAppSelector(
+    selectMultiFarms2RewardsLeft
   );
 
   const [tokenPrices] = useGetMultiplePrices(
@@ -103,6 +107,11 @@ const FarmsCard = ({ proteoArr, isPool, othersArr = null }: IProps) => {
               stakedTokenPrice={farm.stakedTokenPrice}
               isPool={isPool}
               logoSize={isPool ? 45 : 27}
+              multifarmRewardsLeft={
+                multifarmRewardsLeft.find(
+                  (mfr) => mfr.farmId === farm.farm.farm.farmId
+                )?.rewardsLeft || []
+              }
             />
           );
         }

@@ -45,8 +45,8 @@ const Farms = () => {
 
       //farms from oteher farms (Quantumn smart constract)
       dispatch(fetchUSerFarmInfo(address));
-      dispatch(fetchUSerRewardsInfo(address));
     }
+    dispatch(fetchUSerRewardsInfo(address));
   }, [address, dispatch]);
 
   useEffect(() => {

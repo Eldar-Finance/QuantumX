@@ -43,10 +43,6 @@ const BearlyCard = ({ farm, multifarmRewardsLeft }: IProps) => {
   const userFarmInfoForThisFarm = userFarm2Info.data.find(
     (fi) => fi.farmId === farm.farm.farmId
   );
-
-  const { tokens } = useGetMultipleElrondTokens(
-    userRewardsForThisFarm.map((f) => f.rewardToken)
-  );
   const { tokens: rewardsTokens } = useGetMultipleElrondTokens(
     multifarmRewardsLeft
       ? multifarmRewardsLeft.rewardsLeft.map((f) => f.token)

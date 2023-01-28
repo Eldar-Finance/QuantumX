@@ -75,13 +75,7 @@ export const fetchUSerRewardsInfo = createAsyncThunk(
   "farms2/fetchUSerRewardsInfo",
   async (address: string) => {
     const scRes = await scQuery("farms2", "getUserRewardsInfo", [
-      new AddressValue(
-        new Address(
-          address === ""
-            ? "erd1spyavw0956vq68xj8y4tenjpq2wd5a9p2c6j8gsz7ztyrnpxrruqzu66jx"
-            : address
-        )
-      ),
+      new AddressValue(new Address(address)),
     ]);
 
     const scFirstValue = scRes.firstValue.valueOf();

@@ -4,14 +4,13 @@ import bearImage from "assets/logos/bear.png";
 import NextImage from "components/NextImage/NextImage";
 import { Fragment } from "react";
 import useGetMultipleElrondTokens from "utils/hooks/useGetMultipleElrondTokens";
-import { IScUserFarmRewards } from "utils/types/sc.interface";
 interface IProps {
-  userRewards: IScUserFarmRewards[];
+  userRewardsTokensIdentifiers: string[];
 }
 
-const EarnTokens = ({ userRewards }: IProps) => {
+const EarnTokens = ({ userRewardsTokensIdentifiers }: IProps) => {
   const { tokens: rewardsTokens } = useGetMultipleElrondTokens(
-    userRewards.map((r) => r.rewardToken)
+    userRewardsTokensIdentifiers
   );
 
   let manualImage = null;

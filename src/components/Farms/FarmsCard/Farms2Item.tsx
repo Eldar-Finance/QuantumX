@@ -13,6 +13,7 @@ import NextImage from "components/NextImage/NextImage";
 
 import { createContext, PropsWithChildren, useEffect } from "react";
 import {
+  IScFarm2RewardsLeft,
   IScFarmItem,
   IScUserFarmInfo,
   IScUserFarmRewards,
@@ -46,6 +47,7 @@ interface IProps {
   stakedTokenPrice: number;
   isPool?: boolean;
   tvl: number;
+  multifarmRewardsLeft: IScFarm2RewardsLeft[];
 }
 
 export const ProteoItemContenxt = createContext({
@@ -62,6 +64,7 @@ const Farms2Item = ({
   farmUserRewards,
   stakedTokenPrice,
   tvl,
+  multifarmRewardsLeft,
 }: IProps) => {
   const { token: stakingToken } = useGetElrondToken(farm.farm.stakingToken);
 
@@ -177,7 +180,11 @@ const Farms2Item = ({
                 <Text color="white.400">Total Value Locked</Text>
                 <Text>$ {formatNumber(tvl)}</Text>
               </Flex>
-              <EarnTokens userRewards={farmUserRewards} />
+              <EarnTokens
+                userRewardsTokensIdentifiers={multifarmRewardsLeft.map(
+                  (mfr) => mfr.token
+                )}
+              />
             </Grid>
           </Box>
           <AccordionIcon color="main" />
@@ -187,7 +194,10 @@ const Farms2Item = ({
         <Grid flex="1" templateColumns={{ xs: "1fr", md: "1fr 1fr" }} gap="4">
           <PanelBox>
             <Flex justifyContent={"center"} textAlign={"center"} gap={5}>
-              <EarnedRewards userRewards={farmUserRewards} />
+              <EarnedRewards
+                userRewards={farmUserRewards}
+                multifarmRewardsLeft={multifarmRewardsLeft}
+              />
             </Flex>
           </PanelBox>
 
