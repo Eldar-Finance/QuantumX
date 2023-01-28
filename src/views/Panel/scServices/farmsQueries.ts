@@ -37,8 +37,6 @@ export const fetchStakersReport = async ([key, id]: [string, number]) => {
   ]);
   let data = res?.firstValue?.valueOf();
 
-  console.log("data", data);
-
   const finalData: IScFarms2StakersReport[] = data.map((reportInfo) => {
     const data: IScFarms2StakersReport = {
       staker: reportInfo.field0.bech32(),
@@ -50,7 +48,6 @@ export const fetchStakersReport = async ([key, id]: [string, number]) => {
     };
     return data;
   });
-  console.log("finalData", finalData);
 
   return finalData;
 };

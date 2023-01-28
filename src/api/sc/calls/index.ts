@@ -241,9 +241,6 @@ export const MultESDTNFTTranferOrEgldPayment = async (
   );
   const ohterTokens = tokens.filter((token) => token.identifier !== "EGLD");
 
-  console.log("egldPaymentTokens", egldPaymentTokens);
-  console.log("ohterTokens", ohterTokens);
-
   egldPaymentTokens.forEach((token) => {
     const payload = TransactionPayload.contractCall()
       .setFunction(new ContractFunction(funcName))

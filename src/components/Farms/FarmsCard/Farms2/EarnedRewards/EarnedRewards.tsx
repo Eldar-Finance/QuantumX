@@ -17,8 +17,6 @@ const EarnedRewards = ({ userRewards, multifarmRewardsLeft }: IProps) => {
     multifarmRewardsLeft.map((r) => r.token)
   );
 
-  console.log("multifarmRewardsLeft", multifarmRewardsLeft);
-
   return (
     <Flex flexDir={"column"}>
       <Text color="white.400" fontSize={"sm"}>

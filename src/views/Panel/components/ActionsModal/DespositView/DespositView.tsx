@@ -68,8 +68,6 @@ const DepositView = ({ onClose, farm }: IProps) => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      console.log("values", values);
-
       depositRewards(
         values.tokens,
         farm.farmId,

@@ -136,8 +136,6 @@ export const aprFarms = (
     (farm.totalRewardsLeft > 0 || type === "multi") &&
     farm.stakedBalance > 0
   ) {
-    console.log("inside apr");
-
     const epochDifference = lastRewardedEpoch + 1 - stats.epoch;
 
     if (epochDifference > 0) {
@@ -203,8 +201,6 @@ export const aprFarms = (
                   epochDifference
               ).toString()
             ) + "%";
-
-          console.log("rewardsLeftDolarAmount", rewardsLeftDolarAmount);
         }
       }
     }

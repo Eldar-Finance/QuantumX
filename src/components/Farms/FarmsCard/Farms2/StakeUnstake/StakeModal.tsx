@@ -37,7 +37,6 @@ interface IProps {
 
 const StakeModal = ({ isOpen, onClose, farm, isPool, token }: IProps) => {
   const [_, userToken]: any = useGetUserTokens(farm.farm.stakingToken);
-  console.log("arm.farm.stakingToken", farm.farm.stakingToken);
 
   const validationSchema = yup.object({
     amount: yup
@@ -45,7 +44,6 @@ const StakeModal = ({ isOpen, onClose, farm, isPool, token }: IProps) => {
       .required()
       .max(formatBalance(userToken, true)),
   });
-  console.log("userToken", userToken);
 
   const [sessionId, setSessionId] = useState();
   const onSuccess = () => {

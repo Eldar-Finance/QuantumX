@@ -69,7 +69,6 @@ export const panelColumns = [
       const closeReport = () => {
         setOpenReportInfo(false);
       };
-      console.log("openReportInfo", openReportInfo);
 
       return (
         <Flex flexDir={"column"} gap={4}>

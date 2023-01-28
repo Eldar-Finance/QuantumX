@@ -1,4 +1,12 @@
-import { Box, Center, Flex, ModalHeader, Spinner,Heading,CloseButton } from "@chakra-ui/react";
+import {
+  Box,
+  Center,
+  CloseButton,
+  Flex,
+  Heading,
+  ModalHeader,
+  Spinner,
+} from "@chakra-ui/react";
 import { getNetworkStats } from "api/rest/elrondApi/network";
 import MyModal from "components/Modal/Modal";
 import SearchTable from "components/Tables/SearchTable";
@@ -20,7 +28,6 @@ const ReporModal = ({ isOpen, onClose, farmId, stakedToken }: IProps) => {
   const { report, isLoading } = useGetStakersReport(farmId);
   const { token } = useGetElrondToken(stakedToken);
   const { data: statsRes } = useSWR("/stats", getNetworkStats);
-  console.log("statsRes", statsRes);
 
   return (
     <MyModal isOpen={isOpen} onClose={onClose} size={"4xl"}>
