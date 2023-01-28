@@ -12,8 +12,6 @@ const EarnTokens = ({ userRewardsTokensIdentifiers }: IProps) => {
   const { tokens: rewardsTokens } = useGetMultipleElrondTokens(
     userRewardsTokensIdentifiers
   );
-  console.log("userRewardsTokensIdentifiers", userRewardsTokensIdentifiers);
-  console.log("rewardsTokens", rewardsTokens);
 
   let manualImage = null;
 
@@ -24,8 +22,10 @@ const EarnTokens = ({ userRewardsTokensIdentifiers }: IProps) => {
       </Text>
       <Center gap={2}>
         {rewardsTokens.map((rewardsToken) => {
-          if (rewardsToken === toknesID.bear) {
+          if (rewardsToken.identifier === toknesID.bear) {
             manualImage = bearImage;
+            console.log("rewardsToken", rewardsToken);
+            console.log("is bear");
           }
           return (
             <Fragment key={rewardsToken.identifier}>
