@@ -51,6 +51,7 @@ const BearlyCard = ({ farm, multifarmRewardsLeft }: IProps) => {
       ? multifarmRewardsLeft.rewardsLeft.map((f) => f.token)
       : []
   );
+
   const [staingTokenPrice] = useGetTokenPrice(farm.farm.stakingToken);
   const { data: lastRewardedEpoch } = useSWR<number>(
     //@ts-ignore
@@ -112,14 +113,14 @@ const BearlyCard = ({ farm, multifarmRewardsLeft }: IProps) => {
               <Text>{apr}</Text>
             </VStack>
             <VStack>
-              <Text color="white.400">Total ValueLocked</Text>
+              <Text color="white.400">Total Value Locked</Text>
               <Text>
                 {formatBalanceDolar(
                   {
                     balance: farm.stakedBalance,
                     decimals: stakingToken.decimals,
                   },
-                  stakingToken.price,
+                  staingTokenPrice,
                   true
                 )}
               </Text>
