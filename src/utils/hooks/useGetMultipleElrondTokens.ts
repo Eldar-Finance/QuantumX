@@ -43,22 +43,21 @@ const useGetMultipleElrondTokens = (tokensIdentifiers: string[]) => {
           circulatingSupply: egldData.data.circulatingSupply,
         });
       }
-    } else {
-      if (
-        finalData.findIndex((item) => item.identifier === toknesID.prick) !== -1
-      ) {
-        const token = finalData.find((t) => t.identifier === toknesID.prick);
-        finalData = [
-          ...finalData,
-          {
-            ...token,
-            assets: {
-              svgUrl: "/images/prick.png",
-            },
-          },
-        ];
-      }
     }
+  }
+  if (
+    finalData.findIndex((item) => item.identifier === toknesID.prick) !== -1
+  ) {
+    const token = finalData.find((t) => t.identifier === toknesID.prick);
+    finalData = [
+      ...finalData,
+      {
+        ...token,
+        assets: {
+          svgUrl: "/images/prick.png",
+        },
+      },
+    ];
   }
 
   return {
