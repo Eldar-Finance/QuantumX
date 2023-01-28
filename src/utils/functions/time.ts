@@ -48,7 +48,33 @@ export const transfromTime = (sec) => {
   };
 };
 
-// this function receive elrond epoch and return how many days until that epoch
-export const getRemainingDaysFromEpochs = (epoch: number) => {
-  //   const currentEpoch = await;
+//function to subtract days from a date
+export const subtractDays = (date, days) => {
+  const result = new Date(date);
+  result.setDate(result.getDate() - days);
+  return result;
+};
+
+// function to format a date to keep the date part
+export const formatDate = (date) => {
+  let d = new Date(date),
+    month = "" + (d.getMonth() + 1),
+    day = "" + d.getDate(),
+    year = d.getFullYear();
+
+  if (month.length < 2) month = "0" + month;
+  if (day.length < 2) day = "0" + day;
+
+  return [day, month, year].join("/");
+};
+
+export const getDateForEpoch = (epoch, currentEpoch) => {
+  if (epoch === 0) {
+    return "N/A";
+  }
+  const date = new Date();
+  const diff = currentEpoch - epoch;
+  const newDate = subtractDays(date, diff);
+
+  return formatDate(newDate);
 };

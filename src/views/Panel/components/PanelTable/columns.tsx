@@ -63,6 +63,13 @@ export const panelColumns = [
       const handleOpenReportModal = () => {
         setOpenReportInfo((s) => !s);
       };
+      const closeModal = () => {
+        setopenModal(false);
+      };
+      const closeReport = () => {
+        setOpenReportInfo(false);
+      };
+      console.log("openReportInfo", openReportInfo);
 
       return (
         <Flex flexDir={"column"} gap={4}>
@@ -73,17 +80,14 @@ export const panelColumns = [
             <Icon as={HamburgerIcon} />
           </ActionButton>
           {openModal && (
-            <ActionsModal
-              isOpen={openModal}
-              onClose={handleOpenModal}
-              farm={data}
-            />
+            <ActionsModal isOpen={openModal} onClose={closeModal} farm={data} />
           )}
           {openReportInfo && (
             <ReporModal
               isOpen={openReportInfo}
-              onClose={handleOpenModal}
+              onClose={closeReport}
               farmId={data.farm.farmId}
+              stakedToken={data.farm.stakingToken}
             />
           )}
         </Flex>
