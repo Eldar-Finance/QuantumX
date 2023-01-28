@@ -132,7 +132,7 @@ const Farms2Item = ({
       stats
     );
   }
-  if (farm.farm.farmId === 5) {
+  if (farm.farm.farmId === 3) {
     console.log("farm", farm);
     console.log("multifarmRewardsLeft", multifarmRewardsLeft);
 

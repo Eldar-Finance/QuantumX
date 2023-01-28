@@ -1,3 +1,4 @@
+import { toknesID } from "api/net.config";
 import { getEconomics } from "api/rest/elrondApi/network";
 import { getFromAllTokens } from "api/rest/elrondApi/tokens";
 import useSWR from "swr";
@@ -21,8 +22,8 @@ const useGetMultipleElrondTokens = (tokensIdentifiers: string[]) => {
     getEconomics
   );
 
-  const finalData: IElrondToken[] = data?.data;
-
+  let finalData: IElrondToken[] = data?.data ? [...data?.data] : [];
+  const finaltokens = [];
   if (isEgldonTokens) {
     if (egldData && finalData) {
       if (finalData.findIndex((item) => item.identifier === "EGLD") === -1) {
@@ -41,6 +42,21 @@ const useGetMultipleElrondTokens = (tokensIdentifiers: string[]) => {
           supply: egldData.data.totalSupply,
           circulatingSupply: egldData.data.circulatingSupply,
         });
+      }
+    } else {
+      if (
+        finalData.findIndex((item) => item.identifier === toknesID.prick) !== -1
+      ) {
+        const token = finalData.find((t) => t.identifier === toknesID.prick);
+        finalData = [
+          ...finalData,
+          {
+            ...token,
+            assets: {
+              svgUrl: "/images/prick.png",
+            },
+          },
+        ];
       }
     }
   }
