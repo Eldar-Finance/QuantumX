@@ -14,8 +14,9 @@ interface IProps {
 
 const EarnedRewards = ({ userRewards, multifarmRewardsLeft }: IProps) => {
   const { tokens: rewardsTokens } = useGetMultipleElrondTokens(
-    multifarmRewardsLeft.map((r) => r.token)
+    userRewards.map((r) => r.rewardToken)
   );
+  console.log("rewardsTokens", rewardsTokens);
 
   return (
     <Flex flexDir={"column"}>
@@ -26,6 +27,7 @@ const EarnedRewards = ({ userRewards, multifarmRewardsLeft }: IProps) => {
         const rewardInfo = userRewards.find(
           (r) => r.rewardToken === rewardsToken.identifier
         );
+        console.log("rewardInfo", rewardInfo);
 
         return (
           <Center

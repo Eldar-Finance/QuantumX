@@ -12,6 +12,7 @@ const EarnTokens = ({ userRewardsTokensIdentifiers }: IProps) => {
   const { tokens: rewardsTokens } = useGetMultipleElrondTokens(
     userRewardsTokensIdentifiers
   );
+  console.log("userRewardsTokensIdentifiers", userRewardsTokensIdentifiers);
 
   let manualImage = null;
 

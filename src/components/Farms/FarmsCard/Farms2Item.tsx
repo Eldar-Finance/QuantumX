@@ -133,6 +133,8 @@ const Farms2Item = ({
     );
   }
 
+  console.log("farmUserRewards", farmUserRewards);
+
   return (
     <AccordionItem w="full">
       <Box w="full">
@@ -201,8 +203,8 @@ const Farms2Item = ({
                 <Text>$ {formatNumber(tvl)}</Text>
               </Flex>
               <EarnTokens
-                userRewardsTokensIdentifiers={multifarmRewardsLeft.map(
-                  (mfr) => mfr.token
+                userRewardsTokensIdentifiers={farmUserRewards.map(
+                  (mfr) => mfr.rewardToken
                 )}
               />
             </Grid>
