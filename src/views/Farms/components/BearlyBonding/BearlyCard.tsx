@@ -81,9 +81,6 @@ const BearlyCard = ({ farm, multifarmRewardsLeft }: IProps) => {
   };
   const { canUsePool } = useCanUsePool7(farm.farm.farmId);
 
-  if (!userFarmInfoForThisFarm) {
-    return null;
-  }
   return (
     <Card>
       <Grid templateColumns={{ xs: "1fr", tablet: "2fr 1fr" }} gap={20}>
@@ -129,13 +126,13 @@ const BearlyCard = ({ farm, multifarmRewardsLeft }: IProps) => {
               <Text color="white.400">Staked Balance</Text>
               <Text>
                 {formatBalance({
-                  balance: userFarmInfoForThisFarm.stakedBalance,
+                  balance: userFarmInfoForThisFarm?.stakedBalance,
                   decimals: stakingToken.decimals,
                 })}{" "}
                 ($
                 {formatBalanceDolar(
                   {
-                    balance: userFarmInfoForThisFarm.stakedBalance,
+                    balance: userFarmInfoForThisFarm?.stakedBalance,
                     decimals: stakingToken.decimals,
                   },
                   stakingToken.price,
