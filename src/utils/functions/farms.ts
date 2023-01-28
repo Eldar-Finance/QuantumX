@@ -1,10 +1,7 @@
 import { IFarmWithTvl } from "components/Farms/FarmsCard/FarmsCard";
 import { noMaxTokens } from "utils/constants/farms";
 import { IElrondToken } from "utils/types/elrond.interface";
-import {
-  IScFarm2RewardsLeft,
-  IScMultiFarmsRewardsLeft,
-} from "utils/types/sc.interface";
+import { IScFarm2RewardsLeft } from "utils/types/sc.interface";
 import { orderSimpleData } from "./array";
 import { formatBalanceDolar, formatNumber } from "./formatBalance";
 import { preventExponetialNotation } from "./numbers";
@@ -127,7 +124,7 @@ export const aprFarms = (
   farm,
   stats,
   type: "single" | "multi" = "single",
-  multifarmRewardsLeft: IScMultiFarmsRewardsLeft = undefined
+  multifarmRewardsLeft: IScFarm2RewardsLeft[] = undefined
 ) => {
   let apr: string = "-";
 
@@ -173,7 +170,7 @@ export const aprFarms = (
 
           const rewardsLeftDolarAmount = rewardLeftTokens.reduce(
             (acc, token) => {
-              const tokenRewardsLeft: IScFarm2RewardsLeft = multifarmRewardsLeft.rewardsLeft.find(
+              const tokenRewardsLeft: IScFarm2RewardsLeft = multifarmRewardsLeft.find(
                 (r) => r.token === token.identifier
               );
               return (

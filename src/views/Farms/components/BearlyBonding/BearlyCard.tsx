@@ -64,7 +64,7 @@ const BearlyCard = ({ farm, multifarmRewardsLeft }: IProps) => {
     farm,
     stats,
     "multi",
-    multifarmRewardsLeft
+    multifarmRewardsLeft.rewardsLeft
   );
 
   const handleHarvest = () => {

@@ -32,6 +32,7 @@ import {
 import { formatTokenI } from "utils/functions/tokens";
 import { useAppDispatch, useAppSelector } from "utils/hooks/redux";
 import useGetElrondToken from "utils/hooks/useGetElrondToken";
+import useGetMultipleElrondTokens from "utils/hooks/useGetMultipleElrondTokens";
 import { farms2Data } from "views/Farms/constants";
 import useCanUsePool7 from "views/Pools/hooks/useCanUsePool7";
 import EarnedRewards from "./Farms2/EarnedRewards/EarnedRewards";
@@ -78,7 +79,9 @@ const Farms2Item = ({
     ? farms2Data[formatTokenI(farm.farm.stakingToken)]
     : { logo: "", name: "" };
   const { data: stats } = useAppSelector(selectElrondStats);
-
+  const { tokens: rewardsTokens } = useGetMultipleElrondTokens(
+    multifarmRewardsLeft ? multifarmRewardsLeft.map((f) => f.token) : []
+  );
   const price = stakedTokenPrice;
   const dispatch = useAppDispatch();
   useEffect(() => {
@@ -107,14 +110,28 @@ const Farms2Item = ({
   // only for srb farm
   const { canUsePool } = useCanUsePool7(farm.farm.farmId);
 
-  let apr: string = aprFarms(
-    price,
-    stakingToken,
-    lastRewardedEpoch,
-    rewardToken,
-    farm,
-    stats
-  );
+  let apr: string = "-";
+  if (farm.farm.rewardToken === "") {
+    apr = aprFarms(
+      price,
+      stakingToken,
+      lastRewardedEpoch,
+      rewardsTokens,
+      farm,
+      stats,
+      "multi",
+      multifarmRewardsLeft
+    );
+  } else {
+    apr = aprFarms(
+      price,
+      stakingToken,
+      lastRewardedEpoch,
+      rewardToken,
+      farm,
+      stats
+    );
+  }
 
   return (
     <AccordionItem w="full">
