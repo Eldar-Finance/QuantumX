@@ -16,6 +16,7 @@ import {
 } from "redux/slices/farms2/farms2-slice";
 import {
   fetchAllFarms,
+  fetchMultiFarms2RewardsLeft,
   fetchUSerFarmInfo,
   fetchUSerRewardsInfo,
 } from "redux/slices/farms2/funcs";
@@ -69,6 +70,7 @@ const Pools = () => {
     dispatch(fetchPrice());
     dispatch(fetchIndex());
     dispatch(fetchGeneralInfo());
+    dispatch(fetchMultiFarms2RewardsLeft());
 
     //elrond network
     dispatch(fetchStats());
