@@ -18,6 +18,7 @@ import {
   formatBalance,
   formatBalanceDolar,
 } from "utils/functions/formatBalance";
+import { formatTokenI } from "utils/functions/tokens";
 import { useAppSelector } from "utils/hooks/redux";
 import useGetElrondToken from "utils/hooks/useGetElrondToken";
 import useGetMultipleElrondTokens from "utils/hooks/useGetMultipleElrondTokens";
@@ -26,6 +27,7 @@ import {
   IScFarmItem,
   IScMultiFarmsRewardsLeft,
 } from "utils/types/sc.interface";
+import { farms2Data } from "views/Farms/constants";
 import useCanUsePool7 from "views/Pools/hooks/useCanUsePool7";
 interface IProps {
   farm: IScFarmItem;
@@ -39,6 +41,7 @@ const BearlyCard = ({ farm, multifarmRewardsLeft }: IProps) => {
   const userRewardsForThisFarm = userFarm2Rewards.data.filter(
     (f) => f.farmId === farm.farm.farmId
   );
+  const { logo, name } = farms2Data[formatTokenI(farm.farm.stakingToken)];
 
   const userFarmInfoForThisFarm = userFarm2Info.data.find(
     (fi) => fi.farmId === farm.farm.farmId
@@ -86,13 +89,18 @@ const BearlyCard = ({ farm, multifarmRewardsLeft }: IProps) => {
         <Flex flexDir={"column"} w="full">
           <Flex w="full" justify={"space-between"} mb={10}>
             {stakingToken && (
-              <Flex alignItems={"center"} gap={3}>
-                <NextImage
-                  alt=""
-                  src={stakingToken.assets?.svgUrl}
-                  height={55}
-                  width={55}
-                />
+              <Flex gap={5}>
+                {stakingToken?.assets?.svgUrl ? (
+                  <NextImage
+                    alt=""
+                    src={stakingToken.assets?.svgUrl}
+                    height={55}
+                    width={55}
+                  />
+                ) : (
+                  <NextImage src={logo} alt="logo" height={60} width={60} />
+                )}
+
                 <Text fontWeight={"600"}> {stakingToken.name}</Text>
               </Flex>
             )}
