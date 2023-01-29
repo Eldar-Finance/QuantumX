@@ -258,7 +258,6 @@ export const MultESDTNFTTranferOrEgldPayment = async (
 
     transactions.push(tx);
   });
-  console.log("transactions", transactions);
 
   const esdtTokensData = ohterTokens.flatMap((nft) => {
     const nftData = [

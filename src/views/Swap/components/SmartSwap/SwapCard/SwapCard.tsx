@@ -100,9 +100,7 @@ const SwapCard = () => {
             <TextField
               label={"You receive"}
               id="to"
-              onChange={(e) => console.log()}
               handleClickToken={handleOnSelectToToken}
-              onClickMaxtoken={() => console.log()}
               field={toToken}
               sxProps={{
                 marginBottom: "15px",

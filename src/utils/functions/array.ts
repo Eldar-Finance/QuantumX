@@ -40,3 +40,29 @@ export const orderSimpleData = (
   );
   return orderData;
 };
+
+export function exportToCsv(data: any[], filename: string) {
+  const replacer = (key, value) => (value === null ? "" : value);
+  const header = Object.keys(data[0]);
+  let csv = data.map((row) =>
+    header
+      .map((fieldName) => JSON.stringify(row[fieldName], replacer))
+      .join(",")
+  );
+  csv.unshift(header.join(","));
+  let csvArray = csv.join("\r\n");
+
+  var blob = new Blob([csvArray], { type: "text/csv" });
+  /* @ts-ignore */
+  if (window.navigator.msSaveOrOpenBlob) {
+    /* @ts-ignore */
+    window.navigator.msSaveBlob(blob, filename);
+  } else {
+    var a = window.document.createElement("a");
+    a.href = window.URL.createObjectURL(blob);
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+}

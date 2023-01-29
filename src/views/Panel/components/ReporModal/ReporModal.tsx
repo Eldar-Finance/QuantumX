@@ -8,9 +8,11 @@ import {
   Spinner,
 } from "@chakra-ui/react";
 import { getNetworkStats } from "api/rest/elrondApi/network";
+import ActionButton from "components/ActionButton/ActionButton";
 import MyModal from "components/Modal/Modal";
 import SearchTable from "components/Tables/SearchTable";
 import useSWR from "swr";
+import { exportToCsv } from "utils/functions/array";
 import useGetElrondToken from "utils/hooks/useGetElrondToken";
 import useGetStakersReport from "views/Panel/hooks/useGetStakersReport";
 import {
@@ -28,7 +30,9 @@ const ReporModal = ({ isOpen, onClose, farmId, stakedToken }: IProps) => {
   const { report, isLoading } = useGetStakersReport(farmId);
   const { token } = useGetElrondToken(stakedToken);
   const { data: statsRes } = useSWR("/stats", getNetworkStats);
-
+  const handleExportReport = () => {
+    exportToCsv(report, "stakers-report.csv");
+  };
   return (
     <MyModal isOpen={isOpen} onClose={onClose} size={"4xl"}>
       <ModalHeader>
@@ -44,6 +48,9 @@ const ReporModal = ({ isOpen, onClose, farmId, stakedToken }: IProps) => {
           </Center>
         ) : (
           <Box>
+            <Flex w="full" justifyContent={"flex-end"} px={10}>
+              <ActionButton onClick={handleExportReport}>Export</ActionButton>
+            </Flex>
             <SearchTable
               tableData={report.map((r) => {
                 const data: IScFarms2StakersReportWithStakedToken = {

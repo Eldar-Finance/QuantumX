@@ -132,12 +132,6 @@ const Farms2Item = ({
       stats
     );
   }
-  if (farm.farm.farmId === 3) {
-    console.log("farm", farm);
-    console.log("multifarmRewardsLeft", multifarmRewardsLeft);
-
-    console.log("farmUserRewards", farmUserRewards);
-  }
 
   return (
     <AccordionItem w="full">

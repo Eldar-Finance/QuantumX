@@ -14,8 +14,6 @@ const BearlyBonding = () => {
   const bearlyFarms = allFarms.filter((f) => {
     return f.farm.rewardToken === "";
   });
-  console.log("allFarms", allFarms);
-  console.log("bearlyFarms", bearlyFarms);
 
   return (
     <Stack spacing={10}>

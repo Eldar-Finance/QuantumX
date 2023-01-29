@@ -10,7 +10,7 @@ interface IProps extends InputProps {
   label: string;
   id: string;
   handleClickToken: (token: any) => void;
-  onClickMaxtoken: (maxBalance: number) => void;
+  onClickMaxtoken?: (maxBalance: number) => void;
   isMaxToken: boolean;
   field: {
     token?: string;

@@ -1,4 +1,4 @@
-import { Flex } from "@chakra-ui/react";
+import { Flex, useClipboard } from "@chakra-ui/react";
 import { formatAddress } from "utils/functions/formatAddress";
 import { formatBalance } from "utils/functions/formatBalance";
 import { getDateForEpoch } from "utils/functions/time";
@@ -17,8 +17,13 @@ export const reportColumns = [
     accessor: "staker",
     Cell: ({ row }) => {
       const data: IScFarms2StakersReportWithStakedToken = row.original;
+      const { hasCopied, onCopy } = useClipboard(data.staker);
 
-      return <Flex>{formatAddress(data.staker)}</Flex>;
+      return (
+        <Flex onClick={onCopy} cursor="pointer" color={hasCopied && "main"}>
+          {formatAddress(data.staker)}
+        </Flex>
+      );
     },
   },
   {

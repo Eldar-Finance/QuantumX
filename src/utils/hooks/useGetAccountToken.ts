@@ -19,8 +19,6 @@ const useGetAccountToken = (identifier: string) => {
     fetchAccountTokenById,
     {
       onErrorRetry: (error, key, config, revalidate, { retryCount }) => {
-        console.log(error);
-
         // Never retry on 404.
         if (error.response.status === 404) return;
 
