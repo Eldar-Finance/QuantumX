@@ -77,7 +77,7 @@ const ReporModal = ({ isOpen, onClose, farmId, stakedToken }: IProps) => {
     setExportMethod(e.target.value);
   };
   return (
-    <MyModal isOpen={isOpen} onClose={onClose} size={"4xl"}>
+    <MyModal isOpen={isOpen} onClose={onClose} size={"4xl"} isCentered={false}>
       <ModalHeader>
         <Flex w="full" justify="space-between">
           <Heading>Stakers Report</Heading>
