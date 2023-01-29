@@ -152,7 +152,7 @@ const Farms2Item = ({
               flexDir={{ xs: "column", md: "row" }}
               templateColumns={{ xs: "1fr", md: "1fr 1fr 1fr 1fr 1fr" }}
             >
-              {stakingToken && (
+              {stakingToken ? (
                 <Flex gap="4" alignItems={"center"}>
                   {stakingToken?.assets?.pngUrl ||
                   stakingToken?.assets?.svgUrl ? (
@@ -171,6 +171,8 @@ const Farms2Item = ({
 
                   <Text fontWeight={"600"}>{name || stakingToken.name}</Text>
                 </Flex>
+              ) : (
+                <Flex></Flex>
               )}
               <Flex flexDir={"column"} textAlign="center">
                 <Text color="white.400">Staked Balance</Text>

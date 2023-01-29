@@ -112,6 +112,7 @@ const BearlyCard = ({ farm, multifarmRewardsLeft }: IProps) => {
             <VStack>
               <Text color="white.400">Total Value Locked</Text>
               <Text>
+                ${" "}
                 {formatBalanceDolar(
                   {
                     balance: farm.stakedBalance,
@@ -135,7 +136,7 @@ const BearlyCard = ({ farm, multifarmRewardsLeft }: IProps) => {
                     balance: userFarmInfoForThisFarm?.stakedBalance,
                     decimals: stakingToken.decimals,
                   },
-                  stakingToken.price,
+                  staingTokenPrice,
                   true
                 )}
                 )
