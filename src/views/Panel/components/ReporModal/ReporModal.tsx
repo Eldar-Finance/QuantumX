@@ -5,14 +5,18 @@ import {
   Flex,
   Heading,
   ModalHeader,
+  Select,
   Spinner,
 } from "@chakra-ui/react";
 import { getNetworkStats } from "api/rest/elrondApi/network";
 import ActionButton from "components/ActionButton/ActionButton";
 import MyModal from "components/Modal/Modal";
 import SearchTable from "components/Tables/SearchTable";
+import { useState } from "react";
 import useSWR from "swr";
-import { exportToCsv } from "utils/functions/array";
+import { exportToCsv, exportToExcel } from "utils/functions/array";
+import { formatBalance } from "utils/functions/formatBalance";
+import { getDateForEpoch } from "utils/functions/time";
 import useGetElrondToken from "utils/hooks/useGetElrondToken";
 import useGetStakersReport from "views/Panel/hooks/useGetStakersReport";
 import {
@@ -25,13 +29,52 @@ interface IProps {
   farmId: number;
   stakedToken: string;
 }
+const exportOptions = [
+  {
+    value: "csv",
+    label: "CSV",
+  },
+  {
+    value: "excel",
+    label: "EXCEL",
+  },
+];
 
 const ReporModal = ({ isOpen, onClose, farmId, stakedToken }: IProps) => {
   const { report, isLoading } = useGetStakersReport(farmId);
   const { token } = useGetElrondToken(stakedToken);
   const { data: statsRes } = useSWR("/stats", getNetworkStats);
+  const [exportMethod, setExportMethod] = useState(exportOptions[0].value);
   const handleExportReport = () => {
-    exportToCsv(report, "stakers-report.csv");
+    const dataToExport = report.map((r) => {
+      const data = {
+        address: r.staker,
+        stakedAmount: formatBalance({
+          balance: r.stakedAmount,
+          decimals: token.decimals,
+        }),
+        lastStake: getDateForEpoch(r.lastStake, statsRes.data.epoch),
+        lastUnstake: getDateForEpoch(r.lastUnstake, statsRes.data.epoch),
+        lastHarvest: getDateForEpoch(r.lastHarvest, statsRes.data.epoch),
+      };
+      return data;
+    });
+
+    switch (exportMethod) {
+      case exportOptions[0].value:
+        exportToCsv(dataToExport, "stakers-report.csv");
+        break;
+
+      case exportOptions[1].value:
+        exportToExcel(dataToExport, "stakers-report.xlsx");
+        break;
+
+      default:
+        break;
+    }
+  };
+  const handleSelectExporMethod = (e) => {
+    setExportMethod(e.target.value);
   };
   return (
     <MyModal isOpen={isOpen} onClose={onClose} size={"4xl"}>
@@ -48,7 +91,18 @@ const ReporModal = ({ isOpen, onClose, farmId, stakedToken }: IProps) => {
           </Center>
         ) : (
           <Box>
-            <Flex w="full" justifyContent={"flex-end"} px={10}>
+            <Flex width="full" justifyContent={"flex-end"} px={10} gap={5}>
+              <Box width="120px !important">
+                <Select onChange={handleSelectExporMethod} value={exportMethod}>
+                  {exportOptions.map((o) => {
+                    return (
+                      <option key={o.value} value={o.value}>
+                        {o.label}
+                      </option>
+                    );
+                  })}
+                </Select>
+              </Box>
               <ActionButton onClick={handleExportReport}>Export</ActionButton>
             </Flex>
             <SearchTable

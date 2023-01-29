@@ -1,5 +1,6 @@
 import { Many } from "lodash";
 import orderBy from "lodash/orderBy";
+import * as XLSX from "xlsx";
 
 export const removeDuplicates = (
   array: any[],
@@ -65,4 +66,11 @@ export function exportToCsv(data: any[], filename: string) {
     a.click();
     document.body.removeChild(a);
   }
+}
+
+export function exportToExcel(data: any[], filename: string) {
+  const ws = XLSX.utils.json_to_sheet(data);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+  XLSX.writeFile(wb, filename);
 }
