@@ -7,7 +7,7 @@ import {
 } from "@chakra-ui/react";
 import MyModal from "components/Modal/Modal";
 
-import Image from "next/legacy/image";
+import Image from "next/image";
 import { IElrondNFT } from "utils/types/elrond.interface";
 interface IProps {
   isOpen: boolean;
@@ -43,8 +43,11 @@ const SellModal = ({ isOpen, onClose, nft }: IProps) => {
               alt={nft.identifier}
               width={600}
               height={600}
-              layout="responsive"
-            />
+              sizes="100vw"
+              style={{
+                width: "100%",
+                height: "auto"
+              }} />
           )}
         </Box>
         <Text textAlign={"center"} color={secondary} fontSize="sm" mb={3}>

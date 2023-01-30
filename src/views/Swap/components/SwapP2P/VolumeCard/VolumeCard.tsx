@@ -12,7 +12,7 @@ import { useEffect } from "react";
 import jexImg from "assets/img/proteo-board/jexpng.png";
 
 import NextImage from "components/NextImage/NextImage";
-import Image from "next/legacy/image";
+import Image from "next/image";
 import { useSelector } from "react-redux";
 import {
   selectFastSwapTokens,
@@ -77,7 +77,6 @@ const VolumeCard = () => {
                     gap="3"
                   >
                     <Image
-                      layout="intrinsic"
                       width={25}
                       height={25}
                       src={
@@ -86,7 +85,10 @@ const VolumeCard = () => {
                         ""
                       }
                       alt={tokenDetails.name}
-                    />{" "}
+                      style={{
+                        maxWidth: "100%",
+                        height: "auto"
+                      }} />{" "}
                     {formatTokenI(vol.tokenI)}
                   </Center>
                   <Box flex={"20%"}></Box>

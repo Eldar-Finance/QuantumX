@@ -1,6 +1,6 @@
 import { Center, Flex, Text, useColorModeValue } from "@chakra-ui/react";
 
-import Image from "next/legacy/image";
+import Image from "next/image";
 import { formatTokenI } from "utils/functions/tokens";
 import { IElrondNFT } from "utils/types/elrond.interface";
 interface IProps {
@@ -33,11 +33,7 @@ const OwnedNFItem = ({ selected, collection, onClick, nftsArr }: IProps) => {
         overflow={"hidden"}
       >
         {nftsArr && nftsArr[0]?.media && (
-          <Image
-            src={nftsArr[0]?.media[0]?.thumbnailUrl}
-            alt={""}
-            layout="fill"
-          />
+          <Image src={nftsArr[0]?.media[0]?.thumbnailUrl} alt={""} fill sizes="100vw" />
         )}
       </Center>
       <Text fontSize={"lg"} color={selected ? "black" : "white"}>

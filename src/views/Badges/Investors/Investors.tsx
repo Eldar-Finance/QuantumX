@@ -13,7 +13,7 @@ import { scCall } from "api/sc/calls";
 import { sftsRewardsWsp } from "api/sc/sc";
 import ActionButton from "components/ActionButton/ActionButton";
 import { isArray } from "lodash";
-import Image from "next/legacy/image";
+import Image from "next/image";
 import { useState } from "react";
 import { formatBalance } from "utils/functions/formatBalance";
 import { getReturnedDataOfscCall } from "utils/functions/helpers";
@@ -164,7 +164,10 @@ const EarlyInvestorRewards = ({ token, amount }) => {
               alt={elrondToken.ticker}
               width={24}
               height={24}
-            />
+              style={{
+                maxWidth: "100%",
+                height: "auto"
+              }} />
           )}
         </Center>
       </Box>

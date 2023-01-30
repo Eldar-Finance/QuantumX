@@ -1,7 +1,7 @@
 import { Box, Button, Center, Flex, Text } from "@chakra-ui/react";
 import { claimTokens } from "api/sc/calls/swap/fastSwap";
 
-import Image from "next/legacy/image";
+import Image from "next/image";
 import { Fragment, useEffect } from "react";
 
 import { useSelector } from "react-redux";
@@ -69,7 +69,6 @@ const ClaimSection = ({ tokenWithDeatils, position = "absolute" }) => {
                   <Flex gap={1}>
                     <Box boxSize={"15px"}>
                       <Image
-                        layout="intrinsic"
                         width={15}
                         height={15}
                         src={
@@ -78,7 +77,10 @@ const ClaimSection = ({ tokenWithDeatils, position = "absolute" }) => {
                           ""
                         }
                         alt={tokenDetail.name}
-                      />
+                        style={{
+                          maxWidth: "100%",
+                          height: "auto"
+                        }} />
                     </Box>
                     <Text>{formatTokenI(t.tokenI)}</Text>
                   </Flex>

@@ -1,6 +1,6 @@
 import { Box, Center, Flex, Spinner, Text } from "@chakra-ui/react";
 import { toknesID } from "api/net.config";
-import Image from "next/legacy/image";
+import Image from "next/image";
 import { memo, useEffect, useState } from "react";
 import { formatBalance } from "utils/functions/formatBalance";
 import { useAppSelector } from "utils/hooks/redux";
@@ -180,7 +180,10 @@ const StaticInfo = ({ token, amount }) => {
                   alt={elrondToken.ticker}
                   width={24}
                   height={24}
-                />
+                  style={{
+                    maxWidth: "100%",
+                    height: "auto"
+                  }} />
               )}
             </>
           )}

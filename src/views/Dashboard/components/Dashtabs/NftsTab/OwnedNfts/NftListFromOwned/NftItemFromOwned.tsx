@@ -11,7 +11,7 @@ import { getNftData } from "api/rest/others/Swap";
 import ActionButton from "components/ActionButton/ActionButton";
 
 import dynamic from "next/dynamic";
-import Image from "next/legacy/image";
+import Image from "next/image";
 import useSWR from "swr";
 import { IElrondNFT } from "utils/types/elrond.interface";
 
@@ -35,8 +35,11 @@ const NftItemFromOwned = ({ nft }: IProps) => {
             alt={nft.identifier}
             width={600}
             height={600}
-            layout="responsive"
-          />
+            sizes="100vw"
+            style={{
+              width: "100%",
+              height: "auto"
+            }} />
         )}
       </Box>
       <Box px={3} mt={4}>
