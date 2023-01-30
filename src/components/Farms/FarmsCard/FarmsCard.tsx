@@ -85,6 +85,7 @@ const FarmsCard = ({ proteoArr, isPool, othersArr = null }: IProps) => {
     >
       {farmStored.map((farm) => {
         if (farm.type === "proteo") {
+          if (!farm.farm.stakedCoin) return null;
           return (
             <ProteoFarmItem
               tvl={farm.totalLocked}
@@ -93,9 +94,10 @@ const FarmsCard = ({ proteoArr, isPool, othersArr = null }: IProps) => {
             />
           );
         } else {
+          if (!farm.farm.farm.farmId) return null;
           return (
             <Farms2Item
-              key={farm.farm.farmId}
+              key={farm.farm.farm.farmId}
               farm={farm.farm}
               tvl={farm.totalLocked}
               farmUserInfo={othersArr.userFarmInfo.find((userFarm) => {

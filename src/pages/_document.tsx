@@ -30,12 +30,6 @@ const MyDocument = () => {
           type="image/png"
           sizes="16x16"
         />
-        <link
-          href="/icons/favicon-32x32.png"
-          rel="icon"
-          type="image/png"
-          sizes="32x32"
-        />
       </Head>
 
       <body>
