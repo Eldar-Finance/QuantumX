@@ -7,7 +7,7 @@ import {
 } from "@chakra-ui/react";
 import MyModal from "components/Modal/Modal";
 
-import Image from "next/image";
+import Image from "next/legacy/image";
 import { IElrondNFT } from "utils/types/elrond.interface";
 interface IProps {
   isOpen: boolean;

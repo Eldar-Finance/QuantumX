@@ -12,7 +12,7 @@ import { useEffect } from "react";
 import jexImg from "assets/img/proteo-board/jexpng.png";
 
 import NextImage from "components/NextImage/NextImage";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import { useSelector } from "react-redux";
 import {
   selectFastSwapTokens,

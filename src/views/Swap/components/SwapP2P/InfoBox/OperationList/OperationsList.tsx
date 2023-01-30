@@ -1,7 +1,7 @@
 import { ArrowForwardIcon, Icon } from "@chakra-ui/icons";
 import { Box, Flex, Text } from "@chakra-ui/react";
 
-import Image from "next/image";
+import Image from "next/legacy/image";
 import { useSelector } from "react-redux";
 import { selectUserOrders } from "redux/slices/fastSwap/fastSwap";
 import { formatPrecision } from "utils/functions/formatBalance";

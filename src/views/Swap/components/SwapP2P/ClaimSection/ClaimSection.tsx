@@ -1,7 +1,7 @@
 import { Box, Button, Center, Flex, Text } from "@chakra-ui/react";
 import { claimTokens } from "api/sc/calls/swap/fastSwap";
 
-import Image from "next/image";
+import Image from "next/legacy/image";
 import { Fragment, useEffect } from "react";
 
 import { useSelector } from "react-redux";

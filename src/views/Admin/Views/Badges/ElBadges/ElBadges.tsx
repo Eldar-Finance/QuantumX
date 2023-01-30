@@ -3,7 +3,7 @@ import { contractAddr } from "api/net.config";
 import { ESDTTransfer } from "api/sc/calls";
 import ActionButton from "components/ActionButton/ActionButton";
 import TokenList from "components/TokenList/TokenList";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import { useState } from "react";
 import useGetUserTokens from "utils/hooks/useGetUserTokens";
 import { IElrondToken } from "utils/types/elrond.interface";

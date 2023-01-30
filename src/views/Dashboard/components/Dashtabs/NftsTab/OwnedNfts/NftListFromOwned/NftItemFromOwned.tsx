@@ -11,7 +11,7 @@ import { getNftData } from "api/rest/others/Swap";
 import ActionButton from "components/ActionButton/ActionButton";
 
 import dynamic from "next/dynamic";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import useSWR from "swr";
 import { IElrondNFT } from "utils/types/elrond.interface";
 

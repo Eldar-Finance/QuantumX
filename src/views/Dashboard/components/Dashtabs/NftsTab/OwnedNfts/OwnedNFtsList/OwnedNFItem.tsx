@@ -1,6 +1,6 @@
 import { Center, Flex, Text, useColorModeValue } from "@chakra-ui/react";
 
-import Image from "next/image";
+import Image from "next/legacy/image";
 import { formatTokenI } from "utils/functions/tokens";
 import { IElrondNFT } from "utils/types/elrond.interface";
 interface IProps {
