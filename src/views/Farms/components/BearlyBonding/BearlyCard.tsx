@@ -1,5 +1,6 @@
 import { Center, Divider, Flex, Grid, Text, VStack } from "@chakra-ui/react";
 import { BigUIntValue } from "@elrondnetwork/erdjs/out";
+import { toknesID } from "api/net.config";
 import { scCall } from "api/sc/calls";
 import { fetchLastRewardedEpoch } from "api/sc/queries/farms2";
 import BigNumber from "bignumber.js";
@@ -21,6 +22,7 @@ import {
 import { formatTokenI } from "utils/functions/tokens";
 import { useAppSelector } from "utils/hooks/redux";
 import useGetElrondToken from "utils/hooks/useGetElrondToken";
+import useGetJexPrice from "utils/hooks/useGetJexPrice";
 import useGetMultipleElrondTokens from "utils/hooks/useGetMultipleElrondTokens";
 import useGetTokenPrice from "utils/hooks/useGetTokenPrice";
 import {
@@ -42,7 +44,10 @@ const BearlyCard = ({ farm, multifarmRewardsLeft }: IProps) => {
     (f) => f.farmId === farm.farm.farmId
   );
   const { logo, name } = farms2Data[formatTokenI(farm.farm.stakingToken)];
-
+  const { jexPrice } = useGetJexPrice(
+    multifarmRewardsLeft.rewardsLeft.find((r) => r.token === toknesID.jex)
+      ?.token
+  );
   const userFarmInfoForThisFarm = userFarm2Info.data.find(
     (fi) => fi.farmId === farm.farm.farmId
   );
@@ -68,7 +73,8 @@ const BearlyCard = ({ farm, multifarmRewardsLeft }: IProps) => {
     farm,
     stats,
     "multi",
-    multifarmRewardsLeft?.rewardsLeft
+    multifarmRewardsLeft?.rewardsLeft,
+    [{ tokenI: toknesID.jex, price: jexPrice }]
   );
 
   const handleHarvest = () => {

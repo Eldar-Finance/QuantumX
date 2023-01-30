@@ -1,9 +1,15 @@
+import { toknesID } from "api/net.config";
 import { formatTokenI } from "utils/functions/tokens";
 import { useGetFarmsLpPrices } from "./useGetFarmsLpPrices";
+import useGetJexPrice from "./useGetJexPrice";
 import useGetMultipleElrondTokens from "./useGetMultipleElrondTokens";
+
 const useGetMultiplePrices = (tokensIdentifiers: string[]) => {
   const { prices: lpPrices, isLoading } = useGetFarmsLpPrices();
   const { tokens } = useGetMultipleElrondTokens(tokensIdentifiers);
+  const { jexPrice } = useGetJexPrice(
+    tokensIdentifiers.find((id) => id === toknesID.jex)
+  );
 
   const pricesData = tokensIdentifiers.map((idenfier) => {
     let price = 0;
@@ -11,10 +17,14 @@ const useGetMultiplePrices = (tokensIdentifiers: string[]) => {
     if (lpPrice) {
       price = Number(lpPrice.price);
     } else {
-      const elrondToken = tokens.find(
-        (etoken) => etoken.identifier === idenfier
-      );
-      price = elrondToken?.price || 0;
+      if (idenfier === toknesID.jex) {
+        price = jexPrice;
+      } else {
+        const elrondToken = tokens.find(
+          (etoken) => etoken.identifier === idenfier
+        );
+        price = elrondToken?.price || 0;
+      }
     }
     const data = {
       tokenI: idenfier,

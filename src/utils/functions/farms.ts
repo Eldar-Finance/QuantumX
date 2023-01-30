@@ -124,7 +124,8 @@ export const aprFarms = (
   farm,
   stats,
   type: "single" | "multi" = "single",
-  multifarmRewardsLeft: IScFarm2RewardsLeft[] = undefined
+  multifarmRewardsLeft: IScFarm2RewardsLeft[] = undefined,
+  extraPrices: { tokenI: string; price: number }[] = []
 ) => {
   let apr: string = "-";
 
@@ -171,6 +172,15 @@ export const aprFarms = (
               const tokenRewardsLeft: IScFarm2RewardsLeft = multifarmRewardsLeft.find(
                 (r) => r.token === token.identifier
               );
+
+              let price = token.price;
+              const extraTokenPrice = extraPrices.find(
+                (ept) => ept.tokenI === token.identifier
+              );
+              if (extraTokenPrice) {
+                price = extraTokenPrice.price;
+              }
+
               return (
                 acc +
                 formatBalanceDolar(
@@ -178,7 +188,7 @@ export const aprFarms = (
                     balance: tokenRewardsLeft.amount,
                     decimals: token.decimals,
                   },
-                  token.price
+                  price
                 )
               );
             },

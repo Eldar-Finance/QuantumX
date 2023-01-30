@@ -19,6 +19,7 @@ import {
   IScUserFarmRewards,
 } from "utils/types/sc.interface";
 
+import { toknesID } from "api/net.config";
 import { fetchLastRewardedEpoch } from "api/sc/queries/farms2";
 import { selectElrondStats } from "redux/slices/elrond/elrond-slice";
 import { addTvlInEldarFarm } from "redux/slices/proteo/proteo";
@@ -32,6 +33,7 @@ import {
 import { formatTokenI } from "utils/functions/tokens";
 import { useAppDispatch, useAppSelector } from "utils/hooks/redux";
 import useGetElrondToken from "utils/hooks/useGetElrondToken";
+import useGetJexPrice from "utils/hooks/useGetJexPrice";
 import useGetMultipleElrondTokens from "utils/hooks/useGetMultipleElrondTokens";
 import { farms2Data } from "views/Farms/constants";
 import useCanUsePool7 from "views/Pools/hooks/useCanUsePool7";
@@ -79,9 +81,13 @@ const Farms2Item = ({
     ? farms2Data[formatTokenI(farm.farm.stakingToken)]
     : { logo: "", name: "" };
   const { data: stats } = useAppSelector(selectElrondStats);
+  const { jexPrice } = useGetJexPrice(
+    multifarmRewardsLeft.find((r) => r.token === toknesID.jex)?.token
+  );
   const { tokens: rewardsTokens } = useGetMultipleElrondTokens(
     multifarmRewardsLeft ? multifarmRewardsLeft.map((f) => f.token) : []
   );
+
   const price = stakedTokenPrice;
   const dispatch = useAppDispatch();
   useEffect(() => {
@@ -120,7 +126,8 @@ const Farms2Item = ({
       farm,
       stats,
       "multi",
-      multifarmRewardsLeft
+      multifarmRewardsLeft,
+      [{ tokenI: toknesID.jex, price: jexPrice }]
     );
   } else {
     apr = aprFarms(

@@ -121,4 +121,5 @@ export const TOKENS_ID = {
   bear: "BEAR-f9c271",
   kro: "KRO-df97ec",
   estar: "ESTAR-461bab",
+  jex: "JEX-9040ca",
 };
