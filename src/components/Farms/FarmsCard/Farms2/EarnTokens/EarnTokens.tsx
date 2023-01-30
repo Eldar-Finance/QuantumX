@@ -35,8 +35,8 @@ const EarnTokens = ({ userRewardsTokensIdentifiers }: IProps) => {
                     <NextImage
                       alt=""
                       src={rewardsToken.assets.svgUrl}
-                      height={30}
-                      width={30}
+                      height={25}
+                      width={25}
                     />
                   )}
                 </>
