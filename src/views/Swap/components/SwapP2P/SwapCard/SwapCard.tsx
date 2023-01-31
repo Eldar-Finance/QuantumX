@@ -97,12 +97,12 @@ const SwapCard = () => {
         fetchBalances({
           address: address,
           balances: {
-            egld: acc.account.balance,
+            egld: acc.account?.balance,
           },
         })
       );
     }
-  }, [acc.account.balance, address, allowedTokens, dispatch]);
+  }, [acc.account?.balance, address, allowedTokens, dispatch]);
   useEffect(() => {
     if (allowedTokens.length > 0) {
       dispatch(fetchAllTokens(allowedTokens));

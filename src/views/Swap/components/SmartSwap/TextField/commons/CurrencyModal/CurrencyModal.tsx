@@ -18,21 +18,21 @@ import * as React from "react";
 import { useAppSelector } from "utils/hooks/redux";
 import useGetMultipleElrondTokens from "utils/hooks/useGetMultipleElrondTokens";
 
-const CurrencyModal = ({ isOpen, onClose, handleClickToken, field }) => {
+const CurrencyModal = ({ isOpen, onClose, handleClickToken }) => {
   const [order, setOrder] = React.useState<"desc" | "asc">("desc");
   const tokens = useAppSelector((state) => state.smartSwap.tokens.data);
   const { tokens: elrondTokens } = useGetMultipleElrondTokens(tokens);
   const [tokenList, setTokenList] = React.useState([]);
 
-  React.useEffect(() => {
-    setTokenList(elrondTokens);
-  }, [field, elrondTokens]);
+  // React.useEffect(() => {
+  //   setTokenList(elrondTokens);
+  // }, [elrondTokens]);
 
   const handleSearch = (e) => {
     const query = e.target.value;
 
     if (query === "") {
-      setTokenList(elrondTokens);
+      setTokenList(null);
     } else {
       const newTokenList = elrondTokens.filter((token) => {
         return (
@@ -49,7 +49,7 @@ const CurrencyModal = ({ isOpen, onClose, handleClickToken, field }) => {
 
   const handleOrder = () => {
     const orderTokens = orderBy(
-      tokenList,
+      elrondTokens,
       [
         function(o) {
           return o.name.toString().toLowerCase();
@@ -68,6 +68,8 @@ const CurrencyModal = ({ isOpen, onClose, handleClickToken, field }) => {
     });
   };
 
+  const diplayTokens =
+    tokenList && tokenList.length > 0 ? tokenList : elrondTokens;
   return (
     <Modal isOpen={isOpen} onClose={onClose} size={"lg"}>
       <ModalOverlay background={"rgba(0,0,0,0.7)"} />
@@ -123,7 +125,10 @@ const CurrencyModal = ({ isOpen, onClose, handleClickToken, field }) => {
               </IconButton>
             </Flex>
           </Box>
-          <TokenList handleClickToken={handleClickToken} tokens={tokenList} />
+          <TokenList
+            handleClickToken={handleClickToken}
+            tokens={diplayTokens}
+          />
         </ModalBody>
       </ModalContent>
     </Modal>

@@ -36,7 +36,7 @@ const useGetUserTokens = (indentifier?: string, onlyEsdt?: boolean) => {
         assets: {
           svgUrl: "/images/egld.svg",
         },
-        balance: acc.account.balance,
+        balance: acc.account?.balance,
       });
     }
     if (indentifier) {
@@ -44,7 +44,7 @@ const useGetUserTokens = (indentifier?: string, onlyEsdt?: boolean) => {
       setToken(newtoken);
     }
     setTokens(newTokens);
-  }, [acc.account.balance, userTokens, indentifier, onlyEsdt]);
+  }, [acc.account?.balance, userTokens, indentifier, onlyEsdt]);
 
   return [tokens, token];
 };
