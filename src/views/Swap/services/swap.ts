@@ -185,7 +185,7 @@ export const swapLp = async (
     firstSwap,
     {
       token: fromElrondToken,
-      value: Number(fromToken.value),
+      value: new BigNumber(fromToken.value).dividedBy(2).toNumber(),
     }
   );
 };
