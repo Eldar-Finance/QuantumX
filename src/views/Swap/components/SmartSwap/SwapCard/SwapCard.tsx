@@ -17,6 +17,7 @@ import {
   setToTokenValue,
 } from "redux/slices/smartSwaps/smartSwaps";
 import { useAppDispatch, useAppSelector } from "utils/hooks/redux";
+import { ILpSmartSwap, INomalSmartSwap } from "utils/types/others.interface";
 import useGetSwapInfo from "views/Swap/hooks/useGetSwapInfo";
 import SwapDetails from "../SwapDetails/SwapDetails";
 
@@ -29,17 +30,25 @@ const SwapCard = () => {
     dispatch(setFromTokenValue(token));
   };
 
-  const { data, isLoading } = useGetSwapInfo();
+  const { data, isLoading, isSapwToLp } = useGetSwapInfo();
 
   useEffect(() => {
     if (data) {
-      dispatch(
-        setToTokenValue(
-          new BigNumber(data[data.length - 1].amountReceiv).toFixed(4)
-        )
-      );
+      if (!isSapwToLp) {
+        const swapData = data[data.length - 1] as INomalSmartSwap;
+        dispatch(
+          setToTokenValue(new BigNumber(swapData.amountReceiv).toFixed(4))
+        );
+      } else {
+        const swapData = data[data.length - 1] as ILpSmartSwap;
+        console.log("swapData", swapData);
+
+        dispatch(
+          setToTokenValue(new BigNumber(swapData.lpamounttoreceive).toFixed(4))
+        );
+      }
     }
-  }, [data, dispatch]);
+  }, [data, dispatch, isSapwToLp]);
   useEffect(() => {
     dispatch(FetchWhitelistedTokens());
   }, [dispatch]);
@@ -120,6 +129,7 @@ const SwapCard = () => {
               color="main"
               py="20px"
               swapInfo={data}
+              isSapwToLp={isSapwToLp}
               // disableButton={disableButton}
             />
           </Flex>

@@ -1,13 +1,14 @@
 import { Box, Center, Flex, Icon, Text } from "@chakra-ui/react";
 import { SwapIcon } from "components/Icons/ui";
 import { formatTokenI } from "utils/functions/tokens";
+import { INomalSmartSwap } from "utils/types/others.interface";
 import useGetSwapInfo from "views/Swap/hooks/useGetSwapInfo";
 
 const SwapRoute = () => {
   const { data, isLoading } = useGetSwapInfo();
 
   const routes = data
-    ? data.map((swapData) => {
+    ? data.map((swapData: INomalSmartSwap) => {
         return {
           token1: formatTokenI(swapData.token1),
           token2: formatTokenI(swapData.token2),

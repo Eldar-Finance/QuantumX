@@ -12,17 +12,23 @@ interface ILpPrice {
   token: string;
   tokenvalue: string;
 }
-export const fetchSmartSwap = async ([tokenA, amountA, tokenB]: [
+export const fetchSmartSwap = async ([tokenA, amountA, tokenB, isSapwToLp]: [
   string,
   string,
-  string
+  string,
+  boolean
 ]) => {
-  const { data } = await api.get<ISmartSwapData[]>(`/pathfinder.php`, {
-    params: {
-      tokenA,
-      amountA,
-      tokenB,
-    },
-  });
+  const { data } = await api.get<ISmartSwapData[]>(
+    isSapwToLp
+      ? "https://eldar.solutions/api/pathfinderlp.php"
+      : `/pathfinder.php`,
+    {
+      params: {
+        tokenA,
+        amountA,
+        tokenB,
+      },
+    }
+  );
   return data;
 };
