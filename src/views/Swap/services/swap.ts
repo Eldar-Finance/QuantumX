@@ -15,9 +15,10 @@ import {
   ESDTTransfer,
   wrapEgldAndEsdtTranfer,
 } from "api/sc/calls";
-import { getInterface, sendMultipleTransactions } from "api/sc/sc";
+import { EGLD_VAL, getInterface, sendMultipleTransactions } from "api/sc/sc";
 import BigNumber from "bignumber.js";
 import store from "redux/store";
+import { getScOfWrapedEgld } from "utils/functions/helpers";
 import { IElrondToken } from "utils/types/elrond.interface";
 import {
   ILpSmartSwap,
@@ -185,7 +186,8 @@ export const swapLp = async (
     firstSwap,
     {
       token: fromElrondToken,
-      value: new BigNumber(fromToken.value).dividedBy(2).toNumber(),
+      originalValue: Number(fromToken.value),
+      swapValue: new BigNumber(fromToken.value).dividedBy(2).toNumber(),
     }
   );
 };
@@ -200,21 +202,46 @@ export const lpSwapTx = async (
   swapArgs: any[],
   swapData: {
     token: IElrondToken;
-    value: number;
+    originalValue: number;
+    swapValue: number;
   }
 ) => {
   try {
     const transactions = [];
-
     const userAddress = store.getState().userAccount.connectedAddress;
     const senderAddress = new Address(userAddress);
+    let tokenIdentifier = swapData.token.identifier;
 
     let { simpleAddress } = getInterface("smartSwap");
 
+    // user want to send Egld
+    if (swapData.token.identifier === "EGLD") {
+      tokenIdentifier = toknesID.wegld;
+      //wrap egld
+      const shard = store.getState().userAccount.connectedShard;
+      const wrapContractBasedOnShard = getScOfWrapedEgld(shard);
+      const payload = TransactionPayload.contractCall()
+        .setFunction(new ContractFunction("wrapEgld"))
+        .setArgs([])
+        .build();
+      const value = new BigNumber(swapData.originalValue)
+        .multipliedBy(EGLD_VAL)
+        .toFixed(0);
+
+      const wrapTx = new Transaction({
+        sender: senderAddress,
+        value: value,
+        receiver: new Address(wrapContractBasedOnShard),
+        data: payload,
+        gasLimit: 30000000,
+        chainID: ChainId,
+      });
+      transactions.push(wrapTx);
+    }
+
     // normal swap transaction
-    const tokenIdentifier = swapData.token.identifier;
     const multiplyier = Math.pow(10, swapData.token.decimals || 18);
-    const finalValue = Number(swapData.value) * multiplyier;
+    const finalValue = Number(swapData.swapValue) * multiplyier;
 
     const bgFinalValue = new BigNumber(finalValue).toFixed(0);
 

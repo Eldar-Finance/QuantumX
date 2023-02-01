@@ -20,11 +20,7 @@ const useSelectSmarSwapTokens = (fromTokenIdentifier, tokens, field) => {
       ];
     }
   } else {
-    allWhitelistedTokens = [
-      ...allWhitelistedTokens,
-      ...tokens.wegldWhitelisted,
-      ...tokens.usdcWhitelisted,
-    ];
+    allWhitelistedTokens = [...allWhitelistedTokens];
   }
   const { tokens: elrondTokens } = useGetMultipleElrondTokens(
     allWhitelistedTokens
