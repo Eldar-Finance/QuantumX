@@ -106,7 +106,7 @@ const TextField = ({
             title="Token Amount"
             autoComplete="off"
             autoCorrect="off"
-            type="number"
+            type={id === "from" ? "number" : "text"}
             placeholder="0.0"
             minLength={1}
             maxLength={79}

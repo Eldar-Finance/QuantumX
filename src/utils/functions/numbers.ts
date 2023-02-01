@@ -24,3 +24,23 @@ export function preventExponetialNotation(x: any) {
       : b + c + d + Array(e - d.length + 1).join("0");
   });
 }
+
+// function to cut a number with a lot zeros after decimal point and ... and show last part of the number
+export function shortenNumber(
+  num: number,
+  decimalPlaces: number,
+  lastDigits: number
+): string {
+  const factor = Math.pow(10, decimalPlaces);
+  const shortened = Math.round(num * factor) / factor;
+  const str = shortened.toString();
+  const parts = str.split(".");
+  let result = parts[0];
+  if (parts[1]) {
+    result += "." + parts[1].slice(-lastDigits);
+    if (parts[1].length > lastDigits) {
+      result += "...";
+    }
+  }
+  return result;
+}
