@@ -292,7 +292,7 @@ export const lpSwapTx = async (
       value: 0,
       receiver: senderAddress,
       data: payload,
-      gasLimit: 200000000,
+      gasLimit: 100000000,
       chainID: ChainId,
     });
     transactions.push(multiEsdtsTranferTx);
