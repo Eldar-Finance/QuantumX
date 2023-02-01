@@ -10,7 +10,7 @@ interface IProps {
 
 const EarnTokens = ({ userRewardsTokensIdentifiers }: IProps) => {
   const { tokens: rewardsTokens } = useGetMultipleElrondTokens(
-    userRewardsTokensIdentifiers
+    userRewardsTokensIdentifiers.slice(0, 5)
   );
 
   let manualImage = null;
