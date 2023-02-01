@@ -38,7 +38,54 @@
             "outputs": []
         },
         {
+            "name": "swapToLp",
+            "mutability": "mutable",
+            "payableInTokens": [
+                "*"
+            ],
+            "inputs": [
+                {
+                    "name": "sc_address",
+                    "type": "Address"
+                },
+                {
+                    "name": "first_token_amount_min",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "second_token_amount_min",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "lp_identifier",
+                    "type": "EgldOrEsdtTokenIdentifier"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "EsdtTokenPayment"
+                },
+                {
+                    "type": "EsdtTokenPayment"
+                },
+                {
+                    "type": "EsdtTokenPayment"
+                }
+            ]
+        },
+        {
             "name": "setFee",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "fee",
+                    "type": "u64"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "setLpFee",
             "mutability": "mutable",
             "inputs": [
                 {
@@ -73,10 +120,64 @@
             "outputs": []
         },
         {
-            "name": "getView",
-            "mutability": "readonly",
-            "inputs": [],
+            "name": "addWhitelistedLps",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "pair_token",
+                    "type": "EgldOrEsdtTokenIdentifier"
+                },
+                {
+                    "name": "tokens",
+                    "type": "variadic<EgldOrEsdtTokenIdentifier>",
+                    "multi_arg": true
+                }
+            ],
             "outputs": []
+        },
+        {
+            "name": "removeWhitelistedLps",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "pair_token",
+                    "type": "EgldOrEsdtTokenIdentifier"
+                },
+                {
+                    "name": "tokens",
+                    "type": "variadic<EgldOrEsdtTokenIdentifier>",
+                    "multi_arg": true
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "setMaiarAddress",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "address",
+                    "type": "Address"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "getVolume",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "opt_address",
+                    "type": "optional<Address>",
+                    "multi_arg": true
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "variadic<tuple<EgldOrEsdtTokenIdentifier,BigUint,BigUint>>",
+                    "multi_result": true
+                }
+            ]
         },
         {
             "name": "maiarScAddress",
@@ -99,9 +200,35 @@
             ]
         },
         {
+            "name": "lpFee",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "u64"
+                }
+            ]
+        },
+        {
             "name": "whitelistedTokens",
             "mutability": "readonly",
             "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<EgldOrEsdtTokenIdentifier>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "whitelistedLps",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "token",
+                    "type": "EgldOrEsdtTokenIdentifier"
+                }
+            ],
             "outputs": [
                 {
                     "type": "variadic<EgldOrEsdtTokenIdentifier>",
@@ -331,5 +458,23 @@
     ],
     "events": [],
     "hasCallback": false,
-    "types": {}
+    "types": {
+        "EsdtTokenPayment": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "token_identifier",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "token_nonce",
+                    "type": "u64"
+                },
+                {
+                    "name": "amount",
+                    "type": "BigUint"
+                }
+            ]
+        }
+    }
 }
