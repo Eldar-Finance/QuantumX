@@ -8,7 +8,7 @@ import SelectCurrency from "./commons/SelectCurrency/SelectCurrency";
 
 interface IProps extends InputProps {
   label: string;
-  id: string;
+  id: "from" | "to";
   handleClickToken: (token: any) => void;
   onClickMaxtoken?: (maxBalance: number) => void;
   isMaxToken: boolean;

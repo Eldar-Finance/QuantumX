@@ -12,6 +12,7 @@ import dynamic from "next/dynamic";
 const CurrencyModal: any = dynamic(() =>
   import("../CurrencyModal/CurrencyModal")
 );
+
 const SelectCurrency = ({ token, handleClickToken, field }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const handleClickTokenAndClose = (data) => {

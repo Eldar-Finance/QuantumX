@@ -15,18 +15,29 @@ import CutomTooltip from "components/CustomTooltip/CustomTooltip";
 import TokenList from "components/TokenList/TokenList";
 import orderBy from "lodash/orderBy";
 import * as React from "react";
+import { selectFromToken } from "redux/slices/smartSwaps/smartSwaps";
 import { useAppSelector } from "utils/hooks/redux";
-import useGetMultipleElrondTokens from "utils/hooks/useGetMultipleElrondTokens";
+import { IElrondToken } from "utils/types/elrond.interface";
+import useSelectSmarSwapTokens from "views/Swap/hooks/useSelectSmarSwapTokens";
 
-const CurrencyModal = ({ isOpen, onClose, handleClickToken }) => {
+interface IProps {
+  field: "from" | "to";
+  isOpen: boolean;
+  onClose: () => void;
+  handleClickToken: (t: IElrondToken) => void;
+}
+
+const CurrencyModal = ({
+  isOpen,
+  onClose,
+  handleClickToken,
+  field,
+}: IProps) => {
   const [order, setOrder] = React.useState<"desc" | "asc">("desc");
-  const tokens = useAppSelector((state) => state.smartSwap.tokens.data);
-  const { tokens: elrondTokens } = useGetMultipleElrondTokens(tokens);
-  const [tokenList, setTokenList] = React.useState([]);
+  const tokens = useAppSelector((state) => state.smartSwap.tokens);
+  const fromTokenIdentifier = useAppSelector(selectFromToken);
 
-  // React.useEffect(() => {
-  //   setTokenList(elrondTokens);
-  // }, [elrondTokens]);
+  const [tokenList, setTokenList] = React.useState([]);
 
   const handleSearch = (e) => {
     const query = e.target.value;
@@ -68,8 +79,15 @@ const CurrencyModal = ({ isOpen, onClose, handleClickToken }) => {
     });
   };
 
+  const { elrondTokens } = useSelectSmarSwapTokens(
+    fromTokenIdentifier,
+    tokens,
+    field
+  );
+
   const diplayTokens =
     tokenList && tokenList.length > 0 ? tokenList : elrondTokens;
+
   return (
     <Modal isOpen={isOpen} onClose={onClose} size={"lg"}>
       <ModalOverlay background={"rgba(0,0,0,0.7)"} />
