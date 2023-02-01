@@ -89,7 +89,14 @@ const TextField = ({
         ) : (
           <InputS
             value={field.value ?? ""}
-            fontSize={{ xs: "3xl", md: "36px" }}
+            fontSize={
+              Number(field.value) < 0.000000000001
+                ? "15px"
+                : {
+                    xs: "3xl",
+                    md: "26px",
+                  }
+            }
             fontWeight={"500"}
             id={id}
             px={0}

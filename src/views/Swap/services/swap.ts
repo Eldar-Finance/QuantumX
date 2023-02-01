@@ -143,6 +143,7 @@ export const swapLp = async (
       ];
     });
 
+  const firstObjecSwapInfo = swapInfo[0] as INomalSmartSwap;
   const lpSwapInfo = swapInfo[swapInfo.length - 1] as ILpSmartSwap;
   //token1_amount_min
   const token1SlippagePercent = new BigNumber(lpSwapInfo.token1lpamount)
@@ -187,7 +188,7 @@ export const swapLp = async (
     {
       token: fromElrondToken,
       originalValue: Number(fromToken.value),
-      swapValue: new BigNumber(fromToken.value).dividedBy(2).toNumber(),
+      swapValue: new BigNumber(firstObjecSwapInfo.amountsend).toNumber(),
     }
   );
 };

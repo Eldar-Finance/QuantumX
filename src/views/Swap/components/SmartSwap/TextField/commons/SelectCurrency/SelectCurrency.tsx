@@ -7,6 +7,7 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
+import LpTokenImage from "components/LpTokenImage/LpTokenImage";
 import dynamic from "next/dynamic";
 
 const CurrencyModal: any = dynamic(() =>
@@ -39,28 +40,34 @@ const SelectCurrency = ({ token, handleClickToken, field }) => {
           alignItems={"center"}
           onClick={onOpen}
         >
-          <Box
-            sx={{
-              borderRadius: "1.5rem",
-              width: "24px",
-              height: "24px",
-              marginRight: 2,
-              boxShadow: "rgb(255 255 255 / 8%) 0px 6px 10px",
-              display: {
-                xs: "none",
-                md: "block",
-              },
-            }}
-          >
-            {token.assets?.img ? (
-              token.assets?.img
-            ) : (
-              <Image
-                src={token.assets?.svgUrl || token.assets?.static.src || ""}
-                alt={token.assets?.description || ""}
-              />
-            )}
-          </Box>
+          {token.name.slice(-2) === "LP" ? (
+            <Box marginRight={2} minW="54px">
+              <LpTokenImage lpToken={token} />
+            </Box>
+          ) : (
+            <Box
+              sx={{
+                borderRadius: "1.5rem",
+                width: "24px",
+                height: "24px",
+                marginRight: 2,
+                boxShadow: "rgb(255 255 255 / 8%) 0px 6px 10px",
+                display: {
+                  xs: "none",
+                  md: "block",
+                },
+              }}
+            >
+              {token.assets?.img ? (
+                token.assets?.img
+              ) : (
+                <Image
+                  src={token.assets?.svgUrl || token.assets?.static.src || ""}
+                  alt={token.assets?.description || ""}
+                />
+              )}
+            </Box>
+          )}
           <Box
             sx={{
               flex: "1",
@@ -71,7 +78,11 @@ const SelectCurrency = ({ token, handleClickToken, field }) => {
             }}
           >
             <Box>
-              <Text fontSize={"md"}>{token.ticker || token.name || ""}</Text>
+              <Text fontSize={"md"}>
+                {token.ticker === token.identifier
+                  ? token.name || token.ticker || ""
+                  : token.ticker || token.name || ""}
+              </Text>
             </Box>
             <Center
               mr={-2}

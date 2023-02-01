@@ -16,7 +16,6 @@ import {
   setToToken,
   setToTokenValue,
 } from "redux/slices/smartSwaps/smartSwaps";
-import { formatNumber } from "utils/functions/formatBalance";
 import { useAppDispatch, useAppSelector } from "utils/hooks/redux";
 import { ILpSmartSwap, INomalSmartSwap } from "utils/types/others.interface";
 import useGetSwapInfo from "views/Swap/hooks/useGetSwapInfo";
@@ -42,10 +41,7 @@ const SwapCard = () => {
         );
       } else {
         const swapData = data[data.length - 1] as ILpSmartSwap;
-        let toValue = new BigNumber(swapData.lpamounttoreceive).toFixed(10);
-        if (Number(swapData.lpamounttoreceive) < 0.0000000001) {
-          toValue = formatNumber(swapData.lpamounttoreceive);
-        }
+        let toValue = new BigNumber(swapData.lpamounttoreceive).toFixed(25);
 
         dispatch(setToTokenValue(toValue));
       }

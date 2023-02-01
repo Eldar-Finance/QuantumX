@@ -188,6 +188,10 @@ export interface IElrondToken {
     status?: string;
     pngUrl?: string;
     svgUrl: string;
+    img?: string;
+    static?: {
+      src: string;
+    };
     social?: {
       email: string;
       twitter: string;

@@ -1,7 +1,27 @@
 import { Box, Flex, Image, Text } from "@chakra-ui/react";
+import LpTokenImage from "components/LpTokenImage/LpTokenImage";
 import { formatBalance } from "utils/functions/formatBalance";
+import { formatTokenI } from "utils/functions/tokens";
+import {
+  IElrondToken,
+  IELrondTOkenWithBalance,
+} from "utils/types/elrond.interface";
 
-const TokenItem = ({ token, onClick, showIdent, showBalance, hoverBg }) => {
+interface IProps {
+  token: IElrondToken;
+  onClick: (t: IElrondToken) => void;
+  showIdent?: boolean;
+  showBalance?: boolean;
+  hoverBg?: string;
+}
+
+const TokenItem = ({
+  token,
+  onClick,
+  showIdent,
+  showBalance,
+  hoverBg,
+}: IProps) => {
   return (
     <Flex
       px={"20px"}
@@ -20,21 +40,29 @@ const TokenItem = ({ token, onClick, showIdent, showBalance, hoverBg }) => {
             token.assets?.img
           ) : (
             <>
-              {token.assets?.svgUrl || token.assets?.static.src ? (
-                <Image
-                  boxSize={"24px"}
-                  borderRadius={"full"}
-                  boxShadow={"rgb(255 255 255 / 8%) 0px 6px 10px"}
-                  src={token.assets?.svgUrl || token.assets?.static.src || ""}
-                  alt={token.assets?.description || ""}
-                />
+              {formatTokenI(token.name).slice(-2) === "LP" ? (
+                <LpTokenImage lpToken={token} />
               ) : (
-                <Box
-                  boxSize={"24px"}
-                  borderRadius={"full"}
-                  bg="brand.200"
-                  boxShadow={"rgb(255 255 255 / 8%) 0px 6px 10px"}
-                />
+                <>
+                  {token.assets?.svgUrl || token.assets?.static.src ? (
+                    <Image
+                      boxSize={"24px"}
+                      borderRadius={"full"}
+                      boxShadow={"rgb(255 255 255 / 8%) 0px 6px 10px"}
+                      src={
+                        token.assets?.svgUrl || token.assets?.static.src || ""
+                      }
+                      alt={token.assets?.description || ""}
+                    />
+                  ) : (
+                    <Box
+                      boxSize={"24px"}
+                      borderRadius={"full"}
+                      bg="brand.200"
+                      boxShadow={"rgb(255 255 255 / 8%) 0px 6px 10px"}
+                    />
+                  )}
+                </>
               )}
             </>
           )}
@@ -42,12 +70,16 @@ const TokenItem = ({ token, onClick, showIdent, showBalance, hoverBg }) => {
         {showIdent ? (
           <Text>{token.identifier || token.ticker || token.name || ""}</Text>
         ) : (
-          <Text>{token.ticker || token.name || token.identifier || ""}</Text>
+          <Text>
+            {token.identifier !== token.ticker
+              ? token.ticker || token.name || token.identifier || ""
+              : token.name || token.ticker || token.identifier || ""}
+          </Text>
         )}
       </Flex>
       {showBalance && (
         <Box>
-          <Text>{formatBalance(token)}</Text>
+          <Text>{formatBalance(token as IELrondTOkenWithBalance)}</Text>
         </Box>
       )}
     </Flex>
