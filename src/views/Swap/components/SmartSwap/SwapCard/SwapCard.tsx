@@ -41,7 +41,14 @@ const SwapCard = () => {
         );
       } else {
         const swapData = data[data.length - 1] as ILpSmartSwap;
-        let toValue = new BigNumber(swapData.lpamounttoreceive).toFixed(25);
+        let lpValue = new BigNumber(swapData.lpamounttoreceive).toFixed(4);
+        if (Number(lpValue) < 0.00000000001) {
+          lpValue = new BigNumber(swapData.lpamounttoreceive).toFixed(25);
+        }
+        console.log("swapData", swapData);
+        console.log("lpValue", lpValue);
+
+        let toValue = lpValue;
 
         dispatch(setToTokenValue(toValue));
       }
