@@ -90,6 +90,7 @@ const SwapCard = () => {
                 handleClickToken={handleOnSelectFromToken}
                 onClickMaxtoken={handleMaxFromField}
                 field={fromToken}
+                disableChangeToken={isSapwToLp}
               />
               <Center position={"absolute"} bottom={"-20px"} zIndex={2}>
                 <IconButton
@@ -98,6 +99,7 @@ const SwapCard = () => {
                   aria-label="change-positions"
                   bg="main"
                   boxSize={"50px"}
+                  disabled={isSapwToLp}
                 >
                   <ExchangeIcon />
                   {/* {positionNormal ? <AiOutlineArrowDown /> : <AiOutlineArrowUp />} */}

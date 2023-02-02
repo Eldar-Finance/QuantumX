@@ -1,6 +1,7 @@
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import {
   Box,
+  Button,
   Center,
   Image,
   Spinner,
@@ -14,7 +15,7 @@ const CurrencyModal: any = dynamic(() =>
   import("../CurrencyModal/CurrencyModal")
 );
 
-const SelectCurrency = ({ token, handleClickToken, field }) => {
+const SelectCurrency = ({ token, handleClickToken, field, disable }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const handleClickTokenAndClose = (data) => {
     onClose();
@@ -24,7 +25,8 @@ const SelectCurrency = ({ token, handleClickToken, field }) => {
   return (
     <>
       {token ? (
-        <Box
+        <Button
+          variant="unstyled"
           sx={{
             borderRadius: "12px",
             padding: { xs: "10px", md: "10px 15px" },
@@ -39,6 +41,7 @@ const SelectCurrency = ({ token, handleClickToken, field }) => {
           display={"flex"}
           alignItems={"center"}
           onClick={onOpen}
+          disabled={disable}
         >
           {token.name.slice(-2) === "LP" ? (
             <Box marginRight={2} minW="54px">
@@ -95,7 +98,7 @@ const SelectCurrency = ({ token, handleClickToken, field }) => {
               <ChevronDownIcon />
             </Center>
           </Box>
-        </Box>
+        </Button>
       ) : (
         <Center width={"170px"}>
           <Spinner />

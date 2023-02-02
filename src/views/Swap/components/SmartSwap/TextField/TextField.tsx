@@ -18,6 +18,7 @@ interface IProps extends InputProps {
   };
   sxProps?: any;
   isLoadingAmount?: boolean;
+  disableChangeToken?: boolean;
 }
 
 const TextField = ({
@@ -27,7 +28,7 @@ const TextField = ({
   onClickMaxtoken,
   isMaxToken,
   field,
-
+  disableChangeToken,
   sxProps,
   isLoadingAmount,
   ...props
@@ -80,23 +81,46 @@ const TextField = ({
           marginTop: "5px",
           fontSize: "1.4rem",
           display: "flex",
-          alignItems: "center",
+          flexDir: "column",
+          alignItems: "flex-end",
           justifyContent: "space-between",
         }}
       >
+        <Flex alignItems={"center"} mb={2}>
+          {field.token && isMaxToken && (
+            <ActionButton
+              onClick={() => onClickMaxtoken(formatBalance(accountToken, true))}
+              textTransform={"uppercase"}
+              variant={"solid"}
+              fontSize={{ xs: "sm", md: "md" }}
+              height={"2rem"}
+              width={"auto"}
+              minWidth={"unset"}
+              padding={"0.5rem"}
+              fontWeight={"400"}
+              color={"main"}
+              bg="transparent"
+              mr={1}
+            >
+              MAX
+            </ActionButton>
+          )}
+
+          <SelectCurrency
+            field={id}
+            handleClickToken={handleClickToken}
+            token={token}
+            disable={disableChangeToken}
+          />
+        </Flex>
         {isLoadingAmount ? (
-          <Spinner />
+          <Box w="full">
+            <Spinner />
+          </Box>
         ) : (
           <InputS
             value={field.value ?? ""}
-            fontSize={
-              Number(field.value) < 0.000000000001
-                ? "15px"
-                : {
-                    xs: "3xl",
-                    md: "26px",
-                  }
-            }
+            fontSize={"3xl"}
             fontWeight={"500"}
             id={id}
             px={0}
@@ -121,33 +145,6 @@ const TextField = ({
             {...props}
           />
         )}
-
-        <Flex alignItems={"center"}>
-          {field.token && isMaxToken && (
-            <ActionButton
-              onClick={() => onClickMaxtoken(formatBalance(accountToken, true))}
-              textTransform={"uppercase"}
-              variant={"solid"}
-              fontSize={{ xs: "sm", md: "md" }}
-              height={"2rem"}
-              width={"auto"}
-              minWidth={"unset"}
-              padding={"0.5rem"}
-              fontWeight={"400"}
-              color={"main"}
-              bg="transparent"
-              mr={1}
-            >
-              MAX
-            </ActionButton>
-          )}
-
-          <SelectCurrency
-            field={id}
-            handleClickToken={handleClickToken}
-            token={token}
-          />
-        </Flex>
       </Box>
     </Box>
   );
