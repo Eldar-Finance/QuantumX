@@ -271,7 +271,7 @@ export const lpSwapTx = async (
       const nftData = [
         BytesValue.fromUTF8(nft.collection), // <token identifier in hexadecimal encoding>
         new BigUIntValue(new BigNumber(nft.nonce)), // <token nonce in hexadecimal encoding>
-        new BigUIntValue(new BigNumber(nft.value)), //<token quantity to transfer in hexadecimal encoding>
+        new BigUIntValue(new BigNumber(new BigNumber(nft.value).toFixed(0))), //<token quantity to transfer in hexadecimal encoding>
       ];
       return nftData;
     });
