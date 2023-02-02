@@ -6,16 +6,12 @@ const useSelectSmarSwapTokens = (fromTokenIdentifier, tokens, field) => {
   if (field === "to") {
     if (
       fromTokenIdentifier === toknesID.egld ||
-      fromTokenIdentifier === toknesID.wegld
+      fromTokenIdentifier === toknesID.wegld ||
+      fromTokenIdentifier === toknesID.usdc
     ) {
       allWhitelistedTokens = [
         ...allWhitelistedTokens,
         ...tokens.wegldWhitelisted,
-      ];
-    }
-    if (fromTokenIdentifier === toknesID.usdc) {
-      allWhitelistedTokens = [
-        ...allWhitelistedTokens,
         ...tokens.usdcWhitelisted,
       ];
     }

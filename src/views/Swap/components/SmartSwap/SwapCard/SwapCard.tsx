@@ -45,8 +45,6 @@ const SwapCard = () => {
         if (Number(lpValue) < 0.00000000001) {
           lpValue = new BigNumber(swapData.lpamounttoreceive).toFixed(25);
         }
-        console.log("swapData", swapData);
-        console.log("lpValue", lpValue);
 
         let toValue = lpValue;
 
