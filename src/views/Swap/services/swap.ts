@@ -15,7 +15,7 @@ import {
   ESDTTransfer,
   wrapEgldAndEsdtTranfer,
 } from "api/sc/calls";
-import { getInterface, sendMultipleTransactions } from "api/sc/sc";
+import { EGLD_VAL, getInterface, sendMultipleTransactions } from "api/sc/sc";
 import BigNumber from "bignumber.js";
 import store from "redux/store";
 import { getScOfWrapedEgld } from "utils/functions/helpers";
@@ -200,7 +200,9 @@ export const lpSwapTx = async (
         .setFunction(new ContractFunction("wrapEgld"))
         .setArgs([])
         .build();
-      const value = new BigNumber(swapLpData[0].amountsend).toFixed(0);
+      const value = new BigNumber(inputToken.value)
+        .multipliedBy(EGLD_VAL)
+        .toFixed(0);
 
       const wrapTx = new Transaction({
         sender: senderAddress,
