@@ -184,12 +184,12 @@ export const swapLp = async (
       },
     ],
     lpSwapArg,
-    firstSwap,
+    slipapge,
     {
       token: fromElrondToken,
-      originalValue: Number(fromToken.value),
-      swapValue: new BigNumber(firstObjecSwapInfo.amountsend).toNumber(),
-    }
+      value: fromToken.value,
+    },
+    swapInfo.filter((_d, i) => swapInfo.length - 1 !== i) as INomalSmartSwap[]
   );
 };
 
@@ -200,24 +200,22 @@ export const lpSwapTx = async (
     value: number;
   }[],
   swapLpArgs: any[],
-  swapArgs: any[],
-  swapData: {
+  slipapge: number,
+  inputToken: {
     token: IElrondToken;
-    originalValue: number;
-    swapValue: number;
-  }
+    value: string;
+  },
+  swapLpData: INomalSmartSwap[]
 ) => {
   try {
     const transactions = [];
     const userAddress = store.getState().userAccount.connectedAddress;
     const senderAddress = new Address(userAddress);
-    let tokenIdentifier = swapData.token.identifier;
 
     let { simpleAddress } = getInterface("smartSwap");
 
     // user want to send Egld
-    if (swapData.token.identifier === "EGLD") {
-      tokenIdentifier = toknesID.wegld;
+    if (inputToken.token.identifier === "EGLD") {
       //wrap egld
       const shard = store.getState().userAccount.connectedShard;
       const wrapContractBasedOnShard = getScOfWrapedEgld(shard);
@@ -225,7 +223,7 @@ export const lpSwapTx = async (
         .setFunction(new ContractFunction("wrapEgld"))
         .setArgs([])
         .build();
-      const value = new BigNumber(swapData.originalValue)
+      const value = new BigNumber(swapLpData[0].amountsend)
         .multipliedBy(EGLD_VAL)
         .toFixed(0);
 
@@ -240,31 +238,47 @@ export const lpSwapTx = async (
       transactions.push(wrapTx);
     }
 
-    // normal swap transaction
-    const multiplyier = Math.pow(10, swapData.token.decimals || 18);
-    const finalValue = Number(swapData.swapValue) * multiplyier;
+    // normal swapd transactions
+    swapLpData.forEach((sawpData) => {
+      const amountWithSlipage = new BigNumber(sawpData.amountReceivDec)
+        .multipliedBy(slipapge)
+        .dividedBy(100)
+        .toNumber();
 
-    const bgFinalValue = new BigNumber(finalValue).toFixed(0);
+      const finalAmount = new BigNumber(sawpData.amountReceivDec)
+        .minus(amountWithSlipage)
+        .toFixed(0);
+      const swapArgs = [
+        new AddressValue(new Address(sawpData.smartcontract)),
+        BytesValue.fromUTF8("swapTokensFixedInput"),
+        BytesValue.fromUTF8(sawpData.token2),
+        new BigUIntValue(new BigNumber(finalAmount)),
+      ];
 
-    const esdtTranferPayload = TransactionPayload.contractCall()
-      .setFunction(new ContractFunction("ESDTTransfer"))
-      .setArgs([
-        BytesValue.fromUTF8(tokenIdentifier),
-        new BigUIntValue(new BigNumber(bgFinalValue)),
-        BytesValue.fromUTF8("swap"),
-        ...swapArgs,
-      ])
-      .build();
+      const finalValue = Number(sawpData.amountsend);
 
-    const tx1 = new Transaction({
-      sender: senderAddress,
-      value: 0,
-      receiver: new Address(simpleAddress),
-      data: esdtTranferPayload,
-      gasLimit: 80000000,
-      chainID: ChainId,
+      const bgFinalValue = new BigNumber(finalValue).toFixed(0);
+
+      const esdtTranferPayload = TransactionPayload.contractCall()
+        .setFunction(new ContractFunction("ESDTTransfer"))
+        .setArgs([
+          BytesValue.fromUTF8(sawpData.token1),
+          new BigUIntValue(new BigNumber(bgFinalValue)),
+          BytesValue.fromUTF8("swap"),
+          ...swapArgs,
+        ])
+        .build();
+
+      const tx1 = new Transaction({
+        sender: senderAddress,
+        value: 0,
+        receiver: new Address(simpleAddress),
+        data: esdtTranferPayload,
+        gasLimit: 80000000,
+        chainID: ChainId,
+      });
+      transactions.push(tx1);
     });
-    transactions.push(tx1);
 
     // lp transaction
     const data = tokens.flatMap((nft) => {
