@@ -121,29 +121,6 @@ export const swapLp = async (
   fromElrondToken: IElrondToken,
   gas: number
 ): Promise<any> => {
-  const firstSwap = swapInfo
-    .filter((_d, i) => swapInfo.length - 1 !== i)
-    .flatMap((item: INomalSmartSwap) => {
-      console.log("item", item);
-
-      const amountWithSlipage = new BigNumber(item.amountReceivDec)
-        .multipliedBy(slipapge)
-        .dividedBy(100)
-        .toNumber();
-
-      const finalAmount = new BigNumber(item.amountReceivDec)
-        .minus(amountWithSlipage)
-        .toFixed(0);
-
-      return [
-        new AddressValue(new Address(item.smartcontract)),
-        BytesValue.fromUTF8("swapTokensFixedInput"),
-        BytesValue.fromUTF8(item.token2),
-        new BigUIntValue(new BigNumber(finalAmount)),
-      ];
-    });
-
-  const firstObjecSwapInfo = swapInfo[0] as INomalSmartSwap;
   const lpSwapInfo = swapInfo[swapInfo.length - 1] as ILpSmartSwap;
   //token1_amount_min
   const token1SlippagePercent = new BigNumber(lpSwapInfo.token1lpamount)
