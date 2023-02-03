@@ -32,3 +32,8 @@ export const fetchSmartSwap = async ([tokenA, amountA, tokenB, isSapwToLp]: [
   );
   return data;
 };
+
+export const fetchLpPrices = async () => {
+  const { data } = await api.get<ILpPrice[]>("/lpapi.php");
+  return data;
+};
