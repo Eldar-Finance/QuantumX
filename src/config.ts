@@ -122,4 +122,5 @@ export const TOKENS_ID = {
   kro: "KRO-df97ec",
   estar: "ESTAR-461bab",
   jex: "JEX-9040ca",
+  epunks: "EPUNKS-dc0f59",
 };

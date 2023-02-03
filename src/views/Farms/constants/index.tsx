@@ -5,6 +5,7 @@ import {
   zpayEgldEliteDualWsp,
 } from "api/sc/sc";
 import aeroEgld from "assets/logos/aeroegl.png";
+import epunkUsdcimg from "assets/logos/epunksusdc.png";
 import proteoEgldLpImg from "assets/logos/proteolp.png";
 
 import zpayWegldImg from "assets/logos/zpaywegld.png";
@@ -90,6 +91,13 @@ export const farms2Data = {
     logo: estarusdcImage,
     name: "ESTARUSDCLP",
     lpToken1: toknesID.estar,
+    lpToken2: toknesID.usdc,
+    scFarmAddress: "",
+  },
+  EPUNKSUSDC: {
+    logo: epunkUsdcimg,
+    name: "EPUNKSUSDCLP",
+    lpToken1: toknesID.epunks,
     lpToken2: toknesID.usdc,
     scFarmAddress: "",
   },
