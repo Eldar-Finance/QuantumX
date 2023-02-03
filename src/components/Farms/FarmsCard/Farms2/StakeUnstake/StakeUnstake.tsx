@@ -104,7 +104,7 @@ const StakeUnstake = ({ farm, userFarmItem, isPool, isBearly }: IProps) => {
           >
             UNSTAKE
           </ActionButton>
-          {hasuserStaked && disableUnstake && epochDiffrence !== 777 && (
+          {hasuserStaked && epochDiffrence !== 777 && (
             <Text fontSize={"smaller"} mt={1}>
               {timeToUnstake} remaining to unstake
             </Text>
