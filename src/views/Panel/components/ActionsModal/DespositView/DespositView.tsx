@@ -17,7 +17,7 @@ import ActionButton from "components/ActionButton/ActionButton";
 import NextImage from "components/NextImage/NextImage";
 import TokenList from "components/TokenList/TokenList";
 import { useFormik } from "formik";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useMemo, useState } from "react";
 import useGetElrondToken from "utils/hooks/useGetElrondToken";
 import useGetUserTokens from "utils/hooks/useGetUserTokens";
 import { IElrondToken } from "utils/types/elrond.interface";
@@ -38,14 +38,20 @@ const validationSchema = yup.object({
     })
   ),
 });
-
 interface IProps {
   onClose: () => void;
   farm: IScFarm2;
 }
 
-const DepositView = ({ onClose, farm }: IProps) => {
+const skipRender = (prevProps: IProps, nextProps: IProps) => {
+  return prevProps.farm.farmId === nextProps.farm.farmId;
+};
+
+// eslint-disable-next-line react/display-name
+const DepositView = memo(({ onClose, farm }: IProps) => {
   const { token } = useGetElrondToken(farm.rewardToken);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const elrondToken = useMemo(() => token, [token.identifier]);
   const isOneToken = farm.rewardToken !== "";
 
   const [alltokens] = useGetUserTokens(null, true);
@@ -79,10 +85,10 @@ const DepositView = ({ onClose, farm }: IProps) => {
 
   useEffect(() => {
     if (isOneToken) {
-      formik.setFieldValue(`tokens.0.tokenDetail`, token);
+      formik.setFieldValue(`tokens.0.tokenDetail`, elrondToken);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isOneToken, token]);
+  }, [isOneToken, elrondToken]);
 
   const handleSelectToken = (selectedToken: IElrondToken) => {
     formik.setFieldValue(
@@ -249,6 +255,6 @@ const DepositView = ({ onClose, farm }: IProps) => {
       </Flex>
     </>
   );
-};
+}, skipRender);
 
 export default DepositView;

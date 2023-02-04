@@ -1,5 +1,5 @@
 import MyModal from "components/Modal/Modal";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import SwipeableViews from "react-swipeable-views";
 import { IScPanelFarms } from "utils/types/sc.interface";
 import AllActions from "./AllActions/AllActions";
@@ -18,13 +18,16 @@ const ActionsModal = ({ isOpen, onClose, farm }: IProps) => {
   const handleView = (view: number) => {
     setView(view);
   };
+  const handleCloseView = useCallback(() => {
+    handleView(0);
+  }, []);
   return (
     <MyModal isOpen={isOpen} onClose={onClose} size={"4xl"}>
       <SwipeableViews index={view} onChangeIndex={handleView}>
         <AllActions farm={farm} handleView={handleView} />
-        <EditFeeView farm={farm.farm} onClose={() => handleView(0)} />
-        <UnboundingView farm={farm.farm} onClose={() => handleView(0)} />
-        <DepositView farm={farm.farm} onClose={() => handleView(0)} />
+        <EditFeeView farm={farm.farm} onClose={handleCloseView} />
+        <UnboundingView farm={farm.farm} onClose={handleCloseView} />
+        <DepositView farm={farm.farm} onClose={handleCloseView} />
       </SwipeableViews>
     </MyModal>
   );
