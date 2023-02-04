@@ -73,7 +73,7 @@ const Farms = () => {
           justifyContent={"center"}
           flexDir="column"
           alignContent={"center"}
-          maxW="1000px"
+          maxW="1200px"
           mx="auto"
         >
           <Title
