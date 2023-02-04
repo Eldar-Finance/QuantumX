@@ -88,9 +88,10 @@ export const getSortedFarm = (
         0;
 
       const totalLocked = formatBalanceDolar(
-        { balance: farm.stakedBalance, decimals: decimals },
+        { balance: farm.stakedBalance, decimals: decimals || 18 }, // decimals is 18 by default because can show really big numbers
         tokenPrice
       );
+
       const totalLockedBalance: IFarmWithTvl = {
         stakedTokenDecimals: decimals,
         stakedTokenPrice: tokenPrice,
