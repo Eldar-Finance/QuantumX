@@ -58,7 +58,7 @@ const StakeUnstake = ({ farm, userFarmItem, isPool, isBearly }: IProps) => {
   const [openUnstakeStake, setOpenUnstakeStake] = useState(false);
   const { token: stakingToken } = useGetElrondToken(farm.farm.stakingToken);
   const { data: statsRes } = useSWR("/stats", getNetworkStats);
-  const { canUsePool } = useCanUsePool7(farm.farm.farmId);
+  const { isSrbStaker } = useCanUsePool7(farm.farm.farmId);
   const address = useAppSelector(selectUserAddress);
   const currentEpoch = statsRes?.data?.epoch;
   const { farmFee } = useGetQuantumxFarmsFees(farm.farm.farmId);
@@ -74,7 +74,7 @@ const StakeUnstake = ({ farm, userFarmItem, isPool, isBearly }: IProps) => {
   if (
     (epochDiffrence <= 0 && farmFee?.earlyUnbondingFee === 0) ||
     userFarmItem?.stakedBalance === 0 ||
-    (!canUsePool && farm.farm.farmId === 7)
+    (!isSrbStaker && farm.farm.farmId === 7)
   ) {
     // if user is creator not disable unstake
     disableUnstake = true && address !== farm.farm.creator;
@@ -92,7 +92,7 @@ const StakeUnstake = ({ farm, userFarmItem, isPool, isBearly }: IProps) => {
           variant={"outline"}
           w="full"
           maxW={"50%"}
-          disabled={!canUsePool && farm.farm.farmId === 7}
+          disabled={!isSrbStaker && farm.farm.farmId === 7}
         >
           STAKE {!isPool && "LP"}
         </ActionButton>

@@ -117,6 +117,7 @@ export const TOKENS_ID = {
   koson: "KOSON-5dd4fa",
   wegld: "WEGLD-bd4d79",
   rare: "RARE-99e8b0",
+  rareUsdcLp: "RAREUSDC-e4a7f8",
   prick: "PRICK-744592",
   bear: "BEAR-f9c271",
   kro: "KRO-df97ec",

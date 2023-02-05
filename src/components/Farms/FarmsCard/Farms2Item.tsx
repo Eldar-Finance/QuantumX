@@ -114,7 +114,7 @@ const Farms2Item = ({
   ]);
 
   // only for srb farm
-  const { canUsePool } = useCanUsePool7(farm.farm.farmId);
+  const { isSrbStaker } = useCanUsePool7(farm.farm.farmId);
 
   let apr: string = "-";
   if (farm.farm.rewardToken === "") {
@@ -247,7 +247,7 @@ const Farms2Item = ({
             />
           </PanelBox>
         </Grid>
-        {!canUsePool && farm.farm.farmId === 7 && (
+        {!isSrbStaker && farm.farm.farmId === 7 && (
           <Text textAlign={"center"} mt={4}>
             You must be a staker of SRB-61daf7.
           </Text>

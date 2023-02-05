@@ -85,7 +85,7 @@ const BearlyCard = ({ farm, multifarmRewardsLeft }: IProps) => {
       75000000
     );
   };
-  const { canUsePool } = useCanUsePool7(farm.farm.farmId);
+  const { isSrbStaker } = useCanUsePool7(farm.farm.farmId);
 
   return (
     <Card>
@@ -206,7 +206,7 @@ const BearlyCard = ({ farm, multifarmRewardsLeft }: IProps) => {
                 (acc, current) => (acc += current.harvestableAmount),
                 0
               ) === 0 ||
-              (!canUsePool && farm.farm.farmId === 7)
+              (!isSrbStaker && farm.farm.farmId === 7)
             }
           >
             Harvest

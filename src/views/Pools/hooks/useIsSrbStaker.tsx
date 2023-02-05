@@ -11,7 +11,7 @@ const useIsSrbStaker = (poolId: number) => {
   );
 
   return {
-    canUsePool: isOneOfTheNumbersInArray([3, 4, 5, 6, 7], data || []),
+    isSrbStaker: isOneOfTheNumbersInArray([3, 4, 5, 6, 7], data || []),
     isLoading,
     error,
   };
