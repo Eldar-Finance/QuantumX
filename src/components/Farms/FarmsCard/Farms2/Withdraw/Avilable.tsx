@@ -9,7 +9,7 @@ import NextImage from "components/NextImage/NextImage";
 import { formatBalance } from "utils/functions/formatBalance";
 import useGetMultipleElrondTokens from "utils/hooks/useGetMultipleElrondTokens";
 import { IScFarmItem, IScUserFarmRewards } from "utils/types/sc.interface";
-import useCanUsePool7 from "views/Pools/hooks/useCanUsePool7";
+import useCanUsePool7 from "views/Pools/hooks/useIsSrbStaker";
 
 interface IProps {
   farm: IScFarmItem;

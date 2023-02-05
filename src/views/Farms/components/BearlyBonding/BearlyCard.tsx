@@ -30,7 +30,7 @@ import {
   IScMultiFarmsRewardsLeft,
 } from "utils/types/sc.interface";
 import { farms2Data } from "views/Farms/constants";
-import useCanUsePool7 from "views/Pools/hooks/useCanUsePool7";
+import useCanUsePool7 from "views/Pools/hooks/useIsSrbStaker";
 interface IProps {
   farm: IScFarmItem;
   multifarmRewardsLeft?: IScMultiFarmsRewardsLeft;

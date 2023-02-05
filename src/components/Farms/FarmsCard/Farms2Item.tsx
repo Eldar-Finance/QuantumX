@@ -36,7 +36,7 @@ import useGetElrondToken from "utils/hooks/useGetElrondToken";
 import useGetJexPrice from "utils/hooks/useGetJexPrice";
 import useGetMultipleElrondTokens from "utils/hooks/useGetMultipleElrondTokens";
 import { farms2Data } from "views/Farms/constants";
-import useCanUsePool7 from "views/Pools/hooks/useCanUsePool7";
+import useCanUsePool7 from "views/Pools/hooks/useIsSrbStaker";
 import EarnedRewards from "./Farms2/EarnedRewards/EarnedRewards";
 import EarnTokens from "./Farms2/EarnTokens/EarnTokens";
 import StakeUnstake from "./Farms2/StakeUnstake/StakeUnstake";

@@ -12,7 +12,7 @@ import useCountDown from "utils/hooks/useCountDown";
 import useGetElrondToken from "utils/hooks/useGetElrondToken";
 import useGetQuantumxFarmsFees from "utils/hooks/useGetQuantumxFarmsFees";
 import { IScFarmItem, IScUserFarmInfo } from "utils/types/sc.interface";
-import useCanUsePool7 from "views/Pools/hooks/useCanUsePool7";
+import useCanUsePool7 from "views/Pools/hooks/useIsSrbStaker";
 
 const StakeModal: any = dynamic(() => import("./StakeModal"));
 const UnstakeModal: any = dynamic(() => import("./UnstkeModal"));
