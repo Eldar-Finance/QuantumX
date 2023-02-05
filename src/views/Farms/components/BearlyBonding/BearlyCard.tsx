@@ -82,7 +82,7 @@ const BearlyCard = ({ farm, multifarmRewardsLeft }: IProps) => {
       "farms2",
       "harvest",
       [new BigUIntValue(new BigNumber(farm.farm.farmId))],
-      50000000
+      75000000
     );
   };
   const { canUsePool } = useCanUsePool7(farm.farm.farmId);
