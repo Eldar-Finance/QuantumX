@@ -1,4 +1,4 @@
-import { Center, Flex, Text } from "@chakra-ui/react";
+import { Box, Center, Flex, Link, Text } from "@chakra-ui/react";
 import { getNetworkStats } from "api/rest/elrondApi/network";
 import ActionButton from "components/ActionButton/ActionButton";
 import dynamic from "next/dynamic";
@@ -12,6 +12,7 @@ import useCountDown from "utils/hooks/useCountDown";
 import useGetElrondToken from "utils/hooks/useGetElrondToken";
 import useGetQuantumxFarmsFees from "utils/hooks/useGetQuantumxFarmsFees";
 import { IScFarmItem, IScUserFarmInfo } from "utils/types/sc.interface";
+import useIsBearFarm from "views/Pools/hooks/useIsBearFarm";
 import useCanUsePool7 from "views/Pools/hooks/useIsSrbStaker";
 
 const StakeModal: any = dynamic(() => import("./StakeModal"));
@@ -62,6 +63,7 @@ const StakeUnstake = ({ farm, userFarmItem, isPool, isBearly }: IProps) => {
   const address = useAppSelector(selectUserAddress);
   const currentEpoch = statsRes?.data?.epoch;
   const { farmFee } = useGetQuantumxFarmsFees(farm.farm.farmId);
+  const isAFarmBoost = useIsBearFarm(farm);
 
   const epochDiffrence = userFarmItem?.unboundingEpoch
     ? currentEpoch - userFarmItem.unboundingEpoch
@@ -84,7 +86,14 @@ const StakeUnstake = ({ farm, userFarmItem, isPool, isBearly }: IProps) => {
   return (
     <Flex h="full" flexDir={"column"} w="full">
       <Text color="white.400">
-        STAKE {formatTokenI(farm.farm.stakingToken)} {!isPool && "LP"}
+        STAKE {formatTokenI(farm.farm.stakingToken)} {!isPool && "LP"}{" "}
+        {isAFarmBoost && (
+          <Box as="span" color="white">
+            <Link href={"https://xoxno.com/collection/SRB-61daf7"} isExternal>
+              (Get 10% Boost by Staking a 🐻SRB NFT)
+            </Link>
+          </Box>
+        )}
       </Text>
       <Flex mt="2" gap="3" flex={1} alignItems="center" w="full">
         <ActionButton
@@ -94,13 +103,13 @@ const StakeUnstake = ({ farm, userFarmItem, isPool, isBearly }: IProps) => {
           maxW={"50%"}
           disabled={!isSrbStaker && farm.farm.farmId === 7}
         >
-          STAKE {!isPool && "LP"}
+          STAKE {!isPool && "LP"}{" "}
         </ActionButton>
         <Center flex="1" flexDir={"column"} w="full" maxW={"50%"}>
           <ActionButton
             onClick={() => setOpenUnstakeStake((s) => !s)}
             disabled={disableUnstake}
-            w={isBearly ? "full" : "50%"}
+            w={isBearly ? "full" : { xs: "full", md: "50%" }}
           >
             UNSTAKE
           </ActionButton>
