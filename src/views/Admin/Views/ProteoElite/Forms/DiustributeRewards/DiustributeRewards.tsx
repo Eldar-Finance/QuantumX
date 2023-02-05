@@ -15,7 +15,7 @@ const validationSchema = yup.object({
 const DiustributeRewards = () => {
   const formik = useFormik({
     initialValues: {
-      title: "",
+      title: proteoPoolsArr[0].token,
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
