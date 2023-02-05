@@ -122,7 +122,7 @@ const StakeUnstake = ({ farm, userFarmItem, isPool, isBearly }: IProps) => {
             epochDiffrence <= 0 &&
             farmFee?.earlyUnbondingFee > 0 && (
               <Text fontSize={"sm"} color="darkgray" mt={1}>
-                {timeToUnstake}remaining to unstake with 0% penalty
+                {timeToUnstake} remaining to unstake with 0% penalty
               </Text>
             )}
         </Center>
