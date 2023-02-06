@@ -3,10 +3,10 @@ import useSwr from "swr";
 import { useAppSelector } from "utils/hooks/redux";
 import { fetchInfoForNumber7Pool } from "../services";
 import { isOneOfTheNumbersInArray } from "../utils";
-const useIsSrbStaker = (poolId: number) => {
+const useIsSrbStaker = () => {
   const addres = useAppSelector(selectUserAddress);
   const { data, isLoading, error } = useSwr(
-    poolId === 7 ? ["xoxnoSrbPoolsInfoWsp:getWalletPools", addres] : null,
+    ["xoxnoSrbPoolsInfoWsp:getWalletPools", addres],
     fetchInfoForNumber7Pool
   );
 

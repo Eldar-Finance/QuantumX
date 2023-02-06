@@ -59,7 +59,7 @@ const StakeUnstake = ({ farm, userFarmItem, isPool, isBearly }: IProps) => {
   const [openUnstakeStake, setOpenUnstakeStake] = useState(false);
   const { token: stakingToken } = useGetElrondToken(farm.farm.stakingToken);
   const { data: statsRes } = useSWR("/stats", getNetworkStats);
-  const { isSrbStaker } = useCanUsePool7(farm.farm.farmId);
+  const { isSrbStaker } = useCanUsePool7();
   const address = useAppSelector(selectUserAddress);
   const currentEpoch = statsRes?.data?.epoch;
   const { farmFee } = useGetQuantumxFarmsFees(farm.farm.farmId);

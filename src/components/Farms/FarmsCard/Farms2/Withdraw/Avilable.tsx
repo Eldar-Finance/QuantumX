@@ -21,7 +21,7 @@ const Avilable = ({ farm, userFarmRewards }: IProps) => {
   const { tokens: rewardsTokens } = useGetMultipleElrondTokens(
     userFarmRewards.map((r) => r.rewardToken)
   );
-  const { isSrbStaker } = useCanUsePool7(farm.farm.farmId);
+  const { isSrbStaker } = useCanUsePool7();
   const handleHarvest = () => {
     scCall(
       "farms2",
