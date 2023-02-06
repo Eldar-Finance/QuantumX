@@ -114,7 +114,7 @@ const Farms2Item = ({
   ]);
 
   // only for srb farm
-  const { isSrbStaker } = useCanUsePool7(farm.farm.farmId);
+  const { isSrbStaker } = useCanUsePool7();
 
   let apr: string = "-";
   if (farm.farm.rewardToken === "") {
