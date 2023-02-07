@@ -86,7 +86,8 @@ const UnstakeModal = ({
           balance: userFarmItem.stakedBalance,
           decimals: token.decimals,
         },
-        true
+        true,
+        18
       );
       const realmax = percent * max;
       const finalAmount = preventExponetialNotation(realmax);
