@@ -158,7 +158,7 @@ const Pools = () => {
             isExternal
             href="https://bhero.com/pdf/audits/elrond/SuperRareBears_SmartContract_Audit_FarmsSmartContract_v.0.1.pdf"
           >
-            <Image src={auditImg} alt="audit" />
+            <Image src={auditImg} alt="audit" height={150} />
           </Link>
         </Center>
       </Box>
