@@ -1,10 +1,12 @@
-import { Flex } from "@chakra-ui/react";
+import { Box, Center, Flex, Link } from "@chakra-ui/react";
+import auditImg from "assets/farms/audit.png";
 import MyContainer from "components/Container/Container";
 import Title from "components/Farms/Title/Title";
 import Layout from "components/Layout/Layout";
 import MyTabs from "components/MyTabs/MyTabs";
 import withElronDapp from "hoc/withElronDapp";
 import WrapperPages from "hoc/WrapperPages";
+import Image from "next/image";
 import { useEffect } from "react";
 import { fetchStats } from "redux/slices/elrond/elrond-slice";
 import {
@@ -30,7 +32,6 @@ import { useAppDispatch, useAppSelector } from "utils/hooks/redux";
 import useGetTotalValueInFarms from "utils/hooks/useGetTotalValueInFarms";
 import BearlyBonding from "./components/BearlyBonding/BearlyBonding";
 import FarmsList from "./components/FarmsList/FarmsList";
-
 const Farms = () => {
   const dispatch = useAppDispatch();
   const address = useAppSelector(selectUserAddress);
@@ -67,7 +68,7 @@ const Farms = () => {
   }, [dispatch, mexPairs]);
   return (
     <Layout>
-      <MyContainer pb="100px">
+      <MyContainer pb="70px">
         <Flex
           w="full"
           justifyContent={"center"}
@@ -114,6 +115,16 @@ const Farms = () => {
           />
         </Flex>
       </MyContainer>
+      <Box pb="100px">
+        <Center>
+          <Link
+            isExternal
+            href="https://bhero.com/pdf/audits/elrond/SuperRareBears_SmartContract_Audit_FarmsSmartContract_v.0.1.pdf"
+          >
+            <Image src={auditImg} alt="audit" />
+          </Link>
+        </Center>
+      </Box>
     </Layout>
   );
 };
