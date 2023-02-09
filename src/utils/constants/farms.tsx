@@ -12,7 +12,12 @@ import {
 } from "components/Icons/ui";
 import NextImage from "components/NextImage/NextImage";
 
-export const noMaxTokens = ["PROTEOEGLDLP", "ZPAYWEGLD", "AEROWEGLD"];
+export const noMaxTokens = [
+  "PROTEOEGLDLP",
+  "ZPAYWEGLD",
+  "AEROWEGLD",
+  "CYBERWEGLD",
+];
 export const coinInfo = {
   ZPAYWEGLD: {
     logo: <NextImage alt="" src={zpayWegldImg} width={27} />,
