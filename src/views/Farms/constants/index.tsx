@@ -78,10 +78,9 @@ export const proteoFarms: {
     tokenIdentifier: toknesID.cyberwegld,
     tokenRewards: { name: "CYBER", tokenI: toknesID.cyber },
     endpointDefinition: "getMyStakedInfoLPDUALFARMS",
-    getFarm:
-      "https://arda.run/swap?from=single-wallet-&to=lpMaiar-wallet-AEROWEGLD-81cc37",
-    viewContract: "https://explorer.elrond.com/tokens/AEROWEGLD-81cc37",
-    seePair: "https://e-compass.io/maiars/chart/aero/wegld",
+    getFarm: "https://www.quantumx.network/swap",
+    viewContract: `https://explorer.elrond.com/tokens/${toknesID.cyberwegld}`,
+    seePair: "https://e-compass.io/maiars/chart/cyber/wegld",
     type: "farm",
   },
 };
