@@ -239,9 +239,7 @@ export const proteo = createSlice({
           (token) => token.id === action.payload.id
         ) === -1
       ) {
-        if (action.payload.balance !== 0) {
-          state.dualsEarned = [...state.dualsEarned, action.payload];
-        }
+        state.dualsEarned = [...state.dualsEarned, action.payload];
       }
     },
   },

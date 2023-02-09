@@ -1,6 +1,7 @@
 import { toknesID } from "api/net.config";
 import {
   aeroWegldWsp,
+  cyberWegldWsp,
   proteoEgldEliteWsp,
   zpayEgldEliteDualWsp,
 } from "api/sc/sc";
@@ -72,7 +73,7 @@ export const proteoFarms: {
     hc: 20,
     Icon: <NextImage alt="" src={cyberWegldImage} width={45} />,
     stakedCoin: "CYBER-WEGLD",
-    wsp: aeroWegldWsp,
+    wsp: cyberWegldWsp,
     token: "CYBERWEGLD",
     aprEndpoint: "/cyberergldapi.php",
     tokenIdentifier: toknesID.cyberwegld,
