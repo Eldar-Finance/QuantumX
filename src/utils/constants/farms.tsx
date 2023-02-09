@@ -4,6 +4,7 @@ import zpayImg from "assets/logos/logo.svg";
 import proteoEgldLpImg from "assets/logos/proteolp.png";
 import zpayWegldImg from "assets/logos/zpaywegld.png";
 import {
+  CyberLogoIcon,
   EgldlogoIcon2,
   ProteoIcon,
   RidelogoIcon,
@@ -33,6 +34,9 @@ export const coinInfo = {
   },
   RIDE: {
     logo: <RidelogoIcon fontSize={"27px"} />,
+  },
+  CYBER: {
+    logo: <CyberLogoIcon fontSize={"27px"} />,
   },
 };
 

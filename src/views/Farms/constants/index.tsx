@@ -11,6 +11,7 @@ import proteoEgldLpImg from "assets/logos/proteolp.png";
 import zpayWegldImg from "assets/logos/zpaywegld.png";
 import NextImage from "components/NextImage/NextImage";
 
+import cyberWegldImage from "assets/logos/cyberWegld.jpg";
 import estarusdcImage from "assets/logos/estarusdc.png";
 import rareUsdcImage from "assets/logos/rare-usdc.png";
 import { IProteoFarm } from "utils/types/farms.interface";
@@ -19,6 +20,7 @@ export const proteoFarms: {
   ZPAYWEGLD: IProteoFarm;
   AEROWEGLD: IProteoFarm;
   PROTEOEGLDLP: IProteoFarm;
+  CYBERWEGLD: IProteoFarm;
 } = {
   PROTEOEGLDLP: {
     hc: 20,
@@ -59,6 +61,22 @@ export const proteoFarms: {
     aprEndpoint: "/aeroegldapi.php",
     tokenIdentifier: toknesID.aerowegld,
     tokenRewards: { name: "AERO", tokenI: toknesID.aero },
+    endpointDefinition: "getMyStakedInfoLPDUALFARMS",
+    getFarm:
+      "https://arda.run/swap?from=single-wallet-&to=lpMaiar-wallet-AEROWEGLD-81cc37",
+    viewContract: "https://explorer.elrond.com/tokens/AEROWEGLD-81cc37",
+    seePair: "https://e-compass.io/maiars/chart/aero/wegld",
+    type: "farm",
+  },
+  CYBERWEGLD: {
+    hc: 20,
+    Icon: <NextImage alt="" src={cyberWegldImage} width={45} />,
+    stakedCoin: "CYBER-WEGLD",
+    wsp: aeroWegldWsp,
+    token: "CYBERWEGLD",
+    aprEndpoint: "/cyberergldapi.php",
+    tokenIdentifier: toknesID.cyberwegld,
+    tokenRewards: { name: "CYBER", tokenI: toknesID.cyber },
     endpointDefinition: "getMyStakedInfoLPDUALFARMS",
     getFarm:
       "https://arda.run/swap?from=single-wallet-&to=lpMaiar-wallet-AEROWEGLD-81cc37",

@@ -1,4 +1,4 @@
-var abiFile = require("./src/assets/abi/farms.abi.json");
+var abiFile = require("./farms.abi.json");
 var {
   AbiRegistry,
   ContractFunction,
@@ -101,7 +101,7 @@ const scQuery = async (funcName, args) => {
 };
 
 // get Tvl
-const getTvl = async () => {
+const tvl = async () => {
   // tvl
   let tvlDollar = 0;
 
@@ -228,10 +228,16 @@ const getTvl = async () => {
   return tvlDollar;
 };
 
-getTvl()
+tvl()
   .then((res) => {
     console.log("\n\nTVL : ", res);
   })
   .catch((err) => {
     console.log("err", err);
   });
+
+module.exports = {
+    elrond: {
+        tvl,
+    }
+}
