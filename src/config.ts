@@ -60,6 +60,8 @@ export const contractAddress = {
     "erd1qqqqqqqqqqqqqpgq6hzck3wac3ljmth7dkzk2wcw3c9lvcauznyq268sn6",
   aeroEgldEliteDual:
     "erd1qqqqqqqqqqqqqpgqnedra5da464rkcektgzyv0qxcgqgyh26znyq8q4phx",
+  cyberWegkdElite:
+    "erd1qqqqqqqqqqqqqpgqvvn3s8ndrxqu6ndgnvsfp4sx9wgtv9z2znyqrfyhsf",
 };
 export const gatewayAddress = "https://gateway.elrond.com/";
 
@@ -117,10 +119,13 @@ export const TOKENS_ID = {
   koson: "KOSON-5dd4fa",
   wegld: "WEGLD-bd4d79",
   rare: "RARE-99e8b0",
+  rareUsdcLp: "RAREUSDC-e4a7f8",
   prick: "PRICK-744592",
   bear: "BEAR-f9c271",
   kro: "KRO-df97ec",
   estar: "ESTAR-461bab",
   jex: "JEX-9040ca",
   epunks: "EPUNKS-dc0f59",
+  cyberwegld: "CYBERWEGLD-45a866",
+  cyber: "CYBER-489c1c",
 };

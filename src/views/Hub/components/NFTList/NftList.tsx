@@ -2,6 +2,7 @@ import { Center, Text } from "@chakra-ui/react";
 import { BigIntValue } from "@elrondnetwork/erdjs/out";
 import { contractAddr } from "api/net.config";
 import { EGLDPayment, ESDTTransfer } from "api/sc/calls";
+import flamieImage from "assets/hub/flamie.jpg";
 import srbImage from "assets/hub/srbcatalog.jpg";
 import vacineImage from "assets/hub/vacine.png";
 import BigNumber from "bignumber.js";
@@ -14,7 +15,7 @@ import NftCard from "../NftCard/NftCard";
 const NftList = () => {
   const { offers } = useGetOffers();
   const { tokens } = useGetMultipleElrondTokens(
-    offers ? [offers[0].token, offers[1].token] : []
+    offers ? [offers[0].token, offers[1].token, offers[2].token] : []
   );
 
   if (!offers || !tokens) return null;
@@ -27,6 +28,10 @@ const NftList = () => {
     ...offers[0],
     elrondToken: tokens.find((t) => t.identifier === offers[0].token),
   };
+  const offer3 = {
+    ...offers[2],
+    elrondToken: tokens.find((t) => t.identifier === offers[2].token),
+  };
 
   const handleSubmitHubOffer = (offer) => {
     const funcName = "buyNft";
@@ -38,9 +43,10 @@ const NftList = () => {
       EGLDPayment(
         "hubWsp",
         funcName,
-        formatBalance({ balance: offer.price, decimals: 18 }, true, 8),
+        0,
         [new BigIntValue(new BigNumber(offer.id))],
-        10000000
+        10000000,
+        offer.price
       );
     } else {
       ESDTTransfer({
@@ -89,6 +95,22 @@ const NftList = () => {
             {formatTokenI(offer2.token)} <br /> Get an Abominator
           </Text>
         }
+      />
+      <NftCard
+        token={offer3.token}
+        iamge={flamieImage}
+        onSubmit={() => handleSubmitHubOffer(offer3)}
+        text={
+          <Text>
+            Pay{" "}
+            {formatBalance({
+              balance: offer3.price,
+              decimals: offer3.elrondToken?.decimals,
+            })}{" "}
+            {formatTokenI(offer3.token)} <br /> Mint a random Flamie
+          </Text>
+        }
+        disabled={offer3.numberOfAvilableNfts === 0}
       />
     </Center>
   );

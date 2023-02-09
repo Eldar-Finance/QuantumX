@@ -9,7 +9,8 @@ import NextImage from "components/NextImage/NextImage";
 import { formatBalance } from "utils/functions/formatBalance";
 import useGetMultipleElrondTokens from "utils/hooks/useGetMultipleElrondTokens";
 import { IScFarmItem, IScUserFarmRewards } from "utils/types/sc.interface";
-import useCanUsePool7 from "views/Pools/hooks/useCanUsePool7";
+import useIsBearFarm from "views/Pools/hooks/useIsBearFarm";
+import useCanUsePool7 from "views/Pools/hooks/useIsSrbStaker";
 
 interface IProps {
   farm: IScFarmItem;
@@ -20,15 +21,16 @@ const Avilable = ({ farm, userFarmRewards }: IProps) => {
   const { tokens: rewardsTokens } = useGetMultipleElrondTokens(
     userFarmRewards.map((r) => r.rewardToken)
   );
-  const { canUsePool } = useCanUsePool7(farm.farm.farmId);
+  const { isSrbStaker } = useCanUsePool7();
   const handleHarvest = () => {
     scCall(
       "farms2",
       "harvest",
       [new BigUIntValue(new BigNumber(farm.farm.farmId))],
-      50000000
+      75000000
     );
   };
+  const isAFarmBoost = useIsBearFarm(farm);
 
   let manualImage = null;
 
@@ -74,7 +76,7 @@ const Avilable = ({ farm, userFarmRewards }: IProps) => {
         </VStack>
       </Flex>
       <Flex flexDir={"column"}>
-        <Center mt="2">
+        <Center mt="2" flexDir={"column"}>
           <ActionButton
             onClick={handleHarvest}
             disabled={
@@ -82,11 +84,16 @@ const Avilable = ({ farm, userFarmRewards }: IProps) => {
                 (acc, current) => (acc += current.harvestableAmount),
                 0
               ) === 0 ||
-              (!canUsePool && farm.farm.farmId === 7)
+              (!isSrbStaker && farm.farm.farmId === 7)
             }
           >
             HARVEST
           </ActionButton>
+          {isAFarmBoost && isSrbStaker && (
+            <Text align={"center"} fontSize="14px" mt={2}>
+              🐻 You are eligible for 10% Rewards Boost
+            </Text>
+          )}
         </Center>
         <Flex justify={"flex-end"}></Flex>
       </Flex>

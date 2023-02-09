@@ -10,9 +10,10 @@ interface IProps {
   text: ReactNode;
   onSubmit: () => void;
   token: string;
+  disabled?: boolean;
 }
 
-const NftCard = ({ iamge, onSubmit, text, token }: IProps) => {
+const NftCard = ({ iamge, onSubmit, text, token, disabled }: IProps) => {
   const { accountToken } = useGetAccountToken(token);
 
   return (
@@ -32,7 +33,7 @@ const NftCard = ({ iamge, onSubmit, text, token }: IProps) => {
         mt={8}
         fontWeight="900"
         onClick={onSubmit}
-        disabled={formatBalance(accountToken, true) === 0}
+        disabled={disabled || formatBalance(accountToken, true) === 0}
       >
         Buy Now
       </ActionButton>

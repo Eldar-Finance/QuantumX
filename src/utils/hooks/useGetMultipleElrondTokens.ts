@@ -23,7 +23,6 @@ const useGetMultipleElrondTokens = (tokensIdentifiers: string[]) => {
   );
 
   let finalData: IElrondToken[] = data?.data ? [...data?.data] : [];
-  const finaltokens = [];
   if (isEgldonTokens) {
     if (egldData && finalData) {
       if (finalData.findIndex((item) => item.identifier === "EGLD") === -1) {
@@ -50,7 +49,7 @@ const useGetMultipleElrondTokens = (tokensIdentifiers: string[]) => {
   ) {
     const token = finalData.find((t) => t.identifier === toknesID.prick);
     finalData = [
-      ...finalData,
+      ...finalData.filter((t) => t.identifier !== toknesID.prick),
       {
         ...token,
         assets: {

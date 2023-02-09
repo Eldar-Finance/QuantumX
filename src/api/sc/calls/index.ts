@@ -198,7 +198,8 @@ export const EGLDPayment = async (
   funcName,
   amount,
   args = [],
-  gasLimit
+  gasLimit,
+  finalAmount = null
 ) => {
   let { simpleAddress } = getInterface(workspace);
 
@@ -213,7 +214,7 @@ export const EGLDPayment = async (
   const transactionData: any = {
     addr: simpleAddress,
     payload: payload,
-    value: amount * EGLD_VAL,
+    value: finalAmount ?? amount * EGLD_VAL,
     gasL: gasLimit || 200000000,
   };
 

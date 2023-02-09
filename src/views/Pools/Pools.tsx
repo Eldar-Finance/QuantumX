@@ -1,4 +1,5 @@
-import { Center, Flex } from "@chakra-ui/react";
+import { Box, Center, Flex, Link } from "@chakra-ui/react";
+import auditImg from "assets/farms/audit.png";
 import MyContainer from "components/Container/Container";
 import ProteoFarmsCard from "components/Farms/FarmsCard/FarmsCard";
 import Search from "components/Farms/Search/Search";
@@ -6,6 +7,7 @@ import Title from "components/Farms/Title/Title";
 import Layout from "components/Layout/Layout";
 import withElronDapp from "hoc/withElronDapp";
 import WrapperPages from "hoc/WrapperPages";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { fetchStats } from "redux/slices/elrond/elrond-slice";
@@ -37,6 +39,7 @@ import { formatTokenI } from "utils/functions/tokens";
 import { useAppDispatch, useAppSelector } from "utils/hooks/redux";
 import useGetTotalValuePools from "utils/hooks/useGetTotalValuePools";
 import { proteoPoolsArr } from "./constants";
+
 const Pools = () => {
   const dispatch = useAppDispatch();
   const address = useAppSelector(selectUserAddress);
@@ -149,6 +152,16 @@ const Pools = () => {
           </Center>
         </Flex>
       </MyContainer>
+      <Box pb="100px">
+        <Center>
+          <Link
+            isExternal
+            href="https://bhero.com/pdf/audits/elrond/SuperRareBears_SmartContract_Audit_FarmsSmartContract_v.0.1.pdf"
+          >
+            <Image src={auditImg} alt="audit" height={150} />
+          </Link>
+        </Center>
+      </Box>
     </Layout>
   );
 };

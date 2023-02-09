@@ -39,7 +39,7 @@ const QuantumXFeatures = () => {
             <IconAndButtonBox
               href={routeNames.dashboard}
               title="Tools"
-              desc="The Ultimate tools forinvestors, traders or fans."
+              desc="The Ultimate tools for investors, traders or fans."
               icon={<ToolIcon fontSize={"24px"} />}
               buttonText="Use"
             />

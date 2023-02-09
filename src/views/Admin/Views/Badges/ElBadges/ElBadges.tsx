@@ -5,15 +5,19 @@ import ActionButton from "components/ActionButton/ActionButton";
 import TokenList from "components/TokenList/TokenList";
 import Image from "next/image";
 import { useState } from "react";
+import { exportToExcel } from "utils/functions/array";
 import useGetUserTokens from "utils/hooks/useGetUserTokens";
 import { IElrondToken } from "utils/types/elrond.interface";
+import useGetInvestors from "../hooks/useGetInvestors";
+import useGetStakers from "../hooks/useGetStakers";
 
 const ElBadges = () => {
   const [val, setVal] = useState();
   const [alltokens] = useGetUserTokens();
   const [userToken, setUserToken] = useState<IElrondToken>(null);
   const [isOpen, setIsOpen] = useState(false);
-
+  const { stakers } = useGetStakers();
+  const { investors } = useGetInvestors();
   const handleSend = async () => {
     if (userToken) {
       const res = await ESDTTransfer({
@@ -38,11 +42,23 @@ const ElBadges = () => {
     setIsOpen((s) => !s);
   };
 
+  //export actions
+  const exportStakers = () => {
+    exportToExcel(stakers, "stakers.xlsx");
+  };
+  const exportInvestors = () => {
+    exportToExcel(investors, "investors.xlsx");
+  };
+
   return (
     <Center flexDirection={"column"} width="fit-content">
       <Text as="h2" fontSize={"1.8rem"} mb={5}>
-        Badges Rewards
+        Rewards
       </Text>
+      <Flex mb={10} gap={5}>
+        <ActionButton onClick={exportStakers}>Get Stakers</ActionButton>
+        <ActionButton onClick={exportInvestors}>Investors</ActionButton>
+      </Flex>
       <Input
         mb={4}
         width={{ xs: "300px", tablet: "450px" }}
@@ -77,8 +93,9 @@ const ElBadges = () => {
               alt={userToken.assets?.description || ""}
               style={{
                 maxWidth: "100%",
-                height: "auto"
-              }} />
+                height: "auto",
+              }}
+            />
             <Box>{userToken.ticker}</Box>
           </Flex>
         ) : (

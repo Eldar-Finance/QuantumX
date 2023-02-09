@@ -86,7 +86,8 @@ const UnstakeModal = ({
           balance: userFarmItem.stakedBalance,
           decimals: token.decimals,
         },
-        true
+        true,
+        18
       );
       const realmax = percent * max;
       const finalAmount = preventExponetialNotation(realmax);
@@ -115,10 +116,14 @@ const UnstakeModal = ({
             <Flex mb="2">
               <Text>
                 Staked:{" "}
-                {formatBalance({
-                  balance: userFarmItem?.stakedBalance,
-                  decimals: token?.decimals,
-                })}
+                {formatBalance(
+                  {
+                    balance: userFarmItem?.stakedBalance,
+                    decimals: token?.decimals,
+                  },
+                  true,
+                  18
+                )}
               </Text>
             </Flex>
             <Flex mb="3">

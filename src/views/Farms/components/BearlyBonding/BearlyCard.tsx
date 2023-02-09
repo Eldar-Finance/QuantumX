@@ -30,7 +30,7 @@ import {
   IScMultiFarmsRewardsLeft,
 } from "utils/types/sc.interface";
 import { farms2Data } from "views/Farms/constants";
-import useCanUsePool7 from "views/Pools/hooks/useCanUsePool7";
+import useCanUsePool7 from "views/Pools/hooks/useIsSrbStaker";
 interface IProps {
   farm: IScFarmItem;
   multifarmRewardsLeft?: IScMultiFarmsRewardsLeft;
@@ -82,10 +82,10 @@ const BearlyCard = ({ farm, multifarmRewardsLeft }: IProps) => {
       "farms2",
       "harvest",
       [new BigUIntValue(new BigNumber(farm.farm.farmId))],
-      50000000
+      75000000
     );
   };
-  const { canUsePool } = useCanUsePool7(farm.farm.farmId);
+  const { isSrbStaker } = useCanUsePool7();
 
   return (
     <Card>
@@ -206,7 +206,7 @@ const BearlyCard = ({ farm, multifarmRewardsLeft }: IProps) => {
                 (acc, current) => (acc += current.harvestableAmount),
                 0
               ) === 0 ||
-              (!canUsePool && farm.farm.farmId === 7)
+              (!isSrbStaker && farm.farm.farmId === 7)
             }
           >
             Harvest

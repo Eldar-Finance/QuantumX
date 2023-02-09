@@ -143,7 +143,8 @@ export type WspTypes =
   | "wrapEgldShard1"
   | "wrapEgldShard2"
   | "xoxnoSrbPoolsInfoWsp"
-  | "hubWsp";
+  | "hubWsp"
+  | "cyberWegld";
 
 export const getInterface = (workspace: WspTypes) => {
   let address = null;
@@ -262,6 +263,12 @@ export const getInterface = (workspace: WspTypes) => {
       abiUrl = proteoEliteFakeAbi;
       implementsInterfaces = "ProteoEliteFake";
       break;
+    case cyberWegldWsp:
+      simpleAddress = contractAddr.cyberWegkdElite;
+      address = new Address(simpleAddress);
+      abiUrl = proteoEliteFakeAbi;
+      implementsInterfaces = "ProteoEliteFake";
+      break;
     case fastp2pSwapWsp:
       simpleAddress = contractAddr.fastp2pswap;
       address = new Address(simpleAddress);
@@ -355,3 +362,4 @@ export const kroUsdcNonEliteDualWsp = "kroUsdcNonEliteDual";
 export const proteoEgldEliteWsp = "proteoEgldElite";
 export const egldRideWsp = "rideFarmWsp";
 export const aeroWegldWsp = "aeroWegld";
+export const cyberWegldWsp = "cyberWegld";
