@@ -11,7 +11,7 @@ import proteoEgldLpImg from "assets/logos/proteolp.png";
 import zpayWegldImg from "assets/logos/zpaywegld.png";
 import NextImage from "components/NextImage/NextImage";
 
-import cyberWegldImage from "assets/logos/cyberWegld.jpg";
+import cyberWegldImage from "assets/logos/cyberWegld.png";
 import estarusdcImage from "assets/logos/estarusdc.png";
 import rareUsdcImage from "assets/logos/rare-usdc.png";
 import { IProteoFarm } from "utils/types/farms.interface";
