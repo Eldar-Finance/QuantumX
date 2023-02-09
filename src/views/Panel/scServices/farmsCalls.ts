@@ -81,7 +81,7 @@ export async function depositRewards(
     "depositRewards",
     tokensToSend,
     arg,
-    50000000
+    120000000
   );
 
   return res;
