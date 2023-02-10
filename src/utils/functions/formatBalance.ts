@@ -99,8 +99,6 @@ export const formatPrecision = (num, customPrecision?: number) => {
     }
   }
 
-  const exp = Math.pow(10, precision);
-
   return Number(new BigNumber(num).toFixed(precision));
 };
 

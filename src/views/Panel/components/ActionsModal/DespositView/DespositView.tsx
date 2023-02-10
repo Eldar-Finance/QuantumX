@@ -18,9 +18,10 @@ import NextImage from "components/NextImage/NextImage";
 import TokenList from "components/TokenList/TokenList";
 import { useFormik } from "formik";
 import { memo, useEffect, useMemo, useState } from "react";
+import { formatBalance } from "utils/functions/formatBalance";
 import useGetElrondToken from "utils/hooks/useGetElrondToken";
 import useGetUserTokens from "utils/hooks/useGetUserTokens";
-import { IElrondToken } from "utils/types/elrond.interface";
+import { IELrondTOkenWithBalance } from "utils/types/elrond.interface";
 import { IScFarm2 } from "utils/types/sc.interface";
 import { depositRewards } from "views/Panel/scServices/farmsCalls";
 import * as yup from "yup";
@@ -54,13 +55,14 @@ const DepositView = memo(({ onClose, farm }: IProps) => {
   const elrondToken = useMemo(() => token, [token.identifier]);
   const isOneToken = farm.rewardToken !== "";
 
-  const [alltokens] = useGetUserTokens(null, true);
+  const [usersTokens] = useGetUserTokens(null, true);
+  const alltokens: IELrondTOkenWithBalance[] = usersTokens;
   const [selectedTokenId, setSelectedTokenId] = useState<number>(-1);
 
   const formik = useFormik<{
     days: "";
     BypassLastRewardedEpoch: boolean;
-    tokens: { tokenDetail: IElrondToken; amount: string }[];
+    tokens: { tokenDetail: IELrondTOkenWithBalance; amount: string }[];
   }>({
     initialValues: {
       days: "",
@@ -90,7 +92,7 @@ const DepositView = memo(({ onClose, farm }: IProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOneToken, elrondToken]);
 
-  const handleSelectToken = (selectedToken: IElrondToken) => {
+  const handleSelectToken = (selectedToken: IELrondTOkenWithBalance) => {
     formik.setFieldValue(
       `tokens.${selectedTokenId}.tokenDetail`,
       selectedToken
@@ -111,6 +113,9 @@ const DepositView = memo(({ onClose, farm }: IProps) => {
     const values = [...formik.values.tokens];
     values.splice(index, 1);
     formik.setFieldValue("tokens", values);
+  };
+  const handleMax = (i, token: IELrondTOkenWithBalance) => {
+    formik.setFieldValue(`tokens.${i}.amount`, formatBalance(token, true, 17));
   };
 
   return (
@@ -151,10 +156,18 @@ const DepositView = memo(({ onClose, farm }: IProps) => {
                       placeholder="0.0"
                       flex="1"
                       name={`tokens.${i}.amount`}
+                      value={formik.values.tokens[i].amount}
                       onChange={formik.handleChange}
                       pr={5}
                     />
-
+                    {field.tokenDetail && (
+                      <ActionButton
+                        mr={2}
+                        onClick={() => handleMax(i, field.tokenDetail)}
+                      >
+                        MAX
+                      </ActionButton>
+                    )}
                     <ActionButton
                       onClick={
                         isOneToken ? undefined : () => setSelectedTokenId(i)
