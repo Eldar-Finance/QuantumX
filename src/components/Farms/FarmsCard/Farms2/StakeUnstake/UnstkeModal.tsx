@@ -146,13 +146,11 @@ const UnstakeModal = ({
               alignItems={"flex-end"}
             >
               <Flex>
-                {epochDiffrence &&
-                  epochDiffrence <= 0 &&
-                  farmFee.earlyUnbondingFee > 0 && (
-                    <Text fontSize={"sm"} color="darkgray">
-                      ⚠️ Fee : {farmFee.earlyUnbondingFee}%
-                    </Text>
-                  )}
+                {epochDiffrence <= 0 && farmFee.earlyUnbondingFee > 0 && (
+                  <Text fontSize={"sm"} color="darkgray">
+                    ⚠️ Fee : {farmFee.earlyUnbondingFee}%
+                  </Text>
+                )}
               </Flex>
               <Flex gap={1}>
                 <AmountBox percent={25} onClick={() => handleMax(0.25)} />
