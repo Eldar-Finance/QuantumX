@@ -87,7 +87,7 @@ const UnstakeModal = ({
           decimals: token.decimals,
         },
         true,
-        18
+        17
       );
       const realmax = percent * max;
       const finalAmount = preventExponetialNotation(realmax);
@@ -95,6 +95,8 @@ const UnstakeModal = ({
       formik.setFieldValue("amount", finalAmount, false);
     }
   };
+
+  console.log("userFarmItem", userFarmItem);
 
   return (
     <MyModal bg="black.baseDark" isOpen={isOpen} onClose={onClose}>
@@ -122,7 +124,7 @@ const UnstakeModal = ({
                     decimals: token?.decimals,
                   },
                   true,
-                  18
+                  17
                 )}
               </Text>
             </Flex>
