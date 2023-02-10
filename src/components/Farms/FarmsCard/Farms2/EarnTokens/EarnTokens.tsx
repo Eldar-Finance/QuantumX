@@ -12,7 +12,7 @@ const EarnTokens = ({ userRewardsTokensIdentifiers }: IProps) => {
   const { tokens: rewardsTokens } = useGetMultipleElrondTokens(
     userRewardsTokensIdentifiers.slice(0, 5)
   );
-
+  const moreThan5Tokens = userRewardsTokensIdentifiers.length - 5;
   let manualImage = null;
 
   return (
@@ -44,6 +44,11 @@ const EarnTokens = ({ userRewardsTokensIdentifiers }: IProps) => {
             </Fragment>
           );
         })}
+        {moreThan5Tokens > 0 && (
+          <Text fontSize="sm" fontWeight="bold" color="white.400">
+            + {moreThan5Tokens}
+          </Text>
+        )}
       </Center>
     </Flex>
   );
