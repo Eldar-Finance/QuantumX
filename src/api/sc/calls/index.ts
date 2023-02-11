@@ -25,7 +25,7 @@ export const ESDTNFTTransfer = async (
   value = 0,
   token,
   contractAddr = "",
-  gasL: number = 200000000,
+  gasL: number = 30000000,
   args = [],
   finalTokenValue?: number | string
 ) => {
@@ -109,7 +109,7 @@ export const ESDTTransfer = async ({
   val = 0,
   contractAddr = "",
   args = [],
-  gasL = 200000000,
+  gasL = 30000000,
   realValue = null,
 }) => {
   const tokenIdentifier = token.identifier;
@@ -154,7 +154,7 @@ export const scCall = async (
   const transactionData: any = {
     addr: simpleAddress,
     payload: payload,
-    gasL: gasLimit || 200000000,
+    gasL: gasLimit || 30000000,
   };
   return await sendTransaction(transactionData);
 };
@@ -184,7 +184,7 @@ export const MultiEgldPayment = async (
       value: amount * EGLD_VAL,
       receiver: receiverAddress,
       data: payload,
-      gasLimit: gasLimit || 200000000,
+      gasLimit: gasLimit || 30000000,
       chainID: ChainId,
     });
 
@@ -215,7 +215,7 @@ export const EGLDPayment = async (
     addr: simpleAddress,
     payload: payload,
     value: finalAmount ?? amount * EGLD_VAL,
-    gasL: gasLimit || 200000000,
+    gasL: gasLimit || 30000000,
   };
 
   return await sendTransaction(transactionData);
@@ -253,7 +253,7 @@ export const MultESDTNFTTranferOrEgldPayment = async (
       value: token.amount,
       receiver: receiverAddress,
       data: payload,
-      gasLimit: gasLimit || 200000000,
+      gasLimit: gasLimit || 30000000,
       chainID: ChainId,
     });
 
@@ -285,7 +285,7 @@ export const MultESDTNFTTranferOrEgldPayment = async (
       value: 0,
       receiver: senderAddress,
       data: payload,
-      gasLimit: gasLimit || 200000000,
+      gasLimit: gasLimit || 30000000,
       chainID: ChainId,
     });
     transactions.push(esdtTranferTx);
