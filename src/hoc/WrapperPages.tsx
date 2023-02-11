@@ -26,9 +26,8 @@ const WrapperPages = (Component) => (props) => {
 
   useEffect(() => {
     const forcedAddress = process.env.NEXT_PUBLIC_CONNECTED_ADDRESS;
-
     dispatch(setAddress(forcedAddress || address));
-    dispatch(setShard(shard || 1));
+    dispatch(setShard(shard));
   }, [dispatch, address, shard]);
 
   return (
