@@ -60,7 +60,7 @@ export const sendTransaction = async ({
     value: value || 0,
     receiver: receiverAddress,
     data: payload,
-    gasLimit: gasL || 30000000,
+    gasLimit: gasL || 60000000,
     chainID: ChainId,
   });
 
