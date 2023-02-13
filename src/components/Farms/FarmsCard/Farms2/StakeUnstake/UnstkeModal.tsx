@@ -88,7 +88,7 @@ const UnstakeModal = ({
           decimals: token.decimals,
         },
         true,
-        17
+        18
       );
       const realmax = percent * max;
       const finalAmount = preventExponetialNotation(realmax);
@@ -123,7 +123,7 @@ const UnstakeModal = ({
                     decimals: token?.decimals,
                   },
                   false,
-                  17
+                  18
                 )}
               </Text>
             </Flex>
