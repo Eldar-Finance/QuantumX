@@ -1,14 +1,6 @@
-import {
-  Box,
-  Card,
-  Flex,
-  Link,
-  Text,
-  useColorModeValue,
-} from "@chakra-ui/react";
+import { Box, Card, Flex, Text, useColorModeValue } from "@chakra-ui/react";
 import { getCollectionsCount } from "api/rest/elrondApi/collections";
 import { getNftData } from "api/rest/others/Swap";
-import ActionButton from "components/ActionButton/ActionButton";
 
 import dynamic from "next/dynamic";
 import Image from "next/image";
@@ -38,8 +30,9 @@ const NftItemFromOwned = ({ nft }: IProps) => {
             sizes="100vw"
             style={{
               width: "100%",
-              height: "auto"
-            }} />
+              height: "auto",
+            }}
+          />
         )}
       </Box>
       <Box px={3} mt={4}>
@@ -65,17 +58,6 @@ const NftItemFromOwned = ({ nft }: IProps) => {
             </Text>
           )}
         </Flex>
-        <Link
-          isExternal
-          href={"https://www.newmoon.energy/profile"}
-          _hover={{
-            textDecoration: "none",
-          }}
-        >
-          <ActionButton w="full" py="10px" h={"auto"} fontWeight="500">
-            Sell
-          </ActionButton>
-        </Link>
       </Box>
     </Card>
   );
