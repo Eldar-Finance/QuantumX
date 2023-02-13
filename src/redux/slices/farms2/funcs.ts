@@ -16,19 +16,21 @@ export const fetchAllFarms = createAsyncThunk(
     const scRes = await scQuery("farms2", "getAllFarms");
 
     const scFirstValue = scRes.firstValue.valueOf();
-    const allFarms: IScFarmItem[] = scFirstValue.map((farm: any) => {
-      return {
-        farm: {
-          farmId: farm.field0.id.toNumber(),
-          creationEpoch: farm.field0.creation_epoch.toNumber(),
-          stakingToken: farm.field0.staked_token,
-          rewardToken: farm.field0.reward_token,
-          creator: farm.field0.creator.bech32(),
-        },
-        stakedBalance: farm.field1.toNumber(),
-        totalRewardsLeft: farm.field2.toNumber(),
-      };
-    });
+    const allFarms: IScFarmItem[] = scFirstValue
+      .map((farm: any) => {
+        return {
+          farm: {
+            farmId: farm.field0.id.toNumber(),
+            creationEpoch: farm.field0.creation_epoch.toNumber(),
+            stakingToken: farm.field0.staked_token,
+            rewardToken: farm.field0.reward_token,
+            creator: farm.field0.creator.bech32(),
+          },
+          stakedBalance: farm.field1.toNumber(),
+          totalRewardsLeft: farm.field2.toNumber(),
+        };
+      })
+      .filter((farm) => farm.farm.farmId <= 11);
     return {
       allFarms,
       pools: mexPairs
