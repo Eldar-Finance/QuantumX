@@ -29,7 +29,7 @@ export const routes: {
   hub: IRoute;
   dca: IRoute;
   rewards: IRoute;
-  heroes: IRoute;
+  // heroes: IRoute;
   admin: IRoute;
   panel: IRoute;
 } = {
@@ -65,11 +65,11 @@ export const routes: {
     name: "QuantumX Rewards",
     onModal: true,
   },
-  heroes: {
-    path: routeNames.heroes,
-    name: "QuantumX Heroes",
-    onModal: true,
-  },
+  // heroes: {
+  //   path: routeNames.heroes,
+  //   name: "QuantumX Heroes",
+  //   onModal: true,
+  // },
 
   panel: {
     path: routeNames.panel,
