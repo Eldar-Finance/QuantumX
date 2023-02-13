@@ -38,7 +38,7 @@ const RemoveToken = () => {
 
   return (
     //@ts-ignore
-    <Box as="form" w="full" onSubmit={formik.handleSubmit}>
+    <Box as="form" w="full" maxW={"300px"} onSubmit={formik.handleSubmit}>
       <Center flexDirection={"column"}>
         <Select
           onChange={formik.handleChange}

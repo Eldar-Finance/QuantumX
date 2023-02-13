@@ -1,4 +1,4 @@
-import { Center, Input } from "@chakra-ui/react";
+import { Flex, Input } from "@chakra-ui/react";
 import { BytesValue } from "@elrondnetwork/erdjs/out";
 import { scCall } from "api/sc/calls";
 import ActionButton from "components/ActionButton/ActionButton";
@@ -40,10 +40,9 @@ const AddToken = () => {
 
   return (
     <form onSubmit={formik.handleSubmit}>
-      <Center flexDirection={"column"}>
+      <Flex flexDirection={"column"} maxW="300px" mb={10}>
         <Input
           mb={2}
-          width={{ xs: "300px", tablet: "450px" }}
           onChange={formik.handleChange}
           placeholder="Token Identifier"
           name="tokenI"
@@ -53,7 +52,7 @@ const AddToken = () => {
         <ActionButton type="submit" px={8} py={5}>
           Add Token
         </ActionButton>
-      </Center>
+      </Flex>
     </form>
   );
 };
