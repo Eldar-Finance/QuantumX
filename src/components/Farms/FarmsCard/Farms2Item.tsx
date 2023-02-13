@@ -163,7 +163,12 @@ const Farms2Item = ({
               {stakingToken ? (
                 <>
                   {formatTokenI(stakingToken.name).slice(-2) === "LP" ? (
-                    <LpTokenImage lpToken={stakingToken} />
+                    <Flex gap="4" alignItems={"center"}>
+                      <LpTokenImage lpToken={stakingToken} />
+                      <Text fontWeight={"600"}>
+                        {name || stakingToken.name}
+                      </Text>
+                    </Flex>
                   ) : (
                     <Flex gap="4" alignItems={"center"}>
                       {stakingToken?.assets?.pngUrl ||
