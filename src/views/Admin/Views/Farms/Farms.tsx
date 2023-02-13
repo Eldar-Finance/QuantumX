@@ -1,10 +1,10 @@
 import { Box, Flex, Grid, useDisclosure, VStack } from "@chakra-ui/react";
 import ActionButton from "components/ActionButton/ActionButton";
-import NewFarmModal from "views/Panel/components/PanelTable/NewFarmModal";
 import AddEarner from "./AddEarner/AddEarner";
 import Creators from "./Creators/Creators";
 import EarnersTable from "./EarnersTable/EarnersTable";
 import Fees from "./Fees/Fees";
+import NewFarmModal from "./NewFarmModal/NewFarmModal";
 import PuaseButton from "./PuaseButton/PuaseButton";
 import RemoveEarner from "./RemoveEarner/RemoveEarner";
 import ResumeButton from "./ResumeButton/ResumeButton";
