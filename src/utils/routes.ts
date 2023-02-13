@@ -19,6 +19,7 @@ export const routeNames = {
   heroes: "/qheroes",
   admin: "/admin-panel",
   panel: "/panel",
+  hypezone: "/hypezone",
 };
 
 export const routes: {
@@ -32,6 +33,7 @@ export const routes: {
   // heroes: IRoute;
   admin: IRoute;
   panel: IRoute;
+  hypezone: IRoute;
 } = {
   dashboard: {
     path: routeNames.dashboard,
@@ -50,10 +52,15 @@ export const routes: {
     name: "Pools",
     onModalAndNavbar: true,
   },
+  hypezone: {
+    path: routeNames.hypezone,
+    name: "Hypezone",
+    onModalAndNavbar: true,
+  },
   hub: {
     path: routeNames.hub,
     name: "Hub",
-    onModalAndNavbar: true,
+    onModal: true,
   },
   dca: {
     path: routeNames.dca,
