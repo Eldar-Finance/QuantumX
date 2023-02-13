@@ -52,7 +52,8 @@ const UnstakeModal = ({
             balance: userFarmItem?.stakedBalance,
             decimals: token?.decimals,
           },
-          true
+          true,
+          18
         )
       ),
   });
@@ -121,7 +122,7 @@ const UnstakeModal = ({
                     balance: userFarmItem?.stakedBalance,
                     decimals: token?.decimals,
                   },
-                  true,
+                  false,
                   17
                 )}
               </Text>
