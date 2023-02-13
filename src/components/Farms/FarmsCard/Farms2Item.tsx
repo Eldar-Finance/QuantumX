@@ -21,6 +21,7 @@ import {
 
 import { toknesID } from "api/net.config";
 import { fetchLastRewardedEpoch } from "api/sc/queries/farms2";
+import LpTokenImage from "components/LpTokenImage/LpTokenImage";
 import { selectElrondStats } from "redux/slices/elrond/elrond-slice";
 import { addTvlInEldarFarm } from "redux/slices/proteo/proteo";
 import useSWR from "swr";
@@ -160,24 +161,37 @@ const Farms2Item = ({
               templateColumns={{ xs: "1fr", md: "1fr 1fr 1fr 1fr 1fr" }}
             >
               {stakingToken ? (
-                <Flex gap="4" alignItems={"center"}>
-                  {stakingToken?.assets?.pngUrl ||
-                  stakingToken?.assets?.svgUrl ? (
-                    <NextImage
-                      alt=""
-                      src={
-                        stakingToken.assets.pngUrl ||
-                        stakingToken?.assets?.svgUrl
-                      }
-                      height={logoSize || 27}
-                      width={logoSize || 27}
-                    />
+                <>
+                  {formatTokenI(stakingToken.name).slice(-2) === "LP" ? (
+                    <LpTokenImage lpToken={stakingToken} />
                   ) : (
-                    <NextImage src={logo} alt="logo" height={45} width={45} />
-                  )}
+                    <Flex gap="4" alignItems={"center"}>
+                      {stakingToken?.assets?.pngUrl ||
+                      stakingToken?.assets?.svgUrl ? (
+                        <NextImage
+                          alt=""
+                          src={
+                            stakingToken.assets.pngUrl ||
+                            stakingToken?.assets?.svgUrl
+                          }
+                          height={logoSize || 27}
+                          width={logoSize || 27}
+                        />
+                      ) : (
+                        <NextImage
+                          src={logo}
+                          alt="logo"
+                          height={45}
+                          width={45}
+                        />
+                      )}
 
-                  <Text fontWeight={"600"}>{name || stakingToken.name}</Text>
-                </Flex>
+                      <Text fontWeight={"600"}>
+                        {name || stakingToken.name}
+                      </Text>
+                    </Flex>
+                  )}
+                </>
               ) : (
                 <Flex></Flex>
               )}
