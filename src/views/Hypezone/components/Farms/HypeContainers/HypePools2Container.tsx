@@ -30,7 +30,6 @@ const HypePools2Container = ({ ids }: IProps) => {
 
     return true;
   });
-  console.log("idsToDisable", idsToDisable);
 
   return (
     <FarmList

@@ -11,6 +11,7 @@ import { selectMexPairs } from "redux/slices/userAcount/account-slice";
 import { formatBalance } from "utils/functions/formatBalance";
 import { useAppDispatch, useAppSelector } from "utils/hooks/redux";
 import useGetAccountToken from "utils/hooks/useGetAccountToken";
+import useGetTotalValueInHype from "utils/hooks/useGetTotalValueInHype";
 import HypeFarmContainer from "./components/Farms/HypeContainers/HypeFarmContainer";
 import HypePools1Container from "./components/Farms/HypeContainers/HypePools1Container";
 import HypePools2Container from "./components/Farms/HypeContainers/HypePools2Container";
@@ -22,6 +23,7 @@ const Hypezone = () => {
   const dispatch = useAppDispatch();
   const { accountToken } = useGetAccountToken(toknesID.rare);
   const [isOpenRareModal, setIsOpenRareModal] = useState(false);
+  const hypeTvl = useGetTotalValueInHype();
   useEffect(() => {
     if (mexPairs.length > 0) {
       dispatch(fetchAllFarms(mexPairs));
@@ -58,8 +60,8 @@ const Hypezone = () => {
           {" "}
           <Title
             title="Hypezone"
-            subtitle="Hight Yield farming & pools for SRB $HYPE token"
-            amount={148167.88}
+            subtitle="High Yield farming & pools for SRB $HYPE token"
+            amount={hypeTvl}
             tvlText="Total value Locked on Hypezone"
           />
           <HypeFarmContainer ids={hypeFarmIds} />
