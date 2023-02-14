@@ -53,6 +53,7 @@ interface IProps {
   multifarmRewardsLeft: IScFarm2RewardsLeft[];
   disable?: boolean;
   disableComponent: ReactNode;
+  maxStakingAmount?: number;
 }
 
 export const FarmItemContext = createContext<{ farm: IScFarmItem }>({
@@ -70,6 +71,7 @@ const Farms2Item = ({
   multifarmRewardsLeft,
   disable,
   disableComponent,
+  maxStakingAmount,
 }: IProps) => {
   const { token: stakingToken } = useGetElrondToken(farm.farm.stakingToken);
 
@@ -272,6 +274,7 @@ const Farms2Item = ({
                     userFarmItem={farmUserInfo}
                     isPool={isPool}
                     disable={disable}
+                    maxStakingAmount={maxStakingAmount}
                   />
                 </PanelBox>
               </Grid>

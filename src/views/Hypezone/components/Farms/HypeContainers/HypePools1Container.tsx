@@ -2,7 +2,7 @@ import { Box, Center, Heading, Text } from "@chakra-ui/react";
 import { toknesID } from "api/net.config";
 import Link from "next/link";
 import { useContext } from "react";
-import { formatBalance } from "utils/functions/formatBalance";
+import { formatBalance, setElrondBalance } from "utils/functions/formatBalance";
 import useGetAccountToken from "utils/hooks/useGetAccountToken";
 import { routeNames } from "utils/routes";
 import { hypePools1Ids } from "views/Hypezone/utils/constants";
@@ -33,6 +33,7 @@ const HypePools1Container = ({ ids }: IProps) => {
       isPool
       disableIds={idsToDisable}
       disableComponent={<DisableComponent />}
+      maxStakingAmount={setElrondBalance(10000000000, 18)}
     />
   );
 };

@@ -1,5 +1,6 @@
 import { Box, Center, Heading, Link } from "@chakra-ui/react";
 import { useContext } from "react";
+import { setElrondBalance } from "utils/functions/formatBalance";
 import { hypePools2Ids } from "views/Hypezone/utils/constants";
 import { useSrbStaker } from "views/Hypezone/utils/hooks";
 import { FarmItemContext } from "../FarmItem/FarmItem";
@@ -39,6 +40,7 @@ const HypePools2Container = ({ ids }: IProps) => {
       isPool
       disableIds={idsToDisable}
       disableComponent={<DisableComponent />}
+      maxStakingAmount={setElrondBalance(1000000, 18)}
     />
   );
 };

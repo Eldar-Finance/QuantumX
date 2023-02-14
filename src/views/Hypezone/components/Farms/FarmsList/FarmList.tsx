@@ -33,6 +33,7 @@ interface IProps {
   isPool?: boolean;
   disableIds?: number[];
   disableComponent: ReactNode;
+  maxStakingAmount?: number;
 }
 const FarmList = ({
   title,
@@ -41,6 +42,7 @@ const FarmList = ({
   isPool,
   disableIds,
   disableComponent,
+  maxStakingAmount,
 }: IProps) => {
   const dispatch = useAppDispatch();
   const address = useAppSelector(selectUserAddress);
@@ -91,6 +93,7 @@ const FarmList = ({
         isPool={isPool}
         disableIds={disableIds}
         disableComponent={disableComponent}
+        maxStakingAmount={maxStakingAmount}
       />
     </Box>
   );

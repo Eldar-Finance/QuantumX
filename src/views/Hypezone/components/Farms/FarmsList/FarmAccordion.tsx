@@ -23,6 +23,7 @@ interface IProps {
   isPool?: boolean;
   disableIds?: number[];
   disableComponent: ReactNode;
+  maxStakingAmount?: number;
 }
 
 const FarmAccordion = ({
@@ -30,6 +31,7 @@ const FarmAccordion = ({
   othersArr = null,
   disableIds,
   disableComponent,
+  maxStakingAmount,
 }: IProps) => {
   const router = useRouter();
   const [accordionIndex, setAccordionIndex] = useState<number[]>([]);
@@ -101,6 +103,7 @@ const FarmAccordion = ({
                 disableIds?.find((id) => id === farm.farm.farm.farmId)
               )}
               disableComponent={disableComponent}
+              maxStakingAmount={maxStakingAmount}
             />
           );
         }

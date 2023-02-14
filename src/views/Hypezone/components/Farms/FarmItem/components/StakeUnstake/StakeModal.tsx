@@ -21,8 +21,11 @@ import { useFormik } from "formik";
 import { formatBalance } from "utils/functions/formatBalance";
 import { preventExponetialNotation } from "utils/functions/numbers";
 import { formatTokenI } from "utils/functions/tokens";
-import useGetUserTokens from "utils/hooks/useGetUserTokens";
-import { IElrondToken } from "utils/types/elrond.interface";
+import useGetAccountToken from "utils/hooks/useGetAccountToken";
+import {
+  IElrondAccountToken,
+  IElrondToken,
+} from "utils/types/elrond.interface";
 import { IScFarmItem } from "utils/types/sc.interface";
 import { getTxForRareFee } from "views/Hypezone/utils/functions";
 import * as yup from "yup";
@@ -33,16 +36,35 @@ interface IProps {
   onClose: () => void;
   farm: IScFarmItem;
   token: IElrondToken;
+  maxStakingAmount?: number;
 }
 
-const StakeModal = ({ isOpen, onClose, farm, isPool, token }: IProps) => {
-  const [_, userToken]: any = useGetUserTokens(farm.farm.stakingToken);
+const StakeModal = ({
+  isOpen,
+  onClose,
+  farm,
+  isPool,
+  token,
+  maxStakingAmount,
+}: IProps) => {
+  const { accountToken } = useGetAccountToken(farm.farm.stakingToken);
+  const userToken = accountToken as IElrondAccountToken;
 
+  const maxUserCanStake = formatBalance(
+    { balance: maxStakingAmount, decimals: userToken?.decimals },
+    true,
+    18
+  );
+  const userAmount = formatBalance(userToken, true, 18);
+  const max = maxUserCanStake > userAmount ? userAmount : maxUserCanStake;
   const validationSchema = yup.object({
     amount: yup
       .number()
       .required()
-      .max(formatBalance(userToken, true)),
+      .max(
+        max,
+        "The max amount you can stake is " + max + " " + userToken.name
+      ),
   });
 
   const formik = useFormik({
@@ -112,14 +134,19 @@ const StakeModal = ({ isOpen, onClose, farm, isPool, token }: IProps) => {
               </Text>
             </Flex>
             <Flex mb="3">
-              <Input
-                variant={"unstyled"}
-                placeholder="0"
-                flex="1"
-                name="amount"
-                value={formik.values.amount}
-                onChange={formik.handleChange}
-              />{" "}
+              <Flex flexDir={"column"} flex={1}>
+                <Input
+                  variant={"unstyled"}
+                  placeholder="0"
+                  flex="1"
+                  name="amount"
+                  value={formik.values.amount}
+                  onChange={formik.handleChange}
+                />{" "}
+                <Text fontSize={"sm"} color="tomato">
+                  {formik.errors.amount}
+                </Text>
+              </Flex>
               <Text fontSize={"14px"}>
                 {formatTokenI(farm?.farm.stakingToken)}
                 {!isPool && "-LP"}

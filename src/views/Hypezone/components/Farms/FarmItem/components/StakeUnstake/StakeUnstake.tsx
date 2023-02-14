@@ -24,6 +24,7 @@ interface IProps {
   isPool?: boolean;
   isBearly?: boolean;
   disable?: boolean;
+  maxStakingAmount?: number;
 }
 
 const useGetFarmTimeForUnstake = (statsRes, userFarmItem) => {
@@ -61,6 +62,7 @@ const StakeUnstake = ({
   isPool,
   isBearly,
   disable,
+  maxStakingAmount,
 }: IProps) => {
   const [openStake, setOpenStake] = useState(false);
   const [openUnstakeStake, setOpenUnstakeStake] = useState(false);
@@ -139,6 +141,11 @@ const StakeUnstake = ({
           onClose={() => setOpenStake((s) => !s)}
           token={stakingToken}
           isPool={isPool}
+          maxStakingAmount={
+            userFarmItem.stakedBalance === 0
+              ? maxStakingAmount
+              : maxStakingAmount - userFarmItem.stakedBalance
+          }
         />
       )}
 
