@@ -30,7 +30,7 @@ export const fetchAllFarms = createAsyncThunk(
           totalRewardsLeft: farm.field2.toNumber(),
         };
       })
-      .filter((farm) => farm.farm.farmId < 11);
+      .filter((farm) => farm.farm.farmId <= 10 || farm.farm.farmId >= 19);
     return {
       allFarms,
       pools: mexPairs
