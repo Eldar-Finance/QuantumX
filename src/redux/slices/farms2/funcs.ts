@@ -9,6 +9,7 @@ import {
   IScUserFarmInfo,
   IScUserFarmRewards,
 } from "utils/types/sc.interface";
+import { allHypeFarms } from "views/Hypezone/utils/constants";
 
 export const fetchAllFarms = createAsyncThunk(
   "farms2/fetchAllFarms",
@@ -16,25 +17,32 @@ export const fetchAllFarms = createAsyncThunk(
     const scRes = await scQuery("farms2", "getAllFarms");
 
     const scFirstValue = scRes.firstValue.valueOf();
-    const allFarms: IScFarmItem[] = scFirstValue
-      .map((farm: any) => {
-        return {
-          farm: {
-            farmId: farm.field0.id.toNumber(),
-            creationEpoch: farm.field0.creation_epoch.toNumber(),
-            stakingToken: farm.field0.staked_token,
-            rewardToken: farm.field0.reward_token,
-            creator: farm.field0.creator.bech32(),
-          },
-          stakedBalance: farm.field1.toNumber(),
-          totalRewardsLeft: farm.field2.toNumber(),
-        };
-      })
-      .filter((farm) => farm.farm.farmId <= 11);
+    const allFarms: IScFarmItem[] = scFirstValue.map((farm: any) => {
+      return {
+        farm: {
+          farmId: farm.field0.id.toNumber(),
+          creationEpoch: farm.field0.creation_epoch.toNumber(),
+          stakingToken: farm.field0.staked_token,
+          rewardToken: farm.field0.reward_token,
+          creator: farm.field0.creator.bech32(),
+        },
+        stakedBalance: farm.field1.toNumber(),
+        totalRewardsLeft: farm.field2.toNumber(),
+      };
+    });
+
+    const allNomalFarms = allFarms.filter(
+      (farm) => !allHypeFarms.includes(farm.farm.farmId)
+    );
+
+    const hypeFarms = allFarms.filter((farm) =>
+      allHypeFarms.includes(farm.farm.farmId)
+    );
+
     return {
       allFarms,
       pools: mexPairs
-        ? allFarms.filter(
+        ? allNomalFarms.filter(
             (farm) =>
               mexPairs.findIndex(
                 (mexPair) => mexPair.id === farm.farm.stakingToken
@@ -42,13 +50,14 @@ export const fetchAllFarms = createAsyncThunk(
           )
         : [],
       farms: mexPairs
-        ? allFarms.filter(
+        ? allNomalFarms.filter(
             (farm) =>
               mexPairs.findIndex(
                 (mexPair) => mexPair.id === farm.farm.stakingToken
               ) !== -1
           )
         : [],
+      allHypeFarms: hypeFarms,
     };
   }
 );
