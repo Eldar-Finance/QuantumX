@@ -12,6 +12,7 @@ import ActionButton from "components/ActionButton/ActionButton";
 import MyModal from "components/Modal/Modal";
 import Link from "next/link";
 import { formatBalance } from "utils/functions/formatBalance";
+import useAuthentication from "utils/hooks/useAuthentication";
 import useGetAccountToken from "utils/hooks/useGetAccountToken";
 import { routeNames } from "utils/routes";
 interface IProps {
@@ -20,7 +21,7 @@ interface IProps {
 }
 const UserNeedRareModal = ({ isOpen, onClose }: IProps) => {
   const { accountToken } = useGetAccountToken(toknesID.rare);
-
+  const { isLoggedIn, handleConnect } = useAuthentication();
   return (
     <MyModal isOpen={isOpen} onClose={onClose} size={"sm"}>
       {" "}
@@ -37,10 +38,12 @@ const UserNeedRareModal = ({ isOpen, onClose }: IProps) => {
           <Text mb={2} align="center" fontSize={"xl"}>
             Additional RARE needed for gas fees in Hypezone
           </Text>
-          <Text mb={6} fontSize={"xl"}>
-            RARE in your wallet {formatBalance(accountToken)}
-          </Text>
-          <Link href={routeNames.swap}>
+          {isLoggedIn && (
+            <Text mb={6} fontSize={"xl"}>
+              RARE in your wallet {formatBalance(accountToken)}
+            </Text>
+          )}
+          {!isLoggedIn ? (
             <ActionButton
               variant={"outline"}
               color="gray.400"
@@ -48,10 +51,24 @@ const UserNeedRareModal = ({ isOpen, onClose }: IProps) => {
               maxW={"180px"}
               type="submit"
               px={8}
+              onClick={handleConnect}
             >
-              Swap Now
+              Connect
             </ActionButton>
-          </Link>
+          ) : (
+            <Link href={routeNames.swap}>
+              <ActionButton
+                variant={"outline"}
+                color="gray.400"
+                w="full"
+                maxW={"180px"}
+                type="submit"
+                px={8}
+              >
+                Swap Now
+              </ActionButton>
+            </Link>
+          )}
         </Center>
       </ModalBody>{" "}
     </MyModal>

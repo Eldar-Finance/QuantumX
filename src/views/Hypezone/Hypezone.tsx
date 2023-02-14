@@ -10,6 +10,7 @@ import { fetchAllFarms } from "redux/slices/farms2/funcs";
 import { selectMexPairs } from "redux/slices/userAcount/account-slice";
 import { formatBalance } from "utils/functions/formatBalance";
 import { useAppDispatch, useAppSelector } from "utils/hooks/redux";
+import useAuthentication from "utils/hooks/useAuthentication";
 import useGetAccountToken from "utils/hooks/useGetAccountToken";
 import useGetTotalValueInHype from "utils/hooks/useGetTotalValueInHype";
 import HypeFarmContainer from "./components/Farms/HypeContainers/HypeFarmContainer";
@@ -21,16 +22,18 @@ import { hypeFarmIds, hypePools1Ids, hypePools2Ids } from "./utils/constants";
 const Hypezone = () => {
   const { data: mexPairs } = useAppSelector(selectMexPairs);
   const dispatch = useAppDispatch();
-  const { accountToken } = useGetAccountToken(toknesID.rare);
+  const { accountToken, isLoading, error } = useGetAccountToken(toknesID.rare);
   const [isOpenRareModal, setIsOpenRareModal] = useState(false);
   const hypeTvl = useGetTotalValueInHype();
+  const { isLoggedIn } = useAuthentication();
+
   useEffect(() => {
     if (mexPairs.length > 0) {
       dispatch(fetchAllFarms(mexPairs));
     }
   }, [dispatch, mexPairs]);
   useEffect(() => {
-    if (accountToken) {
+    if (accountToken?.name || error) {
       const userRareAmount = formatBalance(accountToken, true);
       if (userRareAmount <= 0.5) {
         if (process.env.NEXT_PUBLIC_SIMULATE_HYPEZONE_ACCESS) {
@@ -42,8 +45,10 @@ const Hypezone = () => {
         setIsOpenRareModal(false);
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [accountToken]);
+    if (!isLoggedIn) {
+      setIsOpenRareModal(true);
+    }
+  }, [accountToken, error, isLoading, isLoggedIn]);
 
   const onClose = () => {};
   return (
