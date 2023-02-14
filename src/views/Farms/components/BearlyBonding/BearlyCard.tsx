@@ -48,6 +48,10 @@ const BearlyCard = ({ farm, multifarmRewardsLeft }: IProps) => {
     multifarmRewardsLeft.rewardsLeft.find((r) => r.token === toknesID.jex)
       ?.token
   );
+  const { jexPrice: bonezPrice } = useGetJexPrice(
+    multifarmRewardsLeft.rewardsLeft.find((r) => r.token === toknesID.bonez)
+      ?.token
+  );
   const userFarmInfoForThisFarm = userFarm2Info.data.find(
     (fi) => fi.farmId === farm.farm.farmId
   );
@@ -74,7 +78,10 @@ const BearlyCard = ({ farm, multifarmRewardsLeft }: IProps) => {
     stats,
     "multi",
     multifarmRewardsLeft?.rewardsLeft,
-    [{ tokenI: toknesID.jex, price: jexPrice }]
+    [
+      { tokenI: toknesID.jex, price: jexPrice },
+      { tokenI: toknesID.bonez, price: bonezPrice },
+    ]
   );
 
   const handleHarvest = () => {
