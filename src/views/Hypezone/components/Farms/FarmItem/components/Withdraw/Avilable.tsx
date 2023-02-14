@@ -18,9 +18,10 @@ import useCanUsePool7 from "views/Pools/hooks/useIsSrbStaker";
 interface IProps {
   farm: IScFarmItem;
   userFarmRewards: IScUserFarmRewards[];
+  disable?: boolean;
 }
 
-const Avilable = ({ farm, userFarmRewards }: IProps) => {
+const Avilable = ({ farm, userFarmRewards, disable }: IProps) => {
   const { tokens: rewardsTokens } = useGetMultipleElrondTokens(
     userFarmRewards.map((r) => r.rewardToken)
   );
@@ -89,11 +90,12 @@ const Avilable = ({ farm, userFarmRewards }: IProps) => {
           <ActionButton
             onClick={handleHarvest}
             disabled={
+              disable ||
               userFarmRewards.reduce(
                 (acc, current) => (acc += current.harvestableAmount),
                 0
               ) === 0 ||
-              (!isSrbStaker && farm.farm.farmId === 7)
+                (!isSrbStaker && farm.farm.farmId === 7)
             }
           >
             HARVEST

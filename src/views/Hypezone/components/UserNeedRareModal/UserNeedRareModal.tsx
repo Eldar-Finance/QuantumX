@@ -7,15 +7,20 @@ import {
   ModalHeader,
   Text,
 } from "@chakra-ui/react";
+import { toknesID } from "api/net.config";
 import ActionButton from "components/ActionButton/ActionButton";
 import MyModal from "components/Modal/Modal";
 import Link from "next/link";
+import { formatBalance } from "utils/functions/formatBalance";
+import useGetAccountToken from "utils/hooks/useGetAccountToken";
 import { routeNames } from "utils/routes";
 interface IProps {
   isOpen: boolean;
   onClose: () => void;
 }
 const UserNeedRareModal = ({ isOpen, onClose }: IProps) => {
+  const { accountToken } = useGetAccountToken(toknesID.rare);
+
   return (
     <MyModal isOpen={isOpen} onClose={onClose} size={"sm"}>
       {" "}
@@ -33,7 +38,7 @@ const UserNeedRareModal = ({ isOpen, onClose }: IProps) => {
             Additional RARE needed for gas fees in Hypezone
           </Text>
           <Text mb={6} fontSize={"xl"}>
-            RARE in your wallet 0.3
+            RARE in your wallet {formatBalance(accountToken)}
           </Text>
           <Link href={routeNames.swap}>
             <ActionButton

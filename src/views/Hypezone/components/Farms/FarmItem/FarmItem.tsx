@@ -11,7 +11,7 @@ import {
 } from "@chakra-ui/react";
 import NextImage from "components/NextImage/NextImage";
 
-import { createContext, PropsWithChildren, useEffect } from "react";
+import { createContext, PropsWithChildren, ReactNode, useEffect } from "react";
 import {
   IScFarm2RewardsLeft,
   IScFarmItem,
@@ -37,7 +37,6 @@ import useGetElrondToken from "utils/hooks/useGetElrondToken";
 import useGetJexPrice from "utils/hooks/useGetJexPrice";
 import useGetMultipleElrondTokens from "utils/hooks/useGetMultipleElrondTokens";
 import { farms2Data } from "views/Farms/constants";
-import useCanUsePool7 from "views/Pools/hooks/useIsSrbStaker";
 import EarnedRewards from "./components/EarnedRewards/EarnedRewards";
 import EarnTokens from "./components/EarnTokens/EarnTokens";
 import StakeUnstake from "./components/StakeUnstake/StakeUnstake";
@@ -52,12 +51,12 @@ interface IProps {
   isPool?: boolean;
   tvl: number;
   multifarmRewardsLeft: IScFarm2RewardsLeft[];
+  disable?: boolean;
+  disableComponent: ReactNode;
 }
 
-export const ProteoItemContenxt = createContext({
-  tokenInfo: null,
-  tokenInfo2: null,
-  decimals: 0,
+export const FarmItemContext = createContext<{ farm: IScFarmItem }>({
+  farm: null,
 });
 
 const Farms2Item = ({
@@ -69,6 +68,8 @@ const Farms2Item = ({
   stakedTokenPrice,
   tvl,
   multifarmRewardsLeft,
+  disable,
+  disableComponent,
 }: IProps) => {
   const { token: stakingToken } = useGetElrondToken(farm.farm.stakingToken);
 
@@ -114,9 +115,6 @@ const Farms2Item = ({
     stakingToken.decimals,
   ]);
 
-  // only for srb farm
-  const { isSrbStaker } = useCanUsePool7();
-
   let apr: string = "-";
   if (farm.farm.rewardToken === "") {
     apr = aprFarms(
@@ -142,137 +140,146 @@ const Farms2Item = ({
   }
 
   return (
-    <AccordionItem w="full">
-      <Box w="full">
-        <AccordionButton
-          py="4"
-          bg="black.baseDark"
-          _hover={{
-            bg: "black.light",
-          }}
-          px="5"
-          w="full"
-          fontSize={{ xs: "14px", lg: "md" }}
-        >
-          <Box flex="1" textAlign="left" w="full">
-            <Grid
-              w="full"
-              flexDir={{ xs: "column", md: "row" }}
-              templateColumns={{ xs: "1fr", md: "1fr 1fr 1fr 1fr 1fr" }}
-            >
-              {stakingToken ? (
-                <>
-                  {formatTokenI(stakingToken.name).slice(-2) === "LP" ? (
-                    <Flex gap="4" alignItems={"center"}>
-                      <LpTokenImage lpToken={stakingToken} />
-                      <Text fontWeight={"600"}>
-                        {name || stakingToken.name}
-                      </Text>
-                    </Flex>
-                  ) : (
-                    <Flex gap="4" alignItems={"center"}>
-                      {stakingToken?.assets?.pngUrl ||
-                      stakingToken?.assets?.svgUrl ? (
-                        <NextImage
-                          alt=""
-                          src={
-                            stakingToken.assets.pngUrl ||
-                            stakingToken?.assets?.svgUrl
-                          }
-                          height={logoSize || 27}
-                          width={logoSize || 27}
-                        />
-                      ) : (
-                        <NextImage
-                          src={logo}
-                          alt="logo"
-                          height={45}
-                          width={45}
-                        />
-                      )}
+    <FarmItemContext.Provider value={{ farm }}>
+      <AccordionItem w="full">
+        <Box w="full">
+          <AccordionButton
+            py="4"
+            bg="black.baseDark"
+            _hover={{
+              bg: "black.light",
+            }}
+            px="5"
+            w="full"
+            fontSize={{ xs: "14px", lg: "md" }}
+          >
+            <Box flex="1" textAlign="left" w="full">
+              <Grid
+                w="full"
+                flexDir={{ xs: "column", md: "row" }}
+                templateColumns={{ xs: "1fr", md: "1fr 1fr 1fr 1fr 1fr" }}
+              >
+                {stakingToken ? (
+                  <>
+                    {formatTokenI(stakingToken.name).slice(-2) === "LP" ? (
+                      <Flex gap="4" alignItems={"center"}>
+                        <LpTokenImage lpToken={stakingToken} />
+                        <Text fontWeight={"600"}>
+                          {name || stakingToken.name}
+                        </Text>
+                      </Flex>
+                    ) : (
+                      <Flex gap="4" alignItems={"center"}>
+                        {stakingToken?.assets?.pngUrl ||
+                        stakingToken?.assets?.svgUrl ? (
+                          <NextImage
+                            alt=""
+                            src={
+                              stakingToken.assets.pngUrl ||
+                              stakingToken?.assets?.svgUrl
+                            }
+                            height={logoSize || 27}
+                            width={logoSize || 27}
+                          />
+                        ) : (
+                          <NextImage
+                            src={logo}
+                            alt="logo"
+                            height={45}
+                            width={45}
+                          />
+                        )}
 
-                      <Text fontWeight={"600"}>
-                        {name || stakingToken.name}
-                      </Text>
-                    </Flex>
-                  )}
-                </>
-              ) : (
-                <Flex></Flex>
-              )}
-              <Flex flexDir={"column"} textAlign="center">
-                <Text color="white.400">Staked Balance</Text>
-                <Text>
-                  {formatBalance({ balance: farmUserInfo?.stakedBalance })}{" "}
-                  <Box as="span" whiteSpace={"nowrap"}>
-                    (${" "}
-                    {formatBalanceDolar(
-                      {
-                        balance: farmUserInfo?.stakedBalance,
-                        decimals: stakingToken.decimals,
-                      },
-                      price,
-                      true
+                        <Text fontWeight={"600"}>
+                          {name || stakingToken.name}
+                        </Text>
+                      </Flex>
                     )}
-                    )
-                  </Box>
-                </Text>
-              </Flex>
-              <Flex flexDir={"column"} textAlign="center">
-                <Text textTransform={"uppercase"} color="white.400">
-                  Apr
-                </Text>
-                <Text>{apr}</Text>
-              </Flex>
-              <Flex flexDir={"column"} textAlign="center">
-                <Text color="white.400">Total Value Locked</Text>
-                <Text>$ {formatNumber(tvl)}</Text>
-              </Flex>
-              <EarnTokens
-                userRewardsTokensIdentifiers={
-                  farm.farm.rewardToken === ""
-                    ? multifarmRewardsLeft.map((r) => r.token)
-                    : [farm.farm.rewardToken]
-                }
-              />
-            </Grid>
-          </Box>
-          <AccordionIcon color="main" />
-        </AccordionButton>
-      </Box>
-      <AccordionPanel pb={4} w="full" bg="black.base">
-        <Grid flex="1" templateColumns={{ xs: "1fr", md: "1fr 1fr" }} gap="4">
-          <PanelBox>
-            <Flex justifyContent={"center"} textAlign={"center"} gap={5}>
-              <EarnedRewards
-                userRewards={farmUserRewards}
-                multifarmRewardsLeft={
-                  farm.farm.rewardToken === ""
-                    ? multifarmRewardsLeft.map((r) => r.token)
-                    : [farm.farm.rewardToken]
-                }
-              />
-            </Flex>
-          </PanelBox>
+                  </>
+                ) : (
+                  <Flex></Flex>
+                )}
+                <Flex flexDir={"column"} textAlign="center">
+                  <Text color="white.400">Staked Balance</Text>
+                  <Text>
+                    {formatBalance({ balance: farmUserInfo?.stakedBalance })}{" "}
+                    <Box as="span" whiteSpace={"nowrap"}>
+                      (${" "}
+                      {formatBalanceDolar(
+                        {
+                          balance: farmUserInfo?.stakedBalance,
+                          decimals: stakingToken.decimals,
+                        },
+                        price,
+                        true
+                      )}
+                      )
+                    </Box>
+                  </Text>
+                </Flex>
+                <Flex flexDir={"column"} textAlign="center">
+                  <Text textTransform={"uppercase"} color="white.400">
+                    Apr
+                  </Text>
+                  <Text>{apr}</Text>
+                </Flex>
+                <Flex flexDir={"column"} textAlign="center">
+                  <Text color="white.400">Total Value Locked</Text>
+                  <Text>$ {formatNumber(tvl)}</Text>
+                </Flex>
+                <EarnTokens
+                  userRewardsTokensIdentifiers={
+                    farm.farm.rewardToken === ""
+                      ? multifarmRewardsLeft.map((r) => r.token)
+                      : [farm.farm.rewardToken]
+                  }
+                />
+              </Grid>
+            </Box>
+            <AccordionIcon color="main" />
+          </AccordionButton>
+        </Box>
+        <AccordionPanel w="full" bg="black.base" p={0}>
+          {disable ? (
+            <Box w="full">{disableComponent}</Box>
+          ) : (
+            <>
+              <Grid
+                flex="1"
+                templateColumns={{ xs: "1fr", md: "1fr 1fr" }}
+                gap="4"
+                p={4}
+              >
+                <PanelBox>
+                  <Flex justifyContent={"center"} textAlign={"center"} gap={5}>
+                    <EarnedRewards
+                      userRewards={farmUserRewards}
+                      multifarmRewardsLeft={
+                        farm.farm.rewardToken === ""
+                          ? multifarmRewardsLeft.map((r) => r.token)
+                          : [farm.farm.rewardToken]
+                      }
+                    />
+                  </Flex>
+                </PanelBox>
 
-          <PanelBox>
-            <Avilable farm={farm} userFarmRewards={farmUserRewards} />
-          </PanelBox>
-          <PanelBox gridColumn={{ xs: "auto", md: "1/3" }}>
-            <StakeUnstake
-              farm={farm}
-              userFarmItem={farmUserInfo}
-              isPool={isPool}
-            />
-          </PanelBox>
-        </Grid>
-        {!isSrbStaker && farm.farm.farmId === 7 && (
-          <Text textAlign={"center"} mt={4}>
-            You must be a staker of SRB-61daf7.
-          </Text>
-        )}
-      </AccordionPanel>
-    </AccordionItem>
+                <PanelBox>
+                  <Avilable farm={farm} userFarmRewards={farmUserRewards} />
+                </PanelBox>
+                <PanelBox gridColumn={{ xs: "auto", md: "1/3" }}>
+                  <StakeUnstake
+                    farm={farm}
+                    userFarmItem={farmUserInfo}
+                    isPool={isPool}
+                    disable={disable}
+                  />
+                </PanelBox>
+              </Grid>
+            </>
+          )}
+        </AccordionPanel>
+      </AccordionItem>
+    </FarmItemContext.Provider>
   );
 };
 

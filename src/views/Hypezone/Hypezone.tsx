@@ -11,7 +11,9 @@ import { selectMexPairs } from "redux/slices/userAcount/account-slice";
 import { formatBalance } from "utils/functions/formatBalance";
 import { useAppDispatch, useAppSelector } from "utils/hooks/redux";
 import useGetAccountToken from "utils/hooks/useGetAccountToken";
-import FarmList from "./components/Farms/FarmsList/FarmList";
+import HypeFarmContainer from "./components/Farms/HypeContainers/HypeFarmContainer";
+import HypePools1Container from "./components/Farms/HypeContainers/HypePools1Container";
+import HypePools2Container from "./components/Farms/HypeContainers/HypePools2Container";
 import UserNeedRareModal from "./components/UserNeedRareModal/UserNeedRareModal";
 import { hypeFarmIds, hypePools1Ids, hypePools2Ids } from "./utils/constants";
 
@@ -60,19 +62,9 @@ const Hypezone = () => {
             amount={148167.88}
             tvlText="Total value Locked on Hypezone"
           />
-          <FarmList title="Farms" ids={hypeFarmIds} />
-          <FarmList
-            title="Pools"
-            subtitle="[Stake $HYPE Earn $RARE]"
-            ids={hypePools1Ids}
-            isPool
-          />
-          <FarmList
-            title="Pools"
-            subtitle="[Stake $RARE Earn $HYPE]"
-            ids={hypePools2Ids}
-            isPool
-          />
+          <HypeFarmContainer ids={hypeFarmIds} />
+          <HypePools1Container ids={hypePools1Ids} />
+          <HypePools2Container ids={hypePools2Ids} />
         </Flex>
         <UserNeedRareModal isOpen={isOpenRareModal} onClose={onClose} />
       </MyContainer>

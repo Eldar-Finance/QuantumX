@@ -23,6 +23,7 @@ interface IProps {
   userFarmItem: IScUserFarmInfo;
   isPool?: boolean;
   isBearly?: boolean;
+  disable?: boolean;
 }
 
 const useGetFarmTimeForUnstake = (statsRes, userFarmItem) => {
@@ -54,7 +55,13 @@ const useGetFarmTimeForUnstake = (statsRes, userFarmItem) => {
   return biggerTime;
 };
 
-const StakeUnstake = ({ farm, userFarmItem, isPool, isBearly }: IProps) => {
+const StakeUnstake = ({
+  farm,
+  userFarmItem,
+  isPool,
+  isBearly,
+  disable,
+}: IProps) => {
   const [openStake, setOpenStake] = useState(false);
   const [openUnstakeStake, setOpenUnstakeStake] = useState(false);
   const { token: stakingToken } = useGetElrondToken(farm.farm.stakingToken);
@@ -101,14 +108,14 @@ const StakeUnstake = ({ farm, userFarmItem, isPool, isBearly }: IProps) => {
           variant={"outline"}
           w="full"
           maxW={"50%"}
-          disabled={!isSrbStaker && farm.farm.farmId === 7}
+          disabled={disable || (!isSrbStaker && farm.farm.farmId === 7)}
         >
           STAKE {!isPool && "LP"}{" "}
         </ActionButton>
         <Center flex="1" flexDir={"column"} w="full" maxW={"50%"}>
           <ActionButton
             onClick={() => setOpenUnstakeStake((s) => !s)}
-            disabled={disableUnstake}
+            disabled={disable || disableUnstake}
             w={isBearly ? "full" : { xs: "full", md: "50%" }}
           >
             UNSTAKE

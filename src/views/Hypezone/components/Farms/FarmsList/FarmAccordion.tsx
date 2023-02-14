@@ -1,7 +1,7 @@
 import { Accordion } from "@chakra-ui/react";
 import { IFarmWithTvl } from "components/Farms/FarmsCard/FarmsCard";
 import { useRouter } from "next/dist/client/router";
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { selectMultiFarms2RewardsLeft } from "redux/slices/farms2/farms2-slice";
 import { getSortedFarm } from "utils/functions/farms";
 import { useAppSelector } from "utils/hooks/redux";
@@ -21,9 +21,16 @@ interface IProps {
     userFarm2Rewards: IScUserFarmRewards[];
   };
   isPool?: boolean;
+  disableIds?: number[];
+  disableComponent: ReactNode;
 }
 
-const FarmAccordion = ({ isPool, othersArr = null }: IProps) => {
+const FarmAccordion = ({
+  isPool,
+  othersArr = null,
+  disableIds,
+  disableComponent,
+}: IProps) => {
   const router = useRouter();
   const [accordionIndex, setAccordionIndex] = useState<number[]>([]);
   const { data: generalFarmsData } = useAppSelector(
@@ -90,6 +97,10 @@ const FarmAccordion = ({ isPool, othersArr = null }: IProps) => {
                   (mfr) => mfr.farmId === farm.farm.farm.farmId
                 )?.rewardsLeft || []
               }
+              disable={Boolean(
+                disableIds?.find((id) => id === farm.farm.farm.farmId)
+              )}
+              disableComponent={disableComponent}
             />
           );
         }

@@ -1,6 +1,7 @@
 import { Box, Flex, Heading, Text } from "@chakra-ui/react";
+import hypeImage from "assets/logos/hype.svg";
 import NextImage from "components/NextImage/NextImage";
-import { useEffect } from "react";
+import { ReactNode, useEffect } from "react";
 import { fetchStats } from "redux/slices/elrond/elrond-slice";
 import {
   selectHype,
@@ -24,15 +25,23 @@ import {
 } from "redux/slices/userAcount/account-slice";
 import { fetchMexPairs } from "redux/slices/userAcount/funcs";
 import { useAppDispatch, useAppSelector } from "utils/hooks/redux";
-import hypeImage from "../../../assets/hypelogo.webp";
 import FarmAccordion from "./FarmAccordion";
 interface IProps {
   title: string;
   subtitle?: string;
   ids: number[];
   isPool?: boolean;
+  disableIds?: number[];
+  disableComponent: ReactNode;
 }
-const FarmList = ({ title, subtitle, ids, isPool }: IProps) => {
+const FarmList = ({
+  title,
+  subtitle,
+  ids,
+  isPool,
+  disableIds,
+  disableComponent,
+}: IProps) => {
   const dispatch = useAppDispatch();
   const address = useAppSelector(selectUserAddress);
   const farms2 = useAppSelector(selectHype);
@@ -80,6 +89,8 @@ const FarmList = ({ title, subtitle, ids, isPool }: IProps) => {
           userFarm2Rewards: userFarm2Rewards.data,
         }}
         isPool={isPool}
+        disableIds={disableIds}
+        disableComponent={disableComponent}
       />
     </Box>
   );
