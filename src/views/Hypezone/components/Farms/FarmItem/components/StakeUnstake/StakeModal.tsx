@@ -104,8 +104,12 @@ const StakeModal = ({
   });
   const handleAmount = (percent: number) => {
     if (userToken) {
-      const userTokenAmount = formatBalance(userToken, true);
-      const userRealAmount = percent * userTokenAmount;
+      const userTokenAmount = formatBalance(userToken, true, 18);
+      let userRealAmount = percent * userTokenAmount;
+
+      if (userRealAmount > maxStakingAmount) {
+        userRealAmount = maxStakingAmount;
+      }
       const finalAmount = preventExponetialNotation(userRealAmount);
 
       formik.setFieldValue("amount", finalAmount, false);
