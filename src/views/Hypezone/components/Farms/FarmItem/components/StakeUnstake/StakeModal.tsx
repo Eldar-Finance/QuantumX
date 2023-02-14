@@ -106,9 +106,11 @@ const StakeModal = ({
     if (userToken) {
       const userTokenAmount = formatBalance(userToken, true, 18);
       let userRealAmount = percent * userTokenAmount;
+      console.log("userRealAmount", userRealAmount);
+      console.log("maxUserCanStake", maxUserCanStake);
 
-      if (userRealAmount > maxStakingAmount) {
-        userRealAmount = maxStakingAmount;
+      if (userRealAmount > maxUserCanStake) {
+        userRealAmount = maxUserCanStake;
       }
       const finalAmount = preventExponetialNotation(userRealAmount);
 

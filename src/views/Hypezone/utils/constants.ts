@@ -1,6 +1,6 @@
 export const hypeFarmIds = [11, 12, 13];
 
-export const hypePools1Ids = [8, 14, 15];
+export const hypePools1Ids = [14, 15];
 
 export const hypePools2Ids = [16, 17, 18];
 
