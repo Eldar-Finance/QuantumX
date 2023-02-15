@@ -71,9 +71,6 @@ const UnstakeModal = ({
       );
     },
   });
-  console.log("balance", userFarmItem?.stakedBalance);
-
-  console.log("formkit", formik.values.amount);
 
   const handleMax = (percent) => {
     if (userFarmItem) {
