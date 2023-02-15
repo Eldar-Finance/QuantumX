@@ -13,7 +13,7 @@ export interface IScFarmItem {
 
 export interface IScUserFarmInfo {
   farmId: number;
-  stakedBalance: number;
+  stakedBalance: string;
   unboundingEpoch: number;
 }
 export interface IScUserFarmRewards {
