@@ -56,7 +56,7 @@ const UserNeedRareModal = ({ isOpen, onClose }: IProps) => {
               Connect
             </ActionButton>
           ) : (
-            <Link href={routeNames.swap}>
+            <Link href={routeNames.swap + "?toToken=RARE-99e8b0"}>
               <ActionButton
                 variant={"outline"}
                 color="gray.400"
