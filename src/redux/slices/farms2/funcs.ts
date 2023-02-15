@@ -73,12 +73,11 @@ export const fetchUSerFarmInfo = createAsyncThunk(
     const allFarms: IScUserFarmInfo[] = scFirstValue.map((farm) => {
       const data: IScUserFarmInfo = {
         farmId: farm[0].toNumber(),
-        stakedBalance: farm[1].toNumber(),
+        stakedBalance: farm[1].toString(),
         unboundingEpoch: farm[2].toNumber(),
       };
       return data;
     });
-
     return allFarms;
   }
 );

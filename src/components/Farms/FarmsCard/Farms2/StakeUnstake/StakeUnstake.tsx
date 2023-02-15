@@ -75,13 +75,13 @@ const StakeUnstake = ({ farm, userFarmItem, isPool, isBearly }: IProps) => {
 
   if (
     (epochDiffrence <= 0 && farmFee?.earlyUnbondingFee === 0) ||
-    userFarmItem?.stakedBalance === 0 ||
+    Number(userFarmItem?.stakedBalance) === 0 ||
     (!isSrbStaker && farm.farm.farmId === 7)
   ) {
     // if user is creator not disable unstake
     disableUnstake = true && address !== farm.farm.creator;
   }
-  let hasuserStaked = userFarmItem?.stakedBalance > 0;
+  let hasuserStaked = Number(userFarmItem?.stakedBalance) > 0;
 
   return (
     <Flex h="full" flexDir={"column"} w="full">
