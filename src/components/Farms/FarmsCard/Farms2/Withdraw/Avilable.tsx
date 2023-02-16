@@ -1,4 +1,4 @@
-import { Box, Center, Flex, Text } from "@chakra-ui/react";
+import { Box, Center, Flex, Text, VStack } from "@chakra-ui/react";
 import { BigUIntValue } from "@elrondnetwork/erdjs/out";
 import { toknesID } from "api/net.config";
 import { scCall } from "api/sc/calls";
@@ -7,24 +7,30 @@ import BigNumber from "bignumber.js";
 import ActionButton from "components/ActionButton/ActionButton";
 import NextImage from "components/NextImage/NextImage";
 import { formatBalance } from "utils/functions/formatBalance";
-import useGetElrondToken from "utils/hooks/useGetElrondToken";
-import { IScFarmItem, IScUserFarmInfo } from "utils/types/sc.interface";
+import useGetMultipleElrondTokens from "utils/hooks/useGetMultipleElrondTokens";
+import { IScFarmItem, IScUserFarmRewards } from "utils/types/sc.interface";
+import useIsBearFarm from "views/Pools/hooks/useIsBearFarm";
+import useCanUsePool7 from "views/Pools/hooks/useIsSrbStaker";
 
 interface IProps {
   farm: IScFarmItem;
-  userFarmInfo: IScUserFarmInfo;
+  userFarmRewards: IScUserFarmRewards[];
 }
 
-const Avilable = ({ farm, userFarmInfo }: IProps) => {
-  const { token: rewardsToken } = useGetElrondToken(farm.farm.rewardToken);
+const Avilable = ({ farm, userFarmRewards }: IProps) => {
+  const { tokens: rewardsTokens } = useGetMultipleElrondTokens(
+    userFarmRewards.map((r) => r.rewardToken)
+  );
+  const { isSrbStaker } = useCanUsePool7();
   const handleHarvest = () => {
     scCall(
       "farms2",
       "harvest",
       [new BigUIntValue(new BigNumber(farm.farm.farmId))],
-      50000000
+      110000000
     );
   };
+  const isAFarmBoost = useIsBearFarm(farm);
 
   let manualImage = null;
 
@@ -36,37 +42,61 @@ const Avilable = ({ farm, userFarmInfo }: IProps) => {
     <Box>
       <Flex w="full" justifyContent={"space-between"}>
         <Text color="white.400">Available to withdraw</Text>
-        <Flex alignItems={"center"} gap={2}>
-          <Text>
-            {formatBalance({
-              balance: userFarmInfo?.harvestableRewards,
-              decimals: rewardsToken?.decimals,
-            })}
-          </Text>
-          {manualImage ? (
-            <NextImage alt="" src={manualImage} height={30} width={30} />
-          ) : (
-            <>
-              {rewardsToken?.assets?.pngUrl && (
-                <NextImage
-                  alt=""
-                  src={rewardsToken.assets.pngUrl}
-                  width={27}
-                  height={27}
-                />
-              )}
-            </>
-          )}
-        </Flex>
+        <VStack>
+          {rewardsTokens.map((rewardsToken) => {
+            const rewardInfo = userFarmRewards.find(
+              (r) => r.rewardToken === rewardsToken.identifier
+            );
+
+            return (
+              <Flex key={rewardsToken.identifier} alignItems={"center"} gap={2}>
+                <Text>
+                  {formatBalance({
+                    balance: rewardInfo?.harvestableAmount || 0,
+                    decimals: rewardsToken?.decimals,
+                  })}
+                </Text>
+                {manualImage ? (
+                  <NextImage alt="" src={manualImage} height={30} width={30} />
+                ) : (
+                  <>
+                    {rewardsToken?.assets?.pngUrl && (
+                      <NextImage
+                        alt=""
+                        src={rewardsToken.assets.pngUrl}
+                        width={27}
+                        height={27}
+                      />
+                    )}
+                  </>
+                )}
+              </Flex>
+            );
+          })}
+        </VStack>
       </Flex>
-      <Center mt="2">
-        <ActionButton
-          onClick={handleHarvest}
-          disabled={userFarmInfo?.harvestableRewards === 0}
-        >
-          HARVEST
-        </ActionButton>
-      </Center>
+      <Flex flexDir={"column"}>
+        <Center mt="2" flexDir={"column"}>
+          <ActionButton
+            onClick={handleHarvest}
+            disabled={
+              userFarmRewards.reduce(
+                (acc, current) => (acc += current.harvestableAmount),
+                0
+              ) === 0 ||
+              (!isSrbStaker && farm.farm.farmId === 7)
+            }
+          >
+            HARVEST
+          </ActionButton>
+          {isAFarmBoost && isSrbStaker && (
+            <Text align={"center"} fontSize="14px" mt={2}>
+              🐻 You are eligible for 10% Rewards Boost
+            </Text>
+          )}
+        </Center>
+        <Flex justify={"flex-end"}></Flex>
+      </Flex>
     </Box>
   );
 };

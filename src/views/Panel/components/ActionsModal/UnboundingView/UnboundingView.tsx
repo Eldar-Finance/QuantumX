@@ -13,7 +13,7 @@ import {
 import ActionButton from "components/ActionButton/ActionButton";
 import { useFormik } from "formik";
 import { IScFarm2 } from "utils/types/sc.interface";
-import { setUnbondingPeriod } from "views/Panel/scServices";
+import { setUnbondingPeriod } from "views/Panel/scServices/farmsCalls";
 import * as yup from "yup";
 
 const validationSchema = yup.object({
@@ -42,7 +42,7 @@ const UnboundingView = ({ onClose, farm }: IProps) => {
         <ModalHeader>
           <Flex justifyContent={"space-between"} alignItems="center">
             <Heading fontSize={"md"} textTransform="uppercase">
-              Set unbounding period
+              Set Unbonding period
             </Heading>{" "}
             <ActionButton aria-label="close" bg="transparent" onClick={onClose}>
               <CloseIcon color="main" fontSize={"12px"} cursor="pointer" />

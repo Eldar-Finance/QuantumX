@@ -1,9 +1,12 @@
-import { CloseIcon } from "@chakra-ui/icons";
+import { CloseIcon, DeleteIcon, PlusSquareIcon } from "@chakra-ui/icons";
 import {
   Box,
+  Center,
+  Checkbox,
   Divider,
   Flex,
   Heading,
+  Icon,
   Input,
   ModalBody,
   ModalFooter,
@@ -11,40 +14,114 @@ import {
   Text,
 } from "@chakra-ui/react";
 import ActionButton from "components/ActionButton/ActionButton";
+import NextImage from "components/NextImage/NextImage";
+import TokenList from "components/TokenList/TokenList";
 import { useFormik } from "formik";
+import { memo, useEffect, useMemo, useState } from "react";
+import { formatBalance } from "utils/functions/formatBalance";
 import useGetElrondToken from "utils/hooks/useGetElrondToken";
+import useGetUserTokens from "utils/hooks/useGetUserTokens";
+import { IELrondTOkenWithBalance } from "utils/types/elrond.interface";
 import { IScFarm2 } from "utils/types/sc.interface";
-import { depositRewards } from "views/Panel/scServices";
+import { depositRewards } from "views/Panel/scServices/farmsCalls";
 import * as yup from "yup";
 
 const validationSchema = yup.object({
   days: yup.number().required(),
-  amount: yup.number().required(),
+  BypassLastRewardedEpoch: yup.boolean().required(),
+  tokens: yup.array().of(
+    yup.object().shape({
+      tokenDetail: yup.object().required("Token is required"),
+      amount: yup
+        .number()
+        .required("Amount is required")
+        .min(0, "Amount must be greater than 0"),
+    })
+  ),
 });
-
 interface IProps {
   onClose: () => void;
   farm: IScFarm2;
 }
 
-const DepositView = ({ onClose, farm }: IProps) => {
+const skipRender = (prevProps: IProps, nextProps: IProps) => {
+  return prevProps.farm.farmId === nextProps.farm.farmId;
+};
+
+// eslint-disable-next-line react/display-name
+const DepositView = memo(({ onClose, farm }: IProps) => {
   const { token } = useGetElrondToken(farm.rewardToken);
-  const formik = useFormik({
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const elrondToken = useMemo(() => token, [token.identifier]);
+  const isOneToken = farm.rewardToken !== "";
+
+  const [usersTokens] = useGetUserTokens(null, true);
+  const alltokens: IELrondTOkenWithBalance[] = usersTokens;
+  const [selectedTokenId, setSelectedTokenId] = useState<number>(-1);
+
+  const formik = useFormik<{
+    days: "";
+    BypassLastRewardedEpoch: boolean;
+    tokens: { tokenDetail: IELrondTOkenWithBalance; amount: string }[];
+  }>({
     initialValues: {
       days: "",
-      amount: "",
+      BypassLastRewardedEpoch: false,
+      tokens: [
+        {
+          tokenDetail: null,
+          amount: "",
+        },
+      ],
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      if (token) {
-        depositRewards(token, farm.farmId, values.days, values.amount);
-      }
+      depositRewards(
+        values.tokens,
+        farm.farmId,
+        values.days,
+        values.BypassLastRewardedEpoch
+      );
     },
   });
 
+  useEffect(() => {
+    if (isOneToken) {
+      formik.setFieldValue(`tokens.0.tokenDetail`, elrondToken);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOneToken, elrondToken]);
+
+  const handleSelectToken = (selectedToken: IELrondTOkenWithBalance) => {
+    formik.setFieldValue(
+      `tokens.${selectedTokenId}.tokenDetail`,
+      selectedToken
+    );
+    setSelectedTokenId(-1);
+  };
+
+  const addField = () => {
+    formik.setFieldValue("tokens", [
+      ...formik.values.tokens,
+      {
+        tokenDetail: null,
+        amount: "",
+      },
+    ]);
+  };
+  const removeField = (index: number) => {
+    const values = [...formik.values.tokens];
+    values.splice(index, 1);
+    formik.setFieldValue("tokens", values);
+  };
+  const handleMax = (i, token: IELrondTOkenWithBalance) => {
+    formik.setFieldValue(`tokens.${i}.amount`, formatBalance(token, true, 17));
+  };
+
   return (
     <>
-      <form onSubmit={formik.handleSubmit}>
+      {/* @ts-ignore */}
+      <Flex as="form" onSubmit={formik.handleSubmit} flexDir="column" h="full">
         <ModalHeader>
           <Flex justifyContent={"space-between"} alignItems="center">
             <Heading fontSize={"md"} textTransform="uppercase">
@@ -56,8 +133,8 @@ const DepositView = ({ onClose, farm }: IProps) => {
           </Flex>
         </ModalHeader>
         <Divider />
-        <ModalBody mt="3">
-          <Flex flexDir={"column"} gap="4">
+        <ModalBody mt="3" flex={1} display="flex" flexDir={"column"}>
+          <Flex flexDir={"column"} gap="4" mb={3}>
             <Box bg="black.base" px="5" py="3" borderRadius={"lg"}>
               <Flex align={"center"}>
                 <Input
@@ -70,19 +147,103 @@ const DepositView = ({ onClose, farm }: IProps) => {
                 <Text fontSize={"14px"}>DAYS</Text>
               </Flex>
             </Box>
-            <Box bg="black.base" px="5" py="3" borderRadius={"lg"}>
-              <Flex align={"center"}>
-                <Input
-                  variant={"unstyled"}
-                  placeholder="0.0"
-                  flex="1"
-                  name="amount"
-                  onChange={formik.handleChange}
-                />{" "}
-                <Text fontSize={"14px"}>{token.ticker}</Text>
-              </Flex>
-            </Box>
+            {formik.values.tokens.map((field, i) => {
+              return (
+                <Box key={i} bg="black.base" px="5" py="3" borderRadius={"lg"}>
+                  <Flex align={"center"}>
+                    <Input
+                      variant={"unstyled"}
+                      placeholder="0.0"
+                      flex="1"
+                      name={`tokens.${i}.amount`}
+                      value={formik.values.tokens[i].amount}
+                      onChange={formik.handleChange}
+                      pr={5}
+                    />
+                    {field.tokenDetail && (
+                      <ActionButton
+                        mr={2}
+                        onClick={() => handleMax(i, field.tokenDetail)}
+                      >
+                        MAX
+                      </ActionButton>
+                    )}
+                    <ActionButton
+                      onClick={
+                        isOneToken ? undefined : () => setSelectedTokenId(i)
+                      }
+                    >
+                      {field.tokenDetail ? (
+                        <>
+                          <NextImage
+                            src={field.tokenDetail.assets.svgUrl}
+                            alt=""
+                            width={27}
+                            height={27}
+                          />
+                          <Text fontSize={"14px"} ml={2}>
+                            {field.tokenDetail.ticker}
+                          </Text>
+                        </>
+                      ) : (
+                        <Text fontSize={"14px"}>Select token</Text>
+                      )}
+                    </ActionButton>
+                    {isOneToken ? null : (
+                      <ActionButton
+                        bg="tomato"
+                        onClick={() => removeField(i)}
+                        ml={3}
+                      >
+                        <Icon as={DeleteIcon} />
+                      </ActionButton>
+                    )}
+                  </Flex>
+                </Box>
+              );
+            })}
+            {isOneToken ? null : (
+              <>
+                <Center w="full" mt={3}>
+                  <ActionButton
+                    aria-label="add field"
+                    onClick={addField}
+                    borderRadius={"full"}
+                    h="45px"
+                    w="45px"
+                  >
+                    <Icon as={PlusSquareIcon} fontSize="20px" />
+                  </ActionButton>
+                </Center>
+              </>
+            )}
+            <Center my={6}>
+              <Checkbox
+                name="BypassLastRewardedEpoch"
+                onChange={formik.handleChange}
+              >
+                <Text color="gray.300">
+                  Bypass last rewarded epoch and allocate the rewards starting
+                  from next epoch.
+                </Text>
+              </Checkbox>
+            </Center>
           </Flex>
+
+          {selectedTokenId !== -1 ? (
+            <TokenList
+              tokens={alltokens.filter(
+                (userToken) =>
+                  formik.values.tokens
+                    .filter((t) => Boolean(t.tokenDetail))
+                    .findIndex(
+                      (t) => t.tokenDetail.identifier === userToken.identifier
+                    ) === -1
+              )}
+              handleClickToken={handleSelectToken}
+              hoverBg="black.base"
+            />
+          ) : null}
         </ModalBody>
         <ModalFooter justifyContent={"center"} gap="6" flexWrap={"wrap"}>
           <ActionButton
@@ -104,9 +265,9 @@ const DepositView = ({ onClose, farm }: IProps) => {
             Confirm
           </ActionButton>
         </ModalFooter>
-      </form>
+      </Flex>
     </>
   );
-};
+}, skipRender);
 
 export default DepositView;

@@ -4,54 +4,94 @@ import { scQuery } from "api/sc/queries";
 import { formatBalance } from "utils/functions/formatBalance";
 import {
   IScFarmItem,
+  IScMultiFarmsRewardsLeft,
   IScPanelFarms,
   IScUserFarmInfo,
+  IScUserFarmRewards,
 } from "utils/types/sc.interface";
 
 export const fetchAllFarms = createAsyncThunk(
   "farms2/fetchAllFarms",
-  async () => {
+  async (mexPairs?: any[]) => {
     const scRes = await scQuery("farms2", "getAllFarms");
 
     const scFirstValue = scRes.firstValue.valueOf();
-
-    const allFarms: IScFarmItem[] = scFirstValue.map((farm: any) => {
-      return {
-        farm: {
-          farmId: farm.field0.id.toNumber(),
-          creationEpoch: farm.field0.creation_epoch.toNumber(),
-          stakingToken: farm.field0.staked_token,
-          rewardToken: farm.field0.reward_token,
-          creator: farm.field0.creator.bech32(),
-        },
-        stakedBalance: farm.field1.toNumber(),
-        totalRewardsLeft: farm.field2.toNumber(),
-      };
-    });
-
-    return allFarms;
+    const allFarms: IScFarmItem[] = scFirstValue
+      .map((farm: any) => {
+        return {
+          farm: {
+            farmId: farm.field0.id.toNumber(),
+            creationEpoch: farm.field0.creation_epoch.toNumber(),
+            stakingToken: farm.field0.staked_token,
+            rewardToken: farm.field0.reward_token,
+            creator: farm.field0.creator.bech32(),
+          },
+          stakedBalance: farm.field1.toNumber(),
+          totalRewardsLeft: farm.field2.toNumber(),
+        };
+      })
+      .filter((farm) => farm.farm.farmId <= 10 || farm.farm.farmId >= 19);
+    return {
+      allFarms,
+      pools: mexPairs
+        ? allFarms.filter(
+            (farm) =>
+              mexPairs.findIndex(
+                (mexPair) => mexPair.id === farm.farm.stakingToken
+              ) === -1
+          )
+        : [],
+      farms: mexPairs
+        ? allFarms.filter(
+            (farm) =>
+              mexPairs.findIndex(
+                (mexPair) => mexPair.id === farm.farm.stakingToken
+              ) !== -1
+          )
+        : [],
+    };
   }
 );
 export const fetchUSerFarmInfo = createAsyncThunk(
   "farms2/fetchUSerFarmInfo",
   async (address: string) => {
-    const scRes = await scQuery("farms2", "getUserInfo", [
+    const scRes = await scQuery("farms2", "getUserFarmInfo", [
       new AddressValue(new Address(address)),
     ]);
 
     const scFirstValue = scRes.firstValue.valueOf();
 
-    const allFarms: IScUserFarmInfo[] = scFirstValue.map((farmInfo) => {
+    const allFarms: IScUserFarmInfo[] = scFirstValue.map((farm) => {
       const data: IScUserFarmInfo = {
-        farmId: farmInfo[0].toNumber(),
-        stakedBalance: farmInfo[1].toNumber(),
-        harvestableRewards: farmInfo[2].toNumber(),
-        earnedRewards: farmInfo[3].toNumber(),
-        unboundingEpoch: farmInfo[4].toNumber(),
+        farmId: farm[0].toNumber(),
+        stakedBalance: farm[1].toString(),
+        unboundingEpoch: farm[2].toNumber(),
       };
       return data;
     });
     return allFarms;
+  }
+);
+export const fetchUSerRewardsInfo = createAsyncThunk(
+  "farms2/fetchUSerRewardsInfo",
+  async (address: string) => {
+    const scRes = await scQuery("farms2", "getUserRewardsInfo", [
+      new AddressValue(new Address(address)),
+    ]);
+
+    const scFirstValue = scRes.firstValue.valueOf();
+
+    const userRewards: IScUserFarmRewards[] = scFirstValue.map((rewards) => {
+      const data: IScUserFarmRewards = {
+        rewardToken: rewards.field0,
+        farmId: rewards.field1[0].toNumber(),
+        harvestableAmount: rewards.field1[1].toNumber(),
+        earnedAmount: rewards.field1[2].toNumber(),
+      };
+      return data;
+    });
+
+    return userRewards;
   }
 );
 export const fetchCreatorsFarms = createAsyncThunk(
@@ -88,5 +128,31 @@ export const fetchCreatorsFarms = createAsyncThunk(
     });
 
     return creatorFarms;
+  }
+);
+export const fetchMultiFarms2RewardsLeft = createAsyncThunk(
+  "farms2/fetchMultiFarms2RewardsLeft",
+  async () => {
+    const scRes = await scQuery("farms2", "getMultifarmsRewardsLeft");
+
+    const scFirstValue = scRes.firstValue.valueOf();
+
+    const multiFarmRewardsLeft: IScMultiFarmsRewardsLeft[] = scFirstValue.map(
+      (r) => {
+        const data: IScMultiFarmsRewardsLeft = {
+          farmId: r.field0.toNumber(),
+          rewardsLeft: r.field1.map((token) => {
+            return {
+              token: token.token_identifier,
+              nonce: token.token_nonce.toNumber(),
+              amount: token.amount.toNumber(),
+            };
+          }),
+        };
+        return data;
+      }
+    );
+
+    return multiFarmRewardsLeft;
   }
 );

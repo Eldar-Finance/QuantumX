@@ -1,12 +1,14 @@
+import { HamburgerIcon } from "@chakra-ui/icons";
 import { Flex, Icon } from "@chakra-ui/react";
 import ActionButton from "components/ActionButton/ActionButton";
 import { ToolIcon } from "components/Icons/ui";
+import dynamic from "next/dynamic";
 import { useState } from "react";
 import { formatTokenI } from "utils/functions/tokens";
 import { IScPanelFarms } from "utils/types/sc.interface";
 
-import ActionsModal from "../ActionsModal/ActionsModal";
-
+const ActionsModal: any = dynamic(() => import("../ActionsModal/ActionsModal"));
+const ReporModal: any = dynamic(() => import("../ReporModal/ReporModal"));
 export const panelColumns = [
   {
     Header: "Pool/Farm id",
@@ -54,8 +56,18 @@ export const panelColumns = [
     Cell: ({ row }) => {
       const data: IScPanelFarms = row.original;
       const [openModal, setopenModal] = useState(false);
+      const [openReportInfo, setOpenReportInfo] = useState(false);
       const handleOpenModal = () => {
         setopenModal((s) => !s);
+      };
+      const handleOpenReportModal = () => {
+        setOpenReportInfo((s) => !s);
+      };
+      const closeModal = () => {
+        setopenModal(false);
+      };
+      const closeReport = () => {
+        setOpenReportInfo(false);
       };
 
       return (
@@ -63,11 +75,20 @@ export const panelColumns = [
           <ActionButton onClick={handleOpenModal}>
             <Icon as={ToolIcon} />
           </ActionButton>
-          <ActionsModal
-            isOpen={openModal}
-            onClose={handleOpenModal}
-            farm={data}
-          />
+          <ActionButton onClick={handleOpenReportModal}>
+            <Icon as={HamburgerIcon} />
+          </ActionButton>
+          {openModal && (
+            <ActionsModal isOpen={openModal} onClose={closeModal} farm={data} />
+          )}
+          {openReportInfo && (
+            <ReporModal
+              isOpen={openReportInfo}
+              onClose={closeReport}
+              farmId={data.farm.farmId}
+              stakedToken={data.farm.stakingToken}
+            />
+          )}
         </Flex>
       );
     },

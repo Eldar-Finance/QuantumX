@@ -1,24 +1,13 @@
 import MyContainer from "components/Container/Container";
 import Layout from "components/Layout/Layout";
+import MyTabs from "components/MyTabs/MyTabs";
 import withElronDapp from "hoc/withElronDapp";
 import WrapperPages from "hoc/WrapperPages";
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
-import { fetchCreatorsFarms } from "redux/slices/farms2/funcs";
-import { selectUserAddress } from "redux/slices/userAcount/account-slice";
-import { useAppDispatch } from "utils/hooks/redux";
+import HubTable from "./components/HubTable/HubTable";
 import PanelTable from "./components/PanelTable/PanelTable";
 import PanelTitle from "./components/PanelTitle/PanelTitle";
 
 const Panel = () => {
-  const dispatch = useAppDispatch();
-  const address = useSelector(selectUserAddress);
-  useEffect(() => {
-    if (address) {
-      dispatch(fetchCreatorsFarms(address));
-    }
-  }, [address, dispatch]);
-
   return (
     <Layout>
       <MyContainer
@@ -31,7 +20,32 @@ const Panel = () => {
         w="full"
       >
         <PanelTitle />
-        <PanelTable />
+        <MyTabs
+          tabListProps={{
+            overflow: "auto",
+          }}
+          tabsProps={{
+            w: "full",
+            display: "flex",
+            alignItems: "center",
+            flexDir: "column",
+          }}
+          tabProps={{
+            fontSize: { xs: "sm", md: "md" },
+            px: "20px",
+            fontWeight: "600",
+          }}
+          tabData={[
+            {
+              tabText: "Farms",
+              tabPanel: <PanelTable />,
+            },
+            {
+              tabText: "Hub",
+              tabPanel: <HubTable />,
+            },
+          ]}
+        />
       </MyContainer>
     </Layout>
   );

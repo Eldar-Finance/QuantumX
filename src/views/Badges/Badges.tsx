@@ -1,4 +1,4 @@
-import { Box, Center, Text } from "@chakra-ui/react";
+import { Box, Center } from "@chakra-ui/react";
 import Layout from "components/Layout/Layout";
 import withElronDapp from "hoc/withElronDapp";
 import WrapperPages from "hoc/WrapperPages";
@@ -9,7 +9,8 @@ import {
   fetcRetrieveStakingStats,
 } from "redux/slices/eldarSfts/funcs";
 import { useAppDispatch, useAppSelector } from "utils/hooks/redux";
-import BadgesCard from "./BadgesCard/BadgesCard";
+import InvestorsCard from "./Investors/Investors";
+import SftsStaking from "./SftsStaking/SftsStaking";
 
 const BadgesView = () => {
   const dispatch = useAppDispatch();
@@ -31,28 +32,9 @@ const BadgesView = () => {
     <Layout>
       <Box p={"4"} minH="95vh">
         <Box width={{ xs: "100%", md: "90%" }} marginX={"auto"} height="100%">
-          <Center width={"95%"} margin="auto">
-            <Box width={"full"}>
-              <Text
-                as={"h1"}
-                fontSize="4xl"
-                fontWeight={"extrabold"}
-                textAlign="center"
-              >
-                Eldar badges SFT&apos;s are live
-              </Text>
-              <Text
-                as={"h3"}
-                fontWeight="extrabold"
-                fontSize="xl"
-                mb={5}
-                textAlign="center"
-              >
-                Support QuantumX and earn rewards just by holding your badges
-                forever.
-              </Text>
-              <BadgesCard />
-            </Box>
+          <Center width={"95%"} margin="auto" flexDir={"column"} gap={"50px"}>
+            <SftsStaking />
+            <InvestorsCard />
           </Center>
         </Box>
       </Box>

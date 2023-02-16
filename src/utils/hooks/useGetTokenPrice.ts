@@ -1,17 +1,24 @@
-import { getMaiarTokens } from "api/rest/others/MaiarTokens";
-import useSwr from "swr";
+import { formatTokenI } from "utils/functions/tokens";
+import useGetElrondToken from "./useGetElrondToken";
 import { useGetFarmsLpPrices } from "./useGetFarmsLpPrices";
-const useGetTokenPrice = (token, secondToken = "USDC") => {
-  const { prices } = useGetFarmsLpPrices();
-  const { data, error } = useSwr([token, secondToken], getMaiarTokens);
+const useGetTokenPrice = (tokenIdentifier) => {
+  const { prices: lpPrices, isLoading } = useGetFarmsLpPrices();
+  const isLpPrice = Boolean(
+    lpPrices.find((lpToken) => lpToken.token === formatTokenI(tokenIdentifier))
+  );
 
+  const { token } = useGetElrondToken(
+    isLpPrice || isLoading ? null : tokenIdentifier
+  );
   let tokenPrice = 0;
 
-  if (data) {
-    tokenPrice = data.data.value;
+  if (token) {
+    tokenPrice = token.price;
   }
-  if (error && secondToken === "USDC") {
-    const price = prices?.find((item) => item.token === token);
+  if (isLpPrice) {
+    const price = lpPrices?.find(
+      (item) => item.token === formatTokenI(tokenIdentifier)
+    );
     if (price) {
       tokenPrice = Number(price.price);
     }

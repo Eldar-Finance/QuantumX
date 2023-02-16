@@ -91,23 +91,23 @@ export const fetchwhiteListedTokens = createAsyncThunk(
 
     const { firstValue } = res;
     const portFolioData = firstValue.valueOf().map((identifier) => {
-      if (identifier === "QWT-46ac01") {
-        return {
-          token: "QWT",
-          baseName: "QoWatt",
-          identifier: "QWT-46ac01",
-          percent: 30,
-          api: {
-            url: "https://graph.maiar.exchange/graphql",
-            method: "post",
-            data: {
-              query:
-                '{  pairs(address: "erd1qqqqqqqqqqqqqpgq5fj4ttp8vylx8napuuruye5rewflqr542jpsv8tauj") {    price : firstTokenPrice  }}',
-              variables: {},
-            },
-          },
-        };
-      }
+      // if (identifier === "QWT-46ac01") {
+      //   return {
+      //     token: "QWT",
+      //     baseName: "QoWatt",
+      //     identifier: "QWT-46ac01",
+      //     percent: 30,
+      //     api: {
+      //       url: "https://graph.maiar.exchange/graphql",
+      //       method: "post",
+      //       data: {
+      //         query:
+      //           '{  pairs(address: "erd1qqqqqqqqqqqqqpgq5fj4ttp8vylx8napuuruye5rewflqr542jpsv8tauj") {    price : firstTokenPrice  }}',
+      //         variables: {},
+      //       },
+      //     },
+      //   };
+      // }
 
       return {
         token: formatTokenI(identifier),
@@ -220,19 +220,19 @@ const fetch = async (portfolioData, resetState) => {
     );
     let newT;
 
-    if (portfolioData[oldIndex].token === "QWT") {
-      newT = {
-        ...portfolioData[oldIndex],
-        ...token,
-        egldValue: 1 / resD[i].data.data.pairs["0"].price,
-      };
-    } else {
-      newT = {
-        ...portfolioData[oldIndex],
-        ...token,
-        egldValue: 1 / Number(resD[i].data.value),
-      };
-    }
+    // if (portfolioData[oldIndex].token === "QWT") {
+    //   newT = {
+    //     ...portfolioData[oldIndex],
+    //     ...token,
+    //     egldValue: 1 / resD[i].data.data.pairs["0"].price,
+    //   };
+    // } else {
+    newT = {
+      ...portfolioData[oldIndex],
+      ...token,
+      egldValue: 1 / Number(resD[i].data.value),
+    };
+    // }
     data[oldIndex] = newT;
   });
 

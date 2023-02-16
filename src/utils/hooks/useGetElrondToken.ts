@@ -1,6 +1,5 @@
 import { toknesID } from "api/net.config";
-import { getEconomics } from "api/rest/elrondApi/network";
-import { getFromAllTokens } from "api/rest/elrondApi/tokens";
+import { getFromAllTokens, getTokenPrice } from "api/rest/elrondApi/tokens";
 import useSWR from "swr";
 import { IElrondToken } from "utils/types/elrond.interface";
 
@@ -11,17 +10,15 @@ const useGetElrondToken = (tokenIdeniifer: string) => {
     },
     getFromAllTokens
   );
-  const { data: egldData, error: egkdError } = useSWR(
-    {
-      identifier: tokenIdeniifer === "EGLD" ? {} : null,
-    },
-    getEconomics
+  const { data: egldPrice, error: egkdError } = useSWR(
+    tokenIdeniifer === "EGLD" ? toknesID.wegld : null,
+    getTokenPrice
   );
 
   const dataApi = data?.data.length > 0 && data?.data[0];
   let manualData = null;
   if (tokenIdeniifer === "EGLD") {
-    if (egldData) {
+    if (egldPrice) {
       manualData = {
         type: "FungibleESDT",
         identifier: "EGLD",
@@ -31,11 +28,7 @@ const useGetElrondToken = (tokenIdeniifer: string) => {
         assets: {
           svgUrl: "/images/egld.svg",
         },
-
-        price: egldData.data.price,
-        marketCap: egldData.data.marketCap,
-        supply: egldData.data.totalSupply,
-        circulatingSupply: egldData.data.circulatingSupply,
+        price: egldPrice,
       };
     }
   }

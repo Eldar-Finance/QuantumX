@@ -1,28 +1,49 @@
 import axiosEldron from "api/rest/axiosEldron";
+import {
+  IElrondAccountToken,
+  IElrondNFT,
+  IElrondUserAccount,
+} from "utils/types/elrond.interface";
 
 export const getTokens = async (address: string, size?: number) => {
   return await axiosEldron.get(
     `/accounts/${address}/tokens?size=${size || 200}`
   );
 };
-export const getTokenByAccount = async (address, token) => {
-  return await axiosEldron.get(`/accounts/${address}/tokens/${token}`);
+export const fetchAccountTokenById = async ([identifier, address]: [
+  string,
+  string
+]): Promise<IElrondAccountToken> => {
+  const res = await axiosEldron.get<IElrondAccountToken>(
+    `/accounts/${address}/tokens/${identifier}`
+  );
+  return res.data;
 };
 export const getTokensByNfts = async (address, nfts) => {
   return await axiosEldron.get(`/accounts/${address}/nfts/${nfts}`);
 };
 export const getMexPairs = async () => {
-  return await axiosEldron.get("/mex-pairs");
+  return await axiosEldron.get("/mex/pairs?size=150");
 };
-export const getEgldBalance = async (address) => {
-  return await axiosEldron.get(`/accounts/${address}`);
+export const getEgldBalance = async (address): Promise<IElrondUserAccount> => {
+  const res = await axiosEldron.get<IElrondUserAccount>(`/accounts/${address}`);
+  return res.data;
 };
-export const getNfts = async (address: string, size?: number) => {
-  // const address =
-  //   "erd1jz3hz44njq2cnveqd7r2m8x4p8m283lz3mj9h3am4747fddg9syspp8xd5";
-  // const address =
-  //   "erd1en90783mdh9kt928qfrt35e7lzqsu9h557j24p3lreu9alkc094qsy4z52";
-  return await axiosEldron.get(
-    `/accounts/${address}/nfts?size=${size || 1000}`
-  );
+export const getNfts = async ({
+  address,
+  parameters,
+}: {
+  address: string;
+  parameters?: {
+    collections?: string;
+    size?: number;
+  };
+}) => {
+  const res = await axiosEldron.get<IElrondNFT[]>(`/accounts/${address}/nfts`, {
+    params: {
+      size: parameters?.size || 1000,
+      ...parameters,
+    },
+  });
+  return res.data;
 };

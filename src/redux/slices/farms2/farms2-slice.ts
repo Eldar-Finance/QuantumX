@@ -1,18 +1,27 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { toknesID } from "api/net.config";
 import { AppState } from "redux/store";
 import { STATUS } from "utils/types/core.interface";
 import {
   IScFarmItem,
+  IScMultiFarmsRewardsLeft,
   IScPanelFarms,
   IScUserFarmInfo,
+  IScUserFarmRewards,
 } from "utils/types/sc.interface";
-import { fetchAllFarms, fetchCreatorsFarms, fetchUSerFarmInfo } from "./funcs";
+import {
+  fetchAllFarms,
+  fetchCreatorsFarms,
+  fetchMultiFarms2RewardsLeft,
+  fetchUSerFarmInfo,
+  fetchUSerRewardsInfo,
+} from "./funcs";
 
 export interface Farms2State {
   allFarms: {
     status: STATUS;
     data: IScFarmItem[];
+    pools: IScFarmItem[];
+    farms: IScFarmItem[];
     error: string;
   };
   userFarmsInfo: {
@@ -20,9 +29,19 @@ export interface Farms2State {
     data: IScUserFarmInfo[];
     error: string;
   };
+  userRewards: {
+    status: STATUS;
+    data: IScUserFarmRewards[];
+    error: string;
+  };
   creatorsFarms: {
     status: STATUS;
     data: IScPanelFarms[];
+    error: string;
+  };
+  multiFarmsRewardsLeft: {
+    status: STATUS;
+    data: IScMultiFarmsRewardsLeft[];
     error: string;
   };
 }
@@ -30,6 +49,8 @@ export interface Farms2State {
 const initialState: Farms2State = {
   allFarms: {
     data: [],
+    pools: [],
+    farms: [],
     status: "idle",
     error: "",
   },
@@ -38,7 +59,17 @@ const initialState: Farms2State = {
     status: "idle",
     error: "",
   },
+  userRewards: {
+    data: [],
+    status: "idle",
+    error: "",
+  },
   creatorsFarms: {
+    data: [],
+    status: "idle",
+    error: "",
+  },
+  multiFarmsRewardsLeft: {
     data: [],
     status: "idle",
     error: "",
@@ -57,9 +88,18 @@ export const generalSlice = createSlice({
       })
       .addCase(
         fetchAllFarms.fulfilled,
-        (state, action: PayloadAction<IScFarmItem[]>) => {
+        (
+          state,
+          action: PayloadAction<{
+            allFarms: IScFarmItem[];
+            pools: IScFarmItem[];
+            farms: IScFarmItem[];
+          }>
+        ) => {
           state.allFarms.status = "succeeded";
-          state.allFarms.data = action.payload;
+          state.allFarms.data = action.payload.allFarms;
+          state.allFarms.pools = action.payload.pools;
+          state.allFarms.farms = action.payload.farms;
         }
       )
       .addCase(fetchAllFarms.rejected, (state, action) => {
@@ -78,6 +118,21 @@ export const generalSlice = createSlice({
         }
       )
       .addCase(fetchUSerFarmInfo.rejected, (state, action) => {
+        state.userRewards.status = "failed";
+        state.userRewards.error = action.error.message;
+      })
+      // fetchUSerRewardsInfo
+      .addCase(fetchUSerRewardsInfo.pending, (state) => {
+        state.userRewards.status = "loading";
+      })
+      .addCase(
+        fetchUSerRewardsInfo.fulfilled,
+        (state, action: PayloadAction<IScUserFarmRewards[]>) => {
+          state.userRewards.status = "succeeded";
+          state.userRewards.data = action.payload;
+        }
+      )
+      .addCase(fetchUSerRewardsInfo.rejected, (state, action) => {
         state.userFarmsInfo.status = "failed";
         state.userFarmsInfo.error = action.error.message;
       })
@@ -95,6 +150,21 @@ export const generalSlice = createSlice({
       .addCase(fetchCreatorsFarms.rejected, (state, action) => {
         state.creatorsFarms.status = "failed";
         state.creatorsFarms.error = action.error.message;
+      })
+      // fetchMultiFarms2RewardsLeft
+      .addCase(fetchMultiFarms2RewardsLeft.pending, (state) => {
+        state.multiFarmsRewardsLeft.status = "loading";
+      })
+      .addCase(
+        fetchMultiFarms2RewardsLeft.fulfilled,
+        (state, action: PayloadAction<IScMultiFarmsRewardsLeft[]>) => {
+          state.multiFarmsRewardsLeft.status = "succeeded";
+          state.multiFarmsRewardsLeft.data = action.payload;
+        }
+      )
+      .addCase(fetchMultiFarms2RewardsLeft.rejected, (state, action) => {
+        state.multiFarmsRewardsLeft.status = "failed";
+        state.multiFarmsRewardsLeft.error = action.error.message;
       });
   },
 });
@@ -102,16 +172,14 @@ export const generalSlice = createSlice({
 export const {} = generalSlice.actions;
 
 export const selectAllFarms2 = (state: AppState) => state.farms2.allFarms;
-export const selectFarms = (state: AppState) =>
-  state.farms2.allFarms.data.filter(
-    (farm) => farm.farm.stakingToken !== toknesID.rare
-  );
-export const selectPools = (state: AppState) =>
-  state.farms2.allFarms.data.filter(
-    (farm) => farm.farm.stakingToken === toknesID.rare
-  );
+export const selectFarms = (state: AppState) => state.farms2.allFarms.farms;
+export const selectPools = (state: AppState) => state.farms2.allFarms.pools;
 export const selectCreatorsFarms = (state: AppState) =>
   state.farms2.creatorsFarms;
 export const selectUserFarms2Info = (state: AppState) =>
   state.farms2.userFarmsInfo;
+export const selectUserFarms2Rewards = (state: AppState) =>
+  state.farms2.userRewards;
+export const selectMultiFarms2RewardsLeft = (state: AppState) =>
+  state.farms2.multiFarmsRewardsLeft;
 export default generalSlice.reducer;

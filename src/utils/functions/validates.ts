@@ -21,3 +21,9 @@ export const validateAddress = (address: string) => {
 
   return true;
 };
+
+export function isValidIdentifier(identifier) {
+  // Regular expression for identifier format
+  const identifierRegex = /^[A-Z]+-[a-zA-Z0-9]{6}$/;
+  return identifierRegex.test(identifier);
+}

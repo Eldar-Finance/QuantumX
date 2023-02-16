@@ -1,5 +1,6 @@
 import { Many } from "lodash";
 import orderBy from "lodash/orderBy";
+import * as XLSX from "xlsx";
 
 export const removeDuplicates = (
   array: any[],
@@ -40,3 +41,36 @@ export const orderSimpleData = (
   );
   return orderData;
 };
+
+export function exportToCsv(data: any[], filename: string) {
+  const replacer = (key, value) => (value === null ? "" : value);
+  const header = Object.keys(data[0]);
+  let csv = data.map((row) =>
+    header
+      .map((fieldName) => JSON.stringify(row[fieldName], replacer))
+      .join(",")
+  );
+  csv.unshift(header.join(","));
+  let csvArray = csv.join("\r\n");
+
+  var blob = new Blob([csvArray], { type: "text/csv" });
+  /* @ts-ignore */
+  if (window.navigator.msSaveOrOpenBlob) {
+    /* @ts-ignore */
+    window.navigator.msSaveBlob(blob, filename);
+  } else {
+    var a = window.document.createElement("a");
+    a.href = window.URL.createObjectURL(blob);
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+}
+
+export function exportToExcel(data: any[], filename: string) {
+  const ws = XLSX.utils.json_to_sheet(data);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+  XLSX.writeFile(wb, filename);
+}

@@ -1,47 +1,53 @@
-import { getEconomics } from "api/rest/elrondApi/network";
-import { getFromAllTokens, getLpTokenPrice } from "api/rest/elrondApi/tokens";
-import { fetchLpPrices } from "api/rest/others/EldarFinance";
-import { getMaiarTokens } from "api/rest/others/MaiarTokens";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { selectFarms } from "redux/slices/farms2/farms2-slice";
 import { formatBalanceDolar } from "utils/functions/formatBalance";
 import { formatTokenI } from "utils/functions/tokens";
 import { useAppSelector } from "utils/hooks/redux";
-import { farms2Data, proteoFarmsArr } from "views/Farms/constants";
+import { proteoFarmsArr } from "views/Farms/constants";
+import { useGetFarmsLpPrices } from "./useGetFarmsLpPrices";
+import useGetMultipleElrondTokens from "./useGetMultipleElrondTokens";
 
 const useGetTotalValueInFarms = () => {
   const { data } = useAppSelector((state) => state.proteo.generalInfoApp);
   const generalInfoAppData = data;
   const [totalValueLocked, setTotalValueLocked] = useState<number>();
   const farms2 = useSelector(selectFarms);
+  const { prices: lpPrices } = useGetFarmsLpPrices();
+  const { tokens } = useGetMultipleElrondTokens(
+    farms2.map((farm) => farm.farm.stakingToken)
+  );
+
   useEffect(() => {
     const func = async () => {
-      if (generalInfoAppData && farms2) {
+      if (
+        lpPrices.length > 0 &&
+        tokens.length > 0 &&
+        generalInfoAppData &&
+        farms2.length > 0
+      ) {
         let totalLockedonProteoFarms = 0;
 
+        // fetch all lp prices that we need in usdc
         // get amount locked on proteo farms in dollars
         for (let i = 0; i < proteoFarmsArr.length; i++) {
+          // get static data about proteo farm
           const pf = proteoFarmsArr[i];
 
-          const { tokenIdentifier, decimals, token } = pf;
+          // extrac tokenIdentifier and decimals from proteo farm
+          const { tokenIdentifier, decimals } = pf;
 
           if (generalInfoAppData) {
             const tokenInfo = generalInfoAppData.tokensInfo.find(
               (ti) => ti.tokenI === tokenIdentifier
             );
             let tokenPrice = 0;
-            try {
-              const res = await getMaiarTokens([token, "USDC"]);
 
-              tokenPrice = Number(res.data.value);
-            } catch (error) {
-              const res = await fetchLpPrices();
-              const price = res.find((lp) => lp.token === tokenIdentifier)
-                ?.tokenvalue;
-              if (price) {
-                tokenPrice = Number(price);
-              }
+            const price = lpPrices.find(
+              (lp) => lp.token === formatTokenI(tokenIdentifier)
+            )?.price;
+            if (price) {
+              tokenPrice = Number(price);
             }
 
             if (tokenInfo && tokenInfo.staked !== 0) {
@@ -55,61 +61,32 @@ const useGetTotalValueInFarms = () => {
 
         // get amount locked on quantumn sc farms in dollars
         for (let i = 0; i < farms2.length; i++) {
+          // info from sc about the farm
           const farm = farms2[i];
 
-          let dataApi = null;
-          let manualData = null;
-
-          if (farm.farm.stakingToken === "EGLD") {
-            const egldData = await getEconomics();
-            if (egldData) {
-              manualData = {
-                type: "FungibleESDT",
-                identifier: "EGLD",
-                name: "EGLD",
-                ticker: "EGLD",
-                decimals: 18,
-                assets: {
-                  svgUrl: "/images/egld.svg",
-                },
-
-                price: egldData.data.price,
-                marketCap: egldData.data.marketCap,
-                supply: egldData.data.totalSupply,
-                circulatingSupply: egldData.data.circulatingSupply,
-              };
-            }
-          } else {
-            const res = await getFromAllTokens({
-              identifier: farm.farm.stakingToken,
-            });
-            dataApi = res.data[0];
-          }
-
-          const stakingToken = manualData || dataApi;
-
-          const { lpToken2, scFarmAddress } = farms2Data[
-            formatTokenI(farm.farm.stakingToken)
-          ];
-          const lpPrice = await getLpTokenPrice(
-            scFarmAddress,
-            lpToken2,
-            farm.farm.stakingToken
+          const stakingToken = tokens.find(
+            (token) => token.identifier === farm.farm.stakingToken
           );
+
+          const lpPrice =
+            lpPrices.find(
+              (lpToken) =>
+                lpToken.token === formatTokenI(farm.farm.stakingToken)
+            )?.price || 0;
 
           totalLockedonProteoFarms += formatBalanceDolar(
             {
               balance: farm.stakedBalance,
               decimals: stakingToken.decimals,
             },
-            lpPrice
+            Number(lpPrice)
           );
         }
         setTotalValueLocked(totalLockedonProteoFarms);
       }
     };
     func();
-  }, [farms2, generalInfoAppData]);
+  }, [farms2, generalInfoAppData, lpPrices, tokens]);
 
   return totalValueLocked;
 };

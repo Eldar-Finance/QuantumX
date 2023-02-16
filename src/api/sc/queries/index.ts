@@ -6,7 +6,6 @@ import {
   SmartContract,
   SmartContractAbi,
 } from "@elrondnetwork/erdjs/out";
-import axios from "axios";
 import { getInterface, provider, WspTypes } from "../sc";
 
 export const scQuery = async (
@@ -17,9 +16,7 @@ export const scQuery = async (
 ) => {
   try {
     const { address, abiUrl, implementsInterfaces } = getInterface(workspace);
-
-    const response = await axios.get(abiUrl);
-    const abiRegistry = await AbiRegistry.create(response.data);
+    const abiRegistry = await AbiRegistry.create(abiUrl);
     const abi = new SmartContractAbi(abiRegistry, [implementsInterfaces]);
     const contract = new SmartContract({
       address: address,

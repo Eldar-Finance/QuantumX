@@ -21,11 +21,12 @@ import { createContext, PropsWithChildren, useEffect, useState } from "react";
 import { addDualEarned, addsProteoEarned } from "redux/slices/proteo/proteo";
 import { fetchProteoFarms } from "redux/slices/userAcount/funcs";
 import useSwr from "swr";
+import { haveMaxLimit } from "utils/functions/farms";
 import {
   formatBalance,
   formatBalanceDolar,
+  formatNumber,
 } from "utils/functions/formatBalance";
-import { haveMaxLimit } from "utils/functions/proteo";
 import { useAppDispatch, useAppSelector } from "utils/hooks/redux";
 import useGetTokenPrice from "utils/hooks/useGetTokenPrice";
 import { IProteoFarm } from "utils/types/farms.interface";
@@ -35,6 +36,7 @@ import StakeUnstake from "./Proteo/StakeUnstake/StakeUnstake";
 import Avilable from "./Proteo/Withdraw/Avilable";
 interface IProps {
   pf: IProteoFarm;
+  tvl: number;
 }
 
 export const ProteoItemContenxt = createContext({
@@ -43,21 +45,16 @@ export const ProteoItemContenxt = createContext({
   decimals: 0,
 });
 
-const ProteoFarmItem = ({ pf }: IProps) => {
+const ProteoFarmItem = ({ pf, tvl }: IProps) => {
   const {
     Icon,
-    stakedCoin,
     tokenIdentifier,
-    type,
     decimals,
     wsp,
     hc,
-    token,
     customPrice,
     aprEndpoint,
-    noRewards,
     tokenRewards,
-    fixedRewards,
     endpointDefinition,
   } = pf;
 
@@ -71,7 +68,7 @@ const ProteoFarmItem = ({ pf }: IProps) => {
 
   const [lastHarvestEpoch, setLastHarvestEpoch] = useState(0);
 
-  const [selectedTokenPrice] = useGetTokenPrice(token);
+  const [selectedTokenPrice] = useGetTokenPrice(tokenIdentifier);
   const tokenPrice = customPrice || selectedTokenPrice;
 
   const tokenInfo = generalInfoAppData?.tokensInfo.find(
@@ -111,8 +108,6 @@ const ProteoFarmItem = ({ pf }: IProps) => {
     }
   }, [dispatch, tokenInfo, wsp, endpointDefinition, tokenRewards]);
 
-  useEffect(() => {}, [aprEndpoint]);
-
   const stats = useAppSelector((state) => state.elrond.stats);
   const currentEpoch = stats.data.epoch;
 
@@ -124,6 +119,7 @@ const ProteoFarmItem = ({ pf }: IProps) => {
   if (aprData) {
     apr = aprData[aprData.length - 1].apr;
   }
+
   return (
     <ProteoItemContenxt.Provider
       value={{
@@ -178,14 +174,7 @@ const ProteoFarmItem = ({ pf }: IProps) => {
                 </Flex>
                 <Flex flexDir={"column"} textAlign="center">
                   <Text color="white.400">Total Value Locked</Text>
-                  <Text>
-                    $
-                    {formatBalanceDolar(
-                      { balance: tokenInfo?.staked, decimals: decimals },
-                      tokenPrice,
-                      true
-                    )}
-                  </Text>
+                  <Text>${formatNumber(tvl)}</Text>
                 </Flex>
                 <EarnTokens pf={pf} />
               </Grid>

@@ -43,8 +43,11 @@ const SellModal = ({ isOpen, onClose, nft }: IProps) => {
               alt={nft.identifier}
               width={600}
               height={600}
-              layout="responsive"
-            />
+              sizes="100vw"
+              style={{
+                width: "100%",
+                height: "auto"
+              }} />
           )}
         </Box>
         <Text textAlign={"center"} color={secondary} fontSize="sm" mb={3}>

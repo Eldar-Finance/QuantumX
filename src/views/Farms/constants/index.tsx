@@ -1,15 +1,19 @@
 import { toknesID } from "api/net.config";
 import {
   aeroWegldWsp,
+  cyberWegldWsp,
   proteoEgldEliteWsp,
   zpayEgldEliteDualWsp,
 } from "api/sc/sc";
 import aeroEgld from "assets/logos/aeroegl.png";
+import epunkUsdcimg from "assets/logos/epunksusdc.png";
 import proteoEgldLpImg from "assets/logos/proteolp.png";
 
 import zpayWegldImg from "assets/logos/zpaywegld.png";
 import NextImage from "components/NextImage/NextImage";
 
+import cyberWegldImage from "assets/logos/cyberWegld.png";
+import estarusdcImage from "assets/logos/estarusdc.png";
 import rareUsdcImage from "assets/logos/rare-usdc.png";
 import { IProteoFarm } from "utils/types/farms.interface";
 
@@ -17,13 +21,14 @@ export const proteoFarms: {
   ZPAYWEGLD: IProteoFarm;
   AEROWEGLD: IProteoFarm;
   PROTEOEGLDLP: IProteoFarm;
+  CYBERWEGLD: IProteoFarm;
 } = {
   PROTEOEGLDLP: {
     hc: 20,
     Icon: <NextImage alt="" src={proteoEgldLpImg} width={45} />,
     stakedCoin: "PROTEO-EGLD",
     wsp: proteoEgldEliteWsp,
-    token: "PROTEOEGLD",
+    token: "PROTEOEGLDLP",
     aprEndpoint: "/proteoegldapi.php",
     tokenIdentifier: toknesID.proteoEgldLp,
     getFarm:
@@ -64,6 +69,21 @@ export const proteoFarms: {
     seePair: "https://e-compass.io/maiars/chart/aero/wegld",
     type: "farm",
   },
+  CYBERWEGLD: {
+    hc: 20,
+    Icon: <NextImage alt="" src={cyberWegldImage} width={45} />,
+    stakedCoin: "CYBER-WEGLD",
+    wsp: cyberWegldWsp,
+    token: "CYBERWEGLD",
+    aprEndpoint: "/cyberergldapi.php",
+    tokenIdentifier: toknesID.cyberwegld,
+    tokenRewards: { name: "CYBER", tokenI: toknesID.cyber },
+    endpointDefinition: "getMyStakedInfoLPDUALFARMS",
+    getFarm: "https://www.quantumx.network/swap",
+    viewContract: `https://explorer.elrond.com/tokens/${toknesID.cyberwegld}`,
+    seePair: "https://e-compass.io/maiars/chart/cyber/wegld",
+    type: "farm",
+  },
 };
 
 const getProteFarmsArr = () => {
@@ -84,5 +104,19 @@ export const farms2Data = {
     lpToken2: toknesID.usdc,
     scFarmAddress:
       "erd1qqqqqqqqqqqqqpgqjz5k2a7ed2xtd0d92zt0j8e7aap70y7g2jpsjz5z4r",
+  },
+  ESTARUSDC: {
+    logo: estarusdcImage,
+    name: "ESTARUSDCLP",
+    lpToken1: toknesID.estar,
+    lpToken2: toknesID.usdc,
+    scFarmAddress: "",
+  },
+  EPUNKSUSDC: {
+    logo: epunkUsdcimg,
+    name: "EPUNKSUSDCLP",
+    lpToken1: toknesID.epunks,
+    lpToken2: toknesID.usdc,
+    scFarmAddress: "",
   },
 };

@@ -12,23 +12,32 @@ import {
 import NextImage from "components/NextImage/NextImage";
 
 import { createContext, PropsWithChildren, useEffect } from "react";
-import { IScFarmItem, IScUserFarmInfo } from "utils/types/sc.interface";
+import {
+  IScFarm2RewardsLeft,
+  IScFarmItem,
+  IScUserFarmInfo,
+  IScUserFarmRewards,
+} from "utils/types/sc.interface";
 
+import { toknesID } from "api/net.config";
 import { fetchLastRewardedEpoch } from "api/sc/queries/farms2";
+import LpTokenImage from "components/LpTokenImage/LpTokenImage";
 import { selectElrondStats } from "redux/slices/elrond/elrond-slice";
 import { addTvlInEldarFarm } from "redux/slices/proteo/proteo";
 import useSWR from "swr";
+import { aprFarms } from "utils/functions/farms";
 import {
   formatBalance,
   formatBalanceDolar,
   formatNumber,
 } from "utils/functions/formatBalance";
-import { preventExponetialNotation } from "utils/functions/numbers";
 import { formatTokenI } from "utils/functions/tokens";
 import { useAppDispatch, useAppSelector } from "utils/hooks/redux";
 import useGetElrondToken from "utils/hooks/useGetElrondToken";
-import useGetLpTokenPrice from "utils/hooks/useGetLpTokenPrice";
+import useGetJexPrice from "utils/hooks/useGetJexPrice";
+import useGetMultipleElrondTokens from "utils/hooks/useGetMultipleElrondTokens";
 import { farms2Data } from "views/Farms/constants";
+import useCanUsePool7 from "views/Pools/hooks/useIsSrbStaker";
 import EarnedRewards from "./Farms2/EarnedRewards/EarnedRewards";
 import EarnTokens from "./Farms2/EarnTokens/EarnTokens";
 import StakeUnstake from "./Farms2/StakeUnstake/StakeUnstake";
@@ -37,8 +46,12 @@ import Avilable from "./Farms2/Withdraw/Avilable";
 interface IProps {
   farm: IScFarmItem;
   farmUserInfo: IScUserFarmInfo;
+  farmUserRewards: IScUserFarmRewards[];
   logoSize?: number;
+  stakedTokenPrice: number;
   isPool?: boolean;
+  tvl: number;
+  multifarmRewardsLeft: IScFarm2RewardsLeft[];
 }
 
 export const ProteoItemContenxt = createContext({
@@ -47,26 +60,39 @@ export const ProteoItemContenxt = createContext({
   decimals: 0,
 });
 
-const Farms2Item = ({ farm, logoSize, isPool, farmUserInfo }: IProps) => {
+const Farms2Item = ({
+  farm,
+  logoSize,
+  isPool,
+  farmUserInfo,
+  farmUserRewards,
+  stakedTokenPrice,
+  tvl,
+  multifarmRewardsLeft,
+}: IProps) => {
   const { token: stakingToken } = useGetElrondToken(farm.farm.stakingToken);
+
   const { token: rewardToken } = useGetElrondToken(farm.farm.rewardToken);
   const { data: lastRewardedEpoch } = useSWR<number>(
     //@ts-ignore
     farm.farm.farmId,
     fetchLastRewardedEpoch
   );
-  const { logo, name, lpToken2, scFarmAddress } = farms2Data[
-    formatTokenI(farm.farm.stakingToken)
-  ]
+  const { logo, name } = farms2Data[formatTokenI(farm.farm.stakingToken)]
     ? farms2Data[formatTokenI(farm.farm.stakingToken)]
-    : { logo: "", name: "", lpToken2: "", scFarmAddress: "" };
+    : { logo: "", name: "" };
   const { data: stats } = useAppSelector(selectElrondStats);
-  const lpPrice = useGetLpTokenPrice(
-    scFarmAddress,
-    lpToken2,
-    farm.farm.stakingToken
+  const { jexPrice } = useGetJexPrice(
+    multifarmRewardsLeft.find((r) => r.token === toknesID.jex)?.token
   );
-  const price = stakingToken?.price || lpPrice;
+  const { jexPrice: bonezPrice } = useGetJexPrice(
+    multifarmRewardsLeft.find((r) => r.token === toknesID.bonez)?.token
+  );
+  const { tokens: rewardsTokens } = useGetMultipleElrondTokens(
+    multifarmRewardsLeft ? multifarmRewardsLeft.map((f) => f.token) : []
+  );
+
+  const price = stakedTokenPrice;
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(
@@ -91,37 +117,34 @@ const Farms2Item = ({ farm, logoSize, isPool, farmUserInfo }: IProps) => {
     stakingToken.decimals,
   ]);
 
+  // only for srb farm
+  const { isSrbStaker } = useCanUsePool7();
+
   let apr: string = "-";
-  if (
-    stakingToken &&
-    rewardToken &&
-    lastRewardedEpoch &&
-    farm.totalRewardsLeft > 0 &&
-    farm.stakedBalance > 0
-  ) {
-    const epochDifference = lastRewardedEpoch - stats.epoch;
-    apr =
-      formatNumber(
-        preventExponetialNotation(
-          ((formatBalanceDolar(
-            {
-              balance: farm.totalRewardsLeft,
-              decimals: rewardToken.decimals,
-            },
-            rewardToken.price
-          ) /
-            formatBalanceDolar(
-              {
-                balance: farm.stakedBalance,
-                decimals: stakingToken.decimals,
-              },
-              price
-            )) *
-            100 *
-            365) /
-            epochDifference
-        ).toString()
-      ) + "%";
+  if (farm.farm.rewardToken === "") {
+    apr = aprFarms(
+      price,
+      stakingToken,
+      lastRewardedEpoch,
+      rewardsTokens,
+      farm,
+      stats,
+      "multi",
+      multifarmRewardsLeft,
+      [
+        { tokenI: toknesID.jex, price: jexPrice },
+        { tokenI: toknesID.bonez, price: bonezPrice },
+      ]
+    );
+  } else {
+    apr = aprFarms(
+      price,
+      stakingToken,
+      lastRewardedEpoch,
+      rewardToken,
+      farm,
+      stats
+    );
   }
 
   return (
@@ -143,23 +166,46 @@ const Farms2Item = ({ farm, logoSize, isPool, farmUserInfo }: IProps) => {
               flexDir={{ xs: "column", md: "row" }}
               templateColumns={{ xs: "1fr", md: "1fr 1fr 1fr 1fr 1fr" }}
             >
-              <Flex gap="4" alignItems={"center"}>
-                {stakingToken?.assets?.pngUrl ||
-                stakingToken?.assets?.svgUrl ? (
-                  <NextImage
-                    alt=""
-                    src={
-                      stakingToken.assets.pngUrl || stakingToken?.assets?.svgUrl
-                    }
-                    height={logoSize || 27}
-                    width={logoSize || 27}
-                  />
-                ) : (
-                  <NextImage src={logo} alt="rareusdc" height={45} width={45} />
-                )}
+              {stakingToken ? (
+                <>
+                  {formatTokenI(stakingToken.name).slice(-2) === "LP" ? (
+                    <Flex gap="4" alignItems={"center"}>
+                      <LpTokenImage lpToken={stakingToken} />
+                      <Text fontWeight={"600"}>
+                        {name || stakingToken.name}
+                      </Text>
+                    </Flex>
+                  ) : (
+                    <Flex gap="4" alignItems={"center"}>
+                      {stakingToken?.assets?.pngUrl ||
+                      stakingToken?.assets?.svgUrl ? (
+                        <NextImage
+                          alt=""
+                          src={
+                            stakingToken.assets.pngUrl ||
+                            stakingToken?.assets?.svgUrl
+                          }
+                          height={logoSize || 27}
+                          width={logoSize || 27}
+                        />
+                      ) : (
+                        <NextImage
+                          src={logo}
+                          alt="logo"
+                          height={45}
+                          width={45}
+                        />
+                      )}
 
-                <Text fontWeight={"600"}>{name || stakingToken.name}</Text>
-              </Flex>
+                      <Text fontWeight={"600"}>
+                        {name || stakingToken.name}
+                      </Text>
+                    </Flex>
+                  )}
+                </>
+              ) : (
+                <Flex></Flex>
+              )}
               <Flex flexDir={"column"} textAlign="center">
                 <Text color="white.400">Staked Balance</Text>
                 <Text>
@@ -186,19 +232,15 @@ const Farms2Item = ({ farm, logoSize, isPool, farmUserInfo }: IProps) => {
               </Flex>
               <Flex flexDir={"column"} textAlign="center">
                 <Text color="white.400">Total Value Locked</Text>
-                <Text>
-                  ${" "}
-                  {formatBalanceDolar(
-                    {
-                      balance: farm.stakedBalance,
-                      decimals: stakingToken.decimals,
-                    },
-                    price,
-                    true
-                  )}
-                </Text>
+                <Text>$ {formatNumber(tvl)}</Text>
               </Flex>
-              <EarnTokens farm={farm} />
+              <EarnTokens
+                userRewardsTokensIdentifiers={
+                  farm.farm.rewardToken === ""
+                    ? multifarmRewardsLeft.map((r) => r.token)
+                    : [farm.farm.rewardToken]
+                }
+              />
             </Grid>
           </Box>
           <AccordionIcon color="main" />
@@ -208,12 +250,19 @@ const Farms2Item = ({ farm, logoSize, isPool, farmUserInfo }: IProps) => {
         <Grid flex="1" templateColumns={{ xs: "1fr", md: "1fr 1fr" }} gap="4">
           <PanelBox>
             <Flex justifyContent={"center"} textAlign={"center"} gap={5}>
-              <EarnedRewards farm={farm} userFarmInfo={farmUserInfo} />
+              <EarnedRewards
+                userRewards={farmUserRewards}
+                multifarmRewardsLeft={
+                  farm.farm.rewardToken === ""
+                    ? multifarmRewardsLeft.map((r) => r.token)
+                    : [farm.farm.rewardToken]
+                }
+              />
             </Flex>
           </PanelBox>
 
           <PanelBox>
-            <Avilable farm={farm} userFarmInfo={farmUserInfo} />
+            <Avilable farm={farm} userFarmRewards={farmUserRewards} />
           </PanelBox>
           <PanelBox gridColumn={{ xs: "auto", md: "1/3" }}>
             <StakeUnstake
@@ -223,6 +272,11 @@ const Farms2Item = ({ farm, logoSize, isPool, farmUserInfo }: IProps) => {
             />
           </PanelBox>
         </Grid>
+        {!isSrbStaker && farm.farm.farmId === 7 && (
+          <Text textAlign={"center"} mt={4}>
+            You must be a staker of SRB-61daf7.
+          </Text>
+        )}
       </AccordionPanel>
     </AccordionItem>
   );

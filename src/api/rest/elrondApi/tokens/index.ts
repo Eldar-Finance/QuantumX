@@ -24,9 +24,11 @@ export const getFromAllTokens = async ({
 };
 
 export const getTokenPrice = async (identifier: string) => {
-  const res = axiosEldron.get<number>(`/tokens/${identifier}?fields=price`);
+  const res = axiosEldron.get<{ price: number }>(
+    `/tokens/${identifier}?fields=price`
+  );
 
-  return (await res).data;
+  return (await res).data.price;
 };
 
 export const getLpTokenPrice = async (

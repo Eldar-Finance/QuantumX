@@ -9,14 +9,14 @@ import {
 import { fetchTokens } from "redux/slices/userAcount/funcs";
 import { useAppDispatch } from "./redux";
 
-const useGetUserTokens = (indentifier) => {
+const useGetUserTokens = (indentifier?: string, onlyEsdt?: boolean) => {
   const dispatch = useAppDispatch();
   const tokensData = useSelector(selectUserTokens);
   const addrees = useSelector(selectUserAddress);
   const acc = useGetAccountInfo();
 
   const userTokens = tokensData.allTokens;
-  const [tokens, setTokens] = useState([]);
+  const [tokens, setTokens] = useState<any>([]);
   const [token, setToken] = useState<any>();
 
   useEffect(() => {
@@ -27,19 +27,24 @@ const useGetUserTokens = (indentifier) => {
 
   useEffect(() => {
     const newTokens = [...userTokens];
-    newTokens.push({
-      identifier: "EGLD",
-      ticker: "EGLD",
-      name: "EGLD",
-      decimals: 18,
-      balance: acc.account.balance,
-    });
+    if (!onlyEsdt) {
+      newTokens.push({
+        identifier: "EGLD",
+        ticker: "EGLD",
+        name: "EGLD",
+        decimals: 18,
+        assets: {
+          svgUrl: "/images/egld.svg",
+        },
+        balance: acc.account?.balance,
+      });
+    }
     if (indentifier) {
       const newtoken = newTokens.find((t) => t.identifier === indentifier);
       setToken(newtoken);
     }
     setTokens(newTokens);
-  }, [acc.account.balance, userTokens, indentifier]);
+  }, [acc.account?.balance, userTokens, indentifier, onlyEsdt]);
 
   return [tokens, token];
 };

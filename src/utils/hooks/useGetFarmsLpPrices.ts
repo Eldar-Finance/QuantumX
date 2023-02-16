@@ -1,4 +1,4 @@
-import { fetchLpPrices } from "api/rest/others/EldarFinance";
+import { fetchLpPrices } from "api/rest/others/EldarSolutions";
 import useSwr from "swr";
 import { formatTokenI } from "utils/functions/tokens";
 //hook for getting the price of LP tokens in USD
@@ -13,7 +13,7 @@ export const useGetFarmsLpPrices = () => {
     };
   });
   return {
-    prices: finalData,
+    prices: finalData || [],
     isLoading,
     isError: error,
   };

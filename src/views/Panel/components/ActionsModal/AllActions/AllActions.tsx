@@ -2,7 +2,7 @@ import { Box, Grid, ModalBody, ModalHeader, Text } from "@chakra-ui/react";
 import ActionButton from "components/ActionButton/ActionButton";
 import PanelBox from "components/PanelBox/PanelBox";
 import { IScPanelFarms } from "utils/types/sc.interface";
-import { deleteFarm } from "views/Panel/scServices";
+import { deleteFarm } from "views/Panel/scServices/farmsCalls";
 
 interface IProps {
   handleView: (view: number) => void;
@@ -25,7 +25,7 @@ const AllActions = ({ handleView, farm }: IProps) => {
             alignItems="center"
           >
             <Text>Rewards Harvested Fee : {farm.rewardsFee}%</Text>
-            <Text mb={3}>Early Unbound Fee : {farm.earlyUnbondingFee}%</Text>
+            <Text mb={3}>Early Unbonding Fee : {farm.earlyUnbondingFee}%</Text>
 
             <ActionButton onClick={() => handleView(1)}>Edit Fees</ActionButton>
           </PanelBox>
@@ -35,10 +35,10 @@ const AllActions = ({ handleView, farm }: IProps) => {
             justifyContent={"center"}
             alignItems="center"
           >
-            <Text flex={1}>Unbounding Period: {farm.unbondingPeriod} Days</Text>
+            <Text flex={1}>Unbonding Period: {farm.unbondingPeriod} Days</Text>
 
             <ActionButton onClick={() => handleView(2)}>
-              Set Unbound
+              Set Unbonding period
             </ActionButton>
           </PanelBox>
           <PanelBox
@@ -48,14 +48,14 @@ const AllActions = ({ handleView, farm }: IProps) => {
             alignItems="center"
           >
             <Text flex={1}>
-              Delete the farm (Fund will be automatically return to stakers)
+              Delete the farm (funds will be automatically returned to stakers)
             </Text>
 
             <ActionButton
               bg="danger"
               onClick={() => deleteFarm(farm.farm.farmId)}
             >
-              Cancel Farm
+              Delete Farm
             </ActionButton>
           </PanelBox>
           <PanelBox
@@ -67,7 +67,8 @@ const AllActions = ({ handleView, farm }: IProps) => {
             <Box flex={1} mb={3}>
               <Text>Deposit rewards for the period you want.</Text>
               <Text>
-                You will no be able to deposit rewards until this period ends
+                Every new deposit will place the rewards exactly after the
+                previous one.
               </Text>
             </Box>
 

@@ -22,12 +22,14 @@ export const tokenColumns = [
             ) : (
               <Box borderRadius={"full"} width="30px" height="30px">
                 <Image
-                  layout="intrinsic"
                   width={30}
                   height={30}
                   src={token.assets.svgUrl}
                   alt={token.name}
-                />
+                  style={{
+                    maxWidth: "100%",
+                    height: "auto"
+                  }} />
               </Box>
             )}
           </Box>

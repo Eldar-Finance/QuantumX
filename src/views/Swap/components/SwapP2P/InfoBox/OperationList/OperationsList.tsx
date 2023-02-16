@@ -26,7 +26,6 @@ const OperationsList = () => {
                   {formatPrecision(order.spend)}{" "}
                 </Text>
                 <Image
-                  layout="intrinsic"
                   width={15}
                   height={15}
                   src={
@@ -35,7 +34,10 @@ const OperationsList = () => {
                     ""
                   }
                   alt={order.fromToken.token.name}
-                />
+                  style={{
+                    maxWidth: "100%",
+                    height: "auto"
+                  }} />
                 <Text ml={"1"} fontSize={{ xs: "12px", md: "14px" }}>
                   {order.fromToken.token.ticker}{" "}
                 </Text>
@@ -51,7 +53,6 @@ const OperationsList = () => {
                   {formatPrecision(order.receive)}{" "}
                 </Text>
                 <Image
-                  layout="intrinsic"
                   width={15}
                   height={15}
                   src={
@@ -60,7 +61,10 @@ const OperationsList = () => {
                     ""
                   }
                   alt={order.toToken.token.name}
-                />
+                  style={{
+                    maxWidth: "100%",
+                    height: "auto"
+                  }} />
                 <Text ml={"1"} fontSize={{ xs: "12px", md: "14px" }}>
                   {order.toToken.token.ticker}{" "}
                 </Text>

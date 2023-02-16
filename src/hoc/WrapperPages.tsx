@@ -7,13 +7,13 @@ import {
   openLogin,
   selectIsLoginModal,
 } from "redux/slices/settings/settings-reducer";
-import { setAddress } from "redux/slices/userAcount/account-slice";
+import { setAddress, setShard } from "redux/slices/userAcount/account-slice";
 import { useAppDispatch, useAppSelector } from "utils/hooks/redux";
 
 const Login: any = dynamic(() => import("components/Login/Login"));
 const WrapperPages = (Component) => (props) => {
   const dispatch = useAppDispatch();
-  const { address } = useGetAccountInfo();
+  const { address, shard } = useGetAccountInfo();
 
   const { isLoggedIn } = useGetLoginInfo();
   const isLoginOpen = useAppSelector(selectIsLoginModal);
@@ -26,9 +26,9 @@ const WrapperPages = (Component) => (props) => {
 
   useEffect(() => {
     const forcedAddress = process.env.NEXT_PUBLIC_CONNECTED_ADDRESS;
-
     dispatch(setAddress(forcedAddress || address));
-  }, [dispatch, address]);
+    dispatch(setShard(shard));
+  }, [dispatch, address, shard]);
 
   return (
     <>

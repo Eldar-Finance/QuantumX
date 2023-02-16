@@ -28,3 +28,24 @@ export interface IElrondnftswapNFT {
   rarityScore: number;
   rank: number;
 }
+
+export interface INomalSmartSwap {
+  token1: string;
+  token2: string;
+  amountsend: string;
+  amountReceiv: string;
+  amountReceivDec: string;
+  smartcontract: string;
+}
+
+export interface ILpSmartSwap {
+  lpamounttoreceive: string;
+  lptokenidentifier: string;
+  smartcontract: string;
+  token1identifier: string;
+  token1lpamount: string;
+  token2identifier: string;
+  token2lpamount: string;
+}
+
+export type ISmartSwapData = INomalSmartSwap | ILpSmartSwap;

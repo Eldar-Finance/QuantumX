@@ -68,10 +68,7 @@ const DcaCompoenent = () => {
       fastSwapInJex(finalOrders, contractAddr.fastp2pswap);
     } else {
       const amountArr = tokensByEgldPercent.map((amount) => {
-        console.log("amount", amount);
-
         const realAmount = amount - (amount * SLIPAGE) / 100;
-        console.log("realAmount", realAmount);
 
         return new BigNumber(realAmount).toFixed(0);
       });

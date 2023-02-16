@@ -22,12 +22,14 @@ const Footer = () => {
         bottom={0}
         position={isLargerThanLg ? "absolute" : "static"}
         zIndex={-1}
+        display={isLargerThanLg ? "block" : "none"}
       >
         <NextImage
           src={footerImage}
           alt=""
-          fill={!isLargerThanLg}
-          layout={isLargerThanLg && "responsive"}
+          style={{
+            height: "100%",
+          }}
         />
       </Box>
       <MyContainer

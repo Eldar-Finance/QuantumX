@@ -31,10 +31,18 @@ export const contractAddress = {
   bettings: "erd1qqqqqqqqqqqqqpgqlurcw7hy586qrwutvqz5g6fhfqhjms7x64qstjk25q",
   proteoElite: "erd1qqqqqqqqqqqqqpgq2ntt20af2emxtyy9g7uzsusr3zf5zknn64qsxjqggw",
   jexSawp: "erd1qqqqqqqqqqqqqpgqawkm2tlyyz6vtg02fcr5w02dyejp8yrw0y8qlucnj2",
-  wrapEgld: "erd1qqqqqqqqqqqqqpgqmuk0q2saj0mgutxm4teywre6dl8wqf58xamqdrukln",
+  wrapEgld: "erd1qqqqqqqqqqqqqpgqvc7gdl0p4s97guh498wgz75k8sav6sjfjlwqh679jy",
+  wrapEgldShar1:
+    "erd1qqqqqqqqqqqqqpgqhe8t5jewej70zupmh44jurgn29psua5l2jps3ntjj3",
+  wrapEgldShar2:
+    "erd1qqqqqqqqqqqqqpgqmuk0q2saj0mgutxm4teywre6dl8wqf58xamqdrukln",
   fastp2pswap: "erd1qqqqqqqqqqqqqpgq3gz6kc7q5zm2zdluhtcn8g0fg8vwyxvk64qsu8p6ja",
   farms2: "erd1qqqqqqqqqqqqqpgql6dxenaameqn2uyyru3nmmpf7e95zmlxu7zskzpdcw",
-
+  smartSwap: "erd1qqqqqqqqqqqqqpgqlhan0n8ny7ajlufn8l2zc6zlu8k44u6hu7zsdvzy24",
+  hub: "erd1qqqqqqqqqqqqqpgqd56kc3pgra3epm7h78czzkm0zlal3agcu7zsjcps8c",
+  upgradeHero: "erd1qqqqqqqqqqqqqpgqfr69nye37kwcjlxqv652k555jyw0uaegu7zs5rlw9f",
+  xoxnoSrbPool:
+    "erd1qqqqqqqqqqqqqpgqvpkd3g3uwludduv3797j54qt6c888wa59w2shntt6z",
   // proteo farms
   usdcProteo: "erd1qqqqqqqqqqqqqpgq3lh80a92d49am3t2pfzheapdxtykzt5kznyqsjhfrx",
   proteoEgldNonElite:
@@ -52,6 +60,8 @@ export const contractAddress = {
     "erd1qqqqqqqqqqqqqpgq6hzck3wac3ljmth7dkzk2wcw3c9lvcauznyq268sn6",
   aeroEgldEliteDual:
     "erd1qqqqqqqqqqqqqpgqnedra5da464rkcektgzyv0qxcgqgyh26znyq8q4phx",
+  cyberWegkdElite:
+    "erd1qqqqqqqqqqqqqpgqvvn3s8ndrxqu6ndgnvsfp4sx9wgtv9z2znyqrfyhsf",
 };
 export const gatewayAddress = "https://gateway.elrond.com/";
 
@@ -109,6 +119,14 @@ export const TOKENS_ID = {
   koson: "KOSON-5dd4fa",
   wegld: "WEGLD-bd4d79",
   rare: "RARE-99e8b0",
+  rareUsdcLp: "RAREUSDC-e4a7f8",
   prick: "PRICK-744592",
   bear: "BEAR-f9c271",
+  kro: "KRO-df97ec",
+  estar: "ESTAR-461bab",
+  jex: "JEX-9040ca",
+  epunks: "EPUNKS-dc0f59",
+  cyberwegld: "CYBERWEGLD-45a866",
+  cyber: "CYBER-489c1c",
+  bonez: "BONEZ-ff9a73",
 };

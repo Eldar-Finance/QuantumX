@@ -22,7 +22,7 @@ const HarvestCycle = () => {
     onSubmit: (values) => {
       let timestamp = 0;
       if (values.duration !== "") {
-        timestamp = Number(values.duration) * 24 * 60 * 60;
+        timestamp = Number(values.duration);
       }
       scCall(
         proteoEliteWsp,

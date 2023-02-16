@@ -13,6 +13,7 @@ const ActionButton = ({
     <Button
       position={"relative"}
       overflow="hidden"
+      fontWeight={"bold"}
       _hover={
         props.bg
           ? {

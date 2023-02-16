@@ -13,9 +13,10 @@ export const routeNames = {
   swap: "/swap",
   farms: "/farms",
   Pools: "/pools",
+  hub: "/hub",
   dca: "/dca",
-  eLBadges: "/eLBadges",
-  investors: "/investor-zone",
+  rewards: "/qrewards",
+  heroes: "/qheroes",
   admin: "/admin-panel",
   panel: "/panel",
 };
@@ -25,9 +26,10 @@ export const routes: {
   swap: IRoute;
   farms: IRoute;
   pools: IRoute;
+  hub: IRoute;
   dca: IRoute;
-  eLBadges: IRoute;
-  investors: IRoute;
+  rewards: IRoute;
+  // heroes: IRoute;
   admin: IRoute;
   panel: IRoute;
 } = {
@@ -48,22 +50,27 @@ export const routes: {
     name: "Pools",
     onModalAndNavbar: true,
   },
+  hub: {
+    path: routeNames.hub,
+    name: "Hub",
+    onModalAndNavbar: true,
+  },
   dca: {
     path: routeNames.dca,
     name: "Dollar Cost Averaging",
-    onModalAndNavbar: true,
-  },
-  eLBadges: {
-    path: routeNames.eLBadges,
-    name: "SFT Staking",
     onModal: true,
   },
-  investors: {
-    path: routeNames.investors,
-    name: "Investors",
+  rewards: {
+    path: routeNames.rewards,
+    name: "QuantumX Rewards",
     onModal: true,
-    soon: true,
   },
+  // heroes: {
+  //   path: routeNames.heroes,
+  //   name: "QuantumX Heroes",
+  //   onModal: true,
+  // },
+
   panel: {
     path: routeNames.panel,
     name: "Quantum Panel",
