@@ -247,7 +247,7 @@ export const lpSwapTx = async (
       .setArgs([
         BytesValue.fromUTF8(swapLpData[0].token1),
         new BigUIntValue(new BigNumber(bgFinalValue)),
-        BytesValue.fromUTF8("multiSwap"),
+        BytesValue.fromUTF8("multiswap"),
 
         ...swapLpArgs,
         new BooleanValue(swapLpData[0].HowMuch === "HALF"),
