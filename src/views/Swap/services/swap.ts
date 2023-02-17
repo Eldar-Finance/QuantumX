@@ -123,7 +123,7 @@ export const swapLp = async (
   fromElrondToken: IElrondToken,
   gas: number
 ): Promise<any> => {
-  const lpSwapInfo = swapInfo[swapInfo.length - 1] as ILpSmartSwap;
+  const lpSwapInfo = swapInfo[0] as ILpSmartSwap;
   //token1_amount_min
   const token1SlippagePercent = new BigNumber(lpSwapInfo.token1lpamount)
     .multipliedBy(slipapge)
@@ -170,7 +170,7 @@ export const swapLp = async (
       token: fromElrondToken,
       value: fromToken.value,
     },
-    swapInfo.filter((_d, i) => swapInfo.length - 1 !== i) as INomalSmartSwap[]
+    swapInfo.filter((_d, i) => i > 0) as INomalSmartSwap[]
   );
 };
 
@@ -240,10 +240,7 @@ export const lpSwapTx = async (
         BytesValue.fromUTF8(sawpData.token2),
         new BigUIntValue(new BigNumber(finalAmount)),
       ];
-      console.log("sawpData.HowMuch", sawpData.HowMuch);
-      if (sawpData.HowMuch !== "HALF") {
-        console.log("put bool");
-
+      if (sawpData.Bool === "True") {
         swapArgs.push(new BooleanValue(true));
       }
       return swapArgs;

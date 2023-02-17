@@ -30,7 +30,7 @@ export interface IElrondnftswapNFT {
 }
 
 export interface INomalSmartSwap {
-  HowMuch?: "ALL" | "HALF";
+  Bool?: "True" | "False";
   token1: string;
   token2: string;
   amountsend: string;

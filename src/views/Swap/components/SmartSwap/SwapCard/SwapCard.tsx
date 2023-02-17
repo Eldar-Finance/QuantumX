@@ -35,12 +35,12 @@ const SwapCard = () => {
   useEffect(() => {
     if (data) {
       if (!isSapwToLp) {
-        const swapData = data[data.length - 1] as INomalSmartSwap;
+        const swapData = data[0] as INomalSmartSwap;
         dispatch(
           setToTokenValue(new BigNumber(swapData.amountReceiv).toFixed(4))
         );
       } else {
-        const swapData = data[data.length - 1] as ILpSmartSwap;
+        const swapData = data[0] as ILpSmartSwap;
         let lpValue = new BigNumber(swapData.lpamounttoreceive).toFixed(4);
         if (Number(lpValue) < 0.00000000001) {
           lpValue = new BigNumber(swapData.lpamounttoreceive).toFixed(25);
