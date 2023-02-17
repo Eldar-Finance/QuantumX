@@ -1,6 +1,7 @@
 import { Address, AddressValue } from "@elrondnetwork/erdjs/out";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { scQuery } from "api/sc/queries";
+import { pairs } from "utils/constants/lpPairs";
 import { formatBalance } from "utils/functions/formatBalance";
 import {
   IScFarmItem,
@@ -12,7 +13,7 @@ import {
 
 export const fetchAllFarms = createAsyncThunk(
   "farms2/fetchAllFarms",
-  async (mexPairs?: any[]) => {
+  async () => {
     const scRes = await scQuery("farms2", "getAllFarms");
 
     const scFirstValue = scRes.firstValue.valueOf();
@@ -31,21 +32,22 @@ export const fetchAllFarms = createAsyncThunk(
         };
       })
       .filter((farm) => farm.farm.farmId <= 10 || farm.farm.farmId >= 19);
+
     return {
       allFarms,
-      pools: mexPairs
+      pools: pairs
         ? allFarms.filter(
             (farm) =>
-              mexPairs.findIndex(
-                (mexPair) => mexPair.id === farm.farm.stakingToken
+              pairs.findIndex(
+                (mexPair) => mexPair.lpidentifier === farm.farm.stakingToken
               ) === -1
           )
         : [],
-      farms: mexPairs
+      farms: pairs
         ? allFarms.filter(
             (farm) =>
-              mexPairs.findIndex(
-                (mexPair) => mexPair.id === farm.farm.stakingToken
+              pairs.findIndex(
+                (mexPair) => mexPair.lpidentifier === farm.farm.stakingToken
               ) !== -1
           )
         : [],
