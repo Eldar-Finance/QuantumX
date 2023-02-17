@@ -19,6 +19,7 @@ import {
 import { EGLD_VAL, getInterface, sendMultipleTransactions } from "api/sc/sc";
 import BigNumber from "bignumber.js";
 import store from "redux/store";
+import { setElrondBalance } from "utils/functions/formatBalance";
 import { getScOfWrapedEgld } from "utils/functions/helpers";
 import { IElrondToken } from "utils/types/elrond.interface";
 import {
@@ -219,7 +220,7 @@ export const lpSwapTx = async (
     }
 
     // swaps args
-    const multiswapArgs = swapLpData.flatMap((sawpData) => {
+    const multiswapArgs = swapLpData.flatMap((sawpData, i) => {
       const amountWithSlipage = new BigNumber(sawpData.amountReceivDec)
         .multipliedBy(slipapge)
         .dividedBy(100)
@@ -228,20 +229,28 @@ export const lpSwapTx = async (
       const finalAmount = new BigNumber(sawpData.amountReceivDec)
         .minus(amountWithSlipage)
         .toFixed(0);
-      const swapArgs = [
+      const swapArgs: (
+        | AddressValue
+        | BytesValue
+        | BigUIntValue
+        | BooleanValue
+      )[] = [
         new AddressValue(new Address(sawpData.smartcontract)),
         BytesValue.fromUTF8("swapTokensFixedInput"),
         BytesValue.fromUTF8(sawpData.token2),
         new BigUIntValue(new BigNumber(finalAmount)),
       ];
+      if (sawpData.HowMuch !== "HALF" && i === 0) {
+        swapArgs.push(new BooleanValue(true));
+      }
       return swapArgs;
     });
 
     // lp args
-    const bgFinalValue =
-      swapLpData[0].HowMuch === "HALF"
-        ? new BigNumber(swapLpData[0].amountsend).multipliedBy(2).toFixed(0)
-        : new BigNumber(swapLpData[0].amountsend).toFixed(0);
+    const bgFinalValue = setElrondBalance(
+      inputToken.value,
+      inputToken.token.decimals
+    );
     const esdtTranferPayload = TransactionPayload.contractCall()
       .setFunction(new ContractFunction("ESDTTransfer"))
       .setArgs([
@@ -250,7 +259,6 @@ export const lpSwapTx = async (
         BytesValue.fromUTF8("multiswap"),
 
         ...swapLpArgs,
-        new BooleanValue(swapLpData[0].HowMuch === "HALF"),
         ...multiswapArgs,
       ])
       .build();
