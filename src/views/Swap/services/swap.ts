@@ -240,7 +240,10 @@ export const lpSwapTx = async (
         BytesValue.fromUTF8(sawpData.token2),
         new BigUIntValue(new BigNumber(finalAmount)),
       ];
-      if (sawpData.HowMuch !== "HALF" && i === 0) {
+      console.log("sawpData.HowMuch", sawpData.HowMuch);
+      if (sawpData.HowMuch !== "HALF") {
+        console.log("put bool");
+
         swapArgs.push(new BooleanValue(true));
       }
       return swapArgs;
