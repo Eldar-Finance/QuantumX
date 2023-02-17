@@ -6,6 +6,7 @@ import useGetSwapInfo from "views/Swap/hooks/useGetSwapInfo";
 
 const SwapRoute = () => {
   const { data, isSapwToLp } = useGetSwapInfo();
+  console.log("data", data);
 
   const routes = data
     ? data.map((swapData, i) => {
@@ -16,14 +17,16 @@ const SwapRoute = () => {
             token2: formatTokenI(d.token2),
           };
         } else {
-          if (i === data.length - 1) {
+          if (i === 0) {
             const d: ILpSmartSwap = swapData as ILpSmartSwap;
+            console.log("ILpSmartSwap", swapData);
             return {
               token1: "",
               token2: formatTokenI(d.lptokenidentifier),
             };
           } else {
             const d: INomalSmartSwap = swapData as INomalSmartSwap;
+            console.log("d", d);
             return {
               token1: formatTokenI(d.token1),
               token2: formatTokenI(d.token2),
@@ -32,6 +35,12 @@ const SwapRoute = () => {
         }
       })
     : [];
+
+  let finalRoutes = routes;
+  if (finalRoutes.length > 0 && isSapwToLp) {
+    finalRoutes = [...routes.filter((d, i) => i > 0), routes[0]];
+  }
+
   return (
     <Flex w="full" gap={"15px"} alignItems="flex-start">
       <Center bg="black.base" boxSize={"44px"} borderRadius="full">
@@ -42,7 +51,7 @@ const SwapRoute = () => {
           Swap route
         </Text>
         <ul>
-          {routes.map((route, i) => {
+          {finalRoutes.map((route, i) => {
             return (
               <li key={i}>
                 <Text fontSize={"lsm"}>
