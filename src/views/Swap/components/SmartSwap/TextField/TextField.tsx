@@ -150,7 +150,7 @@ const TextField = ({
             />
           )}
           {dollarAmount && (
-            <Text>
+            <Text color={"grayText"}>
               ≈ ${formatNumber(preventExponetialNotation(dollarAmount))}
             </Text>
           )}
