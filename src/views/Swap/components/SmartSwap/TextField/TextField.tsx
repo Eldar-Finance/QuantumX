@@ -1,7 +1,8 @@
 import { Box, Flex, Input, InputProps, Spinner, Text } from "@chakra-ui/react";
 import styled from "@emotion/styled";
 import ActionButton from "components/ActionButton/ActionButton";
-import { formatBalance } from "utils/functions/formatBalance";
+import { formatBalance, formatNumber } from "utils/functions/formatBalance";
+import { preventExponetialNotation } from "utils/functions/numbers";
 import useGetAccountToken from "utils/hooks/useGetAccountToken";
 import useGetElrondToken from "utils/hooks/useGetElrondToken";
 import SelectCurrency from "./commons/SelectCurrency/SelectCurrency";
@@ -19,6 +20,7 @@ interface IProps extends InputProps {
   sxProps?: any;
   isLoadingAmount?: boolean;
   disableChangeToken?: boolean;
+  dollarAmount?: string;
 }
 
 const TextField = ({
@@ -31,17 +33,18 @@ const TextField = ({
   disableChangeToken,
   sxProps,
   isLoadingAmount,
+  dollarAmount,
   ...props
 }: IProps) => {
   const { token, isLoading } = useGetElrondToken(field.token);
 
   const { accountToken } = useGetAccountToken(field.token);
-
   return (
     <Box
       mb={"10px"}
       width={"full"}
       p={"30px"}
+      pb={"10px"}
       px={4}
       borderRadius={"20px"}
       border={"1px solid"}
@@ -113,38 +116,45 @@ const TextField = ({
             disable={disableChangeToken}
           />
         </Flex>
-        {isLoadingAmount ? (
-          <Box w="full">
-            <Spinner />
-          </Box>
-        ) : (
-          <InputS
-            value={field.value ?? ""}
-            fontSize={"3xl"}
-            fontWeight={"500"}
-            id={id}
-            px={0}
-            mr={2}
-            _focus={{
-              border: "none",
-              outline: "none",
-              boxShadow: "none",
-            }}
-            _placeholder={{
-              color: "rgba(255, 255, 255, 0.15)",
-            }}
-            inputMode="decimal"
-            title="Token Amount"
-            autoComplete="off"
-            autoCorrect="off"
-            type={id === "from" ? "number" : "text"}
-            placeholder="0.0"
-            minLength={1}
-            maxLength={79}
-            spellCheck="false"
-            {...props}
-          />
-        )}
+        <Flex flexDir={"column"} w="full" transform={"translateY(-5px)"}>
+          {isLoadingAmount ? (
+            <Box w="full">
+              <Spinner />
+            </Box>
+          ) : (
+            <InputS
+              value={field.value ?? ""}
+              fontSize={"3xl"}
+              fontWeight={"500"}
+              id={id}
+              px={0}
+              mr={2}
+              _focus={{
+                border: "none",
+                outline: "none",
+                boxShadow: "none",
+              }}
+              _placeholder={{
+                color: "rgba(255, 255, 255, 0.15)",
+              }}
+              inputMode="decimal"
+              title="Token Amount"
+              autoComplete="off"
+              autoCorrect="off"
+              type={id === "from" ? "number" : "text"}
+              placeholder="0.0"
+              minLength={1}
+              maxLength={79}
+              spellCheck="false"
+              {...props}
+            />
+          )}
+          {dollarAmount && (
+            <Text>
+              ≈ ${formatNumber(preventExponetialNotation(dollarAmount))}
+            </Text>
+          )}
+        </Flex>
       </Box>
     </Box>
   );

@@ -19,6 +19,7 @@ const Swap = () => {
           maxW={"620px"}
           bg="black.light"
           p={{ xs: "20px", md: "56px" }}
+          pt={"30px !important"}
           borderRadius={{ xs: "xl", md: "4xl" }}
           border={"1px solid"}
           borderColor={"main"}

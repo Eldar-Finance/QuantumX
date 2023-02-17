@@ -110,16 +110,17 @@ export const formatNumber = (number?: number | string) => {
 };
 
 export const setElrondBalance = (
-  amount: number,
+  amount: number | string,
   decimals: number = 18
-): number => {
+): string => {
   try {
-    const elrondBalance = amount * Math.pow(10, decimals);
-    const noDecimalsElrondBalance = Number(
-      new BigNumber(elrondBalance).toFixed(0)
-    );
+    const decimalsPow = new BigNumber(10).pow(decimals);
+    const noDecimalsElrondBalance = new BigNumber(amount)
+      .multipliedBy(decimalsPow)
+      .toFixed(0);
+
     return noDecimalsElrondBalance;
   } catch (err) {
-    return 0;
+    return "0";
   }
 };
