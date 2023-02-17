@@ -239,7 +239,6 @@ export const lpSwapTx = async (
         BytesValue.fromUTF8("swapTokensFixedInput"),
         BytesValue.fromUTF8(sawpData.token2),
         new BigUIntValue(new BigNumber(finalAmount)),
-        new BooleanValue(sawpData.Bool === "True"),
       ];
 
       return swapArgs;
@@ -255,9 +254,9 @@ export const lpSwapTx = async (
       .setArgs([
         BytesValue.fromUTF8(swapLpData[0].token1),
         new BigUIntValue(new BigNumber(bgFinalValue)),
-        BytesValue.fromUTF8("multiswap"),
-
+        BytesValue.fromUTF8("swapLp"),
         ...swapLpArgs,
+        new BigUIntValue(new BigNumber(swapLpData[0].NrSwaps)),
         ...multiswapArgs,
       ])
       .build();
