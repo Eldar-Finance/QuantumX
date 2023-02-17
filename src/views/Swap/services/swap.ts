@@ -239,10 +239,9 @@ export const lpSwapTx = async (
         BytesValue.fromUTF8("swapTokensFixedInput"),
         BytesValue.fromUTF8(sawpData.token2),
         new BigUIntValue(new BigNumber(finalAmount)),
+        new BooleanValue(sawpData.Bool === "True"),
       ];
-      if (sawpData.Bool === "True") {
-        swapArgs.push(new BooleanValue(true));
-      }
+
       return swapArgs;
     });
 
