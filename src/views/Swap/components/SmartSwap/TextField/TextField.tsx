@@ -2,6 +2,7 @@ import { Box, Flex, Input, InputProps, Spinner, Text } from "@chakra-ui/react";
 import styled from "@emotion/styled";
 import ActionButton from "components/ActionButton/ActionButton";
 import { formatBalance, formatNumber } from "utils/functions/formatBalance";
+import { preventExponetialNotation } from "utils/functions/numbers";
 import useGetAccountToken from "utils/hooks/useGetAccountToken";
 import useGetElrondToken from "utils/hooks/useGetElrondToken";
 import SelectCurrency from "./commons/SelectCurrency/SelectCurrency";
@@ -148,7 +149,11 @@ const TextField = ({
               {...props}
             />
           )}
-          {dollarAmount && <Text>≈ ${formatNumber(dollarAmount)}</Text>}
+          {dollarAmount && (
+            <Text>
+              ≈ ${formatNumber(preventExponetialNotation(dollarAmount))}
+            </Text>
+          )}
         </Flex>
       </Box>
     </Box>
