@@ -266,7 +266,7 @@ export const lpSwapTx = async (
       value: 0,
       receiver: new Address(simpleAddress),
       data: esdtTranferPayload,
-      gasLimit: 80000000,
+      gasLimit: 150000000,
       chainID: ChainId,
     });
     transactions.push(tx1);
