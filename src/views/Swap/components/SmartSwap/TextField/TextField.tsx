@@ -1,13 +1,9 @@
 import { Box, Flex, Input, InputProps, Spinner, Text } from "@chakra-ui/react";
 import styled from "@emotion/styled";
 import ActionButton from "components/ActionButton/ActionButton";
-import {
-  formatBalance,
-  formatBalanceDolar,
-} from "utils/functions/formatBalance";
+import { formatBalance, formatNumber } from "utils/functions/formatBalance";
 import useGetAccountToken from "utils/hooks/useGetAccountToken";
 import useGetElrondToken from "utils/hooks/useGetElrondToken";
-import useGetTokenPrice from "utils/hooks/useGetTokenPrice";
 import SelectCurrency from "./commons/SelectCurrency/SelectCurrency";
 
 interface IProps extends InputProps {
@@ -23,6 +19,7 @@ interface IProps extends InputProps {
   sxProps?: any;
   isLoadingAmount?: boolean;
   disableChangeToken?: boolean;
+  dollarAmount?: string;
 }
 
 const TextField = ({
@@ -35,18 +32,18 @@ const TextField = ({
   disableChangeToken,
   sxProps,
   isLoadingAmount,
+  dollarAmount,
   ...props
 }: IProps) => {
   const { token, isLoading } = useGetElrondToken(field.token);
 
   const { accountToken } = useGetAccountToken(field.token);
-  const [price] = useGetTokenPrice(field.token);
   return (
     <Box
       mb={"10px"}
       width={"full"}
       p={"30px"}
-      pb={"0"}
+      pb={"10px"}
       px={4}
       borderRadius={"20px"}
       border={"1px solid"}
@@ -118,7 +115,7 @@ const TextField = ({
             disable={disableChangeToken}
           />
         </Flex>
-        <Flex flexDir={"column"} w="full" transform={"translateY(-15px)"}>
+        <Flex flexDir={"column"} w="full" transform={"translateY(-5px)"}>
           {isLoadingAmount ? (
             <Box w="full">
               <Spinner />
@@ -151,11 +148,7 @@ const TextField = ({
               {...props}
             />
           )}
-
-          <Text>
-            = $
-            {formatBalanceDolar({ balance: field.value, decimals: 0 }, price)}
-          </Text>
+          {dollarAmount && <Text>≈ ${formatNumber(dollarAmount)}</Text>}
         </Flex>
       </Box>
     </Box>

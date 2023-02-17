@@ -37,6 +37,7 @@ export interface INomalSmartSwap {
   amountReceiv: string;
   amountReceivDec: string;
   smartcontract: string;
+  dollarAmount?: string;
 }
 
 export interface ILpSmartSwap {
@@ -47,6 +48,7 @@ export interface ILpSmartSwap {
   token1lpamount: string;
   token2identifier: string;
   token2lpamount: string;
+  dollarAmount?: string;
 }
 
 export type ISmartSwapData = INomalSmartSwap | ILpSmartSwap;
