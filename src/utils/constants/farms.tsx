@@ -2,11 +2,11 @@ import aeroEgld from "assets/logos/aeroegl.png";
 import aeroImg from "assets/logos/aerologo.svg";
 import zpayImg from "assets/logos/logo.svg";
 import proteoEgldLpImg from "assets/logos/proteolp.png";
+import sproteoImg from "assets/logos/sproteo.svg";
 import zpayWegldImg from "assets/logos/zpaywegld.png";
 import {
   CyberLogoIcon,
   EgldlogoIcon2,
-  ProteoIcon,
   RidelogoIcon,
   UsdclogoIcon,
 } from "components/Icons/ui";
@@ -33,7 +33,7 @@ export const coinInfo = {
   },
   USDC: { logo: <UsdclogoIcon fontSize={"27px"} />, decimals: 6 },
   EGLD: { logo: <EgldlogoIcon2 size={"27px"} /> },
-  SPROTEO: { logo: <ProteoIcon w={"27px"} /> },
+  SPROTEO: { logo: <NextImage alt="" src={sproteoImg} width={27} /> },
   PROTEOEGLD: {
     logo: <NextImage alt="" src={proteoEgldLpImg} width={30} />,
   },
