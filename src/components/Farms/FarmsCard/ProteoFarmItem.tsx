@@ -127,9 +127,11 @@ const ProteoFarmItem = ({ pf, tvl }: IProps) => {
     scCall("proteoElite", "claim", [BytesValue.fromUTF8(tokenIdentifier)]);
   };
 
-  const disabledHarvest = rewards.reduce((acc, curr) => {
-    return acc + new BigNumber(curr.claimableAmount).toNumber();
-  }, 0);
+  const rewardsAmount = rewards
+    .filter((r) => r.stakedTokenI === pf.tokenIdentifier)
+    .reduce((acc, curr) => {
+      return acc + new BigNumber(curr.claimableAmount).toNumber();
+    }, 0);
   return (
     <ProteoItemContenxt.Provider
       value={{
@@ -224,7 +226,7 @@ const ProteoFarmItem = ({ pf, tvl }: IProps) => {
               <PanelBox>
                 <Flex justifyContent={"center"} textAlign={"center"} gap={5}>
                   {/* <EarnedRewards pf={pf} /> */}
-                  <HarvestableRewards />
+                  <HarvestableRewards pf={pf} />
                   <Flex flexDir={"column"}>
                     <Text color="white.400" fontSize={"sm"}>
                       HARVEST IN
@@ -245,7 +247,7 @@ const ProteoFarmItem = ({ pf, tvl }: IProps) => {
                   <ActionButton
                     mt={5}
                     onClick={handleharvest}
-                    disabled={disabledHarvest === 0}
+                    disabled={rewardsAmount === 0}
                   >
                     HARVEST
                   </ActionButton>

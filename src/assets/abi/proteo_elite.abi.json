@@ -19,24 +19,7 @@
     },
     "name": "ProteoElite",
     "constructor": {
-        "inputs": [
-            {
-                "name": "address",
-                "type": "Address"
-            },
-            {
-                "name": "token",
-                "type": "EgldOrEsdtTokenIdentifier"
-            },
-            {
-                "name": "epochs",
-                "type": "List<u64>"
-            },
-            {
-                "name": "aprs",
-                "type": "List<u64>"
-            }
-        ],
+        "inputs": [],
         "outputs": []
     },
     "endpoints": [
