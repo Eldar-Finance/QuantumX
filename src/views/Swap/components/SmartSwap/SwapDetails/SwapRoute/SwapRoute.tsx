@@ -6,7 +6,6 @@ import useGetSwapInfo from "views/Swap/hooks/useGetSwapInfo";
 
 const SwapRoute = () => {
   const { data, isSapwToLp } = useGetSwapInfo();
-  console.log("data", data);
 
   const routes = data
     ? data.map((swapData, i) => {
@@ -19,14 +18,12 @@ const SwapRoute = () => {
         } else {
           if (i === 0) {
             const d: ILpSmartSwap = swapData as ILpSmartSwap;
-            console.log("ILpSmartSwap", swapData);
             return {
               token1: "",
               token2: formatTokenI(d.lptokenidentifier),
             };
           } else {
             const d: INomalSmartSwap = swapData as INomalSmartSwap;
-            console.log("d", d);
             return {
               token1: formatTokenI(d.token1),
               token2: formatTokenI(d.token2),

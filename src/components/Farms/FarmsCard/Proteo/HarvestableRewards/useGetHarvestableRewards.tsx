@@ -8,7 +8,6 @@ const fetchHarvestableRewards = async ([key, address]: [string, string]) => {
   const res = await scQuery(proteoEliteWsp, "getUserAllClaimable", [
     new AddressValue(new Address(address)),
   ]);
-  console.log("res.firstValue?.valueOf()", res.firstValue?.valueOf());
 
   const data: {
     stakedTokenI: string;
