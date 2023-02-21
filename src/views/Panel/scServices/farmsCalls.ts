@@ -9,7 +9,6 @@ import {
   scCall,
 } from "api/sc/calls";
 import BigNumber from "bignumber.js";
-import { setElrondBalance } from "utils/functions/formatBalance";
 import { IElrondToken } from "utils/types/elrond.interface";
 
 export async function deleteFarm(farmId: number) {
@@ -65,7 +64,7 @@ export async function depositRewards(
     const data = {
       identifier: ti.tokenDetail.identifier,
       nonce: 0,
-      amount: setElrondBalance(Number(ti.amount), ti.tokenDetail.decimals),
+      amount: ti.amount,
     };
 
     return data;

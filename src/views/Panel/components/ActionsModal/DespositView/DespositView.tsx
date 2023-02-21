@@ -13,12 +13,14 @@ import {
   ModalHeader,
   Text,
 } from "@chakra-ui/react";
+import BigNumber from "bignumber.js";
 import ActionButton from "components/ActionButton/ActionButton";
+import InputText from "components/Inputs/InputText";
 import NextImage from "components/NextImage/NextImage";
 import TokenList from "components/TokenList/TokenList";
 import { useFormik } from "formik";
-import { memo, useEffect, useMemo, useState } from "react";
-import { formatBalance } from "utils/functions/formatBalance";
+import { memo, useEffect, useMemo, useRef, useState } from "react";
+import { formatBalance, setElrondBalance } from "utils/functions/formatBalance";
 import useGetElrondToken from "utils/hooks/useGetElrondToken";
 import useGetUserTokens from "utils/hooks/useGetUserTokens";
 import { IELrondTOkenWithBalance } from "utils/types/elrond.interface";
@@ -76,6 +78,8 @@ const DepositView = memo(({ onClose, farm }: IProps) => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
+      console.log("values", values);
+
       depositRewards(
         values.tokens,
         farm.farmId,
@@ -114,8 +118,18 @@ const DepositView = memo(({ onClose, farm }: IProps) => {
     values.splice(index, 1);
     formik.setFieldValue("tokens", values);
   };
-  const handleMax = (i, token: IELrondTOkenWithBalance) => {
-    formik.setFieldValue(`tokens.${i}.amount`, formatBalance(token, true, 17));
+  const handleChange = (val: string, i: number) => {
+    formik.setFieldValue(`tokens.${i}.amount`, val, false);
+  };
+  const transformValue = (val: string, decimals?: number) => {
+    if (decimals) {
+      return setElrondBalance(Number(val), decimals);
+    } else {
+      return "0";
+    }
+  };
+  const handleMax = (realmax: string, i: number) => {
+    formik.setFieldValue(`tokens.${i}.amount`, realmax, false);
   };
 
   return (
@@ -149,57 +163,17 @@ const DepositView = memo(({ onClose, farm }: IProps) => {
             </Box>
             {formik.values.tokens.map((field, i) => {
               return (
-                <Box key={i} bg="black.base" px="5" py="3" borderRadius={"lg"}>
-                  <Flex align={"center"}>
-                    <Input
-                      variant={"unstyled"}
-                      placeholder="0.0"
-                      flex="1"
-                      name={`tokens.${i}.amount`}
-                      value={formik.values.tokens[i].amount}
-                      onChange={formik.handleChange}
-                      pr={5}
-                    />
-                    {field.tokenDetail && (
-                      <ActionButton
-                        mr={2}
-                        onClick={() => handleMax(i, field.tokenDetail)}
-                      >
-                        MAX
-                      </ActionButton>
-                    )}
-                    <ActionButton
-                      onClick={
-                        isOneToken ? undefined : () => setSelectedTokenId(i)
-                      }
-                    >
-                      {field.tokenDetail ? (
-                        <>
-                          <NextImage
-                            src={field.tokenDetail.assets.svgUrl}
-                            alt=""
-                            width={27}
-                            height={27}
-                          />
-                          <Text fontSize={"14px"} ml={2}>
-                            {field.tokenDetail.ticker}
-                          </Text>
-                        </>
-                      ) : (
-                        <Text fontSize={"14px"}>Select token</Text>
-                      )}
-                    </ActionButton>
-                    {isOneToken ? null : (
-                      <ActionButton
-                        bg="tomato"
-                        onClick={() => removeField(i)}
-                        ml={3}
-                      >
-                        <Icon as={DeleteIcon} />
-                      </ActionButton>
-                    )}
-                  </Flex>
-                </Box>
+                <InputComponent
+                  key={i}
+                  field={field}
+                  i={i}
+                  handleChange={handleChange}
+                  onSelectNewToken={() => setSelectedTokenId(i)}
+                  onMax={handleMax}
+                  onRemoveField={removeField}
+                  transformValue={transformValue}
+                  isOneToken={isOneToken}
+                />
               );
             })}
             {isOneToken ? null : (
@@ -271,3 +245,89 @@ const DepositView = memo(({ onClose, farm }: IProps) => {
 }, skipRender);
 
 export default DepositView;
+
+interface IInputComponentProps {
+  handleChange: (val: string, i: number) => void;
+  transformValue: (val: string, decimals?: number) => string;
+  field: {
+    tokenDetail: IELrondTOkenWithBalance;
+    amount: string;
+  };
+  isOneToken: boolean;
+  i: number;
+  onMax(val: string, i: number): void;
+  onSelectNewToken: (i: number) => void;
+  onRemoveField: (i: number) => void;
+}
+
+const InputComponent = ({
+  handleChange,
+  onSelectNewToken,
+  onRemoveField,
+  onMax,
+  transformValue,
+  i,
+  field,
+  isOneToken,
+}: IInputComponentProps) => {
+  const inputRef = useRef(null);
+
+  const handleMax = () => {
+    const realmax = new BigNumber(field.tokenDetail.balance).toString();
+    const inputMax = formatBalance({
+      balance: realmax,
+      decimals: field.tokenDetail.decimals,
+    });
+    inputRef.current.setValue(inputMax);
+
+    onMax(realmax, i);
+  };
+  return (
+    <Box key={i} bg="black.base" px="5" py="3" borderRadius={"lg"}>
+      <Flex align={"center"}>
+        <InputText
+          variant={"unstyled"}
+          placeholder="0.0"
+          flex="1"
+          pr={5}
+          name={`tokens.${i}.amount`}
+          onChangeInput={(val) => handleChange(val, i)}
+          tranformValue={(val) =>
+            transformValue(val, field.tokenDetail?.decimals)
+          }
+          ref={inputRef}
+        />
+
+        {field.tokenDetail && (
+          <ActionButton mr={2} onClick={handleMax}>
+            MAX
+          </ActionButton>
+        )}
+        <ActionButton
+          onClick={isOneToken ? undefined : () => onSelectNewToken(i)}
+        >
+          {field.tokenDetail ? (
+            <>
+              <NextImage
+                src={field.tokenDetail.assets.svgUrl}
+                alt=""
+                width={27}
+                height={27}
+              />
+              <Text fontSize={"14px"} ml={2}>
+                {field.tokenDetail.ticker}
+              </Text>
+            </>
+          ) : (
+            <Text fontSize={"14px"}>Select token</Text>
+          )}
+        </ActionButton>
+        {isOneToken ? null : (
+          <ActionButton bg="tomato" onClick={() => onRemoveField(i)} ml={3}>
+            <Icon as={DeleteIcon} />
+          </ActionButton>
+        )}
+      </Flex>
+    </Box>
+  );
+};
