@@ -5,8 +5,8 @@ import ActionButton from "components/ActionButton/ActionButton";
 import { useFormik } from "formik";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { selectAllowedTokens } from "redux/slices/fastSwap/fastSwap";
 import { fetchAllowedTokens } from "redux/slices/fastSwap/funcs";
+import { selectTokens } from "redux/slices/smartSwaps/smartSwaps";
 import { useAppDispatch } from "utils/hooks/redux";
 import * as yup from "yup";
 
@@ -20,7 +20,8 @@ const RemoveToken = () => {
     dispatch(fetchAllowedTokens());
   }, [dispatch]);
 
-  const { data: allowedTokens } = useSelector(selectAllowedTokens);
+  const { data: allowedTokens } = useSelector(selectTokens);
+
   const formik = useFormik({
     initialValues: {
       token: "",

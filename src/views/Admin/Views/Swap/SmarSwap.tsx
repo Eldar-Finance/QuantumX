@@ -1,4 +1,7 @@
 import { Box, Flex, Grid, VStack } from "@chakra-ui/react";
+import { useEffect } from "react";
+import { FetchWhitelistedTokens } from "redux/slices/smartSwaps/funcs";
+import { useAppDispatch } from "utils/hooks/redux";
 import AddEarner from "./components/AddEarner/AddEarner";
 import AddToken from "./components/AddToken/AddToken";
 import EarnersTable from "./components/EarnersTable/EarnersTable";
@@ -9,6 +12,10 @@ import RemoveToken from "./components/RemoveToken/RemoveToken";
 import ResumeButton from "./components/ResumeButton/ResumeButton";
 
 const SmartSwap = () => {
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(FetchWhitelistedTokens());
+  }, [dispatch]);
   return (
     <Box flexDir={"column"} gap="50px" w="full">
       <AddToken />
