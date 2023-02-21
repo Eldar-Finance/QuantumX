@@ -2,7 +2,6 @@ import { Center, Text } from "@chakra-ui/react";
 import { BigIntValue } from "@elrondnetwork/erdjs/out";
 import { contractAddr } from "api/net.config";
 import { EGLDPayment, ESDTTransfer } from "api/sc/calls";
-import flamieImage from "assets/hub/flamie.jpg";
 import srbImage from "assets/hub/srbcatalog.jpg";
 import vacineImage from "assets/hub/vacine.png";
 import BigNumber from "bignumber.js";
@@ -96,7 +95,7 @@ const NftList = () => {
           </Text>
         }
       />
-      <NftCard
+      {/* <NftCard
         token={offer3.token}
         iamge={flamieImage}
         onSubmit={() => handleSubmitHubOffer(offer3)}
@@ -111,7 +110,7 @@ const NftList = () => {
           </Text>
         }
         disabled={offer3.numberOfAvilableNfts === 0}
-      />
+      /> */}
     </Center>
   );
 };
