@@ -22,11 +22,7 @@ export const FetchWhitelistedTokens = createAsyncThunk(
     const { firstValue: usdcFirstValue } = usdcWhitelistedLp;
 
     const data = {
-      allWhitelisted: [
-        ...allFirstValue.valueOf(),
-        "BUSD-40b57e",
-        "USDT-f8c08c",
-      ],
+      allWhitelisted: [...allFirstValue.valueOf()],
       wegldWhitelisted: wegldFirstValue.valueOf(),
       usdcWhitelisted: usdcFirstValue.valueOf(),
     };
