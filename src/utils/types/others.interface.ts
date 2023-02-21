@@ -38,6 +38,7 @@ export interface INomalSmartSwap {
   amountReceivDec: string;
   smartcontract: string;
   dollarAmount?: string;
+  type?: "exchange";
 }
 
 export interface ILpSmartSwap {

@@ -29,14 +29,31 @@ import {
 } from "utils/types/others.interface";
 
 export const swap = async (
-  swapInfo,
+  swapInfo: INomalSmartSwap[],
   slipapge,
   fromToken,
   toField,
   fromElrondToken,
   gas
 ): Promise<transactionServices.SendTransactionReturnType> => {
+  let isAshaStable = false;
+  let scEndpoint = "swap";
+
+  swapInfo.forEach((swapI) => {
+    if (swapI?.type === "exchange") {
+      isAshaStable = true;
+    }
+  });
+
+  if (isAshaStable) {
+    scEndpoint = "swapStable";
+  }
+
   const dataToSend = swapInfo.flatMap((item) => {
+    let scSwap = "swapTokensFixedInput";
+    if (item?.type === "exchange") {
+      scSwap = "exchange";
+    }
     const amountWithSlipage = new BigNumber(item.amountReceivDec)
       .multipliedBy(slipapge)
       .dividedBy(100)
@@ -48,11 +65,12 @@ export const swap = async (
 
     return [
       new AddressValue(new Address(item.smartcontract)),
-      BytesValue.fromUTF8("swapTokensFixedInput"),
+      BytesValue.fromUTF8(scSwap),
       BytesValue.fromUTF8(item.token2),
       new BigUIntValue(new BigNumber(finalAmount)),
     ];
   });
+
   // if user want EGLD -> WEGLD
   if (fromToken.token === "EGLD" && toField.token === toknesID.wegld) {
     return await EGLDPayment(
@@ -77,7 +95,7 @@ export const swap = async (
       if (fromToken.token === "EGLD") {
         return await wrapEgldAndEsdtTranfer(
           Number(fromToken.value),
-          "swap",
+          scEndpoint,
           dataToSend,
           contractAddr.smartSwap,
           gas
@@ -89,7 +107,7 @@ export const swap = async (
             fromElrondToken,
             Number(fromToken.value),
             swapInfo[swapInfo.length - 1].amountReceiv,
-            "swap",
+            scEndpoint,
             dataToSend,
             contractAddr.smartSwap,
             gas
@@ -97,7 +115,7 @@ export const swap = async (
         } else {
           // is user is going to swap 2 tokens
           return await ESDTTransfer({
-            funcName: "swap",
+            funcName: scEndpoint,
             token: fromElrondToken,
             val: Number(fromToken.value),
             contractAddr: contractAddr.smartSwap,
@@ -109,6 +127,8 @@ export const swap = async (
     }
   }
 };
+
+//lp swaps
 export const swapLp = async (
   swapInfo: ISmartSwapData[],
   slipapge: number,
@@ -173,7 +193,6 @@ export const swapLp = async (
     swapInfo.filter((_d, i) => i > 0) as INomalSmartSwap[]
   );
 };
-
 export const lpSwapTx = async (
   tokens: {
     collection: string;

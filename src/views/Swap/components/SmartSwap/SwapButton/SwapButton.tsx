@@ -9,7 +9,7 @@ import {
 
 import { useAppSelector } from "utils/hooks/redux";
 import useGetElrondToken from "utils/hooks/useGetElrondToken";
-import { ISmartSwapData } from "utils/types/others.interface";
+import { INomalSmartSwap, ISmartSwapData } from "utils/types/others.interface";
 import { swap, swapLp } from "views/Swap/services/swap";
 
 interface IProps extends ButtonProps {
@@ -46,7 +46,14 @@ const SwapButton = ({
     if (swapInfo && swapInfo.length > 0 && fromElrondToken) {
       const gas = 90000000;
       if (!isSapwToLp) {
-        swap(swapInfo, slipapge, fromToken, toField, fromElrondToken, gas);
+        swap(
+          swapInfo as INomalSmartSwap[],
+          slipapge,
+          fromToken,
+          toField,
+          fromElrondToken,
+          gas
+        );
       } else {
         swapLp(swapInfo, slipapge, fromToken, toField, fromElrondToken, gas);
       }
