@@ -19,10 +19,7 @@ import {
   fetchIndex,
   fetchPrice,
 } from "redux/slices/proteo/funcs";
-import {
-  selectMexPairs,
-  selectUserAddress,
-} from "redux/slices/userAcount/account-slice";
+import { selectUserAddress } from "redux/slices/userAcount/account-slice";
 import { fetchMexPairs } from "redux/slices/userAcount/funcs";
 import { useAppDispatch, useAppSelector } from "utils/hooks/redux";
 import FarmAccordion from "./FarmAccordion";
@@ -35,6 +32,9 @@ interface IProps {
   disableComponent: ReactNode;
   maxStakingAmount?: string;
 }
+
+const blur = true;
+
 const FarmList = ({
   title,
   subtitle,
@@ -50,7 +50,6 @@ const FarmList = ({
   const hypeFarms = farms2.filter((farm) => ids.includes(farm.farm.farmId));
   const userFarm2Info = useAppSelector(selectUserFarms2Info);
   const userFarm2Rewards = useAppSelector(selectUserFarms2Rewards);
-  const { data: mexPairs } = useAppSelector(selectMexPairs);
   useEffect(() => {
     if (address) {
       //farms from oteher farms (Quantumn smart constract)
@@ -82,17 +81,25 @@ const FarmList = ({
           {subtitle && <Text>{subtitle}</Text>}
         </Flex>
       </Flex>
-      <FarmAccordion
-        othersArr={{
-          allFarms: hypeFarms,
-          userFarmInfo: userFarm2Info.data,
-          userFarm2Rewards: userFarm2Rewards.data,
-        }}
-        isPool={isPool}
-        disableIds={disableIds}
-        disableComponent={disableComponent}
-        maxStakingAmount={maxStakingAmount}
-      />
+      <Box
+        position={"relative"}
+        filter={blur && "blur(8px)"} // set the amount of blur
+      >
+        {blur && (
+          <Box position={"absolute"} top={0} left={0} right={0} bottom={0} />
+        )}
+        <FarmAccordion
+          othersArr={{
+            allFarms: hypeFarms,
+            userFarmInfo: userFarm2Info.data,
+            userFarm2Rewards: userFarm2Rewards.data,
+          }}
+          isPool={isPool}
+          disableIds={disableIds}
+          disableComponent={disableComponent}
+          maxStakingAmount={maxStakingAmount}
+        />
+      </Box>
     </Box>
   );
 };
