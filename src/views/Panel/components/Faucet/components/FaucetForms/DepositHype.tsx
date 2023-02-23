@@ -27,7 +27,6 @@ const DepositHype = () => {
       <Input
         placeholder="Amount..."
         mb={3}
-        type="number"
         name="amount"
         onChange={formik.handleChange}
         isInvalid={formik.touched.amount && Boolean(formik.errors.amount)}
