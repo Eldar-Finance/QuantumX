@@ -1,6 +1,7 @@
 import { Box, Heading, Input } from "@chakra-ui/react";
 import ActionButton from "components/ActionButton/ActionButton";
 import { useFormik } from "formik";
+import { deposiHype } from "views/Panel/scServices/faucetCall";
 import * as Yup from "yup";
 const validationSchema = Yup.object().shape({
   amount: Yup.number()
@@ -15,6 +16,7 @@ const DepositHype = () => {
     },
     onSubmit: (values) => {
       console.log(values);
+      deposiHype(values.amount);
     },
     validationSchema: validationSchema,
   });
