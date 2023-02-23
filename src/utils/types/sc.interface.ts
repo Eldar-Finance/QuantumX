@@ -87,3 +87,21 @@ export interface IScFarms2StakersReport {
   lastHarvest: number;
   rewardsHarvested: number;
 }
+
+export interface IScHypeFauctetAdminInfo {
+  currentBalance: {
+    token: string;
+    amount: string;
+    nonce: number;
+  };
+  reward: {
+    token: string;
+    amount: string;
+    nonce: number;
+  };
+  cost: {
+    token: string;
+    amount: string;
+    nonce: number;
+  };
+}

@@ -38,6 +38,9 @@
         {
             "name": "deposit",
             "mutability": "mutable",
+            "payableInTokens": [
+                "*"
+            ],
             "inputs": [],
             "outputs": []
         },
@@ -101,7 +104,7 @@
             ]
         },
         {
-            "name": "claimable",
+            "name": "reward",
             "mutability": "readonly",
             "inputs": [],
             "outputs": [
