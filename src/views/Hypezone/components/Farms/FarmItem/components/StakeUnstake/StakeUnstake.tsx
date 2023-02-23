@@ -1,5 +1,6 @@
 import { Box, Center, Flex, Link, Text } from "@chakra-ui/react";
 import { getNetworkStats } from "api/rest/elrondApi/network";
+import BigNumber from "bignumber.js";
 import ActionButton from "components/ActionButton/ActionButton";
 import dynamic from "next/dynamic";
 import { useState } from "react";
@@ -24,7 +25,7 @@ interface IProps {
   isPool?: boolean;
   isBearly?: boolean;
   disable?: boolean;
-  maxStakingAmount?: number;
+  maxStakingAmount?: string;
 }
 
 const useGetFarmTimeForUnstake = (statsRes, userFarmItem) => {
@@ -84,13 +85,13 @@ const StakeUnstake = ({
 
   if (
     (epochDiffrence <= 0 && farmFee?.earlyUnbondingFee === 0) ||
-    userFarmItem?.stakedBalance === 0 ||
+    new BigNumber(userFarmItem?.stakedBalance).toNumber() === 0 ||
     (!isSrbStaker && farm.farm.farmId === 7)
   ) {
     // if user is creator not disable unstake
     disableUnstake = true && address !== farm.farm.creator;
   }
-  let hasuserStaked = userFarmItem?.stakedBalance > 0;
+  let hasuserStaked = new BigNumber(userFarmItem?.stakedBalance).toNumber() > 0;
 
   return (
     <Flex h="full" flexDir={"column"} w="full">
@@ -142,9 +143,11 @@ const StakeUnstake = ({
           token={stakingToken}
           isPool={isPool}
           maxStakingAmount={
-            userFarmItem.stakedBalance === 0
-              ? maxStakingAmount
-              : maxStakingAmount - userFarmItem.stakedBalance
+            new BigNumber(userFarmItem.stakedBalance).isEqualTo(0)
+              ? new BigNumber(maxStakingAmount).toString()
+              : new BigNumber(maxStakingAmount)
+                  .minus(userFarmItem.stakedBalance)
+                  .toString()
           }
         />
       )}

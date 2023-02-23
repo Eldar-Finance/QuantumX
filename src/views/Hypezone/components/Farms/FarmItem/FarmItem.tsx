@@ -53,7 +53,7 @@ interface IProps {
   multifarmRewardsLeft: IScFarm2RewardsLeft[];
   disable?: boolean;
   disableComponent: ReactNode;
-  maxStakingAmount?: number;
+  maxStakingAmount?: string;
 }
 
 export const FarmItemContext = createContext<{ farm: IScFarmItem }>({

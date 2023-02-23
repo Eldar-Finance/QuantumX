@@ -36,7 +36,7 @@ interface IProps {
   onClose: () => void;
   farm: IScFarmItem;
   token: IElrondToken;
-  maxStakingAmount?: number;
+  maxStakingAmount?: string;
 }
 
 const StakeModal = ({

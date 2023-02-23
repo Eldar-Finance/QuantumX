@@ -33,7 +33,7 @@ interface IProps {
   isPool?: boolean;
   disableIds?: number[];
   disableComponent: ReactNode;
-  maxStakingAmount?: number;
+  maxStakingAmount?: string;
 }
 const FarmList = ({
   title,
@@ -69,10 +69,8 @@ const FarmList = ({
     dispatch(fetchStats());
   }, [dispatch]);
   useEffect(() => {
-    if (mexPairs.length > 0) {
-      dispatch(fetchAllFarms(mexPairs));
-    }
-  }, [dispatch, mexPairs]);
+    dispatch(fetchAllFarms());
+  }, [dispatch]);
   return (
     <Box mt={20}>
       <Flex mb={6} gap={4} transform={{ xs: "none", lg: "translateX(-50px)" }}>

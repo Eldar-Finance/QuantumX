@@ -23,7 +23,7 @@ interface IProps {
   isPool?: boolean;
   disableIds?: number[];
   disableComponent: ReactNode;
-  maxStakingAmount?: number;
+  maxStakingAmount?: string;
 }
 
 const FarmAccordion = ({
