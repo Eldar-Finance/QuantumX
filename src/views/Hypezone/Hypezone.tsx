@@ -7,9 +7,8 @@ import withElronDapp from "hoc/withElronDapp";
 import WrapperPages from "hoc/WrapperPages";
 import { useEffect, useState } from "react";
 import { fetchAllFarms } from "redux/slices/farms2/funcs";
-import { selectMexPairs } from "redux/slices/userAcount/account-slice";
 import { formatBalance } from "utils/functions/formatBalance";
-import { useAppDispatch, useAppSelector } from "utils/hooks/redux";
+import { useAppDispatch } from "utils/hooks/redux";
 import useAuthentication from "utils/hooks/useAuthentication";
 import useGetAccountToken from "utils/hooks/useGetAccountToken";
 import useGetTotalValueInHype from "utils/hooks/useGetTotalValueInHype";
@@ -21,7 +20,6 @@ import UserNeedRareModal from "./components/UserNeedRareModal/UserNeedRareModal"
 import { hypeFarmIds, hypePools1Ids, hypePools2Ids } from "./utils/constants";
 
 const Hypezone = () => {
-  const { data: mexPairs } = useAppSelector(selectMexPairs);
   const dispatch = useAppDispatch();
   const { accountToken, isLoading, error } = useGetAccountToken(toknesID.rare);
   const [isOpenRareModal, setIsOpenRareModal] = useState(false);
@@ -29,10 +27,8 @@ const Hypezone = () => {
   const { isLoggedIn } = useAuthentication();
 
   useEffect(() => {
-    if (mexPairs.length > 0) {
-      dispatch(fetchAllFarms(mexPairs));
-    }
-  }, [dispatch, mexPairs]);
+    dispatch(fetchAllFarms());
+  }, [dispatch]);
   useEffect(() => {
     if (accountToken?.name || error) {
       const userRareAmount = formatBalance(accountToken, true);
