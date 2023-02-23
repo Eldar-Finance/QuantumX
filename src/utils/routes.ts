@@ -9,7 +9,7 @@ export interface IRoute {
 }
 export const routeNames = {
   home: "/",
-  dashboard: "/dashboad",
+  dashboard: "/dashboard",
   swap: "/swap",
   farms: "/farms",
   Pools: "/pools",
