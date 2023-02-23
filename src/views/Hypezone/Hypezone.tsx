@@ -72,7 +72,7 @@ const Hypezone = () => {
             <Flex
               w="full"
               maxW={{ xs: "full", md: "350px" }}
-              justifyContent={"flex-end"}
+              justifyContent={"center"}
             >
               <Faucet />
             </Flex>

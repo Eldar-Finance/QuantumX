@@ -1,6 +1,7 @@
 import { Center, Text } from "@chakra-ui/react";
 import ActionButton from "components/ActionButton/ActionButton";
 import NextImage from "components/NextImage/NextImage";
+import { claim } from "views/Hypezone/utils/sc";
 import faucetImg from "../../assets/faucetpng.png";
 const Faucet = () => {
   return (
@@ -20,10 +21,10 @@ const Faucet = () => {
         position={"absolute"}
         flexDir="column"
       >
-        <ActionButton bg="white" mb={1}>
+        <ActionButton bg="white" mb={1} onClick={claim}>
           ClAIM HYPE
         </ActionButton>
-        <Text color="GrayText">+1 claim/epoch</Text>
+        <Text color="GrayText">*1 claim/epoch</Text>
       </Center>
     </Center>
   );

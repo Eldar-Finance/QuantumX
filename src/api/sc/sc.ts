@@ -14,6 +14,7 @@ import dcaAbi from "assets/abi/dca.abi.json";
 import esdtrewardsAbi from "assets/abi/esdtrewards.abi.json";
 import farmsAbi from "assets/abi/farms.abi.json";
 import fastSwapAbi from "assets/abi/fastp2pswap.abi.json";
+import hypefaucetAbi from "assets/abi/hypefaucet.abi.json";
 import jexAbi from "assets/abi/jex.abi.json";
 import jexSwapAbi from "assets/abi/jex_swap.abi.json";
 import nftHubAbi from "assets/abi/nfthub.abi.json";
@@ -144,7 +145,8 @@ export type WspTypes =
   | "wrapEgldShard2"
   | "xoxnoSrbPoolsInfoWsp"
   | "hubWsp"
-  | "cyberWegld";
+  | "cyberWegld"
+  | "hypezoneWsp";
 
 export const getInterface = (workspace: WspTypes) => {
   let address = null;
@@ -317,6 +319,12 @@ export const getInterface = (workspace: WspTypes) => {
       address = new Address(simpleAddress);
       abiUrl = xoxnoSrbPoolAbi;
       implementsInterfaces = "XoxnoSrbPool";
+      break;
+    case "hypezoneWsp":
+      simpleAddress = contractAddr.hypeFaucet;
+      address = new Address(simpleAddress);
+      abiUrl = hypefaucetAbi;
+      implementsInterfaces = "HypeFaucet";
       break;
 
     default:
