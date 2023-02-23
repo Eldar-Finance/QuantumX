@@ -1,17 +1,16 @@
 import { Box } from "@chakra-ui/react";
+import { toknesID } from "api/net.config";
 import { EgldlogoIcon } from "components/Icons/ui";
 import SearchTable from "components/Tables/SearchTable";
 import orderBy from "lodash/orderBy";
 import { useEffect, useState } from "react";
 import {
   selectEgldBalance,
-  selectMexPairsData,
   selectUserAccountData,
   selectUserAddress,
 } from "redux/slices/userAcount/account-slice";
 import {
   fetchEgld,
-  fetchMexPairs,
   fetchNfts,
   fetchTokens,
 } from "redux/slices/userAcount/funcs";
@@ -20,6 +19,7 @@ import {
   formatBalanceDolar,
 } from "utils/functions/formatBalance";
 import { useAppDispatch, useAppSelector } from "utils/hooks/redux";
+import useGetTokenPrice from "utils/hooks/useGetTokenPrice";
 import { tokenColumns } from "./TableColumns";
 
 const CoinTab = () => {
@@ -27,14 +27,12 @@ const CoinTab = () => {
   const address = useAppSelector(selectUserAddress);
 
   const egldData = useAppSelector(selectEgldBalance);
-  const mexPairs = useAppSelector(selectMexPairsData);
-
+  const [egldPrice] = useGetTokenPrice(toknesID.egld);
   const tableData = useAppSelector(selectUserAccountData);
 
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    dispatch(fetchMexPairs());
     if (address) {
       dispatch(fetchEgld(address));
       dispatch(fetchTokens(address));
@@ -61,7 +59,6 @@ const CoinTab = () => {
       "desc"
     );
 
-    const priceEgld = mexPairs.find((e) => e.baseName === "WrappedEGLD");
     const EgldData = {
       tokenBalance: formatBalance(egldData, false, 3),
       identifier: "EGLD",
@@ -72,14 +69,14 @@ const CoinTab = () => {
         img: <EgldlogoIcon /* size={"24px"} */ />,
       },
 
-      price: priceEgld?.basePrice,
+      price: egldPrice,
 
       balance: egldData.balance,
     };
 
     orderData.unshift(EgldData);
     setData(orderData);
-  }, [tableData.data, egldData, mexPairs]);
+  }, [tableData.data, egldData, egldPrice]);
 
   return (
     <Box w="full" maxW={"700px"} mx="auto" minH="70vh" overflow={"auto"}>

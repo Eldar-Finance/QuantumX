@@ -30,11 +30,7 @@ import {
   fetchUserInfo,
   fetchWithdrawInfo,
 } from "redux/slices/proteo/funcs";
-import {
-  selectMexPairs,
-  selectUserAddress,
-} from "redux/slices/userAcount/account-slice";
-import { fetchMexPairs } from "redux/slices/userAcount/funcs";
+import { selectUserAddress } from "redux/slices/userAcount/account-slice";
 import { formatTokenI } from "utils/functions/tokens";
 import { useAppDispatch, useAppSelector } from "utils/hooks/redux";
 import useGetTotalValuePools from "utils/hooks/useGetTotalValuePools";
@@ -46,7 +42,6 @@ const Pools = () => {
   const farms2 = useSelector(selectPools);
   const userFarm2Info = useSelector(selectUserFarms2Info);
   const userFarm2Rewards = useSelector(selectUserFarms2Rewards);
-  const { data: mexPairs } = useAppSelector(selectMexPairs);
 
   const [farms2ToSearch, setFarms2ToSearch] = useState(farms2);
   const [proteoPoolsArrToSearch, setproteoPoolsArrToSearch] = useState(
@@ -69,7 +64,6 @@ const Pools = () => {
   }, [address, dispatch]);
 
   useEffect(() => {
-    dispatch(fetchMexPairs());
     dispatch(fetchPrice());
     dispatch(fetchIndex());
     dispatch(fetchGeneralInfo());
@@ -80,10 +74,8 @@ const Pools = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (mexPairs.length > 0) {
-      dispatch(fetchAllFarms(mexPairs));
-    }
-  }, [dispatch, mexPairs]);
+    dispatch(fetchAllFarms());
+  }, [dispatch]);
 
   useEffect(() => {
     if (farms2) {

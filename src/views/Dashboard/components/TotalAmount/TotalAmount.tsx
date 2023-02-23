@@ -1,20 +1,22 @@
 import { ViewOffIcon } from "@chakra-ui/icons";
 import { Center, Icon, Text } from "@chakra-ui/react";
+import { toknesID } from "api/net.config";
 import { EyeIcon } from "components/Icons/ui";
 import { useEffect, useState } from "react";
 import { setTotalBalance } from "redux/slices/userAcount/account-slice";
 import { formatPrecision, getRealBalance } from "utils/functions/formatBalance";
 import { useAppDispatch, useAppSelector } from "utils/hooks/redux";
+import useGetTokenPrice from "utils/hooks/useGetTokenPrice";
 import { createStringWithCharAndLenght } from "views/Dashboard/funcs/functions";
 
 const TotalAmount = () => {
   const dispatch = useAppDispatch();
-  const mexPairs = useAppSelector((state) => state.userAccount.mexPairs.data);
   const tableData = useAppSelector((state) => state.userAccount.tableData.data);
   const egldData = useAppSelector(
     (state) => state.userAccount.egldBalance.data
   );
   const balance = useAppSelector((state) => state.userAccount.totalBalance);
+  const [egldPrice] = useGetTokenPrice(toknesID.egld);
 
   const [showBalance, setshowBalance] = useState(true);
   const hideBalance = () => {
@@ -22,14 +24,13 @@ const TotalAmount = () => {
   };
 
   useEffect(() => {
-    const egldMex = mexPairs.find((e) => e.baseName === "WrappedEGLD");
-    if (egldMex) {
+    if (egldPrice) {
       let total: any = getRealBalance(
-        egldMex.basePrice * egldData.balance,
+        egldPrice * egldData.balance,
         egldData.decimals
       );
 
-      if (mexPairs.length > 0 && tableData.length > 0) {
+      if (tableData.length > 0) {
         tableData.forEach((token) => {
           if (token.price) {
             total += // @ts-ignore
@@ -39,7 +40,7 @@ const TotalAmount = () => {
       }
       dispatch(setTotalBalance(total));
     }
-  }, [mexPairs, egldData, tableData, dispatch]);
+  }, [egldData, tableData, dispatch, egldPrice]);
 
   const balanceDisplayed = formatPrecision(balance, 2);
   return (

@@ -20,7 +20,7 @@ export const fetchSmartSwap = async ([tokenA, amountA, tokenB, isSapwToLp]: [
 ]) => {
   const { data } = await api.get<ISmartSwapData[]>(
     isSapwToLp
-      ? "https://eldar.solutions/api/pathfinderlp.php"
+      ? "https://eldar.solutions/api/pathfinderlp2.php"
       : `/pathfinder.php`,
     {
       params: {

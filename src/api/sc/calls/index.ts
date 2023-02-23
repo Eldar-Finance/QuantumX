@@ -329,7 +329,7 @@ export const MultESDTNFTTranferOrEgldPayment = async (
   tokens: {
     identifier: string;
     nonce: number;
-    amount: number;
+    amount: number | string;
   }[],
   args: any[],
   gasLimit

@@ -23,11 +23,7 @@ import {
   fetchUserInfo,
   fetchWithdrawInfo,
 } from "redux/slices/proteo/funcs";
-import {
-  selectMexPairs,
-  selectUserAddress,
-} from "redux/slices/userAcount/account-slice";
-import { fetchMexPairs } from "redux/slices/userAcount/funcs";
+import { selectUserAddress } from "redux/slices/userAcount/account-slice";
 import { useAppDispatch, useAppSelector } from "utils/hooks/redux";
 import useGetTotalValueInFarms from "utils/hooks/useGetTotalValueInFarms";
 import BearlyBonding from "./components/BearlyBonding/BearlyBonding";
@@ -36,7 +32,6 @@ const Farms = () => {
   const dispatch = useAppDispatch();
   const address = useAppSelector(selectUserAddress);
   const totalValueLocked = useGetTotalValueInFarms();
-  const { data: mexPairs } = useAppSelector(selectMexPairs);
   useEffect(() => {
     if (address) {
       //farms from proteo
@@ -51,7 +46,6 @@ const Farms = () => {
   }, [address, dispatch]);
 
   useEffect(() => {
-    dispatch(fetchMexPairs());
     dispatch(fetchPrice());
     dispatch(fetchIndex());
     dispatch(fetchGeneralInfo());
@@ -62,10 +56,8 @@ const Farms = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (mexPairs.length > 0) {
-      dispatch(fetchAllFarms(mexPairs));
-    }
-  }, [dispatch, mexPairs]);
+    dispatch(fetchAllFarms());
+  }, [dispatch]);
   return (
     <Layout>
       <MyContainer pb="70px">

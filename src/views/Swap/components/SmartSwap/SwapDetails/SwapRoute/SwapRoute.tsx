@@ -16,7 +16,7 @@ const SwapRoute = () => {
             token2: formatTokenI(d.token2),
           };
         } else {
-          if (i === data.length - 1) {
+          if (i === 0) {
             const d: ILpSmartSwap = swapData as ILpSmartSwap;
             return {
               token1: "",
@@ -32,6 +32,12 @@ const SwapRoute = () => {
         }
       })
     : [];
+
+  let finalRoutes = routes;
+  if (finalRoutes.length > 0 && isSapwToLp) {
+    finalRoutes = [...routes.filter((d, i) => i > 0), routes[0]];
+  }
+
   return (
     <Flex w="full" gap={"15px"} alignItems="flex-start">
       <Center bg="black.base" boxSize={"44px"} borderRadius="full">
@@ -42,7 +48,7 @@ const SwapRoute = () => {
           Swap route
         </Text>
         <ul>
-          {routes.map((route, i) => {
+          {finalRoutes.map((route, i) => {
             return (
               <li key={i}>
                 <Text fontSize={"lsm"}>

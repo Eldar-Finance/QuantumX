@@ -8,25 +8,19 @@ import WrapperPages from "hoc/WrapperPages";
 import { useEffect } from "react";
 import { fetchAllFarms } from "redux/slices/farms2/funcs";
 import { fetchGeneralInfo } from "redux/slices/proteo/funcs";
-import { selectMexPairs } from "redux/slices/userAcount/account-slice";
-import { fetchMexPairs } from "redux/slices/userAcount/funcs";
-import { useAppDispatch, useAppSelector } from "utils/hooks/redux";
+import { useAppDispatch } from "utils/hooks/redux";
 import InfoText from "./components/InfoText/InfoText";
 import MainSection from "./components/MainSection/MainSection";
 import QuantumXFeatures from "./components/QuantumXFeatures/QuantumXFeatures";
 
 const Home = () => {
   const dispatch = useAppDispatch();
-  const { data: mexPairs } = useAppSelector(selectMexPairs);
   useEffect(() => {
-    dispatch(fetchMexPairs());
     dispatch(fetchGeneralInfo());
   }, [dispatch]);
   useEffect(() => {
-    if (mexPairs.length > 0) {
-      dispatch(fetchAllFarms(mexPairs));
-    }
-  }, [dispatch, mexPairs]);
+    dispatch(fetchAllFarms());
+  }, [dispatch]);
   return (
     <Layout>
       <MyContainer>

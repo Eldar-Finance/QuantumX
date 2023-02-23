@@ -12,8 +12,10 @@ import {
   Link,
   Text,
 } from "@chakra-ui/react";
+import { BytesValue } from "@elrondnetwork/erdjs/out";
 import { contractAddr } from "api/net.config";
 import { fetchApr } from "api/rest/axiosEldar2";
+import { scCall } from "api/sc/calls";
 import BigNumber from "bignumber.js";
 import ActionButton from "components/ActionButton/ActionButton";
 
@@ -30,8 +32,9 @@ import {
 import { useAppDispatch, useAppSelector } from "utils/hooks/redux";
 import useGetTokenPrice from "utils/hooks/useGetTokenPrice";
 import { IProteoFarm } from "utils/types/farms.interface";
-import EarnedRewards from "./Proteo/EarnedRewards/EarnedRewards";
 import EarnTokens from "./Proteo/EarnTokens/EarnTokens";
+import HarvestableRewards from "./Proteo/HarvestableRewards/HarvestableRewards";
+import useGetHarvestableRewards from "./Proteo/HarvestableRewards/useGetHarvestableRewards";
 import StakeUnstake from "./Proteo/StakeUnstake/StakeUnstake";
 import Avilable from "./Proteo/Withdraw/Avilable";
 interface IProps {
@@ -65,6 +68,7 @@ const ProteoFarmItem = ({ pf, tvl }: IProps) => {
     (state) => state.proteo.userInfoApp.data
   );
   const { data: aprData } = useSwr(aprEndpoint, fetchApr);
+  const { rewards } = useGetHarvestableRewards();
 
   const [lastHarvestEpoch, setLastHarvestEpoch] = useState(0);
 
@@ -119,7 +123,15 @@ const ProteoFarmItem = ({ pf, tvl }: IProps) => {
   if (aprData) {
     apr = aprData[aprData.length - 1].apr;
   }
+  const handleharvest = () => {
+    scCall("proteoElite", "claim", [BytesValue.fromUTF8(tokenIdentifier)]);
+  };
 
+  const rewardsAmount = rewards
+    .filter((r) => r.stakedTokenI === pf.tokenIdentifier)
+    .reduce((acc, curr) => {
+      return acc + new BigNumber(curr.claimableAmount).toNumber();
+    }, 0);
   return (
     <ProteoItemContenxt.Provider
       value={{
@@ -213,10 +225,11 @@ const ProteoFarmItem = ({ pf, tvl }: IProps) => {
             >
               <PanelBox>
                 <Flex justifyContent={"center"} textAlign={"center"} gap={5}>
-                  <EarnedRewards pf={pf} />
+                  {/* <EarnedRewards pf={pf} /> */}
+                  <HarvestableRewards pf={pf} />
                   <Flex flexDir={"column"}>
                     <Text color="white.400" fontSize={"sm"}>
-                      AUTO HARVEST IN
+                      HARVEST IN
                     </Text>
                     <Center mt="2" gap="3" justifyContent={"space-around"}>
                       <Flex gap="2" alignItems={"center"}>
@@ -231,9 +244,13 @@ const ProteoFarmItem = ({ pf, tvl }: IProps) => {
                   </Flex>
                 </Flex>
                 <Center>
-                  {pf.withHarvest && (
-                    <ActionButton mt={5}>HARVEST</ActionButton>
-                  )}
+                  <ActionButton
+                    mt={5}
+                    onClick={handleharvest}
+                    disabled={rewardsAmount === 0}
+                  >
+                    HARVEST
+                  </ActionButton>
                 </Center>
               </PanelBox>
               <PanelBox>

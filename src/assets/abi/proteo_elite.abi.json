@@ -1,16 +1,16 @@
 {
     "buildInfo": {
         "rustc": {
-            "version": "1.62.0-nightly",
-            "commitHash": "88860d5474a32f507dde8fba8df35fd2064f11b9",
-            "commitDate": "2022-05-09",
+            "version": "1.67.0-nightly",
+            "commitHash": "b7bc90fea3b441234a84b49fdafeb75815eebbab",
+            "commitDate": "2022-11-21",
             "channel": "Nightly",
-            "short": "rustc 1.62.0-nightly (88860d547 2022-05-09)"
+            "short": "rustc 1.67.0-nightly (b7bc90fea 2022-11-21)"
         },
         "contractCrate": {
             "name": "proteo_elite",
             "version": "0.0.0",
-            "git_version": "d5a291f-modified"
+            "git_version": "3c6039b-modified"
         },
         "framework": {
             "name": "elrond-wasm",
@@ -49,6 +49,17 @@
         },
         {
             "name": "withdraw",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "token",
+                    "type": "EgldOrEsdtTokenIdentifier"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "claim",
             "mutability": "mutable",
             "inputs": [
                 {
@@ -284,12 +295,46 @@
             "outputs": []
         },
         {
+            "name": "prepareClaiming",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "token",
+                    "type": "EgldOrEsdtTokenIdentifier"
+                },
+                {
+                    "name": "sproteo_amount",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "extra_reward_amount",
+                    "type": "BigUint"
+                }
+            ],
+            "outputs": []
+        },
+        {
             "name": "distributeFarmRewards",
             "mutability": "mutable",
             "inputs": [
                 {
                     "name": "token",
                     "type": "EgldOrEsdtTokenIdentifier"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "claimPrize",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "date",
+                    "type": "bytes"
+                },
+                {
+                    "name": "ticket",
+                    "type": "u64"
                 }
             ],
             "outputs": []
@@ -400,12 +445,63 @@
             ]
         },
         {
+            "name": "getUserClaimable",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "user",
+                    "type": "Address"
+                },
+                {
+                    "name": "token",
+                    "type": "EgldOrEsdtTokenIdentifier"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "variadic<tuple<EgldOrEsdtTokenIdentifier,BigUint,EgldOrEsdtTokenIdentifier>>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "getUserAllClaimable",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "user",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "variadic<tuple<EgldOrEsdtTokenIdentifier,BigUint,EgldOrEsdtTokenIdentifier>>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
             "name": "getGeneralInfo",
             "mutability": "readonly",
             "inputs": [],
             "outputs": [
                 {
                     "type": "tuple<u32,List<tuple<EgldOrEsdtTokenIdentifier,BigUint,BigUint,u64>>>"
+                }
+            ]
+        },
+        {
+            "name": "testTiers",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "address",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "tuple<u8,u8,u8>"
                 }
             ]
         },
@@ -457,6 +553,16 @@
                 {
                     "type": "variadic<Address>",
                     "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "proteoPrizesScAddress",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "Address"
                 }
             ]
         },
@@ -844,6 +950,21 @@
             ]
         },
         {
+            "name": "getTotalWeightedAverage",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "token",
+                    "type": "EgldOrEsdtTokenIdentifier"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
             "name": "getMundialScAddress",
             "mutability": "readonly",
             "inputs": [],
@@ -895,14 +1016,12 @@
         },
         {
             "name": "pauseSc",
-            "onlyOwner": true,
             "mutability": "mutable",
             "inputs": [],
             "outputs": []
         },
         {
             "name": "resumeSc",
-            "onlyOwner": true,
             "mutability": "mutable",
             "inputs": [],
             "outputs": []

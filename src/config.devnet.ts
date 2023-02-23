@@ -25,7 +25,7 @@ export const contractAddress = {
   faucet: "erd1qqqqqqqqqqqqqpgqam4ypfqlhv8y2xqtd8r46h8kkmhlja7l24usdruc5y",
   rps: "erd1qqqqqqqqqqqqqpgqntetdqumf93lnykcmz7kz9gsh8kj8qrz24usrdys05",
   rpsRewards: "erd1qqqqqqqqqqqqqpgq5c3afwz5kq5kc5jxzqpsnvrj68hz9f8c24usns0985",
-  dca: "erd1qqqqqqqqqqqqqpgqy29sfyzrcnh7a38u7hy3yaekvvsw6nxy24ush5xa45",
+  dca: "erd1qqqqqqqqqqqqqpgqlhan0n8ny7ajlufn8l2zc6zlu8k44u6hu7zsdvzy24",
   sftsRewards: "erd1qqqqqqqqqqqqqpgqchw078y9zd8wjlrq4ujhltpvsmqfpzxx2ndsxyn8ac",
   mundialBet: "erd1qqqqqqqqqqqqqpgq3k2wt4wy37ewtxzas5ttrzmnl72j7myj64qsk3zrls",
   bettings: "erd1qqqqqqqqqqqqqpgqlfzlazg4uda3q4qks9xqpyvl6xtmwyf264qswnxd9f",

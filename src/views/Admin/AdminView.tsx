@@ -77,14 +77,14 @@ const AdminView = () => {
                 </LayOut>
               ),
             },
-            {
+            /* {
               tabText: "Fastp2pSwap",
               tabPanel: (
                 <LayOut>
                   <FastSwap />
                 </LayOut>
               ),
-            },
+            }, */
             {
               tabText: "Rewards",
               tabPanel: (

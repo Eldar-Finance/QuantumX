@@ -1,4 +1,4 @@
-import { Box, Center, Flex, IconButton } from "@chakra-ui/react";
+import { Box, Center, Flex, Heading, IconButton, Text } from "@chakra-ui/react";
 
 import SwapButton from "../SwapButton/SwapButton";
 import TextField from "../TextField/TextField";
@@ -41,7 +41,7 @@ const SwapCard = () => {
           setToTokenValue(new BigNumber(swapData.amountReceiv).toFixed(4))
         );
       } else {
-        const swapData = data[data.length - 1] as ILpSmartSwap;
+        const swapData = data[0] as ILpSmartSwap;
         let lpValue = new BigNumber(swapData.lpamounttoreceive).toFixed(4);
         if (Number(lpValue) < 0.00000000001) {
           lpValue = new BigNumber(swapData.lpamounttoreceive).toFixed(25);
@@ -86,13 +86,18 @@ const SwapCard = () => {
       justifyContent={"flex-start"}
       alignItems={"center"}
     >
+      <Heading textAlign="center" fontSize={"3xl"}>
+        Smart Swap
+      </Heading>
+
+      <Text mb={4}>xExchange/Jungle DEX aggregator</Text>
       <Box
         maxWidth={"500px"}
         width={"full"}
         mb={0}
         borderRadius="30px"
         position="relative"
-        pt={5}
+        pt={2}
       >
         <Box>
           <Flex flexDir={"column"} width={"full"}>
@@ -106,6 +111,10 @@ const SwapCard = () => {
                 onClickMaxtoken={handleMaxFromField}
                 field={fromToken}
                 disableChangeToken={isSapwToLp}
+                dollarAmount={
+                  data &&
+                  (isSapwToLp ? data[1]?.dollarAmount : data[0]?.dollarAmount)
+                }
               />
               <Center position={"absolute"} bottom={"-20px"} zIndex={2}>
                 <IconButton
@@ -132,6 +141,12 @@ const SwapCard = () => {
               // @ts-ignore
               disabled={true}
               isLoadingAmount={isLoading}
+              dollarAmount={
+                data &&
+                (isSapwToLp
+                  ? data[0]?.dollarAmount
+                  : data[data.length - 1]?.dollarAmount)
+              }
             />
             {toToken.token && (
               <Flex justifyContent={"flex-end"} mt={-2} color="#24918a"></Flex>

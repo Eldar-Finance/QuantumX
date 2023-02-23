@@ -1,6 +1,7 @@
 import { Address, AddressValue } from "@elrondnetwork/erdjs/out";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { scQuery } from "api/sc/queries";
+import { pairs } from "utils/constants/lpPairs";
 import { formatBalance } from "utils/functions/formatBalance";
 import {
   IScFarmItem,
@@ -13,7 +14,7 @@ import { allHypeFarms } from "views/Hypezone/utils/constants";
 
 export const fetchAllFarms = createAsyncThunk(
   "farms2/fetchAllFarms",
-  async (mexPairs?: any[]) => {
+  async () => {
     const scRes = await scQuery("farms2", "getAllFarms");
 
     const scFirstValue = scRes.firstValue.valueOf();
@@ -41,19 +42,19 @@ export const fetchAllFarms = createAsyncThunk(
 
     return {
       allFarms,
-      pools: mexPairs
+      pools: pairs
         ? allNomalFarms.filter(
             (farm) =>
-              mexPairs.findIndex(
-                (mexPair) => mexPair.id === farm.farm.stakingToken
+              pairs.findIndex(
+                (mexPair) => mexPair.lpidentifier === farm.farm.stakingToken
               ) === -1
           )
         : [],
-      farms: mexPairs
+      farms: pairs
         ? allNomalFarms.filter(
             (farm) =>
-              mexPairs.findIndex(
-                (mexPair) => mexPair.id === farm.farm.stakingToken
+              pairs.findIndex(
+                (mexPair) => mexPair.lpidentifier === farm.farm.stakingToken
               ) !== -1
           )
         : [],
