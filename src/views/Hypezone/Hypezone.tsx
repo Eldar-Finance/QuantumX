@@ -1,4 +1,4 @@
-import { Flex } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 import { toknesID } from "api/net.config";
 import MyContainer from "components/Container/Container";
 import Title from "components/Farms/Title/Title";
@@ -16,6 +16,7 @@ import useGetTotalValueInHype from "utils/hooks/useGetTotalValueInHype";
 import HypeFarmContainer from "./components/Farms/HypeContainers/HypeFarmContainer";
 import HypePools1Container from "./components/Farms/HypeContainers/HypePools1Container";
 import HypePools2Container from "./components/Farms/HypeContainers/HypePools2Container";
+import Faucet from "./components/Faucet/Faucet";
 import UserNeedRareModal from "./components/UserNeedRareModal/UserNeedRareModal";
 import { hypeFarmIds, hypePools1Ids, hypePools2Ids } from "./utils/constants";
 
@@ -63,12 +64,23 @@ const Hypezone = () => {
           mx="auto"
         >
           {" "}
-          <Title
-            title="Hypezone"
-            subtitle="High Yield farming & pools for SRB $HYPE token"
-            amount={hypeTvl}
-            tvlText="Total value Locked on Hypezone"
-          />
+          <Flex gap={4} flexDir={{ xs: "column", md: "row" }}>
+            <Box flex={1}>
+              <Title
+                title="Hypezone"
+                subtitle="High Yield farming & pools for SRB $HYPE token"
+                amount={hypeTvl}
+                tvlText="Total value Locked on Hypezone"
+              />
+            </Box>
+            <Flex
+              w="full"
+              maxW={{ xs: "full", md: "350px" }}
+              justifyContent={"flex-end"}
+            >
+              <Faucet />
+            </Flex>
+          </Flex>
           <HypeFarmContainer ids={hypeFarmIds} />
           <HypePools1Container ids={hypePools1Ids} />
           <HypePools2Container ids={hypePools2Ids} />
