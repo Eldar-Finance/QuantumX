@@ -31,7 +31,7 @@ const ChangeRewards = () => {
     /* @ts-ignore */
     <Box Box as="form" onSubmit={formik.handleSubmit}>
       <Heading as="h3" fontSize={"xl"} mb={2} textAlign="center">
-        Change Reward
+        Set Reward
       </Heading>
       <Input
         placeholder="Token..."
