@@ -1,11 +1,5 @@
 import { Address, AddressValue } from "@elrondnetwork/erdjs/out";
-import { scCall } from "api/sc/calls";
 import { scQuery } from "api/sc/queries";
-
-//calls
-export const claim = () => {
-  scCall("hypezoneWsp", "claim", [], 5000000);
-};
 
 //queries
 

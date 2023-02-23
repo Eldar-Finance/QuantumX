@@ -1,9 +1,20 @@
 import { Center, Text } from "@chakra-ui/react";
+import { scCallOnlyTx } from "api/sc/calls";
+import { sendMultipleTransactions } from "api/sc/sc";
 import ActionButton from "components/ActionButton/ActionButton";
 import NextImage from "components/NextImage/NextImage";
-import { claim } from "views/Hypezone/utils/sc";
+import { getTxForRareFee } from "views/Hypezone/utils/functions";
 import faucetImg from "../../assets/faucetpng.png";
 const Faucet = () => {
+  const handleClaim = async () => {
+    let txs = [];
+    const t1 = await getTxForRareFee();
+    txs.push(t1);
+    const claimTx = await scCallOnlyTx("hypezoneWsp", "claim", [], 5000000);
+    txs.push(claimTx);
+
+    sendMultipleTransactions({ txs: txs });
+  };
   return (
     <Center
       w={{ xs: "200px", md: "300px" }}
@@ -21,7 +32,7 @@ const Faucet = () => {
         position={"absolute"}
         flexDir="column"
       >
-        <ActionButton bg="white" mb={1} onClick={claim}>
+        <ActionButton bg="white" mb={1} onClick={handleClaim}>
           ClAIM HYPE
         </ActionButton>
         <Text color="GrayText">*1 claim/epoch</Text>
