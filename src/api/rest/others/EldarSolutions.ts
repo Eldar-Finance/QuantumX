@@ -37,3 +37,10 @@ export const fetchLpPrices = async () => {
   const { data } = await api.get<ILpPrice[]>("/lpapi.php");
   return data;
 };
+
+export const fetchSrbNftsByUser = async () => {
+  const { data } = await api.get<{ address: string; totalnft: string }[]>(
+    "/srbnftapi.php"
+  );
+  return data;
+};

@@ -3,6 +3,7 @@ import Layout from "components/Layout/Layout";
 import MyTabs from "components/MyTabs/MyTabs";
 import withElronDapp from "hoc/withElronDapp";
 import WrapperPages from "hoc/WrapperPages";
+import Faucet from "./components/Faucet/Faucet";
 import HubTable from "./components/HubTable/HubTable";
 import PanelTable from "./components/PanelTable/PanelTable";
 import PanelTitle from "./components/PanelTitle/PanelTitle";
@@ -43,6 +44,10 @@ const Panel = () => {
             {
               tabText: "Hub",
               tabPanel: <HubTable />,
+            },
+            {
+              tabText: "Faucet",
+              tabPanel: <Faucet />,
             },
           ]}
         />

@@ -5,9 +5,15 @@ interface IProps {
   title: string;
   subtitle: string;
   amount: number;
+  tvlText?: String;
 }
 
-const Title = ({ title, subtitle, amount }: IProps) => {
+const Title = ({
+  title,
+  subtitle,
+  amount,
+  tvlText = "Total value Locked on Farms",
+}: IProps) => {
   return (
     <Box textAlign={"center"}>
       {" "}
@@ -28,7 +34,7 @@ const Title = ({ title, subtitle, amount }: IProps) => {
         flexDir="column"
       >
         <Heading as="h4" fontSize={"md"} color="white.400" fontWeight={"400"}>
-          Total value Locked on Farms
+          {tvlText}
         </Heading>
         <Text fontSize={"2xl"} fontWeight="600">
           ${formatNumber(amount)}

@@ -21,6 +21,7 @@ export interface Farms2State {
     status: STATUS;
     data: IScFarmItem[];
     pools: IScFarmItem[];
+    hype: IScFarmItem[];
     farms: IScFarmItem[];
     error: string;
   };
@@ -49,6 +50,7 @@ export interface Farms2State {
 const initialState: Farms2State = {
   allFarms: {
     data: [],
+    hype: [],
     pools: [],
     farms: [],
     status: "idle",
@@ -94,12 +96,14 @@ export const generalSlice = createSlice({
             allFarms: IScFarmItem[];
             pools: IScFarmItem[];
             farms: IScFarmItem[];
+            allHypeFarms: IScFarmItem[];
           }>
         ) => {
           state.allFarms.status = "succeeded";
           state.allFarms.data = action.payload.allFarms;
           state.allFarms.pools = action.payload.pools;
           state.allFarms.farms = action.payload.farms;
+          state.allFarms.hype = action.payload.allHypeFarms;
         }
       )
       .addCase(fetchAllFarms.rejected, (state, action) => {
@@ -174,6 +178,7 @@ export const {} = generalSlice.actions;
 export const selectAllFarms2 = (state: AppState) => state.farms2.allFarms;
 export const selectFarms = (state: AppState) => state.farms2.allFarms.farms;
 export const selectPools = (state: AppState) => state.farms2.allFarms.pools;
+export const selectHype = (state: AppState) => state.farms2.allFarms.hype;
 export const selectCreatorsFarms = (state: AppState) =>
   state.farms2.creatorsFarms;
 export const selectUserFarms2Info = (state: AppState) =>

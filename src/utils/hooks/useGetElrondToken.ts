@@ -4,6 +4,8 @@ import useSWR from "swr";
 import { IElrondToken } from "utils/types/elrond.interface";
 
 const useGetElrondToken = (tokenIdeniifer: string) => {
+  console.log("tokenIdeniifer", tokenIdeniifer);
+
   const { data, error } = useSWR(
     {
       identifier: tokenIdeniifer === "EGLD" ? null : tokenIdeniifer,

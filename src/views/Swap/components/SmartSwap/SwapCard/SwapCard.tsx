@@ -5,6 +5,7 @@ import TextField from "../TextField/TextField";
 
 import BigNumber from "bignumber.js";
 import { ExchangeIcon } from "components/Icons/ui";
+import { useRouter } from "next/dist/client/router";
 import { useEffect } from "react";
 import { FetchWhitelistedTokens } from "redux/slices/smartSwaps/funcs";
 import {
@@ -25,7 +26,7 @@ const SwapCard = () => {
   const fromToken = useAppSelector(selectFromField);
   const toToken = useAppSelector(selectToField);
   const dispatch = useAppDispatch();
-
+  const router = useRouter();
   const handleChangeFromField = (token) => {
     dispatch(setFromTokenValue(token));
   };
@@ -68,6 +69,15 @@ const SwapCard = () => {
   const handleMaxFromField = (amount) => {
     dispatch(setFromTokenValue(amount));
   };
+
+  useEffect(() => {
+    if (router.query.fromToken) {
+      dispatch(setFromToken(router.query.fromToken as string));
+    }
+    if (router.query.toToken) {
+      dispatch(setToToken(router.query.toToken as string));
+    }
+  }, [dispatch, router]);
 
   return (
     <Flex

@@ -43,6 +43,7 @@ export const contractAddress = {
   upgradeHero: "erd1qqqqqqqqqqqqqpgqfr69nye37kwcjlxqv652k555jyw0uaegu7zs5rlw9f",
   xoxnoSrbPool:
     "erd1qqqqqqqqqqqqqpgqvpkd3g3uwludduv3797j54qt6c888wa59w2shntt6z",
+  hypeFaucet: "erd1qqqqqqqqqqqqqpgq2srxelqexsxkg82rr8ygwsq684faa2syu7zs4qa7tx",
   // proteo farms
   usdcProteo: "erd1qqqqqqqqqqqqqpgq3lh80a92d49am3t2pfzheapdxtykzt5kznyqsjhfrx",
   proteoEgldNonElite:
@@ -129,4 +130,5 @@ export const TOKENS_ID = {
   cyberwegld: "CYBERWEGLD-45a866",
   cyber: "CYBER-489c1c",
   bonez: "BONEZ-ff9a73",
+  hype: "HYPE-619661",
 };
