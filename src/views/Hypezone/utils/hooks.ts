@@ -24,7 +24,7 @@ export const useSrbStaker = () => {
 
 export const useUserCanClaim = () => {
   const address = useAppSelector(selectUserAddress);
-  const { data, isLoading, error } = useSwr<Boolean>(
+  const { data, isLoading, error } = useSwr<boolean>(
     ["hypezoneWsp:canUserClaim", address],
     fetchCanUserClaim
   );

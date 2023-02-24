@@ -4,11 +4,12 @@ import { sendMultipleTransactions } from "api/sc/sc";
 import ActionButton from "components/ActionButton/ActionButton";
 import NextImage from "components/NextImage/NextImage";
 import { getTxForRareFee } from "views/Hypezone/utils/functions";
+import { useUserCanClaim } from "views/Hypezone/utils/hooks";
 import useGetfaucetInfo from "views/Panel/hooks/useGetfaucetInfo";
 import faucetImg from "../../assets/faucetpng.png";
 const Faucet = () => {
   const { info, isLoading } = useGetfaucetInfo();
-
+  const { canUserClaim } = useUserCanClaim();
   const handleClaim = async () => {
     let txs = [];
     const t1 = await getTxForRareFee(info.cost.token, info.cost.amount);
@@ -35,8 +36,13 @@ const Faucet = () => {
         position={"absolute"}
         flexDir="column"
       >
-        <ActionButton bg="white" mb={1} onClick={handleClaim}>
-          ClAIM HYPE
+        <ActionButton
+          bg="white"
+          mb={1}
+          onClick={handleClaim}
+          disabled={!canUserClaim}
+        >
+          CLAIM HYPE
         </ActionButton>
         <Text color="GrayText">*1 claim/epoch</Text>
       </Center>

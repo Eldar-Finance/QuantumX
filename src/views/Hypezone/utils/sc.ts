@@ -8,5 +8,5 @@ export const fetchCanUserClaim = async ([key, address]: [string, string]) => {
     new AddressValue(new Address(address)),
   ]);
 
-  return res.firstValue?.valueOf() as Boolean;
+  return res.firstValue?.valueOf() as boolean;
 };
