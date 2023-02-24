@@ -15,6 +15,7 @@ import { formatBalance } from "utils/functions/formatBalance";
 import useAuthentication from "utils/hooks/useAuthentication";
 import useGetAccountToken from "utils/hooks/useGetAccountToken";
 import { routeNames } from "utils/routes";
+import { rareFee } from "views/Hypezone/utils/constants";
 interface IProps {
   isOpen: boolean;
   onClose: () => void;
@@ -36,7 +37,7 @@ const UserNeedRareModal = ({ isOpen, onClose }: IProps) => {
       <ModalBody mt="3">
         <Center w="full" flexDir={"column"} mb={8} gap={4}>
           <Text mb={2} align="center" fontSize={"xl"}>
-            Additional RARE needed for gas fees in Hypezone
+            {rareFee}+ RARE needed for access and gas fees in Hypezone
           </Text>
           {isLoggedIn && (
             <Text mb={6} fontSize={"xl"}>

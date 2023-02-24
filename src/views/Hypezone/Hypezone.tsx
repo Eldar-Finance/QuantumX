@@ -17,7 +17,12 @@ import HypePools1Container from "./components/Farms/HypeContainers/HypePools1Con
 import HypePools2Container from "./components/Farms/HypeContainers/HypePools2Container";
 import Faucet from "./components/Faucet/Faucet";
 import UserNeedRareModal from "./components/UserNeedRareModal/UserNeedRareModal";
-import { hypeFarmIds, hypePools1Ids, hypePools2Ids } from "./utils/constants";
+import {
+  hypeFarmIds,
+  hypePools1Ids,
+  hypePools2Ids,
+  rareFee,
+} from "./utils/constants";
 
 const Hypezone = () => {
   const dispatch = useAppDispatch();
@@ -32,7 +37,7 @@ const Hypezone = () => {
   useEffect(() => {
     if (accountToken?.name || error) {
       const userRareAmount = formatBalance(accountToken, true);
-      if (userRareAmount <= 0.5) {
+      if (userRareAmount <= rareFee) {
         if (process.env.NEXT_PUBLIC_SIMULATE_HYPEZONE_ACCESS) {
           setIsOpenRareModal(false);
         } else {

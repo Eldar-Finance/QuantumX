@@ -12,3 +12,5 @@ export const allHypeFarms = [
 
 export const addressToReceiveRareInTx =
   "erd1hnqhqupzxe55xz9tj44l4n3d0zrtqge8pvx03ksfeeee2kcv6k8qzn9tam";
+
+export const rareFee = 5;

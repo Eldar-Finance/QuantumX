@@ -1,7 +1,7 @@
 import { toknesID } from "api/net.config";
 import { getFromAllTokens } from "api/rest/elrondApi/tokens";
 import { ESDTTransferOnlyTx } from "api/sc/calls";
-import { addressToReceiveRareInTx } from "./constants";
+import { addressToReceiveRareInTx, rareFee } from "./constants";
 
 export const getTxForRareFee = async (
   identifier?: string,
@@ -16,7 +16,7 @@ export const getTxForRareFee = async (
       funcName: "fee",
       token: feeElrondToken,
       contractAddr: addressToReceiveRareInTx,
-      val: 0.5,
+      val: rareFee,
       realValue: realAmount,
     });
 
