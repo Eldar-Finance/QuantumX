@@ -106,11 +106,19 @@ export const MultiESDTNFTTransfer = async (
 export const ESDTTransfer = async ({
   funcName,
   token,
-  val,
+  val = 0,
   contractAddr = "",
   args = [],
   gasL = 60000000,
   realValue = null,
+}: {
+  funcName: string;
+  token: any;
+  val?: number | string;
+  contractAddr: string;
+  args?: any[];
+  gasL?: number;
+  realValue?: number | null;
 }) => {
   const tokenIdentifier = token.identifier;
   const multiplyier = Math.pow(10, token.decimals || 18);
