@@ -130,4 +130,5 @@ export const TOKENS_ID = {
   cyberwegld: "CYBERWEGLD-45a866",
   cyber: "CYBER-489c1c",
   bonez: "BONEZ-ff9a73",
+  hype: "HYPE-619661",
 };

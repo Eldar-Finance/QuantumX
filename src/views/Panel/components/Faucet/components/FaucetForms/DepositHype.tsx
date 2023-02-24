@@ -1,6 +1,8 @@
 import { Box, Heading, Input } from "@chakra-ui/react";
 import ActionButton from "components/ActionButton/ActionButton";
 import { useFormik } from "formik";
+import useGetElrondToken from "utils/hooks/useGetElrondToken";
+import useGetfaucetInfo from "views/Panel/hooks/useGetfaucetInfo";
 import { deposiHype } from "views/Panel/scServices/faucetCall";
 import * as Yup from "yup";
 const validationSchema = Yup.object().shape({
@@ -10,13 +12,19 @@ const validationSchema = Yup.object().shape({
 });
 
 const DepositHype = () => {
+  const { info, isLoading } = useGetfaucetInfo();
+
+  const { token } = useGetElrondToken(
+    isLoading === false ? info?.reward.token : null
+  );
   const formik = useFormik({
     initialValues: {
       amount: "",
     },
     onSubmit: (values) => {
-      console.log(values);
-      deposiHype(values.amount);
+      if (token) {
+        deposiHype(values.amount, token);
+      }
     },
     validationSchema: validationSchema,
   });

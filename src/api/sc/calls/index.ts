@@ -106,7 +106,7 @@ export const MultiESDTNFTTransfer = async (
 export const ESDTTransfer = async ({
   funcName,
   token,
-  val = 0,
+  val,
   contractAddr = "",
   args = [],
   gasL = 60000000,
@@ -114,7 +114,7 @@ export const ESDTTransfer = async ({
 }) => {
   const tokenIdentifier = token.identifier;
   const multiplyier = Math.pow(10, token.decimals || 18);
-  const finalValue = realValue || Number(val) * multiplyier;
+  const finalValue = realValue || Number(val || 0) * multiplyier;
 
   const bgFinalValue = new BigNumber(finalValue).toFixed(0);
   const payload = TransactionPayload.contractCall()
@@ -146,7 +146,6 @@ export const ESDTTransferOnlyTx = async ({
   const sender = store.getState().userAccount.connectedAddress;
   const senderAddress = new Address(sender);
   const receiverAddress = new Address(contractAddr);
-  console.log("receiverAddress", receiverAddress);
 
   const tokenIdentifier = token.identifier;
   const multiplyier = Math.pow(10, token.decimals || 18);
