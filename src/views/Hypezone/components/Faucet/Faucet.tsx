@@ -4,11 +4,14 @@ import { sendMultipleTransactions } from "api/sc/sc";
 import ActionButton from "components/ActionButton/ActionButton";
 import NextImage from "components/NextImage/NextImage";
 import { getTxForRareFee } from "views/Hypezone/utils/functions";
+import useGetfaucetInfo from "views/Panel/hooks/useGetfaucetInfo";
 import faucetImg from "../../assets/faucetpng.png";
 const Faucet = () => {
+  const { info, isLoading } = useGetfaucetInfo();
+
   const handleClaim = async () => {
     let txs = [];
-    const t1 = await getTxForRareFee();
+    const t1 = await getTxForRareFee(info.cost.token, info.cost.amount);
     txs.push(t1);
     const claimTx = await scCallOnlyTx("hypezoneWsp", "claim", [], 5000000);
     txs.push(claimTx);

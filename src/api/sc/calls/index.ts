@@ -137,7 +137,7 @@ export const ESDTTransfer = async ({
 export const ESDTTransferOnlyTx = async ({
   funcName,
   token,
-  val = 0,
+  val,
   contractAddr = "",
   args = [],
   gasL = 60000000,
@@ -149,7 +149,7 @@ export const ESDTTransferOnlyTx = async ({
 
   const tokenIdentifier = token.identifier;
   const multiplyier = Math.pow(10, token.decimals || 18);
-  const finalValue = realValue || Number(val) * multiplyier;
+  const finalValue = realValue || Number(val ?? 0) * multiplyier;
 
   const bgFinalValue = new BigNumber(finalValue).toFixed(0);
   const payload = TransactionPayload.contractCall()
