@@ -4,7 +4,6 @@ import { IScHypeFauctetAdminInfo } from "utils/types/sc.interface";
 export const fetchAdminInfo = async () => {
   const res = await scQuery("hypezoneWsp", "adminInfo");
   const firstValue = res?.firstValue?.valueOf();
-  console.log("firstValue", firstValue);
 
   const data: IScHypeFauctetAdminInfo = {
     currentBalance: {
@@ -26,4 +25,10 @@ export const fetchAdminInfo = async () => {
   console.log("data", data);
 
   return data;
+};
+
+export const fetchAdmins = async () => {
+  const res = await scQuery("hypezoneWsp", "withOwnerRights");
+  const firstValue = res?.firstValue?.valueOf().map((add) => add.bech32());
+  return firstValue;
 };
