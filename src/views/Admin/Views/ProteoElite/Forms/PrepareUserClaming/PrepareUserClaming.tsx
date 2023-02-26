@@ -1,10 +1,12 @@
-import { Center, Input, Stack } from "@chakra-ui/react";
+import { Box, Center, Input, Select, Stack } from "@chakra-ui/react";
 import { BigUIntValue, BytesValue } from "@elrondnetwork/erdjs/out";
 import { scCall } from "api/sc/calls";
 import { proteoEliteWsp } from "api/sc/sc";
 import BigNumber from "bignumber.js";
 import ActionButton from "components/ActionButton/ActionButton";
 import { useFormik } from "formik";
+import { proteoFarms, proteoFarmsArr } from "views/Farms/constants";
+import { proteoPoolsArr } from "views/Pools/constants";
 import * as yup from "yup";
 
 const validationSchema = yup.object({
@@ -16,7 +18,7 @@ const validationSchema = yup.object({
 const PrepareUserClaming = () => {
   const formik = useFormik({
     initialValues: {
-      tokenI: "",
+      tokenI: proteoFarms.PROTEOEGLDLP.token,
       reward: "",
       sproteo: "",
     },
@@ -40,14 +42,44 @@ const PrepareUserClaming = () => {
     <form onSubmit={formik.handleSubmit}>
       <Center flexDirection={"column"}>
         <Stack mb={4}>
-          <Input
-            mb={2}
-            width={{ xs: "300px", tablet: "450px" }}
+          <Select
             onChange={formik.handleChange}
-            placeholder="Token Identifier"
+            variant="filled"
+            bg="#0F1535"
+            _focus={{
+              bg: "#0F1535",
+            }}
+            _hover={{
+              bg: "#0F1535",
+            }}
+            cursor="pointer"
             name="tokenI"
-            isInvalid={formik.touched.tokenI && Boolean(formik.errors.tokenI)}
-          />
+          >
+            {proteoFarmsArr.map((pf) => {
+              return (
+                <Box
+                  key={pf.tokenIdentifier}
+                  as="option"
+                  value={pf.token}
+                  bg="#252943 !important"
+                >
+                  {pf.stakedCoin}
+                </Box>
+              );
+            })}
+            {proteoPoolsArr.map((pf) => {
+              return (
+                <Box
+                  key={pf.tokenIdentifier}
+                  as="option"
+                  value={pf.token}
+                  bg="#252943 !important"
+                >
+                  {pf.stakedCoin}
+                </Box>
+              );
+            })}
+          </Select>
           <Input
             mb={2}
             width={{ xs: "300px", tablet: "450px" }}
