@@ -7,7 +7,7 @@ import ActionButton from "components/ActionButton/ActionButton";
 import { useFormik } from "formik";
 import { setElrondBalance } from "utils/functions/formatBalance";
 import { proteoFarms, proteoFarmsArr } from "views/Farms/constants";
-import { proteoPoolsArr } from "views/Pools/constants";
+import { proteoPools, proteoPoolsArr } from "views/Pools/constants";
 import * as yup from "yup";
 
 const validationSchema = yup.object({
@@ -25,11 +25,14 @@ const PrepareUserClaming = () => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
+      const { tokenIdentifier } = proteoFarms[values.tokenI]
+        ? proteoFarms[values.tokenI]
+        : proteoPools[values.tokenI];
       scCall(
         proteoEliteWsp,
         "prepareClaiming",
         [
-          BytesValue.fromUTF8(values.tokenI),
+          BytesValue.fromUTF8(tokenIdentifier),
           new BigUIntValue(new BigNumber(setElrondBalance(values.sproteo, 18))),
           new BigUIntValue(new BigNumber(setElrondBalance(values.reward, 18))),
         ],
