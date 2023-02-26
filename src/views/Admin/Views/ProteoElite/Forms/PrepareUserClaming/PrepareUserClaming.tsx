@@ -12,8 +12,8 @@ import * as yup from "yup";
 
 const validationSchema = yup.object({
   tokenI: yup.string().required(),
-  reward: yup.string().required(),
-  sproteo: yup.string().required(),
+  reward: yup.number().required(),
+  sproteo: yup.number(),
 });
 
 const PrepareUserClaming = () => {
