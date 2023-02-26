@@ -1,23 +1,22 @@
 import { Center, Divider, Grid, VStack } from "@chakra-ui/react";
-import React from "react";
-import DepositSproteo from "./Forms/DepositSproteo/DepositSproteo";
-import Harvest from "./Forms/Harvest/Harvest";
-import UnStakeSProteo from "./Buttons/UnStakeSProteo/UnStakeSProteo";
-import WithdrawSproteo from "./Buttons/WithdrawSproteo/WithdrawSproteo";
+import BlackList from "./BlackList/BlackList";
 import Pause from "./Buttons/Pause/Pause";
 import Resume from "./Buttons/Resume/Resume";
-import HarvestCycle from "./Forms/HarvestCycle/HarvestCycle";
+import UnStakeSProteo from "./Buttons/UnStakeSProteo/UnStakeSProteo";
+import WithdrawSproteo from "./Buttons/WithdrawSproteo/WithdrawSproteo";
+import AddFarmToken from "./Forms/AddFarmToken/AddFarmToken";
+import DepositSproteo from "./Forms/DepositSproteo/DepositSproteo";
+import DiustributeRewards from "./Forms/DiustributeRewards/DiustributeRewards";
 import EliteAddress from "./Forms/EliteAddress/EliteAddress";
 import FarmAddress from "./Forms/FarmAddress/FarmAddress";
-import MaxTokensPerSProteo from "./Forms/MaxTokensPerSProteo/MaxTokensPerSProteo";
-import AddFarmToken from "./Forms/AddFarmToken/AddFarmToken";
-import DiustributeRewards from "./Forms/DiustributeRewards/DiustributeRewards";
-import SetTokenAsLP from "./Forms/SetTokenAsLP/SetTokenAsLP";
-import SetRewardTokenforDualFarm from "./Forms/SetRewardTokenforDualFarm/SetRewardTokenforDualFarm";
-import SetFeesCollector from "./Forms/SetFeesCollector/SetFeesCollector";
-import BlackList from "./BlackList/BlackList";
 import ForceRecoverFunds from "./Forms/ForceRecoverFunds/ForceRecoverFunds";
 import ForceWithdraw from "./Forms/ForceWithdraw/ForceWithdraw";
+import Harvest from "./Forms/Harvest/Harvest";
+import HarvestCycle from "./Forms/HarvestCycle/HarvestCycle";
+import MaxTokensPerSProteo from "./Forms/MaxTokensPerSProteo/MaxTokensPerSProteo";
+import SetFeesCollector from "./Forms/SetFeesCollector/SetFeesCollector";
+import SetRewardTokenforDualFarm from "./Forms/SetRewardTokenforDualFarm/SetRewardTokenforDualFarm";
+import SetTokenAsLP from "./Forms/SetTokenAsLP/SetTokenAsLP";
 const ProteoElite = () => {
   return (
     <Grid
@@ -30,8 +29,8 @@ const ProteoElite = () => {
       }}
     >
       <VStack spacing={8} divider={<Divider />}>
-        <Harvest />
         <DiustributeRewards />
+        <Harvest />
         <DepositSproteo />
         <AddFarmToken />
         <FarmAddress />

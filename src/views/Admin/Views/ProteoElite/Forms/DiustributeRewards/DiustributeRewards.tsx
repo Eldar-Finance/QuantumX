@@ -25,7 +25,7 @@ const DiustributeRewards = () => {
 
       const res = await scCall(
         proteoEliteWsp,
-        "distributeFarmRewards",
+        "forceDistributeUnclaimed",
         [BytesValue.fromUTF8(tokenIdentifier)],
         400000000
       );
@@ -76,7 +76,7 @@ const DiustributeRewards = () => {
           })}
         </Select>
         <ActionButton type="submit" px={8} py={5}>
-          Distribute Farms Rewards
+          1 - Force-Distribute before Harvest
         </ActionButton>
       </Center>
     </Box>

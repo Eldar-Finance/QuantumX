@@ -10,7 +10,7 @@
         "contractCrate": {
             "name": "proteo_elite",
             "version": "0.0.0",
-            "git_version": "3c6039b-modified"
+            "git_version": "a354962-modified"
         },
         "framework": {
             "name": "elrond-wasm",
@@ -19,7 +19,20 @@
     },
     "name": "ProteoElite",
     "constructor": {
-        "inputs": [],
+        "inputs": [
+            {
+                "name": "addr1",
+                "type": "Address"
+            },
+            {
+                "name": "addr2",
+                "type": "Address"
+            },
+            {
+                "name": "addr3",
+                "type": "Address"
+            }
+        ],
         "outputs": []
     },
     "endpoints": [
@@ -314,7 +327,7 @@
             "outputs": []
         },
         {
-            "name": "distributeFarmRewards",
+            "name": "forceDistributeUnclaimed",
             "mutability": "mutable",
             "inputs": [
                 {
