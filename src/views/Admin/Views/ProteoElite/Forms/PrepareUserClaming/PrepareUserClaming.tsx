@@ -1,10 +1,12 @@
-import { Box, Center, Input, Select, Stack } from "@chakra-ui/react";
+import { Box, Center, Input, Select, Spinner, Stack } from "@chakra-ui/react";
 import { BigUIntValue, BytesValue } from "@elrondnetwork/erdjs/out";
 import { scCall } from "api/sc/calls";
 import { proteoEliteWsp } from "api/sc/sc";
 import BigNumber from "bignumber.js";
 import ActionButton from "components/ActionButton/ActionButton";
 import { useFormik } from "formik";
+import { setElrondBalance } from "utils/functions/formatBalance";
+import useGetElrondToken from "utils/hooks/useGetElrondToken";
 import { proteoFarms, proteoFarmsArr } from "views/Farms/constants";
 import { proteoPoolsArr } from "views/Pools/constants";
 import * as yup from "yup";
@@ -24,19 +26,29 @@ const PrepareUserClaming = () => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      scCall(
-        proteoEliteWsp,
-        "prepareClaiming",
-        [
-          BytesValue.fromUTF8(values.tokenI),
-          new BigUIntValue(new BigNumber(values.sproteo)),
-          new BigUIntValue(new BigNumber(values.reward)),
-        ],
+      if (selectedMsToken) {
+        scCall(
+          proteoEliteWsp,
+          "prepareClaiming",
+          [
+            BytesValue.fromUTF8(values.tokenI),
+            new BigUIntValue(
+              new BigNumber(setElrondBalance(values.sproteo, 18))
+            ),
+            new BigUIntValue(
+              new BigNumber(
+                setElrondBalance(values.reward, selectedMsToken.token.decimals)
+              )
+            ),
+          ],
 
-        50000000
-      );
+          50000000
+        );
+      }
     },
   });
+
+  const selectedMsToken = useGetElrondToken(formik.values.tokenI);
 
   return (
     <form onSubmit={formik.handleSubmit}>
@@ -99,7 +111,13 @@ const PrepareUserClaming = () => {
         </Stack>
 
         <ActionButton type="submit" px={8} py={5}>
-          3 - Prepare Users Claiming
+          {selectedMsToken.isLoading ? (
+            <Box minW="160px">
+              <Spinner />
+            </Box>
+          ) : (
+            <Box>3 - Prepare Users Claiming</Box>
+          )}
         </ActionButton>
       </Center>
     </form>
