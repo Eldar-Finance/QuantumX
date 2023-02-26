@@ -14,6 +14,7 @@ import ForceWithdraw from "./Forms/ForceWithdraw/ForceWithdraw";
 import Harvest from "./Forms/Harvest/Harvest";
 import HarvestCycle from "./Forms/HarvestCycle/HarvestCycle";
 import MaxTokensPerSProteo from "./Forms/MaxTokensPerSProteo/MaxTokensPerSProteo";
+import PrepareUserClaming from "./Forms/PrepareUserClaming/PrepareUserClaming";
 import SetFeesCollector from "./Forms/SetFeesCollector/SetFeesCollector";
 import SetRewardTokenforDualFarm from "./Forms/SetRewardTokenforDualFarm/SetRewardTokenforDualFarm";
 import SetTokenAsLP from "./Forms/SetTokenAsLP/SetTokenAsLP";
@@ -29,8 +30,11 @@ const ProteoElite = () => {
       }}
     >
       <VStack spacing={8} divider={<Divider />}>
-        <DiustributeRewards />
-        <Harvest />
+        <VStack spacing={5}>
+          <DiustributeRewards />
+          <Harvest />
+          <PrepareUserClaming />
+        </VStack>
         <DepositSproteo />
         <AddFarmToken />
         <FarmAddress />

@@ -115,7 +115,7 @@ const Harvest = () => {
           })}
         </Select>
         <ActionButton type="submit" px={8} py={5}>
-          Harvest
+          2 - Harvest
         </ActionButton>
       </Center>
     </Box>
