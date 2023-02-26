@@ -34,7 +34,7 @@ const PrepareUserClaming = () => {
           new BigUIntValue(new BigNumber(setElrondBalance(values.reward, 18))),
         ],
 
-        50000000
+        400000000
       );
     },
   });
