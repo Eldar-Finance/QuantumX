@@ -22,7 +22,6 @@ export const fetchAdminInfo = async () => {
       nonce: firstValue[2].token_nonce.toNumber(),
     },
   };
-  console.log("data", data);
 
   return data;
 };

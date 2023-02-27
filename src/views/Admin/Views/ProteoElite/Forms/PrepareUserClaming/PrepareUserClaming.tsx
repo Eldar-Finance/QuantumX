@@ -36,7 +36,6 @@ const PrepareUserClaming = () => {
           new BigUIntValue(new BigNumber(setElrondBalance(values.sproteo, 18))),
           new BigUIntValue(new BigNumber(setElrondBalance(values.reward, 18))),
         ],
-
         400000000
       );
     },

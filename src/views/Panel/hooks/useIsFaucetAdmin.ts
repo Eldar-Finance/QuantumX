@@ -9,9 +9,6 @@ const useIsFaucetAdmin = () => {
     fetchAdmins
   );
   let isAdmin = false;
-  console.log("data", data);
-  console.log("userAddress", userAddress);
-
   if (data) {
     isAdmin = data.includes(userAddress);
   }

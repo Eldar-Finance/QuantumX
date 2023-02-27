@@ -44,3 +44,7 @@ export const fetchSrbNftsByUser = async () => {
   );
   return data;
 };
+export const fetchTopSmartSwapTokens = async () => {
+  const { data } = await api.get<string[]>("/toptokens.php");
+  return data;
+};

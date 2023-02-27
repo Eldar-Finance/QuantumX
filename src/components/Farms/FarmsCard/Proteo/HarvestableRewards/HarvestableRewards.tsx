@@ -22,8 +22,6 @@ const HarvestableRewards = ({ pf }: IProps) => {
       <Center mt="2" gap="3" justifyContent={"space-around"} flexDir="column">
         {rewards.map((r) => {
           const tokenLogo = coinInfo[formatTokenI(r.claimableTokenI)]?.logo;
-          console.log("tokenLogo", tokenLogo);
-
           const decimals =
             coinInfo[formatTokenI(r.claimableTokenI)]?.dedecimals;
           return (

@@ -52,7 +52,6 @@ const useGetTotalValueInHype = () => {
             Number(price)
           );
         }
-        console.log("lpPrices", lpPrices);
 
         setTotalValueLocked(totalLockedonProteoFarms);
       }
