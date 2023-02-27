@@ -27,7 +27,7 @@ const Avilable = ({ farm, userFarmRewards }: IProps) => {
       "farms2",
       "harvest",
       [new BigUIntValue(new BigNumber(farm.farm.farmId))],
-      150000000
+      180000000
     );
   };
   const isAFarmBoost = useIsBearFarm(farm);
