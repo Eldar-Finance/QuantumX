@@ -134,6 +134,8 @@ const CurrencyModal = ({
                     rounded="md"
                     px={2}
                     py={1}
+                    background="transparent"
+                    color="white"
                     cursor="pointer"
                     _hover={{
                       background: "main",
