@@ -1,6 +1,7 @@
 import { ArrowDownIcon, ArrowUpIcon } from "@chakra-ui/icons";
 import {
   Box,
+  Button,
   Center,
   Flex,
   IconButton,
@@ -139,6 +140,11 @@ const CurrencyModal = ({
                       color: "black",
                     }}
                     onClick={() => handleClickToken(t)}
+                    as={Button}
+                    disabled={
+                      field === "from" &&
+                      formatTokenI(t.name).slice(-2) === "LP"
+                    }
                   >
                     {formatTokenI(t.name).slice(-2) === "LP" ? (
                       <LpTokenImage lpToken={t} />
