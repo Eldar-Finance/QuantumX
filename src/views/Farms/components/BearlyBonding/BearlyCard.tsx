@@ -89,7 +89,7 @@ const BearlyCard = ({ farm, multifarmRewardsLeft }: IProps) => {
       "farms2",
       "harvest",
       [new BigUIntValue(new BigNumber(farm.farm.farmId))],
-      180000000
+      300000000
     );
   };
   const { isSrbStaker } = useCanUsePool7();
