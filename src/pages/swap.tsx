@@ -5,7 +5,7 @@ const SwapPage = () => {
     <>
       <MetaHead
         metaTitle="QuantumX Swap"
-        metaDescription="QuantumX - xExchnage or P2P Swaps"
+        metaDescription="QuantumX - xExchnage"
         metaImage="/images/swap.png"
       />
 
