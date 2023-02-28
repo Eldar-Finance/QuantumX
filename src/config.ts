@@ -134,7 +134,7 @@ export const TOKENS_ID = {
 };
 
 //general configs
-export const walletConnectV2ProjectId = "bb4a880517d6fcc65cdb9cac0a238b4e";
+export const walletConnectV2ProjectId = "9b1a9564f91cb659ffe21b73d5c4e2d8";
 export const apiTimeout = 6000;
 export const TOOLS_API_URL = "https://tools.elrond.com";
 export const sampleAuthenticatedDomains = [TOOLS_API_URL];
