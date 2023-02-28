@@ -1,6 +1,7 @@
 
 #dapp-modal{
-  color: black
+  color: black;
+  z-index: 9999
 }
 .dapp-core-component__transactionsToastList-styles__toasts{
   color: black

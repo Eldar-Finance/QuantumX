@@ -154,7 +154,6 @@ const Login = ({ isLoginOpen }) => {
                 callbackRoute={routeNames.home}
                 shouldRenderDefaultCss={false}
                 loginButtonText={mobileText}
-                className="DappUIButton"
                 {...(walletConnectV2ProjectId
                   ? {
                       isWalletConnectV2: true,
@@ -167,7 +166,6 @@ const Login = ({ isLoginOpen }) => {
                 callbackRoute={routeNames.home}
                 shouldRenderDefaultCss={false}
                 loginButtonText={webWallet}
-                className="DappUIButton"
               />
             </LoginMethod>
             <LoginMethod>
@@ -176,7 +174,6 @@ const Login = ({ isLoginOpen }) => {
                 callbackRoute={routeNames.home}
                 shouldRenderDefaultCss={false}
                 loginButtonText={legerWallet}
-                className="DappUIButton"
               />
             </LoginMethod>
           </Flex>
