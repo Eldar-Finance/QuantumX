@@ -14,9 +14,22 @@ import NextImage from "components/NextImage/NextImage";
 import MyModal from "../Modal/Modal";
 
 import { DappUI } from "@elrondnetwork/dapp-core";
+import { walletConnectV2ProjectId } from "config";
+import dynamic from "next/dynamic";
 import { openLogin } from "redux/slices/settings/settings-reducer";
 import { useAppDispatch } from "utils/hooks/redux";
 import { routeNames } from "utils/routes";
+
+const WalletConnectLoginButton: any = dynamic(
+  async () => {
+    return (
+      await import(
+        "@multiversx/sdk-dapp/UI/walletConnect/WalletConnectLoginButton"
+      )
+    ).WalletConnectLoginButton;
+  },
+  { ssr: false }
+);
 
 const mobileText = (
   <Flex
@@ -114,11 +127,16 @@ const Login = ({ isLoginOpen }) => {
               />
             </LoginMethod>
             <LoginMethod>
-              <DappUI.WalletConnectLoginButton
+              <WalletConnectLoginButton
                 callbackRoute={routeNames.home}
                 shouldRenderDefaultCss={false}
                 loginButtonText={mobileText}
                 className="DappUIButton"
+                {...(walletConnectV2ProjectId
+                  ? {
+                      isWalletConnectV2: true,
+                    }
+                  : {})}
               />
             </LoginMethod>
             <LoginMethod>
