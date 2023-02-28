@@ -10,7 +10,7 @@ import {
   ModalHeader,
   Text,
 } from "@chakra-ui/react";
-import { transactionServices } from "@elrondnetwork/dapp-core";
+import { useTrackTransactionStatus } from "@multiversx/sdk-dapp/hooks";
 import { contractAddr } from "api/net.config";
 import { EGLDPayment, ESDTTransfer } from "api/sc/calls";
 import { proteoEliteWsp } from "api/sc/sc";
@@ -45,7 +45,7 @@ const StakeModal = ({ isOpen, onClose, max, pf, token }: IProps) => {
   const onSuccess = () => {
     window.location.reload();
   };
-  const transactionStatus = transactionServices.useTrackTransactionStatus({
+  const transactionStatus = useTrackTransactionStatus({
     transactionId: sessionId,
     onSuccess: onSuccess,
   });

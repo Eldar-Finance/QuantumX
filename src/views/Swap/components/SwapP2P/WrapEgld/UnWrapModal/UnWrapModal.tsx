@@ -11,7 +11,7 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import { transactionServices } from "@elrondnetwork/dapp-core";
+import { useTrackTransactionStatus } from "@multiversx/sdk-dapp/hooks";
 import { contractAddr, toknesID } from "api/net.config";
 import { ESDTTransfer } from "api/sc/calls";
 import ActionButton from "components/ActionButton/ActionButton";
@@ -27,7 +27,7 @@ const UnWrapModal = ({ isOpenModal, onCloseModal }) => {
   const [amount, setAmount] = useState("");
   const [sessionId, setSessionId] = useState<string>();
 
-  const txs = transactionServices.useTrackTransactionStatus({
+  const txs = useTrackTransactionStatus({
     transactionId: sessionId,
     onSuccess: (txI) => {
       if (window) {

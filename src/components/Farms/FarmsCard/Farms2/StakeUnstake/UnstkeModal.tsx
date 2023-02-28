@@ -45,21 +45,18 @@ const UnstakeModal = ({
   const { farmFee } = useGetQuantumxFarmsFees(farm.farm.farmId);
   const inputRef = useRef(null);
   const validationSchema = yup.object({
-    amount: yup
-      .number()
-      .required()
-      .max(Number(userFarmItem?.stakedBalance)),
+    amount: yup.number().required().max(Number(userFarmItem?.stakedBalance)),
   });
   const formik = useFormik({
     initialValues: {
       amount: "",
     },
     validationSchema: validationSchema,
-    onSubmit: async (values: any) => {
+    onSubmit: async (values: any) => { 
       const BigNumber = (await import("bignumber.js")).default;
-      const BigUIntValue = (await import("@elrondnetwork/erdjs/out"))
+      const BigUIntValue = (await import("@multiversx/sdk-core/out"))
         .BigUIntValue;
-
+ 
       scCall(
         "farms2",
         "unstake",

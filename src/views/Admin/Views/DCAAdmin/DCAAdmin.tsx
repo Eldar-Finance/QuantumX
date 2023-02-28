@@ -1,5 +1,5 @@
 import { Box, Center, Input } from "@chakra-ui/react";
-import { Address, AddressValue, BytesValue } from "@elrondnetwork/erdjs/out";
+import { Address, AddressValue, BytesValue } from "@multiversx/sdk-core/out";
 import { scCall } from "api/sc/calls";
 import { dcaWsp } from "api/sc/sc";
 import ActionButton from "components/ActionButton/ActionButton";

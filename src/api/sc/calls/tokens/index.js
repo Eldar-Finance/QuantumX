@@ -6,7 +6,7 @@ import {
   ContractFunction,
   Transaction,
   TransactionPayload,
-} from "@elrondnetwork/erdjs/out";
+} from "@multiversx/sdk-core/out";
 import { ChainId, contractAddr } from "api/net.config";
 import { sendMultipleTransactions } from "api/sc/sc";
 import BigNumber from "bignumber.js";

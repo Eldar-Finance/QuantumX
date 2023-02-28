@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import { BytesValue } from "@elrondnetwork/erdjs/out";
+import { BytesValue } from "@multiversx/sdk-core/out";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { toknesID } from "api/net.config";
 import { scQuery } from "api/sc/queries";

@@ -1,5 +1,5 @@
 import { Box, Center, Input, Select, Stack } from "@chakra-ui/react";
-import { BigUIntValue, BytesValue } from "@elrondnetwork/erdjs/out";
+import { BigUIntValue, BytesValue } from "@multiversx/sdk-core/out";
 import { scCall } from "api/sc/calls";
 import { proteoEliteWsp } from "api/sc/sc";
 import BigNumber from "bignumber.js";

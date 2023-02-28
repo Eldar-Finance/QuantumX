@@ -1,5 +1,5 @@
 import { Center, Text } from "@chakra-ui/react";
-import { BigIntValue } from "@elrondnetwork/erdjs/out";
+import { BigIntValue } from "@multiversx/sdk-core/out";
 import { contractAddr } from "api/net.config";
 import { EGLDPayment, ESDTTransfer } from "api/sc/calls";
 import srbImage from "assets/hub/srbcatalog.jpg";

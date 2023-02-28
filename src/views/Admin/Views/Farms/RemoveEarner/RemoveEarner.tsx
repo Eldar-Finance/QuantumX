@@ -1,5 +1,5 @@
 import { Flex, Input, Text } from "@chakra-ui/react";
-import { BytesValue } from "@elrondnetwork/erdjs/out";
+import { BytesValue } from "@multiversx/sdk-core/out";
 import { scCall } from "api/sc/calls";
 import ActionButton from "components/ActionButton/ActionButton";
 

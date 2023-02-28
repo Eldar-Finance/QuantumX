@@ -1,4 +1,5 @@
-import { logout, useGetLoginInfo } from "@elrondnetwork/dapp-core";
+import { useGetLoginInfo } from "@multiversx/sdk-dapp/hooks";
+import { logout } from "@multiversx/sdk-dapp/utils";
 import { useRouter } from "next/router";
 import { openLogin } from "redux/slices/settings/settings-reducer";
 import { getWebUrl } from "utils/routes";

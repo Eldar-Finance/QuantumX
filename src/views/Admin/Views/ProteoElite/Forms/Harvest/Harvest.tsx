@@ -5,7 +5,7 @@ import {
   ListType,
   U64Type,
   U64Value,
-} from "@elrondnetwork/erdjs/out";
+} from "@multiversx/sdk-core/out";
 import axiosEldar2 from "api/rest/axiosEldar2";
 import { scCall } from "api/sc/calls";
 import { proteoEliteWsp } from "api/sc/sc";

@@ -2,12 +2,12 @@ import { contractAddr } from "api/net.config";
 import { getInterface, provider } from "api/sc/sc";
 import axios from "axios";
 export const getReturnedDataOfscCall = async (workspace, txHash, funcName) => {
-  const AbiRegistry = (await import("@elrondnetwork/erdjs/out")).AbiRegistry;
-  const ResultsParser = (await import("@elrondnetwork/erdjs/out"))
+  const AbiRegistry = (await import("@multiversx/sdk-core/out")).AbiRegistry;
+  const ResultsParser = (await import("@multiversx/sdk-core/out"))
     .ResultsParser;
-  const SmartContract = (await import("@elrondnetwork/erdjs/out"))
+  const SmartContract = (await import("@multiversx/sdk-core/out"))
     .SmartContract;
-  const SmartContractAbi = (await import("@elrondnetwork/erdjs/out"))
+  const SmartContractAbi = (await import("@multiversx/sdk-core/out"))
     .SmartContractAbi;
 
   const parser = new ResultsParser();

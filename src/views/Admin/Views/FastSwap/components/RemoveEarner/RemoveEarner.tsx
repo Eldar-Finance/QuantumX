@@ -1,5 +1,5 @@
 import { Center, Input, Text } from "@chakra-ui/react";
-import { BytesValue } from "@elrondnetwork/erdjs/out";
+import { BytesValue } from "@multiversx/sdk-core/out";
 import { scCall } from "api/sc/calls";
 import { fastp2pSwapWsp } from "api/sc/sc";
 import ActionButton from "components/ActionButton/ActionButton";

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
-import { useGetAccountInfo } from "@elrondnetwork/dapp-core";
+import { useGetAccountInfo } from "@multiversx/sdk-dapp/hooks";
 import {
   selectUserAddress,
   selectUserTokens,

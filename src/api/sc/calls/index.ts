@@ -5,15 +5,15 @@ import {
   BytesValue,
   ContractFunction,
   Transaction,
-  TransactionPayload,
-} from "@elrondnetwork/erdjs/out";
+  TransactionPayload
+} from "@multiversx/sdk-core/out";
 import { ChainId, toknesID } from "api/net.config";
 import {
   EGLD_VAL,
   getInterface,
   sendMultipleTransactions,
   sendTransaction,
-  WspTypes,
+  WspTypes
 } from "api/sc/sc";
 import BigNumber from "bignumber.js";
 import store from "redux/store";

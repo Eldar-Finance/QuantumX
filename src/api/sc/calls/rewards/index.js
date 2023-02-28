@@ -4,7 +4,7 @@ import {
   ContractFunction,
   Transaction,
   TransactionPayload,
-} from "@elrondnetwork/erdjs/out";
+} from "@multiversx/sdk-core/out";
 import { ChainId } from "api/net.config";
 import { getInterface, sendMultipleTransactions } from "api/sc/sc";
 import store from "redux/store";

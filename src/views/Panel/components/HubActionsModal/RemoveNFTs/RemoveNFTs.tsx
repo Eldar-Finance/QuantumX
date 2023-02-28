@@ -9,7 +9,7 @@ import {
   Spinner,
   Text,
 } from "@chakra-ui/react";
-import { BigUIntValue } from "@elrondnetwork/erdjs/out";
+import { BigUIntValue } from "@multiversx/sdk-core/out";
 import { scCall } from "api/sc/calls";
 import BigNumber from "bignumber.js";
 import ActionButton from "components/ActionButton/ActionButton";

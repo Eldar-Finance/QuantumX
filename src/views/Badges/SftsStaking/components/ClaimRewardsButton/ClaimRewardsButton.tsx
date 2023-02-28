@@ -1,5 +1,5 @@
 import { Box, useDisclosure } from "@chakra-ui/react";
-import { transactionServices } from "@elrondnetwork/dapp-core";
+import { useTrackTransactionStatus } from "@multiversx/sdk-dapp/hooks";
 import { scCall } from "api/sc/calls";
 import { sftsRewardsWsp } from "api/sc/sc";
 import ActionButton from "components/ActionButton/ActionButton";
@@ -39,7 +39,7 @@ const ClaimRewardsButton = () => {
       }
     }
   };
-  const transactionStatus = transactionServices.useTrackTransactionStatus({
+  const transactionStatus = useTrackTransactionStatus({
     transactionId: sessionId,
     onSuccess: onSuccess,
   });

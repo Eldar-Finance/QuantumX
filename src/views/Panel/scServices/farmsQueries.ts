@@ -1,4 +1,4 @@
-import { BigUIntValue } from "@elrondnetwork/erdjs/out";
+import { BigUIntValue } from "@multiversx/sdk-core/out";
 import { scQuery } from "api/sc/queries";
 import BigNumber from "bignumber.js";
 import { IScFarms2StakersReport } from "utils/types/sc.interface";

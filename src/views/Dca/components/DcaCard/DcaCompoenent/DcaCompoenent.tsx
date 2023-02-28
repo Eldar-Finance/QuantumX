@@ -6,7 +6,7 @@ import {
   ListType,
   TokenIdentifierType,
   TokenIdentifierValue,
-} from "@elrondnetwork/erdjs/out";
+} from "@multiversx/sdk-core/out";
 import { contractAddr } from "api/net.config";
 import { EGLDPayment } from "api/sc/calls";
 import { fastSwapInJex } from "api/sc/calls/swap/fastSwap";

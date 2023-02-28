@@ -8,7 +8,7 @@ import {
   Text,
   useClipboard,
 } from "@chakra-ui/react";
-import { Address, AddressValue } from "@elrondnetwork/erdjs/out";
+import { Address, AddressValue } from "@multiversx/sdk-core/out";
 import { scCall } from "api/sc/calls";
 import { proteoEliteWsp } from "api/sc/sc";
 import ActionButton from "components/ActionButton/ActionButton";

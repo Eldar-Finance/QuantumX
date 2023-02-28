@@ -1,9 +1,8 @@
-import "@elrondnetwork/dapp-core/dist/index.css";
 import "../styles/globals.css";
 
 import { Provider } from "react-redux";
 
-import { ChakraProvider } from "@chakra-ui/react";
+import { Box, ChakraProvider } from "@chakra-ui/react";
 import { MetaHead } from "components/MetaHead/MetaHead";
 
 import store from "redux/store";
@@ -15,9 +14,9 @@ import { EnvironmentsEnum } from "@multiversx/sdk-dapp/types";
 import { AxiosInterceptorContext } from "@multiversx/sdk-dapp/wrappers/AxiosInterceptorContext";
 import { DappProvider } from "@multiversx/sdk-dapp/wrappers/DappProvider";
 
+import { network } from "api/net.config";
 import dynamic from "next/dynamic";
 import {
-  apiTimeout,
   sampleAuthenticatedDomains,
   walletConnectV2ProjectId,
 } from "../config";
@@ -57,16 +56,13 @@ const QuantumXApp = ({ Component, pageProps }) => {
         <DappProvider
           environment={EnvironmentsEnum.devnet}
           customNetworkConfig={{
-            name: "customConfig",
-            apiTimeout,
+            ...network,
             walletConnectV2ProjectId,
           }}
         >
           <Provider store={store}>
             <AxiosInterceptorContext.Listener />
-            <TransactionsToastList />
-            <NotificationModal />
-            <SignTransactionsModals className="custom-class-for-modals" />
+           
             <ChakraProvider resetCSS theme={customTheme}>
               <style jsx global>{`
                 html,
@@ -75,6 +71,12 @@ const QuantumXApp = ({ Component, pageProps }) => {
                 }
               `}</style>
               <MetaHead metaTitle="QuantumX - Friction-less swaps. Quantum level latency" />
+              <Box color="black">
+
+              <TransactionsToastList />
+            <NotificationModal />
+            <SignTransactionsModals className="custom-class-for-modals" />
+              </Box>
               <Component {...pageProps} />
             </ChakraProvider>
           </Provider>

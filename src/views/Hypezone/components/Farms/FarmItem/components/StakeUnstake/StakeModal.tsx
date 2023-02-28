@@ -10,7 +10,7 @@ import {
   ModalHeader,
   Text,
 } from "@chakra-ui/react";
-import { BigIntValue } from "@elrondnetwork/erdjs/out";
+import { BigIntValue } from "@multiversx/sdk-core/out";
 import { contractAddr } from "api/net.config";
 import { EGLDPaymentOnlyTx, ESDTTransferOnlyTx } from "api/sc/calls";
 import { sendMultipleTransactions } from "api/sc/sc";

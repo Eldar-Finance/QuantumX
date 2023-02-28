@@ -1,5 +1,5 @@
 import { ButtonProps } from "@chakra-ui/react";
-import { transactionServices } from "@elrondnetwork/dapp-core";
+import { useTrackTransactionStatus } from "@multiversx/sdk-dapp/hooks";
 import ActionButton from "components/ActionButton/ActionButton";
 import { useState } from "react";
 import {
@@ -33,7 +33,7 @@ const SwapButton = ({
   const fromToken = useAppSelector(selectFromField);
   const { token: fromElrondToken } = useGetElrondToken(fromToken.token);
 
-  const txs = transactionServices.useTrackTransactionStatus({
+  const txs = useTrackTransactionStatus({
     transactionId: sessionId,
     onSuccess: (txI) => {
       if (window) {
