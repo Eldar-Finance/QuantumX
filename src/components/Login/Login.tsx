@@ -154,11 +154,8 @@ const Login = ({ isLoginOpen }) => {
                 callbackRoute={routeNames.home}
                 shouldRenderDefaultCss={false}
                 loginButtonText={mobileText}
-                {...(walletConnectV2ProjectId
-                  ? {
-                      isWalletConnectV2: true,
-                    }
-                  : {})}
+                isWalletConnectV2={true}
+                
               />
             </LoginMethod>
             <LoginMethod>
