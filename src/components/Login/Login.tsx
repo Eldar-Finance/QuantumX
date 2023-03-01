@@ -13,7 +13,6 @@ import { CloseIcon, LegerIcon, MultiversxLogo } from "components/Icons/ui";
 import NextImage from "components/NextImage/NextImage";
 import MyModal from "../Modal/Modal";
 
-import { walletConnectV2ProjectId } from "config";
 import dynamic from "next/dynamic";
 import { openLogin } from "redux/slices/settings/settings-reducer";
 import { useAppDispatch } from "utils/hooks/redux";
@@ -155,7 +154,6 @@ const Login = ({ isLoginOpen }) => {
                 shouldRenderDefaultCss={false}
                 loginButtonText={mobileText}
                 isWalletConnectV2={true}
-                
               />
             </LoginMethod>
             <LoginMethod>
