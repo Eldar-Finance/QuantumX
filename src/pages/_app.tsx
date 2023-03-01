@@ -52,7 +52,7 @@ const QuantumXApp = ({ Component, pageProps }) => {
         <DappProvider
           environment={EnvironmentsEnum.mainnet}
           customNetworkConfig={{
-            name: "customConfig",
+            name: "quantumxConfig",
             walletConnectV2ProjectId: "bb4a880517d6fcc65cdb9cac0a238b4e",
           }}
         >
