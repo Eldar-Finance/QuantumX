@@ -14,12 +14,8 @@ import { EnvironmentsEnum } from "@multiversx/sdk-dapp/types";
 import { AxiosInterceptorContext } from "@multiversx/sdk-dapp/wrappers/AxiosInterceptorContext";
 import { DappProvider } from "@multiversx/sdk-dapp/wrappers/DappProvider";
 
-import { network } from "api/net.config";
 import dynamic from "next/dynamic";
-import {
-  sampleAuthenticatedDomains,
-  walletConnectV2ProjectId,
-} from "../config";
+import { sampleAuthenticatedDomains } from "../config";
 
 const SignTransactionsModals: any = dynamic(
   async () => {
@@ -56,13 +52,13 @@ const QuantumXApp = ({ Component, pageProps }) => {
         <DappProvider
           environment={EnvironmentsEnum.devnet}
           customNetworkConfig={{
-            ...network,
-            walletConnectV2ProjectId,
+            name: "customConfig",
+            walletConnectV2ProjectId: "bb4a880517d6fcc65cdb9cac0a238b4e",
           }}
         >
           <Provider store={store}>
             <AxiosInterceptorContext.Listener />
-           
+
             <ChakraProvider resetCSS theme={customTheme}>
               <style jsx global>{`
                 html,
@@ -72,10 +68,9 @@ const QuantumXApp = ({ Component, pageProps }) => {
               `}</style>
               <MetaHead metaTitle="QuantumX - Friction-less swaps. Quantum level latency" />
               <Box color="black">
-
-              <TransactionsToastList />
-            <NotificationModal />
-            <SignTransactionsModals className="custom-class-for-modals" />
+                <TransactionsToastList />
+                <NotificationModal />
+                <SignTransactionsModals className="custom-class-for-modals" />
               </Box>
               <Component {...pageProps} />
             </ChakraProvider>
