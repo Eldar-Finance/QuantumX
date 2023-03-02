@@ -18,39 +18,30 @@ import { openLogin } from "redux/slices/settings/settings-reducer";
 import { useAppDispatch } from "utils/hooks/redux";
 import { routeNames } from "utils/routes";
 
-const ExtensionLoginButton: any = dynamic(
+const ExtensionLoginButton:any = dynamic(
   async () => {
-    return (
-      await import("@multiversx/sdk-dapp/UI/extension/ExtensionLoginButton")
-    ).ExtensionLoginButton;
+      return (await import("@multiversx/sdk-dapp/UI/extension/ExtensionLoginButton")).ExtensionLoginButton;
   },
   { ssr: false }
 );
 
-const LedgerLoginButton: any = dynamic(
+const WalletConnectLoginButton:any  = dynamic(
   async () => {
-    return (await import("@multiversx/sdk-dapp/UI/ledger/LedgerLoginButton"))
-      .LedgerLoginButton;
+      return (await import("@multiversx/sdk-dapp/UI/walletConnect/WalletConnectLoginButton")).WalletConnectLoginButton;
   },
   { ssr: false }
 );
 
-const WebWalletLoginButton: any = dynamic(
+const LedgerLoginButton:any  = dynamic(
   async () => {
-    return (
-      await import("@multiversx/sdk-dapp/UI/webWallet/WebWalletLoginButton")
-    ).WebWalletLoginButton;
+      return (await import("@multiversx/sdk-dapp/UI/ledger/LedgerLoginButton")).LedgerLoginButton;
   },
   { ssr: false }
 );
 
-const WalletConnectLoginButton: any = dynamic(
+const WebWalletLoginButton :any = dynamic(
   async () => {
-    return (
-      await import(
-        "@multiversx/sdk-dapp/UI/walletConnect/WalletConnectLoginButton"
-      )
-    ).WalletConnectLoginButton;
+      return (await import("@multiversx/sdk-dapp/UI/webWallet/WebWalletLoginButton")).WebWalletLoginButton;
   },
   { ssr: false }
 );
@@ -146,6 +137,7 @@ const Login = ({ isLoginOpen }) => {
               <ExtensionLoginButton
                 callbackRoute={routeNames.home}
                 loginButtonText={defiWallet}
+                nativeAuth={true}
               />
             </LoginMethod>
             <LoginMethod>
@@ -154,6 +146,7 @@ const Login = ({ isLoginOpen }) => {
                 shouldRenderDefaultCss={false}
                 loginButtonText={mobileText}
                 isWalletConnectV2={true}
+                nativeAuth={true}
               />
             </LoginMethod>
             <LoginMethod>
@@ -161,6 +154,7 @@ const Login = ({ isLoginOpen }) => {
                 callbackRoute={routeNames.home}
                 shouldRenderDefaultCss={false}
                 loginButtonText={webWallet}
+                nativeAuth={true}
               />
             </LoginMethod>
             <LoginMethod>
@@ -169,6 +163,7 @@ const Login = ({ isLoginOpen }) => {
                 callbackRoute={routeNames.home}
                 shouldRenderDefaultCss={false}
                 loginButtonText={legerWallet}
+                nativeAuth={true}
               />
             </LoginMethod>
           </Flex>
