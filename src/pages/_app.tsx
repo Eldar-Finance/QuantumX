@@ -53,7 +53,7 @@ const QuantumXApp = ({ Component, pageProps }) => {
           environment={EnvironmentsEnum.mainnet}
           customNetworkConfig={{
             name: "quantumxConfig",
-            walletConnectV2ProjectId: "bb4a880517d6fcc65cdb9cac0a238b4e",
+            walletConnectV2ProjectId: "cf388e978587b4cba673b4080fb9d89b",
           }}
         >
           <Provider store={store}>
