@@ -17,7 +17,7 @@ const Avilable = ({ pf }: IProps) => {
   const { isLoggedIn, handleLogin } = useLogin();
   const handleWithDraw = async (tokenI) => {
     const scCall = (await import("api/sc/calls")).scCall;
-    const BytesValue = (await import("@elrondnetwork/erdjs/out")).BytesValue;
+    const BytesValue = (await import("@multiversx/sdk-core/out")).BytesValue;
     scCall(proteoEliteWsp, "withdraw", [BytesValue.fromUTF8(tokenI)], 60000000);
   };
 

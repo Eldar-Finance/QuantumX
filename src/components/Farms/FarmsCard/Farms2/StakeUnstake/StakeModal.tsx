@@ -10,8 +10,8 @@ import {
   ModalHeader,
   Text,
 } from "@chakra-ui/react";
-import { transactionServices } from "@elrondnetwork/dapp-core";
-import { BigIntValue } from "@elrondnetwork/erdjs/out";
+import { BigIntValue } from "@multiversx/sdk-core/out";
+import { useTrackTransactionStatus } from "@multiversx/sdk-dapp/hooks";
 import { contractAddr } from "api/net.config";
 import { EGLDPayment, ESDTTransfer } from "api/sc/calls";
 import BigNumber from "bignumber.js";
@@ -49,7 +49,7 @@ const StakeModal = ({ isOpen, onClose, farm, isPool, token }: IProps) => {
   const onSuccess = () => {
     window.location.reload();
   };
-  const transactionStatus = transactionServices.useTrackTransactionStatus({
+  const transactionStatus = useTrackTransactionStatus({
     transactionId: sessionId,
     onSuccess: onSuccess,
   });

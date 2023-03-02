@@ -4,7 +4,7 @@ import {
   AddressValue,
   BigUIntValue,
   BytesValue,
-} from "@elrondnetwork/erdjs/out";
+} from "@multiversx/sdk-core/out";
 import { scCall } from "api/sc/calls";
 import BigNumber from "bignumber.js";
 import ActionButton from "components/ActionButton/ActionButton";

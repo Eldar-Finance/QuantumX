@@ -2,7 +2,7 @@ import {
   BigUIntValue,
   BooleanValue,
   BytesValue,
-} from "@elrondnetwork/erdjs/out";
+} from "@multiversx/sdk-core/out";
 import {
   EGLDPayment,
   MultESDTNFTTranferOrEgldPayment,

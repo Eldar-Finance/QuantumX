@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import { Address, AddressValue, BytesValue } from "@elrondnetwork/erdjs/out";
+import { Address, AddressValue, BytesValue } from "@multiversx/sdk-core/out";
 import { createAsyncThunk, current } from "@reduxjs/toolkit";
 import { toknesID } from "api/net.config";
 import { getTokens } from "api/rest/elrondApi/accounts";

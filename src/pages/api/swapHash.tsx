@@ -1,4 +1,4 @@
-import { Address, BytesValue } from "@elrondnetwork/erdjs/out";
+import { Address, BytesValue } from "@multiversx/sdk-core/out";
 import { sha256 } from "js-sha256";
 import toHex from "to-hex";
 export default function handler(req, res) {

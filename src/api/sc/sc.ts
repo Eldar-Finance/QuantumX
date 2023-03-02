@@ -1,12 +1,8 @@
 import { ChainId, contractAddr, network } from "../net.config";
 
-import {
-  refreshAccount,
-  sendTransactions,
-  transactionServices,
-} from "@elrondnetwork/dapp-core";
-import { ProxyNetworkProvider } from "@elrondnetwork/erdjs-network-providers/out";
-import { Address, Transaction } from "@elrondnetwork/erdjs/out";
+import { Address, Transaction } from "@multiversx/sdk-core/out";
+import { sendTransactions } from "@multiversx/sdk-dapp/services";
+import { ProxyNetworkProvider } from "@multiversx/sdk-network-providers";
 import store from "redux/store";
 
 //abis import
@@ -65,8 +61,6 @@ export const sendTransaction = async ({
     chainID: ChainId,
   });
 
-  await refreshAccount();
-
   const res = await sendTransactions({
     transactions: tx,
     transactionsDisplayInfo: {
@@ -92,10 +86,6 @@ export const sendMultipleTransactions = async ({
   successMessage?: string;
   transactionDuration?: number;
 }) => {
-  await refreshAccount();
-
-  const { sendTransactions } = transactionServices;
-
   const res = await sendTransactions({
     transactions: txs,
     transactionsDisplayInfo: {

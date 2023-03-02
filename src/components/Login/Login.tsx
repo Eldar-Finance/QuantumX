@@ -13,10 +13,47 @@ import { CloseIcon, LegerIcon, MultiversxLogo } from "components/Icons/ui";
 import NextImage from "components/NextImage/NextImage";
 import MyModal from "../Modal/Modal";
 
-import { DappUI } from "@elrondnetwork/dapp-core";
+import dynamic from "next/dynamic";
 import { openLogin } from "redux/slices/settings/settings-reducer";
 import { useAppDispatch } from "utils/hooks/redux";
 import { routeNames } from "utils/routes";
+
+const ExtensionLoginButton: any = dynamic(
+  async () => {
+    return (
+      await import("@multiversx/sdk-dapp/UI/extension/ExtensionLoginButton")
+    ).ExtensionLoginButton;
+  },
+  { ssr: false }
+);
+
+const WalletConnectLoginButton: any = dynamic(
+  async () => {
+    return (
+      await import(
+        "@multiversx/sdk-dapp/UI/walletConnect/WalletConnectLoginButton"
+      )
+    ).WalletConnectLoginButton;
+  },
+  { ssr: false }
+);
+
+const LedgerLoginButton: any = dynamic(
+  async () => {
+    return (await import("@multiversx/sdk-dapp/UI/ledger/LedgerLoginButton"))
+      .LedgerLoginButton;
+  },
+  { ssr: false }
+);
+
+const WebWalletLoginButton: any = dynamic(
+  async () => {
+    return (
+      await import("@multiversx/sdk-dapp/UI/webWallet/WebWalletLoginButton")
+    ).WebWalletLoginButton;
+  },
+  { ssr: false }
+);
 
 const mobileText = (
   <Flex
@@ -104,38 +141,34 @@ const Login = ({ isLoginOpen }) => {
             />
           </Flex>
           <Flex flexDir={"column"} alignItems="center" gap={"10px"}>
+            {" "}
             <LoginMethod>
-              {" "}
-              <DappUI.ExtensionLoginButton
+              <ExtensionLoginButton
                 callbackRoute={routeNames.home}
-                shouldRenderDefaultCss={false}
                 loginButtonText={defiWallet}
-                className="DappUIButton"
               />
             </LoginMethod>
             <LoginMethod>
-              <DappUI.WalletConnectLoginButton
+              <WalletConnectLoginButton
                 callbackRoute={routeNames.home}
                 shouldRenderDefaultCss={false}
                 loginButtonText={mobileText}
-                className="DappUIButton"
+                isWalletConnectV2={true}
               />
             </LoginMethod>
             <LoginMethod>
-              <DappUI.WebWalletLoginButton
+              <WebWalletLoginButton
                 callbackRoute={routeNames.home}
                 shouldRenderDefaultCss={false}
                 loginButtonText={webWallet}
-                className="DappUIButton"
               />
             </LoginMethod>
             <LoginMethod>
               {" "}
-              <DappUI.LedgerLoginButton
+              <LedgerLoginButton
                 callbackRoute={routeNames.home}
                 shouldRenderDefaultCss={false}
                 loginButtonText={legerWallet}
-                className="DappUIButton"
               />
             </LoginMethod>
           </Flex>
@@ -168,23 +201,48 @@ const Login = ({ isLoginOpen }) => {
 export default Login;
 
 const LoginMethod = ({ children, onClick = undefined }) => {
-  const bg = useColorModeValue("lightGray.lighter", "#202020");
+  const bg = useColorModeValue("lightGray.lighter", "");
   return (
     <Flex
       fontSize="18px"
-      bg={bg}
       w="full"
       alignItems={"center"}
       justifyContent="space-between"
       cursor={"pointer"}
       onClick={onClick}
-      borderRadius="15px"
-      px="22px"
-      py={"20px"}
       fontWeight="400"
+      position={"relative"}
+      sx={{
+        "& button": {
+          width: "100%",
+          bg: "#202020",
+          border: "none",
+          px: "22px !important",
+          mx: 0,
+          my: 0,
+          py: "20px",
+          borderRadius: "15px",
+        },
+        "& a": {
+          width: "100%",
+          bg: "#151515",
+          border: "none",
+          px: "22px !important",
+          mx: 0,
+          my: 0,
+          py: "20px",
+          borderRadius: "15px",
+          _hover: {
+            bg: "#0c0b0b",
+          },
+        },
+      }}
     >
       {children}
-      <NextImage src={AngleRightImg} alt="" />
+
+      <Box position={"absolute"} right={"22px"}>
+        <NextImage src={AngleRightImg} alt="" />
+      </Box>
     </Flex>
   );
 };

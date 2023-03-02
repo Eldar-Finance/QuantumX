@@ -6,7 +6,7 @@ import {
   ContractFunction,
   TokenIdentifierValue,
   TransactionPayload,
-} from "@elrondnetwork/erdjs/out";
+} from "@multiversx/sdk-core/out";
 import { EGLD_VAL, getInterface, sendTransaction } from "api/sc/sc";
 import BigNumber from "bignumber.js";
 import orderBy from "lodash/orderBy";

@@ -1,5 +1,5 @@
 import { Flex, Input, Stack, Text } from "@chakra-ui/react";
-import { BytesValue, U64Value } from "@elrondnetwork/erdjs/out";
+import { BytesValue, U64Value } from "@multiversx/sdk-core/out";
 import { scCall } from "api/sc/calls";
 import { dcaWsp } from "api/sc/sc";
 import BigNumber from "bignumber.js";

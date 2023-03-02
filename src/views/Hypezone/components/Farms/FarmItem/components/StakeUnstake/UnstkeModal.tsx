@@ -66,7 +66,7 @@ const UnstakeModal = ({
     validationSchema: validationSchema,
     onSubmit: async (values: any) => {
       const BigNumber = (await import("bignumber.js")).default;
-      const BigUIntValue = (await import("@elrondnetwork/erdjs/out"))
+      const BigUIntValue = (await import("@multiversx/sdk-core/out"))
         .BigUIntValue;
 
       let txs = [];

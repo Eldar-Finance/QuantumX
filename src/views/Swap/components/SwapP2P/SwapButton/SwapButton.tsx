@@ -1,6 +1,6 @@
 import { ButtonProps } from "@chakra-ui/react";
-import { transactionServices } from "@elrondnetwork/dapp-core";
-import { BigUIntValue } from "@elrondnetwork/erdjs/out";
+import { BigUIntValue } from "@multiversx/sdk-core/out";
+import { useTrackTransactionStatus } from "@multiversx/sdk-dapp/hooks";
 import { contractAddr } from "api/net.config";
 import { fastSwapInJex } from "api/sc/calls/swap/fastSwap";
 import { scQuery } from "api/sc/queries";
@@ -25,7 +25,7 @@ const SwapButton = ({ disableButton, ...props }: IProps) => {
   const [sessionId, setSessionId] = useState<string>();
 
   const userOders = useSelector(selectUserOrders);
-  const txs = transactionServices.useTrackTransactionStatus({
+  const txs = useTrackTransactionStatus({
     transactionId: sessionId,
     onSuccess: (txI) => {
       if (window) {

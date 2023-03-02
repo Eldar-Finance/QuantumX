@@ -1,4 +1,4 @@
-import { BigUIntValue } from "@elrondnetwork/erdjs/out";
+import { BigUIntValue } from "@multiversx/sdk-core/out";
 import BigNumber from "bignumber.js";
 import { ISCFarms2Fees } from "utils/types/sc.interface";
 import { scQuery } from ".";
@@ -9,7 +9,7 @@ export const fetchLastRewardedEpoch = async <T>(farmId: number) => {
   ]);
   const data: T = res?.firstValue.valueOf().toNumber();
   return data;
-};
+}; 
 
 export const fetchFarmsFees = async (): Promise<ISCFarms2Fees[]> => {
   const res = await scQuery("farms2", "getFarmFees");

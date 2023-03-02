@@ -12,7 +12,7 @@ import {
   Link,
   Text,
 } from "@chakra-ui/react";
-import { BytesValue } from "@elrondnetwork/erdjs/out";
+import { BytesValue } from "@multiversx/sdk-core/out";
 import { contractAddr } from "api/net.config";
 import { fetchApr } from "api/rest/axiosEldar2";
 import { scCall } from "api/sc/calls";

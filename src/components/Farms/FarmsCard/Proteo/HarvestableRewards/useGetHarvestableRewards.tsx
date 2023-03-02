@@ -1,4 +1,4 @@
-import { Address, AddressValue } from "@elrondnetwork/erdjs/out";
+import { Address, AddressValue } from "@multiversx/sdk-core/out";
 import { scQuery } from "api/sc/queries";
 import { proteoEliteWsp } from "api/sc/sc";
 import { selectUserAddress } from "redux/slices/userAcount/account-slice";

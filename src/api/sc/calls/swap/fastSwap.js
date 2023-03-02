@@ -7,7 +7,7 @@ import {
   Transaction,
   TransactionPayload,
   U64Value,
-} from "@elrondnetwork/erdjs/out";
+} from "@multiversx/sdk-core/out";
 import { ChainId, contractAddr } from "api/net.config";
 import { getHashedSwapData } from "api/rest/nextApi/swapHash";
 import { sendMultipleTransactions } from "api/sc/sc";

@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import { scQuery, scSimpleQuery } from "api/sc/queries";
 
-import { Address, AddressValue } from "@elrondnetwork/erdjs/out";
+import { Address, AddressValue } from "@multiversx/sdk-core/out";
 import axiosEldar2 from "api/rest/axiosEldar2";
 import axiosEldron from "api/rest/axiosEldron";
 import { proteoEliteWsp } from "api/sc/sc";

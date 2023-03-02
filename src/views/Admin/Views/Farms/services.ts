@@ -1,4 +1,4 @@
-import { BigUIntValue, BytesValue } from "@elrondnetwork/erdjs/out";
+import { BigUIntValue, BytesValue } from "@multiversx/sdk-core/out";
 import { EGLDPayment } from "api/sc/calls";
 import { scQuery } from "api/sc/queries";
 import BigNumber from "bignumber.js";

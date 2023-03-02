@@ -11,7 +11,7 @@ import {
   getTransactionsToEldar,
 } from "api/rest/elrondApi/transactions";
 
-import { Address, AddressValue } from "@elrondnetwork/erdjs/out";
+import { Address, AddressValue } from "@multiversx/sdk-core/out";
 import { scQuery } from "api/sc/queries";
 
 import {

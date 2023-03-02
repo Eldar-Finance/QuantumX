@@ -1,4 +1,4 @@
-import { Address, AddressValue } from "@elrondnetwork/erdjs/out";
+import { Address, AddressValue } from "@multiversx/sdk-core/out";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { scQuery } from "api/sc/queries";
 import { pairs } from "utils/constants/lpPairs";

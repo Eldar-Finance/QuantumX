@@ -1,6 +1,7 @@
 // import logo from "assets/logos/quantumx.png";
 import { Box, Flex, Icon } from "@chakra-ui/react";
-import { logout, useGetLoginInfo } from "@elrondnetwork/dapp-core";
+import { useGetLoginInfo } from "@multiversx/sdk-dapp/hooks";
+import { logout } from "@multiversx/sdk-dapp/utils";
 import logo from "assets/logos/quantumx.svg";
 import ActionButton from "components/ActionButton/ActionButton";
 import MyContainer from "components/Container/Container";
@@ -13,7 +14,6 @@ import { openLogin } from "redux/slices/settings/settings-reducer";
 import { useAppDispatch } from "utils/hooks/redux";
 import { getWebUrl } from "utils/routes";
 import Menu from "./Menu/Menu";
-
 const Navbar = () => {
   const dispatch = useAppDispatch();
   const location = useRouter().asPath;

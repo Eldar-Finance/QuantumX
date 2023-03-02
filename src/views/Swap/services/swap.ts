@@ -1,4 +1,3 @@
-import { transactionServices } from "@elrondnetwork/dapp-core";
 import {
   Address,
   AddressValue,
@@ -8,7 +7,8 @@ import {
   ContractFunction,
   Transaction,
   TransactionPayload,
-} from "@elrondnetwork/erdjs/out";
+} from "@multiversx/sdk-core/out";
+import { SendTransactionReturnType } from "@multiversx/sdk-dapp/types";
 import { ChainId, contractAddr, toknesID } from "api/net.config";
 import {
   EGLDPayment,
@@ -35,7 +35,7 @@ export const swap = async (
   toField,
   fromElrondToken,
   gas
-): Promise<transactionServices.SendTransactionReturnType> => {
+): Promise<SendTransactionReturnType> => {
   let isAshaStable = false;
   let scEndpoint = "swap";
 

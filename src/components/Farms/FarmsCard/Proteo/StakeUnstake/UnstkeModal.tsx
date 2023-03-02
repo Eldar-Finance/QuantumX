@@ -65,8 +65,8 @@ const UnstakeModal = ({
     validationSchema: validationSchema,
     onSubmit: async (values: any) => {
       const BigNumber = (await import("bignumber.js")).default;
-      const BytesValue = (await import("@elrondnetwork/erdjs/out")).BytesValue;
-      const BigUIntValue = (await import("@elrondnetwork/erdjs/out"))
+      const BytesValue = (await import("@multiversx/sdk-core/out")).BytesValue;
+      const BigUIntValue = (await import("@multiversx/sdk-core/out"))
         .BigUIntValue;
       scCall(
         proteoEliteWsp,

@@ -1,5 +1,5 @@
 import { Box, Center, Flex, Text, VStack } from "@chakra-ui/react";
-import { BigUIntValue } from "@elrondnetwork/erdjs/out";
+import { BigUIntValue } from "@multiversx/sdk-core/out";
 import { toknesID } from "api/net.config";
 import { scCallOnlyTx } from "api/sc/calls";
 import { sendMultipleTransactions } from "api/sc/sc";
@@ -95,7 +95,7 @@ const Avilable = ({ farm, userFarmRewards, disable }: IProps) => {
                 (acc, current) => (acc += current.harvestableAmount),
                 0
               ) === 0 ||
-                (!isSrbStaker && farm.farm.farmId === 7)
+              (!isSrbStaker && farm.farm.farmId === 7)
             }
           >
             HARVEST

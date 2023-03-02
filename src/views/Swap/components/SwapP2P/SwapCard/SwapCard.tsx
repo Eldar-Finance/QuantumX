@@ -19,7 +19,7 @@ import SwapButton from "../SwapButton/SwapButton";
 import TextField from "../TextField/TextField";
 
 import { ChevronDownIcon, ChevronUpIcon } from "@chakra-ui/icons";
-import { useGetAccountInfo } from "@elrondnetwork/dapp-core";
+import { useGetAccountInfo } from "@multiversx/sdk-dapp/hooks";
 import { toknesID } from "api/net.config";
 import { ExchangeIcon } from "components/Icons/ui";
 import { useRouter } from "next/router";

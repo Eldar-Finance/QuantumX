@@ -1,5 +1,5 @@
 import { Flex, Input, Text } from "@chakra-ui/react";
-import { U64Value } from "@elrondnetwork/erdjs/out";
+import { U64Value } from "@multiversx/sdk-core/out";
 import { scCall } from "api/sc/calls";
 import BigNumber from "bignumber.js";
 import ActionButton from "components/ActionButton/ActionButton";

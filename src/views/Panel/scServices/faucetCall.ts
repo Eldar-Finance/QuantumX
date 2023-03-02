@@ -1,4 +1,4 @@
-import { BigUIntValue, BytesValue } from "@elrondnetwork/erdjs/out";
+import { BigUIntValue, BytesValue } from "@multiversx/sdk-core/out";
 import { contractAddr } from "api/net.config";
 import { ESDTTransfer, scCall } from "api/sc/calls";
 import BigNumber from "bignumber.js";

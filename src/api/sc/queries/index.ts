@@ -5,7 +5,7 @@ import {
   ResultsParser,
   SmartContract,
   SmartContractAbi,
-} from "@elrondnetwork/erdjs/out";
+} from "@multiversx/sdk-core/out";
 import { getInterface, provider, WspTypes } from "../sc";
 
 export const scQuery = async (

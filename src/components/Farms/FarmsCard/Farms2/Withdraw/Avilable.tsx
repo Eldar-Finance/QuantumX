@@ -1,5 +1,5 @@
 import { Box, Center, Flex, Text, VStack } from "@chakra-ui/react";
-import { BigUIntValue } from "@elrondnetwork/erdjs/out";
+import { BigUIntValue } from "@multiversx/sdk-core/out";
 import { toknesID } from "api/net.config";
 import { scCall } from "api/sc/calls";
 import bearImage from "assets/logos/bear.png";

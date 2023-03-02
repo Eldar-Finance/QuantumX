@@ -1,5 +1,5 @@
 import { Center, Divider, Flex, Grid, Text, VStack } from "@chakra-ui/react";
-import { BigUIntValue } from "@elrondnetwork/erdjs/out";
+import { BigUIntValue } from "@multiversx/sdk-core/out";
 import { toknesID } from "api/net.config";
 import { scCall } from "api/sc/calls";
 import { fetchLastRewardedEpoch } from "api/sc/queries/farms2";

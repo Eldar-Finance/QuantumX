@@ -1,4 +1,4 @@
-import { Address } from "@elrondnetwork/erdjs/out";
+import { Address } from "@multiversx/sdk-core/out";
 
 export function isJsonString(str) {
   try {

@@ -8,7 +8,7 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
-import { transactionServices } from "@elrondnetwork/dapp-core";
+import { useTrackTransactionStatus } from "@multiversx/sdk-dapp/hooks";
 import { scCall } from "api/sc/calls";
 import { sftsRewardsWsp } from "api/sc/sc";
 import ActionButton from "components/ActionButton/ActionButton";
@@ -63,7 +63,7 @@ const InvestorsCard = () => {
       }
     }
   };
-  const transactionStatus = transactionServices.useTrackTransactionStatus({
+  const transactionStatus = useTrackTransactionStatus({
     transactionId: sessionId,
     onSuccess: onSuccess,
   });
@@ -166,8 +166,9 @@ const EarlyInvestorRewards = ({ token, amount }) => {
               height={24}
               style={{
                 maxWidth: "100%",
-                height: "auto"
-              }} />
+                height: "auto",
+              }}
+            />
           )}
         </Center>
       </Box>

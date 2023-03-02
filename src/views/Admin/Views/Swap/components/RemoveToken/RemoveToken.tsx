@@ -1,5 +1,5 @@
 import { Box, Center, Select } from "@chakra-ui/react";
-import { BytesValue } from "@elrondnetwork/erdjs/out";
+import { BytesValue } from "@multiversx/sdk-core/out";
 import { scCall } from "api/sc/calls";
 import ActionButton from "components/ActionButton/ActionButton";
 import { useFormik } from "formik";
