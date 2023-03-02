@@ -223,6 +223,19 @@ const LoginMethod = ({ children, onClick = undefined }) => {
           py: "20px",
           borderRadius: "15px",
         },
+        "& a": {
+          width: "100%",
+          bg: "#151515",
+          border: "none",
+          px: "22px !important",
+          mx: 0,
+          my: 0,
+          py: "20px",
+          borderRadius: "15px",
+          _hover: {
+            bg: "#0c0b0b",
+          },
+        },
       }}
     >
       {children}
