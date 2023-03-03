@@ -4,7 +4,11 @@ import { formatBalance } from "utils/functions/formatBalance";
 import { formatTokenI } from "utils/functions/tokens";
 import { useAppSelector } from "utils/hooks/redux";
 import useGetUserTokens from "utils/hooks/useGetUserTokens";
-import { protocolFee, protocolFeeToken } from "views/Converter/utils/contants";
+import {
+  convertSlippage,
+  protocolFee,
+  protocolFeeToken,
+} from "views/Converter/utils/contants";
 import { convertTokens, IConvertTokenData } from "views/Converter/utils/scCall";
 
 const ConvertButton = () => {
@@ -17,7 +21,7 @@ const ConvertButton = () => {
           token: si.identifier,
           value: si.balance,
         },
-        slipapge: 2,
+        slipapge: convertSlippage,
         swapInfo: si.data,
       };
       return data;

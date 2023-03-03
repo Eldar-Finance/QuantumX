@@ -1,4 +1,4 @@
-import { Center, Text } from "@chakra-ui/react";
+import { Box, Center, Text } from "@chakra-ui/react";
 import ActionButton from "components/ActionButton/ActionButton";
 import Card from "components/Card/Card";
 import { motion } from "framer-motion";
@@ -38,7 +38,7 @@ const IconAndButtonBox = ({ desc, title, icon, buttonText, href }: IProps) => {
       </Text>
       <motion.button whileHover={{ scale: 1.05 }}>
         <Link href={href}>
-          <ActionButton w="150px" py="12px" h="auto" fontWeight="600">
+          <ActionButton as={Box} w="150px" py="12px" h="auto" fontWeight="600">
             {buttonText}
           </ActionButton>
         </Link>
