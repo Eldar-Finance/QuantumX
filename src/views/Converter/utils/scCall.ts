@@ -11,6 +11,8 @@ import { sendMultipleTransactions } from "api/sc/sc";
 import BigNumber from "bignumber.js";
 import { isArray } from "lodash";
 import { INomalSmartSwap } from "utils/types/others.interface";
+import { addressToReceiveRareInTx } from "views/Hypezone/utils/constants";
+import { protocolFee, protocolFeeToken } from "./contants";
 
 export interface IConvertTokenData {
   swapInfo: INomalSmartSwap[];
@@ -83,5 +85,27 @@ export const convertTokens = async (
     })
   );
 
-  return await sendMultipleTransactions({ txs: swapTxs });
+  const elrondProtocolTokenFeeRes = await getFromAllTokens({
+    identifier: protocolFeeToken,
+  });
+  if (
+    !elrondProtocolTokenFeeRes ||
+    !elrondProtocolTokenFeeRes.data ||
+    !isArray(elrondProtocolTokenFeeRes.data)
+  ) {
+    throw new Error("Protocol fee token not found");
+  }
+  const feeElrondToken = elrondProtocolTokenFeeRes.data[0];
+
+  const protocoFeeTx = await ESDTTransferOnlyTx({
+    funcName: "fee",
+    token: feeElrondToken,
+    contractAddr: addressToReceiveRareInTx,
+    val: protocolFee,
+    gasL: 20000000,
+  });
+
+  const convertTx = [protocoFeeTx, ...swapTxs];
+
+  return await sendMultipleTransactions({ txs: convertTx });
 };

@@ -20,8 +20,6 @@ const ConvertButton = () => {
     convertTokens(data);
   };
 
-  console.log("swapInfo", swapInfo);
-
   return (
     <ActionButton
       onClick={handleSubmit}
