@@ -3,6 +3,7 @@ import ActionButton from "components/ActionButton/ActionButton";
 import { selectAllTokens } from "redux/slices/converter/converter-slice";
 import { useAppDispatch } from "utils/hooks/redux";
 import ConvertButton from "./ConvertButton/ConvertButton";
+import ConvertInfo from "./ConvertInfo/ConvertInfo";
 import SelectTokens from "./SelectTokens/SelectTokens";
 
 const ConvertCard = () => {
@@ -21,7 +22,7 @@ const ConvertCard = () => {
         </ActionButton>
       </Flex>
       <SelectTokens />
-      {/* <ConvertInfo /> */}
+      <ConvertInfo />
       <ConvertButton />
     </Flex>
   );

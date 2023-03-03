@@ -33,6 +33,7 @@ const SelectTokens = () => {
       py={5}
       maxH="500px"
       overflow={"auto"}
+      rounded="xl"
     >
       {isLoading || tokens.status === "loading" ? (
         <Center w="full" minH="400px">

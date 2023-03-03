@@ -91,7 +91,7 @@ const RowToken = ({ token }: IProps) => {
               <Text>{formatTokenI(token.identifier)}</Text>
             </Flex>
             <Flex fontSize={"sm"} color="GrayText">
-              ≈ {formatBalanceDolar(token, token.price)}
+              ≈ ${formatBalanceDolar(token, token.price)}
             </Flex>
           </Flex>
           <Flex>
