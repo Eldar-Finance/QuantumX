@@ -1,6 +1,7 @@
 import { Center, CheckboxGroup, Flex, Spinner, Text } from "@chakra-ui/react";
 import Card from "components/Card/Card";
 import { selectConvertInfo } from "redux/slices/converter/converter-slice";
+import { formatBalanceDolar } from "utils/functions/formatBalance";
 import { useAppSelector } from "utils/hooks/redux";
 import useGetUserTokens from "utils/hooks/useGetUserTokens";
 import { IElrondAccountToken } from "utils/types/elrond.interface";
@@ -15,7 +16,8 @@ const SelectTokens = () => {
   const finalTokens = userTokens.filter((userToken) => {
     if (
       tokens.data.includes(userToken.identifier) &&
-      userToken.identifier !== "EGLD"
+      userToken.identifier !== "EGLD" &&
+      formatBalanceDolar(userToken, userToken.price) > 3
     ) {
       return true;
     } else {
