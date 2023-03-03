@@ -5,7 +5,7 @@ import {
   BytesValue,
   ContractFunction,
   Transaction,
-  TransactionPayload
+  TransactionPayload,
 } from "@multiversx/sdk-core/out";
 import { ChainId, toknesID } from "api/net.config";
 import {
@@ -13,7 +13,7 @@ import {
   getInterface,
   sendMultipleTransactions,
   sendTransaction,
-  WspTypes
+  WspTypes,
 } from "api/sc/sc";
 import BigNumber from "bignumber.js";
 import store from "redux/store";
@@ -145,7 +145,7 @@ export const ESDTTransfer = async ({
 export const ESDTTransferOnlyTx = async ({
   funcName,
   token,
-  val,
+  val = 0,
   contractAddr = "",
   args = [],
   gasL = 60000000,

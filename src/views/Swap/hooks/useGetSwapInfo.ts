@@ -9,10 +9,20 @@ import useSWR from "swr";
 import { useDebounce } from "use-debounce";
 import { useAppSelector } from "utils/hooks/redux";
 import useIsSmarSwapLp from "./useIsSmarSwapLp";
-const useGetSwapInfo = () => {
-  const fromToken = useAppSelector(selectFromToken);
-  const toToken = useAppSelector(selectToToken);
-  const fromTokenValue = useAppSelector(selectFromTokenValue);
+
+const useGetSwapInfo = (
+  fromTokenProp?: string,
+  toTokenProp?: string,
+  fromTokenValueProp?: string
+) => {
+  const swapFromToken = useAppSelector(selectFromToken);
+  const swapToToken = useAppSelector(selectToToken);
+  const swapFromTokenValue = useAppSelector(selectFromTokenValue);
+
+  const toToken = toTokenProp ?? swapToToken;
+  const fromToken = fromTokenProp ?? swapFromToken;
+  const fromTokenValue = fromTokenValueProp ?? swapFromTokenValue;
+
   const isSapwToLp = useIsSmarSwapLp(toToken);
   const [value] = useDebounce(fromTokenValue, 800);
 

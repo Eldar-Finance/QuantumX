@@ -20,6 +20,7 @@ export const routeNames = {
   admin: "/admin-panel",
   panel: "/panel",
   hypezone: "/hypezone",
+  converter: "/xConverter",
 };
 
 export const routes: {
@@ -34,6 +35,7 @@ export const routes: {
   admin: IRoute;
   panel: IRoute;
   hypezone: IRoute;
+  converter: IRoute;
 } = {
   dashboard: {
     path: routeNames.dashboard,
@@ -71,6 +73,11 @@ export const routes: {
     path: routeNames.rewards,
     name: "QuantumX Rewards",
     onModal: true,
+  },
+  converter: {
+    path: routeNames.converter,
+    name: "xConverter",
+    onModalAndNavbar: true,
   },
   // heroes: {
   //   path: routeNames.heroes,

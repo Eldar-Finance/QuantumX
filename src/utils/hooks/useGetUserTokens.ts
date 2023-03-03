@@ -46,7 +46,7 @@ const useGetUserTokens = (indentifier?: string, onlyEsdt?: boolean) => {
     setTokens(newTokens);
   }, [acc.account?.balance, userTokens, indentifier, onlyEsdt]);
 
-  return [tokens, token];
+  return [tokens, token, tokensData.status === "loading"];
 };
 
 export default useGetUserTokens;
