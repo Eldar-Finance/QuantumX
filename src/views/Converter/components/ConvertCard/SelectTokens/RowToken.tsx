@@ -1,13 +1,18 @@
 import { Box, Checkbox, Flex, Text } from "@chakra-ui/react";
 import Image from "next/image";
-import { handleConverterToken } from "redux/slices/converter/converter-slice";
+import { useEffect } from "react";
+import {
+  addSwapInfoToAllConvertTokens,
+  handleConverterToken,
+  selectConvertInfo,
+} from "redux/slices/converter/converter-slice";
 import {
   formatBalance,
   formatBalanceDolar,
   formatNumber,
 } from "utils/functions/formatBalance";
 import { formatTokenI } from "utils/functions/tokens";
-import { useAppDispatch } from "utils/hooks/redux";
+import { useAppDispatch, useAppSelector } from "utils/hooks/redux";
 import { IElrondAccountToken } from "utils/types/elrond.interface";
 import { INomalSmartSwap } from "utils/types/others.interface";
 import { toTokenToConvert } from "views/Converter/utils/contants";
@@ -18,6 +23,7 @@ interface IProps {
 }
 const RowToken = ({ token }: IProps) => {
   const dispatch = useAppDispatch();
+  const selectedTokens = useAppSelector(selectConvertInfo);
   const { data } = useGetSwapInfo(
     token.identifier,
     toTokenToConvert,
@@ -39,6 +45,19 @@ const RowToken = ({ token }: IProps) => {
       })
     );
   };
+
+  useEffect(() => {
+    if (data) {
+      dispatch(
+        addSwapInfoToAllConvertTokens({
+          identifier: token.identifier,
+          data: data as INomalSmartSwap[],
+          balance: token.balance,
+        })
+      );
+    }
+  }, [data, dispatch, token.balance, token.identifier]);
+
   return (
     <Box>
       <Checkbox

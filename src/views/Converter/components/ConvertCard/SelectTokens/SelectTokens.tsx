@@ -1,5 +1,6 @@
 import { Center, CheckboxGroup, Flex, Spinner, Text } from "@chakra-ui/react";
 import Card from "components/Card/Card";
+import { selectConvertInfo } from "redux/slices/converter/converter-slice";
 import { useAppSelector } from "utils/hooks/redux";
 import useGetUserTokens from "utils/hooks/useGetUserTokens";
 import { IElrondAccountToken } from "utils/types/elrond.interface";
@@ -9,6 +10,7 @@ const SelectTokens = () => {
   const [userTokens, _t, isLoading]: IElrondAccountToken[][] =
     useGetUserTokens();
   const tokens = useAppSelector((state) => state.smartSwap.tokens);
+  const selectedTokens = useAppSelector(selectConvertInfo);
 
   const finalTokens = userTokens.filter((userToken) => {
     if (
@@ -35,7 +37,10 @@ const SelectTokens = () => {
           <Spinner />
         </Center>
       ) : (
-        <CheckboxGroup colorScheme="green" defaultValue={[]}>
+        <CheckboxGroup
+          colorScheme="green"
+          value={selectedTokens.map((item) => item.identifier)}
+        >
           {finalTokens.map((token) => {
             return <RowToken key={token.identifier} token={token} />;
           })}

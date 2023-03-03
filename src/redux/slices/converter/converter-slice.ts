@@ -10,10 +10,16 @@ interface IHubState {
     data: INomalSmartSwap[];
     balance: string;
   }[];
+  allConvertInfo: {
+    identifier: string;
+    data: INomalSmartSwap[];
+    balance: string;
+  }[];
 }
 
 const initialState: IHubState = {
   convertInfo: [],
+  allConvertInfo: [],
 };
 
 export const convert = createSlice({
@@ -29,8 +35,6 @@ export const convert = createSlice({
         balance: string;
       }>
     ) => {
-      console.log("action.payload", action.payload);
-
       const { remove, data, identifier, balance } = action.payload;
 
       if (remove) {
@@ -46,13 +50,37 @@ export const convert = createSlice({
         });
       }
     },
+    selectAllTokens: (state) => {
+      state.convertInfo = state.allConvertInfo;
+    },
+
+    addSwapInfoToAllConvertTokens: (
+      state,
+      action: PayloadAction<{
+        data: INomalSmartSwap[];
+        identifier: string;
+        balance: string;
+      }>
+    ) => {
+      const { data, identifier, balance } = action.payload;
+      if (state.allConvertInfo.find((item) => item.identifier === identifier))
+        return;
+      state.allConvertInfo.push({
+        identifier: identifier,
+        data: data,
+        balance,
+      });
+    },
   },
 });
 
 export const selectConvertInfo = (state: AppState) =>
   state.converter.convertInfo;
-
 // Action creators are generated for each case reducer function
-export const { handleConverterToken } = convert.actions;
+export const {
+  handleConverterToken,
+  addSwapInfoToAllConvertTokens,
+  selectAllTokens,
+} = convert.actions;
 
 export default convert.reducer;
