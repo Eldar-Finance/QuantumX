@@ -1,8 +1,9 @@
 import { Center, CenterProps, Heading } from "@chakra-ui/react";
+import { ReactNode } from "react";
 
 interface TitlePageProps extends CenterProps {
   title: string;
-  subtitle?: string;
+  subtitle?: ReactNode;
 }
 
 const TitlePage = ({ title, subtitle, ...props }: TitlePageProps) => {
@@ -13,7 +14,7 @@ const TitlePage = ({ title, subtitle, ...props }: TitlePageProps) => {
       </Heading>
       {subtitle && (
         <Heading fontSize={"md"} color="white.400">
-          Convert your tokens to RARE
+          {subtitle}
         </Heading>
       )}
     </Center>
