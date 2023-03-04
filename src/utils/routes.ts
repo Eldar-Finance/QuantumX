@@ -6,6 +6,7 @@ export interface IRoute {
   outMenu?: boolean;
   soon?: boolean;
   forAdmins?: boolean;
+  new?: boolean;
 }
 export const routeNames = {
   home: "/",
@@ -20,7 +21,7 @@ export const routeNames = {
   admin: "/admin-panel",
   panel: "/panel",
   hypezone: "/hypezone",
-  converter: "/xConverter",
+  converter: "/raretopia",
 };
 
 export const routes: {
@@ -76,8 +77,9 @@ export const routes: {
   },
   converter: {
     path: routeNames.converter,
-    name: "xConverter",
+    name: "Raretopia",
     onModalAndNavbar: true,
+    new: true,
   },
   // heroes: {
   //   path: routeNames.heroes,

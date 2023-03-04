@@ -28,7 +28,25 @@ const Menu = () => {
         const isActive = isActiveRoute(route.path, location);
         return (
           <Link href={route.path} key={route.path}>
-            <Box color={isActive && "main"}>{route.name}</Box>
+            <Flex position="relative">
+              <Box color={isActive && "main"}>{route.name}</Box>
+
+              {route.new && (
+                <Box
+                  position={"absolute"}
+                  top={"-10px"}
+                  right={"-20px"}
+                  bg="main"
+                  color="black"
+                  fontSize={"xs"}
+                  rounded={"full"}
+                  px={1}
+                  fontWeight="bold"
+                >
+                  NEW
+                </Box>
+              )}
+            </Flex>
           </Link>
         );
       })}
@@ -47,7 +65,24 @@ const Menu = () => {
 
           return (
             <Link href={route.path} key={route.path}>
-              <Box color={isActive && "main"}>{route.name}</Box>
+              <Flex position={"relative"}>
+                <Box color={isActive && "main"}>{route.name}</Box>
+                {route.new && (
+                  <Box
+                    position={"absolute"}
+                    top={"-10px"}
+                    right={"-20px"}
+                    bg="main"
+                    color="black"
+                    fontSize={"xs"}
+                    rounded={"full"}
+                    px={1}
+                    fontWeight="bold"
+                  >
+                    NEW
+                  </Box>
+                )}{" "}
+              </Flex>
             </Link>
           );
         })}
