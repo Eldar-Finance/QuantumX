@@ -5,7 +5,10 @@ import { formatBalanceDolar } from "utils/functions/formatBalance";
 import { useAppSelector } from "utils/hooks/redux";
 import useGetUserTokens from "utils/hooks/useGetUserTokens";
 import { IElrondAccountToken } from "utils/types/elrond.interface";
-import { toTokenToConvert } from "views/Converter/utils/contants";
+import {
+  limitDollarAmount,
+  toTokenToConvert,
+} from "views/Converter/utils/contants";
 import RowToken from "./RowToken";
 
 const SelectTokens = () => {
@@ -18,7 +21,7 @@ const SelectTokens = () => {
     if (
       tokens.data.includes(userToken.identifier) &&
       userToken.identifier !== "EGLD" &&
-      formatBalanceDolar(userToken, userToken.price) > 3 &&
+      formatBalanceDolar(userToken, userToken.price) > limitDollarAmount &&
       userToken.identifier !== toTokenToConvert
     ) {
       return true;
