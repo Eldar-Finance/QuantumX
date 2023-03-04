@@ -13,7 +13,7 @@ const ConvertCard = () => {
       flexDir={"column"}
       bg="secondary"
       py={10}
-      px={7}
+      px={{ xs: 3, md: 7 }}
       borderRadius={{ xs: "xl", md: "4xl" }}
     >
       <Flex w="full" justifyContent={"flex-end"} mb={4}>

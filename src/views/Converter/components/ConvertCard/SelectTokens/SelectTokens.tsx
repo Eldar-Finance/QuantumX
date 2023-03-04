@@ -36,6 +36,7 @@ const SelectTokens = () => {
       maxH="500px"
       overflow={"auto"}
       rounded="xl"
+      px={{ xs: "12px", md: "20px" }}
     >
       {isLoading || tokens.status === "loading" ? (
         <Center w="full" minH="400px">

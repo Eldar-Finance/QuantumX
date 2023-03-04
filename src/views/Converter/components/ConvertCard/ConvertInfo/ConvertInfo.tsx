@@ -28,7 +28,11 @@ const ConvertInfo = () => {
 
   return (
     <Card as={Flex} p={8} rounded="xl" w="full" flexDir={"column"} mt={8}>
-      <Flex justifyContent={"space-between"} mb={4}>
+      <Flex
+        justifyContent={"space-between"}
+        mb={4}
+        fontSize={{ xs: "14px", md: "md" }}
+      >
         <Text>Minimum RARE to receive</Text>
         <Flex flexDir={"column"} alignItems="flex-end">
           <Text fontWeight="600">
@@ -40,7 +44,10 @@ const ConvertInfo = () => {
           </Text>
         </Flex>
       </Flex>
-      <Flex justifyContent={"space-between"}>
+      <Flex
+        justifyContent={"space-between"}
+        fontSize={{ xs: "14px", md: "md" }}
+      >
         <Text>Protocol Fee for Burn</Text>
         <Text color={"GrayText"} fontWeight="600">
           {protocolFee} {formatTokenI(protocolFeeToken)}
