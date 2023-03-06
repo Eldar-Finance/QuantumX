@@ -131,6 +131,8 @@ export const TOKENS_ID = {
   cyber: "CYBER-489c1c",
   bonez: "BONEZ-ff9a73",
   hype: "HYPE-619661",
+  usdt: "USDT-f8c08c",
+  busd: "BUSD-40b57e",
 };
 
 //general configs

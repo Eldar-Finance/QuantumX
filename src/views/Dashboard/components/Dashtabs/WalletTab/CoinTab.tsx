@@ -43,16 +43,31 @@ const CoinTab = () => {
   useEffect(() => {
     const newData = [];
     tableData.data.forEach((token) => {
-      newData.push({
-        tokenBalance: token.price ? formatBalanceDolar(token, token.price) : 0,
-        ...token,
-      });
+      if (
+        toknesID.usdt === token.identifier ||
+        toknesID.busd === token.identifier
+      ) {
+        //force price for usdt and busd
+        const price = 1;
+        newData.push({
+          tokenBalance: formatBalanceDolar(token, price),
+          ...token,
+          price: price,
+        });
+      } else {
+        newData.push({
+          tokenBalance: token.price
+            ? formatBalanceDolar(token, token.price)
+            : 0,
+          ...token,
+        });
+      }
     });
 
     const orderData = orderBy(
       newData,
       [
-        function(o) {
+        function (o) {
           return o.tokenBalance;
         },
       ],
