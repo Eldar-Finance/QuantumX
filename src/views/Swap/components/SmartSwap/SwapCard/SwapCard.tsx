@@ -20,6 +20,7 @@ import {
 import { useAppDispatch, useAppSelector } from "utils/hooks/redux";
 import { ILpSmartSwap, INomalSmartSwap } from "utils/types/others.interface";
 import useGetSwapInfo from "views/Swap/hooks/useGetSwapInfo";
+import FeeInfo from "../FeeInfo/FeeInfo";
 import SwapDetails from "../SwapDetails/SwapDetails";
 
 const SwapCard = () => {
@@ -162,6 +163,8 @@ const SwapCard = () => {
               isSapwToLp={isSapwToLp}
               // disableButton={disableButton}
             />
+
+            <FeeInfo />
           </Flex>
         </Box>
       </Box>

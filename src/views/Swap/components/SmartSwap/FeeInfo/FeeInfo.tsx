@@ -1,0 +1,41 @@
+import { Box, Flex, Text } from "@chakra-ui/react";
+import CustomTooltip from "components/CustomTooltip/CustomTooltip";
+import { formatBalance } from "utils/functions/formatBalance";
+import { useGetFees } from "views/Admin/Views/Swap/hooks";
+
+const FeeInfo = () => {
+  const { fees } = useGetFees();
+
+  if (!fees) return null;
+  return (
+    <Flex justifyContent={"center"} color="GrayText" mt={4}>
+      <CustomTooltip
+        maxWidth={"300px"}
+        text={
+          <Box color="black" fontSize={"md"}>
+            <Flex flexDir={"column"}>
+              <Text fontWeight={"800"}>Single token in Input and Output</Text>
+              <Text>
+                {formatBalance({ balance: fees.fee, decimals: 3 })}% fee
+              </Text>
+            </Flex>
+            <Flex flexDir={"column"}>
+              <Text fontWeight={"800"}>LP Token</Text>
+              <Text>
+                {formatBalance({ balance: fees.lpFee, decimals: 2 })}% fee
+              </Text>
+            </Flex>
+          </Box>
+        }
+        iconSize={"14px"}
+        componentWithIcon={
+          <Text mr={1} fontSize="14px">
+            QuantumX Fee
+          </Text>
+        }
+      />
+    </Flex>
+  );
+};
+
+export default FeeInfo;
