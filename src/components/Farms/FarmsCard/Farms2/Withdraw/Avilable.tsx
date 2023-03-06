@@ -30,6 +30,14 @@ const Avilable = ({ farm, userFarmRewards }: IProps) => {
       farm.farm.rewardToken === "" ? 300000000 : 180000000
     );
   };
+  const handleCompound = () => {
+    scCall(
+      "farms2",
+      "compound",
+      [new BigUIntValue(new BigNumber(farm.farm.farmId))],
+      180000000
+    );
+  };
   const isAFarmBoost = useIsBearFarm(farm);
 
   let manualImage = null;
@@ -37,6 +45,8 @@ const Avilable = ({ farm, userFarmRewards }: IProps) => {
   if (farm.farm.rewardToken === toknesID.bear) {
     manualImage = bearImage;
   }
+
+  const showCompound = farm.compound;
 
   return (
     <Box>
@@ -77,18 +87,35 @@ const Avilable = ({ farm, userFarmRewards }: IProps) => {
       </Flex>
       <Flex flexDir={"column"}>
         <Center mt="2" flexDir={"column"}>
-          <ActionButton
-            onClick={handleHarvest}
-            disabled={
-              userFarmRewards.reduce(
-                (acc, current) => (acc += current.harvestableAmount),
-                0
-              ) === 0 ||
-              (!isSrbStaker && farm.farm.farmId === 7)
-            }
-          >
-            HARVEST
-          </ActionButton>
+          <Flex gap={3}>
+            <ActionButton
+              onClick={handleHarvest}
+              disabled={
+                userFarmRewards.reduce(
+                  (acc, current) => (acc += current.harvestableAmount),
+                  0
+                ) === 0 ||
+                (!isSrbStaker && farm.farm.farmId === 7)
+              }
+            >
+              HARVEST
+            </ActionButton>
+            {showCompound && (
+              <ActionButton
+                onClick={handleCompound}
+                bg="rgb(175, 175, 175)"
+                disabled={
+                  userFarmRewards.reduce(
+                    (acc, current) => (acc += current.harvestableAmount),
+                    0
+                  ) === 0 ||
+                  (!isSrbStaker && farm.farm.farmId === 7)
+                }
+              >
+                Compound
+              </ActionButton>
+            )}
+          </Flex>
           {isAFarmBoost && isSrbStaker && (
             <Text align={"center"} fontSize="14px" mt={2}>
               🐻 You are eligible for 10% Rewards Boost

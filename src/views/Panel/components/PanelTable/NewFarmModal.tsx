@@ -28,7 +28,6 @@ const newFarmSchema = yup.object().shape({
   rewardTokenI: yup.string(),
   unbondingPeriod: yup.number().required("Unbonding period is required"),
   unbondingFee: yup.number().required("Unbonding fee is required"),
-  harvestFee: yup.number().required("Harvest fee is required"),
   allowMultipleRewardsTokens: yup.boolean(),
 });
 
@@ -46,7 +45,6 @@ const NewFarmModal = ({ isOpen, onClose }: IProps) => {
       rewardTokenI: "",
       unbondingPeriod: "",
       unbondingFee: "",
-      harvestFee: "",
       allowMultipleRewardsTokens: false,
     },
     validationSchema: newFarmSchema,
@@ -167,27 +165,6 @@ const NewFarmModal = ({ isOpen, onClose }: IProps) => {
                 </InputGroup>
               </Flex>
             </Box>
-          </FormControl>
-
-          <FormControl>
-            <FormLabel mb={1}>Harvest Fee</FormLabel>
-            <InputGroup>
-              <Input
-                p="2"
-                pl={6}
-                placeholder="Example: 3"
-                flex="1"
-                name="harvestFee"
-                value={formik.values.harvestFee}
-                bg="black.base"
-                borderRadius={"md"}
-                onChange={formik.handleChange}
-                isInvalid={
-                  formik.touched.harvestFee && Boolean(formik.errors.harvestFee)
-                }
-              />{" "}
-              <InputRightAddon>%</InputRightAddon>
-            </InputGroup>
           </FormControl>
         </ModalBody>
         <ModalFooter justifyContent={"center"} gap="6" flexWrap={"wrap"}>

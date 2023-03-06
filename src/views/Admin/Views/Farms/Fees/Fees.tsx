@@ -10,6 +10,7 @@ const Fees = () => {
 
       <SimpleGrid columns={{ xs: 1, lg: 3 }} gap={14}>
         <SetFee feeLabel="general" title="General Fee" scFunc="setFee" />
+        <SetFee feeLabel="harvest" title="Harvest Fee" scFunc="setHarvestFee" />
         <SetFee
           feeLabel="creator"
           title="Creator Fee"

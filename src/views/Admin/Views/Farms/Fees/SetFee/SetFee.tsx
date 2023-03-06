@@ -16,7 +16,11 @@ interface IProps {
   placeholder?: string;
   title: string;
   feeLabel: string;
-  scFunc: "setFee" | "setCreatorCharge" | "setFarmCreationCharge";
+  scFunc:
+    | "setFee"
+    | "setCreatorCharge"
+    | "setFarmCreationCharge"
+    | "setHarvestFee";
   isAmount?: boolean;
 }
 

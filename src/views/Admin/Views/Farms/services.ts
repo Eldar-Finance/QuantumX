@@ -36,7 +36,6 @@ export async function forceCreateFarm(
     rewardTokenI: "",
     unbondingPeriod: "",
     unbondingFee: "",
-    harvestFee: "",
     creator: "",
     allowMultipleRewardsTokens: true,
   }
@@ -56,11 +55,7 @@ export async function forceCreateFarm(
           new BigNumber(farm.unbondingFee).multipliedBy(100).toFixed(0)
         )
       ),
-      new BigUIntValue(
-        new BigNumber(
-          new BigNumber(farm.harvestFee).multipliedBy(100).toFixed(0)
-        )
-      ),
+
       BytesValue.fromUTF8(farm.creator),
     ],
     10000000

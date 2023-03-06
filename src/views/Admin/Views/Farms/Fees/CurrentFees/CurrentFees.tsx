@@ -14,6 +14,10 @@ const CurrentFees = () => {
           %
         </Text>
         <Text>
+          Harvest Fee : {formatBalance({ balance: fees.earners, decimals: 2 })}{" "}
+          %
+        </Text>
+        <Text>
           Creator Fee : {formatBalance({ balance: fees.creator })} EGLD
         </Text>
         <Text>
