@@ -47,7 +47,6 @@ const NewFarmModal = ({ isOpen, onClose }: IProps) => {
       rewardTokenI: "",
       unbondingPeriod: "",
       unbondingFee: "",
-      harvestFee: "",
       creator: "",
       allowMultipleRewardsTokens: false,
     },
@@ -174,26 +173,6 @@ const NewFarmModal = ({ isOpen, onClose }: IProps) => {
             </Box>
           </FormControl>
 
-          <FormControl>
-            <FormLabel mb={1}>Harvest Fee</FormLabel>
-            <InputGroup>
-              <Input
-                p="2"
-                pl={6}
-                placeholder="Example: 3"
-                flex="1"
-                name="harvestFee"
-                value={formik.values.harvestFee}
-                bg="black.base"
-                borderRadius={"md"}
-                onChange={formik.handleChange}
-                isInvalid={
-                  formik.touched.harvestFee && Boolean(formik.errors.harvestFee)
-                }
-              />{" "}
-              <InputRightAddon color="black">%</InputRightAddon>
-            </InputGroup>
-          </FormControl>
           <FormControl>
             <FormLabel mb={1}>Creator</FormLabel>
             <Input

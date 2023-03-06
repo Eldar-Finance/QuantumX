@@ -24,7 +24,6 @@ const AllActions = ({ handleView, farm }: IProps) => {
             justifyContent={"center"}
             alignItems="center"
           >
-            <Text>Rewards Harvested Fee : {farm.rewardsFee}%</Text>
             <Text mb={3}>Early Unbonding Fee : {farm.earlyUnbondingFee}%</Text>
 
             <ActionButton onClick={() => handleView(1)}>Edit Fees</ActionButton>
