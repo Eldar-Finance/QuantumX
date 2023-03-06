@@ -54,10 +54,8 @@ const CurrencyModal = ({
     } else {
       const newTokenList = elrondTokens.filter((token) => {
         return (
-          token.ticker
-            .toString()
-            .toLowerCase()
-            .indexOf(query.toLowerCase()) > -1
+          token.ticker.toString().toLowerCase().indexOf(query.toLowerCase()) >
+          -1
         );
       });
 
@@ -69,7 +67,7 @@ const CurrencyModal = ({
     const orderTokens = orderBy(
       elrondTokens,
       [
-        function(o) {
+        function (o) {
           return o.name.toString().toLowerCase();
         },
       ],
@@ -96,7 +94,7 @@ const CurrencyModal = ({
     tokenList && tokenList.length > 0 ? tokenList : elrondTokens;
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} size={"lg"}>
+    <Modal isOpen={isOpen} onClose={onClose} size={"lg"} isCentered>
       <ModalOverlay background={"rgba(0,0,0,0.7)"} />
 
       <ModalContent
