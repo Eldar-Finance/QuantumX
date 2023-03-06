@@ -27,7 +27,7 @@ export interface IScPanelFarms {
   farm: IScFarm2;
   lastReawardEpoch: number;
   earlyUnbondingFee: number;
-  rewardsFee: number;
+
   unbondingPeriod: number;
 }
 

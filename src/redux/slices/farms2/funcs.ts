@@ -18,7 +18,6 @@ export const fetchAllFarms = createAsyncThunk(
     const scRes = await scQuery("farms2", "getAllFarms");
 
     const scFirstValue = scRes.firstValue.valueOf();
-    console.log("scFirstValue", scFirstValue);
 
     const allFarms: IScFarmItem[] = scFirstValue.map((farm: any) => {
       return {
@@ -115,6 +114,7 @@ export const fetchCreatorsFarms = createAsyncThunk(
     ]);
 
     const scFirstValue = scRes.firstValue.valueOf();
+    console.log("scFirstValue", scFirstValue);
 
     const creatorFarms: IScPanelFarms[] = scFirstValue.map((farm) => {
       const data: IScPanelFarms = {
@@ -130,11 +130,8 @@ export const fetchCreatorsFarms = createAsyncThunk(
           { balance: farm.field1[1].toNumber(), decimals: 2 },
           true
         ),
-        rewardsFee: formatBalance(
-          { balance: farm.field1[2].toNumber(), decimals: 2 },
-          true
-        ),
-        unbondingPeriod: farm.field1[3].toNumber(),
+
+        unbondingPeriod: farm.field1[2].toNumber(),
       };
 
       return data;

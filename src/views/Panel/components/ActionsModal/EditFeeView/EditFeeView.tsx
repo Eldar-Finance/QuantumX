@@ -19,9 +19,6 @@ import * as yup from "yup";
 const valUnbound = yup.object({
   unboundingFee: yup.number().required().max(100).min(0),
 });
-const valHarvest = yup.object({
-  harvestFee: yup.number().required().max(100).min(0),
-});
 
 interface IProps {
   onClose: () => void;
