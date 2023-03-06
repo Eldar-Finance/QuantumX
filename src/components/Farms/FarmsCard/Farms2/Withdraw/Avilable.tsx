@@ -46,7 +46,7 @@ const Avilable = ({ farm, userFarmRewards }: IProps) => {
     manualImage = bearImage;
   }
 
-  const showCompound = true;
+  const showCompound = farm.compound;
 
   return (
     <Box>

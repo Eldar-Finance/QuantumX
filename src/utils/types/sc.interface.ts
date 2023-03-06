@@ -9,6 +9,7 @@ export interface IScFarmItem {
   farm: IScFarm2;
   stakedBalance: number;
   totalRewardsLeft: number;
+  compound: boolean;
 }
 
 export interface IScUserFarmInfo {

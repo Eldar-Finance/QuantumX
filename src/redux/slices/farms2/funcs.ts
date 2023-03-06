@@ -18,6 +18,8 @@ export const fetchAllFarms = createAsyncThunk(
     const scRes = await scQuery("farms2", "getAllFarms");
 
     const scFirstValue = scRes.firstValue.valueOf();
+    console.log("scFirstValue", scFirstValue);
+
     const allFarms: IScFarmItem[] = scFirstValue.map((farm: any) => {
       return {
         farm: {
@@ -29,7 +31,8 @@ export const fetchAllFarms = createAsyncThunk(
         },
         stakedBalance: farm.field1.toNumber(),
         totalRewardsLeft: farm.field2.toNumber(),
-      };
+        compound: farm.field3,
+      } as IScFarmItem;
     });
 
     const allNomalFarms = allFarms.filter(
