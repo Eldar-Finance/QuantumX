@@ -5,6 +5,8 @@ import { IScFarms2StakersReport } from "utils/types/sc.interface";
 
 export const fetchFarmsFees = async () => {
   const res = await scQuery("farms2", "getFees");
+  const resharvestFee = await scQuery("farms2", "harvestFee");
+  const harvestFee = resharvestFee?.firstValue.valueOf();
 
   const data = res?.firstValue?.valueOf();
   if (data) {
@@ -12,10 +14,12 @@ export const fetchFarmsFees = async () => {
       earners: data[0].toNumber(),
       creator: data[1].toNumber(),
       farmCreation: data[2].toNumber(),
+      harvest: harvestFee.toNumber(),
     };
   } else {
     return {
       earners: 0,
+      harvest: 0,
       creator: 0,
       farmCreation: 0,
     };

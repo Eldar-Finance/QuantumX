@@ -6,6 +6,7 @@ const useGetFarmsFees = () => {
   return {
     fees: data || {
       earners: 0,
+      harvest: 0,
       creator: 0,
       farmCreation: 0,
     },

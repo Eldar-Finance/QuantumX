@@ -14,7 +14,7 @@ const CurrentFees = () => {
           %
         </Text>
         <Text>
-          Harvest Fee : {formatBalance({ balance: fees.earners, decimals: 2 })}{" "}
+          Harvest Fee : {formatBalance({ balance: fees.harvest, decimals: 2 })}{" "}
           %
         </Text>
         <Text>
