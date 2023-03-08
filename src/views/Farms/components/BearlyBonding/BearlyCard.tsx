@@ -191,19 +191,18 @@ const BearlyCard = ({ farm, multifarmRewardsLeft }: IProps) => {
 
               return (
                 <Flex key={token.identifier} w="full" justify={"space-around"}>
-                  <NextImage
-                    alt=""
-                    src={token.assets?.svgUrl}
-                    height={35}
-                    width={35}
-                  />
-
                   <Text fontSize={"2xl"} fontWeight="bold">
                     {formatBalance({
                       balance: rewardInfo?.harvestableAmount,
                       decimals: token.decimals,
                     })}
                   </Text>
+                  <NextImage
+                    alt=""
+                    src={token.assets?.svgUrl}
+                    height={35}
+                    width={35}
+                  />
                 </Flex>
               );
             })}
