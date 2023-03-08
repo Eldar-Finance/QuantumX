@@ -113,17 +113,19 @@ const StakeUnstake = ({ farm, userFarmItem, isPool, isBearly }: IProps) => {
           >
             UNSTAKE
           </ActionButton>
-          {hasuserStaked && disableUnstake && epochDiffrence !== 777 && (
-            <Text fontSize={"smaller"} mt={1} color="darkgray">
-              {timeToUnstake} remaining to unstake
-            </Text>
-          )}
-          {epochDiffrence <= 0 && farmFee?.earlyUnbondingFee > 0 && (
-            <Text fontSize={"sm"} color="darkgray" mt={1}>
-              {timeToUnstake} remaining to unstake with 0% penalty
-            </Text>
-          )}
         </Center>
+      </Flex>
+      <Flex w="full" justifyContent={"center"} mt={3}>
+        {hasuserStaked && disableUnstake && epochDiffrence !== 777 && (
+          <Text fontSize={"smaller"} mt={1} color="darkgray">
+            {timeToUnstake} remaining to unstake
+          </Text>
+        )}
+        {epochDiffrence <= 0 && farmFee?.earlyUnbondingFee > 0 && (
+          <Text fontSize={"sm"} color="darkgray" mt={1}>
+            {timeToUnstake} remaining to unstake with 0% penalty
+          </Text>
+        )}
       </Flex>
       {openStake && (
         <StakeModal

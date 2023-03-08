@@ -8,6 +8,7 @@ import ActionButton from "components/ActionButton/ActionButton";
 import Card from "components/Card/Card";
 import StakeUnstake from "components/Farms/FarmsCard/Farms2/StakeUnstake/StakeUnstake";
 import NextImage from "components/NextImage/NextImage";
+import Link from "next/link";
 import { selectElrondStats } from "redux/slices/elrond/elrond-slice";
 import {
   selectUserFarms2Info,
@@ -25,6 +26,7 @@ import useGetElrondToken from "utils/hooks/useGetElrondToken";
 import useGetJexPrice from "utils/hooks/useGetJexPrice";
 import useGetMultipleElrondTokens from "utils/hooks/useGetMultipleElrondTokens";
 import useGetTokenPrice from "utils/hooks/useGetTokenPrice";
+import { routeNames } from "utils/routes";
 import {
   IScFarmItem,
   IScMultiFarmsRewardsLeft,
@@ -206,18 +208,23 @@ const BearlyCard = ({ farm, multifarmRewardsLeft }: IProps) => {
               );
             })}
           </Flex>
-          <ActionButton
-            onClick={handleHarvest}
-            disabled={
-              userRewardsForThisFarm.reduce(
-                (acc, current) => (acc += current.harvestableAmount),
-                0
-              ) === 0 ||
-              (!isSrbStaker && farm.farm.farmId === 7)
-            }
-          >
-            Harvest
-          </ActionButton>
+          <Flex gap={4} w="full" justifyContent={"space-around"}>
+            <Link href={routeNames.converter}>
+              <ActionButton>SWAP TO RARE</ActionButton>
+            </Link>
+            <ActionButton
+              onClick={handleHarvest}
+              disabled={
+                userRewardsForThisFarm.reduce(
+                  (acc, current) => (acc += current.harvestableAmount),
+                  0
+                ) === 0 ||
+                (!isSrbStaker && farm.farm.farmId === 7)
+              }
+            >
+              Harvest
+            </ActionButton>
+          </Flex>
         </VStack>
       </Grid>
     </Card>
