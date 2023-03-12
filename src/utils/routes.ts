@@ -79,7 +79,6 @@ export const routes: {
     path: routeNames.converter,
     name: "Raretopia",
     onModalAndNavbar: true,
-    new: true,
   },
   // heroes: {
   //   path: routeNames.heroes,
