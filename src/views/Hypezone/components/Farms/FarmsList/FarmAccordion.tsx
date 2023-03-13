@@ -84,10 +84,7 @@ const FarmAccordion = ({
           if (!farm.farm.farm.farmId) return null;
           return (
             <BlurComponent
-              blur={
-                true &&
-                farm.farm.farm.farmId !== hypeFarmIds[hypeFarmIds.length - 1]
-              }
+              blur={true && farm.farm.farm.farmId !== hypeFarmIds[0]}
               key={farm.farm.farm.farmId}
             >
               <Farms2Item
