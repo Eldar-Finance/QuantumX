@@ -1,4 +1,5 @@
 import { Accordion } from "@chakra-ui/react";
+import BlurComponent from "components/BlurComponent/BlurComponent";
 import { IFarmWithTvl } from "components/Farms/FarmsCard/FarmsCard";
 import { useRouter } from "next/dist/client/router";
 import { ReactNode, useEffect, useState } from "react";
@@ -12,6 +13,7 @@ import {
   IScUserFarmInfo,
   IScUserFarmRewards,
 } from "utils/types/sc.interface";
+import { hypeFarmIds } from "views/Hypezone/utils/constants";
 import Farms2Item from "../FarmItem/FarmItem";
 
 interface IProps {
@@ -81,30 +83,39 @@ const FarmAccordion = ({
         if (farm.type === "farms2") {
           if (!farm.farm.farm.farmId) return null;
           return (
-            <Farms2Item
-              key={farm.farm.farm.farmId}
-              farm={farm.farm}
-              tvl={farm.totalLocked}
-              farmUserInfo={othersArr.userFarmInfo.find((userFarm) => {
-                return userFarm.farmId === farm.farm.farm.farmId;
-              })}
-              farmUserRewards={othersArr.userFarm2Rewards.filter((userFarm) => {
-                return userFarm.farmId === farm.farm.farm.farmId;
-              })}
-              stakedTokenPrice={farm.stakedTokenPrice}
-              isPool={isPool}
-              logoSize={isPool ? 45 : 27}
-              multifarmRewardsLeft={
-                multifarmRewardsLeft.find(
-                  (mfr) => mfr.farmId === farm.farm.farm.farmId
-                )?.rewardsLeft || []
+            <BlurComponent
+              blur={
+                true &&
+                farm.farm.farm.farmId !== hypeFarmIds[hypeFarmIds.length - 1]
               }
-              disable={Boolean(
-                disableIds?.find((id) => id === farm.farm.farm.farmId)
-              )}
-              disableComponent={disableComponent}
-              maxStakingAmount={maxStakingAmount}
-            />
+              key={farm.farm.farm.farmId}
+            >
+              <Farms2Item
+                farm={farm.farm}
+                tvl={farm.totalLocked}
+                farmUserInfo={othersArr.userFarmInfo.find((userFarm) => {
+                  return userFarm.farmId === farm.farm.farm.farmId;
+                })}
+                farmUserRewards={othersArr.userFarm2Rewards.filter(
+                  (userFarm) => {
+                    return userFarm.farmId === farm.farm.farm.farmId;
+                  }
+                )}
+                stakedTokenPrice={farm.stakedTokenPrice}
+                isPool={isPool}
+                logoSize={isPool ? 45 : 27}
+                multifarmRewardsLeft={
+                  multifarmRewardsLeft.find(
+                    (mfr) => mfr.farmId === farm.farm.farm.farmId
+                  )?.rewardsLeft || []
+                }
+                disable={Boolean(
+                  disableIds?.find((id) => id === farm.farm.farm.farmId)
+                )}
+                disableComponent={disableComponent}
+                maxStakingAmount={maxStakingAmount}
+              />
+            </BlurComponent>
           );
         }
       })}
