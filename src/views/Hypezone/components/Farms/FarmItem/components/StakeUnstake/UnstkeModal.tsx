@@ -10,11 +10,13 @@ import {
   ModalHeader,
   Text,
 } from "@chakra-ui/react";
+import { getNetworkStats } from "api/rest/elrondApi/network";
 import { scCallOnlyTx } from "api/sc/calls";
 import { sendMultipleTransactions } from "api/sc/sc";
 import ActionButton from "components/ActionButton/ActionButton";
 import MyModal from "components/Modal/Modal";
 import { useFormik } from "formik";
+import useSWR from "swr";
 import { formatBalance, setElrondBalance } from "utils/functions/formatBalance";
 import { preventExponetialNotation } from "utils/functions/numbers";
 import { formatTokenI } from "utils/functions/tokens";
@@ -22,6 +24,7 @@ import useGetQuantumxFarmsFees from "utils/hooks/useGetQuantumxFarmsFees";
 import { IElrondToken } from "utils/types/elrond.interface";
 import { IScFarmItem, IScUserFarmInfo } from "utils/types/sc.interface";
 import { getTxForRareFee } from "views/Hypezone/utils/functions";
+import { useGetFarmUnbondingPeriod } from "views/Hypezone/utils/hooks";
 import * as yup from "yup";
 
 interface IProps {
@@ -43,6 +46,10 @@ const UnstakeModal = ({
   token,
   onClose,
 }: IProps) => {
+  const { data: statsRes } = useSWR("/stats", getNetworkStats);
+
+  const currentEpoch = statsRes?.data?.epoch;
+
   const { farmFee } = useGetQuantumxFarmsFees(farm.farm.farmId);
   const validationSchema = yup.object({
     amount: yup
@@ -104,6 +111,12 @@ const UnstakeModal = ({
       formik.setFieldValue("amount", finalAmount, false);
     }
   };
+  const { unbondingPeriod } = useGetFarmUnbondingPeriod(farm.farm.farmId);
+
+  let finalFee = farmFee.earlyUnbondingFee;
+  if (userFarmItem.unboundingEpoch - currentEpoch <= unbondingPeriod / 2) {
+    finalFee = finalFee / 2;
+  }
 
   return (
     <MyModal bg="black.baseDark" isOpen={isOpen} onClose={onClose}>
