@@ -11,23 +11,20 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { BigIntValue } from "@multiversx/sdk-core/out";
+import { useTrackTransactionStatus } from "@multiversx/sdk-dapp/hooks";
 import { contractAddr } from "api/net.config";
-import { EGLDPaymentOnlyTx, ESDTTransferOnlyTx } from "api/sc/calls";
-import { sendMultipleTransactions } from "api/sc/sc";
+import { EGLDPayment, ESDTTransfer } from "api/sc/calls";
 import BigNumber from "bignumber.js";
 import ActionButton from "components/ActionButton/ActionButton";
 import MyModal from "components/Modal/Modal";
 import { useFormik } from "formik";
+import { useState } from "react";
 import { formatBalance } from "utils/functions/formatBalance";
 import { preventExponetialNotation } from "utils/functions/numbers";
 import { formatTokenI } from "utils/functions/tokens";
-import useGetAccountToken from "utils/hooks/useGetAccountToken";
-import {
-  IElrondAccountToken,
-  IElrondToken,
-} from "utils/types/elrond.interface";
+import useGetUserTokens from "utils/hooks/useGetUserTokens";
+import { IElrondToken } from "utils/types/elrond.interface";
 import { IScFarmItem } from "utils/types/sc.interface";
-import { getTxForRareFee } from "views/Hypezone/utils/functions";
 import * as yup from "yup";
 
 interface IProps {
@@ -36,35 +33,22 @@ interface IProps {
   onClose: () => void;
   farm: IScFarmItem;
   token: IElrondToken;
-  maxStakingAmount?: string;
 }
 
-const StakeModal = ({
-  isOpen,
-  onClose,
-  farm,
-  isPool,
-  token,
-  maxStakingAmount,
-}: IProps) => {
-  const { accountToken } = useGetAccountToken(farm.farm.stakingToken);
-  const userToken = accountToken as IElrondAccountToken;
+const StakeModal = ({ isOpen, onClose, farm, isPool, token }: IProps) => {
+  const [_, userToken]: any = useGetUserTokens(farm.farm.stakingToken);
 
-  const maxUserCanStake = formatBalance(
-    { balance: maxStakingAmount, decimals: userToken?.decimals },
-    true,
-    18
-  );
-  const userAmount = formatBalance(userToken, true, 18);
-  const max = maxUserCanStake > userAmount ? userAmount : maxUserCanStake;
   const validationSchema = yup.object({
-    amount: yup
-      .number()
-      .required()
-      .max(
-        max,
-        "The max amount you can stake is " + max + " " + userToken.name
-      ),
+    amount: yup.number().required().max(formatBalance(userToken, true)),
+  });
+
+  const [sessionId, setSessionId] = useState();
+  const onSuccess = () => {
+    window.location.reload();
+  };
+  const transactionStatus = useTrackTransactionStatus({
+    transactionId: sessionId,
+    onSuccess: onSuccess,
   });
 
   const formik = useFormik({
@@ -75,21 +59,17 @@ const StakeModal = ({
     onSubmit: async (values) => {
       const amount = new BigNumber(values.amount).toNumber();
 
-      let txs = [];
-
-      const t1 = await getTxForRareFee();
-      txs.push(t1);
+      let res = null;
       if (farm.farm.stakingToken === "EGLD") {
-        const t2 = await EGLDPaymentOnlyTx(
+        res = await EGLDPayment(
           "farms2",
           "stake",
           amount,
           [new BigIntValue(new BigNumber(farm.farm.farmId))],
           50000000
         );
-        txs.push(t2);
       } else {
-        const t2 = await ESDTTransferOnlyTx({
+        res = await ESDTTransfer({
           funcName: "stake",
           token: { identifier: token.identifier, decimals: token.decimals },
           val: amount,
@@ -97,24 +77,20 @@ const StakeModal = ({
           contractAddr: contractAddr.farms2,
           gasL: 50000000,
         });
-        txs.push(t2);
       }
-      sendMultipleTransactions({ txs: txs });
+      setSessionId(res);
     },
   });
   const handleAmount = (percent: number) => {
     if (userToken) {
-      const userTokenAmount = formatBalance(userToken, true, 18);
-      let userRealAmount = percent * userTokenAmount;
-
-      if (userRealAmount > maxUserCanStake) {
-        userRealAmount = maxUserCanStake;
-      }
+      const userTokenAmount = formatBalance(userToken, true);
+      const userRealAmount = percent * userTokenAmount;
       const finalAmount = preventExponetialNotation(userRealAmount);
 
       formik.setFieldValue("amount", finalAmount, false);
     }
   };
+
   return (
     <MyModal bg="black.baseDark" isOpen={isOpen} onClose={onClose}>
       <form onSubmit={formik.handleSubmit}>
@@ -138,19 +114,14 @@ const StakeModal = ({
               </Text>
             </Flex>
             <Flex mb="3">
-              <Flex flexDir={"column"} flex={1}>
-                <Input
-                  variant={"unstyled"}
-                  placeholder="0"
-                  flex="1"
-                  name="amount"
-                  value={formik.values.amount}
-                  onChange={formik.handleChange}
-                />{" "}
-                <Text fontSize={"sm"} color="tomato">
-                  {formik.errors.amount}
-                </Text>
-              </Flex>
+              <Input
+                variant={"unstyled"}
+                placeholder="0"
+                flex="1"
+                name="amount"
+                value={formik.values.amount}
+                onChange={formik.handleChange}
+              />{" "}
               <Text fontSize={"14px"}>
                 {formatTokenI(farm?.farm.stakingToken)}
                 {!isPool && "-LP"}
