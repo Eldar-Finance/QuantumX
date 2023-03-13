@@ -1,5 +1,6 @@
 import { Box, Flex, Heading, Text } from "@chakra-ui/react";
 import hypeImage from "assets/logos/hype.svg";
+import BlurComponent from "components/BlurComponent/BlurComponent";
 import NextImage from "components/NextImage/NextImage";
 import { ReactNode, useEffect } from "react";
 import { fetchStats } from "redux/slices/elrond/elrond-slice";
@@ -33,7 +34,7 @@ interface IProps {
   maxStakingAmount?: string;
 }
 
-const blur = true;
+const blur = false;
 
 const FarmList = ({
   title,
@@ -81,13 +82,7 @@ const FarmList = ({
           {subtitle && <Text>{subtitle}</Text>}
         </Flex>
       </Flex>
-      <Box
-        position={"relative"}
-        filter={blur && "blur(8px)"} // set the amount of blur
-      >
-        {blur && (
-          <Box position={"absolute"} top={0} left={0} right={0} bottom={0} />
-        )}
+      <BlurComponent blur={blur}>
         <FarmAccordion
           othersArr={{
             allFarms: hypeFarms,
@@ -99,7 +94,7 @@ const FarmList = ({
           disableComponent={disableComponent}
           maxStakingAmount={maxStakingAmount}
         />
-      </Box>
+      </BlurComponent>
     </Box>
   );
 };
