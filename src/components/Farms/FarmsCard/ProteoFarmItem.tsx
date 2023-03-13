@@ -18,6 +18,7 @@ import { fetchApr } from "api/rest/axiosEldar2";
 import { scCall } from "api/sc/calls";
 import BigNumber from "bignumber.js";
 import ActionButton from "components/ActionButton/ActionButton";
+import Badge from "components/Badge/Badge";
 
 import { createContext, PropsWithChildren, useEffect, useState } from "react";
 import { addDualEarned, addsProteoEarned } from "redux/slices/proteo/proteo";
@@ -132,6 +133,18 @@ const ProteoFarmItem = ({ pf, tvl }: IProps) => {
     .reduce((acc, curr) => {
       return acc + new BigNumber(curr.claimableAmount).toNumber();
     }, 0);
+
+  const freeSpace = BigNumber(
+    (formatBalance({ balance: tokenInfo?.staked, decimals: decimals }, true) /
+      formatBalance(
+        {
+          balance: tokenInfo?.staked + tokenInfo?.avilableToStake,
+          decimals: decimals,
+        },
+        true
+      )) *
+      100
+  ).isLessThan(98);
   return (
     <ProteoItemContenxt.Provider
       value={{
@@ -158,8 +171,15 @@ const ProteoFarmItem = ({ pf, tvl }: IProps) => {
                 flexDir={{ xs: "column", md: "row" }}
                 templateColumns={{ xs: "1fr", md: "1fr 1fr 1fr 1fr 1fr" }}
               >
-                <Flex gap="4" alignItems={"center"}>
-                  {Icon}
+                <Flex gap="4" alignItems={"center"} position="relative">
+                  <Badge
+                    text="Free Space"
+                    right={"-50px"}
+                    fontWeight="bold"
+                    show={freeSpace}
+                  >
+                    {Icon}
+                  </Badge>
                   <Text fontWeight={"600"}>{pf.stakedCoin}</Text>
                 </Flex>
                 <Flex flexDir={"column"} textAlign="center">

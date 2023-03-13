@@ -1,4 +1,5 @@
 import { Box, Flex, useDisclosure } from "@chakra-ui/react";
+import Badge from "components/Badge/Badge";
 import { DotsIcon } from "components/Icons/ui";
 import { AnimatePresence } from "framer-motion";
 import Link from "next/link";
@@ -67,21 +68,7 @@ const Menu = () => {
             <Link href={route.path} key={route.path}>
               <Flex position={"relative"}>
                 <Box color={isActive && "main"}>{route.name}</Box>
-                {route.new && (
-                  <Box
-                    position={"absolute"}
-                    top={"-10px"}
-                    right={"-20px"}
-                    bg="main"
-                    color="black"
-                    fontSize={"xs"}
-                    rounded={"full"}
-                    px={1}
-                    fontWeight="bold"
-                  >
-                    NEW
-                  </Box>
-                )}{" "}
+                {route.new && <Badge text="NEW" />}{" "}
               </Flex>
             </Link>
           );
