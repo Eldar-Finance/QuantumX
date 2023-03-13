@@ -17,6 +17,7 @@ import {
   setToToken,
   setToTokenValue,
 } from "redux/slices/smartSwaps/smartSwaps";
+import { updateURLParams } from "utils/functions/routes";
 import { useAppDispatch, useAppSelector } from "utils/hooks/redux";
 import { ILpSmartSwap, INomalSmartSwap } from "utils/types/others.interface";
 import useGetSwapInfo from "views/Swap/hooks/useGetSwapInfo";
@@ -59,9 +60,13 @@ const SwapCard = () => {
   }, [dispatch]);
 
   const handleOnSelectFromToken = (token) => {
+    const fromToken = token.identifier;
+    updateURLParams({ fromToken });
     dispatch(setFromToken(token.identifier));
   };
   const handleOnSelectToToken = (token) => {
+    const toToken = token.identifier;
+    updateURLParams({ toToken });
     dispatch(setToToken(token.identifier));
   };
   const handleExchangeFields = () => {

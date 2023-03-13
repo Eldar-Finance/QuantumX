@@ -66,3 +66,17 @@ export const getParamFromUrl = (paramName: string) => {
     return params.get(paramName);
   }
 };
+
+export const updateURLParams = (params: Record<string, string>) => {
+  const queryParams = new URLSearchParams(window.location.search);
+  Object.keys(params).forEach((key) => {
+    const value = params[key];
+    if (value) {
+      queryParams.set(key, value);
+    } else {
+      queryParams.delete(key);
+    }
+  });
+  const newURL = `${window.location.pathname}?${queryParams.toString()}`;
+  window.history.replaceState({}, "", newURL);
+};
