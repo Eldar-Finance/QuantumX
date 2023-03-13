@@ -174,10 +174,9 @@ const ProteoFarmItem = ({ pf, tvl }: IProps) => {
                 <Flex gap="4" alignItems={"center"} position="relative">
                   <Badge
                     text="Free Space"
-                    right={"-50px"}
+                    right={"-100px"}
                     fontWeight="bold"
                     show={freeSpace}
-                    style={{ textAlign: "center" }}
                   >
                     {Icon}
                   </Badge>
