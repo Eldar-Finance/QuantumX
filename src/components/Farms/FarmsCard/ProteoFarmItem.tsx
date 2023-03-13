@@ -177,6 +177,7 @@ const ProteoFarmItem = ({ pf, tvl }: IProps) => {
                     right={"-50px"}
                     fontWeight="bold"
                     show={freeSpace}
+                    style={{ textAlign: "center" }}
                   >
                     {Icon}
                   </Badge>
