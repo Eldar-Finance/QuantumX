@@ -133,6 +133,7 @@ export const TOKENS_ID = {
   hype: "HYPE-619661",
   usdt: "USDT-f8c08c",
   busd: "BUSD-40b57e",
+  hypeusdc: "HYPEUSDC-3164e5",
 };
 
 //general configs
