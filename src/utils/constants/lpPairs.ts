@@ -258,4 +258,11 @@ export const pairs = [
     token1lp: "ZPAY-247875",
     token2lp: "WEGLD-bd4d79",
   },
+  {
+    lpname: "HYPEUSDC",
+    lpidentifier: "HYPEUSDC-3164e5",
+    lpprice: "0.000001",
+    token1lp: "USDC-c76f1f",
+    token2lp: "HYPE-619661",
+  },
 ];
