@@ -38,7 +38,7 @@ const HypePools2Container = ({ ids }: IProps) => {
       subtitle="[Stake $RARE Earn $HYPE]"
       ids={ids}
       isPool
-      disableIds={[]}
+      disableIds={idsToDisable}
       disableComponent={<DisableComponent />}
       maxStakingAmount={setElrondBalance(1000000, 18)}
     />

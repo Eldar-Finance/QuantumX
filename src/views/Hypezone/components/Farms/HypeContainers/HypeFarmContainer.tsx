@@ -1,5 +1,7 @@
 import { Box, Center, Heading } from "@chakra-ui/react";
-import { hypeFarmIds } from "views/Hypezone/utils/constants";
+import { toknesID } from "api/net.config";
+import { formatBalance } from "utils/functions/formatBalance";
+import useGetAccountToken from "utils/hooks/useGetAccountToken";
 import { useSrbStaker } from "views/Hypezone/utils/hooks";
 import FarmList from "../FarmsList/FarmList";
 
@@ -9,13 +11,27 @@ interface IProps {
 
 const HypeFarmContainer = ({ ids }: IProps) => {
   const { isStaker: isSrbStaker } = useSrbStaker();
-  const disabledIds = isSrbStaker ? [] : [hypeFarmIds[2]];
+  const { accountToken } = useGetAccountToken(toknesID.rare);
 
+  const idsToDisable = ids.filter((id, i) => {
+    if (i === 2) {
+      //in id 14 user can stake only if he is holding more than 100+ RARE in his wallet
+      if (isSrbStaker) {
+        return false;
+      } else {
+        return true;
+      }
+    } else if (i === 3) {
+      //in id 28 user can stake only if he is holding more than 500+ RARE in his wallet
+      return !(formatBalance(accountToken, true) >= 500);
+    }
+    return false;
+  });
   return (
     <FarmList
       title="Farms"
       ids={ids}
-      disableIds={disabledIds}
+      disableIds={idsToDisable}
       disableComponent={<DisableComponent />}
     />
   );
