@@ -52,7 +52,7 @@ export const formatBalanceDolar = (
 };
 
 export const getRealBalance = (
-  balance1: number = 0,
+  balance1: number | string = 0,
   decimal?: number,
   returnBigNumber: boolean = false
 ) => {

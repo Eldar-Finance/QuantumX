@@ -142,13 +142,9 @@ const StakeUnstake = ({
           onClose={() => setOpenStake((s) => !s)}
           token={stakingToken}
           isPool={isPool}
-          maxStakingAmount={
-            new BigNumber(userFarmItem.stakedBalance).isEqualTo(0)
-              ? new BigNumber(maxStakingAmount).toString()
-              : new BigNumber(maxStakingAmount)
-                  .minus(userFarmItem.stakedBalance)
-                  .toString()
-          }
+          maxStakingAmount={new BigNumber(maxStakingAmount)
+            .minus(farm.stakedBalance)
+            .toString()}
         />
       )}
 

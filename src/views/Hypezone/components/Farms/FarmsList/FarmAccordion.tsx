@@ -13,7 +13,6 @@ import {
   IScUserFarmInfo,
   IScUserFarmRewards,
 } from "utils/types/sc.interface";
-import { hypeFarmIds } from "views/Hypezone/utils/constants";
 import Farms2Item from "../FarmItem/FarmItem";
 
 interface IProps {
@@ -84,7 +83,7 @@ const FarmAccordion = ({
           if (!farm.farm.farm.farmId) return null;
           return (
             <BlurComponent
-              blur={true && farm.farm.farm.farmId !== hypeFarmIds[0]}
+              // blur={true && farm.farm.farm.farmId !== hypeFarmIds[0]}
               key={farm.farm.farm.farmId}
             >
               <Farms2Item

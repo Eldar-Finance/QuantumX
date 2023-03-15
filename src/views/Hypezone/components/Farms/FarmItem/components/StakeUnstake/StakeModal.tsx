@@ -19,13 +19,12 @@ import ActionButton from "components/ActionButton/ActionButton";
 import MyModal from "components/Modal/Modal";
 import { useFormik } from "formik";
 import { useState } from "react";
-import { formatBalance } from "utils/functions/formatBalance";
+import { formatBalance, setElrondBalance } from "utils/functions/formatBalance";
 import { preventExponetialNotation } from "utils/functions/numbers";
 import { formatTokenI } from "utils/functions/tokens";
 import useGetUserTokens from "utils/hooks/useGetUserTokens";
 import { IElrondToken } from "utils/types/elrond.interface";
 import { IScFarmItem } from "utils/types/sc.interface";
-import * as yup from "yup";
 
 interface IProps {
   isOpen: boolean;
@@ -33,14 +32,22 @@ interface IProps {
   onClose: () => void;
   farm: IScFarmItem;
   token: IElrondToken;
+  maxStakingAmount: string;
 }
 
-const StakeModal = ({ isOpen, onClose, farm, isPool, token }: IProps) => {
+const StakeModal = ({
+  isOpen,
+  onClose,
+  farm,
+  isPool,
+  token,
+  maxStakingAmount,
+}: IProps) => {
   const [_, userToken]: any = useGetUserTokens(farm.farm.stakingToken);
-
-  const validationSchema = yup.object({
-    amount: yup.number().required().max(formatBalance(userToken, true)),
-  });
+  const maxRealAmount = formatBalance(
+    { balance: maxStakingAmount, decimals: userToken?.decimals },
+    true
+  );
 
   const [sessionId, setSessionId] = useState();
   const onSuccess = () => {
@@ -55,37 +62,45 @@ const StakeModal = ({ isOpen, onClose, farm, isPool, token }: IProps) => {
     initialValues: {
       amount: "",
     },
-    validationSchema: validationSchema,
     onSubmit: async (values) => {
-      const amount = new BigNumber(values.amount).toNumber();
+      if (
+        new BigNumber(
+          setElrondBalance(values.amount, userToken.decimals)
+        ).isLessThanOrEqualTo(maxStakingAmount)
+      ) {
+        const amount = new BigNumber(values.amount).toNumber();
 
-      let res = null;
-      if (farm.farm.stakingToken === "EGLD") {
-        res = await EGLDPayment(
-          "farms2",
-          "stake",
-          amount,
-          [new BigIntValue(new BigNumber(farm.farm.farmId))],
-          50000000
-        );
-      } else {
-        res = await ESDTTransfer({
-          funcName: "stake",
-          token: { identifier: token.identifier, decimals: token.decimals },
-          val: amount,
-          args: [new BigIntValue(new BigNumber(farm.farm.farmId))],
-          contractAddr: contractAddr.farms2,
-          gasL: 50000000,
-        });
+        let res = null;
+        if (farm.farm.stakingToken === "EGLD") {
+          res = await EGLDPayment(
+            "farms2",
+            "stake",
+            amount,
+            [new BigIntValue(new BigNumber(farm.farm.farmId))],
+            50000000
+          );
+        } else {
+          res = await ESDTTransfer({
+            funcName: "stake",
+            token: { identifier: token.identifier, decimals: token.decimals },
+            val: amount,
+            args: [new BigIntValue(new BigNumber(farm.farm.farmId))],
+            contractAddr: contractAddr.farms2,
+            gasL: 50000000,
+          });
+        }
+        setSessionId(res);
       }
-      setSessionId(res);
     },
   });
   const handleAmount = (percent: number) => {
     if (userToken) {
       const userTokenAmount = formatBalance(userToken, true);
       const userRealAmount = percent * userTokenAmount;
-      const finalAmount = preventExponetialNotation(userRealAmount);
+      let finalAmount = preventExponetialNotation(maxRealAmount);
+      if (new BigNumber(maxRealAmount).isGreaterThan(userRealAmount)) {
+        finalAmount = preventExponetialNotation(userRealAmount);
+      }
 
       formik.setFieldValue("amount", finalAmount, false);
     }
@@ -141,7 +156,6 @@ const StakeModal = ({ isOpen, onClose, farm, isPool, token }: IProps) => {
             w="full"
             maxW={"180px"}
             onClick={onClose}
-            disabled={!formik.isValid}
           >
             Cancel
           </ActionButton>
