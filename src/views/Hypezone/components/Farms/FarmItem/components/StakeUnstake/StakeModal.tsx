@@ -68,7 +68,8 @@ const StakeModal = ({
       if (
         new BigNumber(
           setElrondBalance(values.amount, userToken.decimals)
-        ).isLessThanOrEqualTo(maxStakingAmount)
+        ).isLessThanOrEqualTo(maxStakingAmount) ||
+        maxStakingAmount === null
       ) {
         const amount = new BigNumber(values.amount).toNumber();
 
@@ -100,15 +101,25 @@ const StakeModal = ({
     },
   });
   const handleAmount = (percent: number) => {
-    if (userToken) {
-      const userTokenAmount = formatBalance(userToken, true);
-      const userRealAmount = percent * userTokenAmount;
-      let finalAmount = preventExponetialNotation(maxRealAmount);
-      if (new BigNumber(maxRealAmount).isGreaterThan(userRealAmount)) {
-        finalAmount = preventExponetialNotation(userRealAmount);
-      }
+    if (maxStakingAmount) {
+      if (userToken) {
+        const userTokenAmount = formatBalance(userToken, true);
+        const userRealAmount = percent * userTokenAmount;
+        let finalAmount = preventExponetialNotation(maxRealAmount);
+        if (new BigNumber(maxRealAmount).isGreaterThan(userRealAmount)) {
+          finalAmount = preventExponetialNotation(userRealAmount);
+        }
 
-      formik.setFieldValue("amount", finalAmount, false);
+        formik.setFieldValue("amount", finalAmount, false);
+      }
+    } else {
+      if (userToken) {
+        const userTokenAmount = formatBalance(userToken, true);
+        const userRealAmount = percent * userTokenAmount;
+        let finalAmount = preventExponetialNotation(userRealAmount);
+
+        formik.setFieldValue("amount", finalAmount, false);
+      }
     }
   };
 
