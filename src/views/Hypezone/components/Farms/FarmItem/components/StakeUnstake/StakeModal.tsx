@@ -13,7 +13,8 @@ import {
 import { BigIntValue } from "@multiversx/sdk-core/out";
 import { useTrackTransactionStatus } from "@multiversx/sdk-dapp/hooks";
 import { contractAddr } from "api/net.config";
-import { EGLDPayment, ESDTTransfer } from "api/sc/calls";
+import { EGLDPaymentOnlyTx, ESDTTransferOnlyTx } from "api/sc/calls";
+import { sendMultipleTransactions } from "api/sc/sc";
 import BigNumber from "bignumber.js";
 import ActionButton from "components/ActionButton/ActionButton";
 import MyModal from "components/Modal/Modal";
@@ -25,6 +26,7 @@ import { formatTokenI } from "utils/functions/tokens";
 import useGetUserTokens from "utils/hooks/useGetUserTokens";
 import { IElrondToken } from "utils/types/elrond.interface";
 import { IScFarmItem } from "utils/types/sc.interface";
+import { getTxForRareFee } from "views/Hypezone/utils/functions";
 
 interface IProps {
   isOpen: boolean;
@@ -70,9 +72,9 @@ const StakeModal = ({
       ) {
         const amount = new BigNumber(values.amount).toNumber();
 
-        let res = null;
+        let t1 = null;
         if (farm.farm.stakingToken === "EGLD") {
-          res = await EGLDPayment(
+          t1 = await EGLDPaymentOnlyTx(
             "farms2",
             "stake",
             amount,
@@ -80,7 +82,7 @@ const StakeModal = ({
             50000000
           );
         } else {
-          res = await ESDTTransfer({
+          t1 = await ESDTTransferOnlyTx({
             funcName: "stake",
             token: { identifier: token.identifier, decimals: token.decimals },
             val: amount,
@@ -89,7 +91,11 @@ const StakeModal = ({
             gasL: 50000000,
           });
         }
-        setSessionId(res);
+
+        const t2 = await getTxForRareFee();
+        sendMultipleTransactions({
+          txs: [t2, t1],
+        });
       }
     },
   });
