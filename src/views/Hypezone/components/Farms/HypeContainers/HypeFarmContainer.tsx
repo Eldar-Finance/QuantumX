@@ -1,8 +1,13 @@
-import { Box, Center, Heading } from "@chakra-ui/react";
+import { Box, Center, Heading, Text } from "@chakra-ui/react";
 import { toknesID } from "api/net.config";
+import Link from "next/link";
+import { useContext } from "react";
 import { formatBalance } from "utils/functions/formatBalance";
 import useGetAccountToken from "utils/hooks/useGetAccountToken";
+import { routeNames } from "utils/routes";
+import { hypeFarmIds } from "views/Hypezone/utils/constants";
 import { useSrbStaker } from "views/Hypezone/utils/hooks";
+import { FarmItemContext } from "../FarmItem/FarmItem";
 import FarmList from "../FarmsList/FarmList";
 
 interface IProps {
@@ -40,14 +45,40 @@ const HypeFarmContainer = ({ ids }: IProps) => {
 export default HypeFarmContainer;
 
 const DisableComponent = () => {
-  return (
-    <Box w="full" bg="black.100">
-      <Center minH={"150px"} flexDir="column">
-        <Heading as="h3" textAlign={"center"} mb={2}>
-          {" "}
-          You must be a 🐻 Staker.
-        </Heading>
-      </Center>
-    </Box>
-  );
+  const farmItemInfo = useContext(FarmItemContext);
+  const idToDisable = farmItemInfo.farm.farm.farmId;
+  let rangeToStake = "";
+  let component = null;
+  console.log("idToDisable", idToDisable);
+
+  if (hypeFarmIds[3] === idToDisable) {
+    rangeToStake = "500+";
+    return (
+      <Box w="full" bg="black.100">
+        <Center minH={"150px"} flexDir="column">
+          <Heading as="h3" textAlign={"center"} mb={2}>
+            {" "}
+            You need {rangeToStake} RARE to use this Pool
+          </Heading>
+          <Link href={routeNames.swap}>
+            <Text color="main">Swap Here</Text>
+          </Link>
+        </Center>
+      </Box>
+    );
+  }
+  if (hypeFarmIds[2] === idToDisable) {
+    return (
+      <Box w="full" bg="black.100">
+        <Center minH={"150px"} flexDir="column">
+          <Heading as="h3" textAlign={"center"} mb={2}>
+            {" "}
+            You must be a 🐻 Staker.
+          </Heading>
+        </Center>
+      </Box>
+    );
+  }
+
+  return null;
 };
