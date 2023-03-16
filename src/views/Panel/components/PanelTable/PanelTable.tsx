@@ -18,8 +18,12 @@ import { panelColumns } from "./columns";
 const NewFarmModal: any = dynamic(() => import("./NewFarmModal"));
 
 const PanelTable = () => {
+  const swrConfig = {
+    revalidateOnFocus: false,
+    revalidateIfStale: false,
+  };
   const dispatch = useAppDispatch();
-  const { creators, isLoading } = useGetFarmCreators();
+  const { creators, isLoading } = useGetFarmCreators(swrConfig);
   const address = useSelector(selectUserAddress);
   const { onToggle, isOpen } = useDisclosure();
   useEffect(() => {
@@ -29,7 +33,7 @@ const PanelTable = () => {
   }, [address, dispatch]);
   const creatorsInfo = useSelector(selectCreatorsFarms);
   const tableData: IScPanelFarms[] = creatorsInfo.data;
-  const { data: statsRes } = useSWR("/stats", getNetworkStats);
+  const { data: statsRes } = useSWR("/stats", getNetworkStats, swrConfig);
 
   const currentEpoch = statsRes?.data?.epoch;
 
@@ -69,7 +73,7 @@ const PanelTable = () => {
         </Box>
       )}
 
-      <NewFarmModal isOpen={isOpen} onClose={onToggle} />
+      {isOpen && <NewFarmModal isOpen={isOpen} onClose={onToggle} />}
     </Box>
   );
 };

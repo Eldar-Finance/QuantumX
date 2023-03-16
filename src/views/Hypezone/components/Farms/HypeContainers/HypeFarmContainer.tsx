@@ -48,8 +48,6 @@ const DisableComponent = () => {
   const farmItemInfo = useContext(FarmItemContext);
   const idToDisable = farmItemInfo.farm.farm.farmId;
   let rangeToStake = "";
-  let component = null;
-  console.log("idToDisable", idToDisable);
 
   if (hypeFarmIds[3] === idToDisable) {
     rangeToStake = "500+";
