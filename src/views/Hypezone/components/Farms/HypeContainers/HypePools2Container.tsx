@@ -16,14 +16,10 @@ const HypePools2Container = ({ ids }: IProps) => {
     if (!userSrbNfts) return true;
     if (i === 0) {
       //in id 16 using this api we must check if connected address has 1-5 in totalnfts from the api
-      return !(
-        Number(userSrbNfts.totalnft) >= 1 && Number(userSrbNfts.totalnft) <= 5
-      );
+      return !(Number(userSrbNfts.totalnft) >= 1);
     } else if (i === 1) {
       //in id 17 using this api we must check if connected address has 6-9 in totalnfts from the api
-      return !(
-        Number(userSrbNfts.totalnft) >= 6 && Number(userSrbNfts.totalnft) <= 9
-      );
+      return !(Number(userSrbNfts.totalnft) >= 6);
     } else if (i === 2) {
       //in id 18 using this api we must check if connected address has 10+ in totalnfts from the api
       return !(Number(userSrbNfts.totalnft) >= 10);
