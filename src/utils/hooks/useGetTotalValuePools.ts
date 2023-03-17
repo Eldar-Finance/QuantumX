@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { selectPools } from "redux/slices/farms2/farms2-slice";
+import { selectAllFarms2 } from "redux/slices/farms2/farms2-slice";
+import { pairs } from "utils/constants/lpPairs";
 import { formatBalanceDolar } from "utils/functions/formatBalance";
 import { useAppDispatch, useAppSelector } from "utils/hooks/redux";
 import { proteoPoolsArr } from "views/Pools/constants";
@@ -12,7 +13,15 @@ const useGetTotalValuePools = () => {
   const { data } = useAppSelector((state) => state.proteo.generalInfoApp);
   const generalInfoAppData = data;
   const [totalValueLocked, setTotalValueLocked] = useState<number>();
-  const farms2 = useSelector(selectPools);
+  const { data: allFarms } = useSelector(selectAllFarms2);
+  const farms2 = allFarms.filter((farm) =>
+    pairs.filter(
+      (mexPair) =>
+        pairs.findIndex(
+          (mexPair) => mexPair.lpidentifier === farm.farm.stakingToken
+        ) === -1
+    )
+  );
 
   const { tokens: farms2Tokens } = useGetMultipleElrondTokens(
     farms2.map((farm) => farm.farm.stakingToken)
