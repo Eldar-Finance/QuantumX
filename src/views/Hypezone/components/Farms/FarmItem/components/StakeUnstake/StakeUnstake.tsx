@@ -117,7 +117,6 @@ const StakeUnstake = ({
             disabled={
               disable ||
               (!isSrbStaker && farm.farm.farmId === 7) ||
-              !maxAmountToStake ||
               new BigNumber(maxAmountToStake).isLessThan(0)
             }
           >
