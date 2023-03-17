@@ -26,6 +26,7 @@ const ElBadges = () => {
         token: userToken,
         contractAddr: contractAddr.sftsRewards,
         val: val,
+        gasL: 150000000,
       });
     }
   };
