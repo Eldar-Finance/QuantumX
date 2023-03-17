@@ -92,10 +92,6 @@ const StakeUnstake = ({
     disableUnstake = true && address !== farm.farm.creator;
   }
   let hasuserStaked = new BigNumber(userFarmItem?.stakedBalance).toNumber() > 0;
-  if (farm.farm.farmId === 24) {
-    console.log("maxStakingAmount", maxStakingAmount);
-    console.log("farm.stakedBalance", farm.stakedBalance);
-  }
 
   let maxAmountToStake = maxStakingAmount
     ? new BigNumber(maxStakingAmount).minus(farm.stakedBalance).toString()

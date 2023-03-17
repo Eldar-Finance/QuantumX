@@ -102,8 +102,6 @@ const StakeModal = ({
   });
   const handleAmount = (percent: number) => {
     if (maxStakingAmount) {
-      console.log("maxStakingAmount", maxStakingAmount);
-
       if (userToken) {
         const userTokenAmount = formatBalance(userToken, true);
         const userRealAmount = percent * userTokenAmount;
