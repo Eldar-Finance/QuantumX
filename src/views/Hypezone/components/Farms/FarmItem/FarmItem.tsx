@@ -54,6 +54,7 @@ interface IProps {
   disable?: boolean;
   disableComponent: ReactNode;
   maxStakingAmount?: string;
+  fixedStakedBalance?: string;
 }
 
 export const FarmItemContext = createContext<{ farm: IScFarmItem }>({
@@ -72,6 +73,7 @@ const Farms2Item = ({
   disable,
   disableComponent,
   maxStakingAmount,
+  fixedStakedBalance,
 }: IProps) => {
   const { token: stakingToken } = useGetElrondToken(farm.farm.stakingToken);
 
@@ -136,7 +138,12 @@ const Farms2Item = ({
       stakingToken,
       lastRewardedEpoch,
       rewardToken,
-      farm,
+      fixedStakedBalance
+        ? {
+            ...farm,
+            stakedBalance: fixedStakedBalance,
+          }
+        : farm,
       stats
     );
   }

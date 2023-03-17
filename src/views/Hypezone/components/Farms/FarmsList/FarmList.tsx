@@ -32,6 +32,7 @@ interface IProps {
   disableIds?: number[];
   disableComponent: ReactNode;
   maxStakingAmount?: string;
+  fixedStakedBalance?: string;
 }
 
 const blur = false;
@@ -44,6 +45,7 @@ const FarmList = ({
   disableIds,
   disableComponent,
   maxStakingAmount,
+  fixedStakedBalance,
 }: IProps) => {
   const dispatch = useAppDispatch();
   const address = useAppSelector(selectUserAddress);
@@ -93,6 +95,7 @@ const FarmList = ({
           disableIds={disableIds}
           disableComponent={disableComponent}
           maxStakingAmount={maxStakingAmount}
+          fixedStakedBalance={fixedStakedBalance}
         />
       </BlurComponent>
     </Box>

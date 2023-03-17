@@ -34,6 +34,7 @@ const HypePools1Container = ({ ids }: IProps) => {
       disableIds={idsToDisable}
       disableComponent={<DisableComponent />}
       maxStakingAmount={setElrondBalance(10000000000, 18)}
+      fixedStakedBalance={setElrondBalance(2500000000, 18)}
     />
   );
 };
