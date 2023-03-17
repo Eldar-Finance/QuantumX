@@ -92,7 +92,14 @@ const StakeUnstake = ({
     disableUnstake = true && address !== farm.farm.creator;
   }
   let hasuserStaked = new BigNumber(userFarmItem?.stakedBalance).toNumber() > 0;
+  if (farm.farm.farmId === 24) {
+    console.log("maxStakingAmount", maxStakingAmount);
+    console.log("farm.stakedBalance", farm.stakedBalance);
+  }
 
+  let maxAmountToStake = maxStakingAmount
+    ? new BigNumber(maxStakingAmount).minus(farm.stakedBalance).toString()
+    : null;
   return (
     <Flex h="full" flexDir={"column"} w="full">
       <Text color="white.400">
@@ -106,16 +113,27 @@ const StakeUnstake = ({
         )}
       </Text>
       <Flex mt="2" gap="3" flex={1} alignItems="center" w="full">
-        <ActionButton
-          onClick={() => setOpenStake((s) => !s)}
-          variant={"outline"}
-          w="full"
-          maxW={"50%"}
-          disabled={disable || (!isSrbStaker && farm.farm.farmId === 7)}
-        >
-          STAKE {!isPool && "LP"}{" "}
-        </ActionButton>
-        <Center flex="1" flexDir={"column"} w="full" maxW={"50%"}>
+        <Flex flexDir={"column"} flex={1}>
+          <ActionButton
+            onClick={() => setOpenStake((s) => !s)}
+            variant={"outline"}
+            w="full"
+            disabled={
+              disable ||
+              (!isSrbStaker && farm.farm.farmId === 7) ||
+              !maxAmountToStake ||
+              new BigNumber(maxAmountToStake).isLessThan(0)
+            }
+          >
+            STAKE {!isPool && "LP"}{" "}
+          </ActionButton>
+          {new BigNumber(maxAmountToStake).isLessThan(0) && (
+            <Text textAlign={"center"} color="tomato" fontSize={"sm"}>
+              The pool has reached its maximum staking capacity.
+            </Text>
+          )}
+        </Flex>
+        <Center flexDir={"column"} w="full" flex={1}>
           <ActionButton
             onClick={() => setOpenUnstakeStake((s) => !s)}
             disabled={disable || disableUnstake}
@@ -142,13 +160,7 @@ const StakeUnstake = ({
           onClose={() => setOpenStake((s) => !s)}
           token={stakingToken}
           isPool={isPool}
-          maxStakingAmount={
-            maxStakingAmount
-              ? new BigNumber(maxStakingAmount)
-                  .minus(farm.stakedBalance)
-                  .toString()
-              : null
-          }
+          maxStakingAmount={maxAmountToStake}
         />
       )}
 
