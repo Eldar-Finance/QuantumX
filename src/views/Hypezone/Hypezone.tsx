@@ -16,7 +16,6 @@ import HypeFarmContainer from "./components/Farms/HypeContainers/HypeFarmContain
 import HypePools1Container from "./components/Farms/HypeContainers/HypePools1Container";
 import HypePools2Container from "./components/Farms/HypeContainers/HypePools2Container";
 import Faucet from "./components/Faucet/Faucet";
-import UserNeedRareModal from "./components/UserNeedRareModal/UserNeedRareModal";
 import {
   hypeFarmIds,
   hypePools1Ids,
@@ -86,7 +85,7 @@ const Hypezone = () => {
           <HypePools1Container ids={hypePools1Ids} />
           <HypePools2Container ids={hypePools2Ids} />
         </Flex>
-        <UserNeedRareModal isOpen={isOpenRareModal} onClose={onClose} />
+        {/* <UserNeedRareModal isOpen={isOpenRareModal} onClose={onClose} /> */}
       </MyContainer>
     </Layout>
   );
