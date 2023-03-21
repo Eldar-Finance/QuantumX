@@ -11,10 +11,9 @@ interface IProps {
 const LpTokenImage = ({ lpToken }: IProps) => {
   const lpData = pairs.find((pair) => pair.lpidentifier === lpToken.identifier);
 
-  const { tokens } = useGetMultipleElrondTokens([
-    lpData.token1lp,
-    lpData.token2lp,
-  ]);
+  const { tokens } = useGetMultipleElrondTokens(
+    lpData ? [lpData.token1lp, lpData.token2lp] : []
+  );
 
   if (!tokens || tokens.length === 0) return null;
 
