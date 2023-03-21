@@ -265,4 +265,11 @@ export const pairs = [
     token1lp: "USDC-c76f1f",
     token2lp: "HYPE-619661",
   },
+  {
+    lpname: "ZOGUSDC",
+    lpidentifier: "ZOGUSDC-4a579e",
+    lpprice: "0.000001",
+    token1lp: "USDC-c76f1f",
+    token2lp: "ZOG-c66239",
+  },
 ];
