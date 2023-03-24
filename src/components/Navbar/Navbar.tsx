@@ -14,7 +14,12 @@ import { openLogin } from "redux/slices/settings/settings-reducer";
 import { useAppDispatch } from "utils/hooks/redux";
 import { getWebUrl } from "utils/routes";
 import Menu from "./Menu/Menu";
-const Navbar = () => {
+
+interface IProps {
+  onlyConnectButton?: boolean;
+}
+
+const Navbar = ({ onlyConnectButton }: IProps) => {
   const dispatch = useAppDispatch();
   const location = useRouter().asPath;
   const { isLoggedIn } = useGetLoginInfo();
@@ -33,29 +38,33 @@ const Navbar = () => {
         py={{ xs: "15px", "2xl": "40px" }}
         px={{ xs: "30px", xl: "80px" }}
         display="flex"
-        justifyContent={"space-between"}
+        justifyContent={onlyConnectButton ? "flex-end" : "space-between"}
         fontSize={{ xs: "sm", "2xl": "md" }}
         flexDir={{ xs: "column", md: "row" }}
         rowGap={1.5}
       >
-        <Flex w="ful" alignItems={"center"} justifyContent="space-between">
-          <Link href={"/"}>
-            <NextImage src={logo} alt="QuantumX" width={128} height={38} />
-          </Link>
+        {!onlyConnectButton && (
+          <>
+            <Flex w="ful" alignItems={"center"} justifyContent="space-between">
+              <Link href={"/"}>
+                <NextImage src={logo} alt="QuantumX" width={128} height={38} />
+              </Link>
 
-          <ActionButton
-            fontSize={{ xs: "14px", "2xl": "md" }}
-            fontWeight="600"
-            display={{ xs: "block", md: "none" }}
-            onClick={isLoggedIn ? handleLogout : handleConnect}
-            bg={isLoggedIn ? "danger" : "main"}
-          >
-            <Icon as={LightningIcon} />
-          </ActionButton>
-        </Flex>
-        <Box w="fit-content" m="auto">
-          <Menu />
-        </Box>
+              <ActionButton
+                fontSize={{ xs: "14px", "2xl": "md" }}
+                fontWeight="600"
+                display={{ xs: "block", md: "none" }}
+                onClick={isLoggedIn ? handleLogout : handleConnect}
+                bg={isLoggedIn ? "danger" : "main"}
+              >
+                <Icon as={LightningIcon} />
+              </ActionButton>
+            </Flex>
+            <Box w="fit-content" m="auto">
+              <Menu />
+            </Box>
+          </>
+        )}
         <ActionButton
           px={{ xs: "30px", "2xl": "40px" }}
           fontSize={{ xs: "14px", "2xl": "md" }}

@@ -1,7 +1,7 @@
 import {
   extendTheme,
   type ThemeComponents,
-  type ThemeConfig
+  type ThemeConfig,
 } from "@chakra-ui/react";
 import { mode } from "@chakra-ui/theme-tools";
 
@@ -36,23 +36,22 @@ const components: ThemeComponents = {
         _hover: {
           bg: "main",
           opacity: "0.8",
-          color:"black.dark"
+          color: "black.dark",
         },
         _active: {
           bg: "main",
           opacity: "0.8",
-        
         },
       },
       outline: {
-        color:"main",
+        color: "white",
         _hover: {
           bg: "main",
-          color:"black.dark"
+          color: "black.dark",
         },
         _active: {
           bg: "main",
-          color:"black.dark"
+          color: "black.dark",
         },
       },
     },
@@ -75,7 +74,6 @@ const components: ThemeComponents = {
       },
     },
   },
- 
 };
 
 const borderRadius = {
@@ -99,7 +97,7 @@ const borderRadius = {
 const fontSizes = {
   xs: "10px",
   sm: "12px",
-  lsm:"14px",
+  lsm: "14px",
   md: "16px",
   lg: "20px",
   xl: "22px",
@@ -163,7 +161,7 @@ const customTheme = extendTheme({
       500: "rgba(0, 0, 0, 0.5)",
       600: "rgba(0, 0, 0, 0.6)",
     },
-  
+
     white: {
       light: "#fff",
       base: "#",
@@ -176,8 +174,8 @@ const customTheme = extendTheme({
       500: "rgba(255, 255, 255, 0.5)",
       600: "rgba(255, 255, 255, 0.6)",
     },
-    
-    secondary:"#232526",
+
+    secondary: "#232526",
     main: "#22F7DD",
     danger: "#A04C4C",
   },
