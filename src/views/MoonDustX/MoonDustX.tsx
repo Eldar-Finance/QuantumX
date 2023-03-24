@@ -26,7 +26,7 @@ const ConverterView = () => {
               textAlign="center"
               flexWrap={"wrap"}
             >
-              Welcome to Raretopia! Convert all your favorite tokens to WEGLD or
+              Welcome to MoonDustX! Convert all your favorite tokens to WEGLD or
               USDC in one click. Easy, fast, and secure.
             </Flex>
           }
