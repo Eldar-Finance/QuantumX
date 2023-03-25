@@ -27,7 +27,7 @@ export const MetaHead = memo(
         <meta charSet="utf-8" key="utf-8" />
         <meta key="REPLY-TO" name="REPLY-TO" content="team@eldar.finance" />
         <meta key="author" name="author" content="Armando Martin" />
-        <meta key="copyright" name="copyright" content="Eldar team" />
+        <meta key="copyright" name="copyright" content="Quantumx team" />
 
         <meta key="robots" name="robots" content="index, follow" />
         <meta
@@ -41,7 +41,7 @@ export const MetaHead = memo(
           name="viewport"
           content="width=device-width, initial-scale=1, shrink-to-fit=no"
         />
-        <meta key="copyright" name="copyright" content="Eldar team" />
+        <meta key="copyright" name="copyright" content="Quantumx team" />
         <meta key="robots" name="robots" content="index, follow" />
         <meta
           key="Content-Type"
