@@ -17,22 +17,12 @@ export const MetaHead = memo(
 
     return (
       <Head>
-        <link rel="preconnect" href="https://admin.21gramsbox.gr" />
-        <link rel="preconnect" href="https://egld.community/" />
         <title key="titleTag">{title}</title>
 
-        <link rel="manifest" href="/manifest.json" />
-        <link
-          href="/icons/favicon-16x16.png"
-          rel="icon"
-          type="image/png"
-          sizes="16x16"
-        />
-
-        <link rel="apple-touch-icon" href="/apple-icon.png"></link>
+        <link rel="apple-touch-icon" href="/favicon.png"></link>
         <meta name="theme-color" content="#317EFB" />
         <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
-        <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon.png" />
+        <link rel="apple-touch-icon" sizes="76x76" href="/favicon.png" />
         <link rel="canonical" href={canonicalURL} />
         <meta charSet="utf-8" key="utf-8" />
         <meta key="REPLY-TO" name="REPLY-TO" content="team@eldar.finance" />
@@ -45,7 +35,6 @@ export const MetaHead = memo(
           name="description"
           content={metaDescription || defaultMetaTags.description}
         />
-        <meta key="author" name="author" content="Eldar and Beskar team"></meta>
         <meta charSet="utf-8" key="utf-8" />
         <meta
           key="viewport"
@@ -63,7 +52,7 @@ export const MetaHead = memo(
         <meta
           key="keywords"
           name="keywords"
-          content="quantumX,multiversx,egld,nft,nfts,dapp,maiar,marketplace,crypto,bitcoin,eldar"
+          content="quantumX,farm,swap,rare,hype,multiversx,egld,nft,nfts,dapp,maiar,marketplace,crypto,bitcoin,eldar"
         />
 
         {/*   <!-- Open Graph data --> */}

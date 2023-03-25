@@ -3,6 +3,7 @@ import MyContainer from "components/Container/Container";
 import Layout from "components/Layout/Layout";
 import NextImage from "components/NextImage/NextImage";
 import TitlePage from "components/TitlePage/TitlePage";
+import withElronDapp from "hoc/withElronDapp";
 import WrapperPages from "hoc/WrapperPages";
 import { useEffect } from "react";
 import { FetchWhitelistedTokens } from "redux/slices/smartSwaps/funcs";
@@ -55,4 +56,4 @@ const ConverterView = () => {
   );
 };
 
-export default WrapperPages(ConverterView);
+export default withElronDapp(WrapperPages(ConverterView));
