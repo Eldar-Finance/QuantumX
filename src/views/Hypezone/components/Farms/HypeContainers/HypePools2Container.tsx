@@ -28,13 +28,17 @@ const HypePools2Container = ({ ids }: IProps) => {
     return true;
   });
 
+  const forceFarmAccess = Boolean(
+    process.env.NEXT_PUBLIC_SIMULATE_HYPEZONE_ACCESS
+  );
+
   return (
     <FarmList
       title="Pools"
       subtitle="[Stake $RARE Earn $HYPE]"
       ids={ids}
       isPool
-      disableIds={idsToDisable}
+      disableIds={forceFarmAccess ? [] : idsToDisable}
       disableComponent={<DisableComponent />}
       maxStakingAmount={setElrondBalance(1000000, 18)}
       fixedStakedBalance={setElrondBalance(500000, 18)}

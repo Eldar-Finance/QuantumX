@@ -32,11 +32,16 @@ const HypeFarmContainer = ({ ids }: IProps) => {
     }
     return false;
   });
+
+  const forceFarmAccess = Boolean(
+    process.env.NEXT_PUBLIC_SIMULATE_HYPEZONE_ACCESS
+  );
+
   return (
     <FarmList
       title="Farms"
       ids={ids}
-      disableIds={idsToDisable}
+      disableIds={forceFarmAccess ? [] : idsToDisable}
       disableComponent={<DisableComponent />}
     />
   );
