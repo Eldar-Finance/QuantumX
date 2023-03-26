@@ -32,7 +32,7 @@ const Menu = () => {
             <Flex position="relative">
               <Box color={isActive && "main"}>{route.name}</Box>
 
-              {route.new && (
+              {route.isNew && (
                 <Box
                   position={"absolute"}
                   top={"-10px"}
@@ -68,7 +68,7 @@ const Menu = () => {
             <Link href={route.path} key={route.path}>
               <Flex position={"relative"}>
                 <Box color={isActive && "main"}>{route.name}</Box>
-                {route.new && <Badge text="NEW" />}{" "}
+                {route.isNew && <Badge text="NEW" />}{" "}
               </Flex>
             </Link>
           );

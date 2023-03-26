@@ -56,6 +56,7 @@ const ModalMenu = ({ onClose }: IProps) => {
             href={route.path}
             name={route.name}
             soon={route.soon}
+            isNew={route.isNew}
             onlyMobile={route.onModalAndNavbar}
           />
         );

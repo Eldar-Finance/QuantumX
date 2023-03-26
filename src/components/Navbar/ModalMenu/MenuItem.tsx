@@ -1,4 +1,5 @@
 import { Box } from "@chakra-ui/react";
+import Badge from "components/Badge/Badge";
 import Link from "next/link";
 
 interface IProps {
@@ -6,15 +7,16 @@ interface IProps {
   name: string;
   onlyMobile?: boolean;
   soon?: boolean;
+  isNew?: boolean;
 }
 
-const MenuItem = ({ href, onlyMobile, soon, name }: IProps) => {
+const MenuItem = ({ href, onlyMobile, soon, name, isNew }: IProps) => {
   const mobileProps = {
     display: { lg: "none", xs: "block" },
   };
   const aditionalProps = onlyMobile ? mobileProps : {};
   return (
-    <Box w={"full"}>
+    <Box w={"full"} display="flex">
       {soon ? (
         <Box
           w="full"
@@ -45,6 +47,7 @@ const MenuItem = ({ href, onlyMobile, soon, name }: IProps) => {
           </Box>
         </Box>
       )}
+      {isNew && <Badge text="New" top={4} right={4}></Badge>}
     </Box>
   );
 };

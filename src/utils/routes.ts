@@ -6,7 +6,7 @@ export interface IRoute {
   outMenu?: boolean;
   soon?: boolean;
   forAdmins?: boolean;
-  new?: boolean;
+  isNew?: boolean;
 }
 export const routeNames = {
   home: "/",
@@ -22,6 +22,7 @@ export const routeNames = {
   panel: "/panel",
   hypezone: "/hypezone",
   converter: "/raretopia",
+  moondustx: "/moondustx",
 };
 
 export const routes: {
@@ -37,6 +38,7 @@ export const routes: {
   panel: IRoute;
   hypezone: IRoute;
   converter: IRoute;
+  moondustx: IRoute;
 } = {
   dashboard: {
     path: routeNames.dashboard,
@@ -79,6 +81,12 @@ export const routes: {
     path: routeNames.converter,
     name: "Raretopia",
     onModalAndNavbar: true,
+  },
+  moondustx: {
+    path: routeNames.moondustx,
+    name: "MoonDustX",
+    onModal: true,
+    isNew: true,
   },
   // heroes: {
   //   path: routeNames.heroes,
