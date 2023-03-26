@@ -28,7 +28,7 @@ const ConverterView = () => {
               flexWrap={"wrap"}
             >
               Welcome to MoonDustX! Convert all your favorite tokens to WEGLD or
-              USDC in one click. Easy, fast, and secure.
+              USDC in one click. Easy, fast, and secure
             </Flex>
           }
           mb={10}
