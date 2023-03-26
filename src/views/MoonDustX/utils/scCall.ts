@@ -76,7 +76,7 @@ export const convertTokens = async (
         realValue: fromToken.value,
         contractAddr: contractAddr.smartSwap,
         args: dataToSend,
-        gasL: gasL || 35000000,
+        gasL: gasL || 50000000,
       });
 
       return tx;
