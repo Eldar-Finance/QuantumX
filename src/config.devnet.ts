@@ -61,13 +61,13 @@ export const eldarSftCollection = "TESTSFT-76f5c3";
 // export const contractAddress =
 //   "erd1qqqqqqqqqqqqqpgq39le5awe7c7hu6773pnaulhns98ke3qf094q09cgu5";
 
-export const gatewayAddress = "https://devnet-gateway.elrond.com/";
+export const gatewayAddress = "https://devnet-gateway.multiversx.com/";
 export const ENVIROMENT = "devnet";
 
 export const walletConnectBridge = "https://bridge.walletconnect.org";
 
 export const walletConnectDeepLink =
-  "https://maiar.page.link/?apn=com.elrond.maiar.wallet&isi=1519405832&ibi=com.elrond.maiar.wallet&link=https://maiar.com/";
+  "https://maiar.page.link/?apn=com.multiversx.maiar.wallet&isi=1519405832&ibi=com.multiversx.maiar.wallet&link=https://maiar.com/";
 
 export const ChainID = "D";
 
@@ -75,11 +75,11 @@ export const network = {
   id: "devnet",
   name: "Devnet",
   egldLabel: "xEGLD",
-  walletAddress: "https://devnet-wallet.elrond.com",
+  walletAddress: "https://devnet-wallet.multiversx.com",
   apiAddress: "https://devnet-api.multiversx.com",
-  gatewayAddress: "https://devnet-gateway.elrond.com",
-  explorerAddress: "http://devnet-explorer.elrond.com",
-  graphQlAddress: "https://devnet-exchange-graph.elrond.com/graphql",
+  gatewayAddress: "https://devnet-gateway.multiversx.com",
+  explorerAddress: "http://devnet-explorer.multiversx.com",
+  graphQlAddress: "https://devnet-exchange-graph.multiversx.com/graphql",
   apiTimeout: 10000,
 };
 

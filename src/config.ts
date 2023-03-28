@@ -64,25 +64,25 @@ export const contractAddress = {
   cyberWegkdElite:
     "erd1qqqqqqqqqqqqqpgqvvn3s8ndrxqu6ndgnvsfp4sx9wgtv9z2znyqrfyhsf",
 };
-export const gatewayAddress = "https://gateway.elrond.com/";
+export const gatewayAddress = "https://gateway.multiversx.com/";
 
 export const walletConnectBridge = "https://bridge.walletconnect.org";
 
 export const ENVIROMENT = "mainnet";
 
 export const walletConnectDeepLink =
-  "https://maiar.page.link/?apn=com.elrond.maiar.wallet&isi=1519405832&ibi=com.elrond.maiar.wallet&link=https://maiar.com/";
+  "https://maiar.page.link/?apn=com.multiversx.maiar.wallet&isi=1519405832&ibi=com.multiversx.maiar.wallet&link=https://maiar.com/";
 
 export const ChainID = "1";
 export const network = {
   id: "mainnet",
   name: "Mainnet",
   egldLabel: "EGLD",
-  walletAddress: "https://wallet.elrond.com",
+  walletAddress: "https://wallet.multiversx.com",
   apiAddress: "https://api.multiversx.com",
-  gatewayAddress: "https://gateway.elrond.com",
-  explorerAddress: "http://explorer.elrond.com",
-  graphQlAddress: "https://exchange-graph.elrond.com/graphql",
+  gatewayAddress: "https://gateway.multiversx.com",
+  explorerAddress: "http://explorer.multiversx.com",
+  graphQlAddress: "https://exchange-graph.multiversx.com/graphql",
   apiTimeout: 10000,
 };
 
@@ -139,5 +139,5 @@ export const TOKENS_ID = {
 //general configs
 export const walletConnectV2ProjectId = "bb4a880517d6fcc65cdb9cac0a238b4e";
 export const apiTimeout = 6000;
-export const TOOLS_API_URL = "https://tools.elrond.com";
+export const TOOLS_API_URL = "https://tools.multiversx.com";
 export const sampleAuthenticatedDomains = [TOOLS_API_URL];

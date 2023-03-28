@@ -30,24 +30,24 @@ export const contractAddress = {
 // export const contractAddress =
 //   "erd1qqqqqqqqqqqqqpgq39le5awe7c7hu6773pnaulhns98ke3qf094q09cgu5";
 
-export const gatewayAddress = "https://testnet-gateway.elrond.com/";
+export const gatewayAddress = "https://testnet-gateway.multiversx.com/";
 export const ENVIROMENT = "testnet";
 
 export const walletConnectBridge = "https://bridge.walletconnect.org";
 
 export const walletConnectDeepLink =
-  "https://maiar.page.link/?apn=com.elrond.maiar.wallet&isi=1519405832&ibi=com.elrond.maiar.wallet&link=https://maiar.com/";
+  "https://maiar.page.link/?apn=com.multiversx.maiar.wallet&isi=1519405832&ibi=com.multiversx.maiar.wallet&link=https://maiar.com/";
 
 export const ChainID = "T";
 export const network = {
   id: "testnet",
   name: "Testnet",
   egldLabel: "xEGLD",
-  walletAddress: "https://testnet-wallet.elrond.com",
-  apiAddress: "https://testnet-api.elrond.com",
-  gatewayAddress: "https://testnet-gateway.elrond.com",
-  explorerAddress: "http://testnet-explorer.elrond.com",
-  graphQlAddress: "https://testnet-exchange-graph.elrond.com/graphql",
+  walletAddress: "https://testnet-wallet.multiversx.com",
+  apiAddress: "https://testnet-api.multiversx.com",
+  gatewayAddress: "https://testnet-gateway.multiversx.com",
+  explorerAddress: "http://testnet-explorer.multiversx.com",
+  graphQlAddress: "https://testnet-exchange-graph.multiversx.com/graphql",
   apiTimeout: 10000,
 };
 
