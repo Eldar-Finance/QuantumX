@@ -1,6 +1,9 @@
-import { Box, Center, Heading, Link } from "@chakra-ui/react";
+import { Box, Center, Heading, Link, Text } from "@chakra-ui/react";
+import { toknesID } from "api/net.config";
 import { useContext } from "react";
-import { setElrondBalance } from "utils/functions/formatBalance";
+import { formatBalance, setElrondBalance } from "utils/functions/formatBalance";
+import useGetAccountToken from "utils/hooks/useGetAccountToken";
+import { routeNames } from "utils/routes";
 import { hypePools2Ids } from "views/Hypezone/utils/constants";
 import { useSrbStaker } from "views/Hypezone/utils/hooks";
 import { FarmItemContext } from "../FarmItem/FarmItem";
@@ -12,6 +15,8 @@ interface IProps {
 
 const HypePools2Container = ({ ids }: IProps) => {
   const { userSrbNfts } = useSrbStaker();
+  const { accountToken } = useGetAccountToken(toknesID.rare);
+
   const idsToDisable = ids.filter((id, i) => {
     if (!userSrbNfts) return true;
     if (i === 0) {
@@ -23,6 +28,8 @@ const HypePools2Container = ({ ids }: IProps) => {
     } else if (i === 2) {
       //in id 18 using this api we must check if connected address has 10+ in totalnfts from the api
       return !(Number(userSrbNfts.totalnft) >= 10);
+    } else if (i === 3) {
+      return !(formatBalance(accountToken, true) >= 100);
     }
 
     return true;
@@ -35,7 +42,7 @@ const HypePools2Container = ({ ids }: IProps) => {
   return (
     <FarmList
       title="Pools"
-      subtitle="[Stake $RARE Earn $HYPE]"
+      subtitle="[Earn $HYPE]"
       ids={ids}
       isPool
       disableIds={forceFarmAccess ? [] : idsToDisable}
@@ -60,6 +67,23 @@ const DisableComponent = () => {
   }
   if (hypePools2Ids[2] === idToDisable) {
     rangeToStake = "10+ 🐻";
+  }
+
+  if (hypePools2Ids[3] === idToDisable) {
+    rangeToStake = "100+";
+    return (
+      <Box w="full" bg="black.100">
+        <Center minH={"150px"} flexDir="column">
+          <Heading as="h3" textAlign={"center"} mb={2}>
+            {" "}
+            You need {rangeToStake} RARE to use this Pool
+          </Heading>
+          <Link href={routeNames.swap}>
+            <Text color="main">Swap Here</Text>
+          </Link>
+        </Center>
+      </Box>
+    );
   }
 
   return (
