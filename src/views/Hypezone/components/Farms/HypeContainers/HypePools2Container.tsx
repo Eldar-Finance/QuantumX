@@ -16,19 +16,24 @@ interface IProps {
 const HypePools2Container = ({ ids }: IProps) => {
   const { userSrbNfts } = useSrbStaker();
   const { accountToken } = useGetAccountToken(toknesID.rare);
+  console.log("ids", ids);
 
   const idsToDisable = ids.filter((id, i) => {
-    if (!userSrbNfts) return true;
     if (i === 0) {
+      if (!userSrbNfts) return true;
       //in id 16 using this api we must check if connected address has 1-5 in totalnfts from the api
       return !(Number(userSrbNfts.totalnft) >= 1);
     } else if (i === 1) {
+      if (!userSrbNfts) return true;
       //in id 17 using this api we must check if connected address has 6-9 in totalnfts from the api
       return !(Number(userSrbNfts.totalnft) >= 6);
     } else if (i === 2) {
+      if (!userSrbNfts) return true;
       //in id 18 using this api we must check if connected address has 10+ in totalnfts from the api
       return !(Number(userSrbNfts.totalnft) >= 10);
     } else if (i === 3) {
+      console.log("accountToken", accountToken);
+
       return !(formatBalance(accountToken, true) >= 100);
     }
 
