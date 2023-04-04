@@ -12,8 +12,8 @@ import { SendTransactionReturnType } from "@multiversx/sdk-dapp/types";
 import { ChainId, contractAddr, toknesID } from "api/net.config";
 import {
   EGLDPayment,
-  EsdtTranferAndUnwrapEgld,
   ESDTTransfer,
+  EsdtTranferAndUnwrapEgld,
   wrapEgldAndEsdtTranfer,
 } from "api/sc/calls";
 import { EGLD_VAL, getInterface, sendMultipleTransactions } from "api/sc/sc";
@@ -27,6 +27,32 @@ import {
   INomalSmartSwap,
   ISmartSwapData,
 } from "utils/types/others.interface";
+
+export const getNormalSwapArgs = (swapInfo: INomalSmartSwap[], slipapge) => {
+  const dataToSend = swapInfo.flatMap((item) => {
+    let scSwap = "swapTokensFixedInput";
+    if (item?.type === "exchange") {
+      scSwap = "exchange";
+    }
+    const amountWithSlipage = new BigNumber(item.amountReceivDec)
+      .multipliedBy(slipapge)
+      .dividedBy(100)
+      .toNumber();
+
+    const finalAmount = new BigNumber(item.amountReceivDec)
+      .minus(amountWithSlipage)
+      .toFixed(0);
+
+    return [
+      new AddressValue(new Address(item.smartcontract)),
+      BytesValue.fromUTF8(scSwap),
+      BytesValue.fromUTF8(item.token2),
+      new BigUIntValue(new BigNumber(finalAmount)),
+    ];
+  });
+
+  return dataToSend;
+};
 
 export const swap = async (
   swapInfo: INomalSmartSwap[],
@@ -49,27 +75,7 @@ export const swap = async (
     scEndpoint = "swapStable";
   }
 
-  const dataToSend = swapInfo.flatMap((item) => {
-    let scSwap = "swapTokensFixedInput";
-    if (item?.type === "exchange") {
-      scSwap = "exchange";
-    }
-    const amountWithSlipage = new BigNumber(item.amountReceivDec)
-      .multipliedBy(slipapge)
-      .dividedBy(100)
-      .toNumber();
-
-    const finalAmount = new BigNumber(item.amountReceivDec)
-      .minus(amountWithSlipage)
-      .toFixed(0);
-
-    return [
-      new AddressValue(new Address(item.smartcontract)),
-      BytesValue.fromUTF8(scSwap),
-      BytesValue.fromUTF8(item.token2),
-      new BigUIntValue(new BigNumber(finalAmount)),
-    ];
-  });
+  const dataToSend = getNormalSwapArgs(swapInfo, slipapge);
 
   // if user want EGLD -> WEGLD
   if (fromToken.token === "EGLD" && toField.token === toknesID.wegld) {

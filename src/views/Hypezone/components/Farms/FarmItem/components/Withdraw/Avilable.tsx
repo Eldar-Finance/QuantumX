@@ -12,6 +12,7 @@ import useGetElrondToken from "utils/hooks/useGetElrondToken";
 import useGetMultipleElrondTokens from "utils/hooks/useGetMultipleElrondTokens";
 import { IScFarmItem, IScUserFarmRewards } from "utils/types/sc.interface";
 import { getTxForRareFee } from "views/Hypezone/utils/functions";
+import useCompund from "views/Pools/hooks/useCompund";
 import useIsBearFarm from "views/Pools/hooks/useIsBearFarm";
 import useCanUsePool7 from "views/Pools/hooks/useIsSrbStaker";
 
@@ -40,6 +41,9 @@ const Avilable = ({ farm, userFarmRewards, disable }: IProps) => {
       sendMultipleTransactions({ txs: [t1, t2] });
     }
   };
+  const { data, handleCompound } = useCompund(farm, userFarmRewards);
+  console.log("data", data);
+
   const isAFarmBoost = useIsBearFarm(farm);
 
   let manualImage = null;
@@ -47,6 +51,7 @@ const Avilable = ({ farm, userFarmRewards, disable }: IProps) => {
   if (farm.farm.rewardToken === toknesID.bear) {
     manualImage = bearImage;
   }
+  const showCompound = farm.compound;
 
   return (
     <Box>
@@ -87,19 +92,36 @@ const Avilable = ({ farm, userFarmRewards, disable }: IProps) => {
       </Flex>
       <Flex flexDir={"column"}>
         <Center mt="2" flexDir={"column"}>
-          <ActionButton
-            onClick={handleHarvest}
-            disabled={
-              disable ||
-              userFarmRewards.reduce(
-                (acc, current) => (acc += current.harvestableAmount),
-                0
-              ) === 0 ||
-              (!isSrbStaker && farm.farm.farmId === 7)
-            }
-          >
-            HARVEST
-          </ActionButton>
+          <Flex gap={3}>
+            <ActionButton
+              onClick={handleHarvest}
+              disabled={
+                disable ||
+                userFarmRewards.reduce(
+                  (acc, current) => (acc += current.harvestableAmount),
+                  0
+                ) === 0 ||
+                (!isSrbStaker && farm.farm.farmId === 7)
+              }
+            >
+              HARVEST
+            </ActionButton>
+            {showCompound && (
+              <ActionButton
+                onClick={handleCompound}
+                bg="rgb(175, 175, 175)"
+                disabled={
+                  userFarmRewards.reduce(
+                    (acc, current) => (acc += current.harvestableAmount),
+                    0
+                  ) === 0 ||
+                  (!isSrbStaker && farm.farm.farmId === 7)
+                }
+              >
+                Compound
+              </ActionButton>
+            )}
+          </Flex>
           {isAFarmBoost && isSrbStaker && (
             <Text align={"center"} fontSize="14px" mt={2}>
               🐻 You are eligible for 10% Rewards Boost

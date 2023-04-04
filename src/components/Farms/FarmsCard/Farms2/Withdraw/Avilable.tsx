@@ -9,6 +9,7 @@ import NextImage from "components/NextImage/NextImage";
 import { formatBalance } from "utils/functions/formatBalance";
 import useGetMultipleElrondTokens from "utils/hooks/useGetMultipleElrondTokens";
 import { IScFarmItem, IScUserFarmRewards } from "utils/types/sc.interface";
+import useCompund from "views/Pools/hooks/useCompund";
 import useIsBearFarm from "views/Pools/hooks/useIsBearFarm";
 import useCanUsePool7 from "views/Pools/hooks/useIsSrbStaker";
 
@@ -21,6 +22,8 @@ const Avilable = ({ farm, userFarmRewards }: IProps) => {
   const { tokens: rewardsTokens } = useGetMultipleElrondTokens(
     userFarmRewards.map((r) => r.rewardToken)
   );
+  const { data, handleCompound } = useCompund(farm, userFarmRewards);
+
   const { isSrbStaker } = useCanUsePool7();
   const handleHarvest = () => {
     scCall(
@@ -30,14 +33,7 @@ const Avilable = ({ farm, userFarmRewards }: IProps) => {
       farm.farm.rewardToken === "" ? 300000000 : 180000000
     );
   };
-  const handleCompound = () => {
-    scCall(
-      "farms2",
-      "compound",
-      [new BigUIntValue(new BigNumber(farm.farm.farmId))],
-      180000000
-    );
-  };
+
   const isAFarmBoost = useIsBearFarm(farm);
 
   let manualImage = null;
