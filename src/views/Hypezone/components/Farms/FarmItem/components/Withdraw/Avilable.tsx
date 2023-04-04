@@ -117,6 +117,7 @@ const Avilable = ({ farm, userFarmRewards, disable }: IProps) => {
                   ) === 0 ||
                   (!isSrbStaker && farm.farm.farmId === 7)
                 }
+                textTransform={"uppercase"}
               >
                 Compound
               </ActionButton>

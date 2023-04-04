@@ -98,6 +98,7 @@ const Avilable = ({ farm, userFarmRewards }: IProps) => {
             </ActionButton>
             {showCompound && (
               <ActionButton
+                textTransform={"uppercase"}
                 onClick={handleCompound}
                 bg="rgb(175, 175, 175)"
                 disabled={
