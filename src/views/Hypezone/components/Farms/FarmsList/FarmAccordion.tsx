@@ -26,6 +26,7 @@ interface IProps {
   disableComponent: ReactNode;
   maxStakingAmount?: string;
   fixedStakedBalance?: string;
+  noRestrictionsIds?: number[];
 }
 
 const FarmAccordion = ({
@@ -35,6 +36,7 @@ const FarmAccordion = ({
   disableComponent,
   maxStakingAmount,
   fixedStakedBalance,
+  noRestrictionsIds,
 }: IProps) => {
   const router = useRouter();
   const [accordionIndex, setAccordionIndex] = useState<number[]>([]);
@@ -111,8 +113,16 @@ const FarmAccordion = ({
                   disableIds?.find((id) => id === farm.farm.farm.farmId)
                 )}
                 disableComponent={disableComponent}
-                maxStakingAmount={maxStakingAmount}
-                fixedStakedBalance={fixedStakedBalance}
+                maxStakingAmount={
+                  noRestrictionsIds?.includes(farm.farm.farm.farmId)
+                    ? null
+                    : maxStakingAmount
+                }
+                fixedStakedBalance={
+                  noRestrictionsIds?.includes(farm.farm.farm.farmId)
+                    ? null
+                    : fixedStakedBalance
+                }
               />
             </BlurComponent>
           );

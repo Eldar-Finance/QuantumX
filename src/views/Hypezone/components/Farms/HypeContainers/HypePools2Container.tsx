@@ -32,8 +32,6 @@ const HypePools2Container = ({ ids }: IProps) => {
       //in id 18 using this api we must check if connected address has 10+ in totalnfts from the api
       return !(Number(userSrbNfts.totalnft) >= 10);
     } else if (i === 3) {
-      console.log("accountToken", accountToken);
-
       return !(formatBalance(accountToken, true) >= 100);
     }
 
@@ -54,6 +52,7 @@ const HypePools2Container = ({ ids }: IProps) => {
       disableComponent={<DisableComponent />}
       maxStakingAmount={setElrondBalance(1000000, 18)}
       fixedStakedBalance={setElrondBalance(500000, 18)}
+      noRestrictionsIds={[hypePools2Ids[3]]}
     />
   );
 };
