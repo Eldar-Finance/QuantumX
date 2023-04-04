@@ -8,7 +8,9 @@ const useIsBearFarm = (farm: IScFarmItem): boolean => {
     farm.farm.stakingToken === toknesID.rare ||
     farm.farm.stakingToken === toknesID.rareUsdcLp ||
     farm.farm.stakingToken === toknesID.hype ||
-    farm.farm.stakingToken === toknesID.hypeusdc
+    farm.farm.stakingToken === toknesID.hypeusdc ||
+    (farm.farm.stakingToken === toknesID.mex &&
+      farm.farm.rewardToken === toknesID.hype)
   ) {
     isBear = true;
   }
