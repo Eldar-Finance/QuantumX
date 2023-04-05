@@ -16,11 +16,11 @@ const useCompund = (
   const { data, isLoading, isSapwToLp } = useGetSwapInfo(
     farm.farm.rewardToken,
     farm.farm.stakingToken,
-    userFarmRewards && userFarmRewards.length > 0
+    userFarmRewards && userFarmRewards.length > 0 && rewardsTokens.length > 0
       ? (
           getRealBalance(
-            userFarmRewards[0].harvestableAmount,
-            rewardsTokens[0].decimals,
+            userFarmRewards[0]?.harvestableAmount,
+            rewardsTokens[0]?.decimals,
             true
           ) as BigNumber
         ).toString()
