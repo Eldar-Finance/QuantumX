@@ -16,7 +16,6 @@ interface IProps {
 const HypePools2Container = ({ ids }: IProps) => {
   const { userSrbNfts } = useSrbStaker();
   const { accountToken } = useGetAccountToken(toknesID.rare);
-  console.log("ids", ids);
 
   const idsToDisable = ids.filter((id, i) => {
     if (i === 0) {

@@ -42,7 +42,6 @@ const Avilable = ({ farm, userFarmRewards, disable }: IProps) => {
     }
   };
   const { data, handleCompound } = useCompund(farm, userFarmRewards);
-  console.log("data", data);
 
   const isAFarmBoost = useIsBearFarm(farm);
 
