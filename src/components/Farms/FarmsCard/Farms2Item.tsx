@@ -25,7 +25,7 @@ import LpTokenImage from "components/LpTokenImage/LpTokenImage";
 import { selectElrondStats } from "redux/slices/elrond/elrond-slice";
 import { addTvlInEldarFarm } from "redux/slices/proteo/proteo";
 import useSWR from "swr";
-import { aprFarms } from "utils/functions/farms";
+import { aprFarms, apyFarms } from "utils/functions/farms";
 import {
   formatBalance,
   formatBalanceDolar,
@@ -147,6 +147,7 @@ const Farms2Item = ({
     );
   }
 
+  // const apy = apyFarms(30);
   return (
     <AccordionItem w="full">
       <Box w="full">
@@ -226,9 +227,11 @@ const Farms2Item = ({
               </Flex>
               <Flex flexDir={"column"} textAlign="center">
                 <Text textTransform={"uppercase"} color="white.400">
-                  Apr
+                  Apr / Apy
                 </Text>
-                <Text>{apr}</Text>
+                <Text>
+                  {apr} / {apy}
+                </Text>
               </Flex>
               <Flex flexDir={"column"} textAlign="center">
                 <Text color="white.400">Total Value Locked</Text>

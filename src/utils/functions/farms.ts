@@ -1,3 +1,4 @@
+import BigNumber from "bignumber.js";
 import { IFarmWithTvl } from "components/Farms/FarmsCard/FarmsCard";
 import { noMaxTokens } from "utils/constants/farms";
 import { IElrondToken } from "utils/types/elrond.interface";
@@ -170,9 +171,8 @@ export const aprFarms = (
 
           const rewardsLeftDolarAmount = rewardLeftTokens.reduce(
             (acc, token) => {
-              const tokenRewardsLeft: IScFarm2RewardsLeft = multifarmRewardsLeft.find(
-                (r) => r.token === token.identifier
-              );
+              const tokenRewardsLeft: IScFarm2RewardsLeft =
+                multifarmRewardsLeft.find((r) => r.token === token.identifier);
 
               let price = token.price;
               const extraTokenPrice = extraPrices.find(
@@ -217,4 +217,21 @@ export const aprFarms = (
     }
   }
   return apr;
+};
+
+export const apyFarms = (apr: number | string) => {
+  if (apr === "-") {
+    return "-";
+  }
+  const compoundingPeriods = 360;
+
+  const apy = new BigNumber(
+    new BigNumber(1).plus(new BigNumber(apr).dividedBy(compoundingPeriods))
+  )
+    .pow(compoundingPeriods)
+
+    .minus(1)
+    .toFixed(2);
+
+  return apy;
 };
