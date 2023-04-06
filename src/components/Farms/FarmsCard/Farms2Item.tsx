@@ -25,7 +25,7 @@ import LpTokenImage from "components/LpTokenImage/LpTokenImage";
 import { selectElrondStats } from "redux/slices/elrond/elrond-slice";
 import { addTvlInEldarFarm } from "redux/slices/proteo/proteo";
 import useSWR from "swr";
-import { aprFarms, apyFarms } from "utils/functions/farms";
+import { aprFarms } from "utils/functions/farms";
 import {
   formatBalance,
   formatBalanceDolar,
@@ -227,10 +227,11 @@ const Farms2Item = ({
               </Flex>
               <Flex flexDir={"column"} textAlign="center">
                 <Text textTransform={"uppercase"} color="white.400">
-                  Apr / Apy
+                  Apr {/* / Apy */}
                 </Text>
                 <Text>
-                  {apr} / {apy}
+                  {apr}
+                  {/*  / {apy} */}
                 </Text>
               </Flex>
               <Flex flexDir={"column"} textAlign="center">
