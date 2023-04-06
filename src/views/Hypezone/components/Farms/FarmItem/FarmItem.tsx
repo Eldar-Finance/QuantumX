@@ -119,7 +119,12 @@ const Farms2Item = ({
     stakingToken.decimals,
   ]);
 
-  const { apr, apy } = useApr(farm, multifarmRewardsLeft, stakedTokenPrice);
+  const { apr, apy } = useApr(
+    farm,
+    multifarmRewardsLeft,
+    stakedTokenPrice,
+    fixedStakedBalance
+  );
 
   return (
     <FarmItemContext.Provider value={{ farm }}>
@@ -204,7 +209,7 @@ const Farms2Item = ({
                     Apr / Apy
                   </Text>
                   <Text>
-                    {apr} / {formatNumber(apy)} %
+                    {apr} / {apy}
                   </Text>
                 </Flex>
                 <Flex flexDir={"column"} textAlign="center">

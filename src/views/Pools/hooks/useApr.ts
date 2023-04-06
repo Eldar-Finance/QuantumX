@@ -5,6 +5,7 @@ import { fetchLastRewardedEpoch } from "api/sc/queries/farms2";
 import { selectElrondStats } from "redux/slices/elrond/elrond-slice";
 import useSWR from "swr";
 import { aprFarms, apyFarms } from "utils/functions/farms";
+import { formatNumber } from "utils/functions/formatBalance";
 import { useAppSelector } from "utils/hooks/redux";
 import useGetElrondToken from "utils/hooks/useGetElrondToken";
 import useGetJexPrice from "utils/hooks/useGetJexPrice";
@@ -13,7 +14,8 @@ import useGetMultipleElrondTokens from "utils/hooks/useGetMultipleElrondTokens";
 const useApr = (
   farm: IScFarmItem,
   multifarmRewardsLeft: IScFarm2RewardsLeft[],
-  stakedTokenPrice: number
+  stakedTokenPrice: number,
+  fixedStakedBalance?: string
 ) => {
   const { token: stakingToken } = useGetElrondToken(farm.farm.stakingToken);
 
@@ -74,7 +76,13 @@ const useApr = (
       stakingToken,
       lastRewardedEpoch,
       rewardToken,
-      farm,
+      fixedStakedBalance
+        ? {
+            ...farm,
+            stakedBalance: fixedStakedBalance,
+          }
+        : farm,
+
       stats
     ) as string;
     aprNumber = aprFarms(
@@ -82,7 +90,12 @@ const useApr = (
       stakingToken,
       lastRewardedEpoch,
       rewardToken,
-      farm,
+      fixedStakedBalance
+        ? {
+            ...farm,
+            stakedBalance: fixedStakedBalance,
+          }
+        : farm,
       stats,
       undefined,
       undefined,
@@ -91,7 +104,10 @@ const useApr = (
     ) as number;
   }
 
-  const apy = apyFarms(aprNumber);
+  const apy =
+    apyFarms(aprNumber) !== "-"
+      ? formatNumber(apyFarms(aprNumber)) + " %"
+      : "-";
 
   return {
     apr: apr,

@@ -182,7 +182,7 @@ const Farms2Item = ({
                   Apr / Apy
                 </Text>
                 <Text>
-                  {apr} / {formatNumber(apy)} %
+                  {apr} / {apy}
                 </Text>
               </Flex>
               <Flex flexDir={"column"} textAlign="center">
