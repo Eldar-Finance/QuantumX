@@ -20,10 +20,19 @@ export async function fetchInfoForNumber7Pool([key, address]) {
 
 export async function compound(farm: IScFarmItem, swapInfo: INomalSmartSwap[]) {
   const dataToSend = getNormalSwapArgs(swapInfo, 2);
-  scCall(
-    "farms2",
-    "compound",
-    [new BigUIntValue(new BigNumber(farm.farm.farmId)), ...dataToSend],
-    180000000
-  );
+  if (farm.farm.stakingToken === farm.farm.rewardToken) {
+    scCall(
+      "farms2",
+      "compound",
+      [new BigUIntValue(new BigNumber(farm.farm.farmId))],
+      180000000
+    );
+  } else {
+    scCall(
+      "farms2",
+      "compound",
+      [new BigUIntValue(new BigNumber(farm.farm.farmId)), ...dataToSend],
+      180000000
+    );
+  }
 }
