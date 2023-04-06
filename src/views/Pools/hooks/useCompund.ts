@@ -1,3 +1,4 @@
+import { toknesID } from "api/net.config";
 import BigNumber from "bignumber.js";
 import { getRealBalance } from "utils/functions/formatBalance";
 import useGetMultipleElrondTokens from "utils/hooks/useGetMultipleElrondTokens";
@@ -28,6 +29,12 @@ const useCompund = (
   );
 
   const handleCompound = () => {
+    if (
+      farm.farm.rewardToken === toknesID.epunks &&
+      farm.farm.stakingToken === toknesID.epunks
+    ) {
+      return;
+    }
     compound(farm, data as INomalSmartSwap[]);
   };
   return {

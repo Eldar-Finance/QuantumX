@@ -25,7 +25,6 @@ import LpTokenImage from "components/LpTokenImage/LpTokenImage";
 import { selectElrondStats } from "redux/slices/elrond/elrond-slice";
 import { addTvlInEldarFarm } from "redux/slices/proteo/proteo";
 import useSWR from "swr";
-import { aprFarms } from "utils/functions/farms";
 import {
   formatBalance,
   formatBalanceDolar,
@@ -37,6 +36,7 @@ import useGetElrondToken from "utils/hooks/useGetElrondToken";
 import useGetJexPrice from "utils/hooks/useGetJexPrice";
 import useGetMultipleElrondTokens from "utils/hooks/useGetMultipleElrondTokens";
 import { farms2Data } from "views/Farms/constants";
+import useApr from "views/Pools/hooks/useApr";
 import EarnedRewards from "./components/EarnedRewards/EarnedRewards";
 import EarnTokens from "./components/EarnTokens/EarnTokens";
 import StakeUnstake from "./components/StakeUnstake/StakeUnstake";
@@ -119,34 +119,7 @@ const Farms2Item = ({
     stakingToken.decimals,
   ]);
 
-  let apr: string = "-";
-  if (farm.farm.rewardToken === "") {
-    apr = aprFarms(
-      price,
-      stakingToken,
-      lastRewardedEpoch,
-      rewardsTokens,
-      farm,
-      stats,
-      "multi",
-      multifarmRewardsLeft,
-      [{ tokenI: toknesID.jex, price: jexPrice }]
-    );
-  } else {
-    apr = aprFarms(
-      price,
-      stakingToken,
-      lastRewardedEpoch,
-      rewardToken,
-      fixedStakedBalance
-        ? {
-            ...farm,
-            stakedBalance: fixedStakedBalance,
-          }
-        : farm,
-      stats
-    );
-  }
+  const { apr, apy } = useApr(farm, multifarmRewardsLeft, stakedTokenPrice);
 
   return (
     <FarmItemContext.Provider value={{ farm }}>
@@ -228,9 +201,11 @@ const Farms2Item = ({
                 </Flex>
                 <Flex flexDir={"column"} textAlign="center">
                   <Text textTransform={"uppercase"} color="white.400">
-                    Apr
+                    Apr / Apy
                   </Text>
-                  <Text>{apr}</Text>
+                  <Text>
+                    {apr} / {formatNumber(apy)} %
+                  </Text>
                 </Flex>
                 <Flex flexDir={"column"} textAlign="center">
                   <Text color="white.400">Total Value Locked</Text>

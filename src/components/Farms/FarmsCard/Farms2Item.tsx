@@ -19,24 +19,18 @@ import {
   IScUserFarmRewards,
 } from "utils/types/sc.interface";
 
-import { toknesID } from "api/net.config";
-import { fetchLastRewardedEpoch } from "api/sc/queries/farms2";
 import LpTokenImage from "components/LpTokenImage/LpTokenImage";
-import { selectElrondStats } from "redux/slices/elrond/elrond-slice";
 import { addTvlInEldarFarm } from "redux/slices/proteo/proteo";
-import useSWR from "swr";
-import { aprFarms } from "utils/functions/farms";
 import {
   formatBalance,
   formatBalanceDolar,
   formatNumber,
 } from "utils/functions/formatBalance";
 import { formatTokenI } from "utils/functions/tokens";
-import { useAppDispatch, useAppSelector } from "utils/hooks/redux";
+import { useAppDispatch } from "utils/hooks/redux";
 import useGetElrondToken from "utils/hooks/useGetElrondToken";
-import useGetJexPrice from "utils/hooks/useGetJexPrice";
-import useGetMultipleElrondTokens from "utils/hooks/useGetMultipleElrondTokens";
 import { farms2Data } from "views/Farms/constants";
+import useApr from "views/Pools/hooks/useApr";
 import useCanUsePool7 from "views/Pools/hooks/useIsSrbStaker";
 import EarnedRewards from "./Farms2/EarnedRewards/EarnedRewards";
 import EarnTokens from "./Farms2/EarnTokens/EarnTokens";
@@ -72,25 +66,9 @@ const Farms2Item = ({
 }: IProps) => {
   const { token: stakingToken } = useGetElrondToken(farm.farm.stakingToken);
 
-  const { token: rewardToken } = useGetElrondToken(farm.farm.rewardToken);
-  const { data: lastRewardedEpoch } = useSWR<number>(
-    //@ts-ignore
-    farm.farm.farmId,
-    fetchLastRewardedEpoch
-  );
   const { logo, name } = farms2Data[formatTokenI(farm.farm.stakingToken)]
     ? farms2Data[formatTokenI(farm.farm.stakingToken)]
     : { logo: "", name: "" };
-  const { data: stats } = useAppSelector(selectElrondStats);
-  const { jexPrice } = useGetJexPrice(
-    multifarmRewardsLeft.find((r) => r.token === toknesID.jex)?.token
-  );
-  const { jexPrice: bonezPrice } = useGetJexPrice(
-    multifarmRewardsLeft.find((r) => r.token === toknesID.bonez)?.token
-  );
-  const { tokens: rewardsTokens } = useGetMultipleElrondTokens(
-    multifarmRewardsLeft ? multifarmRewardsLeft.map((f) => f.token) : []
-  );
 
   const price = stakedTokenPrice;
   const dispatch = useAppDispatch();
@@ -120,34 +98,8 @@ const Farms2Item = ({
   // only for srb farm
   const { isSrbStaker } = useCanUsePool7();
 
-  let apr: string = "-";
-  if (farm.farm.rewardToken === "") {
-    apr = aprFarms(
-      price,
-      stakingToken,
-      lastRewardedEpoch,
-      rewardsTokens,
-      farm,
-      stats,
-      "multi",
-      multifarmRewardsLeft,
-      [
-        { tokenI: toknesID.jex, price: jexPrice },
-        { tokenI: toknesID.bonez, price: bonezPrice },
-      ]
-    );
-  } else {
-    apr = aprFarms(
-      price,
-      stakingToken,
-      lastRewardedEpoch,
-      rewardToken,
-      farm,
-      stats
-    );
-  }
+  const { apr, apy } = useApr(farm, multifarmRewardsLeft, stakedTokenPrice);
 
-  // const apy = apyFarms(30);
   return (
     <AccordionItem w="full">
       <Box w="full">
@@ -227,11 +179,10 @@ const Farms2Item = ({
               </Flex>
               <Flex flexDir={"column"} textAlign="center">
                 <Text textTransform={"uppercase"} color="white.400">
-                  Apr {/* / Apy */}
+                  Apr / Apy
                 </Text>
                 <Text>
-                  {apr}
-                  {/*  / {apy} */}
+                  {apr} / {formatNumber(apy)} %
                 </Text>
               </Flex>
               <Flex flexDir={"column"} textAlign="center">

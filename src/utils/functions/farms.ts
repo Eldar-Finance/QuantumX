@@ -127,9 +127,10 @@ export const aprFarms = (
   stats,
   type: "single" | "multi" = "single",
   multifarmRewardsLeft: IScFarm2RewardsLeft[] = undefined,
-  extraPrices: { tokenI: string; price: number }[] = []
+  extraPrices: { tokenI: string; price: number }[] = [],
+  onlyNumber?: boolean
 ) => {
-  let apr: string = "-";
+  let apr: string | number = "-";
 
   if (
     price &&
@@ -143,28 +144,49 @@ export const aprFarms = (
 
     if (epochDifference > 0) {
       if (type === "single") {
-        apr =
-          formatNumber(
-            preventExponetialNotation(
-              ((formatBalanceDolar(
+        if (onlyNumber) {
+          apr =
+            ((formatBalanceDolar(
+              {
+                balance: farm.totalRewardsLeft,
+                decimals: rewardTokens.decimals,
+              },
+              rewardTokens.price
+            ) /
+              formatBalanceDolar(
                 {
-                  balance: farm.totalRewardsLeft,
-                  decimals: rewardTokens.decimals,
+                  balance: farm.stakedBalance,
+                  decimals: stakingToken.decimals,
                 },
-                rewardTokens.price
-              ) /
-                formatBalanceDolar(
+                price
+              )) *
+              100 *
+              365) /
+            epochDifference;
+        } else {
+          apr =
+            formatNumber(
+              preventExponetialNotation(
+                ((formatBalanceDolar(
                   {
-                    balance: farm.stakedBalance,
-                    decimals: stakingToken.decimals,
+                    balance: farm.totalRewardsLeft,
+                    decimals: rewardTokens.decimals,
                   },
-                  price
-                )) *
-                100 *
-                365) /
-                epochDifference
-            ).toString()
-          ) + "%";
+                  rewardTokens.price
+                ) /
+                  formatBalanceDolar(
+                    {
+                      balance: farm.stakedBalance,
+                      decimals: stakingToken.decimals,
+                    },
+                    price
+                  )) *
+                  100 *
+                  365) /
+                  epochDifference
+              ).toString()
+            ) + "%";
+        }
       } else {
         if (multifarmRewardsLeft) {
           const rewardLeftTokens = rewardTokens as IElrondToken[];
@@ -196,22 +218,37 @@ export const aprFarms = (
             0
           );
 
-          apr =
-            formatNumber(
-              preventExponetialNotation(
-                ((rewardsLeftDolarAmount /
-                  formatBalanceDolar(
-                    {
-                      balance: farm.stakedBalance,
-                      decimals: stakingToken.decimals,
-                    },
-                    price
-                  )) *
-                  100 *
-                  365) /
-                  epochDifference
-              ).toString()
-            ) + "%";
+          if (onlyNumber) {
+            apr =
+              ((rewardsLeftDolarAmount /
+                formatBalanceDolar(
+                  {
+                    balance: farm.stakedBalance,
+                    decimals: stakingToken.decimals,
+                  },
+                  price
+                )) *
+                100 *
+                365) /
+              epochDifference;
+          } else {
+            apr =
+              formatNumber(
+                preventExponetialNotation(
+                  ((rewardsLeftDolarAmount /
+                    formatBalanceDolar(
+                      {
+                        balance: farm.stakedBalance,
+                        decimals: stakingToken.decimals,
+                      },
+                      price
+                    )) *
+                    100 *
+                    365) /
+                    epochDifference
+                ).toString()
+              ) + "%";
+          }
         }
       }
     }
@@ -223,14 +260,17 @@ export const apyFarms = (apr: number | string) => {
   if (apr === "-") {
     return "-";
   }
-  const compoundingPeriods = 360;
+  const compoundingPeriods = 365;
 
   const apy = new BigNumber(
-    new BigNumber(1).plus(new BigNumber(apr).dividedBy(compoundingPeriods))
+    new BigNumber(1).plus(
+      new BigNumber(apr).dividedBy(100).dividedBy(compoundingPeriods)
+    )
   )
     .pow(compoundingPeriods)
 
     .minus(1)
+    .multipliedBy(100)
     .toFixed(2);
 
   return apy;
