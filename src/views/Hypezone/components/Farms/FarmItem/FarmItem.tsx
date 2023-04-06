@@ -19,22 +19,16 @@ import {
   IScUserFarmRewards,
 } from "utils/types/sc.interface";
 
-import { toknesID } from "api/net.config";
-import { fetchLastRewardedEpoch } from "api/sc/queries/farms2";
 import LpTokenImage from "components/LpTokenImage/LpTokenImage";
-import { selectElrondStats } from "redux/slices/elrond/elrond-slice";
 import { addTvlInEldarFarm } from "redux/slices/proteo/proteo";
-import useSWR from "swr";
 import {
   formatBalance,
   formatBalanceDolar,
   formatNumber,
 } from "utils/functions/formatBalance";
 import { formatTokenI } from "utils/functions/tokens";
-import { useAppDispatch, useAppSelector } from "utils/hooks/redux";
+import { useAppDispatch } from "utils/hooks/redux";
 import useGetElrondToken from "utils/hooks/useGetElrondToken";
-import useGetJexPrice from "utils/hooks/useGetJexPrice";
-import useGetMultipleElrondTokens from "utils/hooks/useGetMultipleElrondTokens";
 import { farms2Data } from "views/Farms/constants";
 import useApr from "views/Pools/hooks/useApr";
 import EarnedRewards from "./components/EarnedRewards/EarnedRewards";
@@ -77,22 +71,9 @@ const Farms2Item = ({
 }: IProps) => {
   const { token: stakingToken } = useGetElrondToken(farm.farm.stakingToken);
 
-  const { token: rewardToken } = useGetElrondToken(farm.farm.rewardToken);
-  const { data: lastRewardedEpoch } = useSWR<number>(
-    //@ts-ignore
-    farm.farm.farmId,
-    fetchLastRewardedEpoch
-  );
   const { logo, name } = farms2Data[formatTokenI(farm.farm.stakingToken)]
     ? farms2Data[formatTokenI(farm.farm.stakingToken)]
     : { logo: "", name: "" };
-  const { data: stats } = useAppSelector(selectElrondStats);
-  const { jexPrice } = useGetJexPrice(
-    multifarmRewardsLeft.find((r) => r.token === toknesID.jex)?.token
-  );
-  const { tokens: rewardsTokens } = useGetMultipleElrondTokens(
-    multifarmRewardsLeft ? multifarmRewardsLeft.map((f) => f.token) : []
-  );
 
   const price = stakedTokenPrice;
   const dispatch = useAppDispatch();
