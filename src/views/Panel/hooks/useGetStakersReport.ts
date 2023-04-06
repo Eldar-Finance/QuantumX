@@ -1,9 +1,14 @@
 import useSWR from "swr";
 import { fetchStakersReport } from "../scServices/farmsQueries";
 const useGetStakersReport = (id: number) => {
+  const swrConfig = {
+    revalidateOnFocus: false,
+    revalidateIfStale: false,
+  };
   const { data, isLoading, error } = useSWR(
     ["farms2:getStakersReport", id],
-    fetchStakersReport
+    fetchStakersReport,
+    swrConfig
   );
 
   return {

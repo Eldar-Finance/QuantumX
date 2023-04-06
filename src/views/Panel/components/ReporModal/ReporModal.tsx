@@ -41,9 +41,13 @@ const exportOptions = [
 ];
 
 const ReporModal = ({ isOpen, onClose, farmId, stakedToken }: IProps) => {
+  const swrConfig = {
+    revalidateOnFocus: false,
+    revalidateIfStale: false,
+  };
   const { report, isLoading } = useGetStakersReport(farmId);
   const { token } = useGetElrondToken(stakedToken);
-  const { data: statsRes } = useSWR("/stats", getNetworkStats);
+  const { data: statsRes } = useSWR("/stats", getNetworkStats, swrConfig);
   const [exportMethod, setExportMethod] = useState(exportOptions[0].value);
   const handleExportReport = () => {
     const dataToExport = report.map((r) => {
