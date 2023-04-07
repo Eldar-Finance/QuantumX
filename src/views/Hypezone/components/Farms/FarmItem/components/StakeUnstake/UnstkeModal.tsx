@@ -4,7 +4,6 @@ import {
   Divider,
   Flex,
   Heading,
-  Input,
   ModalBody,
   ModalFooter,
   ModalHeader,
@@ -13,12 +12,14 @@ import {
 import { getNetworkStats } from "api/rest/elrondApi/network";
 import { scCallOnlyTx } from "api/sc/calls";
 import { sendMultipleTransactions } from "api/sc/sc";
+import BigNumber from "bignumber.js";
 import ActionButton from "components/ActionButton/ActionButton";
+import InputText from "components/Inputs/InputText";
 import MyModal from "components/Modal/Modal";
 import { useFormik } from "formik";
+import { useRef } from "react";
 import useSWR from "swr";
 import { formatBalance, setElrondBalance } from "utils/functions/formatBalance";
-import { preventExponetialNotation } from "utils/functions/numbers";
 import { formatTokenI } from "utils/functions/tokens";
 import useGetQuantumxFarmsFees from "utils/hooks/useGetQuantumxFarmsFees";
 import { IElrondToken } from "utils/types/elrond.interface";
@@ -50,23 +51,14 @@ const UnstakeModal = ({
   const { data: statsRes } = useSWR("/stats", getNetworkStats);
 
   const currentEpoch = statsRes?.data?.epoch;
+  const inputRef = useRef(null);
 
   const { farmFee } = useGetQuantumxFarmsFees(farm.farm.farmId);
   const validationSchema = yup.object({
-    amount: yup
-      .number()
-      .required()
-      .max(
-        formatBalance(
-          {
-            balance: userFarmItem?.stakedBalance,
-            decimals: token?.decimals,
-          },
-          true,
-          18
-        )
-      ),
+    amount: yup.number().required().max(Number(userFarmItem?.stakedBalance)),
   });
+  console.log("userFarmItem", userFarmItem);
+
   const formik = useFormik({
     initialValues: {
       amount: "",
@@ -78,6 +70,7 @@ const UnstakeModal = ({
         .BigUIntValue;
 
       let txs = [];
+      console.log("vales", values);
 
       const t1 = await getTxForRareFee();
       txs.push(t1);
@@ -86,9 +79,7 @@ const UnstakeModal = ({
         "unstake",
         [
           new BigUIntValue(new BigNumber(farm.farm.farmId)),
-          new BigUIntValue(
-            new BigNumber(setElrondBalance(values.amount, token.decimals))
-          ),
+          new BigUIntValue(new BigNumber(values.amount)),
         ],
         50000000
       );
@@ -98,20 +89,25 @@ const UnstakeModal = ({
   });
   const handleMax = (percent) => {
     if (userFarmItem) {
-      const max = formatBalance(
-        {
-          balance: userFarmItem.stakedBalance,
-          decimals: token.decimals,
-        },
-        true,
-        18
-      );
-      const realmax = percent * max;
-      const finalAmount = preventExponetialNotation(realmax);
-
-      formik.setFieldValue("amount", finalAmount, false);
+      const realmax = new BigNumber(percent)
+        .multipliedBy(userFarmItem.stakedBalance)
+        .toString();
+      const inputMax = formatBalance({
+        balance: realmax,
+        decimals: token.decimals,
+      });
+      inputRef.current.setValue(inputMax);
+      formik.setFieldValue("amount", realmax, false);
     }
   };
+
+  const handleChange = (val: string) => {
+    formik.setFieldValue("amount", val, false);
+  };
+  const transformValue = (val: string) => {
+    return setElrondBalance(Number(val), token.decimals);
+  };
+
   const { unbondingPeriod } = useGetFarmUnbondingPeriod(farm.farm.farmId);
 
   let finalFee = farmFee.earlyUnbondingFee;
@@ -150,14 +146,16 @@ const UnstakeModal = ({
               </Text>
             </Flex>
             <Flex mb="3">
-              <Input
+              <InputText
                 variant={"unstyled"}
                 placeholder="0"
                 flex="1"
                 name="amount"
-                value={formik.values.amount}
-                onChange={formik.handleChange}
-              />{" "}
+                onChangeInput={handleChange}
+                tranformValue={transformValue}
+                ref={inputRef}
+              />
+
               <Text fontSize={"14px"}>
                 {formatTokenI(farm.farm.stakingToken)}
                 {!isPool && "-LP"}
