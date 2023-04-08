@@ -48,5 +48,3 @@ export const useGetFarmUnbondingPeriod = (farmId: number) => {
     error,
   };
 };
-
-// commit on dev 4
