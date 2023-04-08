@@ -5,7 +5,7 @@ import { INomalSmartSwap } from "utils/types/others.interface";
 import { IScFarmItem, IScUserFarmRewards } from "utils/types/sc.interface";
 import useGetSwapInfo from "views/Swap/hooks/useGetSwapInfo";
 import { compound } from "../services";
-//
+
 const useCompund = (
   farm: IScFarmItem,
   userFarmRewards: IScUserFarmRewards[]
