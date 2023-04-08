@@ -25,3 +25,7 @@ ul{
   background-color: #000;
   opacity: 0.7;
 }
+
+.dapp-core-component__transactionDetails-styles__container .dapp-core-component__transactionDetails-styles__icon{
+  height: 18px;
+}
