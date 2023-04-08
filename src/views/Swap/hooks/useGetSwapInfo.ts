@@ -13,7 +13,8 @@ import useIsSmarSwapLp from "./useIsSmarSwapLp";
 const useGetSwapInfo = (
   fromTokenProp?: string,
   toTokenProp?: string,
-  fromTokenValueProp?: string
+  fromTokenValueProp?: string,
+  lp?: boolean
 ) => {
   const swapFromToken = useAppSelector(selectFromToken);
   const swapToToken = useAppSelector(selectToToken);
@@ -23,7 +24,9 @@ const useGetSwapInfo = (
   const fromToken = fromTokenProp ?? swapFromToken;
   const fromTokenValue = fromTokenValueProp ?? swapFromTokenValue;
 
-  const isSapwToLp = useIsSmarSwapLp(toToken);
+  const isToTokenLp = useIsSmarSwapLp(toToken);
+  const isSapwToLp = lp || isToTokenLp;
+
   const [value] = useDebounce(fromTokenValue, 800);
 
   const { data, error, isLoading } = useSWR(

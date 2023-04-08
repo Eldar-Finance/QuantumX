@@ -140,6 +140,8 @@ export const getFirstArgsOfLpSwaps = (
   swapInfo: ISmartSwapData[],
   slipapge = 2
 ) => {
+  console.log("lpSwapInfo", swapInfo);
+
   const lpSwapInfo = swapInfo[0] as ILpSmartSwap;
   //token1_amount_min
   const token1SlippagePercent = new BigNumber(lpSwapInfo.token1lpamount)
