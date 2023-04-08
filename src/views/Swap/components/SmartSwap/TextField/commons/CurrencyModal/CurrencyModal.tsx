@@ -142,8 +142,9 @@ const CurrencyModal = ({
                     onClick={() => handleClickToken(t)}
                     as={Button}
                     disabled={
-                      field === "from" &&
-                      formatTokenI(t.name).slice(-2) === "LP"
+                      elrondTokens.findIndex(
+                        (token) => t.identifier === token.identifier
+                      ) === -1
                     }
                   >
                     {formatTokenI(t.name).slice(-2) === "LP" ? (
