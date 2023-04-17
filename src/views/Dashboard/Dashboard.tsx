@@ -1,9 +1,10 @@
 import MyContainer from "components/Container/Container";
 import Layout from "components/Layout/Layout";
-import withElronDapp from "hoc/withElronDapp";
 import WrapperPages from "hoc/WrapperPages";
+import withElronDapp from "hoc/withElronDapp";
 import AddressSection from "./components/AddressSection/AddressSection";
 import Dashtabs from "./components/Dashtabs/Dashtabs";
+import SendTokens from "./components/SendTokens/SendTokens";
 import TotalAmount from "./components/TotalAmount/TotalAmount";
 
 const Dashboard = () => {
@@ -20,6 +21,7 @@ const Dashboard = () => {
       >
         <TotalAmount />
         <AddressSection />
+        <SendTokens />
         <Dashtabs />
       </MyContainer>
     </Layout>
