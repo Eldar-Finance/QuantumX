@@ -4,7 +4,7 @@ const MoonDustXPage = () => {
   return (
     <>
       <MetaHead
-        metaTitle="MoonDustX"
+        metaTitle="QuantumX Network - MoonDustX"
         metaDescription="Welcome to MoonDustX! Convert all your favorite tokens to RARE in one click. Easy, fast, and secure."
       />
       <MoonDustX />

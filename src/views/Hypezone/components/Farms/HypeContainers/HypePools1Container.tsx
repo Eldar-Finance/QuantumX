@@ -6,6 +6,7 @@ import { formatBalance, setElrondBalance } from "utils/functions/formatBalance";
 import useGetAccountToken from "utils/hooks/useGetAccountToken";
 import { routeNames } from "utils/routes";
 import { hypePools1Ids } from "views/Hypezone/utils/constants";
+import { useUserHaasFee } from "views/Hypezone/utils/hooks";
 import { FarmItemContext } from "../FarmItem/FarmItem";
 import FarmList from "../FarmsList/FarmList";
 interface IProps {
@@ -14,6 +15,7 @@ interface IProps {
 
 const HypePools1Container = ({ ids }: IProps) => {
   const { accountToken } = useGetAccountToken(toknesID.rare);
+  const { hasForFee } = useUserHaasFee();
   const idsToDisable = ids.filter((id, i) => {
     if (!accountToken) return true;
     if (i === 0) {
@@ -36,7 +38,7 @@ const HypePools1Container = ({ ids }: IProps) => {
       subtitle="[Stake $HYPE Earn $RARE]"
       ids={ids}
       isPool
-      disableIds={forceFarmAccess ? [] : idsToDisable}
+      disableIds={hasForFee ? (forceFarmAccess ? [] : idsToDisable) : ids}
       disableComponent={<DisableComponent />}
       maxStakingAmount={setElrondBalance(10000000000, 18)}
       fixedStakedBalance={setElrondBalance(2500000000, 18)}
@@ -47,9 +49,16 @@ const HypePools1Container = ({ ids }: IProps) => {
 export default HypePools1Container;
 
 const DisableComponent = () => {
+  const { hasForFee, noFeeComponent } = useUserHaasFee();
+
   const farmItemInfo = useContext(FarmItemContext);
   const idToDisable = farmItemInfo.farm.farm.farmId;
   let rangeToStake = "";
+
+  if (!hasForFee) {
+    return noFeeComponent;
+  }
+
   if (hypePools1Ids[0] === idToDisable) {
     rangeToStake = "100+";
   }

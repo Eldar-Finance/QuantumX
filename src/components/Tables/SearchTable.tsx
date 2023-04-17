@@ -27,6 +27,7 @@ import {
 
 function SearchTable(props) {
   const { columnsData, tableData } = props;
+  console.log("render 2");
 
   const columns = useMemo(() => columnsData, [columnsData]);
   const data = useMemo(() => tableData, [tableData]);
