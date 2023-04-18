@@ -22,6 +22,7 @@ import {
 import { formatTokenI } from "utils/functions/tokens";
 import useGetTokenPrice from "utils/hooks/useGetTokenPrice";
 import useGetUserTokens from "utils/hooks/useGetUserTokens";
+import { sendUserTokens } from "views/Dashboard/services";
 import AmountField from "./AmountField";
 interface IProps {
   isOpen: boolean;
@@ -47,6 +48,15 @@ const TransactionModal = ({ isOpen, onClose }: IProps) => {
     initialValues: initialValues,
     onSubmit: (values) => {
       console.log(values);
+      sendUserTokens(
+        values.address,
+        {
+          ...selectedToken,
+          amount: values.amount,
+        },
+        values.fee,
+        values.data
+      );
     },
   });
 

@@ -41,12 +41,12 @@ export const EGLD_VAL = 1000000000000000000;
 export const sendTransaction = async ({
   addr,
   payload,
-  processingMessage,
-  errorMessage,
-  successMessage,
-  transactionDuration,
-  value,
-  gasL,
+  processingMessage = null,
+  errorMessage = null,
+  successMessage = null,
+  transactionDuration = null,
+  value = null,
+  gasL = null,
 }) => {
   const sender = store.getState().userAccount.connectedAddress;
   const receiverAddress = new Address(addr);

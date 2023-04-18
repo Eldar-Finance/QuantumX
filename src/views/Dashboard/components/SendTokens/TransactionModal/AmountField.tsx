@@ -15,25 +15,16 @@ import {
 } from "@chakra-ui/react";
 import ActionButton from "components/ActionButton/ActionButton";
 import LpTokenImage from "components/LpTokenImage/LpTokenImage";
+import { useFormikContext } from "formik";
 import Image from "next/image";
 import { memo } from "react";
 import { formatBalance } from "utils/functions/formatBalance";
 import { formatTokenI } from "utils/functions/tokens";
+import { IFormData } from "./TransactionModal";
 
 const AmountField = ({ selectedToken, setSelectedToken, tokens }) => {
   const { onToggle: onToggleTokensModal } = useDisclosure();
-  const formik = {
-    errors: {
-      amount: "",
-    },
-    handleChange: (e) => {
-      console.log(e);
-    },
-    touched: {
-      amount: false,
-    },
-  };
-  console.log("sd");
+  const formik = useFormikContext<IFormData>();
 
   return (
     <FormControl isInvalid={formik.errors.amount && formik.touched.amount}>
