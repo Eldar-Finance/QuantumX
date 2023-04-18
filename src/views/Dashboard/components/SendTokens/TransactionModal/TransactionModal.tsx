@@ -14,12 +14,13 @@ import BigNumber from "bignumber.js";
 import ActionButton from "components/ActionButton/ActionButton";
 import MyModal from "components/Modal/Modal";
 import { FormikProvider, useFormik } from "formik";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   formatBalance,
   formatBalanceDolar,
 } from "utils/functions/formatBalance";
 import { formatTokenI } from "utils/functions/tokens";
+import useGetMultiplePrices from "utils/hooks/useGetMultiplePrices";
 import useGetTokenPrice from "utils/hooks/useGetTokenPrice";
 import useGetUserTokens from "utils/hooks/useGetUserTokens";
 import { sendUserTokens } from "views/Dashboard/services";
@@ -41,9 +42,13 @@ const initialValues: IFormData = {
   data: "",
 };
 const TransactionModal = ({ isOpen, onClose }: IProps) => {
-  const [tokens] = useGetUserTokens();
+  const [userTokens] = useGetUserTokens();
+  // const [tokens, setTokens] = useState([]);
   const [selectedToken, setSelectedToken] = useState<any>();
-  const [price] = useGetTokenPrice("EGLD");
+  const [egldPrice] = useGetTokenPrice("EGLD");
+  const [missingPrices] = useGetMultiplePrices(
+    userTokens.filter((t) => !Boolean(t.price)).map((t) => t.identifier)
+  );
   const formik = useFormik({
     initialValues: initialValues,
     onSubmit: (values) => {
@@ -60,18 +65,38 @@ const TransactionModal = ({ isOpen, onClose }: IProps) => {
     },
   });
 
+  const tokens = useMemo(() => {
+    const newTokens = userTokens.map((token) => {
+      const missingPrice = missingPrices.find(
+        (p) => p.tokenI === token.identifier
+      );
+      const missinEgldPrice = token.identifier === "EGLD" ? egldPrice : null;
+      const price = missinEgldPrice || missingPrice?.price || token.price;
+
+      return {
+        ...token,
+        price: price,
+      };
+    });
+
+    const tokensOrdered = newTokens.sort(
+      (a, b) =>
+        formatBalanceDolar(b, b.price, false) -
+        formatBalanceDolar(a, a.price, false)
+    );
+    return tokensOrdered;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userTokens, egldPrice]);
+
   useEffect(() => {
     const initialToken =
       tokens.length > 0 ? tokens.find((t) => t.identifier === "EGLD") : null;
-
     setSelectedToken(initialToken);
   }, [tokens]);
 
   const egldGas = new BigNumber(1000000000)
     .multipliedBy(formik.values.fee)
     .toString();
-
-  console.log("price", price);
 
   return (
     <MyModal
@@ -107,6 +132,7 @@ const TransactionModal = ({ isOpen, onClose }: IProps) => {
               selectedToken={selectedToken}
               setSelectedToken={setSelectedToken}
               tokens={tokens}
+              formik={formik}
             />
             {/* Fee */}
             <FormControl isInvalid={formik.errors.fee && formik.touched.fee}>
@@ -129,7 +155,7 @@ const TransactionModal = ({ isOpen, onClose }: IProps) => {
                       balance: egldGas,
                       decimals: 18,
                     },
-                    price,
+                    egldPrice,
                     true
                   )}
                   )

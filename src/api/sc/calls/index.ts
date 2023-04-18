@@ -10,10 +10,10 @@ import {
 import { ChainId, toknesID } from "api/net.config";
 import {
   EGLD_VAL,
+  WspTypes,
   getInterface,
   sendMultipleTransactions,
   sendTransaction,
-  WspTypes,
 } from "api/sc/sc";
 import BigNumber from "bignumber.js";
 import store from "redux/store";
@@ -118,7 +118,7 @@ export const ESDTTransfer = async ({
   contractAddr: string;
   args?: any[];
   gasL?: number;
-  realValue?: number | null;
+  realValue?: string | number | null;
 }) => {
   const tokenIdentifier = token.identifier;
   const multiplyier = Math.pow(10, token.decimals || 18);

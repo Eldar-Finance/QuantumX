@@ -2,9 +2,8 @@ import { Transaction, TransactionPayload } from "@multiversx/sdk-core";
 import { Address } from "@multiversx/sdk-core/out";
 import { sendTransactions } from "@multiversx/sdk-dapp/services";
 import { ChainId } from "api/net.config";
-import { ESDTNFTTransfer } from "api/sc/calls";
+import { ESDTTransfer } from "api/sc/calls";
 import store from "redux/store";
-import { setElrondBalance } from "utils/functions/formatBalance";
 
 export const sendUserTokens = async (
   address: string,
@@ -26,20 +25,20 @@ export const sendUserTokens = async (
       gasLimit: 70000,
       sender: new Address(sender),
       receiver: new Address(address),
-      value: setElrondBalance(token.amount, token.decimals),
+      value: token.amount,
       chainID: ChainId,
     });
     const res = await sendTransactions({
       transactions: tx,
     });
   } else {
-    ESDTNFTTransfer(
-      "",
-      sender,
-      Number(token.amount),
-      token,
-      address,
-      Number(fee)
-    );
+    ESDTTransfer({
+      contractAddr: address,
+      funcName: "",
+      token: token,
+      args: [],
+      gasL: Number(fee),
+      realValue: token.amount,
+    });
   }
 };

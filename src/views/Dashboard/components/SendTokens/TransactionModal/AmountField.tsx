@@ -5,7 +5,6 @@ import {
   FormControl,
   FormLabel,
   Icon,
-  Input,
   Menu,
   MenuButton,
   MenuItem,
@@ -14,17 +13,40 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import ActionButton from "components/ActionButton/ActionButton";
+import InputText from "components/Inputs/InputText";
 import LpTokenImage from "components/LpTokenImage/LpTokenImage";
-import { useFormikContext } from "formik";
+import { isEqual } from "lodash";
 import Image from "next/image";
-import { memo } from "react";
-import { formatBalance } from "utils/functions/formatBalance";
+import { memo, useRef } from "react";
+import {
+  formatBalance,
+  formatBalanceDolar,
+  setElrondBalance,
+} from "utils/functions/formatBalance";
 import { formatTokenI } from "utils/functions/tokens";
-import { IFormData } from "./TransactionModal";
+import useGetTokenPrice from "utils/hooks/useGetTokenPrice";
 
-const AmountField = ({ selectedToken, setSelectedToken, tokens }) => {
+const AmountField = ({ selectedToken, setSelectedToken, tokens, formik }) => {
+  console.log("renderizo amount field");
+  const [price] = useGetTokenPrice("EGLD");
+  const inputRef = useRef(null);
+
   const { onToggle: onToggleTokensModal } = useDisclosure();
-  const formik = useFormikContext<IFormData>();
+  const handleMax = () => {
+    if (selectedToken) {
+      const realmax = selectedToken.balance;
+      const inputMax = formatBalance(selectedToken);
+      inputRef.current.setValue(inputMax);
+      formik.setFieldValue("amount", realmax, false);
+    }
+  };
+
+  const handleChange = (val: string) => {
+    formik.setFieldValue("amount", val, false);
+  };
+  const transformValue = (val: string) => {
+    return setElrondBalance(Number(val), selectedToken.decimals);
+  };
 
   return (
     <FormControl isInvalid={formik.errors.amount && formik.touched.amount}>
@@ -38,8 +60,10 @@ const AmountField = ({ selectedToken, setSelectedToken, tokens }) => {
         )}
       </Flex>
       <Flex bg="black.base" rounded={"md"} pr="5" py="1">
-        <Input
-          onChange={formik.handleChange}
+        <InputText
+          onChangeInput={handleChange}
+          tranformValue={transformValue}
+          ref={inputRef}
           placeholder="Amount"
           name="amount"
           border={"none"}
@@ -54,12 +78,13 @@ const AmountField = ({ selectedToken, setSelectedToken, tokens }) => {
                 bg: "transparent",
                 color: "white",
               }}
+              onClick={handleMax}
             >
               MAX
             </ActionButton>
             <Menu>
-              <Flex
-                as={MenuButton}
+              <MenuButton
+                as={Flex}
                 w="auto"
                 alignItems={"center"}
                 gap={2}
@@ -86,67 +111,78 @@ const AmountField = ({ selectedToken, setSelectedToken, tokens }) => {
                 />
                 <Text>{formatTokenI(selectedToken.identifier)}</Text>
                 <Icon as={ChevronDownIcon} />
-              </Flex>
+              </MenuButton>
               <MenuList maxH={"250px"} overflow={"auto"} bg="black.light">
-                {tokens.map((token) => (
-                  <MenuItem
-                    key={token.identifier}
-                    bg="black.light"
-                    _hover={{
-                      bg: "black.base",
-                    }}
-                    onClick={() => setSelectedToken(token)}
-                  >
-                    <Flex>
-                      <Box mr={4}>
-                        {token.assets?.img ? (
-                          token.assets?.img
-                        ) : (
-                          <>
-                            {formatTokenI(token.name).slice(-2) === "LP" ? (
-                              <LpTokenImage lpToken={token} />
-                            ) : (
-                              <>
-                                {token.assets?.svgUrl ||
-                                token.assets?.static.src ? (
-                                  <Box
-                                    boxSize={"24px"}
-                                    borderRadius={"full"}
-                                    boxShadow={
-                                      "rgb(255 255 255 / 8%) 0px 6px 10px"
-                                    }
-                                    overflow={"hidden"}
-                                  >
-                                    <Image
-                                      src={
-                                        token.assets?.svgUrl ||
-                                        token.assets?.static.src ||
-                                        ""
+                {tokens.map((token) => {
+                  const tPrice =
+                    token.identifier === "EGLD" ? price : token.price;
+                  return (
+                    <MenuItem
+                      key={token.identifier}
+                      bg="black.light"
+                      _hover={{
+                        bg: "black.base",
+                      }}
+                      onClick={() => setSelectedToken(token)}
+                    >
+                      <Flex w="full">
+                        <Box mr={4}>
+                          {token.assets?.img ? (
+                            token.assets?.img
+                          ) : (
+                            <>
+                              {formatTokenI(token.name).slice(-2) === "LP" ? (
+                                <LpTokenImage lpToken={token} />
+                              ) : (
+                                <>
+                                  {token.assets?.svgUrl ||
+                                  token.assets?.static.src ? (
+                                    <Box
+                                      boxSize={"24px"}
+                                      borderRadius={"full"}
+                                      boxShadow={
+                                        "rgb(255 255 255 / 8%) 0px 6px 10px"
                                       }
-                                      alt={token.assets?.description || ""}
-                                      width={30}
-                                      height={30}
+                                      overflow={"hidden"}
+                                    >
+                                      <Image
+                                        src={
+                                          token.assets?.svgUrl ||
+                                          token.assets?.static.src ||
+                                          ""
+                                        }
+                                        alt={token.assets?.description || ""}
+                                        width={30}
+                                        height={30}
+                                      />
+                                    </Box>
+                                  ) : (
+                                    <Box
+                                      boxSize={"24px"}
+                                      borderRadius={"full"}
+                                      bg="brand.200"
+                                      boxShadow={
+                                        "rgb(255 255 255 / 8%) 0px 6px 10px"
+                                      }
                                     />
-                                  </Box>
-                                ) : (
-                                  <Box
-                                    boxSize={"24px"}
-                                    borderRadius={"full"}
-                                    bg="brand.200"
-                                    boxShadow={
-                                      "rgb(255 255 255 / 8%) 0px 6px 10px"
-                                    }
-                                  />
-                                )}
-                              </>
-                            )}
-                          </>
-                        )}
-                      </Box>
-                      {formatTokenI(token.identifier)}
-                    </Flex>
-                  </MenuItem>
-                ))}
+                                  )}
+                                </>
+                              )}
+                            </>
+                          )}
+                        </Box>
+                        <Flex w="full" justifyContent={"space-between"}>
+                          {formatTokenI(token.identifier)}
+                          <Flex>
+                            {tPrice
+                              ? `$${formatBalanceDolar(token, tPrice, true)}`
+                              : "-$"}
+                          </Flex>
+                        </Flex>
+                      </Flex>
+                    </MenuItem>
+                  );
+                })}
               </MenuList>
             </Menu>
           </>
@@ -157,5 +193,6 @@ const AmountField = ({ selectedToken, setSelectedToken, tokens }) => {
 };
 
 export default memo(AmountField, (prev, next) => {
-  return prev.selectedToken === next.selectedToken;
+  const areTokensEqual = isEqual(prev.tokens, next.tokens);
+  return prev.selectedToken === next.selectedToken && areTokensEqual;
 });
