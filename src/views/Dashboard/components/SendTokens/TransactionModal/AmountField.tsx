@@ -78,6 +78,8 @@ const AmountField = ({ selectedToken, setSelectedToken, tokens, formik }) => {
                 color: "white",
               }}
               onClick={handleMax}
+              fontSize={{ xs: "sm", md: "md" }}
+              px={2}
             >
               MAX
             </ActionButton>
@@ -108,10 +110,18 @@ const AmountField = ({ selectedToken, setSelectedToken, tokens, formik }) => {
                   width={40}
                   height={40}
                 />
-                <Text>{formatTokenI(selectedToken.identifier)}</Text>
+
+                <Text display={{ xs: "none", md: "block" }}>
+                  {formatTokenI(selectedToken.identifier)}
+                </Text>
                 <Icon as={ChevronDownIcon} />
               </MenuButton>
-              <MenuList maxH={"250px"} overflow={"auto"} bg="black.light">
+              <MenuList
+                maxH={"250px"}
+                overflow={"auto"}
+                bg="black.light"
+                zIndex={10}
+              >
                 {tokens.map((token) => {
                   const tPrice =
                     token.identifier === "EGLD" ? price : token.price;
