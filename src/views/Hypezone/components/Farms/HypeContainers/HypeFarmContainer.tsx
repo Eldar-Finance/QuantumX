@@ -6,7 +6,7 @@ import { formatBalance } from "utils/functions/formatBalance";
 import useGetAccountToken from "utils/hooks/useGetAccountToken";
 import { routeNames } from "utils/routes";
 import { hypeFarmIds } from "views/Hypezone/utils/constants";
-import { useSrbStaker } from "views/Hypezone/utils/hooks";
+import { useSrbStaker, useUserHaasFee } from "views/Hypezone/utils/hooks";
 import { FarmItemContext } from "../FarmItem/FarmItem";
 import FarmList from "../FarmsList/FarmList";
 
@@ -17,7 +17,7 @@ interface IProps {
 const HypeFarmContainer = ({ ids }: IProps) => {
   const { isStaker: isSrbStaker } = useSrbStaker();
   const { accountToken } = useGetAccountToken(toknesID.rare);
-
+  const { hasForFee } = useUserHaasFee();
   const idsToDisable = ids.filter((id, i) => {
     if (i === 2) {
       //in id 14 user can stake only if he is holding more than 100+ RARE in his wallet
@@ -41,7 +41,7 @@ const HypeFarmContainer = ({ ids }: IProps) => {
     <FarmList
       title="Farms"
       ids={ids}
-      disableIds={forceFarmAccess ? [] : idsToDisable}
+      disableIds={hasForFee ? (forceFarmAccess ? [] : idsToDisable) : ids}
       disableComponent={<DisableComponent />}
     />
   );
@@ -51,7 +51,12 @@ export default HypeFarmContainer;
 
 const DisableComponent = () => {
   const farmItemInfo = useContext(FarmItemContext);
+  const { hasForFee, noFeeComponent } = useUserHaasFee();
   const idToDisable = farmItemInfo.farm.farm.farmId;
+
+  if (!hasForFee) {
+    return noFeeComponent;
+  }
   let rangeToStake = "";
 
   if (hypeFarmIds[3] === idToDisable) {

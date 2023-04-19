@@ -2,6 +2,13 @@
 
 import dynamic from "next/dynamic";
 
+import { EnvironmentsEnum } from "@multiversx/sdk-dapp/types";
+import { AxiosInterceptorContext } from "@multiversx/sdk-dapp/wrappers/AxiosInterceptorContext";
+import { DappProvider } from "@multiversx/sdk-dapp/wrappers/DappProvider";
+
+import { Box } from "@chakra-ui/react";
+import { network } from "api/net.config";
+import { sampleAuthenticatedDomains } from "../config";
 const SignTransactionsModals: any = dynamic(
   async () => {
     return (await import("@multiversx/sdk-dapp/UI/SignTransactionsModals"))
@@ -27,7 +34,29 @@ const TransactionsToastList: any = dynamic(
 const withElronDapp = (Component) => (props) => {
   return (
     <>
-      <Component {...props} />
+      <AxiosInterceptorContext.Provider>
+        {/* @ts-ignore */}
+        <AxiosInterceptorContext.Interceptor
+          authenticatedDomanis={sampleAuthenticatedDomains}
+        >
+          <DappProvider
+            environment={EnvironmentsEnum.mainnet}
+            customNetworkConfig={{
+              name: "quantumxConfig",
+              walletConnectV2ProjectId: "cf388e978587b4cba673b4080fb9d89b",
+              ...network,
+            }}
+          >
+            <Box color="black">
+              <TransactionsToastList />
+              <NotificationModal />
+              <SignTransactionsModals className="custom-class-for-modals" />
+            </Box>
+            <AxiosInterceptorContext.Listener />
+            <Component {...props} />
+          </DappProvider>
+        </AxiosInterceptorContext.Interceptor>
+      </AxiosInterceptorContext.Provider>
     </>
   );
 };

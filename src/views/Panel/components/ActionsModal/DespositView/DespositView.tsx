@@ -21,6 +21,7 @@ import TokenList from "components/TokenList/TokenList";
 import { useFormik } from "formik";
 import { memo, useEffect, useMemo, useRef, useState } from "react";
 import { formatBalance, setElrondBalance } from "utils/functions/formatBalance";
+import { formatTokenI } from "utils/functions/tokens";
 import useGetElrondToken from "utils/hooks/useGetElrondToken";
 import useGetUserTokens from "utils/hooks/useGetUserTokens";
 import { IELrondTOkenWithBalance } from "utils/types/elrond.interface";
@@ -281,7 +282,13 @@ const InputComponent = ({
     onMax(realmax, i);
   };
   return (
-    <Box key={i} bg="black.base" px="5" py="3" borderRadius={"lg"}>
+    <Box
+      key={i}
+      bg="black.base"
+      px={{ xs: "3", md: "5" }}
+      py="3"
+      borderRadius={"lg"}
+    >
       <Flex align={"center"}>
         <InputText
           variant={"unstyled"}
@@ -297,12 +304,13 @@ const InputComponent = ({
         />
 
         {field.tokenDetail && (
-          <ActionButton mr={2} onClick={handleMax}>
+          <ActionButton mr={2} onClick={handleMax} p={{ xs: "2", md: "3" }}>
             MAX
           </ActionButton>
         )}
         <ActionButton
           onClick={isOneToken ? undefined : () => onSelectNewToken(i)}
+          p={{ xs: "2", md: "3" }}
         >
           {field.tokenDetail ? (
             <>
@@ -313,7 +321,7 @@ const InputComponent = ({
                 height={27}
               />
               <Text fontSize={"14px"} ml={2}>
-                {field.tokenDetail.ticker}
+                {formatTokenI(field.tokenDetail.ticker)}
               </Text>
             </>
           ) : (
