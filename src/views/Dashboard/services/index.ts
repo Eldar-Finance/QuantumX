@@ -15,8 +15,6 @@ export const sendUserTokens = async (
   fee: string,
   data: string
 ) => {
-  console.log("token", token);
-
   const sender = store.getState().userAccount.connectedAddress;
 
   if (token.identifier === "EGLD") {

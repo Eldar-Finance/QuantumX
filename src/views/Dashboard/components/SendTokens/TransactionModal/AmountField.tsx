@@ -27,7 +27,6 @@ import { formatTokenI } from "utils/functions/tokens";
 import useGetTokenPrice from "utils/hooks/useGetTokenPrice";
 
 const AmountField = ({ selectedToken, setSelectedToken, tokens, formik }) => {
-  console.log("renderizo amount field");
   const [price] = useGetTokenPrice("EGLD");
   const inputRef = useRef(null);
 

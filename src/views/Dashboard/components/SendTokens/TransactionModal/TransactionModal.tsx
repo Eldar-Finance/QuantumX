@@ -51,7 +51,6 @@ const TransactionModal = ({ isOpen, onClose }: IProps) => {
   const formik = useFormik({
     initialValues: initialValues,
     onSubmit: (values) => {
-      console.log(values);
       sendUserTokens(
         values.address,
         {
