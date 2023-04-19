@@ -22,7 +22,7 @@ export const sendUserTokens = async (
   if (token.identifier === "EGLD") {
     const tx = new Transaction({
       data: new TransactionPayload(data),
-      gasLimit: 70000,
+      gasLimit: Number(fee),
       sender: new Address(sender),
       receiver: new Address(address),
       value: token.amount,
