@@ -2,7 +2,7 @@ import BigNumber from "bignumber.js";
 import { IFarmWithTvl } from "components/Farms/FarmsCard/FarmsCard";
 import { noMaxTokens } from "utils/constants/farms";
 import { IElrondToken } from "utils/types/elrond.interface";
-import { IScFarm2RewardsLeft } from "utils/types/sc.interface";
+import { IScFarm2RewardsLeft, IScFarmItem } from "utils/types/sc.interface";
 import { orderSimpleData } from "./array";
 import { formatBalanceDolar, formatNumber } from "./formatBalance";
 import { preventExponetialNotation } from "./numbers";
@@ -274,4 +274,35 @@ export const apyFarms = (apr: number | string) => {
     .toFixed(2);
 
   return apy;
+};
+
+export const parseMultipleFarms = (
+  inputArray: IScFarmItem[]
+): IScFarmItem[] => {
+  const outputArray: IScFarmItem[] = [];
+  const processedFarmIds: Set<number> = new Set();
+
+  inputArray.forEach((item) => {
+    if (!processedFarmIds.has(item.farm.farmId)) {
+      processedFarmIds.add(item.farm.farmId);
+      const mainItem = inputArray.find(
+        (i) =>
+          i.farm.farmId === item.farm.farmId &&
+          i.stakedToken === i.farm.stakingToken
+      );
+
+      if (mainItem) {
+        const extraPools = inputArray
+          .filter(
+            (i) =>
+              i.farm.farmId === item.farm.farmId &&
+              i.stakedToken !== i.farm.stakingToken
+          )
+          .map((i) => ({ ...i, extraPools: undefined }));
+
+        outputArray.push({ ...mainItem, extraPools });
+      }
+    }
+  });
+  return outputArray;
 };

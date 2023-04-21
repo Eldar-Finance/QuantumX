@@ -96,7 +96,7 @@ const FarmsCard = ({ proteoArr, isPool, othersArr = null }: IProps) => {
               key={i}
               farm={farm.farm}
               tvl={farm.totalLocked}
-              farmUserInfo={othersArr.userFarmInfo.find((userFarm) => {
+              farmUserInfoArr={othersArr.userFarmInfo.filter((userFarm) => {
                 return userFarm.farmId === farm.farm.farm.farmId;
               })}
               farmUserRewards={othersArr.userFarm2Rewards.filter((userFarm) => {
@@ -104,7 +104,7 @@ const FarmsCard = ({ proteoArr, isPool, othersArr = null }: IProps) => {
               })}
               stakedTokenPrice={farm.stakedTokenPrice}
               isPool={isPool}
-              logoSize={isPool ? 45 : 27}
+              logoSize={isPool ? 40 : 27}
               multifarmRewardsLeft={
                 multifarmRewardsLeft.find(
                   (mfr) => mfr.farmId === farm.farm.farm.farmId

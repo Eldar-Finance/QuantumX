@@ -14,6 +14,7 @@ import useGetQuantumxFarmsFees from "utils/hooks/useGetQuantumxFarmsFees";
 import { IScFarmItem, IScUserFarmInfo } from "utils/types/sc.interface";
 import useIsBearFarm from "views/Pools/hooks/useIsBearFarm";
 import useCanUsePool7 from "views/Pools/hooks/useIsSrbStaker";
+import MultipleStakeModal from "./MultipleStakeModal";
 
 const StakeModal: any = dynamic(() => import("./StakeModal"));
 const UnstakeModal: any = dynamic(() => import("./UnstkeModal"));
@@ -127,15 +128,24 @@ const StakeUnstake = ({ farm, userFarmItem, isPool, isBearly }: IProps) => {
           </Text>
         )}
       </Flex>
-      {openStake && (
-        <StakeModal
-          farm={farm}
-          isOpen={openStake}
-          onClose={() => setOpenStake((s) => !s)}
-          token={stakingToken}
-          isPool={isPool}
-        />
-      )}
+      {openStake &&
+        (farm.extraPools ? (
+          <MultipleStakeModal
+            farm={farm}
+            isOpen={openStake}
+            onClose={() => setOpenStake((s) => !s)}
+            token={stakingToken}
+            isPool={isPool}
+          />
+        ) : (
+          <StakeModal
+            farm={farm}
+            isOpen={openStake}
+            onClose={() => setOpenStake((s) => !s)}
+            token={stakingToken}
+            isPool={isPool}
+          />
+        ))}
 
       {openUnstakeStake && (
         <UnstakeModal

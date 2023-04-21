@@ -2,6 +2,7 @@ import { Address, AddressValue } from "@multiversx/sdk-core/out";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { scQuery } from "api/sc/queries";
 import { pairs } from "utils/constants/lpPairs";
+import { parseMultipleFarms } from "utils/functions/farms";
 import { formatBalance } from "utils/functions/formatBalance";
 import {
   IScFarmItem,
@@ -18,7 +19,6 @@ export const fetchAllFarms = createAsyncThunk(
     const scRes = await scQuery("farms2", "getAllFarms");
 
     const scFirstValue = scRes.firstValue.valueOf();
-    console.log("scFirstValue fetchAllFarms", scFirstValue);
 
     const allFarms: IScFarmItem[] = scFirstValue.map((farm: any) => {
       const data: IScFarmItem = {
@@ -37,16 +37,18 @@ export const fetchAllFarms = createAsyncThunk(
       return data;
     });
 
-    const allNomalFarms = allFarms.filter(
+    const reducedFarms = parseMultipleFarms(allFarms);
+
+    const allNomalFarms = reducedFarms.filter(
       (farm) => !allHypeFarms.includes(farm.farm.farmId)
     );
 
-    const hypeFarms = allFarms.filter((farm) =>
+    const hypeFarms = reducedFarms.filter((farm) =>
       allHypeFarms.includes(farm.farm.farmId)
     );
 
     return {
-      allFarms,
+      allFarms: reducedFarms,
       pools: pairs
         ? allNomalFarms.filter(
             (farm) =>
@@ -70,25 +72,30 @@ export const fetchAllFarms = createAsyncThunk(
 export const fetchUSerFarmInfo = createAsyncThunk(
   "farms2/fetchUSerFarmInfo",
   async (address: string) => {
-    console.log("start fetchUSerFarmInfo");
+    // console.log("start fetchUSerFarmInfo");
 
     const scRes = await scQuery("farms2", "getUserFarmInfo", [
       new AddressValue(new Address(address)),
     ]);
 
     const scFirstValue = scRes.firstValue.valueOf();
-    console.log("scFirstValue", scFirstValue);
+    // console.log("scFirstValue", scFirstValue);
 
     //need to verify data
     const allFarms: IScUserFarmInfo[] = scFirstValue.map((farm) => {
+      // console.log(" farm[0]", farm[0]);
+
       const data: IScUserFarmInfo = {
-        farmId: farm[0].toNumber(),
-        stakedToken: farm[1],
-        stakedBalance: farm[1].toString(),
-        unboundingEpoch: farm[2].toNumber(),
+        farmId: farm.field0.toNumber(),
+        stakedToken: farm.field1,
+        stakedBalance: farm.field2[0].toString(),
+        unboundingEpoch: farm.field2[1].toNumber(),
       };
       return data;
     });
+
+    console.log("userfarmInfo", allFarms);
+
     return allFarms;
   }
 );
