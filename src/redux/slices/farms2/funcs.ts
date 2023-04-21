@@ -18,9 +18,10 @@ export const fetchAllFarms = createAsyncThunk(
     const scRes = await scQuery("farms2", "getAllFarms");
 
     const scFirstValue = scRes.firstValue.valueOf();
+    console.log("scFirstValue fetchAllFarms", scFirstValue);
 
     const allFarms: IScFarmItem[] = scFirstValue.map((farm: any) => {
-      return {
+      const data: IScFarmItem = {
         farm: {
           farmId: farm.field0.id.toNumber(),
           creationEpoch: farm.field0.creation_epoch.toNumber(),
@@ -28,10 +29,12 @@ export const fetchAllFarms = createAsyncThunk(
           rewardToken: farm.field0.reward_token,
           creator: farm.field0.creator.bech32(),
         },
-        stakedBalance: farm.field1.toNumber(),
-        totalRewardsLeft: farm.field2.toNumber(),
-        compound: farm.field3,
-      } as IScFarmItem;
+        stakedToken: farm.field1,
+        stakedBalance: farm.field2.toNumber(),
+        totalRewardsLeft: farm.field3.toNumber(),
+        compound: farm.field4,
+      };
+      return data;
     });
 
     const allNomalFarms = allFarms.filter(
@@ -67,15 +70,20 @@ export const fetchAllFarms = createAsyncThunk(
 export const fetchUSerFarmInfo = createAsyncThunk(
   "farms2/fetchUSerFarmInfo",
   async (address: string) => {
+    console.log("start fetchUSerFarmInfo");
+
     const scRes = await scQuery("farms2", "getUserFarmInfo", [
       new AddressValue(new Address(address)),
     ]);
 
     const scFirstValue = scRes.firstValue.valueOf();
+    console.log("scFirstValue", scFirstValue);
 
+    //need to verify data
     const allFarms: IScUserFarmInfo[] = scFirstValue.map((farm) => {
       const data: IScUserFarmInfo = {
         farmId: farm[0].toNumber(),
+        stakedToken: farm[1],
         stakedBalance: farm[1].toString(),
         unboundingEpoch: farm[2].toNumber(),
       };
