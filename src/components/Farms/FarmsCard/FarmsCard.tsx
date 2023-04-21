@@ -83,21 +83,17 @@ const FarmsCard = ({ proteoArr, isPool, othersArr = null }: IProps) => {
       index={accordionIndex}
       onChange={handleChangePoolIndex}
     >
-      {farmStored.map((farm) => {
+      {farmStored.map((farm, i) => {
         if (farm.type === "proteo") {
           if (!farm.farm.stakedCoin) return null;
           return (
-            <ProteoFarmItem
-              tvl={farm.totalLocked}
-              key={farm.farm.stakedCoin}
-              pf={farm.farm}
-            />
+            <ProteoFarmItem tvl={farm.totalLocked} key={i} pf={farm.farm} />
           );
         } else {
           if (!farm.farm.farm.farmId) return null;
           return (
             <Farms2Item
-              key={farm.farm.farm.farmId}
+              key={i}
               farm={farm.farm}
               tvl={farm.totalLocked}
               farmUserInfo={othersArr.userFarmInfo.find((userFarm) => {
