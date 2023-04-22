@@ -92,7 +92,7 @@ const TransactionModal = ({ isOpen, onClose }: IProps) => {
     setSelectedToken(initialToken);
   }, [tokens]);
 
-  const egldGas = new BigNumber(11000000)
+  const egldGas = new BigNumber(10495000)
     .multipliedBy(formik.values.fee)
     .toString();
 
