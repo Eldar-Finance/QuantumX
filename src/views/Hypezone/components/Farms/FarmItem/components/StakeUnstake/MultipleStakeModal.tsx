@@ -49,7 +49,6 @@ const MultipleStakeModal = ({
     farm.farm.stakingToken,
     ...farm.extraPools?.map((item) => item.stakedToken),
   ]);
-  //   console.log("userToken", userToken);
 
   const validationSchema = yup.object({
     amount: yup.number().required().max(formatBalance(userToken, true)),
@@ -116,7 +115,6 @@ const MultipleStakeModal = ({
       formik.setFieldValue("amount", finalAmount, false);
     }
   };
-  console.log("formik", formik.values);
 
   return (
     <MyModal bg="black.baseDark" isOpen={isOpen} onClose={onClose}>
@@ -236,7 +234,6 @@ const MultiStakeComponent = ({
   multiStakeIndex: number;
 }) => {
   const { ratio } = useMultiSakingRatio(farm.farm.farmId, farm.stakedToken);
-  console.log("ratio", ratio);
 
   useEffect(() => {
     if (ratio) {

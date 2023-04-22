@@ -49,7 +49,6 @@ const MultipleStakeModal = ({
     farm.farm.stakingToken,
     ...farm.extraPools?.map((item) => item.stakedToken),
   ]);
-  //   console.log("userToken", userToken);
 
   const validationSchema = yup.object({
     amount: yup.number().required().max(formatBalance(userToken, true)),
@@ -94,8 +93,6 @@ const MultipleStakeModal = ({
           };
         }),
       ];
-
-      console.log("tokensToSend", tokensToSend);
 
       let res = null;
 

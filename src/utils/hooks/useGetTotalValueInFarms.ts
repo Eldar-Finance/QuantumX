@@ -22,8 +22,6 @@ const useGetTotalValueInFarms = () => {
       ) !== -1
   );
 
-  console.log("farms", farms2);
-
   const { prices: lpPrices } = useGetFarmsLpPrices();
   const { tokens } = useGetMultipleElrondTokens(
     unparseMultipleFarms(farms2).map((farm) => farm.stakedToken)

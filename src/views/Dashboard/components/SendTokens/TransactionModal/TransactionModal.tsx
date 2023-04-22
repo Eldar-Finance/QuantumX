@@ -45,9 +45,7 @@ const TransactionModal = ({ isOpen, onClose }: IProps) => {
   const [price] = useGetTokenPrice("EGLD");
   const formik = useFormik({
     initialValues: initialValues,
-    onSubmit: (values) => {
-      console.log(values);
-    },
+    onSubmit: (values) => {},
   });
 
   useEffect(() => {
@@ -60,8 +58,6 @@ const TransactionModal = ({ isOpen, onClose }: IProps) => {
   const egldGas = new BigNumber(1000000000)
     .multipliedBy(formik.values.fee)
     .toString();
-
-  console.log("price", price);
 
   return (
     <MyModal

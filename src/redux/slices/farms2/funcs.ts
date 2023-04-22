@@ -19,7 +19,6 @@ export const fetchAllFarms = createAsyncThunk(
     const scRes = await scQuery("farms2", "getAllFarms");
 
     const scFirstValue = scRes.firstValue.valueOf();
-    console.log("scFirstValue", scFirstValue);
 
     const allFarms: IScFarmItem[] = scFirstValue.map((farm: any) => {
       const data: IScFarmItem = {
@@ -40,7 +39,6 @@ export const fetchAllFarms = createAsyncThunk(
 
     const reducedFarms = parseMultipleFarms(allFarms);
 
-    console.log("reducedFarms", reducedFarms);
     const allNomalFarms = reducedFarms.filter(
       (farm) => !allHypeFarms.includes(farm.farm.farmId)
     );
@@ -74,19 +72,14 @@ export const fetchAllFarms = createAsyncThunk(
 export const fetchUSerFarmInfo = createAsyncThunk(
   "farms2/fetchUSerFarmInfo",
   async (address: string) => {
-    // console.log("start fetchUSerFarmInfo");
-
     const scRes = await scQuery("farms2", "getUserFarmInfo", [
       new AddressValue(new Address(address)),
     ]);
 
     const scFirstValue = scRes.firstValue.valueOf();
-    // console.log("scFirstValue", scFirstValue);
 
     //need to verify data
     const allFarms: IScUserFarmInfo[] = scFirstValue.map((farm) => {
-      // console.log(" farm[0]", farm[0]);
-
       const data: IScUserFarmInfo = {
         farmId: farm.field0.toNumber(),
         stakedToken: farm.field1,
@@ -95,8 +88,6 @@ export const fetchUSerFarmInfo = createAsyncThunk(
       };
       return data;
     });
-
-    console.log("userfarmInfo", allFarms);
 
     return allFarms;
   }

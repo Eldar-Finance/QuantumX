@@ -57,7 +57,6 @@ const UnstakeModal = ({
   const validationSchema = yup.object({
     amount: yup.number().required().max(Number(userFarmItem?.stakedBalance)),
   });
-  console.log("userFarmItem", userFarmItem);
 
   const formik = useFormik({
     initialValues: {
@@ -70,7 +69,6 @@ const UnstakeModal = ({
         .BigUIntValue;
 
       let txs = [];
-      console.log("vales", values);
 
       const t1 = await getTxForRareFee();
       txs.push(t1);

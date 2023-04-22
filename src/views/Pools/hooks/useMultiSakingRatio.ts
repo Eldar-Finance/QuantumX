@@ -12,8 +12,7 @@ const useMultiSakingRatio = (farmId: number, secondaryToken: string) => {
         BytesValue.fromUTF8(secondaryToken),
       ]);
       const data = sc.firstValue.valueOf().toNumber();
-      console.log("secondaryToken", secondaryToken);
-      console.log("data", data);
+
       return data;
     }
   );

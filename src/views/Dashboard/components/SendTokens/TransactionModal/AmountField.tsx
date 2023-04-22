@@ -33,7 +33,6 @@ const AmountField = ({ selectedToken, setSelectedToken, tokens }) => {
       amount: false,
     },
   };
-  console.log("sd");
 
   return (
     <FormControl isInvalid={formik.errors.amount && formik.touched.amount}>
