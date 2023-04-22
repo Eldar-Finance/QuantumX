@@ -12,13 +12,11 @@ import { useAppDispatch } from "utils/hooks/redux";
 import useAuthentication from "utils/hooks/useAuthentication";
 import useGetAccountToken from "utils/hooks/useGetAccountToken";
 import useGetTotalValueInHype from "utils/hooks/useGetTotalValueInHype";
-import HypeDualContainer from "./components/Farms/HypeContainers/HypeDualContainer";
 import HypeFarmContainer from "./components/Farms/HypeContainers/HypeFarmContainer";
 import HypePools1Container from "./components/Farms/HypeContainers/HypePools1Container";
 import HypePools2Container from "./components/Farms/HypeContainers/HypePools2Container";
 import Faucet from "./components/Faucet/Faucet";
 import {
-  dualPoolIds,
   hypeFarmIds,
   hypePools1Ids,
   hypePools2Ids,
@@ -83,8 +81,8 @@ const Hypezone = () => {
               <Faucet />
             </Flex>
           </Flex>
+          {/* <HypeDualContainer ids={dualPoolIds} /> */}
           <HypeFarmContainer ids={hypeFarmIds} />
-          <HypeDualContainer ids={dualPoolIds} />
           <HypePools1Container ids={hypePools1Ids} />
           <HypePools2Container ids={hypePools2Ids} />
         </Flex>
