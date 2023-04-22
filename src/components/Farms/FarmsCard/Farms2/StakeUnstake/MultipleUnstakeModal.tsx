@@ -5,118 +5,97 @@ import {
   Divider,
   Flex,
   Heading,
-  Input,
   ModalBody,
   ModalFooter,
   ModalHeader,
   Text,
 } from "@chakra-ui/react";
-import { BigUIntValue } from "@multiversx/sdk-core/out";
-import { useTrackTransactionStatus } from "@multiversx/sdk-dapp/hooks";
-import { MultiESDTNFTTransfer } from "api/sc/calls";
+import { scCall } from "api/sc/calls";
 import BigNumber from "bignumber.js";
 import ActionButton from "components/ActionButton/ActionButton";
+import InputText from "components/Inputs/InputText";
 import MyModal from "components/Modal/Modal";
 import { useFormik } from "formik";
-import { useEffect, useState } from "react";
+import { useRef } from "react";
 import { formatBalance, setElrondBalance } from "utils/functions/formatBalance";
-import { preventExponetialNotation } from "utils/functions/numbers";
 import { formatTokenI } from "utils/functions/tokens";
 import useGetMultipleElrondTokens from "utils/hooks/useGetMultipleElrondTokens";
-import useGetUserTokens from "utils/hooks/useGetUserTokens";
+import useGetQuantumxFarmsFees from "utils/hooks/useGetQuantumxFarmsFees";
 import { IElrondToken } from "utils/types/elrond.interface";
-import { IScFarmItem } from "utils/types/sc.interface";
+import { IScFarmItem, IScUserFarmInfo } from "utils/types/sc.interface";
 import useMultiSakingRatio from "views/Pools/hooks/useMultiSakingRatio";
-
 import * as yup from "yup";
+
 interface IProps {
   isOpen: boolean;
   isPool?: boolean;
   onClose: () => void;
   farm: IScFarmItem;
-  token: IElrondToken;
+  userFarmItem: IScUserFarmInfo;
+  epochDiffrence: number;
+  token?: IElrondToken;
 }
 
-const MultipleStakeModal = ({
-  isOpen,
-  onClose,
+const MultipleUnstakeModal = ({
+  userFarmItem,
   farm,
+  epochDiffrence,
   isPool,
+  isOpen,
   token,
+  onClose,
 }: IProps) => {
-  const [_, userToken]: any = useGetUserTokens(farm.farm.stakingToken);
+  const { farmFee } = useGetQuantumxFarmsFees(farm.farm.farmId);
   const { tokens } = useGetMultipleElrondTokens([
     farm.farm.stakingToken,
     ...farm.extraPools?.map((item) => item.stakedToken),
   ]);
-  //   console.log("userToken", userToken);
-
+  const inputRef = useRef(null);
   const validationSchema = yup.object({
-    amount: yup.number().required() /* .max(formatBalance(userToken, true)) */,
-    multifarmsAmounts: yup.array().of(yup.number().required()),
+    amount: yup.number().required().max(Number(userFarmItem?.stakedBalance)),
   });
-
-  const [sessionId, setSessionId] = useState();
-  const onSuccess = () => {
-    window.location.reload();
-  };
-  const transactionStatus = useTrackTransactionStatus({
-    transactionId: sessionId,
-    onSuccess: onSuccess,
-  });
-
   const formik = useFormik({
     initialValues: {
       amount: "",
-      multifarmsAmounts: farm?.extraPools.map((_, i) => ""),
     },
     validationSchema: validationSchema,
-    onSubmit: async (values) => {
-      const mainDecimals = tokens.find(
-        (item) => item.identifier === farm.farm.stakingToken
-      )?.decimals;
-      const amount = new BigNumber(values.amount).toNumber();
-      const tokensToSend = [
-        {
-          collection: farm.farm.stakingToken,
-          nonce: 0,
-          value: Number(setElrondBalance(amount, mainDecimals)),
-        },
-        ...farm.extraPools.map((item, i) => {
-          const decimals = tokens.find(
-            (t) => t.identifier === item.stakedToken
-          )?.decimals;
-          const amount = new BigNumber(values.multifarmsAmounts[i]).toNumber();
-          return {
-            collection: item.stakedToken,
-            nonce: 0,
-            value: Number(setElrondBalance(amount, decimals)),
-          };
-        }),
-      ];
+    onSubmit: async (values: any) => {
+      const BigNumber = (await import("bignumber.js")).default;
+      const BigUIntValue = (await import("@multiversx/sdk-core/out"))
+        .BigUIntValue;
 
-      console.log("tokensToSend", tokensToSend);
-
-      let res = null;
-
-      res = await MultiESDTNFTTransfer("farms2", "stakeMulti", tokensToSend, [
-        new BigUIntValue(new BigNumber(farm.farm.farmId)),
-      ]);
-
-      setSessionId(res);
+      scCall(
+        "farms2",
+        "multistakedTokenRatio",
+        [
+          new BigUIntValue(new BigNumber(farm.farm.farmId)),
+          new BigUIntValue(new BigNumber(values.amount)),
+        ],
+        50000000
+      );
     },
   });
 
-  const handleAmount = (percent: number) => {
-    if (userToken) {
-      const userTokenAmount = formatBalance(userToken, true);
-      const userRealAmount = percent * userTokenAmount;
-      const finalAmount = preventExponetialNotation(userRealAmount);
-
-      formik.setFieldValue("amount", finalAmount, false);
+  const handleMax = (percent) => {
+    if (userFarmItem) {
+      const realmax = new BigNumber(percent)
+        .multipliedBy(userFarmItem.stakedBalance)
+        .toString();
+      const inputMax = formatBalance({
+        balance: realmax,
+        decimals: token.decimals,
+      });
+      inputRef.current.setValue(inputMax);
+      formik.setFieldValue("amount", realmax, false);
     }
   };
-  console.log("values", formik.errors);
+
+  const handleChange = (val: string) => {
+    formik.setFieldValue("amount", val, false);
+  };
+  const transformValue = (val: string) => {
+    return setElrondBalance(Number(val), token.decimals);
+  };
 
   return (
     <MyModal bg="black.baseDark" isOpen={isOpen} onClose={onClose}>
@@ -125,7 +104,7 @@ const MultipleStakeModal = ({
           <Flex justifyContent={"space-between"} alignItems="center">
             <Heading fontSize={"md"}>
               {" "}
-              Stake {formatTokenI(farm.farm.stakingToken)}{" "}
+              Unstake {formatTokenI(farm.farm.stakingToken)}{" "}
               {farm.extraPools
                 ?.map((item) => formatTokenI(item.stakedToken))
                 .join(" ")}
@@ -140,37 +119,60 @@ const MultipleStakeModal = ({
           <Box bg="black.base" p="5" borderRadius={"xl"}>
             <Flex mb="2">
               <Text>
-                Balance: {formatBalance(userToken)} {userToken?.ticker}
+                Staked:{" "}
+                {formatBalance(
+                  {
+                    balance: userFarmItem?.stakedBalance,
+                    decimals: token?.decimals,
+                  },
+                  false,
+                  18
+                )}
               </Text>
             </Flex>
             <Flex mb="3">
-              <Input
+              <InputText
                 variant={"unstyled"}
                 placeholder="0"
                 flex="1"
                 name="amount"
-                value={formik.values.amount}
-                onChange={formik.handleChange}
-              />{" "}
+                onChangeInput={handleChange}
+                tranformValue={transformValue}
+                ref={inputRef}
+              />
               <Text fontSize={"14px"}>
-                {formatTokenI(farm?.farm.stakingToken)}
+                {formatTokenI(farm.farm.stakingToken)}
                 {!isPool && "-LP"}
               </Text>
             </Flex>
-            <Flex justifyContent={"flex-end"} gap="1">
-              <AmountBox percent={25} onClick={() => handleAmount(0.25)} />
-              <AmountBox percent={50} onClick={() => handleAmount(0.5)} />
-              <AmountBox percent={75} onClick={() => handleAmount(0.75)} />
-              <AmountBox percent={100} onClick={() => handleAmount(1)} />
+            <Flex
+              justifyContent={"space-between"}
+              gap="1"
+              alignItems={"flex-end"}
+            >
+              <Flex>
+                {epochDiffrence <= 0 && farmFee.earlyUnbondingFee > 0 && (
+                  <Text fontSize={"sm"} color="darkgray">
+                    ⚠️ Fee : {farmFee.earlyUnbondingFee}%
+                  </Text>
+                )}
+              </Flex>
+              <Flex gap={1}>
+                <AmountBox percent={25} onClick={() => handleMax(0.25)} />
+                <AmountBox percent={50} onClick={() => handleMax(0.5)} />
+                <AmountBox percent={75} onClick={() => handleMax(0.75)} />
+                <AmountBox percent={100} onClick={() => handleMax(1)} />
+              </Flex>
             </Flex>
           </Box>
+
           {farm?.extraPools.map((farm, i) => {
             return (
               <MultiStakeComponent
                 key={farm.stakedToken}
                 farm={farm}
                 formik={formik}
-                multiStakeIndex={i}
+                tokens={tokens}
               />
             );
           })}
@@ -181,7 +183,6 @@ const MultipleStakeModal = ({
             w="full"
             maxW={"180px"}
             onClick={onClose}
-            disabled={!formik.isValid}
           >
             Cancel
           </ActionButton>
@@ -192,6 +193,7 @@ const MultipleStakeModal = ({
             w="full"
             maxW={"180px"}
             type="submit"
+            disabled={!formik.isValid}
           >
             Confirm
           </ActionButton>
@@ -201,7 +203,7 @@ const MultipleStakeModal = ({
   );
 };
 
-export default MultipleStakeModal;
+export default MultipleUnstakeModal;
 
 const AmountBox = ({
   percent,
@@ -229,35 +231,24 @@ const AmountBox = ({
 const MultiStakeComponent = ({
   farm,
   formik,
-  multiStakeIndex,
+  tokens,
 }: {
   farm: IScFarmItem;
   formik;
-  multiStakeIndex: number;
+  tokens: IElrondToken[];
 }) => {
   const { ratio } = useMultiSakingRatio(farm.farm.farmId, farm.stakedToken);
 
-  useEffect(() => {
-    if (ratio) {
-      const ratioNumber = new BigNumber(ratio);
-      const mainInputAmount = new BigNumber(
-        formik.values.amount === "" ? "0" : formik.values.amount
-      );
+  const amount = new BigNumber(
+    formatBalance({
+      balance: formik.values.amount === "" ? "0" : formik.values.amount,
+      decimals: tokens.find((t) => t.identifier === farm.farm.stakingToken)
+        ?.decimals,
+    })
+  )
+    .multipliedBy(ratio)
+    .toString();
 
-      const amount = mainInputAmount.multipliedBy(ratioNumber).toString();
-
-      formik.setFieldValue(
-        `multifarmsAmounts[${multiStakeIndex}]`,
-        amount,
-        false
-      );
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ratio, formik.values.amount, multiStakeIndex]);
-
-  if (!formik.values?.multifarmsAmounts) {
-    return null;
-  }
   return (
     <Center
       bg="black.baseDark"
@@ -269,7 +260,7 @@ const MultiStakeComponent = ({
       rounded={"md"}
     >
       <Flex w="full" justifyContent={"space-between"}>
-        <Text>{formik.values.multifarmsAmounts[multiStakeIndex]}</Text>
+        <Text>{amount}</Text>
         <Text>{formatTokenI(farm.stakedToken)}</Text>
       </Flex>
     </Center>

@@ -19,7 +19,7 @@ const useMultiSakingRatio = (farmId: number, secondaryToken: string) => {
   );
 
   return {
-    ratio: data,
+    ratio: data || 0,
     isLoading,
     error,
   };

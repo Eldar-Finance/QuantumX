@@ -5,10 +5,8 @@ import {
   AccordionPanel,
   Box,
   BoxProps,
-  Center,
   Flex,
   Grid,
-  Icon,
   Text,
 } from "@chakra-ui/react";
 import NextImage from "components/NextImage/NextImage";
@@ -21,7 +19,6 @@ import {
   IScUserFarmRewards,
 } from "utils/types/sc.interface";
 
-import { PlusSquareIcon } from "@chakra-ui/icons";
 import LpTokenImage from "components/LpTokenImage/LpTokenImage";
 import { addTvlInEldarFarm } from "redux/slices/proteo/proteo";
 import {
@@ -171,9 +168,9 @@ const Farms2Item = ({
                   othersStakedTokens.map((stakingToken) => {
                     return (
                       <Fragment key={stakingToken.identifier}>
-                        <Center w="full">
+                        {/* <Center w="full">
                           <Icon as={PlusSquareIcon} fontSize={"30px"} />
-                        </Center>
+                        </Center> */}
                         {formatTokenI(stakingToken.name).slice(-2) === "LP" ? (
                           <Flex gap="4" alignItems={"center"}>
                             <LpTokenImage lpToken={stakingToken} />
@@ -224,19 +221,27 @@ const Farms2Item = ({
                   py={2}
                 >
                   {farmUserInfoArr.map((farmUserInfo) => {
+                    const token =
+                      farmUserInfo.stakedToken === stakingToken.identifier
+                        ? stakingToken
+                        : othersStakedTokens.find(
+                            (item) =>
+                              item.identifier === farmUserInfo.stakedToken
+                          );
                     return (
                       <Text key={farmUserInfo.stakedToken}>
                         {formatBalance({
                           balance: farmUserInfo?.stakedBalance,
+                          decimals: token?.decimals,
                         })}{" "}
                         <Box as="span" whiteSpace={"nowrap"}>
                           (${" "}
                           {formatBalanceDolar(
                             {
                               balance: farmUserInfo?.stakedBalance,
-                              decimals: stakingToken.decimals,
+                              decimals: token?.decimals,
                             },
-                            price,
+                            token?.price,
                             true
                           )}
                           )

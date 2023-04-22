@@ -15,6 +15,7 @@ import { IScFarmItem, IScUserFarmInfo } from "utils/types/sc.interface";
 import useIsBearFarm from "views/Pools/hooks/useIsBearFarm";
 import useCanUsePool7 from "views/Pools/hooks/useIsSrbStaker";
 import MultipleStakeModal from "./MultipleStakeModal";
+import MultipleUnstakeModal from "./MultipleUnstakeModal";
 
 const StakeModal: any = dynamic(() => import("./StakeModal"));
 const UnstakeModal: any = dynamic(() => import("./UnstkeModal"));
@@ -147,17 +148,28 @@ const StakeUnstake = ({ farm, userFarmItem, isPool, isBearly }: IProps) => {
           />
         ))}
 
-      {openUnstakeStake && (
-        <UnstakeModal
-          token={stakingToken}
-          userFarmItem={userFarmItem}
-          farm={farm}
-          isPool={isPool}
-          isOpen={openUnstakeStake}
-          onClose={() => setOpenUnstakeStake((s) => !s)}
-          epochDiffrence={epochDiffrence}
-        />
-      )}
+      {openUnstakeStake &&
+        (farm.extraPools ? (
+          <MultipleUnstakeModal
+            token={stakingToken}
+            userFarmItem={userFarmItem}
+            farm={farm}
+            isPool={isPool}
+            isOpen={openUnstakeStake}
+            onClose={() => setOpenUnstakeStake((s) => !s)}
+            epochDiffrence={epochDiffrence}
+          />
+        ) : (
+          <UnstakeModal
+            token={stakingToken}
+            userFarmItem={userFarmItem}
+            farm={farm}
+            isPool={isPool}
+            isOpen={openUnstakeStake}
+            onClose={() => setOpenUnstakeStake((s) => !s)}
+            epochDiffrence={epochDiffrence}
+          />
+        ))}
     </Flex>
   );
 };
