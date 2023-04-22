@@ -1,12 +1,10 @@
 import {
-  Center,
   FormControl,
   FormLabel,
   Heading,
   Input,
   ModalBody,
   ModalHeader,
-  Text,
   Textarea,
   VStack,
 } from "@chakra-ui/react";
@@ -14,15 +12,18 @@ import BigNumber from "bignumber.js";
 import ActionButton from "components/ActionButton/ActionButton";
 import MyModal from "components/Modal/Modal";
 import { FormikProvider, useFormik } from "formik";
-import { useEffect, useState } from "react";
-import {
-  formatBalance,
-  formatBalanceDolar,
-} from "utils/functions/formatBalance";
+import { useEffect, useMemo, useState } from "react";
+import { formatBalanceDolar } from "utils/functions/formatBalance";
 import { formatTokenI } from "utils/functions/tokens";
+import useGetMultiplePrices from "utils/hooks/useGetMultiplePrices";
 import useGetTokenPrice from "utils/hooks/useGetTokenPrice";
 import useGetUserTokens from "utils/hooks/useGetUserTokens";
+import { sendUserTokens } from "views/Dashboard/services";
 import AmountField from "./AmountField";
+import FeeSlider from "./FeeSlider";
+
+const defaultFee = 7;
+
 interface IProps {
   isOpen: boolean;
   onClose: () => void;
@@ -36,26 +37,62 @@ export interface IFormData {
 const initialValues: IFormData = {
   address: "",
   amount: "",
-  fee: "5000000",
+  fee: new BigNumber(defaultFee).multipliedBy(1000000).toString(),
   data: "",
 };
 const TransactionModal = ({ isOpen, onClose }: IProps) => {
-  const [tokens] = useGetUserTokens();
+  const [userTokens] = useGetUserTokens();
+  // const [tokens, setTokens] = useState([]);
   const [selectedToken, setSelectedToken] = useState<any>();
-  const [price] = useGetTokenPrice("EGLD");
+  const [egldPrice] = useGetTokenPrice("EGLD");
+  const [missingPrices] = useGetMultiplePrices(
+    userTokens.filter((t) => !Boolean(t.price)).map((t) => t.identifier)
+  );
   const formik = useFormik({
     initialValues: initialValues,
-    onSubmit: (values) => {},
+    onSubmit: (values) => {
+      sendUserTokens(
+        values.address,
+        {
+          ...selectedToken,
+          amount: values.amount,
+        },
+        values.fee,
+        values.data
+      );
+    },
   });
+
+  const tokens = useMemo(() => {
+    const newTokens = userTokens.map((token) => {
+      const missingPrice = missingPrices.find(
+        (p) => p.tokenI === token.identifier
+      );
+      const missinEgldPrice = token.identifier === "EGLD" ? egldPrice : null;
+      const price = missinEgldPrice || missingPrice?.price || token.price;
+
+      return {
+        ...token,
+        price: price,
+      };
+    });
+
+    const tokensOrdered = newTokens.sort(
+      (a, b) =>
+        formatBalanceDolar(b, b.price, false) -
+        formatBalanceDolar(a, a.price, false)
+    );
+    return tokensOrdered;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userTokens, egldPrice]);
 
   useEffect(() => {
     const initialToken =
       tokens.length > 0 ? tokens.find((t) => t.identifier === "EGLD") : null;
-
     setSelectedToken(initialToken);
   }, [tokens]);
 
-  const egldGas = new BigNumber(1000000000)
+  const egldGas = new BigNumber(10495000)
     .multipliedBy(formik.values.fee)
     .toString();
 
@@ -93,35 +130,15 @@ const TransactionModal = ({ isOpen, onClose }: IProps) => {
               selectedToken={selectedToken}
               setSelectedToken={setSelectedToken}
               tokens={tokens}
+              formik={formik}
             />
             {/* Fee */}
-            <FormControl isInvalid={formik.errors.fee && formik.touched.fee}>
-              <FormLabel>Fee</FormLabel>
-              <Center
-                justifyContent={"flex-start"}
-                bg="black.base"
-                h="52px"
-                rounded={"md"}
-                px="4"
-              >
-                <Text>
-                  {formatBalance({
-                    balance: egldGas,
-                    decimals: 18,
-                  })}{" "}
-                  EGLD (= $
-                  {formatBalanceDolar(
-                    {
-                      balance: egldGas,
-                      decimals: 18,
-                    },
-                    price,
-                    true
-                  )}
-                  )
-                </Text>
-              </Center>
-            </FormControl>
+            <FeeSlider
+              egldGas={egldGas}
+              egldPrice={egldPrice}
+              formik={formik}
+              defaultFee={defaultFee}
+            />
 
             {/* Data */}
             <FormControl isInvalid={formik.errors.data && formik.touched.data}>

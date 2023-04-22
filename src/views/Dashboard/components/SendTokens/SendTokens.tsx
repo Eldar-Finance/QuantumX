@@ -6,7 +6,6 @@ const TransactionModal: any = dynamic(
 );
 const SendTokens = () => {
   const { onClose, onOpen, isOpen } = useDisclosure();
-
   return (
     <Center w="full">
       <Center

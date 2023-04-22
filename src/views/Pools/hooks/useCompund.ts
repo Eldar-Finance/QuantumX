@@ -1,8 +1,11 @@
 import BigNumber from "bignumber.js";
+import { selectFarms } from "redux/slices/farms2/farms2-slice";
 import { getRealBalance } from "utils/functions/formatBalance";
+import { useAppSelector } from "utils/hooks/redux";
 import useGetMultipleElrondTokens from "utils/hooks/useGetMultipleElrondTokens";
 import { INomalSmartSwap } from "utils/types/others.interface";
 import { IScFarmItem, IScUserFarmRewards } from "utils/types/sc.interface";
+import { hypeFarmIds } from "views/Hypezone/utils/constants";
 import useGetSwapInfo from "views/Swap/hooks/useGetSwapInfo";
 import { compound } from "../services";
 
@@ -24,11 +27,17 @@ const useCompund = (
             true
           ) as BigNumber
         ).toString()
-      : null
+      : null,
+    true
   );
-
+  const isNormalFarm =
+    useAppSelector(selectFarms).findIndex(
+      (farm) => farm.farm.farmId === farm.farm.farmId
+    ) !== -1;
+  const ishypeFarm = hypeFarmIds.includes(farm.farm.farmId);
+  const isLp = isNormalFarm || ishypeFarm;
   const handleCompound = () => {
-    compound(farm, data as INomalSmartSwap[], isSapwToLp);
+    compound(farm, data as INomalSmartSwap[], isLp);
   };
 
   return {
