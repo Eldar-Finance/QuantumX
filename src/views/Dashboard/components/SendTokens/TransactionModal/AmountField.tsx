@@ -58,7 +58,7 @@ const AmountField = ({ selectedToken, setSelectedToken, tokens, formik }) => {
           </Text>
         )}
       </Flex>
-      <Flex bg="black.base" rounded={"md"} pr="5" py="1">
+      <Flex bg="black.base" rounded={"md"} pr="1" py="1">
         <InputText
           onChangeInput={handleChange}
           tranformValue={transformValue}
