@@ -1,4 +1,4 @@
-export const hypeFarmIds = [20, 21, 22, 33, 4, 5, 6]; // originals ids [11 12 13]
+export const hypeFarmIds = [20, 21, 22, 33, 34, 35]; // originals ids [11 12 13]
 
 export const hypePools1Ids = [23, 24]; // originals ids [14 15]
 
