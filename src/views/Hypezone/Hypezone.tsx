@@ -3,8 +3,8 @@ import { toknesID } from "api/net.config";
 import MyContainer from "components/Container/Container";
 import Title from "components/Farms/Title/Title";
 import Layout from "components/Layout/Layout";
-import withElronDapp from "hoc/withElronDapp";
 import WrapperPages from "hoc/WrapperPages";
+import withElronDapp from "hoc/withElronDapp";
 import { useEffect, useState } from "react";
 import { fetchAllFarms } from "redux/slices/farms2/funcs";
 import { formatBalance } from "utils/functions/formatBalance";
@@ -12,11 +12,13 @@ import { useAppDispatch } from "utils/hooks/redux";
 import useAuthentication from "utils/hooks/useAuthentication";
 import useGetAccountToken from "utils/hooks/useGetAccountToken";
 import useGetTotalValueInHype from "utils/hooks/useGetTotalValueInHype";
+import HypeDualContainer from "./components/Farms/HypeContainers/HypeDualContainer";
 import HypeFarmContainer from "./components/Farms/HypeContainers/HypeFarmContainer";
 import HypePools1Container from "./components/Farms/HypeContainers/HypePools1Container";
 import HypePools2Container from "./components/Farms/HypeContainers/HypePools2Container";
 import Faucet from "./components/Faucet/Faucet";
 import {
+  dualPoolIds,
   hypeFarmIds,
   hypePools1Ids,
   hypePools2Ids,
@@ -82,6 +84,7 @@ const Hypezone = () => {
             </Flex>
           </Flex>
           <HypeFarmContainer ids={hypeFarmIds} />
+          <HypeDualContainer ids={dualPoolIds} />
           <HypePools1Container ids={hypePools1Ids} />
           <HypePools2Container ids={hypePools2Ids} />
         </Flex>

@@ -1,4 +1,5 @@
-export const hypeFarmIds = [20, 21, 22, 33, 34, 35]; // originals ids [11 12 13]
+export const hypeFarmIds = [20, 21, 22, 33]; // originals ids [11 12 13]
+export const dualPoolIds = [34, 35]; // originals ids [11 12 13]
 
 export const hypePools1Ids = [23, 24]; // originals ids [14 15]
 
@@ -8,6 +9,7 @@ export const allHypeFarms = [
   ...hypeFarmIds,
   ...hypePools1Ids,
   ...hypePools2Ids,
+  ...dualPoolIds,
 ];
 
 export const addressToReceiveRareInTx =

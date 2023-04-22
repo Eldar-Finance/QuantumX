@@ -103,7 +103,7 @@ const FarmAccordion = ({
                 )}
                 stakedTokenPrice={farm.stakedTokenPrice}
                 isPool={isPool}
-                logoSize={isPool ? 45 : 27}
+                logoSize={isPool ? 40 : 27}
                 multifarmRewardsLeft={
                   multifarmRewardsLeft.find(
                     (mfr) => mfr.farmId === farm.farm.farm.farmId
