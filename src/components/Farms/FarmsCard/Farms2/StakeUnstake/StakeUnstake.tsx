@@ -130,7 +130,7 @@ const StakeUnstake = ({ farm, userFarmItem, isPool, isBearly }: IProps) => {
         )}
       </Flex>
       {openStake &&
-        (farm.extraPools ? (
+        (farm?.extraPools?.length > 0 ? (
           <MultipleStakeModal
             farm={farm}
             isOpen={openStake}
@@ -149,7 +149,7 @@ const StakeUnstake = ({ farm, userFarmItem, isPool, isBearly }: IProps) => {
         ))}
 
       {openUnstakeStake &&
-        (farm.extraPools ? (
+        (farm?.extraPools?.length > 0 ? (
           <MultipleUnstakeModal
             token={stakingToken}
             userFarmItem={userFarmItem}

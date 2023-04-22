@@ -93,11 +93,33 @@ export const getSortedFarm = (
         tokenPrice
       );
 
+      const othersLockedValues = farm.extraPools.map((item) => {
+        let val = 0;
+        const decimals =
+          tokens.find((t) => t.identifier === item.stakedToken)?.decimals || 0;
+        const price =
+          tokenPrices.find((tp) => tp.tokenI === item.stakedToken)?.price || 0;
+
+        if (price && decimals) {
+          val = formatBalanceDolar(
+            {
+              balance: item.stakedBalance,
+              decimals: decimals,
+            },
+            price
+          );
+        }
+
+        return val;
+      });
+
+      const total = othersLockedValues.reduce((a, b) => a + b, 0) + totalLocked;
+
       const totalLockedBalance: IFarmWithTvl = {
         stakedTokenDecimals: decimals,
         stakedTokenPrice: tokenPrice,
         tokenI: farm.farm.stakingToken,
-        totalLocked: totalLocked,
+        totalLocked: total,
         type: "farms2",
         farm: farm,
       };
@@ -302,6 +324,24 @@ export const parseMultipleFarms = (
 
         outputArray.push({ ...mainItem, extraPools });
       }
+    }
+  });
+  return outputArray;
+};
+
+export const unparseMultipleFarms = (
+  inputArray: IScFarmItem[]
+): IScFarmItem[] => {
+  const outputArray: IScFarmItem[] = [];
+
+  inputArray.forEach((item) => {
+    if (item.extraPools) {
+      outputArray.push(item);
+      item.extraPools.forEach((extraPool) => {
+        outputArray.push(extraPool);
+      });
+    } else {
+      outputArray.push(item);
     }
   });
   return outputArray;

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { selectAllFarms2 } from "redux/slices/farms2/farms2-slice";
 import { pairs } from "utils/constants/lpPairs";
+import { unparseMultipleFarms } from "utils/functions/farms";
 import { formatBalanceDolar } from "utils/functions/formatBalance";
 import { formatTokenI } from "utils/functions/tokens";
 import { useAppSelector } from "utils/hooks/redux";
@@ -21,9 +22,11 @@ const useGetTotalValueInFarms = () => {
       ) !== -1
   );
 
+  console.log("farms", farms2);
+
   const { prices: lpPrices } = useGetFarmsLpPrices();
   const { tokens } = useGetMultipleElrondTokens(
-    farms2.map((farm) => farm.farm.stakingToken)
+    unparseMultipleFarms(farms2).map((farm) => farm.stakedToken)
   );
 
   useEffect(() => {

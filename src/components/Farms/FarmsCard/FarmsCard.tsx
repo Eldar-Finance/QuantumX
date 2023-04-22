@@ -2,7 +2,7 @@ import { Accordion } from "@chakra-ui/react";
 import { useRouter } from "next/dist/client/router";
 import { useEffect, useState } from "react";
 import { selectMultiFarms2RewardsLeft } from "redux/slices/farms2/farms2-slice";
-import { getSortedFarm } from "utils/functions/farms";
+import { getSortedFarm, unparseMultipleFarms } from "utils/functions/farms";
 import { useAppSelector } from "utils/hooks/redux";
 import useGetMultipleElrondTokens from "utils/hooks/useGetMultipleElrondTokens";
 import useGetMultiplePrices from "utils/hooks/useGetMultiplePrices";
@@ -45,14 +45,14 @@ const FarmsCard = ({ proteoArr, isPool, othersArr = null }: IProps) => {
   );
 
   const [tokenPrices] = useGetMultiplePrices(
-    othersArr.allFarms
-      .map((f) => f.farm.stakingToken)
+    unparseMultipleFarms(othersArr.allFarms)
+      .map((f) => f.stakedToken)
       .concat(proteoArr.map((pf) => pf.tokenIdentifier))
   );
 
   const { tokens } = useGetMultipleElrondTokens(
-    othersArr.allFarms
-      .map((f) => f.farm.stakingToken)
+    unparseMultipleFarms(othersArr.allFarms)
+      .map((f) => f.stakedToken)
       .concat(proteoArr.map((pf) => pf.tokenIdentifier))
   );
 

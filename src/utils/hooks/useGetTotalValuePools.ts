@@ -2,14 +2,13 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { selectAllFarms2 } from "redux/slices/farms2/farms2-slice";
 import { pairs } from "utils/constants/lpPairs";
+import { unparseMultipleFarms } from "utils/functions/farms";
 import { formatBalanceDolar } from "utils/functions/formatBalance";
-import { useAppDispatch, useAppSelector } from "utils/hooks/redux";
+import { useAppSelector } from "utils/hooks/redux";
 import { proteoPoolsArr } from "views/Pools/constants";
 import useGetMultipleElrondTokens from "./useGetMultipleElrondTokens";
 
 const useGetTotalValuePools = () => {
-  const dispatch = useAppDispatch();
-
   const { data } = useAppSelector((state) => state.proteo.generalInfoApp);
   const generalInfoAppData = data;
   const [totalValueLocked, setTotalValueLocked] = useState<number>();
@@ -24,7 +23,7 @@ const useGetTotalValuePools = () => {
   );
 
   const { tokens: farms2Tokens } = useGetMultipleElrondTokens(
-    farms2.map((farm) => farm.farm.stakingToken)
+    unparseMultipleFarms(farms2).map((farm) => farm.stakedToken)
   );
   const { tokens: pfTokens } = useGetMultipleElrondTokens(
     proteoPoolsArr.map((pf) => pf.tokenIdentifier)
@@ -81,6 +80,22 @@ const useGetTotalValuePools = () => {
             },
             stakingToken?.price
           );
+
+          const extrapollsAmounts = farm.extraPools?.reduce((acc, pool) => {
+            const stakingToken = farms2Tokens.find(
+              (token) => token.identifier === pool.stakedToken
+            );
+
+            return (acc += formatBalanceDolar(
+              {
+                balance: pool.stakedBalance,
+                decimals: stakingToken?.decimals,
+              },
+              stakingToken?.price
+            ));
+          }, 0);
+
+          totalLockedonProteoFarms += extrapollsAmounts;
         }
 
         setTotalValueLocked(totalLockedonProteoFarms);
