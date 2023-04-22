@@ -15,6 +15,8 @@ import useGetQuantumxFarmsFees from "utils/hooks/useGetQuantumxFarmsFees";
 import { IScFarmItem, IScUserFarmInfo } from "utils/types/sc.interface";
 import useIsBearFarm from "views/Pools/hooks/useIsBearFarm";
 import useCanUsePool7 from "views/Pools/hooks/useIsSrbStaker";
+import MultipleStakeModal from "./MultipleStakeModal";
+import MultipleUnstakeModal from "./MultipleUnstakeModal";
 
 const StakeModal: any = dynamic(() => import("./StakeModal"));
 const UnstakeModal: any = dynamic(() => import("./UnstkeModal"));
@@ -148,28 +150,48 @@ const StakeUnstake = ({
           )}
         </Center>
       </Flex>
-      {openStake && (
-        <StakeModal
-          farm={farm}
-          isOpen={openStake}
-          onClose={() => setOpenStake((s) => !s)}
-          token={stakingToken}
-          isPool={isPool}
-          maxStakingAmount={maxAmountToStake}
-        />
-      )}
+      {openStake &&
+        (farm?.extraPools?.length > 0 ? (
+          <MultipleStakeModal
+            farm={farm}
+            isOpen={openStake}
+            onClose={() => setOpenStake((s) => !s)}
+            token={stakingToken}
+            isPool={isPool}
+          />
+        ) : (
+          <StakeModal
+            farm={farm}
+            isOpen={openStake}
+            onClose={() => setOpenStake((s) => !s)}
+            token={stakingToken}
+            isPool={isPool}
+            maxStakingAmount={maxAmountToStake}
+          />
+        ))}
 
-      {openUnstakeStake && (
-        <UnstakeModal
-          token={stakingToken}
-          userFarmItem={userFarmItem}
-          farm={farm}
-          isPool={isPool}
-          isOpen={openUnstakeStake}
-          onClose={() => setOpenUnstakeStake((s) => !s)}
-          epochDiffrence={epochDiffrence}
-        />
-      )}
+      {openUnstakeStake &&
+        (farm?.extraPools?.length > 0 ? (
+          <MultipleUnstakeModal
+            token={stakingToken}
+            userFarmItem={userFarmItem}
+            farm={farm}
+            isPool={isPool}
+            isOpen={openUnstakeStake}
+            onClose={() => setOpenUnstakeStake((s) => !s)}
+            epochDiffrence={epochDiffrence}
+          />
+        ) : (
+          <UnstakeModal
+            token={stakingToken}
+            userFarmItem={userFarmItem}
+            farm={farm}
+            isPool={isPool}
+            isOpen={openUnstakeStake}
+            onClose={() => setOpenUnstakeStake((s) => !s)}
+            epochDiffrence={epochDiffrence}
+          />
+        ))}
     </Flex>
   );
 };

@@ -93,7 +93,7 @@ const FarmAccordion = ({
               <Farms2Item
                 farm={farm.farm}
                 tvl={farm.totalLocked}
-                farmUserInfo={othersArr.userFarmInfo.find((userFarm) => {
+                farmUserInfoArr={othersArr.userFarmInfo.filter((userFarm) => {
                   return userFarm.farmId === farm.farm.farm.farmId;
                 })}
                 farmUserRewards={othersArr.userFarm2Rewards.filter(

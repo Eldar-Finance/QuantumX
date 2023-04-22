@@ -19,6 +19,7 @@ export const fetchAllFarms = createAsyncThunk(
     const scRes = await scQuery("farms2", "getAllFarms");
 
     const scFirstValue = scRes.firstValue.valueOf();
+    console.log("scFirstValue", scFirstValue);
 
     const allFarms: IScFarmItem[] = scFirstValue.map((farm: any) => {
       const data: IScFarmItem = {
@@ -39,6 +40,7 @@ export const fetchAllFarms = createAsyncThunk(
 
     const reducedFarms = parseMultipleFarms(allFarms);
 
+    console.log("reducedFarms", reducedFarms);
     const allNomalFarms = reducedFarms.filter(
       (farm) => !allHypeFarms.includes(farm.farm.farmId)
     );
