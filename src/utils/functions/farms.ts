@@ -2,7 +2,7 @@ import BigNumber from "bignumber.js";
 import { IFarmWithTvl } from "components/Farms/FarmsCard/FarmsCard";
 import { noMaxTokens } from "utils/constants/farms";
 import { IElrondToken } from "utils/types/elrond.interface";
-import { IScFarm2RewardsLeft } from "utils/types/sc.interface";
+import { IScFarm2RewardsLeft, IScFarmItem } from "utils/types/sc.interface";
 import { orderSimpleData } from "./array";
 import { formatBalanceDolar, formatNumber } from "./formatBalance";
 import { preventExponetialNotation } from "./numbers";
@@ -93,11 +93,33 @@ export const getSortedFarm = (
         tokenPrice
       );
 
+      const othersLockedValues = farm.extraPools.map((item) => {
+        let val = 0;
+        const decimals =
+          tokens.find((t) => t.identifier === item.stakedToken)?.decimals || 0;
+        const price =
+          tokenPrices.find((tp) => tp.tokenI === item.stakedToken)?.price || 0;
+
+        if (price && decimals) {
+          val = formatBalanceDolar(
+            {
+              balance: item.stakedBalance,
+              decimals: decimals,
+            },
+            price
+          );
+        }
+
+        return val;
+      });
+
+      const total = othersLockedValues.reduce((a, b) => a + b, 0) + totalLocked;
+
       const totalLockedBalance: IFarmWithTvl = {
         stakedTokenDecimals: decimals,
         stakedTokenPrice: tokenPrice,
         tokenI: farm.farm.stakingToken,
-        totalLocked: totalLocked,
+        totalLocked: total,
         type: "farms2",
         farm: farm,
       };
@@ -274,4 +296,53 @@ export const apyFarms = (apr: number | string) => {
     .toFixed(2);
 
   return apy;
+};
+
+export const parseMultipleFarms = (
+  inputArray: IScFarmItem[]
+): IScFarmItem[] => {
+  const outputArray: IScFarmItem[] = [];
+  const processedFarmIds: Set<number> = new Set();
+
+  inputArray.forEach((item) => {
+    if (!processedFarmIds.has(item.farm.farmId)) {
+      processedFarmIds.add(item.farm.farmId);
+      const mainItem = inputArray.find(
+        (i) =>
+          i.farm.farmId === item.farm.farmId &&
+          i.stakedToken === i.farm.stakingToken
+      );
+
+      if (mainItem) {
+        const extraPools = inputArray
+          .filter(
+            (i) =>
+              i.farm.farmId === item.farm.farmId &&
+              i.stakedToken !== i.farm.stakingToken
+          )
+          .map((i) => ({ ...i, extraPools: undefined }));
+
+        outputArray.push({ ...mainItem, extraPools });
+      }
+    }
+  });
+  return outputArray;
+};
+
+export const unparseMultipleFarms = (
+  inputArray: IScFarmItem[]
+): IScFarmItem[] => {
+  const outputArray: IScFarmItem[] = [];
+
+  inputArray.forEach((item) => {
+    if (item.extraPools) {
+      outputArray.push(item);
+      item.extraPools.forEach((extraPool) => {
+        outputArray.push(extraPool);
+      });
+    } else {
+      outputArray.push(item);
+    }
+  });
+  return outputArray;
 };

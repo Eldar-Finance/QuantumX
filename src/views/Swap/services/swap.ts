@@ -135,20 +135,11 @@ export const swap = async (
 };
 
 //lp swaps
-export const swapLp = async (
+
+export const getFirstArgsOfLpSwaps = (
   swapInfo: ISmartSwapData[],
-  slipapge: number,
-  fromToken: {
-    value: string;
-    token: string;
-  },
-  toField: {
-    value: string;
-    token: string;
-  },
-  fromElrondToken: IElrondToken,
-  gas: number
-): Promise<any> => {
+  slipapge = 2
+) => {
   const lpSwapInfo = swapInfo[0] as ILpSmartSwap;
   //token1_amount_min
   const token1SlippagePercent = new BigNumber(lpSwapInfo.token1lpamount)
@@ -176,6 +167,53 @@ export const swapLp = async (
     new BigUIntValue(new BigNumber(finalToken2Amount)),
     BytesValue.fromUTF8(lpSwapInfo.lptokenidentifier),
   ];
+  return lpSwapArg;
+};
+
+export const getOthersArgsOfLpSwaps = (swapLpData: any[], slipapge = 2) => {
+  // swaps args
+  const multiswapArgs = swapLpData.flatMap((sawpData, i) => {
+    const amountWithSlipage = new BigNumber(sawpData.amountReceivDec)
+      .multipliedBy(slipapge)
+      .dividedBy(100)
+      .toNumber();
+
+    const finalAmount = new BigNumber(sawpData.amountReceivDec)
+      .minus(amountWithSlipage)
+      .toFixed(0);
+    const swapArgs: (
+      | AddressValue
+      | BytesValue
+      | BigUIntValue
+      | BooleanValue
+    )[] = [
+      new AddressValue(new Address(sawpData.smartcontract)),
+      BytesValue.fromUTF8("swapTokensFixedInput"),
+      BytesValue.fromUTF8(sawpData.token2),
+      new BigUIntValue(new BigNumber(finalAmount)),
+    ];
+
+    return swapArgs;
+  });
+  return multiswapArgs;
+};
+export const swapLp = async (
+  swapInfo: ISmartSwapData[],
+  slipapge: number,
+  fromToken: {
+    value: string;
+    token: string;
+  },
+  toField: {
+    value: string;
+    token: string;
+  },
+  fromElrondToken: IElrondToken,
+  gas: number
+): Promise<any> => {
+  const lpSwapInfo = swapInfo[0] as ILpSmartSwap;
+
+  const lpSwapArg = getFirstArgsOfLpSwaps(swapInfo, slipapge);
 
   lpSwapTx(
     [
@@ -245,29 +283,7 @@ export const lpSwapTx = async (
     }
 
     // swaps args
-    const multiswapArgs = swapLpData.flatMap((sawpData, i) => {
-      const amountWithSlipage = new BigNumber(sawpData.amountReceivDec)
-        .multipliedBy(slipapge)
-        .dividedBy(100)
-        .toNumber();
-
-      const finalAmount = new BigNumber(sawpData.amountReceivDec)
-        .minus(amountWithSlipage)
-        .toFixed(0);
-      const swapArgs: (
-        | AddressValue
-        | BytesValue
-        | BigUIntValue
-        | BooleanValue
-      )[] = [
-        new AddressValue(new Address(sawpData.smartcontract)),
-        BytesValue.fromUTF8("swapTokensFixedInput"),
-        BytesValue.fromUTF8(sawpData.token2),
-        new BigUIntValue(new BigNumber(finalAmount)),
-      ];
-
-      return swapArgs;
-    });
+    const multiswapArgs = getOthersArgsOfLpSwaps(swapLpData, slipapge);
 
     // lp args
     const bgFinalValue = setElrondBalance(

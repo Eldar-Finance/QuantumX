@@ -1,4 +1,4 @@
-const sendUserTokens = async (
+export const sendUserTokens = async (
   address: string,
   token: {
     amount: string;

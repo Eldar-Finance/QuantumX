@@ -37,7 +37,36 @@
             "outputs": []
         },
         {
+            "name": "stakeMulti",
+            "mutability": "mutable",
+            "payableInTokens": [
+                "*"
+            ],
+            "inputs": [
+                {
+                    "name": "farm_id",
+                    "type": "BigUint"
+                }
+            ],
+            "outputs": []
+        },
+        {
             "name": "unstake",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "farm_id",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "amount",
+                    "type": "BigUint"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "unstakeMulti",
             "mutability": "mutable",
             "inputs": [
                 {
@@ -69,6 +98,11 @@
                 {
                     "name": "farm_id",
                     "type": "BigUint"
+                },
+                {
+                    "name": "swap_operations",
+                    "type": "variadic<multi<Address,bytes,TokenIdentifier,BigUint>>",
+                    "multi_arg": true
                 }
             ],
             "outputs": []
@@ -179,6 +213,12 @@
         },
         {
             "name": "claimLeftovers",
+            "mutability": "mutable",
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "name": "claimExcess",
             "mutability": "mutable",
             "inputs": [],
             "outputs": []
@@ -418,6 +458,67 @@
             "outputs": []
         },
         {
+            "name": "addToHypeFarms",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "farms",
+                    "type": "variadic<BigUint>",
+                    "multi_arg": true
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "removeFromHypeFarms",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "farms",
+                    "type": "variadic<BigUint>",
+                    "multi_arg": true
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "setMaxCap",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "farm",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "amount",
+                    "type": "BigUint"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "setSmartswapsAddress",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "address",
+                    "type": "Address"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "setWegldwrapperAddress",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "address",
+                    "type": "Address"
+                }
+            ],
+            "outputs": []
+        },
+        {
             "name": "forceAddCreator",
             "onlyOwner": true,
             "mutability": "mutable",
@@ -449,15 +550,6 @@
             "mutability": "mutable",
             "inputs": [
                 {
-                    "name": "staking_token",
-                    "type": "EgldOrEsdtTokenIdentifier"
-                },
-                {
-                    "name": "opt_reward_token",
-                    "type": "optional<EgldOrEsdtTokenIdentifier>",
-                    "multi_arg": true
-                },
-                {
                     "name": "unbonding_period",
                     "type": "u64"
                 },
@@ -468,22 +560,80 @@
                 {
                     "name": "creator",
                     "type": "Address"
+                },
+                {
+                    "name": "staking_token",
+                    "type": "EgldOrEsdtTokenIdentifier"
+                },
+                {
+                    "name": "opt_reward_token",
+                    "type": "optional<EgldOrEsdtTokenIdentifier>",
+                    "multi_arg": true
                 }
             ],
             "outputs": []
         },
         {
-            "name": "fixLre",
+            "name": "forceDeleteFarm",
             "onlyOwner": true,
             "mutability": "mutable",
             "inputs": [
                 {
-                    "name": "farm",
+                    "name": "farm_id",
+                    "type": "BigUint"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "bool"
+                }
+            ]
+        },
+        {
+            "name": "addMultistakedTokens",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "farm_id",
                     "type": "BigUint"
                 },
                 {
-                    "name": "val",
-                    "type": "u64"
+                    "name": "staking_tokens",
+                    "type": "variadic<EgldOrEsdtTokenIdentifier>",
+                    "multi_arg": true
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "clearMultistakedTokens",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "farm_id",
+                    "type": "BigUint"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "setMultistakedTokenRatio",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "farm_id",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "token",
+                    "type": "EgldOrEsdtTokenIdentifier"
+                },
+                {
+                    "name": "ratio",
+                    "type": "BigUint"
                 }
             ],
             "outputs": []
@@ -514,7 +664,7 @@
             "inputs": [],
             "outputs": [
                 {
-                    "type": "variadic<tuple<Farm,BigUint,BigUint,bool>>",
+                    "type": "variadic<tuple<Farm,EgldOrEsdtTokenIdentifier,BigUint,BigUint,bool>>",
                     "multi_result": true
                 }
             ]
@@ -552,7 +702,7 @@
             ],
             "outputs": [
                 {
-                    "type": "variadic<List<BigUint>>",
+                    "type": "variadic<tuple<BigUint,EgldOrEsdtTokenIdentifier,List<BigUint>>>",
                     "multi_result": true
                 }
             ]
@@ -660,6 +810,17 @@
             ]
         },
         {
+            "name": "getExcessReturns",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<tuple<BigUint,EgldOrEsdtTokenIdentifier,BigUint>>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
             "name": "farmsLatestId",
             "mutability": "readonly",
             "inputs": [],
@@ -752,6 +913,26 @@
             ]
         },
         {
+            "name": "smartswapsAddress",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "Address"
+                }
+            ]
+        },
+        {
+            "name": "wegldwrapperAddress",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "Address"
+                }
+            ]
+        },
+        {
             "name": "farmCreators",
             "mutability": "readonly",
             "inputs": [],
@@ -811,6 +992,51 @@
                 {
                     "type": "variadic<BigUint>",
                     "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "hypeFarms",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<BigUint>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "maxCap",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "farm_id",
+                    "type": "BigUint"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "excessed",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "farm_id",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "epoch",
+                    "type": "u64"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "BigUint"
                 }
             ]
         },
@@ -1024,6 +1250,41 @@
             "name": "tempRewards",
             "mutability": "readonly",
             "inputs": [
+                {
+                    "name": "token",
+                    "type": "EgldOrEsdtTokenIdentifier"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "multistakedTokens",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "farm_id",
+                    "type": "BigUint"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "variadic<EgldOrEsdtTokenIdentifier>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "multistakedTokenRatio",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "farm_id",
+                    "type": "BigUint"
+                },
                 {
                     "name": "token",
                     "type": "EgldOrEsdtTokenIdentifier"
@@ -1275,6 +1536,30 @@
                     "type": "bool"
                 }
             ]
+        },
+        {
+            "name": "forceRecoverFunds",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "token_identifier",
+                    "type": "EgldOrEsdtTokenIdentifier"
+                },
+                {
+                    "name": "token_nonce",
+                    "type": "u64"
+                },
+                {
+                    "name": "amount",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "receiver",
+                    "type": "Address"
+                }
+            ],
+            "outputs": []
         },
         {
             "name": "earners",

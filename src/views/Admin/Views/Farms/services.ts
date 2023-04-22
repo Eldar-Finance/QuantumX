@@ -45,18 +45,18 @@ export async function forceCreateFarm(
     "forceCreateFarm",
     fee,
     [
-      BytesValue.fromUTF8(farm.stakingTokenI),
-      BytesValue.fromUTF8(
-        farm.allowMultipleRewardsTokens ? "" : farm.rewardTokenI
-      ),
       new BigUIntValue(new BigNumber(farm.unbondingPeriod)),
       new BigUIntValue(
         new BigNumber(
           new BigNumber(farm.unbondingFee).multipliedBy(100).toFixed(0)
         )
       ),
-
       BytesValue.fromUTF8(farm.creator),
+      BytesValue.fromUTF8(farm.stakingTokenI),
+
+      BytesValue.fromUTF8(
+        farm.allowMultipleRewardsTokens ? "" : farm.rewardTokenI
+      ),
     ],
     10000000
   );

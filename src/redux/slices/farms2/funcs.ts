@@ -2,6 +2,7 @@ import { Address, AddressValue } from "@multiversx/sdk-core/out";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { scQuery } from "api/sc/queries";
 import { pairs } from "utils/constants/lpPairs";
+import { parseMultipleFarms } from "utils/functions/farms";
 import { formatBalance } from "utils/functions/formatBalance";
 import {
   IScFarmItem,
@@ -20,7 +21,7 @@ export const fetchAllFarms = createAsyncThunk(
     const scFirstValue = scRes.firstValue.valueOf();
 
     const allFarms: IScFarmItem[] = scFirstValue.map((farm: any) => {
-      return {
+      const data: IScFarmItem = {
         farm: {
           farmId: farm.field0.id.toNumber(),
           creationEpoch: farm.field0.creation_epoch.toNumber(),
@@ -28,22 +29,26 @@ export const fetchAllFarms = createAsyncThunk(
           rewardToken: farm.field0.reward_token,
           creator: farm.field0.creator.bech32(),
         },
-        stakedBalance: farm.field1.toNumber(),
-        totalRewardsLeft: farm.field2.toNumber(),
-        compound: farm.field3,
-      } as IScFarmItem;
+        stakedToken: farm.field1,
+        stakedBalance: farm.field2.toNumber(),
+        totalRewardsLeft: farm.field3.toNumber(),
+        compound: farm.field4,
+      };
+      return data;
     });
 
-    const allNomalFarms = allFarms.filter(
+    const reducedFarms = parseMultipleFarms(allFarms);
+
+    const allNomalFarms = reducedFarms.filter(
       (farm) => !allHypeFarms.includes(farm.farm.farmId)
     );
 
-    const hypeFarms = allFarms.filter((farm) =>
+    const hypeFarms = reducedFarms.filter((farm) =>
       allHypeFarms.includes(farm.farm.farmId)
     );
 
     return {
-      allFarms,
+      allFarms: reducedFarms,
       pools: pairs
         ? allNomalFarms.filter(
             (farm) =>
@@ -67,20 +72,30 @@ export const fetchAllFarms = createAsyncThunk(
 export const fetchUSerFarmInfo = createAsyncThunk(
   "farms2/fetchUSerFarmInfo",
   async (address: string) => {
+    // console.log("start fetchUSerFarmInfo");
+
     const scRes = await scQuery("farms2", "getUserFarmInfo", [
       new AddressValue(new Address(address)),
     ]);
 
     const scFirstValue = scRes.firstValue.valueOf();
+    // console.log("scFirstValue", scFirstValue);
 
+    //need to verify data
     const allFarms: IScUserFarmInfo[] = scFirstValue.map((farm) => {
+      // console.log(" farm[0]", farm[0]);
+
       const data: IScUserFarmInfo = {
-        farmId: farm[0].toNumber(),
-        stakedBalance: farm[1].toString(),
-        unboundingEpoch: farm[2].toNumber(),
+        farmId: farm.field0.toNumber(),
+        stakedToken: farm.field1,
+        stakedBalance: farm.field2[0].toString(),
+        unboundingEpoch: farm.field2[1].toNumber(),
       };
       return data;
     });
+
+    console.log("userfarmInfo", allFarms);
+
     return allFarms;
   }
 );

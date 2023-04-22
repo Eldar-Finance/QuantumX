@@ -28,8 +28,9 @@ const useCompund = (
   );
 
   const handleCompound = () => {
-    compound(farm, data as INomalSmartSwap[]);
+    compound(farm, data as INomalSmartSwap[], isSapwToLp);
   };
+
   return {
     data,
     isLoading,

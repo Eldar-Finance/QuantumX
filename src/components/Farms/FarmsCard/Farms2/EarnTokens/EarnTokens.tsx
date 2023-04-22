@@ -16,7 +16,12 @@ const EarnTokens = ({ userRewardsTokensIdentifiers }: IProps) => {
   let manualImage = null;
 
   return (
-    <Flex flexDir={"column"} textAlign="center">
+    <Flex
+      flexDir={"column"}
+      textAlign="center"
+      h="full"
+      justifyContent={"center"}
+    >
       <Text color="white.400" mb={2} textAlign="center">
         Earn
       </Text>

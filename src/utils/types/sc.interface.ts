@@ -7,15 +7,19 @@ export interface IScFarm2 {
 }
 export interface IScFarmItem {
   farm: IScFarm2;
+  stakedToken: string;
   stakedBalance: number;
   totalRewardsLeft: number;
   compound: boolean;
+  extraPools?: IScFarmItem[];
 }
 
 export interface IScUserFarmInfo {
   farmId: number;
+  stakedToken: string;
   stakedBalance: string;
   unboundingEpoch: number;
+  extraPools?: IScFarmItem[];
 }
 export interface IScUserFarmRewards {
   rewardToken: string;

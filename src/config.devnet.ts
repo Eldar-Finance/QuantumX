@@ -33,7 +33,7 @@ export const contractAddress = {
   wrapEgld: "erd1qqqqqqqqqqqqqpgq7ykazrzd905zvnlr88dpfw06677lxe9w0n4suz00uh",
   hub: "erd1qqqqqqqqqqqqqpgqq4ens8kf4knm8arzyfdut0akxf74pq5qu7zssh8q99",
 
-  farms2: "erd1qqqqqqqqqqqqqpgqpk46s94qjvyqy8ync8dphcx9fz7nk7f2u7zspgvplv",
+  farms2: "erd1qqqqqqqqqqqqqpgq7tmqkpckffamvh8ssynjqanklvk6d478u7zsxmnsse",
   smartSwap: "erd1qqqqqqqqqqqqqpgqc44hejn5vy7kdxrlv7munsc24aed6n62u7zskdc6hq",
   hypeFaucet: "erd1qqqqqqqqqqqqqpgqprlm2q5veg4fcck3rct5uk63vctn6wu9u7zs40s2km",
   // proteo farms

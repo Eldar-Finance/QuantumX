@@ -2,7 +2,7 @@ import { Accordion } from "@chakra-ui/react";
 import { useRouter } from "next/dist/client/router";
 import { useEffect, useState } from "react";
 import { selectMultiFarms2RewardsLeft } from "redux/slices/farms2/farms2-slice";
-import { getSortedFarm } from "utils/functions/farms";
+import { getSortedFarm, unparseMultipleFarms } from "utils/functions/farms";
 import { useAppSelector } from "utils/hooks/redux";
 import useGetMultipleElrondTokens from "utils/hooks/useGetMultipleElrondTokens";
 import useGetMultiplePrices from "utils/hooks/useGetMultiplePrices";
@@ -45,14 +45,14 @@ const FarmsCard = ({ proteoArr, isPool, othersArr = null }: IProps) => {
   );
 
   const [tokenPrices] = useGetMultiplePrices(
-    othersArr.allFarms
-      .map((f) => f.farm.stakingToken)
+    unparseMultipleFarms(othersArr.allFarms)
+      .map((f) => f.stakedToken)
       .concat(proteoArr.map((pf) => pf.tokenIdentifier))
   );
 
   const { tokens } = useGetMultipleElrondTokens(
-    othersArr.allFarms
-      .map((f) => f.farm.stakingToken)
+    unparseMultipleFarms(othersArr.allFarms)
+      .map((f) => f.stakedToken)
       .concat(proteoArr.map((pf) => pf.tokenIdentifier))
   );
 
@@ -83,24 +83,20 @@ const FarmsCard = ({ proteoArr, isPool, othersArr = null }: IProps) => {
       index={accordionIndex}
       onChange={handleChangePoolIndex}
     >
-      {farmStored.map((farm) => {
+      {farmStored.map((farm, i) => {
         if (farm.type === "proteo") {
           if (!farm.farm.stakedCoin) return null;
           return (
-            <ProteoFarmItem
-              tvl={farm.totalLocked}
-              key={farm.farm.stakedCoin}
-              pf={farm.farm}
-            />
+            <ProteoFarmItem tvl={farm.totalLocked} key={i} pf={farm.farm} />
           );
         } else {
           if (!farm.farm.farm.farmId) return null;
           return (
             <Farms2Item
-              key={farm.farm.farm.farmId}
+              key={i}
               farm={farm.farm}
               tvl={farm.totalLocked}
-              farmUserInfo={othersArr.userFarmInfo.find((userFarm) => {
+              farmUserInfoArr={othersArr.userFarmInfo.filter((userFarm) => {
                 return userFarm.farmId === farm.farm.farm.farmId;
               })}
               farmUserRewards={othersArr.userFarm2Rewards.filter((userFarm) => {
@@ -108,7 +104,7 @@ const FarmsCard = ({ proteoArr, isPool, othersArr = null }: IProps) => {
               })}
               stakedTokenPrice={farm.stakedTokenPrice}
               isPool={isPool}
-              logoSize={isPool ? 45 : 27}
+              logoSize={isPool ? 40 : 27}
               multifarmRewardsLeft={
                 multifarmRewardsLeft.find(
                   (mfr) => mfr.farmId === farm.farm.farm.farmId
