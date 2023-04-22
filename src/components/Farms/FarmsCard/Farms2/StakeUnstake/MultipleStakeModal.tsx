@@ -52,7 +52,7 @@ const MultipleStakeModal = ({
   //   console.log("userToken", userToken);
 
   const validationSchema = yup.object({
-    amount: yup.number().required() /* .max(formatBalance(userToken, true)) */,
+    amount: yup.number().required().max(formatBalance(userToken, true)),
     multifarmsAmounts: yup.array().of(yup.number().required()),
   });
 
@@ -116,7 +116,6 @@ const MultipleStakeModal = ({
       formik.setFieldValue("amount", finalAmount, false);
     }
   };
-  console.log("values", formik.errors);
 
   return (
     <MyModal bg="black.baseDark" isOpen={isOpen} onClose={onClose}>
