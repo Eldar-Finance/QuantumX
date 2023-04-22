@@ -241,7 +241,7 @@ const Farms2Item = ({
                               balance: farmUserInfo?.stakedBalance,
                               decimals: token?.decimals,
                             },
-                            token?.price,
+                            token?.price || price,
                             true
                           )}
                           )
