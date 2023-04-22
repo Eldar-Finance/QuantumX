@@ -143,7 +143,7 @@ const Farms2Item = ({
                         <Flex gap="4" alignItems={"center"}>
                           <LpTokenImage lpToken={stakingToken} />
                           <Text fontWeight={"600"}>
-                            {name || stakingToken.name}
+                            {name || stakingToken.name}465
                           </Text>
                         </Flex>
                       ) : (
@@ -256,7 +256,7 @@ const Farms2Item = ({
                                 balance: farmUserInfo?.stakedBalance,
                                 decimals: token?.decimals,
                               },
-                              token?.price,
+                              token?.price || price,
                               true
                             )}
                             )
