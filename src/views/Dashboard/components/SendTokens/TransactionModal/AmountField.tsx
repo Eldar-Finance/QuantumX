@@ -83,7 +83,7 @@ const AmountField = ({ selectedToken, setSelectedToken, tokens, formik }) => {
             >
               MAX
             </ActionButton>
-            <Menu>
+            <Menu isLazy direction="rtl" placement="bottom-end">
               <MenuButton
                 as={Flex}
                 w="auto"
