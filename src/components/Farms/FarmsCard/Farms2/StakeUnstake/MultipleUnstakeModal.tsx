@@ -66,7 +66,7 @@ const MultipleUnstakeModal = ({
 
       scCall(
         "farms2",
-        "multistakedTokenRatio",
+        "unstakeMulti",
         [
           new BigUIntValue(new BigNumber(farm.farm.farmId)),
           new BigUIntValue(new BigNumber(values.amount)),
