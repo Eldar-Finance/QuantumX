@@ -100,11 +100,7 @@ export const getSortedFarm = (
           tokens.find((t) => t.identifier === item.stakedToken)?.decimals || 0;
         const price =
           tokenPrices.find((tp) => tp.tokenI === item.stakedToken)?.price || 0;
-        if (farm.farm.farmId === 37) {
-          console.log("\nitem", item);
-          console.log("decimals", decimals);
-          console.log("price", price);
-        }
+
         if (price && decimals) {
           val = formatBalanceDolar(
             {
@@ -117,14 +113,6 @@ export const getSortedFarm = (
 
         return val;
       });
-      if (farm.farm.farmId === 37) {
-        console.log("\ntokens", tokens);
-        console.log("farm", farm);
-        console.log("totalLocked", totalLocked);
-        console.log("tokenPrices", tokenPrices);
-        console.log("othersLockedValues", othersLockedValues);
-        console.log("\n");
-      }
 
       const total = othersLockedValues.reduce((a, b) => a + b, 0) + totalLocked;
 

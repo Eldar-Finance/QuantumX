@@ -35,8 +35,6 @@ export async function compound(
       180000000
     );
   } else {
-    console.log("swapInfo", swapInfo);
-    console.log("isSapwToLp", isSapwToLp);
     if (isSapwToLp) {
       const swapLpData = swapInfo.filter((_d, i) => i > 0) as INomalSmartSwap[];
       const lpSwapArg = getFirstArgsOfLpSwaps(swapInfo, 2);

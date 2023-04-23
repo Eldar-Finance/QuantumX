@@ -254,7 +254,6 @@ const Farms2Item = ({
                         (tp) => tp.tokenI === farmUserInfo.stakedToken
                       )?.price;
 
-                      // console.log("price", price);
                       return (
                         <Text key={farmUserInfo.stakedToken}>
                           {formatBalance({
