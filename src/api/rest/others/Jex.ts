@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import axios from "axios";
-const BASE_URL = "https://microservice.jexchange.io";
+const BASE_URL = "https://api.jexchange.io";
 
 const axiosJex = axios.create({
   baseURL: BASE_URL,

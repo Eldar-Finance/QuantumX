@@ -10,3 +10,30 @@ const useGetJexPrice = (identifier?: string) => {
 };
 
 export default useGetJexPrice;
+
+export const useGetMultiJextPrices = (identifiers: string[]) => {
+  const { data, isLoading, error } = useSwr<
+    { identifier: string; price: number }[]
+  >(
+    identifiers ? "jexchange/prices" : null,
+    async () => {
+      const data = await Promise.all(
+        identifiers.map(async (identifier) => {
+          const priceData = await getJexPrice(["key", identifier]);
+
+          return {
+            identifier,
+            price: priceData,
+          };
+        })
+      );
+      return data;
+    },
+    {
+      fallback: [],
+      fallbackData: [],
+    }
+  );
+
+  return { jexPrices: data, isLoading, error };
+};
