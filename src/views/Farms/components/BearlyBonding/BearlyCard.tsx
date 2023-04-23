@@ -42,6 +42,9 @@ const BearlyCard = ({ farm, multifarmRewardsLeft }: IProps) => {
   const userFarm2Info = useAppSelector(selectUserFarms2Info);
   const userFarm2Rewards = useAppSelector(selectUserFarms2Rewards);
   const { token: stakingToken } = useGetElrondToken(farm.farm.stakingToken);
+  const { tokens: stakingTokens } = useGetMultipleElrondTokens([
+    farm.farm.stakingToken,
+  ]);
   const userRewardsForThisFarm = userFarm2Rewards.data.filter(
     (f) => f.farmId === farm.farm.farmId
   );
@@ -73,7 +76,7 @@ const BearlyCard = ({ farm, multifarmRewardsLeft }: IProps) => {
 
   const apr = aprFarms(
     staingTokenPrice,
-    stakingToken,
+    stakingTokens,
     lastRewardedEpoch,
     rewardsTokens,
     farm,
