@@ -1,20 +1,17 @@
-import { toknesID } from "api/net.config";
+import { scQuery } from "api/sc/queries";
+import useSwr from "swr";
 import { IScFarmItem } from "utils/types/sc.interface";
-
 const useIsBearFarm = (farm: IScFarmItem): boolean => {
-  let isBear = false;
+  const { data } = useSwr<number[]>("farms2:srbBoostedFarms", async () => {
+    const res = await scQuery("farms2", "srbBoostedFarms");
+    const resData = res.firstValue?.valueOf()?.map((farmId) => {
+      return farmId?.toNumber();
+    });
 
-  if (
-    farm.farm.stakingToken === toknesID.rare ||
-    farm.farm.stakingToken === toknesID.rareUsdcLp ||
-    farm.farm.stakingToken === toknesID.hype ||
-    farm.farm.stakingToken === toknesID.hypeusdc ||
-    (farm.farm.stakingToken === toknesID.mex &&
-      farm.farm.rewardToken === toknesID.hype)
-  ) {
-    isBear = true;
-  }
-  return isBear;
+    return resData as number[];
+  });
+
+  return data?.includes(farm.farm.farmId);
 };
 
 export default useIsBearFarm;
