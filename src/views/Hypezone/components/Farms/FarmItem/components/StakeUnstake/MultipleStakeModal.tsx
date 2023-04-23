@@ -126,7 +126,7 @@ const MultipleStakeModal = ({
         if (
           new BigNumber(
             formik.values.multifarmsAmounts[tokenIndex]
-          ).isGreaterThanOrEqualTo(userBalance)
+          ).isGreaterThan(userBalance)
         ) {
           hasBalance = false;
         }
