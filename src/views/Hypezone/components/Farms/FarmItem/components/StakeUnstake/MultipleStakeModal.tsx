@@ -18,7 +18,7 @@ import BigNumber from "bignumber.js";
 import ActionButton from "components/ActionButton/ActionButton";
 import MyModal from "components/Modal/Modal";
 import { useFormik } from "formik";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { formatBalance, setElrondBalance } from "utils/functions/formatBalance";
 import { preventExponetialNotation } from "utils/functions/numbers";
 import { formatTokenI } from "utils/functions/tokens";
@@ -44,7 +44,7 @@ const MultipleStakeModal = ({
   isPool,
   token,
 }: IProps) => {
-  const [_, userToken]: any = useGetUserTokens(farm.farm.stakingToken);
+  const [userTokens, userToken]: any = useGetUserTokens(farm.farm.stakingToken);
   const { tokens } = useGetMultipleElrondTokens([
     farm.farm.stakingToken,
     ...farm.extraPools?.map((item) => item.stakedToken),
@@ -94,8 +94,6 @@ const MultipleStakeModal = ({
         }),
       ];
 
-      console.log("tokensToSend", tokensToSend);
-
       let res = null;
 
       res = await MultiESDTNFTTransfer("farms2", "stakeMulti", tokensToSend, [
@@ -115,6 +113,30 @@ const MultipleStakeModal = ({
       formik.setFieldValue("amount", finalAmount, false);
     }
   };
+
+  let hasBalance = useMemo(() => {
+    let hasBalance = true;
+    farm.extraPools.forEach((t, tokenIndex) => {
+      const userToken = userTokens.find(
+        (userToken) => t.stakedToken === userToken.identifier
+      );
+      if (userToken) {
+        const userBalance = formatBalance(userToken, true);
+
+        if (
+          new BigNumber(
+            formik.values.multifarmsAmounts[tokenIndex]
+          ).isGreaterThanOrEqualTo(userBalance)
+        ) {
+          hasBalance = false;
+        }
+      } else {
+        hasBalance = false;
+      }
+    });
+
+    return hasBalance;
+  }, [farm.extraPools, formik.values.multifarmsAmounts, userTokens]);
 
   return (
     <MyModal bg="black.baseDark" isOpen={isOpen} onClose={onClose}>
@@ -179,7 +201,6 @@ const MultipleStakeModal = ({
             w="full"
             maxW={"180px"}
             onClick={onClose}
-            disabled={!formik.isValid}
           >
             Cancel
           </ActionButton>
@@ -190,6 +211,7 @@ const MultipleStakeModal = ({
             w="full"
             maxW={"180px"}
             type="submit"
+            disabled={!formik.isValid || !hasBalance}
           >
             Confirm
           </ActionButton>
