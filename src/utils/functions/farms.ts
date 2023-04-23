@@ -1,5 +1,6 @@
 import BigNumber from "bignumber.js";
 import { IFarmWithTvl } from "components/Farms/FarmsCard/FarmsCard";
+import { isArray } from "lodash";
 import { noMaxTokens } from "utils/constants/farms";
 import { IElrondToken } from "utils/types/elrond.interface";
 import { IScFarm2RewardsLeft, IScFarmItem } from "utils/types/sc.interface";
@@ -99,7 +100,11 @@ export const getSortedFarm = (
           tokens.find((t) => t.identifier === item.stakedToken)?.decimals || 0;
         const price =
           tokenPrices.find((tp) => tp.tokenI === item.stakedToken)?.price || 0;
-
+        if (farm.farm.farmId === 37) {
+          console.log("\nitem", item);
+          console.log("decimals", decimals);
+          console.log("price", price);
+        }
         if (price && decimals) {
           val = formatBalanceDolar(
             {
@@ -112,6 +117,14 @@ export const getSortedFarm = (
 
         return val;
       });
+      if (farm.farm.farmId === 37) {
+        console.log("\ntokens", tokens);
+        console.log("farm", farm);
+        console.log("totalLocked", totalLocked);
+        console.log("tokenPrices", tokenPrices);
+        console.log("othersLockedValues", othersLockedValues);
+        console.log("\n");
+      }
 
       const total = othersLockedValues.reduce((a, b) => a + b, 0) + totalLocked;
 
@@ -141,11 +154,11 @@ export const getSortedFarm = (
 };
 
 export const aprFarms = (
-  price,
-  stakingToken,
+  price: number | { tokenI: string; price: number }[],
+  stakingToken: IElrondToken[],
   lastRewardedEpoch,
   rewardTokens,
-  farm,
+  farm: IScFarmItem,
   stats,
   type: "single" | "multi" = "single",
   multifarmRewardsLeft: IScFarm2RewardsLeft[] = undefined,
@@ -165,88 +178,134 @@ export const aprFarms = (
     const epochDifference = lastRewardedEpoch + 1 - stats.epoch;
 
     if (epochDifference > 0) {
-      if (type === "single") {
-        if (onlyNumber) {
-          apr =
-            ((formatBalanceDolar(
-              {
-                balance: farm.totalRewardsLeft,
-                decimals: rewardTokens.decimals,
-              },
-              rewardTokens.price
-            ) /
-              formatBalanceDolar(
-                {
-                  balance: farm.stakedBalance,
-                  decimals: stakingToken.decimals,
-                },
-                price
-              )) *
-              100 *
-              365) /
-            epochDifference;
-        } else {
-          apr =
-            formatNumber(
-              preventExponetialNotation(
-                ((formatBalanceDolar(
-                  {
-                    balance: farm.totalRewardsLeft,
-                    decimals: rewardTokens.decimals,
-                  },
-                  rewardTokens.price
-                ) /
-                  formatBalanceDolar(
-                    {
-                      balance: farm.stakedBalance,
-                      decimals: stakingToken.decimals,
-                    },
-                    price
-                  )) *
-                  100 *
-                  365) /
-                  epochDifference
-              ).toString()
-            ) + "%";
-        }
-      } else {
-        if (multifarmRewardsLeft) {
-          const rewardLeftTokens = rewardTokens as IElrondToken[];
+      if (isArray(price)) {
+        const stakedTokens = [
+          farm.stakedToken,
+          ...farm.extraPools.map((e) => e.stakedToken),
+        ];
+        const totalDollarStakedAmount = stakedTokens.reduce(
+          (acc, stakedToken) => {
+            const tokenPrice =
+              price.find((p) => p.tokenI === stakedToken)?.price || 0;
+            const decimals =
+              stakingToken.find((t) => t.identifier === stakedToken)
+                ?.decimals || 0;
+            const stakedBalance =
+              farm.stakedToken === stakedToken
+                ? farm.stakedBalance
+                : farm.extraPools.find((e) => e.stakedToken === stakedToken)
+                    ?.stakedBalance || 0;
+            const dollarStakedAmount = formatBalanceDolar(
+              { balance: stakedBalance, decimals: decimals },
+              tokenPrice
+            );
+            return acc + dollarStakedAmount;
+          },
+          0
+        );
 
-          const rewardsLeftDolarAmount = rewardLeftTokens.reduce(
-            (acc, token) => {
-              const tokenRewardsLeft: IScFarm2RewardsLeft =
-                multifarmRewardsLeft.find((r) => r.token === token.identifier);
-
-              let price = token.price;
-              const extraTokenPrice = extraPrices.find(
-                (ept) => ept.tokenI === token.identifier
-              );
-              if (extraTokenPrice) {
-                price = extraTokenPrice.price;
-              }
-
-              return (
-                acc +
-                formatBalanceDolar(
-                  {
-                    balance: tokenRewardsLeft.amount,
-                    decimals: token.decimals,
-                  },
-                  price
-                )
-              );
-            },
-            0
-          );
-
+        if (type === "single") {
           if (onlyNumber) {
             apr =
-              ((rewardsLeftDolarAmount /
+              ((formatBalanceDolar(
+                {
+                  balance: farm.totalRewardsLeft,
+                  decimals: rewardTokens.decimals,
+                },
+                rewardTokens.price
+              ) /
+                totalDollarStakedAmount) *
+                100 *
+                365) /
+              epochDifference;
+          } else {
+            apr =
+              formatNumber(
+                preventExponetialNotation(
+                  ((formatBalanceDolar(
+                    {
+                      balance: farm.totalRewardsLeft,
+                      decimals: rewardTokens.decimals,
+                    },
+                    rewardTokens.price
+                  ) /
+                    totalDollarStakedAmount) *
+                    100 *
+                    365) /
+                    epochDifference
+                ).toString()
+              ) + "%";
+          }
+        } else {
+          if (multifarmRewardsLeft) {
+            const rewardLeftTokens = rewardTokens as IElrondToken[];
+
+            const rewardsLeftDolarAmount = rewardLeftTokens.reduce(
+              (acc, token) => {
+                const tokenRewardsLeft: IScFarm2RewardsLeft =
+                  multifarmRewardsLeft.find(
+                    (r) => r.token === token.identifier
+                  );
+
+                let price = token.price;
+                const extraTokenPrice = extraPrices.find(
+                  (ept) => ept.tokenI === token.identifier
+                );
+                if (extraTokenPrice) {
+                  price = extraTokenPrice.price;
+                }
+
+                return (
+                  acc +
+                  formatBalanceDolar(
+                    {
+                      balance: tokenRewardsLeft.amount,
+                      decimals: token.decimals,
+                    },
+                    price
+                  )
+                );
+              },
+              0
+            );
+
+            if (onlyNumber) {
+              apr =
+                ((rewardsLeftDolarAmount / totalDollarStakedAmount) *
+                  100 *
+                  365) /
+                epochDifference;
+            } else {
+              apr =
+                formatNumber(
+                  preventExponetialNotation(
+                    ((rewardsLeftDolarAmount / totalDollarStakedAmount) *
+                      100 *
+                      365) /
+                      epochDifference
+                  ).toString()
+                ) + "%";
+            }
+          }
+        }
+      } else {
+        const realStakedToken = stakingToken.find(
+          (t) => t.identifier === farm.stakedToken
+        );
+        if (type === "single") {
+          if (onlyNumber) {
+            apr =
+              ((formatBalanceDolar(
+                {
+                  balance: farm.totalRewardsLeft,
+                  decimals: rewardTokens.decimals,
+                },
+                rewardTokens.price
+              ) /
                 formatBalanceDolar(
                   {
                     balance: farm.stakedBalance,
-                    decimals: stakingToken.decimals,
+                    decimals: realStakedToken?.decimals,
                   },
                   price
                 )) *
@@ -257,11 +316,17 @@ export const aprFarms = (
             apr =
               formatNumber(
                 preventExponetialNotation(
-                  ((rewardsLeftDolarAmount /
+                  ((formatBalanceDolar(
+                    {
+                      balance: farm.totalRewardsLeft,
+                      decimals: rewardTokens.decimals,
+                    },
+                    rewardTokens.price
+                  ) /
                     formatBalanceDolar(
                       {
                         balance: farm.stakedBalance,
-                        decimals: stakingToken.decimals,
+                        decimals: realStakedToken?.decimals,
                       },
                       price
                     )) *
@@ -270,6 +335,71 @@ export const aprFarms = (
                     epochDifference
                 ).toString()
               ) + "%";
+          }
+        } else {
+          if (multifarmRewardsLeft) {
+            const rewardLeftTokens = rewardTokens as IElrondToken[];
+
+            const rewardsLeftDolarAmount = rewardLeftTokens.reduce(
+              (acc, token) => {
+                const tokenRewardsLeft: IScFarm2RewardsLeft =
+                  multifarmRewardsLeft.find(
+                    (r) => r.token === token.identifier
+                  );
+
+                let price = token.price;
+                const extraTokenPrice = extraPrices.find(
+                  (ept) => ept.tokenI === token.identifier
+                );
+                if (extraTokenPrice) {
+                  price = extraTokenPrice.price;
+                }
+
+                return (
+                  acc +
+                  formatBalanceDolar(
+                    {
+                      balance: tokenRewardsLeft.amount,
+                      decimals: token.decimals,
+                    },
+                    price
+                  )
+                );
+              },
+              0
+            );
+
+            if (onlyNumber) {
+              apr =
+                ((rewardsLeftDolarAmount /
+                  formatBalanceDolar(
+                    {
+                      balance: farm.stakedBalance,
+                      decimals: realStakedToken?.decimals,
+                    },
+                    price
+                  )) *
+                  100 *
+                  365) /
+                epochDifference;
+            } else {
+              apr =
+                formatNumber(
+                  preventExponetialNotation(
+                    ((rewardsLeftDolarAmount /
+                      formatBalanceDolar(
+                        {
+                          balance: farm.stakedBalance,
+                          decimals: realStakedToken?.decimals,
+                        },
+                        price
+                      )) *
+                      100 *
+                      365) /
+                      epochDifference
+                  ).toString()
+                ) + "%";
+            }
           }
         }
       }

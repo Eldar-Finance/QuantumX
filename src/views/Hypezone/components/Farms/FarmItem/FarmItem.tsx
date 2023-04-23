@@ -122,10 +122,6 @@ const Farms2Item = ({
     fixedStakedBalance
   );
 
-  if (farm.farm.farmId === 36 || farm.farm.farmId === 37) {
-    console.log("apr", apr);
-  }
-
   return (
     <FarmItemContext.Provider value={{ farm }}>
       <AccordionItem w="full">

@@ -10,6 +10,7 @@ import { useAppSelector } from "utils/hooks/redux";
 import useGetElrondToken from "utils/hooks/useGetElrondToken";
 import useGetJexPrice from "utils/hooks/useGetJexPrice";
 import useGetMultipleElrondTokens from "utils/hooks/useGetMultipleElrondTokens";
+import useGetMultiplePrices from "utils/hooks/useGetMultiplePrices";
 
 const useApr = (
   farm: IScFarmItem,
@@ -17,7 +18,14 @@ const useApr = (
   stakedTokenPrice: number,
   fixedStakedBalance?: string
 ) => {
-  const { token: stakingToken } = useGetElrondToken(farm.farm.stakingToken);
+  const { tokens: stakingToken } = useGetMultipleElrondTokens([
+    farm.farm.stakingToken,
+    ...farm.extraPools.map((p) => p.stakedToken),
+  ]);
+  const [prices] = useGetMultiplePrices([
+    farm.farm.stakingToken,
+    ...farm.extraPools.map((p) => p.stakedToken),
+  ]);
 
   const { token: rewardToken } = useGetElrondToken(farm.farm.rewardToken);
   const { data: lastRewardedEpoch } = useSWR<number>(
@@ -42,7 +50,7 @@ const useApr = (
   let aprNumber = 0;
   if (farm.farm.rewardToken === "") {
     apr = aprFarms(
-      price,
+      prices || price,
       stakingToken,
       lastRewardedEpoch,
       rewardsTokens,
@@ -56,7 +64,7 @@ const useApr = (
       ]
     ) as string;
     aprNumber = aprFarms(
-      price,
+      prices || price,
       stakingToken,
       lastRewardedEpoch,
       rewardsTokens,
@@ -72,28 +80,28 @@ const useApr = (
     ) as number;
   } else {
     apr = aprFarms(
-      price,
+      prices || price,
       stakingToken,
       lastRewardedEpoch,
       rewardToken,
       fixedStakedBalance
         ? {
             ...farm,
-            stakedBalance: fixedStakedBalance,
+            stakedBalance: Number(fixedStakedBalance),
           }
         : farm,
 
       stats
     ) as string;
     aprNumber = aprFarms(
-      price,
+      prices || price,
       stakingToken,
       lastRewardedEpoch,
       rewardToken,
       fixedStakedBalance
         ? {
             ...farm,
-            stakedBalance: fixedStakedBalance,
+            stakedBalance: Number(fixedStakedBalance),
           }
         : farm,
       stats,

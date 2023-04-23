@@ -47,13 +47,19 @@ const FarmAccordion = ({
     selectMultiFarms2RewardsLeft
   );
 
-  const [tokenPrices] = useGetMultiplePrices(
-    othersArr.allFarms.map((f) => f.farm.stakingToken)
-  );
+  const [tokenPrices] = useGetMultiplePrices([
+    ...othersArr.allFarms.map((f) => f.stakedToken),
+    ...othersArr.allFarms.flatMap((f) =>
+      f?.extraPools ? f.extraPools.map((extp) => extp.stakedToken) : []
+    ),
+  ]);
 
-  const { tokens } = useGetMultipleElrondTokens(
-    othersArr.allFarms.map((f) => f.farm.stakingToken)
-  );
+  const { tokens } = useGetMultipleElrondTokens([
+    ...othersArr.allFarms.map((f) => f.stakedToken),
+    ...othersArr.allFarms.flatMap((f) =>
+      f?.extraPools ? f.extraPools.map((extp) => extp.stakedToken) : []
+    ),
+  ]);
 
   useEffect(() => {
     if (router.query.index) {
