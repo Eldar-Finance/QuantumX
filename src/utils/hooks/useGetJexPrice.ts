@@ -15,7 +15,7 @@ export const useGetMultiJextPrices = (identifiers: string[]) => {
   const { data, isLoading, error } = useSwr<
     { identifier: string; price: number }[]
   >(
-    identifiers ? "jexchange/prices" : null,
+    identifiers ? ["jexchange/prices", identifiers] : null,
     async () => {
       const data = await Promise.all(
         identifiers.map(async (identifier) => {
