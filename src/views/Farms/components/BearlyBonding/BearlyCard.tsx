@@ -48,7 +48,10 @@ const BearlyCard = ({ farm, multifarmRewardsLeft }: IProps) => {
   const userRewardsForThisFarm = userFarm2Rewards.data.filter(
     (f) => f.farmId === farm.farm.farmId
   );
-  const { logo, name } = farms2Data[formatTokenI(farm.farm.stakingToken)];
+
+  const { logo, name } = farms2Data[
+    formatTokenI(farm.farm.stakingToken) || "RAREUSDC"
+  ] || { logo: "", name: "" };
   const { jexPrice } = useGetJexPrice(
     multifarmRewardsLeft.rewardsLeft.find((r) => r.token === toknesID.jex)
       ?.token
