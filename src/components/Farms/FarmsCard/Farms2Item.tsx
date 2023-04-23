@@ -30,6 +30,7 @@ import { formatTokenI } from "utils/functions/tokens";
 import { useAppDispatch } from "utils/hooks/redux";
 import useGetElrondToken from "utils/hooks/useGetElrondToken";
 import useGetMultipleElrondTokens from "utils/hooks/useGetMultipleElrondTokens";
+import useGetMultiplePrices from "utils/hooks/useGetMultiplePrices";
 import { farms2Data } from "views/Farms/constants";
 import useApr from "views/Pools/hooks/useApr";
 import useCanUsePool7 from "views/Pools/hooks/useIsSrbStaker";
@@ -69,6 +70,10 @@ const Farms2Item = ({
   const { tokens: othersStakedTokens } = useGetMultipleElrondTokens(
     farm?.extraPools.map((item) => item.stakedToken)
   );
+  const [prices] = useGetMultiplePrices([
+    farm.farm.stakingToken,
+    ...farm?.extraPools.map((item) => item.stakedToken),
+  ]);
 
   const { logo, name } = farms2Data[formatTokenI(farm.farm.stakingToken)]
     ? farms2Data[formatTokenI(farm.farm.stakingToken)]
@@ -228,6 +233,13 @@ const Farms2Item = ({
                             (item) =>
                               item.identifier === farmUserInfo.stakedToken
                           );
+
+                    const price = prices.find(
+                      (tp) => tp.tokenI === farmUserInfo.stakedToken
+                    )?.price;
+
+                    console.log("price", price);
+
                     return (
                       <Text key={farmUserInfo.stakedToken}>
                         {formatBalance({
@@ -241,7 +253,7 @@ const Farms2Item = ({
                               balance: farmUserInfo?.stakedBalance,
                               decimals: token?.decimals,
                             },
-                            token?.price || price,
+                            price,
                             true
                           )}
                           )
