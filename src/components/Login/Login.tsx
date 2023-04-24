@@ -1,9 +1,9 @@
 import {
   Box,
   Center,
+  Link as ChakraLink,
   Flex,
   Heading,
-  Link as ChakraLink,
   ModalBody,
   Text,
   useColorModeValue,
@@ -13,6 +13,7 @@ import { CloseIcon, LegerIcon, MultiversxLogo } from "components/Icons/ui";
 import NextImage from "components/NextImage/NextImage";
 import MyModal from "../Modal/Modal";
 
+import { WebWalletLoginButtonPropsType } from "@multiversx/sdk-dapp/UI/webWallet/WebWalletLoginButton";
 import dynamic from "next/dynamic";
 import { openLogin } from "redux/slices/settings/settings-reducer";
 import { useAppDispatch } from "utils/hooks/redux";
@@ -53,7 +54,7 @@ const WebWalletLoginButton: any = dynamic(
     ).WebWalletLoginButton;
   },
   { ssr: false }
-);
+) as WebWalletLoginButtonPropsType;
 
 const mobileText = (
   <Flex
@@ -161,6 +162,7 @@ const Login = ({ isLoginOpen }) => {
                 callbackRoute={routeNames.home}
                 shouldRenderDefaultCss={false}
                 loginButtonText={webWallet}
+                nativeAuth
               />
             </LoginMethod>
             <LoginMethod>
