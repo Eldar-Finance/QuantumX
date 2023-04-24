@@ -149,7 +149,7 @@ const Farms2Item = ({
                         <Flex gap="4" alignItems={"center"}>
                           <LpTokenImage lpToken={stakingToken} />
                           <Text fontWeight={"600"}>
-                            {name || stakingToken.name}465
+                            {name || stakingToken.name}
                           </Text>
                         </Flex>
                       ) : (
