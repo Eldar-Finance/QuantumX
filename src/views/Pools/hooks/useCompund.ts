@@ -27,12 +27,11 @@ const useCompund = (
             true
           ) as BigNumber
         ).toString()
-      : null,
-    true
+      : null
   );
   const isNormalFarm =
     useAppSelector(selectFarms).findIndex(
-      (farm) => farm.farm.farmId === farm.farm.farmId
+      (sfarm) => sfarm.farm.farmId === farm.farm.farmId
     ) !== -1;
   const ishypeFarm = hypeFarmIds.includes(farm.farm.farmId);
   const isLp = isNormalFarm || ishypeFarm;
