@@ -12,7 +12,7 @@ import {
 } from "@chakra-ui/react";
 import { BigIntValue } from "@multiversx/sdk-core/out";
 import { useTrackTransactionStatus } from "@multiversx/sdk-dapp/hooks";
-import { contractAddr } from "api/net.config";
+import { contractAddr, toknesID } from "api/net.config";
 import { EGLDPaymentOnlyTx, ESDTTransferOnlyTx } from "api/sc/calls";
 import { sendMultipleTransactions } from "api/sc/sc";
 import BigNumber from "bignumber.js";
@@ -101,23 +101,22 @@ const StakeModal = ({
     },
   });
   const handleAmount = (percent: number) => {
-    if (maxStakingAmount) {
-      if (userToken) {
-        const userTokenAmount = formatBalance(userToken, true);
-        const userRealAmount = percent * userTokenAmount;
+    let userRealAmount = 0;
+    if (userToken) {
+      const userTokenAmount = formatBalance(userToken, true);
+      userRealAmount = percent * userTokenAmount;
+      if (userToken.identifier === toknesID.rare) {
+        userRealAmount = userRealAmount - 0.5;
+      }
+
+      if (maxStakingAmount) {
         let finalAmount = preventExponetialNotation(maxRealAmount);
         if (new BigNumber(maxRealAmount).isGreaterThan(userRealAmount)) {
           finalAmount = preventExponetialNotation(userRealAmount);
         }
-
         formik.setFieldValue("amount", finalAmount, false);
-      }
-    } else {
-      if (userToken) {
-        const userTokenAmount = formatBalance(userToken, true);
-        const userRealAmount = percent * userTokenAmount;
+      } else {
         let finalAmount = preventExponetialNotation(userRealAmount);
-
         formik.setFieldValue("amount", finalAmount, false);
       }
     }
