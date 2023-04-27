@@ -42,6 +42,7 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
         fontSize={{ xs: "sm", "2xl": "md" }}
         flexDir={{ xs: "column", md: "row" }}
         rowGap={1.5}
+        columnGap={3}
       >
         {!onlyConnectButton && (
           <>
@@ -65,6 +66,7 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
             </Box>
           </>
         )}
+
         <ActionButton
           px={{ xs: "30px", "2xl": "40px" }}
           fontSize={{ xs: "14px", "2xl": "md" }}
