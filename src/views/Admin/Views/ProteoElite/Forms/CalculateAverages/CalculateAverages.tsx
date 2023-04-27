@@ -81,7 +81,7 @@ const CalculateAverages = () => {
           })}
         </Select>
         <ActionButton type="submit" px={8} py={5}>
-          3 - Calculate Averages
+          3 - Calculate Averages (run until tx fails)
         </ActionButton>
       </Center>
     </Box>
