@@ -10,7 +10,7 @@
         "contractCrate": {
             "name": "proteo_elite",
             "version": "0.0.0",
-            "git_version": "a354962-modified"
+            "git_version": "8659d67-modified"
         },
         "framework": {
             "name": "elrond-wasm",
@@ -19,20 +19,7 @@
     },
     "name": "ProteoElite",
     "constructor": {
-        "inputs": [
-            {
-                "name": "addr1",
-                "type": "Address"
-            },
-            {
-                "name": "addr2",
-                "type": "Address"
-            },
-            {
-                "name": "addr3",
-                "type": "Address"
-            }
-        ],
+        "inputs": [],
         "outputs": []
     },
     "endpoints": [
@@ -322,6 +309,28 @@
                 {
                     "name": "extra_reward_amount",
                     "type": "BigUint"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "calcAverages",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "token",
+                    "type": "EgldOrEsdtTokenIdentifier"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "calcTotalWeightedAverage",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "token",
+                    "type": "EgldOrEsdtTokenIdentifier"
                 }
             ],
             "outputs": []
@@ -629,6 +638,25 @@
                 {
                     "type": "variadic<Address>",
                     "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "userChecked",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "token",
+                    "type": "EgldOrEsdtTokenIdentifier"
+                },
+                {
+                    "name": "address",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "bool"
                 }
             ]
         },

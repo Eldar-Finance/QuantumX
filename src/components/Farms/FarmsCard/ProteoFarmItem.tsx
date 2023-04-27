@@ -20,6 +20,7 @@ import BigNumber from "bignumber.js";
 import ActionButton from "components/ActionButton/ActionButton";
 import Badge from "components/Badge/Badge";
 
+import CustomTooltip from "components/CustomTooltip/CustomTooltip";
 import { createContext, PropsWithChildren, useEffect, useState } from "react";
 import { addDualEarned, addsProteoEarned } from "redux/slices/proteo/proteo";
 import { fetchProteoFarms } from "redux/slices/userAcount/funcs";
@@ -263,14 +264,34 @@ const ProteoFarmItem = ({ pf, tvl }: IProps) => {
                     </Center>
                   </Flex>
                 </Flex>
-                <Center>
+                <Center flexDir={"column"}>
                   <ActionButton
                     mt={5}
                     onClick={handleharvest}
                     disabled={rewardsAmount === 0}
+                    mb={3}
                   >
                     HARVEST
                   </ActionButton>
+                  <Flex
+                    justifyContent={"flex-end"}
+                    alignItems="center"
+                    fontSize={"small"}
+                    mb="2"
+                    color="gray.300"
+                  >
+                    <CustomTooltip
+                      text={
+                        <Box fontWeight="bold" fontSize={"14px"}>
+                          <Text mb={1}>
+                            If you do not harvest before next Harvest Cycle, you
+                            will lose your rewards.
+                          </Text>
+                        </Box>
+                      }
+                    />
+                    <Text ml={1}>Info about harvest rewards</Text>
+                  </Flex>
                 </Center>
               </PanelBox>
               <PanelBox>

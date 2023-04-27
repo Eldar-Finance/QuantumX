@@ -5,8 +5,9 @@ import Resume from "./Buttons/Resume/Resume";
 import UnStakeSProteo from "./Buttons/UnStakeSProteo/UnStakeSProteo";
 import WithdrawSproteo from "./Buttons/WithdrawSproteo/WithdrawSproteo";
 import AddFarmToken from "./Forms/AddFarmToken/AddFarmToken";
+import CalculateAverages from "./Forms/CalculateAverages/CalculateAverages";
+import CalculateTotalWA from "./Forms/CalculateTotalWA/CalculateTotalWA";
 import DepositSproteo from "./Forms/DepositSproteo/DepositSproteo";
-import DiustributeRewards from "./Forms/DiustributeRewards/DiustributeRewards";
 import EliteAddress from "./Forms/EliteAddress/EliteAddress";
 import FarmAddress from "./Forms/FarmAddress/FarmAddress";
 import ForceRecoverFunds from "./Forms/ForceRecoverFunds/ForceRecoverFunds";
@@ -31,9 +32,11 @@ const ProteoElite = () => {
     >
       <VStack spacing={8} divider={<Divider />}>
         <VStack spacing={5}>
-          <DiustributeRewards />
+          {/* <DiustributeRewards /> */}
           <Harvest />
           <PrepareUserClaming />
+          <CalculateAverages />
+          <CalculateTotalWA />
         </VStack>
         <DepositSproteo />
         <AddFarmToken />

@@ -93,11 +93,42 @@ const StakeUnstake = ({ pf }: IProps) => {
                 </ActionButton>
               </Center>
               <Center flexDir={"column"} w="full">
+                <Center flex="1">
+                  <ActionButton
+                    onClick={
+                      isLoggedIn
+                        ? () => setOpenUnstakeStake((s) => !s)
+                        : handleLogin
+                    }
+                  >
+                    UNSTAKE
+                  </ActionButton>
+                </Center>
                 <Flex
                   justifyContent={"flex-end"}
                   alignItems="center"
                   fontSize={"small"}
-                  mb="2"
+                  mt="2"
+                  color="gray.300"
+                >
+                  <CustomTooltip
+                    text={
+                      <Box fontWeight="bold" fontSize={"14px"}>
+                        <Text mb={1}>
+                          If you unstake before harvesting, you will lose your
+                          rewards.
+                        </Text>
+                      </Box>
+                    }
+                  />
+
+                  <Text ml={1}>Info about Unstake and Rewards </Text>
+                </Flex>
+                <Flex
+                  justifyContent={"flex-end"}
+                  alignItems="center"
+                  fontSize={"small"}
+                  mt="2"
                   color="gray.300"
                 >
                   <CustomTooltip
@@ -120,18 +151,6 @@ const StakeUnstake = ({ pf }: IProps) => {
 
                   <Text ml={1}>Info about fees for Unstaking</Text>
                 </Flex>
-
-                <Center flex="1">
-                  <ActionButton
-                    onClick={
-                      isLoggedIn
-                        ? () => setOpenUnstakeStake((s) => !s)
-                        : handleLogin
-                    }
-                  >
-                    UNSTAKE
-                  </ActionButton>
-                </Center>
               </Center>
             </Flex>
             {openStake && (

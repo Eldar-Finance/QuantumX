@@ -36,7 +36,7 @@ const PrepareUserClaming = () => {
           new BigUIntValue(new BigNumber(setElrondBalance(values.sproteo, 18))),
           new BigUIntValue(new BigNumber(setElrondBalance(values.reward, 18))),
         ],
-        400000000
+        20000000
       );
     },
   });
@@ -102,7 +102,7 @@ const PrepareUserClaming = () => {
         </Stack>
 
         <ActionButton type="submit" px={8} py={5}>
-          <Box>3 - Prepare Users Claiming</Box>
+          <Box>2 - Prepare Users Claiming</Box>
         </ActionButton>
       </Center>
     </form>

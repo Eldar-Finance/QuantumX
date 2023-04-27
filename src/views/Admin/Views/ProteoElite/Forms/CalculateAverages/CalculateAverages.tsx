@@ -1,15 +1,7 @@
 import { Box, Center, Select } from "@chakra-ui/react";
-import {
-  BytesValue,
-  List,
-  ListType,
-  U64Type,
-  U64Value,
-} from "@multiversx/sdk-core/out";
-import axiosEldar2 from "api/rest/axiosEldar2";
+import { BytesValue } from "@multiversx/sdk-core/out";
 import { scCall } from "api/sc/calls";
 import { proteoEliteWsp } from "api/sc/sc";
-import BigNumber from "bignumber.js";
 import ActionButton from "components/ActionButton/ActionButton";
 import { useFormik } from "formik";
 import { proteoFarms, proteoFarmsArr } from "views/Farms/constants";
@@ -20,7 +12,7 @@ const validationSchema = yup.object({
   title: yup.string().required(),
 });
 
-const Harvest = () => {
+const CalculateAverages = () => {
   const formik = useFormik({
     initialValues: {
       title: proteoFarms.PROTEOEGLDLP.token,
@@ -28,45 +20,19 @@ const Harvest = () => {
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       const {
-        hc,
         wsp,
 
         tokenIdentifier,
-        aprEndpoint,
       } = proteoFarms[values.title]
         ? proteoFarms[values.title]
         : proteoPools[values.title];
       if (wsp) {
-        const resApr = await axiosEldar2.get(aprEndpoint);
-        if (resApr) {
-          const aprs = resApr.data;
-          const aprToSend = aprs.slice(Number("-" + (hc + 1))).map((item) => {
-            return {
-              ...item,
-              apr: Number(
-                new BigNumber(item.apr).multipliedBy(1000).toFixed(0)
-              ),
-            };
-          });
-
-          const epochValues = aprToSend.map((item) => {
-            return new U64Value(new BigNumber(item.epoch));
-          });
-          const aprValues = aprToSend.map((item) => {
-            return new U64Value(new BigNumber(item.apr));
-          });
-
-          const res = await scCall(
-            proteoEliteWsp,
-            "harvest",
-            [
-              BytesValue.fromUTF8(tokenIdentifier),
-              new List(new ListType(new U64Type()), epochValues),
-              new List(new ListType(new U64Type()), aprValues),
-            ],
-            50000000
-          );
-        }
+        const res = await scCall(
+          proteoEliteWsp,
+          "calcAverages",
+          [BytesValue.fromUTF8(tokenIdentifier)],
+          150000000
+        );
       }
     },
   });
@@ -115,11 +81,11 @@ const Harvest = () => {
           })}
         </Select>
         <ActionButton type="submit" px={8} py={5}>
-          1 - Harvest
+          3 - Calculate Averages
         </ActionButton>
       </Center>
     </Box>
   );
 };
 
-export default Harvest;
+export default CalculateAverages;
