@@ -16,6 +16,7 @@ import jexSwapAbi from "assets/abi/jex_swap.abi.json";
 import nftHubAbi from "assets/abi/nfthub.abi.json";
 import proteoEliteAbi from "assets/abi/proteo_elite.abi.json";
 import proteoEliteFakeAbi from "assets/abi/proteo_elite_fake.abi.json";
+import qxTagsAbi from "assets/abi/qxtags.abi.json";
 import rewardsAbi from "assets/abi/rewards.abi.json";
 import sftsRewardsAbi from "assets/abi/sft-rewards-sc.abi.json";
 import smartSwapAbi from "assets/abi/smartswaps.abi.json";
@@ -136,7 +137,8 @@ export type WspTypes =
   | "xoxnoSrbPoolsInfoWsp"
   | "hubWsp"
   | "cyberWegld"
-  | "hypezoneWsp";
+  | "hypezoneWsp"
+  | "tagsWsp";
 
 export const getInterface = (workspace: WspTypes) => {
   let address = null;
@@ -315,6 +317,12 @@ export const getInterface = (workspace: WspTypes) => {
       address = new Address(simpleAddress);
       abiUrl = hypefaucetAbi;
       implementsInterfaces = "HypeFaucet";
+      break;
+    case "tagsWsp":
+      simpleAddress = contractAddr.qxtags;
+      address = new Address(simpleAddress);
+      abiUrl = qxTagsAbi;
+      implementsInterfaces = "QxTags";
       break;
 
     default:
