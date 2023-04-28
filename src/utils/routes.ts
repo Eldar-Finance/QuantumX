@@ -23,6 +23,7 @@ export const routeNames = {
   hypezone: "/hypezone",
   converter: "/raretopia",
   moondustx: "/moondustx",
+  qtags: "/qtags",
 };
 
 export const routes: {
@@ -39,6 +40,7 @@ export const routes: {
   hypezone: IRoute;
   converter: IRoute;
   moondustx: IRoute;
+  qtags: IRoute;
 } = {
   dashboard: {
     path: routeNames.dashboard,
@@ -85,6 +87,11 @@ export const routes: {
   moondustx: {
     path: routeNames.moondustx,
     name: "MoonDustX",
+    onModal: true,
+  },
+  qtags: {
+    path: routeNames.qtags,
+    name: "QuantumX Tags",
     onModal: true,
     isNew: true,
   },

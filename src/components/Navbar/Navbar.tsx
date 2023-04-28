@@ -7,6 +7,7 @@ import ActionButton from "components/ActionButton/ActionButton";
 import MyContainer from "components/Container/Container";
 import { LightningIcon } from "components/Icons/ui";
 import NextImage from "components/NextImage/NextImage";
+import QTagButton from "components/QTagButton/QTagButton";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -66,7 +67,7 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
             </Box>
           </>
         )}
-
+        <QTagButton />
         <ActionButton
           px={{ xs: "30px", "2xl": "40px" }}
           fontSize={{ xs: "14px", "2xl": "md" }}
