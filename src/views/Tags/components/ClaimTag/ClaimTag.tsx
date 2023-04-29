@@ -9,10 +9,12 @@ import CardButtons from "../CardButtons/CardButtons";
 import ExtensionSelect from "../ExtensionSelect/ExtensionSelect";
 import TagCard from "../TagCard/TagCard";
 const validationSchema = Yup.object({
-  tag: Yup.string().required("Required"),
+  //validate only numbers and letters
+  tag: Yup.string()
+    .matches(/^[a-zA-Z0-9]+$/, "Only alphanumerical chars are allowed")
+    .required("Required"),
   extention: Yup.object().required("Required"),
 });
-
 const ClaimTag = () => {
   const { extensionsInfo, isLoading } = useGetExtensionsList();
 
@@ -39,6 +41,8 @@ const ClaimTag = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [extensionsInfo]);
 
+  const isInvalid = formik.touched.tag && Boolean(formik.errors.tag);
+
   return (
     //@ts-ignore
     <TagCard textAlign={"center"} as="form" onSubmit={formik.handleSubmit}>
@@ -54,7 +58,7 @@ const ClaimTag = () => {
         rounded={"md"}
         px="3"
         py="2"
-        mb={14}
+        mb={1}
         gap={4}
         position={"relative"}
       >
@@ -69,7 +73,10 @@ const ClaimTag = () => {
           selectedExtention={formik.values.extention}
         />
       </Flex>
-      <CardButtons />
+      <Flex mb={14} fontSize={"sm"} color="tomato">
+        {isInvalid && formik.errors.tag}
+      </Flex>
+      <CardButtons isInvalid={isInvalid} />
     </TagCard>
   );
 };
