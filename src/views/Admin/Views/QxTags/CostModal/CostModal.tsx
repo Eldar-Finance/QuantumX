@@ -43,8 +43,6 @@ const CostModal = ({ isOpen, onClose, onSubmit, title }: IProps) => {
     },
     validationSchema: newFarmSchema,
     onSubmit: (values) => {
-      console.log("values", values);
-
       onSubmit(values);
     },
   });
@@ -100,7 +98,7 @@ const CostModal = ({ isOpen, onClose, onSubmit, title }: IProps) => {
             </InputGroup>
           </FormControl>
           <FormControl>
-            <FormLabel mb={1}>Cost Amount</FormLabel>
+            <FormLabel mb={1}>Cost Nonce</FormLabel>
             <InputGroup>
               <Input
                 p="2"
