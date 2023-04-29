@@ -8,7 +8,7 @@ const QTagButton = () => {
   const { tagInfo, isLoading } = useGetUserQTag();
   return (
     /* @ts-ignore */
-    <ActionButton as={Link} href={routeNames.qtags}>
+    <ActionButton as={Link} href={routeNames.qtags} fontWeight={"normal"}>
       {tagInfo.tag || (isLoading ? <Spinner size={"sm"} /> : "Create QxTags")}
     </ActionButton>
   );
