@@ -1,36 +1,51 @@
 import { ChevronDownIcon } from "@chakra-ui/icons";
-import { Box, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
-import ActionButton from "components/ActionButton/ActionButton";
-
-const extentions = ["quantumx", "eldar", "multiversx"];
+import {
+  Box,
+  Button,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  Spinner,
+} from "@chakra-ui/react";
+import { IScQxTagExtension } from "utils/types/sc.interface";
+import { useGetExtensionsList } from "views/Tags/hooks/useGetQTag";
 
 interface IProps {
-  onSelect: (extention: string) => void;
-  selectedExtention: string;
+  onSelect: (extention: IScQxTagExtension) => void;
+  selectedExtention: IScQxTagExtension;
+  disabled?: boolean;
 }
 
-const ExtensionSelect = ({ onSelect, selectedExtention }: IProps) => {
+const ExtensionSelect = ({ onSelect, disabled, selectedExtention }: IProps) => {
+  const { extensionsInfo } = useGetExtensionsList();
+
   return (
     <Box>
-      <Menu>
+      <Menu placement="bottom-end">
         <MenuButton
-          as={ActionButton}
+          as={Button}
           rightIcon={<ChevronDownIcon />}
           position={"relative"}
+          disabled={disabled}
         >
-          .{selectedExtention}
+          {selectedExtention ? (
+            `.${selectedExtention?.extension}`
+          ) : (
+            <Spinner size={"sm"} />
+          )}
         </MenuButton>
         <MenuList maxH={"250px"} overflow={"auto"} bg="black.light" zIndex={10}>
-          {extentions.map((extention) => (
+          {extensionsInfo.map((einfo) => (
             <MenuItem
-              key={extention}
-              onClick={() => onSelect(extention)}
+              key={einfo.extension}
+              onClick={() => onSelect(einfo)}
               bg="black.light"
               _hover={{
                 bg: "black.base",
               }}
             >
-              {extention}
+              {einfo.extension}
             </MenuItem>
           ))}
         </MenuList>

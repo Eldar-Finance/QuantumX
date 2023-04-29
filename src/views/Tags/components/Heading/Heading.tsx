@@ -6,11 +6,11 @@ interface IProps {
 }
 
 const HeadingSection = ({ claimed }: IProps) => {
-  const tag = useGetQTag();
+  const { tagInfo } = useGetQTag();
 
   return (
     <Heading mb={8} as="h1" fontSize={"3xl"} textAlign={"center"}>
-      {claimed ? `Hello, ${tag}` : "Claim your QuantumxTag"}
+      {claimed ? `Hello, ${tagInfo.username}` : "Claim your QuantumxTag"}
     </Heading>
   );
 };

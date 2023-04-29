@@ -110,3 +110,15 @@ export interface IScHypeFauctetAdminInfo {
     nonce: number;
   };
 }
+
+export interface IScQxTagInfo {
+  username: string;
+  extension: string;
+  tag: string;
+}
+export interface IScQxTagExtension {
+  extension: string;
+  token: string;
+  nonce: number;
+  amount: string;
+}
