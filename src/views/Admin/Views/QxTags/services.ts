@@ -49,7 +49,7 @@ export const setUsernameUpdateCost = async (
 ) => {
   scCall(
     "tagsWsp",
-    "setExtensionCost",
+    "setUsernameUpdateCost",
     [
       BytesValue.fromUTF8(token),
       new BigUIntValue(new BigNumber(nonce)),
