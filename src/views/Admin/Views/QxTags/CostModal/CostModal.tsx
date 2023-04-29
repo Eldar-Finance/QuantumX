@@ -14,32 +14,37 @@ import {
 import ActionButton from "components/ActionButton/ActionButton";
 import MyModal from "components/Modal/Modal";
 import { useFormik } from "formik";
-import useGetFarmsFees from "views/Panel/hooks/useGetFarmsFees";
 
 import * as yup from "yup";
 
 const newFarmSchema = yup.object({
   tokenI: yup.string().required("Required"),
   costAmount: yup.string().required("Required"),
+  nonce: yup.number().required("Required"),
 });
 
 interface IProps {
   isOpen: boolean;
   onClose: () => void;
   title: string;
-  onSubmit: (values: { tokenI: string; costAmount: string }) => void;
+  onSubmit: (values: {
+    tokenI: string;
+    costAmount: string;
+    nonce: string;
+  }) => void;
 }
 
 const CostModal = ({ isOpen, onClose, onSubmit, title }: IProps) => {
-  const { fees } = useGetFarmsFees();
-
   const formik = useFormik({
     initialValues: {
       tokenI: "",
       costAmount: "",
+      nonce: "",
     },
     validationSchema: newFarmSchema,
     onSubmit: (values) => {
+      console.log("values", values);
+
       onSubmit(values);
     },
   });
@@ -57,7 +62,7 @@ const CostModal = ({ isOpen, onClose, onSubmit, title }: IProps) => {
         </ModalHeader>
         <Divider />
         <ModalBody display={"flex"} flexDir="column" gap={4} mt={5}>
-          <FormControl>
+          <FormControl isRequired>
             <FormLabel mb={1}>Cost Token</FormLabel>
             <Input
               p="2"
@@ -75,7 +80,7 @@ const CostModal = ({ isOpen, onClose, onSubmit, title }: IProps) => {
 
           <Divider />
 
-          <FormControl>
+          <FormControl isRequired>
             <FormLabel mb={1}>Cost Amount</FormLabel>
             <InputGroup>
               <Input
@@ -91,6 +96,23 @@ const CostModal = ({ isOpen, onClose, onSubmit, title }: IProps) => {
                 isInvalid={
                   formik.touched.costAmount && Boolean(formik.errors.costAmount)
                 }
+              />{" "}
+            </InputGroup>
+          </FormControl>
+          <FormControl>
+            <FormLabel mb={1}>Cost Amount</FormLabel>
+            <InputGroup>
+              <Input
+                p="2"
+                pl={6}
+                placeholder="Example: 02"
+                flex="1"
+                name="nonce"
+                bg="black.base"
+                borderRadius={"md"}
+                value={formik.values.nonce}
+                onChange={formik.handleChange}
+                isInvalid={formik.touched.nonce && Boolean(formik.errors.nonce)}
               />{" "}
             </InputGroup>
           </FormControl>

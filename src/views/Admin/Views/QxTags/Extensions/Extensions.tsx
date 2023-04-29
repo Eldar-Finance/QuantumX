@@ -3,7 +3,8 @@ import { Box, Heading, useDisclosure } from "@chakra-ui/react";
 import { getFromAllTokens } from "api/rest/elrondApi/tokens";
 import dynamic from "next/dynamic";
 import { useState } from "react";
-import { setElrondBalance } from "utils/functions/formatBalance";
+import { formatBalance, setElrondBalance } from "utils/functions/formatBalance";
+import useGetMultipleElrondTokens from "utils/hooks/useGetMultipleElrondTokens";
 import { IScQxTagExtension } from "utils/types/sc.interface";
 import { useGetExtensionsList } from "views/Tags/hooks/useGetQTag";
 import DynamicFormAndTable from "../commons/DynamicFormAndTable/DynamicFormAndTable";
@@ -13,6 +14,9 @@ const Extensions = () => {
   const { extensionsInfo } = useGetExtensionsList();
   const { isOpen, onClose, onOpen } = useDisclosure();
   const [selectedExtension, setExtension] = useState<IScQxTagExtension>();
+  const { tokens: mxToekens } = useGetMultipleElrondTokens(
+    extensionsInfo.map((extension) => extension.token)
+  );
   const handleSetextensionsCost = (extension: string) => {
     const extensionInfo = extensionsInfo.find(
       (extensionInfo) => extensionInfo.extension === extension
@@ -26,6 +30,7 @@ const Extensions = () => {
   const handleSubmit = async (values: {
     tokenI: string;
     costAmount: string;
+    nonce: number;
   }) => {
     if (selectedExtension) {
       let elrondTokenArr = [];
@@ -46,7 +51,7 @@ const Extensions = () => {
           selectedExtension.extension,
           values.tokenI,
           realCost,
-          0
+          values?.nonce ? Number(values.nonce) : 0
         );
       }
     }
@@ -62,6 +67,14 @@ const Extensions = () => {
         dinamuyFormScFunc="addAvailableExtensions"
         removeItemScFunc="removeAvailableExtensions"
         onAction={handleSetextensionsCost}
+        actionTexArr={extensionsInfo.map(
+          (extension) =>
+            `${formatBalance({
+              balance: extension.amount,
+              decimals: mxToekens.find((t) => t.identifier === extension.token)
+                ?.decimals,
+            })} ${extension.token}`
+        )}
       />
       {isOpen && (
         <CostModal

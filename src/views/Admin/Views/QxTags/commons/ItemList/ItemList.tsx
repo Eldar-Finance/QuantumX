@@ -19,9 +19,10 @@ interface IProps {
   scFunc: ScFuncsRemoveType;
   optionList: string[];
   onAction?: (value: string) => void;
+  actionTexArrt?: string[];
 }
 
-const ItemList = ({ scFunc, optionList, onAction }: IProps) => {
+const ItemList = ({ scFunc, optionList, actionTexArrt, onAction }: IProps) => {
   const [checkedValues, setCheckedValues] = useState([]);
   const handleChange = (values) => {
     setCheckedValues(values);
@@ -37,6 +38,9 @@ const ItemList = ({ scFunc, optionList, onAction }: IProps) => {
       <CheckboxGroup colorScheme="linkedin" onChange={handleChange}>
         <Grid templateColumns={{ xs: "1fr", tablet: "1fr 1fr" }} gap={3}>
           {optionList.map((option, i) => {
+            const text = actionTexArrt.find(
+              (text, textIndex) => textIndex === i
+            );
             return (
               <Fragment key={option}>
                 <Flex
@@ -47,11 +51,13 @@ const ItemList = ({ scFunc, optionList, onAction }: IProps) => {
                   <Checkbox value={option}>
                     {validateAddress(option) ? formatAddress(option) : option}
                   </Checkbox>
-                  <ActionButton
-                    onClick={() => (onAction ? onAction(option) : null)}
-                  >
-                    Set Cost
-                  </ActionButton>
+                  {text && (
+                    <ActionButton
+                      onClick={() => (onAction ? onAction(option) : null)}
+                    >
+                      {text}
+                    </ActionButton>
+                  )}
                 </Flex>
                 {(i + 1) % 2 === 0 && <Divider gridColumn={"1 / 3"} />}
               </Fragment>

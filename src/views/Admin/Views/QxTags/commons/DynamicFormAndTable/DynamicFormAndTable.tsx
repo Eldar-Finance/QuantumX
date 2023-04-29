@@ -8,6 +8,7 @@ interface IProps {
   dinamuyFormScFunc: SCFuncTypes;
   removeItemScFunc: ScFuncsRemoveType;
   onAction?: (value: string) => void;
+  actionTexArr?: string[];
 }
 
 const DynamicFormAndTable = ({
@@ -16,6 +17,7 @@ const DynamicFormAndTable = ({
   dinamuyFormScFunc,
   removeItemScFunc,
   onAction,
+  actionTexArr,
 }: IProps) => {
   return (
     <Grid templateColumns={{ xs: "1fr", md: "1fr 1fr" }} gap={10} w="full">
@@ -27,6 +29,7 @@ const DynamicFormAndTable = ({
         optionList={items}
         scFunc={removeItemScFunc}
         onAction={onAction}
+        actionTexArrt={actionTexArr}
       />
     </Grid>
   );

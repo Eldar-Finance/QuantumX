@@ -1,4 +1,9 @@
-import { BigUIntValue, BytesValue } from "@multiversx/sdk-core/out";
+import {
+  Address,
+  AddressValue,
+  BigUIntValue,
+  BytesValue,
+} from "@multiversx/sdk-core/out";
 import { scCall } from "api/sc/calls";
 import { scQuery } from "api/sc/queries";
 import BigNumber from "bignumber.js";
@@ -50,6 +55,47 @@ export const setUsernameUpdateCost = async (
       new BigUIntValue(new BigNumber(nonce)),
       new BigUIntValue(new BigNumber(amount)),
     ],
+    10000000
+  );
+};
+
+export const forceRegisterQxTag = async (
+  username: string,
+  exrension: string,
+  address: string
+) => {
+  scCall(
+    "tagsWsp",
+    "forceRegisterQtag",
+    [
+      new AddressValue(new Address(address)),
+      BytesValue.fromUTF8(username),
+      BytesValue.fromUTF8(exrension),
+    ],
+    10000000
+  );
+};
+
+export const forceReplaceExtension = async (
+  extension: string,
+  address: string
+) => {
+  scCall(
+    "tagsWsp",
+    "forceReplaceExtension",
+    [new AddressValue(new Address(address)), BytesValue.fromUTF8(extension)],
+    10000000
+  );
+};
+
+export const forceUpdateUsername = async (
+  username: string,
+  address: string
+) => {
+  scCall(
+    "tagsWsp",
+    "forceUpdateUsername",
+    [new AddressValue(new Address(address)), BytesValue.fromUTF8(username)],
     10000000
   );
 };

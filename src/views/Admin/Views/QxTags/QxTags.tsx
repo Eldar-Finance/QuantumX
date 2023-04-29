@@ -3,6 +3,9 @@ import AddEarner from "./AddEarner/AddEarner";
 import EarnersTable from "./EarnersTable/EarnersTable";
 import StakedTokens from "./Extensions/Extensions";
 import PuaseButton from "./PuaseButton/PuaseButton";
+import RegisterExtension from "./RegisterExtension/RegisterExtension";
+import RegisterTag from "./RegisterTag/RegisterTag";
+import RegisterUsername from "./RegisterUsername/RegisterUsername";
 import RemoveEarner from "./RemoveEarner/RemoveEarner";
 import ResumeButton from "./ResumeButton/ResumeButton";
 import UsernameUpdateCost from "./UsernameUpdateCost/UsernameUpdateCost";
@@ -24,10 +27,13 @@ const QxTags = () => {
 
           <AddEarner />
           <RemoveEarner />
-          <UsernameUpdateCost />
+          <RegisterTag />
+          <RegisterUsername />
+          <RegisterExtension />
         </Box>
         <Flex flexDir={"column"} rowGap={8}>
           <EarnersTable />
+          <UsernameUpdateCost />
         </Flex>
       </Grid>
 

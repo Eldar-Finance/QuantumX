@@ -12,6 +12,7 @@ const UsernameUpdateCost = () => {
   const handleSubmit = async (values: {
     tokenI: string;
     costAmount: string;
+    nonce: string;
   }) => {
     let elrondTokenArr = [];
     try {
@@ -26,7 +27,11 @@ const UsernameUpdateCost = () => {
         values.costAmount,
         elrondToken?.decimals
       );
-      setUsernameUpdateCost(values.tokenI, realCost, 0);
+      setUsernameUpdateCost(
+        values.tokenI,
+        realCost,
+        values?.nonce ? Number(values.nonce) : 0
+      );
     }
   };
   return (
