@@ -35,7 +35,7 @@ const RegisterTag = () => {
         maxW={{ xs: "300px", tablet: "450px" }}
       >
         <Text as="h2" fontSize={"1.8rem"} mb={5}>
-          Force Update Tag
+          Force Register Tag
         </Text>
         <Input
           mb={4}

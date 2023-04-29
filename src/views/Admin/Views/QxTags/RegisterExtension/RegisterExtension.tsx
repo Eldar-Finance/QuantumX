@@ -56,7 +56,7 @@ const RegisterExtension = () => {
         />
 
         <ActionButton type="submit" px={8} py={5}>
-          Force Register Extension{" "}
+          Force Replace Extension{" "}
         </ActionButton>
       </Flex>
     </form>

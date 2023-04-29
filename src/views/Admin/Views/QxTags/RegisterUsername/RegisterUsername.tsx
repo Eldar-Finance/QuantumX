@@ -54,7 +54,7 @@ const RegisterUsername = () => {
         />
 
         <ActionButton type="submit" px={8} py={5}>
-          Force Register Username{" "}
+          Force Update Username{" "}
         </ActionButton>
       </Flex>
     </form>
