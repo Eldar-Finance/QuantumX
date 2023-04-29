@@ -1,6 +1,10 @@
 import { Address, AddressValue } from "@multiversx/sdk-core/out";
 import { scQuery } from "api/sc/queries";
-import { IScQxTagExtension, IScQxTagInfo } from "utils/types/sc.interface";
+import {
+  IScPayment,
+  IScQxTagExtension,
+  IScQxTagInfo,
+} from "utils/types/sc.interface";
 
 export const fetchUserTag = async (address: string): Promise<IScQxTagInfo> => {
   const scRes = await scQuery("tagsWsp", "getUserInfo", [
@@ -32,6 +36,27 @@ export const fetchExtensionsList = async (): Promise<IScQxTagExtension[]> => {
     };
     return data;
   });
+
+  return finalData;
+};
+
+export const fetchUserNameUpdateCost = async (): Promise<IScPayment> => {
+  const scRes = await scQuery("tagsWsp", "usernameUpdateCost", []);
+
+  const data = scRes.firstValue?.valueOf();
+  let finalData: IScPayment = {
+    token: "EGLD",
+    amount: "0",
+    nonce: 0,
+  };
+
+  if (data) {
+    finalData = {
+      token: data.token_identifier,
+      amount: data.amount.toString(),
+      nonce: data.token_nonce.toNumber(),
+    };
+  }
 
   return finalData;
 };

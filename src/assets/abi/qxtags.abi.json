@@ -45,7 +45,7 @@
             ]
         },
         {
-            "name": "changeUsername",
+            "name": "updateUsername",
             "mutability": "mutable",
             "payableInTokens": [
                 "*"
@@ -56,10 +56,14 @@
                     "type": "bytes"
                 }
             ],
-            "outputs": []
+            "outputs": [
+                {
+                    "type": "bytes"
+                }
+            ]
         },
         {
-            "name": "changeExtension",
+            "name": "replaceExtension",
             "mutability": "mutable",
             "payableInTokens": [
                 "*"
@@ -70,11 +74,14 @@
                     "type": "bytes"
                 }
             ],
-            "outputs": []
+            "outputs": [
+                {
+                    "type": "bytes"
+                }
+            ]
         },
         {
             "name": "forceRegisterQtag",
-            "onlyOwner": true,
             "mutability": "mutable",
             "inputs": [
                 {
@@ -90,7 +97,55 @@
                     "type": "bytes"
                 }
             ],
-            "outputs": []
+            "outputs": [
+                {
+                    "type": "bytes"
+                }
+            ]
+        },
+        {
+            "name": "forceUpdateUsername",
+            "mutability": "mutable",
+            "payableInTokens": [
+                "*"
+            ],
+            "inputs": [
+                {
+                    "name": "address",
+                    "type": "Address"
+                },
+                {
+                    "name": "username",
+                    "type": "bytes"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "bytes"
+                }
+            ]
+        },
+        {
+            "name": "forceReplaceExtension",
+            "mutability": "mutable",
+            "payableInTokens": [
+                "*"
+            ],
+            "inputs": [
+                {
+                    "name": "address",
+                    "type": "Address"
+                },
+                {
+                    "name": "extension",
+                    "type": "bytes"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "bytes"
+                }
+            ]
         },
         {
             "name": "getExtensionsInfo",
@@ -210,12 +265,7 @@
         {
             "name": "usernameUpdateCost",
             "mutability": "readonly",
-            "inputs": [
-                {
-                    "name": "extension",
-                    "type": "bytes"
-                }
-            ],
+            "inputs": [],
             "outputs": [
                 {
                     "type": "EgldOrEsdtTokenPayment"
@@ -480,6 +530,25 @@
                     "name": "extension",
                     "type": "bytes"
                 },
+                {
+                    "name": "token",
+                    "type": "EgldOrEsdtTokenIdentifier"
+                },
+                {
+                    "name": "nonce",
+                    "type": "u64"
+                },
+                {
+                    "name": "amount",
+                    "type": "BigUint"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "setUsernameUpdateCost",
+            "mutability": "mutable",
+            "inputs": [
                 {
                     "name": "token",
                     "type": "EgldOrEsdtTokenIdentifier"

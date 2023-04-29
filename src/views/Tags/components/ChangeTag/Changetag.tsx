@@ -1,20 +1,25 @@
-import { Box, Flex, Heading, Input } from "@chakra-ui/react";
+import { Flex, Heading, Input } from "@chakra-ui/react";
 import ActionButton from "components/ActionButton/ActionButton";
 import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 import { IScQxTagExtension } from "utils/types/sc.interface";
 import useGetQTag, { useGetExtensionsList } from "views/Tags/hooks/useGetQTag";
-import { registerTag } from "views/Tags/services/calls";
+import { useGetUserNameUpdateCost } from "views/Tags/hooks/useGetUserNameUpdateCost";
+import { replaceExtension, updsteUserName } from "views/Tags/services/calls";
 import * as Yup from "yup";
 import CardButtons from "../CardButtons/CardButtons";
 import ExtensionSelect from "../ExtensionSelect/ExtensionSelect";
 import TagCard from "../TagCard/TagCard";
 const validationSchema = Yup.object({
-  tag: Yup.string().required("Required"),
+  //validate only numbers and letters
+  tag: Yup.string()
+    .matches(/^[a-zA-Z0-9]+$/, "Only alphanumerical chars are allowed")
+    .required("Required"),
   extention: Yup.object().required("Required"),
 });
 
 const ChangeTag = () => {
+  const { usernameUpdateCost } = useGetUserNameUpdateCost();
   const { extensionsInfo } = useGetExtensionsList();
   const [canUpdateUsername, setCanUpdateUsername] = useState(true);
   const [canUpdateExtension, setCanUpdateExtension] = useState(false);
@@ -26,7 +31,11 @@ const ChangeTag = () => {
     },
 
     onSubmit: (values) => {
-      registerTag(values.tag, values.extention);
+      if (canUpdateUsername) {
+        updsteUserName(values.tag, usernameUpdateCost);
+      } else {
+        replaceExtension(values.extention);
+      }
     },
     validationSchema: validationSchema,
   });
@@ -51,11 +60,24 @@ const ChangeTag = () => {
   const handleUpdateUsername = () => {
     setCanUpdateUsername(true);
     setCanUpdateExtension(false);
+
+    const userExtension = extensionsInfo.find(
+      (ext) => ext.extension === tagInfo.extension
+    );
+
+    if (userExtension) {
+      formik.setFieldValue("extention", userExtension, true);
+    }
   };
   const handleUpdateExtension = () => {
     setCanUpdateUsername(false);
     setCanUpdateExtension(true);
+
+    formik.setFieldValue("tag", tagInfo.username, true);
   };
+
+  const isInvalid = formik.touched.tag && Boolean(formik.errors.tag);
+
   return (
     //@ts-ignore
     <TagCard as="form" onSubmit={formik.handleSubmit} maxW={"800px"}>
@@ -63,10 +85,14 @@ const ChangeTag = () => {
         {" "}
         Your QuantumXTag : {tagInfo.tag}
       </Heading>
-      <Box mb={1}>Update :</Box>
-      <Flex mb={10} gap={4}>
-        <ActionButton onClick={handleUpdateUsername}>Username</ActionButton>
-        <ActionButton onClick={handleUpdateExtension}>Extension</ActionButton>
+
+      <Flex mb={10} gap={4} flexDir={{ xs: "column", md: "row" }}>
+        <ActionButton onClick={handleUpdateUsername}>
+          Update Username
+        </ActionButton>
+        <ActionButton onClick={handleUpdateExtension}>
+          Replace Extension
+        </ActionButton>
       </Flex>
       <Flex
         w="full"
@@ -74,8 +100,8 @@ const ChangeTag = () => {
         rounded={"md"}
         px="3"
         py="2"
-        mb={14}
         gap={4}
+        mb={1}
         position={"relative"}
       >
         <Input
@@ -92,7 +118,10 @@ const ChangeTag = () => {
           disabled={!canUpdateExtension}
         />
       </Flex>
-      <CardButtons />
+      <Flex mb={14} fontSize={"sm"} color="tomato">
+        {isInvalid && formik.errors.tag}
+      </Flex>
+      <CardButtons isInvalid={isInvalid} />
     </TagCard>
   );
 };

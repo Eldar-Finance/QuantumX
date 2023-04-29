@@ -111,14 +111,17 @@ export interface IScHypeFauctetAdminInfo {
   };
 }
 
+export interface IScPayment {
+  token: string;
+  amount: string;
+  nonce: number;
+}
+
 export interface IScQxTagInfo {
   username: string;
   extension: string;
   tag: string;
 }
-export interface IScQxTagExtension {
+export interface IScQxTagExtension extends IScPayment {
   extension: string;
-  token: string;
-  nonce: number;
-  amount: string;
 }
