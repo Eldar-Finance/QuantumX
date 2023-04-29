@@ -11,11 +11,12 @@ import withElronDapp from "hoc/withElronDapp";
 import { useAppSelector } from "utils/hooks/redux";
 import ElBadges from "./Views/Badges/ElBadges/ElBadges";
 import Farms from "./Views/Farms/Farms";
+import QxTags from "./Views/QxTags/QxTags";
 import SmartSwap from "./Views/Swap/SmarSwap";
 
 const DCAAdmin: any = dynamic(() => import("./Views/DCAAdmin/DCAAdmin"));
-const ProteoElite: any = dynamic(() =>
-  import("./Views/ProteoElite/ProteoElite")
+const ProteoElite: any = dynamic(
+  () => import("./Views/ProteoElite/ProteoElite")
 );
 const FastSwap: any = dynamic(() => import("./Views/FastSwap/FastSwap"));
 
@@ -90,6 +91,14 @@ const AdminView = () => {
               tabPanel: (
                 <LayOut>
                   <ElBadges />
+                </LayOut>
+              ),
+            },
+            {
+              tabText: "QxTags",
+              tabPanel: (
+                <LayOut>
+                  <QxTags />
                 </LayOut>
               ),
             },
