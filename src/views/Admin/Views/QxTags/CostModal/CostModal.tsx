@@ -39,7 +39,7 @@ const CostModal = ({ isOpen, onClose, onSubmit, title }: IProps) => {
     initialValues: {
       tokenI: "",
       costAmount: "",
-      nonce: "",
+      nonce: "0",
     },
     validationSchema: newFarmSchema,
     onSubmit: (values) => {
