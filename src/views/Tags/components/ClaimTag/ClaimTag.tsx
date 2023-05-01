@@ -1,6 +1,9 @@
 import { Flex, Heading, Input } from "@chakra-ui/react";
 import { useFormik } from "formik";
 import { useEffect } from "react";
+import { formatBalance } from "utils/functions/formatBalance";
+import { formatTokenI } from "utils/functions/tokens";
+import useGetAccountToken from "utils/hooks/useGetAccountToken";
 import { IScQxTagExtension } from "utils/types/sc.interface";
 import { useGetExtensionsList } from "views/Tags/hooks/useGetQTag";
 import { registerTag } from "views/Tags/services/calls";
@@ -30,6 +33,11 @@ const ClaimTag = () => {
     validationSchema: validationSchema,
   });
 
+  const { accountToken: costToken } = useGetAccountToken(
+    formik.values.extention
+      ? (formik.values.extention as IScQxTagExtension)?.token
+      : null
+  );
   const handleSelectExtension = (val: IScQxTagExtension) => {
     formik.setFieldValue("extention", val, false);
   };
@@ -76,7 +84,27 @@ const ClaimTag = () => {
       <Flex mb={14} fontSize={"sm"} color="tomato">
         {isInvalid && formik.errors.tag}
       </Flex>
-      <CardButtons isInvalid={isInvalid} />
+      <CardButtons
+        isInvalid={
+          isInvalid ||
+          formatBalance(costToken, true) <
+            formatBalance(
+              {
+                balance: formik.values.extention?.amount,
+                decimals: costToken?.decimals,
+              },
+              true
+            )
+        }
+        cost={
+          formik.values.extention
+            ? `${formatBalance({
+                balance: (formik.values.extention as IScQxTagExtension).amount,
+                decimals: costToken?.decimals,
+              })} ${formatTokenI(formik.values.extention.token)}`
+            : ""
+        }
+      />
     </TagCard>
   );
 };

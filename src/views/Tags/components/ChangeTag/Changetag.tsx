@@ -2,6 +2,9 @@ import { Flex, Heading, Input } from "@chakra-ui/react";
 import ActionButton from "components/ActionButton/ActionButton";
 import { useFormik } from "formik";
 import { useEffect, useState } from "react";
+import { formatBalance } from "utils/functions/formatBalance";
+import { formatTokenI } from "utils/functions/tokens";
+import useGetUserTokens from "utils/hooks/useGetUserTokens";
 import { IScQxTagExtension } from "utils/types/sc.interface";
 import useGetQTag, { useGetExtensionsList } from "views/Tags/hooks/useGetQTag";
 import { useGetUserNameUpdateCost } from "views/Tags/hooks/useGetUserNameUpdateCost";
@@ -39,7 +42,13 @@ const ChangeTag = () => {
     },
     validationSchema: validationSchema,
   });
-
+  const [_, costToken] = useGetUserTokens(
+    canUpdateUsername
+      ? usernameUpdateCost?.token
+      : formik.values.extention
+      ? (formik.values.extention as IScQxTagExtension)?.token
+      : null
+  );
   const handleSelectExtension = (val: IScQxTagExtension) => {
     formik.setFieldValue("extention", val, false);
   };
@@ -121,7 +130,36 @@ const ChangeTag = () => {
       <Flex mb={14} fontSize={"sm"} color="tomato">
         {isInvalid && formik.errors.tag}
       </Flex>
-      <CardButtons isInvalid={isInvalid} />
+      <CardButtons
+        isInvalid={
+          isInvalid ||
+          formatBalance(costToken, true) <
+            formatBalance(
+              {
+                balance: canUpdateUsername
+                  ? usernameUpdateCost?.amount
+                  : formik.values.extention.amount,
+                decimals: costToken?.decimals,
+              },
+              true
+            )
+        }
+        cost={
+          canUpdateUsername
+            ? usernameUpdateCost
+              ? `${formatBalance({
+                  balance: usernameUpdateCost.amount,
+                  decimals: costToken?.decimals,
+                })} ${formatTokenI(usernameUpdateCost.token)}`
+              : ""
+            : formik.values.extention
+            ? `${formatBalance({
+                balance: (formik.values.extention as IScQxTagExtension).amount,
+                decimals: costToken?.decimals,
+              })} ${formatTokenI(formik.values.extention.token)}`
+            : ""
+        }
+      />
     </TagCard>
   );
 };
