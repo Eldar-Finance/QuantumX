@@ -1,6 +1,7 @@
 import MyContainer from "components/Container/Container";
 import Layout from "components/Layout/Layout";
 import WrapperPages from "hoc/WrapperPages";
+import withElronDapp from "hoc/withElronDapp";
 import NftList from "./components/NFTList/NftList";
 import TitleSection from "./components/TitleSection/TitleSection";
 
@@ -15,4 +16,4 @@ const Hub = () => {
   );
 };
 
-export default WrapperPages(Hub);
+export default withElronDapp(WrapperPages(Hub));
