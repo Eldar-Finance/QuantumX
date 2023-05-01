@@ -71,7 +71,7 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
         <ActionButton
           px={{ xs: "30px", "2xl": "40px" }}
           fontSize={{ xs: "14px", "2xl": "md" }}
-          fontWeight="600"
+          fontWeight="500"
           display={{ xs: "none", md: "block" }}
           onClick={isLoggedIn ? handleLogout : handleConnect}
           bg={isLoggedIn ? "danger" : "main"}

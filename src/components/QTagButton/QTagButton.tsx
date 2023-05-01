@@ -11,8 +11,13 @@ const QTagButton = () => {
   return (
     <>
       {isLoggedIn && (
-        /* @ts-ignore */
-        <ActionButton as={Link} href={routeNames.qtags} fontWeight={"normal"}>
+        <ActionButton
+          as={Link}
+          /* @ts-ignore */
+          href={routeNames.qtags}
+          fontWeight={"500"}
+          fontSize={{ xs: "14px", "2xl": "md" }}
+        >
           {tagInfo.tag || (isLoading ? <Spinner size={"sm"} /> : "Claim QxTag")}
         </ActionButton>
       )}
