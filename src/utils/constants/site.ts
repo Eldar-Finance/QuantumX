@@ -14,7 +14,7 @@ export const defaultMetaTags = {
 export const KostasAddress1 =
   "erd1hqaczk7hmszly8jt2a4yd3pk6dkvffjk0efy9uz6p3r65dnpfhas6nxvyd";
 export const KostasAddress2 =
-  "erd13j00d82gs7ec665z202lh25l7tjw6lpaxwe7th4e6uwlsk3r8pgq555qzg";
+  "erd1kupvf2xtps62vvtrkpjceyxrnefuarnnc24j8q8nwc4jrz73pzascfsu33";
 export const KostasAddress3 =
   "erd1lnmfa5p9j6qy40kjtrf0wfq6cl056car6hyvrq5uxdcalc2gu7zsrwalel";
 //  Dinos address
@@ -25,7 +25,7 @@ export const ArmandoAddress =
   "erd1ag6nvusjhcw90ntutyzsn7gntmgx9rv8xz2qczgquy48ltaxqghqxs0rkl";
 
 export const admins = [
-  ArmandoAddress,
+  // ArmandoAddress,
   DinosAddress,
   KostasAddress1,
   KostasAddress2,
