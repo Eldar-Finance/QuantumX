@@ -91,8 +91,8 @@ const useApr = (
             stakedBalance: new BigNumber(
               farm.stakedBalance
             ).isGreaterThanOrEqualTo(fixedStakedBalance)
-              ? Number(fixedStakedBalance)
-              : farm.stakedBalance,
+              ? farm.stakedBalance
+              : Number(fixedStakedBalance),
           }
         : farm,
 
@@ -109,8 +109,8 @@ const useApr = (
             stakedBalance: new BigNumber(
               farm.stakedBalance
             ).isGreaterThanOrEqualTo(fixedStakedBalance)
-              ? Number(fixedStakedBalance)
-              : farm.stakedBalance,
+            ? farm.stakedBalance
+            : Number(fixedStakedBalance),
           }
         : farm,
       stats,
