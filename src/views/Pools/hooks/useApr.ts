@@ -2,6 +2,7 @@ import { IScFarm2RewardsLeft, IScFarmItem } from "utils/types/sc.interface";
 
 import { toknesID } from "api/net.config";
 import { fetchLastRewardedEpoch } from "api/sc/queries/farms2";
+import BigNumber from "bignumber.js";
 import { selectElrondStats } from "redux/slices/elrond/elrond-slice";
 import useSWR from "swr";
 import { aprFarms, apyFarms } from "utils/functions/farms";
@@ -87,7 +88,11 @@ const useApr = (
       fixedStakedBalance
         ? {
             ...farm,
-            stakedBalance: Number(fixedStakedBalance),
+            stakedBalance: new BigNumber(
+              farm.stakedBalance
+            ).isGreaterThanOrEqualTo(fixedStakedBalance)
+              ? Number(fixedStakedBalance)
+              : farm.stakedBalance,
           }
         : farm,
 
@@ -101,7 +106,11 @@ const useApr = (
       fixedStakedBalance
         ? {
             ...farm,
-            stakedBalance: Number(fixedStakedBalance),
+            stakedBalance: new BigNumber(
+              farm.stakedBalance
+            ).isGreaterThanOrEqualTo(fixedStakedBalance)
+              ? Number(fixedStakedBalance)
+              : farm.stakedBalance,
           }
         : farm,
       stats,
