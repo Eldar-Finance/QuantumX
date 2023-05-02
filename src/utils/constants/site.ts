@@ -23,9 +23,12 @@ export const DinosAddress =
 /* My address */
 export const ArmandoAddress =
   "erd1ag6nvusjhcw90ntutyzsn7gntmgx9rv8xz2qczgquy48ltaxqghqxs0rkl";
+// Nick
+export const NickAddress =
+  "erd1kn7k3mxqh8m5tpadngexcfeaff8fvv85lh98rftfecp8uqetmyystdfspe";
 
 export const admins = [
-  // ArmandoAddress,
+  NickAddress,
   DinosAddress,
   KostasAddress1,
   KostasAddress2,
