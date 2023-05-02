@@ -107,7 +107,7 @@ const NftList = () => {
               balance: offer3.price,
               decimals: offer3.elrondToken?.decimals,
             })}{" "}
-            {formatTokenI(offer3.token)} <br /> Mint a random Mice
+            {formatTokenI(offer3.token)} <br /> Get a random Mice
           </Text>
         }
         disabled={offer3.numberOfAvilableNfts === 0}
