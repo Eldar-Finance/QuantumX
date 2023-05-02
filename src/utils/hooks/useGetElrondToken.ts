@@ -49,6 +49,15 @@ const useGetElrondToken = (tokenIdeniifer: string) => {
     };
   }
 
+  if (tokenIdeniifer === toknesID.nfttoken) {
+    manualData = {
+      ...dataApi,
+      assets: {
+        svgUrl: "/images/nfttoken.png",
+      },
+    };
+  }
+
   const finalDAta: IElrondToken = manualData || dataApi;
   return {
     token: finalDAta,
