@@ -1,6 +1,7 @@
 import { Center, Flex, Text } from "@chakra-ui/react";
 import { toknesID } from "api/net.config";
 import bearImage from "assets/logos/bear.png";
+import nftImage from "assets/logos/nfttoken.png";
 import NextImage from "components/NextImage/NextImage";
 import { Fragment } from "react";
 import useGetMultipleElrondTokens from "utils/hooks/useGetMultipleElrondTokens";
@@ -29,6 +30,9 @@ const EarnTokens = ({ userRewardsTokensIdentifiers }: IProps) => {
         {rewardsTokens.map((rewardsToken) => {
           if (rewardsToken.identifier === toknesID.bear) {
             manualImage = bearImage;
+          }
+          if (rewardsToken.identifier === toknesID.nfttoken) {
+            manualImage = nftImage;
           }
           return (
             <Fragment key={rewardsToken.identifier}>
