@@ -9,6 +9,7 @@ import { useAppSelector } from "utils/hooks/redux";
 import { proteoFarmsArr } from "views/Farms/constants";
 import { useGetFarmsLpPrices } from "./useGetFarmsLpPrices";
 import useGetMultipleElrondTokens from "./useGetMultipleElrondTokens";
+import { allHypeFarms } from "views/Hypezone/utils/constants";
 
 const useGetTotalValueInFarms = () => {
   const { data } = useAppSelector((state) => state.proteo.generalInfoApp);
@@ -73,6 +74,10 @@ const useGetTotalValueInFarms = () => {
           // info from sc about the farm
           const farm = farms2[i];
 
+          // Skip the calculation if the farmID exists in allHypeFarms array
+          if (allHypeFarms.includes(farm.farm.farmId)) {
+            continue;
+          }
           const stakingToken = tokens.find(
             (token) => token.identifier === farm.farm.stakingToken
           );

@@ -28,6 +28,7 @@ import { useAppDispatch, useAppSelector } from "utils/hooks/redux";
 import useGetTotalValueInFarms from "utils/hooks/useGetTotalValueInFarms";
 import BearlyBonding from "./components/BearlyBonding/BearlyBonding";
 import FarmsList from "./components/FarmsList/FarmsList";
+
 const Farms = () => {
   const dispatch = useAppDispatch();
   const address = useAppSelector(selectUserAddress);

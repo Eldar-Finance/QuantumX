@@ -7,6 +7,7 @@ import { formatBalanceDolar } from "utils/functions/formatBalance";
 import { useAppSelector } from "utils/hooks/redux";
 import { proteoPoolsArr } from "views/Pools/constants";
 import useGetMultipleElrondTokens from "./useGetMultipleElrondTokens";
+import { allHypeFarms } from "views/Hypezone/utils/constants";
 
 const useGetTotalValuePools = () => {
   const { data } = useAppSelector((state) => state.proteo.generalInfoApp);
@@ -68,6 +69,11 @@ const useGetTotalValuePools = () => {
 
         for (let i = 0; i < farms2.length; i++) {
           const farm = farms2[i];
+
+          // Skip the calculation if the farmID exists in allHypeFarms array
+          if (allHypeFarms.includes(farm.farm.farmId)) {
+            continue;
+          }
 
           const stakingToken = farms2Tokens.find(
             (token) => token.identifier === farm.farm.stakingToken
