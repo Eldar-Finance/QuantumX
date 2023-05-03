@@ -4,7 +4,7 @@ import { formatNumber } from "utils/functions/formatBalance";
 
 interface IProps {
   value: number;
-  type: "FARMS" | "POOLS";
+  type: "FARMS" | "POOLS" | "HYPEZONE";
 }
 
 const AmountBox1 = ({ type, value }: IProps) => {
