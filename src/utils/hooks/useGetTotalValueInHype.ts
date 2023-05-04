@@ -70,7 +70,6 @@ const useGetTotalValueInHype = () => {
 
           // TVL of secondary token in Dual pools
           if (farm.extraPools.length !== 0) {
-            console.log(farm.extraPools[0]);
 
             const extra_farm = farm.extraPools[0];
 
