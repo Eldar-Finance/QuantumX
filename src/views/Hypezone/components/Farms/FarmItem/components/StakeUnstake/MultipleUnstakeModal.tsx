@@ -10,6 +10,7 @@ import {
   ModalHeader,
   Text,
 } from "@chakra-ui/react";
+import { getNetworkStats } from "api/rest/elrondApi/network";
 import { scCall } from "api/sc/calls";
 import BigNumber from "bignumber.js";
 import ActionButton from "components/ActionButton/ActionButton";
@@ -17,6 +18,7 @@ import InputText from "components/Inputs/InputText";
 import MyModal from "components/Modal/Modal";
 import { useFormik } from "formik";
 import { useRef } from "react";
+import useSWR from "swr";
 import { formatBalance, setElrondBalance } from "utils/functions/formatBalance";
 import { formatTokenI } from "utils/functions/tokens";
 import useGetMultipleElrondTokens from "utils/hooks/useGetMultipleElrondTokens";
@@ -25,6 +27,8 @@ import { IElrondToken } from "utils/types/elrond.interface";
 import { IScFarmItem, IScUserFarmInfo } from "utils/types/sc.interface";
 import useMultiSakingRatio from "views/Pools/hooks/useMultiSakingRatio";
 import * as yup from "yup";
+import { allHypeFarms } from "views/Hypezone/utils/constants";
+import { useGetFarmUnbondingPeriod } from "views/Hypezone/utils/hooks";
 
 interface IProps {
   isOpen: boolean;
@@ -96,6 +100,16 @@ const MultipleUnstakeModal = ({
   const transformValue = (val: string) => {
     return setElrondBalance(Number(val), token.decimals);
   };
+
+  const { data: statsRes } = useSWR("/stats", getNetworkStats);
+  const currentEpoch = statsRes?.data?.epoch;
+
+  const { unbondingPeriod } = useGetFarmUnbondingPeriod(farm.farm.farmId);
+
+  let finalFee = farmFee.earlyUnbondingFee;
+  if (userFarmItem.unboundingEpoch - currentEpoch <= unbondingPeriod / 2) {
+    finalFee = finalFee / 2;
+  }
 
   return (
     <MyModal bg="black.baseDark" isOpen={isOpen} onClose={onClose}>

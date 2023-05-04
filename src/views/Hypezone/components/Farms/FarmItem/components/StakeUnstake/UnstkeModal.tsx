@@ -24,7 +24,7 @@ import { formatTokenI } from "utils/functions/tokens";
 import useGetQuantumxFarmsFees from "utils/hooks/useGetQuantumxFarmsFees";
 import { IElrondToken } from "utils/types/elrond.interface";
 import { IScFarmItem, IScUserFarmInfo } from "utils/types/sc.interface";
-import { hypeFarmIds } from "views/Hypezone/utils/constants";
+import { allHypeFarms } from "views/Hypezone/utils/constants";
 import { getTxForRareFee } from "views/Hypezone/utils/functions";
 import { useGetFarmUnbondingPeriod } from "views/Hypezone/utils/hooks";
 import * as yup from "yup";
@@ -168,7 +168,7 @@ const UnstakeModal = ({
                 {epochDiffrence <= 0 && farmFee.earlyUnbondingFee > 0 && (
                   <Text fontSize={"sm"} color="darkgray">
                     ⚠️ Fee :{" "}
-                    {farm.farm.farmId === hypeFarmIds[0]
+                    {allHypeFarms.includes(farm.farm.farmId)
                       ? finalFee
                       : farmFee.earlyUnbondingFee}
                     %
