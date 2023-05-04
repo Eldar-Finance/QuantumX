@@ -12,7 +12,7 @@ const Title = ({
   title,
   subtitle,
   amount,
-  tvlText = "Total value Locked on Farms",
+  tvlText = "Total value Locked in Farms",
 }: IProps) => {
   return (
     <Box textAlign={"center"}>

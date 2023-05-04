@@ -72,7 +72,7 @@ const Hypezone = () => {
                 title="Hypezone"
                 subtitle="High Yield farming & pools for SRB $HYPE token"
                 amount={hypeTvl}
-                tvlText="Total value Locked on Hypezone"
+                tvlText="Total value Locked in Hypezone"
               />
             </Box>
             <Flex

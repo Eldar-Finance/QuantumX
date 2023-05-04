@@ -125,6 +125,7 @@ const Pools = () => {
             title="Pools"
             subtitle="Stake in Single Asset (SA) Pools"
             amount={totalValueLocked}
+            tvlText = "Total value Locked in Pools"
           />
           <Flex w="full" justifyContent={"flex-end"} mt="12">
             <Flex gap="20px">
