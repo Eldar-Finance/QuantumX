@@ -4,7 +4,9 @@ import {
   IScPayment,
   IScQxTagExtension,
   IScQxTagInfo,
+  IScQxGetAddress
 } from "utils/types/sc.interface";
+import { BytesValue } from "@multiversx/sdk-core/out";
 
 export const fetchUserTag = async (address: string): Promise<IScQxTagInfo> => {
   const scRes = await scQuery("tagsWsp", "getUserInfo", [
@@ -59,4 +61,19 @@ export const fetchUserNameUpdateCost = async (): Promise<IScPayment> => {
   }
 
   return finalData;
+};
+
+export const getAddress = async (username: string, extension: string): Promise<IScQxGetAddress> => {
+  const scRes = await scQuery("tagsWsp", "getAddress", [
+    new BytesValue(Buffer.from(username, "utf-8")), 
+    new BytesValue(Buffer.from(extension, "utf-8"))
+  ]);
+
+  const address = scRes.firstValue?.valueOf().toString("hex");
+
+  if(address == "erd1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq6gq4hu"){
+    throw new Error("Address not found");
+  }
+
+  return address;
 };

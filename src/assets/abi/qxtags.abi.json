@@ -176,6 +176,51 @@
             ]
         },
         {
+            "name": "getAddress",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "username",
+                    "type": "bytes"
+                },
+                {
+                    "name": "extension",
+                    "type": "bytes"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "Address"
+                }
+            ]
+        },
+        {
+            "name": "getReport",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<tuple<bytes,bytes,Address>>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "testCall",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "address",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "bytes"
+                }
+            ]
+        },
+        {
             "name": "username",
             "mutability": "readonly",
             "inputs": [
@@ -217,6 +262,21 @@
             "outputs": [
                 {
                     "type": "bytes"
+                }
+            ]
+        },
+        {
+            "name": "tagAddress",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "qtag",
+                    "type": "bytes"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "Address"
                 }
             ]
         },
@@ -440,12 +500,12 @@
             "mutability": "mutable",
             "inputs": [
                 {
-                    "name": "address",
-                    "type": "Address"
-                },
-                {
                     "name": "name",
                     "type": "bytes"
+                },
+                {
+                    "name": "address",
+                    "type": "Address"
                 },
                 {
                     "name": "percentage",

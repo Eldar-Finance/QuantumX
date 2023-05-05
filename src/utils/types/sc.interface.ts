@@ -125,3 +125,8 @@ export interface IScQxTagInfo {
 export interface IScQxTagExtension extends IScPayment {
   extension: string;
 }
+
+export interface IScQxGetAddress {
+  username: string;
+  extension: string;
+}

@@ -7,6 +7,7 @@ import {
   ModalHeader,
   Textarea,
   VStack,
+  Text
 } from "@chakra-ui/react";
 import BigNumber from "bignumber.js";
 import ActionButton from "components/ActionButton/ActionButton";
@@ -21,6 +22,7 @@ import useGetUserTokens from "utils/hooks/useGetUserTokens";
 import { sendUserTokens } from "views/Dashboard/services";
 import AmountField from "./AmountField";
 import FeeSlider from "./FeeSlider";
+import { getAddress } from "../../../../Tags/services/queries";
 
 const defaultFee = 7;
 
@@ -50,6 +52,13 @@ const TransactionModal = ({ isOpen, onClose }: IProps) => {
   );
   const formik = useFormik({
     initialValues: initialValues,
+    validate: (values) => {
+      const errors: Partial<IFormData> = {};
+      if (!values.address) {
+        errors.address = "Required";
+      }
+      return errors;
+    },
     onSubmit: (values) => {
       sendUserTokens(
         values.address,
@@ -96,6 +105,22 @@ const TransactionModal = ({ isOpen, onClose }: IProps) => {
     .multipliedBy(formik.values.fee)
     .toString();
 
+    const getAddressViaQxTag = async () => {
+      try {
+        let qxTag = formik.values.address;
+        if (qxTag.includes(".")) {
+          const username = qxTag.split(".")[0];
+          const extension = qxTag.split(".")[1];
+    
+          const res = await getAddress(username, extension);
+          console.log(res)
+          formik.setFieldValue("address", res);
+        }
+      } catch (error) {
+        formik.setFieldError("address", error.message);
+      }
+    };
+
   return (
     <MyModal
       isOpen={isOpen}
@@ -117,12 +142,21 @@ const TransactionModal = ({ isOpen, onClose }: IProps) => {
               <FormLabel>To</FormLabel>
               <Input
                 onChange={formik.handleChange}
+                onBlur={(e) => {
+                  formik.handleBlur(e);
+                  getAddressViaQxTag();
+                }}
                 placeholder="address"
                 name="address"
                 border={"none"}
                 bg="black.base"
                 h="52px"
               />
+              {formik.touched.address && formik.errors.address ? (
+                <Text fontSize="sm" color="red.500" p={1}>
+                  {formik.errors.address}
+                </Text>
+              ) : null}
             </FormControl>
 
             {/* Amount */}
@@ -155,7 +189,7 @@ const TransactionModal = ({ isOpen, onClose }: IProps) => {
             </FormControl>
 
             {selectedToken && (
-              <ActionButton type="submit">
+              <ActionButton type="submit"  disabled={!formik.isValid}>
                 Send {formatTokenI(selectedToken.identifier)}
               </ActionButton>
             )}
