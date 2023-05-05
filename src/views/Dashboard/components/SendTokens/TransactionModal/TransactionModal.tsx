@@ -7,8 +7,10 @@ import {
   ModalHeader,
   Textarea,
   VStack,
-  Text
+  Text,
+  Flex
 } from "@chakra-ui/react";
+import { CheckIcon, CloseIcon } from '@chakra-ui/icons'
 import BigNumber from "bignumber.js";
 import ActionButton from "components/ActionButton/ActionButton";
 import MyModal from "components/Modal/Modal";
@@ -23,6 +25,7 @@ import { sendUserTokens } from "views/Dashboard/services";
 import AmountField from "./AmountField";
 import FeeSlider from "./FeeSlider";
 import { getAddress } from "../../../../Tags/services/queries";
+import { formatAddress } from "utils/functions/formatAddress";
 
 const defaultFee = 7;
 
@@ -105,21 +108,22 @@ const TransactionModal = ({ isOpen, onClose }: IProps) => {
     .multipliedBy(formik.values.fee)
     .toString();
 
-    const getAddressViaQxTag = async () => {
-      try {
-        let qxTag = formik.values.address;
-        if (qxTag.includes(".")) {
-          const username = qxTag.split(".")[0];
-          const extension = qxTag.split(".")[1];
-    
-          const res = await getAddress(username, extension);
-          console.log(res)
-          formik.setFieldValue("address", res);
-        }
-      } catch (error) {
-        formik.setFieldError("address", error.message);
+  const getAddressViaQxTag = async () => {
+    try {
+      let qxTag = formik.values.address;
+      if (qxTag.includes(".")) {
+        const username = qxTag.split(".")[0];
+        const extension = qxTag.split(".")[1];
+
+        const res = await getAddress(username, extension);
+        formik.setFieldValue("address", res);
+        formik.setStatus(res);
       }
-    };
+    } catch (error) {
+      formik.setFieldError("address", error.message);
+      formik.setStatus(null);
+    }
+  };
 
   return (
     <MyModal
@@ -153,9 +157,15 @@ const TransactionModal = ({ isOpen, onClose }: IProps) => {
                 h="52px"
               />
               {formik.touched.address && formik.errors.address ? (
-                <Text fontSize="sm" color="red.500" p={1}>
-                  {formik.errors.address}
-                </Text>
+                <Flex alignItems="center" fontSize="sm" color="red.500" p={2}>
+                  <CloseIcon fontSize={10} />
+                  <Text ml={2}>{formik.errors.address}</Text>
+                </Flex>
+              ) : formik.status ? (
+                <Flex alignItems="center" fontSize="sm" color="#22F7DD" p={2}>
+                  <CheckIcon fontSize={10} />
+                  <Text ml={2}>Address: {formatAddress(formik.status)}</Text>
+                </Flex>
               ) : null}
             </FormControl>
 
@@ -189,7 +199,7 @@ const TransactionModal = ({ isOpen, onClose }: IProps) => {
             </FormControl>
 
             {selectedToken && (
-              <ActionButton type="submit"  disabled={!formik.isValid}>
+              <ActionButton type="submit" disabled={!formik.isValid}>
                 Send {formatTokenI(selectedToken.identifier)}
               </ActionButton>
             )}
