@@ -27,6 +27,7 @@ const Footer = () => {
         <NextImage
           src={footerImage}
           alt=""
+          layout="responsive"
           style={{
             height: "100%",
           }}
