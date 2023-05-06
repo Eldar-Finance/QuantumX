@@ -25,7 +25,7 @@ const QuantumXFeatures = () => {
           >
             QuantumX is a decentralised platform that provides a tightly
             integrated ecosystem of dApps <br /> aiming to get full advantage of
-            the power of MultiversX!
+            the power of MultiversX.
           </Heading>
 
           <Grid
