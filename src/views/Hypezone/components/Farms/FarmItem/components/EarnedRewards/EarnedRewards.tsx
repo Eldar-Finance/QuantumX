@@ -1,5 +1,7 @@
 import { Center, Flex, Text } from "@chakra-ui/react";
 import NextImage from "components/NextImage/NextImage";
+import nftImage from "assets/logos/nfttoken.png";
+import { toknesID } from "api/net.config";
 import { formatBalance } from "utils/functions/formatBalance";
 import useGetMultipleElrondTokens from "utils/hooks/useGetMultipleElrondTokens";
 import { IScUserFarmRewards } from "utils/types/sc.interface";
@@ -13,6 +15,7 @@ const EarnedRewards = ({ userRewards, multifarmRewardsLeft }: IProps) => {
   const { tokens: rewardsTokens } = useGetMultipleElrondTokens(
     multifarmRewardsLeft
   );
+  let manualImage = null;
 
   return (
     <Flex flexDir={"column"}>
@@ -20,6 +23,11 @@ const EarnedRewards = ({ userRewards, multifarmRewardsLeft }: IProps) => {
         EARNED REWARDS
       </Text>
       {rewardsTokens.map((rewardsToken) => {
+
+        if (rewardsToken.identifier === toknesID.nfttoken) {
+          manualImage = nftImage;
+        }
+
         const rewardInfo = userRewards.find(
           (r) => r.rewardToken === rewardsToken.identifier
         );
@@ -39,13 +47,19 @@ const EarnedRewards = ({ userRewards, multifarmRewardsLeft }: IProps) => {
                   decimals: rewardsToken.decimals,
                 })}
               </Text>{" "}
-              {rewardsToken?.assets?.svgUrl && (
-                <NextImage
-                  src={rewardsToken.assets.svgUrl}
-                  alt=""
-                  height={30}
-                  width={30}
-                />
+              {manualImage ? (
+                <NextImage alt="" src={manualImage} height={30} width={30} />
+              ) : (
+                <>
+                  {rewardsToken?.assets?.svgUrl && (
+                    <NextImage
+                      src={rewardsToken.assets.svgUrl}
+                      alt=""
+                      height={30}
+                      width={30}
+                    />
+                  )}
+                </>
               )}
             </Flex>
           </Center>

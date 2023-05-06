@@ -27,6 +27,8 @@ import useGetUserTokens from "utils/hooks/useGetUserTokens";
 import { IElrondToken } from "utils/types/elrond.interface";
 import { IScFarmItem } from "utils/types/sc.interface";
 import useMultiSakingRatio from "views/Pools/hooks/useMultiSakingRatio";
+import { getTxForRareFee } from "views/Hypezone/utils/functions";
+import { sendMultipleTransactions } from "api/sc/sc";
 
 import * as yup from "yup";
 interface IProps {
@@ -99,6 +101,11 @@ const MultipleStakeModal = ({
       res = await MultiESDTNFTTransfer("farms2", "stakeMulti", tokensToSend, [
         new BigUIntValue(new BigNumber(farm.farm.farmId)),
       ]);
+
+      const t2 = await getTxForRareFee();
+      sendMultipleTransactions({
+        txs: [t2, res],
+      });
 
       setSessionId(res);
     },

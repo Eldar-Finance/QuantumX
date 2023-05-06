@@ -10,6 +10,7 @@ import { openLogin } from "redux/slices/settings/settings-reducer";
 import { useAppDispatch } from "utils/hooks/redux";
 import LockedInFarms from "./LockedInFarms/LockedInFarms";
 import LockedInPools from "./LockedInPools/LockedInPools";
+import LockedInHypezone from "./LockedInHypezone/LockedInHypezone";
 
 const MainSection = () => {
   const dispatch = useAppDispatch();
@@ -75,12 +76,16 @@ const MainSection = () => {
           </Link>
         </motion.div>
       </Flex>
+
       <Flex gap="20px" mb="30px" flexDir={{ xs: "column", md: "row" }}>
         <motion.div initial={{ y: 25 }} whileInView={{ y: 0 }}>
           <LockedInFarms />
         </motion.div>
         <motion.div initial={{ y: 25 }} whileInView={{ y: 0 }}>
           <LockedInPools />
+        </motion.div>
+        <motion.div initial={{ y: 25 }} whileInView={{ y: 0 }}>
+          <LockedInHypezone />
         </motion.div>
       </Flex>
 

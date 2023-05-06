@@ -4,6 +4,7 @@ import { contractAddr } from "api/net.config";
 import { EGLDPayment, ESDTTransfer } from "api/sc/calls";
 import srbImage from "assets/hub/srbcatalog.jpg";
 import vacineImage from "assets/hub/vacine.png";
+import miceCityImage from "assets/hub/miceCityImage.jpg";
 import BigNumber from "bignumber.js";
 import { formatBalance } from "utils/functions/formatBalance";
 import { formatTokenI } from "utils/functions/tokens";
@@ -28,8 +29,8 @@ const NftList = () => {
     elrondToken: tokens.find((t) => t.identifier === offers[0].token),
   };
   const offer3 = {
-    ...offers[2],
-    elrondToken: tokens.find((t) => t.identifier === offers[2].token),
+    ...offers[3],
+    elrondToken: tokens.find((t) => t.identifier === offers[3].token),
   };
 
   const handleSubmitHubOffer = (offer) => {
@@ -95,9 +96,9 @@ const NftList = () => {
           </Text>
         }
       />
-      {/* <NftCard
+      <NftCard
         token={offer3.token}
-        iamge={flamieImage}
+        iamge={miceCityImage}
         onSubmit={() => handleSubmitHubOffer(offer3)}
         text={
           <Text>
@@ -106,11 +107,11 @@ const NftList = () => {
               balance: offer3.price,
               decimals: offer3.elrondToken?.decimals,
             })}{" "}
-            {formatTokenI(offer3.token)} <br /> Mint a random Flamie
+            {formatTokenI(offer3.token)} <br /> Get a random Mice
           </Text>
         }
         disabled={offer3.numberOfAvilableNfts === 0}
-      /> */}
+      />
     </Center>
   );
 };

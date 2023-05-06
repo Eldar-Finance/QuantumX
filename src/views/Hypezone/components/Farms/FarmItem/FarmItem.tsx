@@ -122,6 +122,8 @@ const Farms2Item = ({
     fixedStakedBalance
   );
 
+  // console.log(farm.farm.farmId)
+
   return (
     <FarmItemContext.Provider value={{ farm }}>
       <AccordionItem w="full">
@@ -283,12 +285,16 @@ const Farms2Item = ({
                   h="full"
                   justifyContent={"center"}
                 >
-                  <Text textTransform={"uppercase"} color="white.400">
-                    Apr / Apy
-                  </Text>
+                <Text textTransform={"uppercase"} color="white.400">
+                  Apr / Apy
+                </Text>
+                {farm.farm.farmId !== 41 ? (
                   <Text>
                     {apr} / {apy}
                   </Text>
+                ) : (
+                  <Text>Variable</Text>
+                )}
                 </Flex>
                 <Flex
                   flexDir={"column"}
