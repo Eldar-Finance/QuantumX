@@ -86,7 +86,7 @@ export const fetchQxTagList = async (): Promise<IScQxTagReport[]> => {
   const results: IScQxTagReport[] = rawResults.map((rawResult: any) => ({
     username: Buffer.from(rawResult.field0).toString('utf-8'),
     extension: Buffer.from(rawResult.field1).toString('utf-8'),
-    address: rawResult.field2,
+    address: rawResult.field2.toString("hex"),
   }));
 
   return results;

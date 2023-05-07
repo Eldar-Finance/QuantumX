@@ -6,13 +6,14 @@ import { formatBalance } from "utils/functions/formatBalance";
 import { formatTokenI } from "utils/functions/tokens";
 import useGetUserTokens from "utils/hooks/useGetUserTokens";
 import { IScQxTagExtension } from "utils/types/sc.interface";
-import useGetQTag, { useGetExtensionsList } from "views/Tags/hooks/useGetQTag";
+import useGetQTag, { useGetExtensionsList, useGetQxAllTags } from "views/Tags/hooks/useGetQTag";
 import { useGetUserNameUpdateCost } from "views/Tags/hooks/useGetUserNameUpdateCost";
 import { replaceExtension, updsteUserName } from "views/Tags/services/calls";
 import * as Yup from "yup";
 import CardButtons from "../CardButtons/CardButtons";
 import ExtensionSelect from "../ExtensionSelect/ExtensionSelect";
 import TagCard from "../TagCard/TagCard";
+
 const validationSchema = Yup.object({
   //validate only numbers and letters
   tag: Yup.string()
@@ -27,17 +28,32 @@ const ChangeTag = () => {
   const [canUpdateUsername, setCanUpdateUsername] = useState(true);
   const [canUpdateExtension, setCanUpdateExtension] = useState(false);
   const { tagInfo } = useGetQTag();
+  const { dataTagsInfo, error } = useGetQxAllTags();
+
+  const isTagAlreadyExist = async (username: string, extension: string): Promise<boolean> => {
+    return dataTagsInfo.some(t => t.username === username && t.extension === extension);
+  };
+
   const formik = useFormik({
     initialValues: {
       tag: "",
       extention: null,
     },
 
-    onSubmit: (values) => {
-      if (canUpdateUsername) {
-        updsteUserName(values.tag, usernameUpdateCost);
+    onSubmit: async (values) => {
+      const inputTag = values.tag + "." + values.extention.extension;
+      const existingTag = tagInfo.tag;
+      const isTagExist = await isTagAlreadyExist(values.tag, values.extention.extension);
+      if (existingTag === inputTag) {
+        formik.setFieldError("tag", "You have already this tag");
+      } else if (isTagExist) {
+        formik.setFieldError("tag", "Tag already exists");
       } else {
-        replaceExtension(values.extention);
+        if (canUpdateUsername) {
+          updsteUserName(values.tag, usernameUpdateCost);
+        } else {
+          replaceExtension(values.extention);
+        }
       }
     },
     validationSchema: validationSchema,
@@ -46,16 +62,21 @@ const ChangeTag = () => {
     canUpdateUsername
       ? usernameUpdateCost?.token
       : formik.values.extention
-      ? (formik.values.extention as IScQxTagExtension)?.token
-      : null
+        ? (formik.values.extention as IScQxTagExtension)?.token
+        : null
   );
   const handleSelectExtension = (val: IScQxTagExtension) => {
     formik.setFieldValue("extention", val, false);
   };
 
   useEffect(() => {
-    if (extensionsInfo.length > 0) {
-      formik.setFieldValue("extention", extensionsInfo[0], false);
+    if (tagInfo.extension !== "") {
+      const userExtension = extensionsInfo.find(
+        (ext) => ext.extension === tagInfo.extension
+      );
+      if (userExtension) {
+        formik.setFieldValue("extention", userExtension, false);
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [extensionsInfo]);
@@ -122,9 +143,12 @@ const ChangeTag = () => {
           disabled={!canUpdateUsername}
         />
         <ExtensionSelect
-          onSelect={handleSelectExtension}
-          selectedExtention={formik.values.extention}
           disabled={!canUpdateExtension}
+          onSelect={(selectedExtension) => {
+            formik.setFieldValue("extention", selectedExtension);
+            formik.setFieldError("tag", null); // clear the tag error
+          }}
+          selectedExtention={formik.values.extention}
         />
       </Flex>
       <Flex mb={14} fontSize={"sm"} color="tomato">
@@ -134,30 +158,30 @@ const ChangeTag = () => {
         isInvalid={
           isInvalid ||
           formatBalance(costToken, true) <
-            formatBalance(
-              {
-                balance: canUpdateUsername
-                  ? usernameUpdateCost?.amount
-                  : formik.values.extention.amount,
-                decimals: costToken?.decimals,
-              },
-              true
-            )
+          formatBalance(
+            {
+              balance: canUpdateUsername
+                ? usernameUpdateCost?.amount
+                : formik.values.extention.amount,
+              decimals: costToken?.decimals,
+            },
+            true
+          )
         }
         cost={
           canUpdateUsername
             ? usernameUpdateCost
               ? `${formatBalance({
-                  balance: usernameUpdateCost.amount,
-                  decimals: costToken?.decimals,
-                })} ${formatTokenI(usernameUpdateCost.token)}`
+                balance: usernameUpdateCost.amount,
+                decimals: costToken?.decimals,
+              })} ${formatTokenI(usernameUpdateCost.token)}`
               : ""
             : formik.values.extention
-            ? `${formatBalance({
+              ? `${formatBalance({
                 balance: (formik.values.extention as IScQxTagExtension).amount,
                 decimals: costToken?.decimals,
               })} ${formatTokenI(formik.values.extention.token)}`
-            : ""
+              : ""
         }
       />
     </TagCard>
