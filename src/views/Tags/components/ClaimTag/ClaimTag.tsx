@@ -5,7 +5,7 @@ import { formatBalance } from "utils/functions/formatBalance";
 import { formatTokenI } from "utils/functions/tokens";
 import useGetAccountToken from "utils/hooks/useGetAccountToken";
 import { IScQxTagExtension } from "utils/types/sc.interface";
-import { useGetExtensionsList } from "views/Tags/hooks/useGetQTag";
+import { useGetExtensionsList, useGetQxAllTags } from "views/Tags/hooks/useGetQTag";
 import { registerTag } from "views/Tags/services/calls";
 import * as Yup from "yup";
 import CardButtons from "../CardButtons/CardButtons";
@@ -19,7 +19,13 @@ const validationSchema = Yup.object({
   extention: Yup.object().required("Required"),
 });
 const ClaimTag = () => {
+
   const { extensionsInfo, isLoading } = useGetExtensionsList();
+  const { dataTagsInfo, error } = useGetQxAllTags();
+
+  const isTagAlreadyExist = async (username: string, extension: string): Promise<boolean> => {
+    return dataTagsInfo.some(t => t.username === username && t.extension === extension);
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -27,8 +33,13 @@ const ClaimTag = () => {
       extention: null,
     },
 
-    onSubmit: (values) => {
-      registerTag(values.tag, values.extention);
+    onSubmit: async (values) => {
+      const isTagExist = await isTagAlreadyExist(values.tag, values.extention.extension);
+      if (isTagExist) {
+        formik.setFieldError("tag", "Tag already exists");
+      } else {
+        registerTag(values.tag, values.extention);
+      }
     },
     validationSchema: validationSchema,
   });
@@ -77,7 +88,10 @@ const ClaimTag = () => {
           onChange={formik.handleChange}
         />
         <ExtensionSelect
-          onSelect={handleSelectExtension}
+          onSelect={(selectedExtension) => {
+            formik.setFieldValue("extention", selectedExtension);
+            formik.setFieldError("tag", null); // clear the tag error
+          }}
           selectedExtention={formik.values.extention}
         />
       </Flex>
@@ -88,20 +102,20 @@ const ClaimTag = () => {
         isInvalid={
           isInvalid ||
           formatBalance(costToken, true) <
-            formatBalance(
-              {
-                balance: formik.values.extention?.amount,
-                decimals: costToken?.decimals,
-              },
-              true
-            )
+          formatBalance(
+            {
+              balance: formik.values.extention?.amount,
+              decimals: costToken?.decimals,
+            },
+            true
+          )
         }
         cost={
           formik.values.extention
             ? `${formatBalance({
-                balance: (formik.values.extention as IScQxTagExtension).amount,
-                decimals: costToken?.decimals,
-              })} ${formatTokenI(formik.values.extention.token)}`
+              balance: (formik.values.extention as IScQxTagExtension).amount,
+              decimals: costToken?.decimals,
+            })} ${formatTokenI(formik.values.extention.token)}`
             : ""
         }
       />
