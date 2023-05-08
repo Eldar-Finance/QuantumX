@@ -39,8 +39,6 @@ const ExtensionSelect = ({ onSelect, disabled, selectedExtention, specificCollec
     return true;
   });
 
-  console.log(filteredExtensions)
-
   return (
     <Box>
       <Menu placement="bottom-end">

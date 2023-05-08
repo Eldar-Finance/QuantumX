@@ -1,6 +1,6 @@
 import { Flex, Heading, Input } from "@chakra-ui/react";
 import { useFormik } from "formik";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { formatBalance } from "utils/functions/formatBalance";
 import { formatTokenI } from "utils/functions/tokens";
 import useGetAccountToken from "utils/hooks/useGetAccountToken";
@@ -11,6 +11,11 @@ import * as Yup from "yup";
 import CardButtons from "../CardButtons/CardButtons";
 import ExtensionSelect from "../ExtensionSelect/ExtensionSelect";
 import TagCard from "../TagCard/TagCard";
+import { network } from "api/net.config";
+import axios from "axios";
+import { useAppSelector } from "utils/hooks/redux";
+import { selectUserAddress } from "redux/slices/userAcount/account-slice";
+
 const validationSchema = Yup.object({
   //validate only numbers and letters
   tag: Yup.string()
@@ -22,9 +27,22 @@ const ClaimTag = () => {
 
   const { extensionsInfo, isLoading } = useGetExtensionsList();
   const { dataTagsInfo, error } = useGetQxAllTags();
+  const [data, setData] = useState(null);
+  const userAddress = useAppSelector(selectUserAddress);
 
   const isTagAlreadyExist = async (username: string, extension: string): Promise<boolean> => {
     return dataTagsInfo.some(t => t.username === username && t.extension === extension);
+  };
+
+
+  const fetchData = async (url: string) => {
+    try {
+      const response = await axios.get(url);
+      return response.data;
+    } catch (error) {
+      console.error('API Error:', error);
+      throw new Error('Failed to fetch data from the API');
+    }
   };
 
   const formik = useFormik({
@@ -60,6 +78,29 @@ const ClaimTag = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [extensionsInfo]);
 
+  useEffect(() => {
+    const fetchDataFromApi = async () => {
+      try {
+        const apiURL = `${network.apiAddress}/accounts/${userAddress}/collections?size=50`;
+  
+        const responseData = await fetchData(apiURL);
+        const collectionsToCheck = ["QXFLM-06e81a", "QXHR-9b0bc6"];
+        
+        if (responseData) {
+          const exists = collectionsToCheck.reduce((acc, collection) => {
+            const exists = responseData.some(item => item.collection === collection);
+            acc[collection] = exists;
+            return acc;
+          }, {});
+          setData(exists);
+        }
+      } catch (error) {
+        console.error('Error:', error.message);
+      }
+    };
+    fetchDataFromApi();
+  }, []);
+
   const isInvalid = formik.touched.tag && Boolean(formik.errors.tag);
 
   return (
@@ -93,6 +134,7 @@ const ClaimTag = () => {
             formik.setFieldError("tag", null); // clear the tag error
           }}
           selectedExtention={formik.values.extention}
+          specificCollection={data}
         />
       </Flex>
       <Flex mb={14} fontSize={"sm"} color="tomato">

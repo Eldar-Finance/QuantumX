@@ -106,7 +106,6 @@ const ChangeTag = () => {
   useEffect(() => {
     const fetchDataFromApi = async () => {
       try {
-        //let userAddress = 'erd15j2lu277rqxtk6vqmut9tekv9jy3f9ll9qaad44hntpjprqx2pwqc4td7q';
         const apiURL = `${network.apiAddress}/accounts/${userAddress}/collections?size=50`;
   
         const responseData = await fetchData(apiURL);
