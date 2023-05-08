@@ -44,6 +44,7 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
         flexDir={{ xs: "column", md: "row" }}
         rowGap={1.5}
         columnGap={3}
+        alignItems={"center"}
       >
         {!onlyConnectButton && (
           <>
