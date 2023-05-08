@@ -6,7 +6,7 @@ const {
   ChainID,
   TOKENS_ID,
   eldarSftCollection,
-} = require("config.devnet");
+} = require("config");
 
 export const toknesID = TOKENS_ID;
 export const environment = ENVIROMENT;
