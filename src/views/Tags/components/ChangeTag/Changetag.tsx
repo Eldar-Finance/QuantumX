@@ -106,7 +106,7 @@ const ChangeTag = () => {
   useEffect(() => {
     const fetchDataFromApi = async () => {
       try {
-        const apiURL = `${network.apiAddress}/accounts/${userAddress}/collections?size=50`;
+        const apiURL = `${network.apiAddress}/accounts/${userAddress}/collections?size=350`;
   
         const responseData = await fetchData(apiURL);
         const collectionsToCheck = ["QXFLM-06e81a", "QXHR-9b0bc6"];
