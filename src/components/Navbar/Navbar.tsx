@@ -39,7 +39,7 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
         bg="black.light"
         borderRadius={{ xs: "xl", "2xl": "3xl" }}
         py={{ xs: "15px", "2xl": "40px" }}
-        px={!isLargerThanLg ? "15px" : "80px"} 
+        px={!isLargerThanLg ? "30px" : "80px"}
         display="flex"
         justifyContent={onlyConnectButton ? "flex-end" : "space-between"}
         fontSize={{ xs: "sm", "2xl": "md" }}
@@ -49,24 +49,26 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
         alignItems={"center"}
       >
         {!isLargerThanLg && (
-          <Flex w="full" alignItems={"center"} justifyContent="space-between" direction="column" gap="10px">
-            <Flex w="full" alignItems={"center"} justifyContent="space-between" gap="5px">
-              <Link href={"/"}>
-                <NextImage src={logo} alt="QuantumX" width={90} />
+          <Flex w="full" alignItems="center" justifyContent="space-between" direction="column" gap="10px">
+            <Flex w="full" alignItems="center" justifyContent="space-between">
+              <Link href="/">
+                <NextImage src={logo} alt="QuantumX" width={100} />
               </Link>
-              <QTagButton />
-              {!onlyConnectButton && (
-                <ActionButton
-                  fontSize={{ xs: "14px", "2xl": "md" }}
-                  fontWeight="600"
-                  display={{ xs: "block", md: "none" }}
-                  onClick={isLoggedIn ? handleLogout : handleConnect}
-                  bg={isLoggedIn ? "danger" : "main"}
-                >
-                  <Icon as={LightningIcon} />
-                </ActionButton>
-
-              )}
+              <Flex alignItems="center" justifyContent="flex-end" flex="1">
+                <QTagButton />
+                {!onlyConnectButton && (
+                  <ActionButton
+                    fontSize={{ xs: "14px", "2xl": "md" }}
+                    fontWeight="600"
+                    display={{ xs: "block", md: "none" }}
+                    onClick={isLoggedIn ? handleLogout : handleConnect}
+                    bg={isLoggedIn ? "danger" : "main"}
+                    ml="2px"
+                  >
+                    <Icon as={LightningIcon} />
+                  </ActionButton>
+                )}
+              </Flex>
             </Flex>
             <Box w="fit-content" m="auto">
               <Menu />
@@ -74,11 +76,12 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
           </Flex>
         )}
         {isLargerThanLg && (
-          <Flex w="full" alignItems={"center"} justifyContent="space-between" gap="10px">
+          <Flex w="full" alignItems="center" justifyContent="space-between" gap="10px">
             <Link href={"/"}>
               <NextImage src={logo} alt="QuantumX" width={128} height={38} />
             </Link>
-            <Box w="fit-content" m="auto">
+            <Box ml="150px" />
+            <Box w="fit-content" m="auto" flex="1" display="flex" justifyContent="center">
               <Menu />
             </Box>
             <QTagButton />
