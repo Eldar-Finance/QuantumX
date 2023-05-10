@@ -53,6 +53,8 @@ export const sendTransaction = async ({
   const receiverAddress = new Address(addr);
   const senderAddress = new Address(sender);
 
+  console.log('Debug(sendTransaction) for senderAddress: ', senderAddress);
+
   const tx = new Transaction({
     sender: senderAddress,
     value: value || 0,
