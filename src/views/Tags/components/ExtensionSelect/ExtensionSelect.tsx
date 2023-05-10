@@ -14,11 +14,30 @@ import { useGetExtensionsList } from "views/Tags/hooks/useGetQTag";
 interface IProps {
   onSelect: (extention: IScQxTagExtension) => void;
   selectedExtention: IScQxTagExtension;
+  specificCollection?: { [key: string]: boolean };
   disabled?: boolean;
 }
 
-const ExtensionSelect = ({ onSelect, disabled, selectedExtention }: IProps) => {
+const ExtensionSelect = ({ onSelect, disabled, selectedExtention, specificCollection }: IProps) => {
   const { extensionsInfo } = useGetExtensionsList();
+
+  const filteredExtensions = extensionsInfo.filter((extension) => {
+    if (specificCollection) {
+      if (
+        specificCollection["QXFLM-06e81a"] != true &&
+        extension.extension === "flamie"
+      ) {
+        return false;
+      }
+      if (
+        specificCollection["QXHR-9b0bc6"] != true &&
+        extension.extension === "hero"
+      ) {
+        return false;
+      }
+    }
+    return true;
+  });
 
   return (
     <Box>
@@ -36,16 +55,16 @@ const ExtensionSelect = ({ onSelect, disabled, selectedExtention }: IProps) => {
           )}
         </MenuButton>
         <MenuList maxH={"250px"} overflow={"auto"} bg="black.light" zIndex={10}>
-          {extensionsInfo.map((einfo) => (
+          {filteredExtensions.map((extension) => (
             <MenuItem
-              key={einfo.extension}
-              onClick={() => onSelect(einfo)}
+              key={extension.extension}
+              onClick={() => onSelect(extension)}
               bg="black.light"
               _hover={{
                 bg: "black.base",
               }}
             >
-              {einfo.extension}
+              {extension.extension}
             </MenuItem>
           ))}
         </MenuList>

@@ -27,6 +27,7 @@ const useGetTotalValueInHype = () => {
   useEffect(() => {
     const fetchPriceData = async () => {
       const data = await getJexPrice(["key", toknesID.bonez]);
+      //const data = 0;
       setBonezPrice(data);
     };
     fetchPriceData();

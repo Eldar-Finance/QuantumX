@@ -195,7 +195,7 @@
             ]
         },
         {
-            "name": "getReport",
+            "name": "getAllTags",
             "mutability": "readonly",
             "inputs": [],
             "outputs": [

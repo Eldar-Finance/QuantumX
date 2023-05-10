@@ -10,7 +10,7 @@ const HeadingSection = ({ claimed }: IProps) => {
 
   return (
     <Heading mb={8} as="h1" fontSize={"3xl"} textAlign={"center"}>
-      {claimed ? `Hello, ${tagInfo.username}` : "Claim your QuantumxTag"}
+      {claimed ? `Hello, ${tagInfo.username}.` : "Claim your QuantumxTag"}
     </Heading>
   );
 };

@@ -130,3 +130,9 @@ export interface IScQxGetAddress {
   username: string;
   extension: string;
 }
+
+export interface IScQxTagReport {
+  username: string;
+  extension: string;
+  address: string;
+}

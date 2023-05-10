@@ -7,11 +7,11 @@ import {
 } from "utils/functions/formatBalance";
 const FeeSlider = ({ formik, egldGas, egldPrice, defaultFee }) => {
   const handleChangeFee = (fee: number) => {
-    const realFee = new BigNumber(fee).multipliedBy(1000000).toString();
+    const realFee = new BigNumber(fee).multipliedBy(1000).toString();
     formik.setFieldValue("fee", realFee, false);
   };
   return (
-    <>
+  <>
       <FormControl isInvalid={formik.errors.fee && formik.touched.fee}>
         <FormLabel>Fee</FormLabel>
         <Center
@@ -25,13 +25,13 @@ const FeeSlider = ({ formik, egldGas, egldPrice, defaultFee }) => {
             ≈{" "}
             {formatBalance({
               balance: egldGas,
-              decimals: 18,
+              decimals: 15,
             })}{" "}
             EGLD (≈ $
             {formatBalanceDolar(
               {
                 balance: egldGas,
-                decimals: 18,
+                decimals: 15,
               },
               egldPrice,
               true
@@ -42,20 +42,20 @@ const FeeSlider = ({ formik, egldGas, egldPrice, defaultFee }) => {
         <ChkSlider
           defaultValue={defaultFee}
           onChange={handleChangeFee}
-          maxValue={600}
-          minValue={5}
+          maxValue={400}
+          minValue={50}
           sliderMarks={[
             {
-              label: "25%",
+              label: "30%",
               value: 150,
             },
             {
               label: "50%",
-              value: 300,
+              value: 250,
             },
             {
-              label: "75%",
-              value: 450,
+              label: "70%",
+              value: 350,
             },
           ]}
           step={1}

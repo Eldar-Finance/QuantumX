@@ -6,13 +6,18 @@ import { formatBalance } from "utils/functions/formatBalance";
 import { formatTokenI } from "utils/functions/tokens";
 import useGetUserTokens from "utils/hooks/useGetUserTokens";
 import { IScQxTagExtension } from "utils/types/sc.interface";
-import useGetQTag, { useGetExtensionsList } from "views/Tags/hooks/useGetQTag";
+import useGetQTag, { useGetExtensionsList, useGetQxAllTags } from "views/Tags/hooks/useGetQTag";
 import { useGetUserNameUpdateCost } from "views/Tags/hooks/useGetUserNameUpdateCost";
 import { replaceExtension, updsteUserName } from "views/Tags/services/calls";
 import * as Yup from "yup";
 import CardButtons from "../CardButtons/CardButtons";
 import ExtensionSelect from "../ExtensionSelect/ExtensionSelect";
 import TagCard from "../TagCard/TagCard";
+import { network } from "api/net.config";
+import axios from "axios";
+import { useAppSelector } from "utils/hooks/redux";
+import { selectUserAddress } from "redux/slices/userAcount/account-slice";
+
 const validationSchema = Yup.object({
   //validate only numbers and letters
   tag: Yup.string()
@@ -27,17 +32,44 @@ const ChangeTag = () => {
   const [canUpdateUsername, setCanUpdateUsername] = useState(true);
   const [canUpdateExtension, setCanUpdateExtension] = useState(false);
   const { tagInfo } = useGetQTag();
+  const { dataTagsInfo, error } = useGetQxAllTags();
+  const [data, setData] = useState(null);
+  const userAddress = useAppSelector(selectUserAddress);
+
+  const isTagAlreadyExist = async (username: string, extension: string): Promise<boolean> => {
+    return dataTagsInfo.some(t => t.username === username && t.extension === extension);
+  };
+
+  const fetchData = async (url: string) => {
+    try {
+      const response = await axios.get(url);
+      return response.data;
+    } catch (error) {
+      console.error('API Error:', error);
+      throw new Error('Failed to fetch data from the API');
+    }
+  };
+
   const formik = useFormik({
     initialValues: {
       tag: "",
       extention: null,
     },
 
-    onSubmit: (values) => {
-      if (canUpdateUsername) {
-        updsteUserName(values.tag, usernameUpdateCost);
+    onSubmit: async (values) => {
+      const inputTag = values.tag + "." + values.extention.extension;
+      const existingTag = tagInfo.tag;
+      const isTagExist = await isTagAlreadyExist(values.tag, values.extention.extension);
+      if (existingTag === inputTag) {
+        formik.setFieldError("tag", "You have already this tag");
+      } else if (isTagExist) {
+        formik.setFieldError("tag", "Tag already exists");
       } else {
-        replaceExtension(values.extention);
+        if (canUpdateUsername) {
+          updsteUserName(values.tag, usernameUpdateCost);
+        } else {
+          replaceExtension(values.extention);
+        }
       }
     },
     validationSchema: validationSchema,
@@ -46,16 +78,21 @@ const ChangeTag = () => {
     canUpdateUsername
       ? usernameUpdateCost?.token
       : formik.values.extention
-      ? (formik.values.extention as IScQxTagExtension)?.token
-      : null
+        ? (formik.values.extention as IScQxTagExtension)?.token
+        : null
   );
   const handleSelectExtension = (val: IScQxTagExtension) => {
     formik.setFieldValue("extention", val, false);
   };
 
   useEffect(() => {
-    if (extensionsInfo.length > 0) {
-      formik.setFieldValue("extention", extensionsInfo[0], false);
+    if (tagInfo.extension !== "") {
+      const userExtension = extensionsInfo.find(
+        (ext) => ext.extension === tagInfo.extension
+      );
+      if (userExtension) {
+        formik.setFieldValue("extention", userExtension, false);
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [extensionsInfo]);
@@ -65,6 +102,29 @@ const ChangeTag = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tagInfo.username]);
+
+  useEffect(() => {
+    const fetchDataFromApi = async () => {
+      try {
+        const apiURL = `${network.apiAddress}/accounts/${userAddress}/collections?size=350`;
+  
+        const responseData = await fetchData(apiURL);
+        const collectionsToCheck = ["QXFLM-06e81a", "QXHR-9b0bc6"];
+        
+        if (responseData) {
+          const exists = collectionsToCheck.reduce((acc, collection) => {
+            const exists = responseData.some(item => item.collection === collection);
+            acc[collection] = exists;
+            return acc;
+          }, {});
+          setData(exists);
+        }
+      } catch (error) {
+        console.error('Error:', error.message);
+      }
+    };
+    fetchDataFromApi();
+  }, []);
 
   const handleUpdateUsername = () => {
     setCanUpdateUsername(true);
@@ -122,9 +182,13 @@ const ChangeTag = () => {
           disabled={!canUpdateUsername}
         />
         <ExtensionSelect
-          onSelect={handleSelectExtension}
-          selectedExtention={formik.values.extention}
           disabled={!canUpdateExtension}
+          onSelect={(selectedExtension) => {
+            formik.setFieldValue("extention", selectedExtension);
+            formik.setFieldError("tag", null); // clear the tag error
+          }}
+          selectedExtention={formik.values.extention}
+          specificCollection={data}
         />
       </Flex>
       <Flex mb={14} fontSize={"sm"} color="tomato">
@@ -134,30 +198,30 @@ const ChangeTag = () => {
         isInvalid={
           isInvalid ||
           formatBalance(costToken, true) <
-            formatBalance(
-              {
-                balance: canUpdateUsername
-                  ? usernameUpdateCost?.amount
-                  : formik.values.extention.amount,
-                decimals: costToken?.decimals,
-              },
-              true
-            )
+          formatBalance(
+            {
+              balance: canUpdateUsername
+                ? usernameUpdateCost?.amount
+                : formik.values.extention.amount,
+              decimals: costToken?.decimals,
+            },
+            true
+          )
         }
         cost={
           canUpdateUsername
             ? usernameUpdateCost
               ? `${formatBalance({
-                  balance: usernameUpdateCost.amount,
-                  decimals: costToken?.decimals,
-                })} ${formatTokenI(usernameUpdateCost.token)}`
+                balance: usernameUpdateCost.amount,
+                decimals: costToken?.decimals,
+              })} ${formatTokenI(usernameUpdateCost.token)}`
               : ""
             : formik.values.extention
-            ? `${formatBalance({
+              ? `${formatBalance({
                 balance: (formik.values.extention as IScQxTagExtension).amount,
                 decimals: costToken?.decimals,
               })} ${formatTokenI(formik.values.extention.token)}`
-            : ""
+              : ""
         }
       />
     </TagCard>
