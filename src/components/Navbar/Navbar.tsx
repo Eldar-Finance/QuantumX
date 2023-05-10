@@ -1,5 +1,5 @@
 // import logo from "assets/logos/quantumx.png";
-import { Box, Flex, Icon } from "@chakra-ui/react";
+import { Box, Flex, Icon, useMediaQuery } from "@chakra-ui/react";
 import { useGetLoginInfo } from "@multiversx/sdk-dapp/hooks";
 import { logout } from "@multiversx/sdk-dapp/utils";
 import logo from "assets/logos/quantumx.svg";
@@ -15,6 +15,7 @@ import { openLogin } from "redux/slices/settings/settings-reducer";
 import { useAppDispatch } from "utils/hooks/redux";
 import { getWebUrl } from "utils/routes";
 import Menu from "./Menu/Menu";
+import { breakpoints } from "theme/chakra";
 
 interface IProps {
   onlyConnectButton?: boolean;
@@ -24,6 +25,7 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
   const dispatch = useAppDispatch();
   const location = useRouter().asPath;
   const { isLoggedIn } = useGetLoginInfo();
+  const [isLargerThanLg] = useMediaQuery(`(min-width: ${breakpoints["md"]})`);
 
   const handleLogout = () => {
     logout(getWebUrl(location));
@@ -46,40 +48,53 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
         columnGap={3}
         alignItems={"center"}
       >
-        {!onlyConnectButton && (
-          <>
-            <Flex w="ful" alignItems={"center"} justifyContent="space-between">
+        {!isLargerThanLg && (
+          <Flex w="full" alignItems={"center"} justifyContent="space-between" direction="column" gap="10px">
+            <Flex w="full" alignItems={"center"} justifyContent="space-between">
               <Link href={"/"}>
-                <NextImage src={logo} alt="QuantumX" width={128} height={38} />
+                <NextImage src={logo} alt="QuantumX" width={100} />
               </Link>
+              <QTagButton />
+              {!onlyConnectButton && (
+                <ActionButton
+                  fontSize={{ xs: "14px", "2xl": "md" }}
+                  fontWeight="600"
+                  display={{ xs: "block", md: "none" }}
+                  onClick={isLoggedIn ? handleLogout : handleConnect}
+                  bg={isLoggedIn ? "danger" : "main"}
+                >
+                  <Icon as={LightningIcon} />
+                </ActionButton>
 
-              <ActionButton
-                fontSize={{ xs: "14px", "2xl": "md" }}
-                fontWeight="600"
-                display={{ xs: "block", md: "none" }}
-                onClick={isLoggedIn ? handleLogout : handleConnect}
-                bg={isLoggedIn ? "danger" : "main"}
-              >
-                <Icon as={LightningIcon} />
-              </ActionButton>
+              )}
             </Flex>
             <Box w="fit-content" m="auto">
               <Menu />
             </Box>
-          </>
+          </Flex>
         )}
-        <QTagButton />
-        <ActionButton
-          px={{ xs: "30px", "2xl": "40px" }}
-          fontSize={{ xs: "14px", "2xl": "md" }}
-          fontWeight="500"
-          display={{ xs: "none", md: "block" }}
-          onClick={isLoggedIn ? handleLogout : handleConnect}
-          bg={isLoggedIn ? "danger" : "main"}
-          color={isLoggedIn ? "white" : "black"}
-        >
-          {isLoggedIn ? "Disconnect" : "Connect"}
-        </ActionButton>
+        {isLargerThanLg && (
+          <Flex w="full" alignItems={"center"} justifyContent="space-between" gap="10px">
+            <Link href={"/"}>
+              <NextImage src={logo} alt="QuantumX" width={128} height={38} />
+            </Link>
+            <Box w="fit-content" m="auto">
+              <Menu />
+            </Box>
+            <QTagButton />
+            <ActionButton
+              px={{ xs: "30px", "2xl": "40px" }}
+              fontSize={{ xs: "14px", "2xl": "md" }}
+              fontWeight="500"
+              display={{ xs: "none", md: "block" }}
+              onClick={isLoggedIn ? handleLogout : handleConnect}
+              bg={isLoggedIn ? "danger" : "main"}
+              color={isLoggedIn ? "white" : "black"}
+            >
+              {isLoggedIn ? "Disconnect" : "Connect"}
+            </ActionButton>
+          </Flex>
+        )}
       </MyContainer>
     </motion.div>
   );
