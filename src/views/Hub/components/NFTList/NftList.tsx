@@ -17,8 +17,10 @@ import NftCard from "../NftCard/NftCard";
 const NftList = () => {
   const { offers } = useGetOffers();
   const { tokens } = useGetMultipleElrondTokens(
-    offers ? [offers[0].token, offers[1].token, offers[2].token] : []
+    offers ? [offers[0].token, offers[1].token, offers[3].token, offers[4].token, offers[6].token, offers[7].token] : []
   );
+
+  console.log(offers);
 
   if (!offers || !tokens) return null;
 
@@ -36,15 +38,15 @@ const NftList = () => {
   };
   const offer4 = {
     ...offers[4],
-    elrondToken: tokens.find((t) => t.identifier === offers[3].token),
+    elrondToken: tokens.find((t) => t.identifier === offers[4].token),
   };
   const offer5 = {
-    ...offers[5],
-    elrondToken: tokens.find((t) => t.identifier === offers[3].token),
+    ...offers[7],
+    elrondToken: tokens.find((t) => t.identifier === offers[7].token),
   };
   const offer6 = {
     ...offers[6],
-    elrondToken: tokens.find((t) => t.identifier === offers[3].token),
+    elrondToken: tokens.find((t) => t.identifier === offers[6].token),
   };
 
   const handleSubmitHubOffer = (offer) => {
@@ -91,6 +93,7 @@ const NftList = () => {
             )}{" "}
             {formatTokenI(offer1.token)}
             <br /> Get a random SRB
+            <br /> <br /> Available NFTs: {offer1.numberOfAvilableNfts}
           </Text>
         }
         onSubmit={() => handleSubmitHubOffer(offer1)}
@@ -107,6 +110,7 @@ const NftList = () => {
               decimals: offer2.elrondToken?.decimals,
             })}{" "}
             {formatTokenI(offer2.token)} <br /> Get an Abominator
+            <br /> <br /> Available NFTs: {offer2.numberOfAvilableNfts}
           </Text>
         }
       />
@@ -122,6 +126,7 @@ const NftList = () => {
               decimals: offer3.elrondToken?.decimals,
             })}{" "}
             {formatTokenI(offer3.token)} <br /> Get a random Mice
+            <br /> <br /> Available NFTs: {offer3.numberOfAvilableNfts}
           </Text>
         }
         disabled={offer3.numberOfAvilableNfts === 0}
@@ -142,6 +147,7 @@ const NftList = () => {
             )}{" "}
             {formatTokenI(offer4.token)}
             <br /> Get a random Cow
+            <br /> <br /> Available NFTs: {offer4.numberOfAvilableNfts}
           </Text>
         }
         onSubmit={() => handleSubmitHubOffer(offer4)}
@@ -161,7 +167,8 @@ const NftList = () => {
               8
             )}{" "}
             {formatTokenI(offer5.token)}
-            <br /> Get a random Gnogen
+            <br /> Get a random Gnogon
+            <br /> <br /> Available NFTs: {offer5.numberOfAvilableNfts}
           </Text>
         }
         onSubmit={() => handleSubmitHubOffer(offer5)}
@@ -182,6 +189,7 @@ const NftList = () => {
             )}{" "}
             {formatTokenI(offer6.token)}
             <br /> Get a random SRB
+            <br /> <br /> Available NFTs: {offer6.numberOfAvilableNfts}
           </Text>
         }
         onSubmit={() => handleSubmitHubOffer(offer6)}
