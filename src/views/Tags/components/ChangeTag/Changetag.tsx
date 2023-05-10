@@ -6,7 +6,7 @@ import { formatBalance } from "utils/functions/formatBalance";
 import { formatTokenI } from "utils/functions/tokens";
 import useGetUserTokens from "utils/hooks/useGetUserTokens";
 import { IScQxTagExtension } from "utils/types/sc.interface";
-import useGetQTag, { useGetExtensionsList, useGetQxAllTags } from "views/Tags/hooks/useGetQTag";
+import useGetQTag, { useGetExtensionsList } from "views/Tags/hooks/useGetQTag";
 import { useGetUserNameUpdateCost } from "views/Tags/hooks/useGetUserNameUpdateCost";
 import { replaceExtension, updsteUserName } from "views/Tags/services/calls";
 import * as Yup from "yup";
@@ -17,6 +17,7 @@ import { network } from "api/net.config";
 import axios from "axios";
 import { useAppSelector } from "utils/hooks/redux";
 import { selectUserAddress } from "redux/slices/userAcount/account-slice";
+import { getIsTagAvailable } from "views/Tags/services/queries";
 
 const validationSchema = Yup.object({
   //validate only numbers and letters
@@ -32,12 +33,11 @@ const ChangeTag = () => {
   const [canUpdateUsername, setCanUpdateUsername] = useState(true);
   const [canUpdateExtension, setCanUpdateExtension] = useState(false);
   const { tagInfo } = useGetQTag();
-  const { dataTagsInfo, error } = useGetQxAllTags();
   const [data, setData] = useState(null);
   const userAddress = useAppSelector(selectUserAddress);
 
-  const isTagAlreadyExist = async (username: string, extension: string): Promise<boolean> => {
-    return dataTagsInfo.some(t => t.username === username && t.extension === extension);
+  const isTagAvailable = async (username: string, extension: string): Promise<Boolean> => {
+    return getIsTagAvailable(username, extension);
   };
 
   const fetchData = async (url: string) => {
@@ -59,10 +59,10 @@ const ChangeTag = () => {
     onSubmit: async (values) => {
       const inputTag = values.tag + "." + values.extention.extension;
       const existingTag = tagInfo.tag;
-      const isTagExist = await isTagAlreadyExist(values.tag, values.extention.extension);
+      const isAvailabletag = await isTagAvailable(values.tag, values.extention.extension);
       if (existingTag === inputTag) {
         formik.setFieldError("tag", "You have already this tag");
-      } else if (isTagExist) {
+      } else if (!isAvailabletag) {
         formik.setFieldError("tag", "Tag already exists");
       } else {
         if (canUpdateUsername) {

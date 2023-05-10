@@ -91,3 +91,15 @@ export const fetchQxTagList = async (): Promise<IScQxTagReport[]> => {
 
   return results;
 };
+
+export const getIsTagAvailable = async (username: string, extension: string): Promise<Boolean> => {
+
+  const scRes = await scQuery("tagsWsp", "isTagAvailable", [
+    new BytesValue(Buffer.from(username, "utf-8")),
+    new BytesValue(Buffer.from(extension, "utf-8"))
+  ]);
+
+  const isAvailable = scRes.firstValue?.valueOf();
+
+  return isAvailable;
+}

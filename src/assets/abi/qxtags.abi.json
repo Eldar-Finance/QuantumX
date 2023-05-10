@@ -18,7 +18,40 @@
     },
     "name": "QxTags",
     "constructor": {
-        "inputs": [],
+        "inputs": [
+            {
+                "name": "etx1old",
+                "type": "bytes"
+            },
+            {
+                "name": "etx2old",
+                "type": "bytes"
+            },
+            {
+                "name": "etx1new",
+                "type": "bytes"
+            },
+            {
+                "name": "etx2new",
+                "type": "bytes"
+            },
+            {
+                "name": "erd1",
+                "type": "Address"
+            },
+            {
+                "name": "erd2",
+                "type": "Address"
+            },
+            {
+                "name": "erd3",
+                "type": "Address"
+            },
+            {
+                "name": "erd4",
+                "type": "Address"
+            }
+        ],
         "outputs": []
     },
     "endpoints": [
@@ -195,6 +228,25 @@
             ]
         },
         {
+            "name": "isTagAvailable",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "username",
+                    "type": "bytes"
+                },
+                {
+                    "name": "extension",
+                    "type": "bytes"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "bool"
+                }
+            ]
+        },
+        {
             "name": "getAllTags",
             "mutability": "readonly",
             "inputs": [],
@@ -210,7 +262,7 @@
             "mutability": "readonly",
             "inputs": [
                 {
-                    "name": "address",
+                    "name": "_address",
                     "type": "Address"
                 }
             ],
@@ -277,6 +329,17 @@
             "outputs": [
                 {
                     "type": "Address"
+                }
+            ]
+        },
+        {
+            "name": "taggedUsers",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<Address>",
+                    "multi_result": true
                 }
             ]
         },
