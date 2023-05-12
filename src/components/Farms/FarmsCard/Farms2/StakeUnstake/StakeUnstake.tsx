@@ -92,7 +92,7 @@ const StakeUnstake = ({ farm, userFarmItem, isPool, isBearly }: IProps) => {
         {isAFarmBoost && (
           <Box as="span" color="white">
             <Link href={"https://xoxno.com/collection/SRB-61daf7"} isExternal>
-              (Get 10% Boost by Staking a 🐻SRB NFT)
+              (Get 20% Boost by Staking a 🐻SRB NFT)
             </Link>
           </Box>
         )}
