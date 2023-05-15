@@ -10,7 +10,7 @@ export const registerTag = async (
     "registerQtag",
     0,
     [BytesValue.fromUTF8(tag), BytesValue.fromUTF8(extension.extension)],
-    10000000,
+    30000000,
     extension.amount
   );
   return res;

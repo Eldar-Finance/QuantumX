@@ -72,7 +72,7 @@ export const forceRegisterQxTag = async (
       BytesValue.fromUTF8(username),
       BytesValue.fromUTF8(exrension),
     ],
-    10000000
+    30000000
   );
 };
 

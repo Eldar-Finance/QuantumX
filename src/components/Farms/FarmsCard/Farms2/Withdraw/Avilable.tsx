@@ -115,7 +115,7 @@ const Avilable = ({ farm, userFarmRewards }: IProps) => {
           </Flex>
           {isAFarmBoost && isSrbStaker && (
             <Text align={"center"} fontSize="14px" mt={2}>
-              🐻 You are eligible for 10% Rewards Boost
+              🐻 You are eligible for 20% Rewards Boost
             </Text>
           )}
         </Center>
