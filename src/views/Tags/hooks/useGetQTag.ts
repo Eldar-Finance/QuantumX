@@ -1,8 +1,8 @@
 import { selectUserAddress } from "redux/slices/userAcount/account-slice";
 import useSwr from "swr";
 import { useAppSelector } from "utils/hooks/redux";
-import { IScQxTagExtension, IScQxTagInfo, IScQxTagReport } from "utils/types/sc.interface";
-import { fetchExtensionsList, fetchUserTag, fetchQxTagList } from "../services/queries";
+import { IScQxTagExtension, IScQxTagInfo, IScQxTagMarketplace } from "utils/types/sc.interface";
+import { fetchExtensionsList, fetchUserTag, fetchQxtagMarketplace } from "../services/queries";
 const useGetUserQTag = () => {
   const address = useAppSelector(selectUserAddress);
 
@@ -49,16 +49,11 @@ export const useGetExtensionsList = () => {
     error,
   };
 };
-
-
-export const useGetQxAllTags = () => {
-  const {
-    data: dataTags,
-    error,
-  } = useSwr<IScQxTagReport[]>(
-    `tagsWsp:getAllTags`,
+export const useGetQxTagMarketplace = () => {
+  const { data: dataTags, error } = useSwr<IScQxTagMarketplace[]>(
+    'tagsWsp:getMarketplaceTags',
     async () => {
-      return await fetchQxTagList();
+      return await fetchQxtagMarketplace();
     },
     {
       fallbackData: [],

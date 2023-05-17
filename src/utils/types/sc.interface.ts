@@ -131,7 +131,7 @@ export interface IScQxGetAddress {
   extension: string;
 }
 
-export interface IScQxTagReport {
+export interface IScQxTagMarketplace extends IScPayment{
   username: string;
   extension: string;
   address: string;

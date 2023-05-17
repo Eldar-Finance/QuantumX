@@ -18,40 +18,7 @@
     },
     "name": "QxTags",
     "constructor": {
-        "inputs": [
-            {
-                "name": "etx1old",
-                "type": "bytes"
-            },
-            {
-                "name": "etx2old",
-                "type": "bytes"
-            },
-            {
-                "name": "etx1new",
-                "type": "bytes"
-            },
-            {
-                "name": "etx2new",
-                "type": "bytes"
-            },
-            {
-                "name": "erd1",
-                "type": "Address"
-            },
-            {
-                "name": "erd2",
-                "type": "Address"
-            },
-            {
-                "name": "erd3",
-                "type": "Address"
-            },
-            {
-                "name": "erd4",
-                "type": "Address"
-            }
-        ],
+        "inputs": [],
         "outputs": []
     },
     "endpoints": [
@@ -114,6 +81,45 @@
             ]
         },
         {
+            "name": "listForSale",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "egld_amount",
+                    "type": "BigUint"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "cancelListing",
+            "mutability": "mutable",
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "name": "buyQtag",
+            "mutability": "mutable",
+            "payableInTokens": [
+                "*"
+            ],
+            "inputs": [
+                {
+                    "name": "username",
+                    "type": "bytes"
+                },
+                {
+                    "name": "extension",
+                    "type": "bytes"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "bytes"
+                }
+            ]
+        },
+        {
             "name": "forceRegisterQtag",
             "mutability": "mutable",
             "inputs": [
@@ -139,9 +145,6 @@
         {
             "name": "forceUpdateUsername",
             "mutability": "mutable",
-            "payableInTokens": [
-                "*"
-            ],
             "inputs": [
                 {
                     "name": "address",
@@ -161,9 +164,6 @@
         {
             "name": "forceReplaceExtension",
             "mutability": "mutable",
-            "payableInTokens": [
-                "*"
-            ],
             "inputs": [
                 {
                     "name": "address",
@@ -252,7 +252,7 @@
             "inputs": [],
             "outputs": [
                 {
-                    "type": "variadic<tuple<bytes,bytes,Address>>",
+                    "type": "variadic<tuple<bytes,bytes,Address,EgldOrEsdtTokenPayment>>",
                     "multi_result": true
                 }
             ]
@@ -329,6 +329,31 @@
             "outputs": [
                 {
                     "type": "Address"
+                }
+            ]
+        },
+        {
+            "name": "tagPrice",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "qtag",
+                    "type": "bytes"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "EgldOrEsdtTokenPayment"
+                }
+            ]
+        },
+        {
+            "name": "sellingFee",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "BigUint"
                 }
             ]
         },

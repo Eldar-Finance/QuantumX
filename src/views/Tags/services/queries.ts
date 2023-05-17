@@ -5,7 +5,7 @@ import {
   IScQxTagExtension,
   IScQxTagInfo,
   IScQxGetAddress,
-  IScQxTagReport
+  IScQxTagMarketplace
 } from "utils/types/sc.interface";
 import { BytesValue } from "@multiversx/sdk-core/out";
 
@@ -79,14 +79,18 @@ export const getAddress = async (username: string, extension: string): Promise<I
   return address;
 };
 
-export const fetchQxTagList = async (): Promise<IScQxTagReport[]> => {
-  const queryResult = await scQuery('tagsWsp', 'getAllTags', []);
-  const rawResults = queryResult.firstValue?.valueOf() ?? [];
+export const fetchQxtagMarketplace = async (): Promise<IScQxTagMarketplace[]> => {
+  
+  const queryResult = await scQuery("tagsWsp", "getAllTags", []);
+  const rawResults = queryResult?.firstValue?.valueOf() ?? [];
 
-  const results: IScQxTagReport[] = rawResults.map((rawResult: any) => ({
+  const results: IScQxTagMarketplace[] = rawResults.map((rawResult: any) => ({
     username: Buffer.from(rawResult.field0).toString('utf-8'),
     extension: Buffer.from(rawResult.field1).toString('utf-8'),
     address: rawResult.field2.toString("hex"),
+    token: rawResult.field3.token_identifier,
+    amount: rawResult.field3.amount.toString(),
+    nonce: rawResult.field3.token_nonce.toNumber(),
   }));
 
   return results;
