@@ -1,16 +1,10 @@
 import {
     Box,
-    Stack,
-    Input,
     Button,
-    List,
-    ListItem,
-    Text,
     Heading,
     Wrap,
     WrapItem,
     Flex,
-    Center,
 } from '@chakra-ui/react';
 import { useGetQxTagMarketplace } from '../../Tags/hooks/useGetQTag'
 import React, { useState, useEffect } from 'react';
@@ -114,7 +108,7 @@ const MarketplaceQxTag = () => {
             >
                 QuantumXTags Marketplace
             </Heading>
-            <Wrap mb={4} justifyContent="flex-start" width="80%">
+            <Wrap mb={4} justifyContent="flex-start" width="70%">
                 {letterRanges.map((range) => (
                     <WrapItem key={range.label}>
                         <Button
@@ -130,14 +124,16 @@ const MarketplaceQxTag = () => {
                     </WrapItem>
                 ))}
             </Wrap>
-            <Flex gap="10px" flexWrap="wrap" width="80%">
+            <Flex gap="10px" flexWrap="wrap" width="70%">
                 {filteredItems.map((item, index) => (
                     <Box
                         key={index}
-                        style={{ minWidth: "15%", maxWidth: "150px", flex: "1 0 auto" }}
+                        minWidth={{ base: "15%",  'md': "100%", 'sm': "100%", "lg": "15%"}}
+                        maxWidth={{ base: "150px", 'md': "100%", 'sm': "100%", "lg": "150px"}}
+                        flex="1 0 auto"
                     >
                         <Button
-                            padding="30px"
+                            padding="25px"
                             width="100%"
                             textAlign="center"
                             whiteSpace="nowrap"
@@ -146,7 +142,7 @@ const MarketplaceQxTag = () => {
                             borderRadius="none"
                             background="#242526"
                             color="#22F7DD"
-                            onClick={() => alert('re malaka de to exw teleiwsei akoma')}
+                            onClick={() => alert("re malaka de to exw teleiwsei akoma")}
                         >
                             {item}
                         </Button>
