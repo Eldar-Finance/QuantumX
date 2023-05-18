@@ -6,6 +6,7 @@ import {
   ContractFunction,
   Transaction,
   TransactionPayload,
+  ContractCallPayloadBuilder
 } from "@multiversx/sdk-core/out";
 import { ChainId, toknesID } from "api/net.config";
 import {
@@ -125,15 +126,21 @@ export const ESDTTransfer = async ({
   const finalValue = realValue || Number(val || 0) * multiplyier;
 
   const bgFinalValue = new BigNumber(finalValue).toFixed(0);
-  const payload = TransactionPayload.contractCall()
-    .setFunction(new ContractFunction("ESDTTransfer"))
-    .setArgs([
-      BytesValue.fromUTF8(tokenIdentifier),
-      new BigUIntValue(new BigNumber(bgFinalValue)),
-      BytesValue.fromUTF8(funcName),
-      ...args,
-    ])
-    .build();
+  const payload = ContractCallPayloadBuilder.arguments(
+    BytesValue.fromUTF8(tokenIdentifier),
+    new BigUIntValue(new BigNumber(bgFinalValue)),
+    BytesValue.fromUTF8(funcName),
+    ...args
+  ).build();
+  // const payload = TransactionPayload.contractCall()
+  //   .setFunction(new ContractFunction("ESDTTransfer"))
+  //   .setArgs([
+  //     BytesValue.fromUTF8(tokenIdentifier),
+  //     new BigUIntValue(new BigNumber(bgFinalValue)),
+  //     BytesValue.fromUTF8(funcName),
+  //     ...args,
+  //   ])
+  //   .build();
 
   const transactionData: any = {
     addr: contractAddr,
