@@ -190,21 +190,15 @@ export const ESDTTransfer = async ({
 
   let tx = interaction
     .withSender(senderAddress)
-    .useThenIncrementNonceOf(new Account(senderAddress))
+    .useThenIncrementNonceOf(new Account(senderAddress)) // den xerw an xreiazetai auto
     .withSingleESDTTransfer(TokenTransfer.fungibleFromBigInteger(tokenIdentifier, bgFinalValue, token.decimals))
-    .withGasLimit(50000000)
+    .withGasLimit(gasL)
     .withChainID(ChainId)
     .buildTransaction();
 
-  return await sendTransactions({
-    transactions: tx,
-    transactionsDisplayInfo: {
-      processingMessage: defaultProcessingMessage,
-      errorMessage: defaultPerrorMessage,
-      successMessage: defaultSuccessMessage,
-      transactionDuration: defaulttransactionDuration,
-    },
-  });
+  let transactionInput = { tx: tx };
+
+  return await sendTransaction(transactionInput);
 };
 
 export const ESDTTransferOnlyTx = async ({
