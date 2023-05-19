@@ -4,7 +4,6 @@ import {
   ContractFunction,
   ResultsParser,
   SmartContract,
-  SmartContractAbi,
 } from "@multiversx/sdk-core/out";
 import { getInterface, provider, WspTypes } from "../sc";
 
@@ -17,10 +16,9 @@ export const scQuery = async (
   try {
     const { address, abiUrl, implementsInterfaces } = getInterface(workspace);
     const abiRegistry = await AbiRegistry.create(abiUrl);
-    const abi = new SmartContractAbi(abiRegistry, [implementsInterfaces]);
     const contract = new SmartContract({
       address: address,
-      abi: abi,
+      abi: abiRegistry,
     });
 
     const query = contract.createQuery({
