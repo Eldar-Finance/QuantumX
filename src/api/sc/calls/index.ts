@@ -19,6 +19,14 @@ import {
 import BigNumber from "bignumber.js";
 import store from "redux/store";
 import { getScOfWrapedEgld } from "utils/functions/helpers";
+import { AbiRegistry, SmartContract, U32Value, Interaction, TokenTransfer, Account} from "@multiversx/sdk-core";
+import { sendTransactions } from "@multiversx/sdk-dapp/services";
+
+/* Messages */
+const defaultProcessingMessage = "Processing transaction";
+const defaultPerrorMessage = "An error has occured";
+const defaultSuccessMessage = "Transaction successful";
+const defaulttransactionDuration = 1000 * 60 * 2;
 
 export const ESDTNFTTransfer = async (
   funcName = "",
@@ -104,6 +112,52 @@ export const MultiESDTNFTTransfer = async (
   }
 };
 
+// export const ESDTTransfer = async ({
+//   funcName,
+//   token,
+//   val = 0,
+//   contractAddr = "",
+//   args = [],
+//   gasL = 60000000,
+//   realValue = null,
+// }: {
+//   funcName: string;
+//   token: any;
+//   val?: number | string;
+//   contractAddr: string;
+//   args?: any[];
+//   gasL?: number;
+//   realValue?: string | number | null;
+// }) => {
+//   const tokenIdentifier = token.identifier;
+//   const multiplyier = Math.pow(10, token.decimals || 18);
+//   const finalValue = realValue || Number(val || 0) * multiplyier;
+//   const bgFinalValue = new BigNumber(finalValue).toFixed(0);
+
+//   const payload = ContractCallPayloadBuilder.arguments(
+//     BytesValue.fromUTF8(tokenIdentifier),
+//     new BigUIntValue(new BigNumber(bgFinalValue)),
+//     BytesValue.fromUTF8(funcName),
+//     ...args
+//   ).build();
+//   // const payload = TransactionPayload.contractCall()
+//   //   .setFunction(new ContractFunction("ESDTTransfer"))
+//   //   .setArgs([
+//   //     BytesValue.fromUTF8(tokenIdentifier),
+//   //     new BigUIntValue(new BigNumber(bgFinalValue)),
+//   //     BytesValue.fromUTF8(funcName),
+//   //     ...args,
+//   //   ])
+//   //   .build();
+
+//   const transactionData: any = {
+//     addr: contractAddr,
+//     payload: payload,
+//     gasL: gasL,
+//   };
+//   return await sendTransaction(transactionData);
+// };
+
 export const ESDTTransfer = async ({
   funcName,
   token,
@@ -112,6 +166,7 @@ export const ESDTTransfer = async ({
   args = [],
   gasL = 60000000,
   realValue = null,
+  sender = null
 }: {
   funcName: string;
   token: any;
@@ -120,35 +175,38 @@ export const ESDTTransfer = async ({
   args?: any[];
   gasL?: number;
   realValue?: string | number | null;
+  sender?: string | null;
 }) => {
   const tokenIdentifier = token.identifier;
   const multiplyier = Math.pow(10, token.decimals || 18);
   const finalValue = realValue || Number(val || 0) * multiplyier;
-
   const bgFinalValue = new BigNumber(finalValue).toFixed(0);
-  const payload = ContractCallPayloadBuilder.arguments(
-    BytesValue.fromUTF8(tokenIdentifier),
-    new BigUIntValue(new BigNumber(bgFinalValue)),
-    BytesValue.fromUTF8(funcName),
-    ...args
-  ).build();
-  // const payload = TransactionPayload.contractCall()
-  //   .setFunction(new ContractFunction("ESDTTransfer"))
-  //   .setArgs([
-  //     BytesValue.fromUTF8(tokenIdentifier),
-  //     new BigUIntValue(new BigNumber(bgFinalValue)),
-  //     BytesValue.fromUTF8(funcName),
-  //     ...args,
-  //   ])
-  //   .build();
 
-  const transactionData: any = {
-    addr: contractAddr,
-    payload: payload,
-    gasL: gasL,
-  };
-  return await sendTransaction(transactionData);
+  const receiverAddress = new Address(contractAddr);
+  const senderAddress = new Address(sender);
+
+  const contract = new SmartContract({ address: receiverAddress});
+  let interaction = new Interaction(contract, new ContractFunction(funcName), args);
+
+  let tx = interaction
+    .withSender(senderAddress)
+    .useThenIncrementNonceOf(new Account(senderAddress))
+    .withSingleESDTTransfer(TokenTransfer.fungibleFromBigInteger(tokenIdentifier, bgFinalValue, token.decimals))
+    .withGasLimit(50000000)
+    .withChainID(ChainId)
+    .buildTransaction();
+
+  return await sendTransactions({
+    transactions: tx,
+    transactionsDisplayInfo: {
+      processingMessage: defaultProcessingMessage,
+      errorMessage: defaultPerrorMessage,
+      successMessage: defaultSuccessMessage,
+      transactionDuration: defaulttransactionDuration,
+    },
+  });
 };
+
 export const ESDTTransferOnlyTx = async ({
   funcName,
   token,
