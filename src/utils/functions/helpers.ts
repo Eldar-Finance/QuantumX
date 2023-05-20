@@ -7,18 +7,18 @@ export const getReturnedDataOfscCall = async (workspace, txHash, funcName) => {
     .ResultsParser;
   const SmartContract = (await import("@multiversx/sdk-core/out"))
     .SmartContract;
-  const SmartContractAbi = (await import("@multiversx/sdk-core/out"))
-    .SmartContractAbi;
+  // const SmartContractAbi = (await import("@multiversx/sdk-core/out"))
+  //   .SmartContractAbi;
 
   const parser = new ResultsParser();
   const { address, abiUrl, implementsInterfaces } = getInterface(workspace);
   const response = await axios.get(abiUrl);
 
   const abiRegistry = await AbiRegistry.create(response.data);
-  const abi = new SmartContractAbi(abiRegistry, [implementsInterfaces]);
+  //const abi = new SmartContractAbi(abiRegistry, [implementsInterfaces]);
   const contract = new SmartContract({
     address: address,
-    abi: abi,
+    abi: abiRegistry,
   });
   const transactionOnNetwork = await provider.getTransaction(txHash);
   const endpointDefinition = contract.getEndpoint(funcName);
