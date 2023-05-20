@@ -5,6 +5,7 @@ import {
     Wrap,
     WrapItem,
     Flex,
+    Text
 } from '@chakra-ui/react';
 import { useGetQxTagMarketplace } from '../../Tags/hooks/useGetQTag'
 import React, { useState, useEffect } from 'react';
@@ -30,7 +31,9 @@ const MarketplaceQxTag = () => {
 
     useEffect(() => {
         if (dataTagsInfo && dataTagsInfo.length > 0) {
-            const filtered = dataTagsInfo.filter((item) => selectedRange.range.test(item.username));
+            const filtered = dataTagsInfo.filter((item) => {
+                return selectedRange.range.test(item.username) && item.amount !== "0";
+            });
             setFilteredItems(filtered);
         }
     }, [selectedRange, dataTagsInfo]);
@@ -38,7 +41,7 @@ const MarketplaceQxTag = () => {
     const handleRangeFilter = (range) => {
         setSelectedRange(range);
     };
-    
+
     const handleOpenModal = (item) => {
         setSelectedItem(item);
         setModalOpen(true);
@@ -56,7 +59,7 @@ const MarketplaceQxTag = () => {
                 QuantumXTags Marketplace
             </Heading>
             <Wrap mb={4} justifyContent="flex-start" width="70%">
-                {letterRanges.map((range) => (
+                {letterRanges.map((range, index) => (
                     <WrapItem key={range.label}>
                         <Button
                             bg="none"
@@ -65,6 +68,8 @@ const MarketplaceQxTag = () => {
                             _hover={{ bg: "none" }}
                             _active={{ bg: "none" }}
                             onClick={() => handleRangeFilter(range)}
+                            // Add conditional padding to the last item
+                            ml={index === letterRanges.length - 1 ? "-10px" : ""}
                         >
                             {range.label}
                         </Button>
@@ -107,6 +112,12 @@ const MarketplaceQxTag = () => {
                     )}
                 </Box>
             </Flex>
+
+            <Box>
+                {filteredItems.length === 0 &&
+                    <Text>No available QXTags for the selected filter.</Text>
+                }
+            </Box>
         </>
     );
 

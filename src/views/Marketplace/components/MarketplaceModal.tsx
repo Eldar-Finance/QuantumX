@@ -8,9 +8,8 @@ const ModalComponent = ({ username, extension, amount, onClose }) => {
         <MyModal
             isOpen={true}
             onClose={onClose}
-            size={"3xl"}
+            size={"2xl"}
             background="black.baseDark"
-            
         >
             <ModalHeader>
                 <ModalHeader>
@@ -39,7 +38,7 @@ const ModalComponent = ({ username, extension, amount, onClose }) => {
                         </Button>
                     </Box>
                     <Box width="100%">
-                        <Button colorScheme="blue" width="100%" bg="none" border="1px solid #22F7DD" color='white' _hover={{ bg: '#22F7DD', color: 'black' }} onClick={() => alert('Re na to xanapw?')}>
+                        <Button colorScheme="blue" width="100%" bg="none" border="1px solid #22F7DD" color='white' _hover={{ bg: '#22F7DD', color: 'black' }} onClick={() => alert('Paw gia poto')}>
                             <Text>Buy</Text>
                         </Button>
                     </Box>
