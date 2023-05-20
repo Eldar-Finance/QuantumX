@@ -196,29 +196,35 @@ export const ESDTTransfer = async ({
 //   return tx;
 // };
 
-// export const scCall = async (
-//   workspace: WspTypes,
-//   funcName: string,
-//   args: any = [],
-//   gasLimit?: number
-// ) => {
-//   let { simpleAddress } = getInterface(workspace);
+export const scCall = async (
+  workspace: WspTypes,
+  funcName: string,
+  args: any = [],
+  gasLimit: number = 60000000
+) => {
+  let { simpleAddress } = getInterface(workspace);
 
-//   if (simpleAddress === "") {
-//     simpleAddress = workspace;
-//   }
+  if (simpleAddress === "") {
+    simpleAddress = workspace;
+  }
 
-//   const payload = TransactionPayload.contractCall()
-//     .setFunction(new ContractFunction(funcName))
-//     .setArgs(args)
-//     .build();
-//   const transactionData: any = {
-//     addr: simpleAddress,
-//     payload: payload,
-//     gasL: gasLimit || 60000000,
-//   };
-//   return await sendTransaction(transactionData);
-// };
+  const sender = store.getState().userAccount.connectedAddress;
+  const senderAddress = new Address(sender);
+
+  const contract = new SmartContract({ address: new Address(simpleAddress)});
+  let interaction = new Interaction(contract, new ContractFunction(funcName), args);
+
+  let tx = interaction
+    .withSender(senderAddress)
+    .useThenIncrementNonceOf(new Account(senderAddress)) // den xerw an xreiazetai auto
+    .withGasLimit(gasLimit)
+    .withChainID(ChainId)
+    .buildTransaction();
+
+  let transactionInput = { tx: tx };
+
+  return await sendTransaction(transactionInput);
+};
 
 // export const scCallOnlyTx = async (
 //   workspace: WspTypes,
