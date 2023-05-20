@@ -67,52 +67,53 @@ export const ESDTNFTTransfer = async (
   }
 };
 
-// export const MultiESDTNFTTransfer = async (
-//   wsp: WspTypes,
-//   funcName: string,
-//   tokens: {
-//     collection: string;
-//     nonce: number;
-//     value: number;
-//   }[],
-//   args: any[] = [],
-//   gasL: number = 100000000
-// ) => {
-//   try {
-//     const userAddress = store.getState().userAccount.connectedAddress;
-//     let { simpleAddress } = getInterface(wsp);
+export const MultiESDTNFTTransfer = async (
+  wsp: WspTypes,
+  funcName: string,
+  tokens: {
+    collection: string;
+    nonce: number;
+    value: number;
+  }[],
+  args: any[] = [],
+  gasL: number = 100000000
+) => {
+  try {
+    const sender = store.getState().userAccount.connectedAddress;
+    const senderAddress = new Address(sender);
 
-//     const data = tokens.flatMap((nft) => {
-//       const nftData = [
-//         BytesValue.fromUTF8(nft.collection), // <token identifier in hexadecimal encoding>
-//         new BigUIntValue(new BigNumber(nft.nonce)), // <token nonce in hexadecimal encoding>
-//         new BigUIntValue(new BigNumber(nft.value)), //<token quantity to transfer in hexadecimal encoding>
-//       ];
-//       return nftData;
-//     });
+    let { simpleAddress } = getInterface(wsp);
+    const receiverAddress = new Address(simpleAddress);
 
-//     const payload = TransactionPayload.contractCall()
-//       .setFunction(new ContractFunction("MultiESDTNFTTransfer"))
-//       .setArgs([
-//         new AddressValue(new Address(simpleAddress)), // <receiver bytes in hexadecimal encoding>
-//         new BigUIntValue(new BigNumber(tokens.length)), //<number of tokens to transfer in hexadecimal encoding>
-//         ...data,
-//         BytesValue.fromUTF8(funcName),
-//         ...args,
-//       ])
-//       .build();
+    const contract = new SmartContract({ address: receiverAddress});
+    let interaction = new Interaction(contract, new ContractFunction(funcName), args);
 
-//     const transactionData: any = {
-//       addr: userAddress,
-//       payload: payload,
-//       gasL: gasL,
-//     };
+    const data = tokens.flatMap((nft) => {
+      const nftData = TokenTransfer.metaEsdtFromBigInteger(
+        nft.collection,
+        nft.nonce,
+        new BigNumber(nft.value),
+      );
+      return nftData;
+    });
+  
+    if (data.length > 0) {
+      let tx = interaction
+      .withSender(senderAddress)
+      .useThenIncrementNonceOf(new Account(senderAddress)) // den xerw an xreiazetai auto
+      .withMultiESDTNFTTransfer(data)
+      .withGasLimit(gasL)
+      .withChainID(ChainId)
+      .buildTransaction();
 
-//     return await sendTransaction(transactionData);
-//   } catch (error) {
-//     console.log("error", error);
-//   }
-// };
+      let transactionInput = { tx: tx };
+
+      return await sendTransaction(transactionInput);
+    }
+  } catch (error) {
+    console.log("error", error);
+  }
+};
 
 export const ESDTTransfer = async ({
   funcName,
@@ -157,44 +158,38 @@ export const ESDTTransfer = async ({
   return await sendTransaction(transactionInput);
 };
 
-// export const ESDTTransferOnlyTx = async ({
-//   funcName,
-//   token,
-//   val = 0,
-//   contractAddr = "",
-//   args = [],
-//   gasL = 60000000,
-//   realValue = null,
-// }) => {
-//   const sender = store.getState().userAccount.connectedAddress;
-//   const senderAddress = new Address(sender);
-//   const receiverAddress = new Address(contractAddr);
+export const ESDTTransferOnlyTx = async ({
+  funcName,
+  token,
+  val = 0,
+  contractAddr = "",
+  args = [],
+  gasL = 60000000,
+  realValue = null,
+}) => {
+  const tokenIdentifier = token.identifier;
+  const multiplyier = Math.pow(10, token.decimals || 18);
+  const finalValue = realValue || Number(val || 0) * multiplyier;
+  const bgFinalValue = new BigNumber(finalValue).toFixed(0);
 
-//   const tokenIdentifier = token.identifier;
-//   const multiplyier = Math.pow(10, token.decimals || 18);
-//   const finalValue = realValue || Number(val ?? 0) * multiplyier;
+  const receiverAddress = new Address(contractAddr);
 
-//   const bgFinalValue = new BigNumber(finalValue).toFixed(0);
-//   const payload = TransactionPayload.contractCall()
-//     .setFunction(new ContractFunction("ESDTTransfer"))
-//     .setArgs([
-//       BytesValue.fromUTF8(tokenIdentifier),
-//       new BigUIntValue(new BigNumber(bgFinalValue)),
-//       BytesValue.fromUTF8(funcName),
-//       ...args,
-//     ])
-//     .build();
+  const sender = store.getState().userAccount.connectedAddress;
+  const senderAddress = new Address(sender);
 
-//   const tx = new Transaction({
-//     sender: senderAddress,
-//     value: 0,
-//     receiver: receiverAddress,
-//     data: payload,
-//     gasLimit: gasL || 60000000,
-//     chainID: ChainId,
-//   });
-//   return tx;
-// };
+  const contract = new SmartContract({ address: receiverAddress});
+  let interaction = new Interaction(contract, new ContractFunction(funcName), args);
+
+  let tx = interaction
+    .withSender(senderAddress)
+    .useThenIncrementNonceOf(new Account(senderAddress)) // den xerw an xreiazetai auto
+    .withSingleESDTTransfer(TokenTransfer.fungibleFromBigInteger(tokenIdentifier, bgFinalValue, token.decimals))
+    .withGasLimit(gasL)
+    .withChainID(ChainId)
+    .buildTransaction();
+
+  return tx;
+};
 
 export const scCall = async (
   workspace: WspTypes,
@@ -226,37 +221,34 @@ export const scCall = async (
   return await sendTransaction(transactionInput);
 };
 
-// export const scCallOnlyTx = async (
-//   workspace: WspTypes,
-//   funcName: string,
-//   args: any = [],
-//   gasLimit?: number
-// ) => {
-//   let { simpleAddress } = getInterface(workspace);
-//   const sender = store.getState().userAccount.connectedAddress;
-//   const senderAddress = new Address(sender);
+export const scCallOnlyTx = async (
+  workspace: WspTypes,
+  funcName: string,
+  args: any = [],
+  gasLimit: number = 60000000
+) => {
+  let { simpleAddress } = getInterface(workspace);
+  const sender = store.getState().userAccount.connectedAddress;
+  const senderAddress = new Address(sender);
 
-//   const receiverAddress = new Address(simpleAddress);
+  const receiverAddress = new Address(simpleAddress);
 
-//   if (simpleAddress === "") {
-//     simpleAddress = workspace;
-//   }
+  if (simpleAddress === "") {
+    simpleAddress = workspace;
+  }
 
-//   const payload = TransactionPayload.contractCall()
-//     .setFunction(new ContractFunction(funcName))
-//     .setArgs(args)
-//     .build();
+  const contract = new SmartContract({ address: new Address(simpleAddress)});
+  let interaction = new Interaction(contract, new ContractFunction(funcName), args);
 
-//   const tx = new Transaction({
-//     sender: senderAddress,
-//     value: 0,
-//     receiver: receiverAddress,
-//     data: payload,
-//     gasLimit: gasLimit || 60000000,
-//     chainID: ChainId,
-//   });
-//   return tx;
-// };
+  let tx = interaction
+    .withSender(senderAddress)
+    .useThenIncrementNonceOf(new Account(senderAddress)) // den xerw an xreiazetai auto
+    .withGasLimit(gasLimit)
+    .withChainID(ChainId)
+    .buildTransaction();
+
+  return tx;
+};
 
 // // need to check if works (is not used yet)
 // export const MultiEgldPayment = async (
@@ -293,258 +285,225 @@ export const scCall = async (
 //   return await sendMultipleTransactions({ txs: transactions });
 // };
 
-// export const EGLDPayment = async (
-//   workspace: WspTypes,
-//   funcName,
-//   amount,
-//   args = [],
-//   gasLimit,
-//   finalAmount = null
-// ) => {
-//   let { simpleAddress } = getInterface(workspace);
+export const EGLDPayment = async (
+  workspace: WspTypes,
+  funcName,
+  amount,
+  args = [],
+  gasLimit: number = 60000000,
+  finalAmount = null
+) => {
+  let { simpleAddress } = getInterface(workspace);
 
-//   if (simpleAddress === "") {
-//     simpleAddress = workspace;
-//   }
+  if (simpleAddress === "") {
+    simpleAddress = workspace;
+  }
+  const sender = store.getState().userAccount.connectedAddress;
+  const senderAddress = new Address(sender);
 
-//   const payload = TransactionPayload.contractCall()
-//     .setFunction(new ContractFunction(funcName))
-//     .setArgs(args)
-//     .build();
-//   const transactionData: any = {
-//     addr: simpleAddress,
-//     payload: payload,
-//     value: finalAmount ?? amount * EGLD_VAL,
-//     gasL: gasLimit || 60000000,
-//   };
+  const contract = new SmartContract({ address: new Address(simpleAddress)});
+  let interaction = new Interaction(contract, new ContractFunction(funcName), args);
 
-//   return await sendTransaction(transactionData);
-// };
-// export const EGLDPaymentOnlyTx = async (
-//   workspace: WspTypes,
-//   funcName,
-//   amount,
-//   args = [],
-//   gasLimit,
-//   finalAmount = null
-// ) => {
-//   let { simpleAddress } = getInterface(workspace);
-//   const sender = store.getState().userAccount.connectedAddress;
-//   const senderAddress = new Address(sender);
-//   const receiverAddress = new Address(simpleAddress);
-//   if (simpleAddress === "") {
-//     simpleAddress = workspace;
-//   }
+  let tx = interaction
+    .withSender(senderAddress)
+    .useThenIncrementNonceOf(new Account(senderAddress)) // den xerw an xreiazetai auto
+    .withValue(finalAmount ?? amount * EGLD_VAL)
+    .withGasLimit(gasLimit)
+    .withChainID(ChainId)
+    .buildTransaction();
 
-//   const payload = TransactionPayload.contractCall()
-//     .setFunction(new ContractFunction(funcName))
-//     .setArgs(args)
-//     .build();
+  let transactionInput = { tx: tx };
 
-//   const tx = new Transaction({
-//     sender: senderAddress,
-//     value: finalAmount ?? amount * EGLD_VAL,
-//     receiver: receiverAddress,
-//     data: payload,
-//     gasLimit: gasLimit || 60000000,
-//     chainID: ChainId,
-//   });
-//   return tx;
-// };
+  return await sendTransaction(transactionInput);
+};
 
-// export const MultESDTNFTTranferOrEgldPayment = async (
-//   workspace: WspTypes,
-//   funcName: string,
-//   tokens: {
-//     identifier: string;
-//     nonce: number;
-//     amount: number | string;
-//   }[],
-//   args: any[],
-//   gasLimit
-// ) => {
-//   const transactions = [];
-//   const sender = store.getState().userAccount.connectedAddress;
-//   const senderAddress = new Address(sender);
-//   const { simpleAddress: scAddress } = getInterface(workspace);
-//   const receiverAddress = new Address(scAddress);
+export const EGLDPaymentOnlyTx = async (
+  workspace: WspTypes,
+  funcName,
+  amount,
+  args = [],
+  gasLimit: number = 60000000,
+  finalAmount = null
+) => {
+  let { simpleAddress } = getInterface(workspace);
 
-//   const egldPaymentTokens = tokens.filter(
-//     (token) => token.identifier === "EGLD"
-//   );
-//   const ohterTokens = tokens.filter((token) => token.identifier !== "EGLD");
+  if (simpleAddress === "") {
+    simpleAddress = workspace;
+  }
+  const sender = store.getState().userAccount.connectedAddress;
+  const senderAddress = new Address(sender);
 
-//   egldPaymentTokens.forEach((token) => {
-//     const payload = TransactionPayload.contractCall()
-//       .setFunction(new ContractFunction(funcName))
-//       .setArgs(args)
-//       .build();
+  const contract = new SmartContract({ address: new Address(simpleAddress)});
+  let interaction = new Interaction(contract, new ContractFunction(funcName), args);
 
-//     const tx = new Transaction({
-//       sender: senderAddress,
-//       value: token.amount,
-//       receiver: receiverAddress,
-//       data: payload,
-//       gasLimit: gasLimit || 60000000,
-//       chainID: ChainId,
-//     });
+  let tx = interaction
+    .withSender(senderAddress)
+    .useThenIncrementNonceOf(new Account(senderAddress)) // den xerw an xreiazetai auto
+    .withValue(finalAmount ?? amount * EGLD_VAL)
+    .withGasLimit(gasLimit)
+    .withChainID(ChainId)
+    .buildTransaction();
 
-//     transactions.push(tx);
-//   });
+  return tx;
+};
 
-//   const esdtTokensData = ohterTokens.flatMap((nft) => {
-//     const nftData = [
-//       BytesValue.fromUTF8(nft.identifier), // <token identifier in hexadecimal encoding>
-//       new BigUIntValue(new BigNumber(nft.nonce)), // <token nonce in hexadecimal encoding>
-//       new BigUIntValue(new BigNumber(nft.amount)), //<token quantity to transfer in hexadecimal encoding>
-//     ];
-//     return nftData;
-//   });
+export const MultESDTNFTTranferOrEgldPayment = async (
+  workspace: WspTypes,
+  funcName: string,
+  tokens: {
+    identifier: string;
+    nonce: number;
+    amount: number | string;
+  }[],
+  args: any[],
+  gasLimit: number = 60000000
+) => {
+  const transactions = [];
+  const sender = store.getState().userAccount.connectedAddress;
+  const senderAddress = new Address(sender);
+  const { simpleAddress: scAddress } = getInterface(workspace);
+  const receiverAddress = new Address(scAddress);
 
-//   if (esdtTokensData.length > 0) {
-//     const payload = TransactionPayload.contractCall()
-//       .setFunction(new ContractFunction("MultiESDTNFTTransfer"))
-//       .setArgs([
-//         new AddressValue(receiverAddress), // <receiver bytes in hexadecimal encoding>
-//         new BigUIntValue(new BigNumber(tokens.length)), //<number of tokens to transfer in hexadecimal encoding>
-//         ...esdtTokensData,
-//         BytesValue.fromUTF8(funcName),
-//         ...args,
-//       ])
-//       .build();
-//     const esdtTranferTx = new Transaction({
-//       sender: senderAddress,
-//       value: 0,
-//       receiver: senderAddress,
-//       data: payload,
-//       gasLimit: gasLimit || 60000000,
-//       chainID: ChainId,
-//     });
-//     transactions.push(esdtTranferTx);
-//   }
+  const egldPaymentTokens = tokens.filter(
+    (token) => token.identifier === "EGLD"
+  );
+  const ohterTokens = tokens.filter((token) => token.identifier !== "EGLD");
 
-//   return await sendMultipleTransactions({ txs: transactions });
-// };
+  const contract = new SmartContract({ address: new Address(receiverAddress)});
+  let interaction = new Interaction(contract, new ContractFunction(funcName), args);
 
-// export const wrapEgldAndEsdtTranfer = async (
-//   egldAmount: number | string,
-//   funcName: string,
-//   args: any[] = [],
-//   scAddress: string,
-//   gasL: number = 90000000
-// ) => {
-//   const sender = store.getState().userAccount.connectedAddress;
-//   const value = new BigNumber(egldAmount).multipliedBy(EGLD_VAL).toFixed(0);
+  egldPaymentTokens.forEach((token) => {
 
-//   //wrap egld
-//   const shard = store.getState().userAccount.connectedShard;
-//   const wrapContractBasedOnShard = getScOfWrapedEgld(shard);
-//   const payload = TransactionPayload.contractCall()
-//     .setFunction(new ContractFunction("wrapEgld"))
-//     .setArgs([])
-//     .build();
+    let tx = interaction
+    .withSender(senderAddress)
+    .useThenIncrementNonceOf(new Account(senderAddress)) // den xerw an xreiazetai auto
+    .withValue(token.amount)
+    .withGasLimit(gasLimit)
+    .withChainID(ChainId)
+    .buildTransaction();
 
-//   const tx1 = new Transaction({
-//     sender: new Address(sender),
-//     value: value,
-//     receiver: new Address(wrapContractBasedOnShard),
-//     data: payload,
-//     gasLimit: 30000000,
-//     chainID: ChainId,
-//   });
+    transactions.push(tx);
+  });
 
-//   //esdt transfer
+  const esdtTokensData = ohterTokens.flatMap((nft) => {
+    const nftData = TokenTransfer.fungibleFromBigInteger(
+      nft.identifier,
+      new BigNumber(nft.amount), //<token quantity to transfer in hexadecimal encoding>
+    );
+    return nftData;
+  });
 
-//   const tokenIdentifier = toknesID.wegld;
+  if (esdtTokensData.length > 0) {
+    let tx = interaction
+    .withSender(senderAddress)
+    .useThenIncrementNonceOf(new Account(senderAddress)) // den xerw an xreiazetai auto
+    .withMultiESDTNFTTransfer(esdtTokensData)
+    .withGasLimit(gasLimit)
+    .withChainID(ChainId)
+    .buildTransaction();
 
-//   const payload2 = TransactionPayload.contractCall()
-//     .setFunction(new ContractFunction("ESDTTransfer"))
-//     .setArgs([
-//       BytesValue.fromUTF8(tokenIdentifier),
-//       new BigUIntValue(new BigNumber(value)),
-//       BytesValue.fromUTF8(funcName),
-//       ...args,
-//     ])
-//     .build();
+    transactions.push(tx);
+  }
 
-//   const tx2 = new Transaction({
-//     sender: new Address(sender),
-//     value: 0,
-//     receiver: new Address(scAddress),
-//     data: payload2,
-//     gasLimit: gasL,
-//     chainID: ChainId,
-//   });
+  return await sendMultipleTransactions({ txs: transactions });
+};
 
-//   return await sendMultipleTransactions({ txs: [tx1, tx2] });
-// };
+export const wrapEgldAndEsdtTranfer = async (
+  egldAmount: number | string,
+  funcName: string,
+  args: any[] = [],
+  scAddress: string,
+  gasL: number = 90000000
+) => {
+  const sender = store.getState().userAccount.connectedAddress;
+  const senderAddress = new Address(sender);
 
-// export const EsdtTranferAndUnwrapEgld = async (
-//   token: {
-//     decimals: number;
-//     identifier: string;
-//   },
-//   val: number | string,
-//   wegldAmount: number | string,
-//   funcName: string,
-//   args: any[] = [],
-//   scAddress: string,
-//   gasL: number = 90000000
-// ) => {
-//   const sender = store.getState().userAccount.connectedAddress;
+  const value = new BigNumber(egldAmount).multipliedBy(EGLD_VAL).toFixed(0);
 
-//   const tokenIdentifier = token.identifier;
-//   const multiplyier = Math.pow(10, token.decimals || 18);
-//   const finalValue = Number(val) * multiplyier;
+  //wrap egld
+  const shard = store.getState().userAccount.connectedShard;
+  const wrapContractBasedOnShard = getScOfWrapedEgld(shard);
+  
+  const wrapcontract = new SmartContract({ address: new Address(wrapContractBasedOnShard)});
+  let interaction = new Interaction(wrapcontract, new ContractFunction("wrapEgld"), []);
 
-//   const bgFinalValue = new BigNumber(finalValue).toFixed(0);
+  let tx1 = interaction
+    .withSender(senderAddress)
+    .useThenIncrementNonceOf(new Account(senderAddress)) // den xerw an xreiazetai auto
+    .withValue(value)
+    .withGasLimit(20000000)
+    .withChainID(ChainId)
+    .buildTransaction();
 
-//   const payload = TransactionPayload.contractCall()
-//     .setFunction(new ContractFunction("ESDTTransfer"))
-//     .setArgs([
-//       BytesValue.fromUTF8(tokenIdentifier),
-//       new BigUIntValue(new BigNumber(bgFinalValue)),
-//       BytesValue.fromUTF8(funcName),
-//       ...args,
-//     ])
-//     .build();
+  //esdt transfer
+  const tokenIdentifier = toknesID.wegld;
 
-//   const tx1 = new Transaction({
-//     sender: new Address(sender),
-//     value: 0,
-//     receiver: new Address(scAddress),
-//     data: payload,
-//     gasLimit: gasL,
-//     chainID: ChainId,
-//   });
+  const scaddress = new SmartContract({ address: new Address(scAddress)});
+  let interaction2 = new Interaction(scaddress, new ContractFunction(funcName), args);
 
-//   //uwwrap wegld
-//   const shard = store.getState().userAccount.connectedShard;
-//   const wrapContractBasedOnShard = getScOfWrapedEgld(shard);
+  let tx2 = interaction2
+  .withSender(senderAddress)
+  .useThenIncrementNonceOf(new Account(senderAddress)) // den xerw an xreiazetai auto
+  .withSingleESDTTransfer(TokenTransfer.fungibleFromBigInteger(tokenIdentifier, new BigNumber(value)))
+  .withGasLimit(gasL)
+  .withChainID(ChainId)
+  .buildTransaction();
 
-//   const wegldAmountToSend = Number(wegldAmount) * EGLD_VAL;
+  return await sendMultipleTransactions({ txs: [tx1, tx2] });
+};
 
-//   const wegldAmountToSendFinalValue = new BigNumber(wegldAmountToSend).toFixed(
-//     0
-//   );
+export const EsdtTranferAndUnwrapEgld = async (
+  token: {
+    decimals: number;
+    identifier: string;
+  },
+  val: number | string,
+  wegldAmount: number | string,
+  funcName: string,
+  args: any[] = [],
+  scAddress: string,
+  gasL: number = 90000000
+) => {
+  const sender = store.getState().userAccount.connectedAddress;
+  const senderAddress = new Address(sender);
 
-//   const payload2 = TransactionPayload.contractCall()
-//     .setFunction(new ContractFunction("ESDTTransfer"))
-//     .setArgs([
-//       BytesValue.fromUTF8(toknesID.wegld),
-//       new BigUIntValue(new BigNumber(wegldAmountToSendFinalValue)),
-//       BytesValue.fromUTF8("unwrapEgld"),
-//     ])
-//     .build();
+  const tokenIdentifier = token.identifier;
+  const multiplyier = Math.pow(10, token.decimals || 18);
+  const finalValue = Number(val) * multiplyier;
 
-//   const tx2 = new Transaction({
-//     sender: new Address(sender),
-//     value: 0,
-//     receiver: new Address(wrapContractBasedOnShard),
-//     data: payload2,
-//     gasLimit: 30000000,
-//     chainID: ChainId,
-//   });
+  const bgFinalValue = new BigNumber(finalValue).toFixed(0);
 
-//   return await sendMultipleTransactions({ txs: [tx1, tx2] });
-// };
+  const scaddress = new SmartContract({ address: new Address(scAddress)});
+  let interaction1 = new Interaction(scaddress, new ContractFunction(funcName), args);
+
+  let tx1 = interaction1
+  .withSender(senderAddress)
+  .useThenIncrementNonceOf(new Account(senderAddress)) // den xerw an xreiazetai auto
+  .withSingleESDTTransfer(TokenTransfer.fungibleFromBigInteger(tokenIdentifier, bgFinalValue))
+  .withGasLimit(gasL)
+  .withChainID(ChainId)
+  .buildTransaction();
+
+  //uwwrap wegld
+  const shard = store.getState().userAccount.connectedShard;
+  const wrapContractBasedOnShard = getScOfWrapedEgld(shard);
+
+  const wegldAmountToSend = Number(wegldAmount) * EGLD_VAL;
+
+  const wegldAmountToSendFinalValue = new BigNumber(wegldAmountToSend).toFixed(
+    0
+  );
+
+  const wrapcontract = new SmartContract({ address: new Address(wrapContractBasedOnShard)});
+  let interaction2 = new Interaction(wrapcontract, new ContractFunction("unwrapEgld"), []);
+
+  let tx2 = interaction2
+    .withSender(senderAddress)
+    .useThenIncrementNonceOf(new Account(senderAddress)) // den xerw an xreiazetai auto
+    .withSingleESDTTransfer(TokenTransfer.fungibleFromBigInteger(toknesID.wegld, wegldAmountToSendFinalValue))
+    .withGasLimit(20000000)
+    .withChainID(ChainId)
+    .buildTransaction();
+
+  return await sendMultipleTransactions({ txs: [tx1, tx2] });
+};
