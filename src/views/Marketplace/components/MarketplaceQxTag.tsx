@@ -8,68 +8,7 @@ import {
 } from '@chakra-ui/react';
 import { useGetQxTagMarketplace } from '../../Tags/hooks/useGetQTag'
 import React, { useState, useEffect } from 'react';
-
-const data = [
-    'Apple',
-    'Ant',
-    'Airplane',
-    'Anchor',
-    'Alphabet',
-    'Astronaut',
-    'Banana',
-    'Bird',
-    'Butterfly',
-    'Basket',
-    'Cat',
-    'Car',
-    'Candle',
-    'Dog',
-    'Dolphin',
-    'Dinosaur',
-    'Elephant',
-    'Eagle',
-    'Fish',
-    'Fox',
-    'Giraffe',
-    'Guitar',
-    'Horse',
-    'Helicopter',
-    'Ice Cream',
-    'Island',
-    'Jungle',
-    'Jump',
-    'Kangaroo',
-    'King',
-    'Lion',
-    'Lemon',
-    'Moon',
-    'Mountain',
-    'Monkey',
-    'Nest',
-    'Ninja',
-    'Orange',
-    'Octopus',
-    'Penguin',
-    'Piano',
-    'Queen',
-    'Rainbow',
-    'Rocket',
-    'Sun',
-    'Star',
-    'Tiger',
-    'Tree',
-    'Umbrella',
-    'Unicorn',
-    'Violin',
-    'Watermelon',
-    'Whale',
-    'Xylophone',
-    'X-ray',
-    'Yacht',
-    'Yoga',
-    'Zebra',
-    'Zero'
-];
+import ModalComponent from './MarketplaceModal';
 
 const letterRanges = [
     { label: '[ A-G ]', range: /^[A-G]/i },
@@ -86,16 +25,24 @@ const MarketplaceQxTag = () => {
     const defaultRange = letterRanges.find(range => range.label === '[ A-G ]');
     const [selectedRange, setSelectedRange] = useState(defaultRange);
     const [filteredItems, setFilteredItems] = useState([]);
+    const [modalOpen, setModalOpen] = useState(false);
+    const [selectedItem, setSelectedItem] = useState(null);
 
     useEffect(() => {
-        const filtered = data.filter((item) => selectedRange.range.test(item));
-        setFilteredItems(filtered);
-    }, [selectedRange]);
+        if (dataTagsInfo && dataTagsInfo.length > 0) {
+            const filtered = dataTagsInfo.filter((item) => selectedRange.range.test(item.username));
+            setFilteredItems(filtered);
+        }
+    }, [selectedRange, dataTagsInfo]);
 
     const handleRangeFilter = (range) => {
         setSelectedRange(range);
     };
-
+    
+    const handleOpenModal = (item) => {
+        setSelectedItem(item);
+        setModalOpen(true);
+    };
     return (
         <>
             <Heading
@@ -128,8 +75,8 @@ const MarketplaceQxTag = () => {
                 {filteredItems.map((item, index) => (
                     <Box
                         key={index}
-                        minWidth={{ base: "15%",  'md': "100%", 'sm': "100%", "lg": "15%"}}
-                        maxWidth={{ base: "150px", 'md': "100%", 'sm': "100%", "lg": "150px"}}
+                        minWidth={{ base: "15%", md: "100%", sm: "100%", lg: "15%" }}
+                        maxWidth={{ base: "150px", md: "100%", sm: "100%", lg: "150px" }}
                         flex="1 0 auto"
                     >
                         <Button
@@ -142,12 +89,22 @@ const MarketplaceQxTag = () => {
                             borderRadius="none"
                             background="#242526"
                             color="#22F7DD"
-                            onClick={() => alert("re malaka de to exw teleiwsei akoma")}
+                            onClick={() => handleOpenModal(item)}
                         >
-                            {item}
+                            {item.username + '.' + item.extension}
                         </Button>
                     </Box>
                 ))}
+                <Box>
+                    {/* Render the modal component */}
+                    {modalOpen && selectedItem && (
+                        <ModalComponent
+                            username={selectedItem.username}
+                            extension={selectedItem.extension}
+                            onClose={() => setModalOpen(false)}
+                        />
+                    )}
+                </Box>
             </Flex>
         </>
     );
