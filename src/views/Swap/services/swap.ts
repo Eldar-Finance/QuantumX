@@ -7,6 +7,10 @@ import {
   ContractFunction,
   Transaction,
   TransactionPayload,
+  SmartContract,
+  Interaction,
+  Account,
+  TokenTransfer
 } from "@multiversx/sdk-core/out";
 import { SendTransactionReturnType } from "@multiversx/sdk-dapp/types";
 import { ChainId, contractAddr, toknesID } from "api/net.config";
@@ -261,25 +265,26 @@ export const lpSwapTx = async (
     // user want to send Egld
     if (inputToken.token.identifier === "EGLD") {
       //wrap egld
+
       const shard = store.getState().userAccount.connectedShard;
       const wrapContractBasedOnShard = getScOfWrapedEgld(shard);
-      const payload = TransactionPayload.contractCall()
-        .setFunction(new ContractFunction("wrapEgld"))
-        .setArgs([])
-        .build();
+      
+      const wrapcontract = new SmartContract({ address: new Address(wrapContractBasedOnShard)});
+      let interaction = new Interaction(wrapcontract, new ContractFunction("wrapEgld"), []);
+    
       const value = new BigNumber(inputToken.value)
-        .multipliedBy(EGLD_VAL)
-        .toFixed(0);
+      .multipliedBy(EGLD_VAL)
+      .toFixed(0);
 
-      const wrapTx = new Transaction({
-        sender: senderAddress,
-        value: value,
-        receiver: new Address(wrapContractBasedOnShard),
-        data: payload,
-        gasLimit: 30000000,
-        chainID: ChainId,
-      });
-      transactions.push(wrapTx);
+      let tx1 = interaction
+        .withSender(senderAddress)
+        .useThenIncrementNonceOf(new Account(senderAddress)) // den xerw an xreiazetai auto
+        .withValue(value)
+        .withGasLimit(20000000)
+        .withChainID(ChainId)
+        .buildTransaction();
+      
+      transactions.push(tx1);
     }
 
     // swaps args
@@ -290,27 +295,23 @@ export const lpSwapTx = async (
       inputToken.value,
       inputToken.token.decimals
     );
-    const esdtTranferPayload = TransactionPayload.contractCall()
-      .setFunction(new ContractFunction("ESDTTransfer"))
-      .setArgs([
-        BytesValue.fromUTF8(swapLpData[0].token1),
-        new BigUIntValue(new BigNumber(bgFinalValue)),
-        BytesValue.fromUTF8("swapLp"),
-        ...swapLpArgs,
-        new BigUIntValue(new BigNumber(swapLpData[0].NrSwaps)),
-        ...multiswapArgs,
-      ])
-      .build();
 
-    const tx1 = new Transaction({
-      sender: senderAddress,
-      value: 0,
-      receiver: new Address(simpleAddress),
-      data: esdtTranferPayload,
-      gasLimit: 100000000,
-      chainID: ChainId,
-    });
-    transactions.push(tx1);
+    const contract = new SmartContract({ address: new Address(simpleAddress)});
+    let interaction2 = new Interaction(contract, new ContractFunction("swapLp"), [
+      ...swapLpArgs,
+      new BigUIntValue(new BigNumber(swapLpData[0].NrSwaps)),
+      ...multiswapArgs,
+    ]);
+  
+    let tx2 = interaction2
+      .withSender(senderAddress)
+      .useThenIncrementNonceOf(new Account(senderAddress)) // den xerw an xreiazetai auto
+      .withSingleESDTTransfer(TokenTransfer.fungibleFromBigInteger(swapLpData[0].token1, bgFinalValue))
+      .withGasLimit(100000000)
+      .withChainID(ChainId)
+      .buildTransaction();
+  
+    transactions.push(tx2);
 
     return await sendMultipleTransactions({ txs: transactions });
   } catch (error) {
