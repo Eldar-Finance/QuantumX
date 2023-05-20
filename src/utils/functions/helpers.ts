@@ -15,10 +15,10 @@ export const getReturnedDataOfscCall = async (workspace, txHash, funcName) => {
   const response = await axios.get(abiUrl);
 
   const abiRegistry = await AbiRegistry.create(response.data);
-  const abi = new SmartContractAbi(abiRegistry, [implementsInterfaces]);
+  // const abi = new SmartContractAbi(abiRegistry, [implementsInterfaces]);
   const contract = new SmartContract({
     address: address,
-    abi: abi,
+    abi: abiRegistry,
   });
   const transactionOnNetwork = await provider.getTransaction(txHash);
   const endpointDefinition = contract.getEndpoint(funcName);
