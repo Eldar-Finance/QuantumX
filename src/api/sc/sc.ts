@@ -40,30 +40,21 @@ export const EGLD_VAL = 1000000000000000000;
 
 /* Calls */
 export const sendTransaction = async ({
-  addr,
-  payload,
+  tx,
   processingMessage = null,
   errorMessage = null,
   successMessage = null,
   transactionDuration = null,
-  value = null,
-  gasL = null,
+}: {
+  tx: any;
+  processingMessage?: string;
+  errorMessage?: string;
+  successMessage?: string;
+  transactionDuration?: number;
 }) => {
-  const sender = store.getState().userAccount.connectedAddress;
-  const receiverAddress = new Address(addr);
-  const senderAddress = new Address(sender);
-
-  const tx = new Transaction({
-    sender: senderAddress,
-    value: value || 0,
-    receiver: receiverAddress,
-    data: payload,
-    gasLimit: gasL || 60000000,
-    chainID: ChainId,
-  });
 
   const res = await sendTransactions({
-    transactions: tx,
+    transactions: [tx],
     transactionsDisplayInfo: {
       processingMessage: processingMessage || defaultProcessingMessage,
       errorMessage: errorMessage || defaultPerrorMessage,
@@ -74,6 +65,7 @@ export const sendTransaction = async ({
 
   return res;
 };
+
 export const sendMultipleTransactions = async ({
   txs,
   processingMessage,
