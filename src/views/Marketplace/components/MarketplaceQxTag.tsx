@@ -101,6 +101,7 @@ const MarketplaceQxTag = () => {
                         <ModalComponent
                             username={selectedItem.username}
                             extension={selectedItem.extension}
+                            amount={selectedItem.amount}
                             onClose={() => setModalOpen(false)}
                         />
                     )}

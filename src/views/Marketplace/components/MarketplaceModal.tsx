@@ -1,43 +1,51 @@
 import React from 'react';
-import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Button, Divider, Flex, Box } from '@chakra-ui/react';
+import { ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Button, Divider, Flex, Box, Text } from '@chakra-ui/react';
 
-const ModalComponent = ({ username, extension, onClose }) => {
+import MyModal from 'components/Modal/Modal';
+
+const ModalComponent = ({ username, extension, amount, onClose }) => {
     return (
-        // <Modal isOpen={true} onClose={onClose} >
-        <Modal
-            isCentered
+        <MyModal
             isOpen={true}
             onClose={onClose}
-            motionPreset='slideInBottom'
+            size={"3xl"}
+            background="black.baseDark"
+            
         >
-            <ModalOverlay />
-            <ModalContent>
-                <ModalHeader>Buy QxTag</ModalHeader>
-                <Divider />
-                <ModalCloseButton />
-                <ModalBody>
-                    <Box bg="#151515" padding="20px" borderRadius="20px"  >
-                        <p>Username: {username}</p>
-                        <p>Extension: {extension}</p>
-                    </Box>
-                </ModalBody>
-                <Divider />
-                <ModalFooter justifyContent="center">
-                    <Flex width="100%" justifyContent="space-between">
-                        <Box>
-                            <Button colorScheme="blue" onClick={onClose}>
-                                Cancel
-                            </Button>
-                        </Box>
-                        <Box>
-                            <Button colorScheme="blue" onClick={() => alert('Re na to xanapw?')}>
-                                Buy
-                            </Button>
-                        </Box>
+            <ModalHeader>
+                <ModalHeader>
+                    <Flex justify="space-between" alignItems="center">
+                        <Text fontSize="xl" fontWeight="bold">
+                            Buy QxTag
+                        </Text>
+                        <ModalCloseButton m="20px 20px 0 0" />
                     </Flex>
-                </ModalFooter>
-            </ModalContent>
-        </Modal>
+                </ModalHeader>
+                <Divider />
+            </ModalHeader>
+            <ModalBody>
+                <Box bg="#151515" padding="20px" borderRadius="20px">
+                    <Flex direction="column" textAlign="center" gap="5px">
+                        <Text>{username}.{extension}</Text>
+                        <Text>{amount}</Text>
+                    </Flex>
+                </Box>
+            </ModalBody>
+            <ModalFooter justifyContent="center">
+                <Flex width="100%" justify="space-around" gap="10px">
+                    <Box width="100%">
+                        <Button colorScheme="blue" width="100%" bg="none" border="1px solid #22F7DD" color='white' _hover={{ bg: '#22F7DD', color: 'black' }} onClick={onClose}>
+                            <Text>Cancel</Text>
+                        </Button>
+                    </Box>
+                    <Box width="100%">
+                        <Button colorScheme="blue" width="100%" bg="none" border="1px solid #22F7DD" color='white' _hover={{ bg: '#22F7DD', color: 'black' }} onClick={() => alert('Re na to xanapw?')}>
+                            <Text>Buy</Text>
+                        </Button>
+                    </Box>
+                </Flex>
+            </ModalFooter>
+        </MyModal>
     );
 };
 
