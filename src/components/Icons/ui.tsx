@@ -311,7 +311,7 @@ export const ExchangeIcon = createIcon({
       key={1}
       d="M5.48735 17.4536V1M5.48735 1L1 5.48735M5.48735 1L9.97471 5.48735"
       stroke="black"
-      stroke-width="1.5"
+      strokeWidth="1.5"
       strokeLinecap="round"
       strokeLinejoin="round"
     />,
@@ -319,7 +319,7 @@ export const ExchangeIcon = createIcon({
       key={2}
       d="M14.4621 1.00047L14.4621 17.4541M14.4621 17.4541L18.9495 12.9667M14.4621 17.4541L9.97476 12.9667"
       stroke="black"
-      stroke-width="1.5"
+      strokeWidth="1.5"
       strokeLinecap="round"
       strokeLinejoin="round"
     />,
@@ -332,7 +332,7 @@ export const EyeIcon = createIcon({
     <path
       d="M1 12C1 12 5 4 12 4C19 4 23 12 23 12C23 12 19 20 12 20C5 20 1 12 1 12Z"
       stroke="white"
-      stroke-width="1.5"
+      strokeWidth="1.5"
       strokeLinecap="round"
       strokeLinejoin="round"
       key={1}
@@ -340,7 +340,7 @@ export const EyeIcon = createIcon({
     <path
       d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z"
       stroke="white"
-      stroke-width="1.5"
+      strokeWidth="1.5"
       strokeLinecap="round"
       strokeLinejoin="round"
       key={2}
