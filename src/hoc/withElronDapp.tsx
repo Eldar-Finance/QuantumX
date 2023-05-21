@@ -44,6 +44,7 @@ const withElronDapp = (Component) => (props) => {
             customNetworkConfig={{
               name: "quantumxConfig",
               walletConnectV2ProjectId: "cf388e978587b4cba673b4080fb9d89b",
+              shouldUseWebViewProvider: true,
               ...network,
             }}
           >
