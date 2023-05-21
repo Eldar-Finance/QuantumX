@@ -1,9 +1,19 @@
 import React from 'react';
 import { ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Button, Divider, Flex, Box, Text } from '@chakra-ui/react';
-
+import { purchaseQxTagMarketplace } from 'views/Marketplace/services/calls';
+import { useAppSelector } from "utils/hooks/redux";
+import { selectUserAddress } from "redux/slices/userAcount/account-slice";
 import MyModal from 'components/Modal/Modal';
 
+const buyQxTag = (username,extension) => {
+    console.log(username + '' + extension)
+    //purchaseQxTagMarketplace(username, extension)
+};
+
 const ModalComponent = ({ username, extension, amount, onClose }) => {
+
+const userAddress = useAppSelector(selectUserAddress);
+
     return (
         <MyModal
             isOpen={true}
@@ -38,7 +48,12 @@ const ModalComponent = ({ username, extension, amount, onClose }) => {
                         </Button>
                     </Box>
                     <Box width="100%">
-                        <Button colorScheme="blue" width="100%" bg="none" border="1px solid #22F7DD" color='white' _hover={{ bg: '#22F7DD', color: 'black' }} onClick={() => alert('Paw gia poto')}>
+                        <Button 
+                        colorScheme="blue" width="100%" bg="none" border="1px solid #22F7DD" color='white' 
+                        _hover={{ bg: '#22F7DD', color: 'black' }} 
+                        onClick={() => buyQxTag(username,extension)}
+                        disabled={!userAddress}
+                        >
                             <Text>Buy</Text>
                         </Button>
                     </Box>
