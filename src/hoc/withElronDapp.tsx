@@ -31,6 +31,9 @@ const TransactionsToastList: any = dynamic(
   { ssr: false }
 );
 
+// console.log(network);
+// console.log(EnvironmentsEnum.mainnet);
+
 const withElronDapp = (Component) => (props) => {
   return (
     <>
@@ -40,12 +43,11 @@ const withElronDapp = (Component) => (props) => {
           authenticatedDomanis={sampleAuthenticatedDomains}
         >
           <DappProvider
-            environment={EnvironmentsEnum.mainnet}
+            environment={network.id}
             customNetworkConfig={{
               name: "quantumxConfig",
               walletConnectV2ProjectId: "cf388e978587b4cba673b4080fb9d89b",
               shouldUseWebViewProvider: true,
-              ...network,
             }}
           >
             <Box color="black">
