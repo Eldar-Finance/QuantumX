@@ -32,10 +32,14 @@ export const getOffers = async ({
   });
 };
 
-export const getJexPrice = async ([key, identifier]: [
-  string,
-  string
-]): Promise<number> => {
-  const { data } = await axiosJex.get(`/prices/${identifier}`);
-  return data.rate;
+export const getJexPrice = async ([key, identifier]: [string, string]): Promise<number> => {
+  try {
+    // console.log(identifier);
+    const { data } = await axiosJex.get(`/prices/${identifier}`);
+    return data.rate;
+  } catch (error) {
+    console.error(`Error retrieving price for identifier: ${identifier}. Returning 0 instead...`);
+    return 0;
+  }
 };
+
