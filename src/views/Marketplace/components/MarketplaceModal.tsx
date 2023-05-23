@@ -4,10 +4,10 @@ import { purchaseQxTagMarketplace } from 'views/Marketplace/services/calls';
 import { useAppSelector } from "utils/hooks/redux";
 import { selectUserAddress } from "redux/slices/userAcount/account-slice";
 import MyModal from 'components/Modal/Modal';
+import { getRealBalance } from "utils/functions/formatBalance";
 
-const buyQxTag = (username,extension) => {
-    console.log(username + '' + extension)
-    //purchaseQxTagMarketplace(username, extension)
+const buyQxTag = (username,extension, amount) => {
+    purchaseQxTagMarketplace(username, extension, amount)
 };
 
 const ModalComponent = ({ username, extension, amount, onClose }) => {
@@ -36,7 +36,7 @@ const userAddress = useAppSelector(selectUserAddress);
                 <Box bg="#151515" padding="20px" borderRadius="20px">
                     <Flex direction="column" textAlign="center" gap="5px">
                         <Text>{username}.{extension}</Text>
-                        <Text>{amount}</Text>
+                        <Text>{getRealBalance(amount, 18)}</Text>
                     </Flex>
                 </Box>
             </ModalBody>
@@ -51,7 +51,7 @@ const userAddress = useAppSelector(selectUserAddress);
                         <Button 
                         colorScheme="blue" width="100%" bg="none" border="1px solid #22F7DD" color='white' 
                         _hover={{ bg: '#22F7DD', color: 'black' }} 
-                        onClick={() => buyQxTag(username,extension)}
+                        onClick={() => buyQxTag(username,extension, amount)}
                         disabled={!userAddress}
                         >
                             <Text>Buy</Text>

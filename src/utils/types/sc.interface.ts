@@ -136,7 +136,3 @@ export interface IScQxTagMarketplace extends IScPayment{
   extension: string;
   address: string;
 }
-export interface IScQxTagPurchaseMarketplace extends IScPayment {
-  username: string;
-  extension: string;
-}

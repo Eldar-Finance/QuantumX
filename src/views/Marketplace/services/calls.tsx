@@ -1,8 +1,9 @@
 import { BytesValue } from "@multiversx/sdk-core/out";
 import { EGLDPayment } from "api/sc/calls";
-import { IScQxTagPurchaseMarketplace } from "utils/types/sc.interface";
+import { IScPayment } from "utils/types/sc.interface";
 
-export const purchaseQxTagMarketplace = async (username: string, extension: string): Promise<IScQxTagPurchaseMarketplace> => {
+export const purchaseQxTagMarketplace = async (username: string, extension: string, marketplaceCost: IScPayment) => {
+
     const res = await EGLDPayment(
         "tagsWsp",
         "buyQtag",
@@ -12,6 +13,7 @@ export const purchaseQxTagMarketplace = async (username: string, extension: stri
             BytesValue.fromUTF8(extension),
         ],
         10000000,
+        marketplaceCost
     );
     return res;
 };
