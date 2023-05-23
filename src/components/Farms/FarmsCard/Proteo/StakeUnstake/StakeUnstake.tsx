@@ -23,6 +23,7 @@ const StakeUnstake = ({ pf }: IProps) => {
   const handleOpenStake = () => {
     setOpenStake((s) => !s);
   };
+  console.log(pf.type);
   return (
     <ProteoItemContenxt.Consumer>
       {(value) => {
@@ -82,15 +83,38 @@ const StakeUnstake = ({ pf }: IProps) => {
               <Flex w="full"></Flex>
             </Flex>
             <Flex mt="2" gap="3">
-              <Center w="full">
-                <ActionButton
-                  onClick={isLoggedIn ? handleOpenStake : handleLogin}
-                  variant={"outline"}
-                  w="full"
-                  maxW={"500px"}
+              <Center w="full" flexDir={"column"}>
+                <Center flex="1" w="full">
+                  <ActionButton
+                    onClick={isLoggedIn ? handleOpenStake : handleLogin}
+                    variant={"solid"}
+                    w="full"
+                    maxW={"500px"}
+                    style={pf.type != "pool" ? { pointerEvents: "none", opacity: 0.2 } : {}}
+                  >
+                    STAKE {pf.type != "pool" && "LP"}
+                  </ActionButton>
+                </Center>
+                {pf.type != "pool" &&
+                <Flex
+                  justifyContent={"flex-end"}
+                  alignItems="center"
+                  fontSize={"small"}
+                  mt="2"
+                  color="gray.300"
                 >
-                  STAKE {pf.type !== "pool" && "LP"}
-                </ActionButton>
+                  <CustomTooltip
+                    text={
+                      <Box fontWeight="bold" fontSize={"14px"}>
+                        <Text mb={1}>
+                          Farm will be terminated soon. Staking is not allowed in order to prevent users from being charged fees unnecessarily.
+                        </Text>
+                      </Box>
+                    }
+                  />
+
+                  <Text ml={1}>Staking is disabled</Text>
+                </Flex>}
               </Center>
               <Center flexDir={"column"} w="full">
                 <Center flex="1">
