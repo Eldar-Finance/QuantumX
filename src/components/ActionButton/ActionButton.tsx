@@ -11,9 +11,9 @@ const ActionButton = ({
 }: PropsWithChildren<ButtonProps>) => {
   return (
     <Button
-      position={"relative"}
+      position="relative"
       overflow="hidden"
-      fontWeight={"bold"}
+      fontWeight="bold"
       _hover={
         props.bg
           ? {
@@ -30,6 +30,7 @@ const ActionButton = ({
             }
           : null
       }
+      disabled={props.disabled} // Add disabled prop here
       {...props}
     >
       {children}
