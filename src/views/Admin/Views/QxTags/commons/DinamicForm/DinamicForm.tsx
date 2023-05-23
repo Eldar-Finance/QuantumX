@@ -34,7 +34,7 @@ const DinamicForm = ({ scFunc, placeholder }: IProps) => {
             : BytesValue.fromUTF8(value);
         });
 
-      scCall("farms2", scFunc, [...array]);
+      scCall("tagsWsp", scFunc, [...array]);
     },
   });
 
