@@ -115,7 +115,7 @@ export const MultiESDTNFTTransfer = async (
   }
 };
 
-export const ESDTTransferOnly = async ({
+export const ESDTTransferToUser = async ({
   token,
   receiver,
   val = 0,
@@ -151,6 +151,42 @@ export const ESDTTransferOnly = async ({
   let transactionInput = { tx: tx };
 
   return await sendTransaction(transactionInput);
+};
+
+export const ESDTTransferToUserTxOnly = async ({
+  token,
+  receiver,
+  val = 0,
+  gasL = 60000000,
+  realValue = null,
+}: {
+  token: any;
+  receiver: string;
+  val?: number | string;
+  gasL?: number;
+  realValue?: string | number | null;
+}) => {
+  const tokenIdentifier = token.identifier;
+  const multiplyier = Math.pow(10, token.decimals || 18);
+  const finalValue = realValue || Number(val || 0) * multiplyier;
+  const bgFinalValue = new BigNumber(finalValue).toFixed(0);
+
+
+  const sender = store.getState().userAccount.connectedAddress;
+  const senderAddress = new Address(sender);
+
+  const factory = new TransferTransactionsFactory(new GasEstimator());
+  const transfer = TokenTransfer.fungibleFromBigInteger(tokenIdentifier, bgFinalValue, token.decimals);
+  
+  const tx = factory.createESDTTransfer({
+      tokenTransfer: transfer,
+      sender: senderAddress,
+      receiver: new Address(receiver),
+      chainID: ChainId,
+      gasLimit: gasL
+  });
+
+  return tx;
 };
 
 export const ESDTTransfer = async ({
