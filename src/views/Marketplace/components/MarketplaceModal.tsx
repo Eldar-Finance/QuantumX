@@ -7,12 +7,13 @@ import MyModal from 'components/Modal/Modal';
 import { getRealBalance } from "utils/functions/formatBalance";
 import egld from 'assets/logos/egld.svg';
 import NextImage from 'components/NextImage/NextImage';
+import { InfoOutlineIcon } from '@chakra-ui/icons'
 
 const buyQxTag = (username, extension, amount) => {
     purchaseQxTagMarketplace(username, extension, amount)
 };
 
-const ModalComponent = ({ username, extension, amount, tokenId, onClose }) => {
+const ModalComponent = ({ username, extension, amount, tokenId, isOwned, onClose }) => {
 
     const userAddress = useAppSelector(selectUserAddress);
 
@@ -24,14 +25,24 @@ const ModalComponent = ({ username, extension, amount, tokenId, onClose }) => {
             background="black.baseDark"
         >
             <ModalHeader>
-                <ModalHeader>
-                    <Flex justify="space-between" alignItems="center">
+                <Flex justify="space-between" alignItems="center" p="10px">
+                    <Flex flexDirection="column">
                         <Text fontSize="xl" fontWeight="bold">
                             Buy QxTag
                         </Text>
-                        <ModalCloseButton m="20px 20px 0 0" />
+                        {isOwned && (
+                            <Flex alignItems="center" mt={2}>
+                                <InfoOutlineIcon color="#22F7DD" boxSize={5} />
+                                <Text fontSize="md" color="#22F7DD" ml={2}>
+                                    You are the owner
+                                </Text>
+                            </Flex>
+                        )}
                     </Flex>
-                </ModalHeader>
+                    <ModalCloseButton m="20px 20px 0 0" />
+                </Flex>
+
+
                 <Divider />
             </ModalHeader>
             <ModalBody>
@@ -67,7 +78,7 @@ const ModalComponent = ({ username, extension, amount, tokenId, onClose }) => {
                             colorScheme="blue" width="100%" bg="none" border="1px solid #22F7DD" color='white'
                             _hover={{ bg: '#22F7DD', color: 'black' }}
                             onClick={() => buyQxTag(username, extension, amount)}
-                            disabled={!userAddress}
+                            disabled={!userAddress || isOwned}
                         >
                             <Text>Buy</Text>
                         </Button>

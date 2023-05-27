@@ -10,6 +10,7 @@ import {
 import { useGetQxTagMarketplace } from '../../Tags/hooks/useGetQTag'
 import React, { useState, useEffect } from 'react';
 import ModalComponent from './MarketplaceModal';
+import useGetQTag from "views/Tags/hooks/useGetQTag";
 
 const letterRanges = [
     { label: '[ A-G ]', range: /^[A-G]/i },
@@ -22,6 +23,7 @@ const letterRanges = [
 const MarketplaceQxTag = () => {
 
     const { dataTagsInfo, error } = useGetQxTagMarketplace();
+    const { tagInfo } = useGetQTag();
 
     const defaultRange = letterRanges.find(range => range.label === '[ A-G ]');
     const [selectedRange, setSelectedRange] = useState(defaultRange);
@@ -46,6 +48,12 @@ const MarketplaceQxTag = () => {
         setSelectedItem(item);
         setModalOpen(true);
     };
+
+    const isOwned = filteredItems.some(
+        (item) =>
+          item.username === tagInfo.username &&
+          item.extension === tagInfo.extension
+      );
     return (
         <>
             <Heading
@@ -108,6 +116,7 @@ const MarketplaceQxTag = () => {
                             extension={selectedItem.extension}
                             amount={selectedItem.amount}
                             tokenId={selectedItem.token}
+                            isOwned={isOwned}
                             onClose={() => setModalOpen(false)}
                         />
                     )}
