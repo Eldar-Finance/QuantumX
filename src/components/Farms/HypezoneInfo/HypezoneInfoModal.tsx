@@ -37,7 +37,7 @@ const HypezoneInfoModal = ({ onClose }) => {
                     </Flex>
                     <Flex alignItems="start">
                         <InfoIcon color="white" mr="2" mt={1} />
-                        <Text color="white" fontWeight="normal">Minimum staking period 28days, after 28days 0 fees</Text>
+                        <Text color="white" fontWeight="normal">Minimum staking period 28 days, after 28 days 0 fees</Text>
                     </Flex>
                     <Flex alignItems="start">
                         <InfoIcon color="white" mr="2" mt={1} />
