@@ -57,7 +57,7 @@ const MarketplaceQxTag = () => {
     );
 
     return (
-        <>
+        <Flex direction="column" justifyContent="center">
             <Heading
                 mb={8}
                 as="h1"
@@ -65,11 +65,17 @@ const MarketplaceQxTag = () => {
                 textAlign={"center"}
                 display="flex"
                 justifyContent="center"
+                alignItems="center"
             >
                 QuantumXTags Marketplace
             </Heading>
             {!isLoading && (
-                <Wrap mb={4} justifyContent="flex-start" width="70%">
+                <Wrap
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                    fontSize="20px"
+                >
                     {letterRanges.map((range, index) => (
                         <WrapItem key={range.label}>
                             <Button
@@ -79,54 +85,47 @@ const MarketplaceQxTag = () => {
                                 _hover={{ bg: "none" }}
                                 _active={{ bg: "none" }}
                                 onClick={() => handleRangeFilter(range)}
-                                // Add conditional padding to the last item
-                                ml={index === letterRanges.length - 1 ? "-10px" : ""}
+                                ml={index === letterRanges.length - 1 ? "" : "10px"}
                             >
                                 {range.label}
                             </Button>
                         </WrapItem>
                     ))}
+
                 </Wrap>
             )}
             {isLoading ? (
                 <Box display="flex" justifyContent="center" alignItems="center">
-                    <Spinner size="xl" color="#22F7DD"/>
+                    <Spinner size="xl" color="#22F7DD" />
                 </Box>
             ) : (
-                <Flex gap="10px" flexWrap="wrap" width="70%">
-                    {filteredItems.map((item, index) => (
-                        <Box
-                            key={index}
-                            minWidth={{
-                                base: "15%",
-                                md: "100%",
-                                sm: "100%",
-                                lg: "15%",
-                            }}
-                            maxWidth={{
-                                base: "150px",
-                                md: "100%",
-                                sm: "100%",
-                                lg: "150px",
-                            }}
-                            flex="1 0 auto"
-                        >
-                            <Button
-                                padding="25px"
-                                width="100%"
-                                textAlign="center"
-                                whiteSpace="nowrap"
-                                overflow="hidden"
-                                textOverflow="ellipsis"
-                                borderRadius="none"
-                                background="#242526"
-                                color="#22F7DD"
-                                onClick={() => handleOpenModal(item)}
-                            >
-                                {item.username + "." + item.extension}
-                            </Button>
-                        </Box>
-                    ))}
+                <Flex gap="10px" justifyContent="center" alignItems="center">
+                    <Box p={4} mt="25px">
+                        <Flex flexWrap="wrap" justifyContent="center" alignItems="center">
+                            {filteredItems.map((item, index) => (
+                                <Button
+                                    padding="25px"
+                                    textAlign="center"
+                                    fontSize="md"
+                                    m={1}
+                                    borderRadius="none"
+                                    background="#242526"
+                                    color="#22F7DD"
+                                    w={{
+                                        sm: "100%",
+                                        base: "auto",
+                                        md: "auto",
+                                        lg: "auto",
+                                    }}
+                                    key={item.username + '.' + item.extension}
+                                    onClick={() => handleOpenModal(item)}
+                                >
+                                    {item.username + "." + item.extension}
+                                </Button>
+                            ))}
+
+                        </Flex>
+                    </Box>
                     <Box>
                         {/* Render the modal component */}
                         {modalOpen && selectedItem && (
@@ -142,13 +141,12 @@ const MarketplaceQxTag = () => {
                     </Box>
                 </Flex>
             )}
-            <Box>
+            <Box display="flex" justifyContent="center" alignItems="center" mt="25px">
                 {filteredItems.length === 0 && !isLoading && (
                     <Text>No available QXTags for the selected filter.</Text>
                 )}
             </Box>
-        </>
-
+        </Flex>
     );
 
 };
