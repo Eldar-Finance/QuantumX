@@ -1,4 +1,4 @@
-import { Center, Text } from "@chakra-ui/react";
+import { Center, Text, Box, Flex } from "@chakra-ui/react";
 import { scCallOnlyTx } from "api/sc/calls";
 import { sendMultipleTransactions } from "api/sc/sc";
 import ActionButton from "components/ActionButton/ActionButton";
@@ -28,24 +28,19 @@ const Faucet = () => {
       <Center position="absolute" top={"-10px"} right={0}>
         <NextImage src={faucetImg} alt="faucet" height={350} width={300} />
       </Center>
-      <Center
-        bottom={{ xs: "-5px", md: "-25px" }}
-        right={0}
-        left={0}
-        w="full"
-        position={"absolute"}
-        flexDir="column"
-      >
-        <ActionButton
-          bg="white"
-          mb={1}
-          onClick={handleClaim}
-          disabled={!canUserClaim}
-        >
-          CLAIM HYPE
-        </ActionButton>
-        <Text color="GrayText">*1 claim/epoch</Text>
-      </Center>
+
+        <Flex flexDirection="column" alignItems="center">
+          <ActionButton
+            bg="white"
+            mt={{ xs: "80px", md: "70px" }}
+            onClick={handleClaim}
+            disabled={!canUserClaim}
+          >
+            CLAIM HYPE
+          </ActionButton>
+          <Text color="GrayText">*1 claim/epoch</Text>
+        </Flex>
+
     </Center>
   );
 };
