@@ -19,7 +19,7 @@ import {
 import BigNumber from "bignumber.js";
 import store from "redux/store";
 import { getScOfWrapedEgld } from "utils/functions/helpers";
-import { AbiRegistry, SmartContract, U32Value, Interaction, TokenTransfer, Account} from "@multiversx/sdk-core";
+import { AbiRegistry, SmartContract, U32Value, Interaction, TokenTransfer, GasEstimator, TransferTransactionsFactory, Account} from "@multiversx/sdk-core";
 import { sendTransactions } from "@multiversx/sdk-dapp/services";
 
 /* Messages */
@@ -113,6 +113,80 @@ export const MultiESDTNFTTransfer = async (
   } catch (error) {
     console.log("error", error);
   }
+};
+
+export const ESDTTransferToUser = async ({
+  token,
+  receiver,
+  val = 0,
+  gasL = 60000000,
+  realValue = null,
+}: {
+  token: any;
+  receiver: string;
+  val?: number | string;
+  gasL?: number;
+  realValue?: string | number | null;
+}) => {
+  const tokenIdentifier = token.identifier;
+  const multiplyier = Math.pow(10, token.decimals || 18);
+  const finalValue = realValue || Number(val || 0) * multiplyier;
+  const bgFinalValue = new BigNumber(finalValue).toFixed(0);
+
+
+  const sender = store.getState().userAccount.connectedAddress;
+  const senderAddress = new Address(sender);
+
+  const factory = new TransferTransactionsFactory(new GasEstimator());
+  const transfer = TokenTransfer.fungibleFromBigInteger(tokenIdentifier, bgFinalValue, token.decimals);
+  
+  const tx = factory.createESDTTransfer({
+      tokenTransfer: transfer,
+      sender: senderAddress,
+      receiver: new Address(receiver),
+      chainID: ChainId,
+      gasLimit: gasL
+  });
+
+  let transactionInput = { tx: tx };
+
+  return await sendTransaction(transactionInput);
+};
+
+export const ESDTTransferToUserTxOnly = async ({
+  token,
+  receiver,
+  val = 0,
+  gasL = 60000000,
+  realValue = null,
+}: {
+  token: any;
+  receiver: string;
+  val?: number | string;
+  gasL?: number;
+  realValue?: string | number | null;
+}) => {
+  const tokenIdentifier = token.identifier;
+  const multiplyier = Math.pow(10, token.decimals || 18);
+  const finalValue = realValue || Number(val || 0) * multiplyier;
+  const bgFinalValue = new BigNumber(finalValue).toFixed(0);
+
+
+  const sender = store.getState().userAccount.connectedAddress;
+  const senderAddress = new Address(sender);
+
+  const factory = new TransferTransactionsFactory(new GasEstimator());
+  const transfer = TokenTransfer.fungibleFromBigInteger(tokenIdentifier, bgFinalValue, token.decimals);
+  
+  const tx = factory.createESDTTransfer({
+      tokenTransfer: transfer,
+      sender: senderAddress,
+      receiver: new Address(receiver),
+      chainID: ChainId,
+      gasLimit: gasL
+  });
+
+  return tx;
 };
 
 export const ESDTTransfer = async ({

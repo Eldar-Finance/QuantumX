@@ -18,7 +18,7 @@ export const getTxForRareFee = async (
       contractAddr: addressToReceiveRareInTx,
       val: rareFee,
       realValue: realAmount,
-      gasL: 20000000,
+      gasL: 5000000,
     });
 
     return t1;

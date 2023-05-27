@@ -31,7 +31,7 @@ const ItemList = ({ scFunc, optionList, actionTexArrt, onAction }: IProps) => {
     const array = checkedValues.map((value) => {
       return BytesValue.fromUTF8(value);
     });
-    scCall("farms2", scFunc, [...array]);
+    scCall("tagsWsp", scFunc, [...array]);
   };
   return (
     <Box>

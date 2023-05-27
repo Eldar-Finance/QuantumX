@@ -39,7 +39,7 @@ const HypeDualContainer = ({ ids }: IProps) => {
 
   return (
     <FarmList
-      title="Dual Pools"
+      title="Pools"
       ids={ids}
       isPool
       disableIds={hasForFee ? [] : ids}

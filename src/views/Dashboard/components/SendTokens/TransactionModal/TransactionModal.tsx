@@ -27,7 +27,7 @@ import FeeSlider from "./FeeSlider";
 import { getAddress } from "../../../../Tags/services/queries";
 import { formatAddress } from "utils/functions/formatAddress";
 
-const defaultFee = 50;
+const defaultFee = 0.5;
 
 interface IProps {
   isOpen: boolean;
@@ -42,7 +42,7 @@ export interface IFormData {
 const initialValues: IFormData = {
   address: "",
   amount: "",
-  fee: new BigNumber(defaultFee).multipliedBy(1000).toString(),
+  fee: new BigNumber(defaultFee).multipliedBy(1000000).toString(),
   data: "",
 };
 const TransactionModal = ({ isOpen, onClose }: IProps) => {

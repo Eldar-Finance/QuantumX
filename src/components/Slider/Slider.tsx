@@ -80,7 +80,7 @@ export default function ChkSlider({
           w="12"
           rounded={"sm"}
         >
-          {sliderValue}K
+          {sliderValue}M
         </SliderMark>
         <SliderTrack>
           <SliderFilledTrack />

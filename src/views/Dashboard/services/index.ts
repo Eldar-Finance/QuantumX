@@ -2,8 +2,9 @@ import { Transaction, TransactionPayload } from "@multiversx/sdk-core";
 import { Address } from "@multiversx/sdk-core/out";
 import { sendTransactions } from "@multiversx/sdk-dapp/services";
 import { ChainId } from "api/net.config";
-import { ESDTTransfer } from "api/sc/calls";
+import { ESDTTransferToUser } from "api/sc/calls";
 import store from "redux/store";
+import { sendTransaction } from "api/sc/sc";
 
 export const sendUserTokens = async (
   address: string,
@@ -16,6 +17,8 @@ export const sendUserTokens = async (
   data: string
 ) => {
   const sender = store.getState().userAccount.connectedAddress;
+
+  console.log(Number(fee));
 
   if (token.identifier === "EGLD") {
     const tx = new Transaction({
@@ -30,11 +33,9 @@ export const sendUserTokens = async (
       transactions: tx,
     });
   } else {
-    ESDTTransfer({
-      contractAddr: address,
-      funcName: "",
+    ESDTTransferToUser({
+      receiver: address,
       token: token,
-      args: [],
       gasL: Number(fee),
       realValue: token.amount,
     });
