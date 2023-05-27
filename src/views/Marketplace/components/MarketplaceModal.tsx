@@ -48,7 +48,7 @@ const ModalComponent = ({ username, extension, amount, tokenId, isOwned, onClose
             <ModalBody>
                 <Box bg="#151515" padding="20px" borderRadius="20px">
                     <Flex direction="column" textAlign="center" gap="5px">
-                        <Text>{username}.{extension}</Text>
+                        <Text fontSize="1.8rem">{username}.{extension}</Text>
                         {tokenId && tokenId == 'EGLD' ?
                             <>
                                 <Flex justifyContent="center" gap="10px">
