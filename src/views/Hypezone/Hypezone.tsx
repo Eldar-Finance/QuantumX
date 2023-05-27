@@ -1,7 +1,8 @@
 import { Box, Flex } from "@chakra-ui/react";
 import { toknesID } from "api/net.config";
 import MyContainer from "components/Container/Container";
-import Title from "components/Farms/Title/Title";
+// import Title from "components/Farms/Title/Title";
+import HypezoneTitle from "components/Farms/Title/HypezoneTitle";
 import Layout from "components/Layout/Layout";
 import WrapperPages from "hoc/WrapperPages";
 import withElronDapp from "hoc/withElronDapp";
@@ -68,7 +69,7 @@ const Hypezone = () => {
           {" "}
           <Flex gap={4} flexDir={{ xs: "column", md: "row" }}>
             <Box flex={1}>
-              <Title
+              <HypezoneTitle
                 title="Hypezone"
                 subtitle="High Yield farming & pools for SRB $HYPE token"
                 amount={hypeTvl}
