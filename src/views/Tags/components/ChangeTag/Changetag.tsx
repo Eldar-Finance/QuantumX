@@ -18,6 +18,7 @@ import axios from "axios";
 import { useAppSelector } from "utils/hooks/redux";
 import { selectUserAddress } from "redux/slices/userAcount/account-slice";
 import { getIsTagAvailable } from "views/Tags/services/queries";
+import SellTagModal from "../SellTagModal/SellTagModal";
 
 const validationSchema = Yup.object({
   //validate only numbers and letters
@@ -35,6 +36,7 @@ const ChangeTag = () => {
   const { tagInfo } = useGetQTag();
   const [data, setData] = useState(null);
   const userAddress = useAppSelector(selectUserAddress);
+  const [sellTagModalOpen, setSellTagModalOpen] = useState(false);
 
   const isTagAvailable = async (username: string, extension: string): Promise<Boolean> => {
     return getIsTagAvailable(username, extension);
@@ -107,10 +109,10 @@ const ChangeTag = () => {
     const fetchDataFromApi = async () => {
       try {
         const apiURL = `${network.apiAddress}/accounts/${userAddress}/collections?size=350`;
-  
+
         const responseData = await fetchData(apiURL);
         const collectionsToCheck = ["QXFLM-06e81a", "QXHR-9b0bc6"];
-        
+
         if (responseData) {
           const exists = collectionsToCheck.reduce((acc, collection) => {
             const exists = responseData.some(item => item.collection === collection);
@@ -145,6 +147,10 @@ const ChangeTag = () => {
     formik.setFieldValue("tag", tagInfo.username, true);
   };
 
+  const handleSellTag = () => {
+    setSellTagModalOpen(true);
+  }
+
   const isInvalid = formik.touched.tag && Boolean(formik.errors.tag);
 
   return (
@@ -161,6 +167,9 @@ const ChangeTag = () => {
         </ActionButton>
         <ActionButton onClick={handleUpdateExtension}>
           Replace Extension
+        </ActionButton>
+        <ActionButton onClick={() => handleSellTag()}>
+          Sell Tag
         </ActionButton>
       </Flex>
       <Flex
@@ -224,6 +233,15 @@ const ChangeTag = () => {
               : ""
         }
       />
+
+      {/* Render the modal component */}
+      {sellTagModalOpen && (
+        <SellTagModal
+        
+          onClose={() => setSellTagModalOpen(false)}
+        />
+      )}
+
     </TagCard>
   );
 };

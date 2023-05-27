@@ -23,6 +23,8 @@ const MarketplaceQxTag = () => {
 
     const { dataTagsInfo, error } = useGetQxTagMarketplace();
 
+    console.log(dataTagsInfo)
+
     const defaultRange = letterRanges.find(range => range.label === '[ A-G ]');
     const [selectedRange, setSelectedRange] = useState(defaultRange);
     const [filteredItems, setFilteredItems] = useState([]);
