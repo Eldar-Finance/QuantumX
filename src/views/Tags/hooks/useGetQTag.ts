@@ -50,7 +50,7 @@ export const useGetExtensionsList = () => {
   };
 };
 export const useGetQxTagMarketplace = () => {
-  const { data: dataTags, error } = useSwr<IScQxTagMarketplace[]>(
+  const { data: dataTags, error, isLoading } = useSwr<IScQxTagMarketplace[]>(
     'tagsWsp:getMarketplaceTags',
     async () => {
       return await fetchQxtagMarketplace();
@@ -63,5 +63,6 @@ export const useGetQxTagMarketplace = () => {
   return {
     dataTagsInfo: dataTags,
     error,
+    isLoading
   };
 };
