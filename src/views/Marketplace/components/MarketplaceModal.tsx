@@ -5,14 +5,16 @@ import { useAppSelector } from "utils/hooks/redux";
 import { selectUserAddress } from "redux/slices/userAcount/account-slice";
 import MyModal from 'components/Modal/Modal';
 import { getRealBalance } from "utils/functions/formatBalance";
+import egld from 'assets/logos/egld.svg';
+import NextImage from 'components/NextImage/NextImage';
 
-const buyQxTag = (username,extension, amount) => {
+const buyQxTag = (username, extension, amount) => {
     purchaseQxTagMarketplace(username, extension, amount)
 };
 
-const ModalComponent = ({ username, extension, amount, onClose }) => {
+const ModalComponent = ({ username, extension, amount, tokenId, onClose }) => {
 
-const userAddress = useAppSelector(selectUserAddress);
+    const userAddress = useAppSelector(selectUserAddress);
 
     return (
         <MyModal
@@ -36,7 +38,20 @@ const userAddress = useAppSelector(selectUserAddress);
                 <Box bg="#151515" padding="20px" borderRadius="20px">
                     <Flex direction="column" textAlign="center" gap="5px">
                         <Text>{username}.{extension}</Text>
-                        <Text>{getRealBalance(amount, 18)}</Text>
+                        {tokenId && tokenId == 'EGLD' ?
+                            <>
+                                <Flex justifyContent="center" gap="10px">
+                                    <Text fontSize="20px">{getRealBalance(amount, 18)}</Text>
+                                    <NextImage
+                                        src={egld}
+                                        alt=""
+                                        height={20}
+                                        width={20}
+                                    />
+                                </Flex>
+                            </>
+                            : ''
+                        }
                     </Flex>
                 </Box>
             </ModalBody>
@@ -48,11 +63,11 @@ const userAddress = useAppSelector(selectUserAddress);
                         </Button>
                     </Box>
                     <Box width="100%">
-                        <Button 
-                        colorScheme="blue" width="100%" bg="none" border="1px solid #22F7DD" color='white' 
-                        _hover={{ bg: '#22F7DD', color: 'black' }} 
-                        onClick={() => buyQxTag(username,extension, amount)}
-                        disabled={!userAddress}
+                        <Button
+                            colorScheme="blue" width="100%" bg="none" border="1px solid #22F7DD" color='white'
+                            _hover={{ bg: '#22F7DD', color: 'black' }}
+                            onClick={() => buyQxTag(username, extension, amount)}
+                            disabled={!userAddress}
                         >
                             <Text>Buy</Text>
                         </Button>

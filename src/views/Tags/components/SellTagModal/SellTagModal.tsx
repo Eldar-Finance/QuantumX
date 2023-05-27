@@ -1,5 +1,5 @@
 import MyModal from 'components/Modal/Modal';
-import { ModalFooter, ModalBody, Button, Divider, Flex, Box, Input, FormErrorMessage } from '@chakra-ui/react';
+import { ModalFooter, ModalBody, Button, Divider, Flex, Box, Input, FormErrorMessage, Text } from '@chakra-ui/react';
 import ActionButton from "components/ActionButton/ActionButton";
 import { useFormik } from "formik";
 import { setElrondBalance } from "utils/functions/formatBalance";
@@ -66,18 +66,25 @@ const SellTagModal = ({ onClose }) => {
                     </Box>
 
                 </ModalBody>
-                <ModalFooter justifyContent={"center"} gap="6" flexWrap={"wrap"}>
-                    <ActionButton
-                        variant={"outline"}
-                        w="full"
-                        maxW={"180px"}
-                        onClick={onClose}
-                    >
-                        Cancel
-                    </ActionButton>
-                    <Button mt={4} colorScheme="teal" type="submit" disabled={!formik.isValid || formik.isSubmitting}>
-                        {formik.isSubmitting ? 'Submitting...' : 'Submit'}
-                    </Button>
+                <ModalFooter justifyContent="center">
+                    <Flex width="100%" justify="space-around" gap="10px">
+                        <Box width="100%">
+                            <Button colorScheme="blue" width="100%" bg="none" border="1px solid #22F7DD" color='white' _hover={{ bg: '#22F7DD', color: 'black' }} onClick={onClose}>
+                                <Text>Cancel</Text>
+                            </Button>
+                        </Box>
+                        <Box width="100%">
+                            <Button
+                            
+                                colorScheme="blue" width="100%" bg="none" border="1px solid #22F7DD" color='white'
+                                _hover={{ bg: '#22F7DD', color: 'black' }}
+                                type="submit"
+                                disabled={!formik.isValid || formik.isSubmitting}
+                            >
+                                {formik.isSubmitting ? 'Confirming...' : 'Confirm'}
+                            </Button>
+                        </Box>
+                    </Flex>
                 </ModalFooter>
             </form>
         </MyModal>
