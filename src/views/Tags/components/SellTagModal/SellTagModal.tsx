@@ -1,6 +1,5 @@
 import MyModal from 'components/Modal/Modal';
-import { ModalFooter, ModalBody, Button, Divider, Flex, Box, Input, FormErrorMessage, Text } from '@chakra-ui/react';
-import ActionButton from "components/ActionButton/ActionButton";
+import { ModalFooter, ModalBody, Button, Divider, Flex, Box, Input, FormErrorMessage, Text, ModalHeader, ModalCloseButton } from '@chakra-ui/react';
 import { useFormik } from "formik";
 import { setElrondBalance } from "utils/functions/formatBalance";
 import { scCallOnlyTx } from "api/sc/calls";
@@ -16,11 +15,14 @@ interface FormValues {
 const SellTagModal = ({ onClose }) => {
 
     const initialValues: FormValues = {
-        inputValue: 0,
+        inputValue: null,
     };
 
     const validationSchema = Yup.object({
-        inputValue: Yup.number().typeError('Input value must be a number').required('Input value is required'),
+        inputValue: Yup.number()
+            .nullable(true)
+            .typeError('Input value must be a number')
+            .required('Input value is required'),
     });
 
     const handleSubmit = async (values: FormValues) => {
@@ -45,16 +47,24 @@ const SellTagModal = ({ onClose }) => {
             onClose={onClose}
             size="xl"
         >
+            <ModalHeader>
+                <Flex justify="space-between" alignItems="center">
+                    <Text fontSize="xl" fontWeight="bold">
+                        Sell Your QxTag
+                    </Text>
+                    <ModalCloseButton m="10px" />
+                </Flex>
+            </ModalHeader>
             <form onSubmit={formik.handleSubmit}>
                 <Divider />
                 <ModalBody>
                     <Box bg="black.base" p="5" borderRadius={"xl"}>
 
-                        <Flex mb="3">
+                        <Flex>
                             <Input
                                 id="inputValue"
                                 name="inputValue"
-                                placeholder="Enter a number"
+                                placeholder="Enter egld amount"
                                 type="number"
                                 value={formik.values.inputValue}
                                 onChange={formik.handleChange}
@@ -64,7 +74,6 @@ const SellTagModal = ({ onClose }) => {
                             <FormErrorMessage>{formik.errors.inputValue}</FormErrorMessage>
                         </Flex>
                     </Box>
-
                 </ModalBody>
                 <ModalFooter justifyContent="center">
                     <Flex width="100%" justify="space-around" gap="10px">
@@ -75,7 +84,7 @@ const SellTagModal = ({ onClose }) => {
                         </Box>
                         <Box width="100%">
                             <Button
-                            
+
                                 colorScheme="blue" width="100%" bg="none" border="1px solid #22F7DD" color='white'
                                 _hover={{ bg: '#22F7DD', color: 'black' }}
                                 type="submit"
