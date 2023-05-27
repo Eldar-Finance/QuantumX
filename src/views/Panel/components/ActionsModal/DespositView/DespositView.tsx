@@ -314,12 +314,12 @@ const InputComponent = ({
         >
           {field.tokenDetail ? (
             <>
-              <NextImage
+              {field.tokenDetail.assets && <NextImage
                 src={field.tokenDetail.assets.svgUrl}
                 alt=""
                 width={27}
                 height={27}
-              />
+              />}
               <Text fontSize={"14px"} ml={2}>
                 {formatTokenI(field.tokenDetail.ticker)}
               </Text>
