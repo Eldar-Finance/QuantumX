@@ -3,6 +3,8 @@ import NextImage from "components/NextImage/NextImage";
 import { formatBalance } from "utils/functions/formatBalance";
 import useGetMultipleElrondTokens from "utils/hooks/useGetMultipleElrondTokens";
 import { IScUserFarmRewards } from "utils/types/sc.interface";
+import nftImage from "assets/logos/nfttoken.png";
+import { toknesID } from "api/net.config";
 
 interface IProps {
   userRewards: IScUserFarmRewards[];
@@ -14,6 +16,8 @@ const EarnedRewards = ({ userRewards, multifarmRewardsLeft }: IProps) => {
     multifarmRewardsLeft
   );
 
+  let manualImage = null;
+
   return (
     <Flex flexDir={"column"}>
       <Text color="white.400" fontSize={"sm"}>
@@ -23,6 +27,10 @@ const EarnedRewards = ({ userRewards, multifarmRewardsLeft }: IProps) => {
         const rewardInfo = userRewards.find(
           (r) => r.rewardToken === rewardsToken.identifier
         );
+
+        if (rewardsToken.identifier === toknesID.nfttoken) {
+          manualImage = nftImage;
+        }
 
         return (
           <Center
@@ -39,13 +47,17 @@ const EarnedRewards = ({ userRewards, multifarmRewardsLeft }: IProps) => {
                   decimals: rewardsToken.decimals,
                 })}
               </Text>{" "}
-              {rewardsToken?.assets?.svgUrl && (
+              {manualImage ? (
+                <NextImage alt="" src={manualImage} height={30} width={30} />
+              ) : (
+                <> {rewardsToken?.assets?.svgUrl && (
                 <NextImage
                   src={rewardsToken.assets.svgUrl}
                   alt=""
                   height={30}
                   width={30}
-                />
+                />)}
+              </>
               )}
             </Flex>
           </Center>
