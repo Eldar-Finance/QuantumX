@@ -16,7 +16,10 @@ const buyQxTag = (username, extension, amount) => {
 const ModalComponent = ({ username, extension, amount, tokenId, isOwned, onClose }) => {
 
     const userAddress = useAppSelector(selectUserAddress);
-
+    const amiowner = isOwned.filter(
+        (item) =>
+            item.username === username && item.extension === extension
+    );
     return (
         <MyModal
             isOpen={true}
@@ -30,7 +33,7 @@ const ModalComponent = ({ username, extension, amount, tokenId, isOwned, onClose
                         <Text fontSize="xl" fontWeight="bold">
                             Buy QxTag
                         </Text>
-                        {isOwned && (
+                        {amiowner.length > 0 && (
                             <Flex alignItems="center" mt={2}>
                                 <InfoOutlineIcon color="#22F7DD" boxSize={5} />
                                 <Text fontSize="md" color="#22F7DD" ml={2}>

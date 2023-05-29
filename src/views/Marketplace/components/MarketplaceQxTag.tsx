@@ -51,7 +51,7 @@ const MarketplaceQxTag = () => {
         setModalOpen(true);
     };
 
-    const isOwned = filteredItems.some(
+    const isOwned = filteredItems.filter(
         (item) =>
             item.username === tagInfo.username && item.extension === tagInfo.extension
     );
