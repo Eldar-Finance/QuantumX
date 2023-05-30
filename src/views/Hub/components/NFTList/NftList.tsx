@@ -77,7 +77,7 @@ const NftList = () => {
 
   return (
     <Center flexWrap={"wrap"} gap={12} mt={8}>
-      <NftCard
+      {/* <NftCard
         iamge={srbImage}
         token={offer1.token}
         text={
@@ -97,7 +97,7 @@ const NftList = () => {
           </Text>
         }
         onSubmit={() => handleSubmitHubOffer(offer1)}
-      />
+      /> */}
       <NftCard
         token={offer2.token}
         iamge={vacineImage}
