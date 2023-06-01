@@ -10,7 +10,7 @@ const CardButtons = ({ isInvalid, cost }: ICardButtonsProps) => {
   return (
     <Center w="full" gap={6}>
       <ConfirmButton type="submit" disabled={isInvalid} maxW={"200px"}>
-        Confirm {cost}
+        Confirm &nbsp; {cost}
       </ConfirmButton>
     </Center>
   );
