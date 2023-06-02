@@ -135,6 +135,7 @@ const ClaimTag = () => {
           }}
           selectedExtention={formik.values.extention}
           specificCollection={data}
+          itemClicked={true}
         />
       </Flex>
       <Flex mb={14} fontSize={"sm"} color="tomato">
