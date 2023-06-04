@@ -10,7 +10,7 @@ jobs:
         uses: appleboy/telegram-action@master
         with:
           to: ${{ -828093222 }}
-          token: ${{ 6165290967:AAF3iJDXIBwpQ6BrCOWdE0AhfRLHZKN1RDA }}
+          token: ${{ AAF3iJDXIBwpQ6BrCOWdE0AhfRLHZKN1RDA }}
           message: |
             ${{ github.actor }} created commit:
             Commit message: ${{ github.event.commits[0].message }}
