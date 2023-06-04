@@ -13,9 +13,8 @@ jobs:
           token: 6165290967:AAF3iJDXIBwpQ6BrCOWdE0AhfRLHZKN1RDA
           message: |
             New commit by: ${{ github.actor }}
-            On repo: ${{ github.repository }}
-            On branch: ${{ github.repository.repo }}
-            On branch: ${{ github.repo }}
+            On repo: qx
+            On branch: main
             Commit message: ${{ github.event.commits[0].message }}
 
             https://github.com/${{ github.repository }}/commit/${{github.sha}}
