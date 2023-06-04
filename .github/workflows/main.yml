@@ -14,7 +14,8 @@ jobs:
           message: |
             New commit by: ${{ github.actor }}
             On repo: ${{ github.repository }}
-            On branch: ${{ github.name }}
+            On branch: ${{ github.repository.repo }}
+            On branch: ${{ github.repo }}
             Commit message: ${{ github.event.commits[0].message }}
 
             https://github.com/${{ github.repository }}/commit/${{github.sha}}
