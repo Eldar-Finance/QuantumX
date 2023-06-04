@@ -131,7 +131,7 @@ const ClaimTag = () => {
         <ExtensionSelect
           onSelect={(selectedExtension) => {
             formik.setFieldValue("extention", selectedExtension);
-            formik.setFieldError("tag", null); // clear the tag error
+            formik.setFieldError("tag", null); //  clear the tag error
           }}
           selectedExtention={formik.values.extention}
           specificCollection={data}
