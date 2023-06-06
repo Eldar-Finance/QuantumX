@@ -23,7 +23,8 @@ const validationSchema = yup.object({
 const Harvest = () => {
   const formik = useFormik({
     initialValues: {
-      title: proteoFarms.PROTEOEGLDLP.token,
+      //title: proteoFarms.PROTEOEGLDLP.token,
+      title: '',
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {

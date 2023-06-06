@@ -7,7 +7,7 @@ import {
 } from "api/sc/sc";
 // import aeroEgld from "assets/logos/aeroegl.png";
 import epunkUsdcimg from "assets/logos/epunksusdc.png";
-import proteoEgldLpImg from "assets/logos/proteolp.png";
+//import proteoEgldLpImg from "assets/logos/proteolp.png";
 
 // import zpayWegldImg from "assets/logos/zpaywegld.png";
 import NextImage from "components/NextImage/NextImage";
@@ -20,23 +20,23 @@ import { IProteoFarm } from "utils/types/farms.interface";
 export const proteoFarms: {
   // ZPAYWEGLD: IProteoFarm;
   // AEROWEGLD: IProteoFarm;
-  PROTEOEGLDLP: IProteoFarm;
+  // PROTEOEGLDLP: IProteoFarm;
   // CYBERWEGLD: IProteoFarm;
 } = {
-  PROTEOEGLDLP: {
-    hc: 20,
-    Icon: <NextImage alt="" src={proteoEgldLpImg} width={45} />,
-    stakedCoin: "PROTEO-EGLD",
-    wsp: proteoEgldEliteWsp,
-    token: "PROTEOEGLDLP",
-    aprEndpoint: "/proteoegldapi.php",
-    tokenIdentifier: toknesID.proteoEgldLp,
-    getFarm:
-      "https://arda.run/swap?from=single-wallet-&to=lpMaiar-wallet-PROTEOEGLD-baf054",
-    viewContract: "https://explorer.elrond.com/tokens/PROTEOEGLD-baf054",
-    seePair: "https://e-compass.io/maiars/chart/proteo/wegld",
-    type: "farm",
-  },
+  // PROTEOEGLDLP: {
+  //   hc: 20,
+  //   Icon: <NextImage alt="" src={proteoEgldLpImg} width={45} />,
+  //   stakedCoin: "PROTEO-EGLD",
+  //   wsp: proteoEgldEliteWsp,
+  //   token: "PROTEOEGLDLP",
+  //   aprEndpoint: "/proteoegldapi.php",
+  //   tokenIdentifier: toknesID.proteoEgldLp,
+  //   getFarm:
+  //     "https://arda.run/swap?from=single-wallet-&to=lpMaiar-wallet-PROTEOEGLD-baf054",
+  //   viewContract: "https://explorer.elrond.com/tokens/PROTEOEGLD-baf054",
+  //   seePair: "https://e-compass.io/maiars/chart/proteo/wegld",
+  //   type: "farm",
+  // },
   // ZPAYWEGLD: {
   //   hc: 20,
   //   Icon: <NextImage alt="" src={zpayWegldImg} width={45} />,
