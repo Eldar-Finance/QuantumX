@@ -9,12 +9,12 @@ jobs:
       - name: send telegram message on push
         uses: appleboy/telegram-action@master
         with:
-          to: -828093222
+          to: -1001965421430
           token: 6165290967:AAF3iJDXIBwpQ6BrCOWdE0AhfRLHZKN1RDA
           message: |
-            New commit by: ${{ github.actor }}
-            On repo: qx
-            On branch: main
-            Commit message: ${{ github.event.commits[0].message }}
+            Commit by:   ${{github.actor}}
+            On repo:       Qx
+            On branch:   ${{github.ref_name}}
+            Message:      ${{github.event.commits[0].message}}
 
-            https://github.com/${{ github.repository }}/commit/${{github.sha}}
+            https://github.com/${{github.repository}}/commit/${{github.sha}}
