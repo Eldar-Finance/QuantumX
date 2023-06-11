@@ -175,10 +175,11 @@ const Pools = () => {
             tvlText = "Total value Locked in Pools"
           />
           <Flex w="full" gap="50px" alignItems="center" justifyContent={"flex-end"} mt="12">
-            <Flex alignItems="center" gap="10px">
-              <Switch size="md" isChecked={isOpen} colorScheme="teal" onChange={handleToggle} />
-              <Box>My Pools</Box>
-            </Flex>
+            { address && (<Flex alignItems="center" gap="10px">
+                <Switch size="md" isChecked={isOpen} colorScheme="teal" onChange={handleToggle} />
+                <Box>My Pools</Box>
+              </Flex>
+            )}
             <Search onChange={handleSearch}/>
           </Flex>
           <Center mt="30px" w="full">

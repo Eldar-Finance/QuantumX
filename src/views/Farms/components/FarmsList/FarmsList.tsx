@@ -10,11 +10,14 @@ import {
 } from "redux/slices/farms2/farms2-slice";
 import { formatTokenI } from "utils/functions/tokens";
 import { proteoFarmsArr } from "views/Farms/constants";
+import { selectUserAddress } from "redux/slices/userAcount/account-slice";
+import { useAppSelector } from "utils/hooks/redux";
 
 const FarmsList = () => {
   const userFarm2Info = useSelector(selectUserFarms2Info);
   const userFarm2Rewards = useSelector(selectUserFarms2Rewards);
   const farms2 = useSelector(selectFarms);
+  const address = useAppSelector(selectUserAddress);
 
   const [farms2ToSearch, setFarms2ToSearch] = useState(farms2);
   const [proteoFarmsArrToSearch, setproteoFarmsArrToSearch] = useState(
@@ -59,10 +62,10 @@ const FarmsList = () => {
   const [isLoading, setIsLoading] = useState(true); // Add a loading state
 
   useEffect(() => {
-    if (farms2ToSearch.length > 0) {
+    if (farms2ToSearch.length > 0 && address) {
       setIsLoading(false); // Set loading state to false when farms2ToSearch is not empty
     }
-  }, [farms2ToSearch]);
+  }, [address, farms2ToSearch]);
 
   const handleToggle = () => {
     if (!isLoading) { // Only run the logic if the loading state is false
@@ -88,12 +91,13 @@ const FarmsList = () => {
     <>
       <Flex w="full" justifyContent={"flex-end"} mt="12">
       <Flex w="full" gap="50px" alignItems="center" justifyContent={"flex-end"} mt="12">
-            <Flex alignItems="center" gap="10px">
+          { address && (<Flex alignItems="center" gap="10px">
               <Switch size="md" isChecked={isOpen} colorScheme="teal" onChange={handleToggle} />
               <Box>My Farms</Box>
             </Flex>
-            <Search onChange={handleSearch}/>
-          </Flex>
+          )}
+          <Search onChange={handleSearch}/>
+        </Flex>
       </Flex>
       <Center mt="50px" w="full">
         <FarmsCard
