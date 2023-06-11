@@ -1,4 +1,4 @@
-import { Center, Flex } from "@chakra-ui/react";
+import { Box, Center, Flex, Switch, extendTheme } from "@chakra-ui/react";
 import FarmsCard from "components/Farms/FarmsCard/FarmsCard";
 import Search from "components/Farms/Search/Search";
 import { useEffect, useState } from "react";
@@ -54,12 +54,46 @@ const FarmsList = () => {
     }
   };
 
+  
+  const [isOpen, setIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true); // Add a loading state
+
+  useEffect(() => {
+    if (farms2ToSearch.length > 0) {
+      setIsLoading(false); // Set loading state to false when farms2ToSearch is not empty
+    }
+  }, [farms2ToSearch]);
+
+  const handleToggle = () => {
+    if (!isLoading) { // Only run the logic if the loading state is false
+      setIsOpen(!isOpen);
+
+      if (!isOpen) {
+        const newFarm2 = farms2.filter((farm) => {
+          return userFarm2Info.data.some(
+            (userFarm) =>
+              userFarm.farmId === farm.farm.farmId &&
+              Number(userFarm.stakedBalance) > 0
+          );
+        });
+
+        setFarms2ToSearch(newFarm2);
+      } else {
+        setFarms2ToSearch(farms2);
+      }
+    }
+  };
+
   return (
     <>
       <Flex w="full" justifyContent={"flex-end"} mt="12">
-        <Flex gap="20px">
-          <Search onChange={handleSearch} />
-        </Flex>
+      <Flex w="full" gap="50px" alignItems="center" justifyContent={"flex-end"} mt="12">
+            <Flex alignItems="center" gap="10px">
+              <Switch size="md" isChecked={isOpen} colorScheme="teal" onChange={handleToggle} />
+              <Box>My Farms</Box>
+            </Flex>
+            <Search onChange={handleSearch}/>
+          </Flex>
       </Flex>
       <Center mt="50px" w="full">
         <FarmsCard
