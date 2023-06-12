@@ -89,8 +89,8 @@ const FarmsList = () => {
 
   return (
     <>
-      <Flex w="full" justifyContent={"flex-end"} mt="12">
-      <Flex w="full" gap="50px" alignItems="center" justifyContent={"flex-end"} mt="12">
+      <Flex w="full" justifyContent={"flex-end"} mt={{ xs: "10px", md: "30px" }}>
+      <Flex w="full" gap="50px" alignItems="center" justifyContent={"flex-end"} mt={{ xs: "30px", md: "30px" }}>
           { address && (<Flex alignItems="center" gap="10px">
               <Switch size="md" isChecked={isOpen} colorScheme="teal" onChange={handleToggle} />
               <Box>My Farms</Box>
@@ -99,7 +99,7 @@ const FarmsList = () => {
           <Search onChange={handleSearch}/>
         </Flex>
       </Flex>
-      <Center mt="50px" w="full">
+      <Center mt={{ xs: "15px", md: "30px" }} w="full">
         <FarmsCard
           proteoArr={proteoFarmsArrToSearch}
           othersArr={{

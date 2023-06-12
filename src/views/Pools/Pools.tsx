@@ -174,7 +174,7 @@ const Pools = () => {
             amount={totalValueLocked}
             tvlText = "Total value Locked in Pools"
           />
-          <Flex w="full" gap="50px" alignItems="center" justifyContent={"flex-end"} mt="12">
+          <Flex w="full" gap="50px" alignItems="center" justifyContent={"flex-end"} mt={{ xs: "40px", md: "70px" }}>
             { address && (<Flex alignItems="center" gap="10px">
                 <Switch size="md" isChecked={isOpen} colorScheme="teal" onChange={handleToggle} />
                 <Box>My Pools</Box>
@@ -182,7 +182,7 @@ const Pools = () => {
             )}
             <Search onChange={handleSearch}/>
           </Flex>
-          <Center mt="30px" w="full">
+          <Center mt={{ xs: "15px", md: "30px" }} w="full">
             <ProteoFarmsCard
               proteoArr={proteoPoolsArrToSearch}
               othersArr={{
