@@ -38,8 +38,8 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
       <MyContainer
         bg="black.light"
         borderRadius={{ xs: "xl", "2xl": "3xl" }}
-        py={{ xs: "15px", "2xl": "40px" }}
-        px={!isLargerThanLg ? "30px" : "80px"}
+        py={{ xs: "15px", "lg": "40px" }}
+        px={!isLargerThanLg ? "15px" : "80px"}
         display="flex"
         justifyContent={onlyConnectButton ? "flex-end" : "space-between"}
         fontSize={{ xs: "sm", "2xl": "md" }}
@@ -49,7 +49,7 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
         alignItems={"center"}
       >
         {!isLargerThanLg && (
-          <Flex w="full" alignItems="center" justifyContent="space-between" direction="column" gap="10px">
+          <Flex w="full" alignItems="center" justifyContent="space-between" direction="column" gap="20px">
             <Flex w="full" alignItems="center" justifyContent="space-between">
               <Link href="/">
                 <NextImage src={logo} alt="QuantumX" width={100} />

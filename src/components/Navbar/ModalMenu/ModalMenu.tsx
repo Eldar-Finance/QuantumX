@@ -39,6 +39,7 @@ const ModalMenu = ({ onClose }: IProps) => {
       flexDir={"column"}
       p={0}
       overflow="hidden"
+      fontSize={{ xs: "inherit", md: "inherit" }}
     >
       {routesArr.map((route) => {
         if (!route.onModal && !route.onModalAndNavbar) {

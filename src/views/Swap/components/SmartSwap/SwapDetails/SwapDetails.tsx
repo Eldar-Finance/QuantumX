@@ -4,7 +4,7 @@ import SwapRoute from "./SwapRoute/SwapRoute";
 
 const SwapDetails = () => {
   return (
-    <Stack w="full" spacing={"10px"} mt="30px">
+    <Stack w="full" spacing={"10px"} mt="20px">
       <SwapRoute />
       <Slippage />
     </Stack>

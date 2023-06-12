@@ -9,7 +9,7 @@ const Layout = ({ children, ...props }: PropsWithChildren<IProps>) => {
   return (
     <Box
       position={"relative"}
-      pt={{ xs: "210px", md: "180px", "2xl": "248px" }}
+      pt={{ xs: "160px", md: "180px", "2xl": "248px" }}
       h="full"
       minH="100vh"
       {...props}
@@ -30,8 +30,8 @@ const Layout = ({ children, ...props }: PropsWithChildren<IProps>) => {
         w="full"
         left={0}
         right="0"
-        top={"50px"}
-        px={{ xs: "15px", md: "30px" }}
+        top={{ xs: "10px", md: "40px" }}
+        px={{ xs: "10px", md: "30px" }}
       >
         <Navbar />
       </Box>
