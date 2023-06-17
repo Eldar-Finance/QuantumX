@@ -293,4 +293,11 @@ export const pairs = [
     token2lp: "HYPE-619661",
     token1lp: "LEGLD-d74da9",
   },
+  {
+    lpname: "RARELEGLD",
+    lpidentifier: "RARELEGLD-55ef1d",
+    lpprice: "0",
+    token2lp: "RARE-99e8b0",
+    token1lp: "LEGLD-d74da9",
+  },
 ];
