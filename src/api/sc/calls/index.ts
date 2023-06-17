@@ -115,6 +115,52 @@ export const MultiESDTNFTTransfer = async (
   }
 };
 
+export const MultiESDTNFTTransferOnlyTx = async (
+  wsp: WspTypes,
+  funcName: string,
+  tokens: {
+    collection: string;
+    nonce: number;
+    value: number;
+  }[],
+  args: any[] = [],
+  gasL: number = 100000000
+) => {
+  try {
+    const sender = store.getState().userAccount.connectedAddress;
+    const senderAddress = new Address(sender);
+
+    let { simpleAddress } = getInterface(wsp);
+    const receiverAddress = new Address(simpleAddress);
+
+    const contract = new SmartContract({ address: receiverAddress});
+    let interaction = new Interaction(contract, new ContractFunction(funcName), args);
+
+    const data = tokens.flatMap((nft) => {
+      const nftData = TokenTransfer.metaEsdtFromBigInteger(
+        nft.collection,
+        nft.nonce,
+        new BigNumber(nft.value),
+      );
+      return nftData;
+    });
+  
+    if (data.length > 0) {
+      let tx = interaction
+      .withSender(senderAddress)
+      .useThenIncrementNonceOf(new Account(senderAddress)) // den xerw an xreiazetai auto
+      .withMultiESDTNFTTransfer(data)
+      .withGasLimit(gasL)
+      .withChainID(ChainId)
+      .buildTransaction();
+
+      return tx;
+    }
+  } catch (error) {
+    console.log("error", error);
+  }
+};
+
 export const ESDTTransferToUser = async ({
   token,
   receiver,

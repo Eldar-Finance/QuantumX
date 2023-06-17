@@ -45,7 +45,7 @@ const HypePools2Container = ({ ids }: IProps) => {
   return (
     <FarmList
       title="Pools"
-      subtitle="[Earn $HYPE]"
+      subtitle="[Stake $RARE &nbsp;-&nbsp; Earn $HYPE]"
       ids={ids}
       isPool
       disableIds={hasForFee ? (forceFarmAccess ? [] : idsToDisable) : ids}
