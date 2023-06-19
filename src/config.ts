@@ -135,7 +135,9 @@ export const TOKENS_ID = {
   usdt: "USDT-f8c08c",
   busd: "BUSD-40b57e",
   hypeusdc: "HYPEUSDC-3164e5",
-  nfttoken: "NFT-e08b3e"
+  nfttoken: "NFT-e08b3e",
+  wbtc: "WBTC-5349b3",
+  weth: "WETH-b4ca29"
 };
 
 //general configs
