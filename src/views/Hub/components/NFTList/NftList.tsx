@@ -21,7 +21,7 @@ const NftList = () => {
     offers ? [offers[0].token, offers[1].token, offers[3].token, offers[4].token, offers[6].token, offers[7].token, offers[8].token] : []
   );
 
-  console.log(offers);
+  // console.log(offers);
 
   if (!offers || !tokens) return null;
 
