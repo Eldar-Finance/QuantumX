@@ -6,6 +6,7 @@ import srbImage from "assets/hub/srbcatalog.jpg";
 import vacineImage from "assets/hub/vacine.png";
 import miceCityImage from "assets/hub/miceCityImage.jpg";
 import cowImage from "assets/hub/cow.jpg";
+import pepeImage from "assets/hub/pepe.jpg";
 import gnogenImage from "assets/hub/gnogen.jpg";
 import BigNumber from "bignumber.js";
 import { formatBalance } from "utils/functions/formatBalance";
@@ -17,7 +18,7 @@ import NftCard from "../NftCard/NftCard";
 const NftList = () => {
   const { offers } = useGetOffers();
   const { tokens } = useGetMultipleElrondTokens(
-    offers ? [offers[0].token, offers[1].token, offers[3].token, offers[4].token, offers[6].token, offers[7].token] : []
+    offers ? [offers[0].token, offers[1].token, offers[3].token, offers[4].token, offers[6].token, offers[7].token, offers[8].token] : []
   );
 
   console.log(offers);
@@ -47,6 +48,10 @@ const NftList = () => {
   const offer6 = {
     ...offers[6],
     elrondToken: tokens.find((t) => t.identifier === offers[6].token),
+  };
+  const offer7 = {
+    ...offers[8],
+    elrondToken: tokens.find((t) => t.identifier === offers[8].token),
   };
 
   const handleSubmitHubOffer = (offer) => {
@@ -193,6 +198,27 @@ const NftList = () => {
           </Text>
         }
         onSubmit={() => handleSubmitHubOffer(offer6)}
+      />
+      <NftCard
+        iamge={pepeImage}
+        token={offer7.token}
+        text={
+          <Text>
+            Pay{" "}
+            {formatBalance(
+              {
+                balance: offer7.price,
+                decimals: offer7.elrondToken?.decimals,
+              },
+              false,
+              8
+            )}{" "}
+            {formatTokenI(offer7.token)}
+            <br /> Get a random Pepe
+            <br /> <br /> Available NFTs: {offer7.numberOfAvilableNfts}
+          </Text>
+        }
+        onSubmit={() => handleSubmitHubOffer(offer7)}
       />
     </Center>
   );
