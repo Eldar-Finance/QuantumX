@@ -104,7 +104,7 @@ const StakeUnstake = ({ farm, userFarmItem, isPool, isBearly }: IProps) => {
       </Text>
       <Flex mt="2" gap="3" flex={1} alignItems="center" w="full">
           <VStack w="full" maxW="50%" position="relative" top={disabledForFarm49 ? 4 : 0}>
-          <ActionButton
+          {farm.farm.farmId != 49 && <ActionButton
             onClick={() => setOpenStake((s) => !s)}
             variant={"outline"}
             w="full"
@@ -112,7 +112,7 @@ const StakeUnstake = ({ farm, userFarmItem, isPool, isBearly }: IProps) => {
             disabled={(!isSrbStaker && farm.farm.farmId === 7) || disabledForFarm49}
           >
             STAKE {!isPool && "LP"}{" "}
-          </ActionButton>
+          </ActionButton>}
           {disabledForFarm49 &&
           <Text pl={2} placeSelf={"center"} whiteSpace={"nowrap"}>
             Add Liquidity in {" "}
