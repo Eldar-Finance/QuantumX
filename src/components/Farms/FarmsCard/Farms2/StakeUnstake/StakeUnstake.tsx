@@ -2,7 +2,7 @@ import { Box, Center, Flex, Link, Text, Tooltip, VStack } from "@chakra-ui/react
 import { getNetworkStats } from "api/rest/elrondApi/network";
 import ActionButton from "components/ActionButton/ActionButton";
 import dynamic from "next/dynamic";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { selectUserAddress } from "redux/slices/userAcount/account-slice";
 import useSWR from "swr";
 import { getBigerTime } from "utils/functions/time";
@@ -18,6 +18,7 @@ import MultipleStakeModal from "./MultipleStakeModal";
 import MultipleUnstakeModal from "./MultipleUnstakeModal";
 import { ToolIcon } from "components/Icons/ui";
 import CustomTooltip from "components/CustomTooltip/CustomTooltip";
+import useIsEligibleLpProvider from "views/Pools/hooks/useIsEligibleLpProvider";
 
 const StakeModal: any = dynamic(() => import("./StakeModal"));
 const UnstakeModal: any = dynamic(() => import("./UnstkeModal"));
@@ -87,8 +88,27 @@ const StakeUnstake = ({ farm, userFarmItem, isPool, isBearly }: IProps) => {
   }
   let hasuserStaked = Number(userFarmItem?.stakedBalance) > 0;
 
-  let isEligibleFromNewLp = false;
-  let disabledForFarm49 = !isEligibleFromNewLp && farm.farm.farmId === 49;
+  const [isEligible, setIsEligible] = useState(false);
+  const lpProviders = useIsEligibleLpProvider();
+  useEffect(() => {
+    const checkEligibility = async () => {
+      try {
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        
+        console.log("RESULT: ", lpProviders);
+        let res = (await lpProviders).some((item) => item.address === address) && farm.farm.farmId === 49;
+        console.log("RES: ", res);
+        setIsEligible(res);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    checkEligibility();
+  }, [address, farm.farm.farmId, lpProviders]);
+
+  // console.log("1: ", isEligible);
+  // console.log("2: ", disabledForFarm49);
 
   return (
     <Flex h="full" flexDir={"column"} w="full">
@@ -103,17 +123,17 @@ const StakeUnstake = ({ farm, userFarmItem, isPool, isBearly }: IProps) => {
         )}
       </Text>
       <Flex mt="2" gap="3" flex={1} alignItems="center" w="full">
-          <VStack w="full" maxW="50%" position="relative" top={disabledForFarm49 ? 4 : 0}>
-          {farm.farm.farmId != 49 && <ActionButton
+          <VStack w="full" maxW="50%" position="relative" top={!isEligible ? 4 : 0}>
+          <ActionButton
             onClick={() => setOpenStake((s) => !s)}
             variant={"outline"}
             w="full"
             // maxW={"50%"}
-            disabled={(!isSrbStaker && farm.farm.farmId === 7) || disabledForFarm49}
+            disabled={(!isSrbStaker && farm.farm.farmId === 7) || !isEligible}
           >
             STAKE {!isPool && "LP"}{" "}
-          </ActionButton>}
-          {disabledForFarm49 &&
+          </ActionButton>
+          {!isEligible &&
           <Text pl={2} placeSelf={"center"} whiteSpace={"nowrap"}>
             Add Liquidity in {" "}
             <Link
