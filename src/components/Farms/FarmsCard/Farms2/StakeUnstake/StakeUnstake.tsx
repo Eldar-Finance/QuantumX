@@ -1,4 +1,4 @@
-import { Box, Center, Flex, Link, Text } from "@chakra-ui/react";
+import { Box, Center, Flex, Link, Text, Tooltip, VStack } from "@chakra-ui/react";
 import { getNetworkStats } from "api/rest/elrondApi/network";
 import ActionButton from "components/ActionButton/ActionButton";
 import dynamic from "next/dynamic";
@@ -16,6 +16,8 @@ import useIsBearFarm from "views/Pools/hooks/useIsBearFarm";
 import useCanUsePool7 from "views/Pools/hooks/useIsSrbStaker";
 import MultipleStakeModal from "./MultipleStakeModal";
 import MultipleUnstakeModal from "./MultipleUnstakeModal";
+import { ToolIcon } from "components/Icons/ui";
+import CustomTooltip from "components/CustomTooltip/CustomTooltip";
 
 const StakeModal: any = dynamic(() => import("./StakeModal"));
 const UnstakeModal: any = dynamic(() => import("./UnstkeModal"));
@@ -85,6 +87,9 @@ const StakeUnstake = ({ farm, userFarmItem, isPool, isBearly }: IProps) => {
   }
   let hasuserStaked = Number(userFarmItem?.stakedBalance) > 0;
 
+  let isEligibleFromNewLp = false;
+  let disabledForFarm49 = !isEligibleFromNewLp && farm.farm.farmId === 49;
+
   return (
     <Flex h="full" flexDir={"column"} w="full">
       <Text color="white.400">
@@ -98,15 +103,28 @@ const StakeUnstake = ({ farm, userFarmItem, isPool, isBearly }: IProps) => {
         )}
       </Text>
       <Flex mt="2" gap="3" flex={1} alignItems="center" w="full">
-        <ActionButton
-          onClick={() => setOpenStake((s) => !s)}
-          variant={"outline"}
-          w="full"
-          maxW={"50%"}
-          disabled={!isSrbStaker && farm.farm.farmId === 7}
-        >
-          STAKE {!isPool && "LP"}{" "}
-        </ActionButton>
+          <VStack w="full" maxW="50%" position="relative" top={disabledForFarm49 ? 4 : 0}>
+          <ActionButton
+            onClick={() => setOpenStake((s) => !s)}
+            variant={"outline"}
+            w="full"
+            // maxW={"50%"}
+            disabled={(!isSrbStaker && farm.farm.farmId === 7) || disabledForFarm49}
+          >
+            STAKE {!isPool && "LP"}{" "}
+          </ActionButton>
+          {disabledForFarm49 &&
+          <Text pl={2} placeSelf={"center"} whiteSpace={"nowrap"}>
+            Add Liquidity in {" "}
+            <Link
+              href="https://xexchange.com/liquidity"
+              isExternal
+              color="main"
+            >
+               {" "} xExchange
+            </Link> 
+          </Text>}
+          </VStack>
         <Center flex="1" flexDir={"column"} w="full" maxW={"50%"}>
           <ActionButton
             onClick={() => setOpenUnstakeStake((s) => !s)}
