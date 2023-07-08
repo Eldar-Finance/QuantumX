@@ -110,6 +110,12 @@ const StakeUnstake = ({ farm, userFarmItem, isPool, isBearly }: IProps) => {
   // console.log("1: ", isEligible);
   // console.log("2: ", disabledForFarm49);
 
+  const handleClickStake = () => {
+    if (isEligible && !(isSrbStaker && farm.farm.farmId === 7)) {
+      setOpenStake((s) => !s);
+    }
+  };
+
   return (
     <Flex h="full" flexDir={"column"} w="full">
       <Text color="white.400">
@@ -125,11 +131,11 @@ const StakeUnstake = ({ farm, userFarmItem, isPool, isBearly }: IProps) => {
       <Flex mt="2" gap="3" flex={1} alignItems="center" w="full">
           <VStack w="full" maxW="50%" position="relative" top={!isEligible ? 4 : 0}>
           <ActionButton
-            onClick={() => setOpenStake((s) => !s)}
+            onClick={handleClickStake}
             variant={"outline"}
             w="full"
             // maxW={"50%"}
-            disabled={(!isSrbStaker && farm.farm.farmId === 7) || !isEligible}
+            disabled={!isEligible || (isSrbStaker && farm.farm.farmId === 7)}
           >
             STAKE {!isPool && "LP"}{" "}
           </ActionButton>
