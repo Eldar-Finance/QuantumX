@@ -140,12 +140,12 @@ const StakeUnstake = ({
           </ActionButton>
           {hasuserStaked && disableUnstake && epochDiffrence !== 777 && (
             <Text fontSize={"smaller"} mt={1} color="darkgray">
-              {timeToUnstake} remaining to unstake
+              ⚠️ {" "} {timeToUnstake} remaining to unstake
             </Text>
           )}
           {epochDiffrence <= 0 && farmFee?.earlyUnbondingFee > 0 && (
-            <Text fontSize={"sm"} color="darkgray" mt={1}>
-              {timeToUnstake} remaining to unstake with 0% penalty
+            <Text fontSize={"smaller"} color="darkgray" mt={1}>
+              ⚠️ {" "} {timeToUnstake} remaining to unstake with 0% penalty
             </Text>
           )}
         </Center>

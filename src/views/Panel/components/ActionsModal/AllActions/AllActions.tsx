@@ -24,7 +24,7 @@ const AllActions = ({ handleView, farm }: IProps) => {
             justifyContent={"center"}
             alignItems="center"
           >
-            <Text mb={3}>Early Unbonding Fee : {farm.earlyUnbondingFee}%</Text>
+            <Text mb={3}>Early Unbonding Fee: {farm.earlyUnbondingFee}%</Text>
 
             <ActionButton onClick={() => handleView(1)}>Edit Fees</ActionButton>
           </PanelBox>

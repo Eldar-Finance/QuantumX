@@ -130,26 +130,26 @@ const StakeUnstake = ({ farm, userFarmItem, isPool, isBearly }: IProps) => {
       </Text>
       <Flex mt="2" gap="3" flex={1} alignItems="center" w="full">
           <VStack w="full" maxW="50%" position="relative" top={!isEligible ? 4 : 0}>
-          <ActionButton
-            onClick={handleClickStake}
-            variant={"outline"}
-            w="full"
-            // maxW={"50%"}
-            disabled={!isEligible || (isSrbStaker && farm.farm.farmId === 7)}
-          >
-            STAKE {!isPool && "LP"}{" "}
-          </ActionButton>
-          {!isEligible &&
-          <Text pl={2} placeSelf={"center"} whiteSpace={"nowrap"}>
-            Add Liquidity in {" "}
-            <Link
-              href="https://xexchange.com/liquidity"
-              isExternal
-              color="main"
+            <ActionButton
+              onClick={handleClickStake}
+              variant={"outline"}
+              w="full"
+              // maxW={"50%"}
+              disabled={!isEligible || (isSrbStaker && farm.farm.farmId === 7)}
             >
-               {" "} xExchange
-            </Link> 
-          </Text>}
+              STAKE {!isPool && "LP"}{" "}
+            </ActionButton>
+            {!isEligible &&
+            <Text pl={2} placeSelf={"center"} whiteSpace={"nowrap"}>
+              Add Liquidity in {" "}
+              <Link
+                href="https://xexchange.com/liquidity"
+                isExternal
+                color="main"
+              >
+                {" "} xExchange
+              </Link> 
+            </Text>}
           </VStack>
         <Center flex="1" flexDir={"column"} w="full" maxW={"50%"}>
           <ActionButton
@@ -164,12 +164,12 @@ const StakeUnstake = ({ farm, userFarmItem, isPool, isBearly }: IProps) => {
       <Flex w="full" justifyContent={"center"} mt={3}>
         {hasuserStaked && disableUnstake && epochDiffrence !== 777 && (
           <Text fontSize={"smaller"} mt={1} color="darkgray">
-            {timeToUnstake} remaining to unstake
+            ⚠️ {" "} {timeToUnstake} remaining to unstake
           </Text>
         )}
         {epochDiffrence <= 0 && farmFee?.earlyUnbondingFee > 0 && (
-          <Text fontSize={"sm"} color="darkgray" mt={1}>
-            {timeToUnstake} remaining to unstake with 0% penalty
+          <Text fontSize={"smaller"} color="darkgray" mt={1}>
+            ⚠️ {" "} {timeToUnstake} remaining to unstake with 0% penalty
           </Text>
         )}
       </Flex>

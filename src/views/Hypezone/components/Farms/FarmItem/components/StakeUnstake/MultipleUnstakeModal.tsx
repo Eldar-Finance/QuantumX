@@ -167,7 +167,7 @@ const MultipleUnstakeModal = ({
               <Flex>
                 {epochDiffrence <= 0 && farmFee.earlyUnbondingFee > 0 && (
                   <Text fontSize={"sm"} color="darkgray">
-                    ⚠️ Fee :{" "}
+                    ⚠️ Fee:{" "}
                     {allHypeFarms.includes(farm.farm.farmId)
                       ? finalFee
                       : farmFee.earlyUnbondingFee}
