@@ -111,7 +111,10 @@ const StakeUnstake = ({ farm, userFarmItem, isPool, isBearly }: IProps) => {
   // console.log("2: ", disabledForFarm49);
 
   const handleClickStake = () => {
-    if (isEligible && !(isSrbStaker && farm.farm.farmId === 7)) {
+    if (
+      (isEligible && farm.farm.farmId === 49) || 
+      (isSrbStaker && farm.farm.farmId === 7) ||
+      (farm.farm.farmId != 49 && farm.farm.farmId != 7) ) {
       setOpenStake((s) => !s);
     }
   };
@@ -129,17 +132,17 @@ const StakeUnstake = ({ farm, userFarmItem, isPool, isBearly }: IProps) => {
         )}
       </Text>
       <Flex mt="2" gap="3" flex={1} alignItems="center" w="full">
-          <VStack w="full" maxW="50%" position="relative" top={!isEligible ? 4 : 0}>
+          <VStack w="full" maxW="50%" position="relative" top={(!isEligible && farm.farm.farmId === 49) ? 4 : 0}>
             <ActionButton
               onClick={handleClickStake}
               variant={"outline"}
               w="full"
               // maxW={"50%"}
-              disabled={!isEligible || (isSrbStaker && farm.farm.farmId === 7)}
+              disabled={(!isEligible && farm.farm.farmId === 49) || (isSrbStaker && farm.farm.farmId === 7)}
             >
               STAKE {!isPool && "LP"}{" "}
             </ActionButton>
-            {!isEligible &&
+            {!isEligible && farm.farm.farmId === 49 &&
             <Text pl={2} placeSelf={"center"} whiteSpace={"nowrap"}>
               Add Liquidity in {" "}
               <Link
