@@ -139,12 +139,15 @@ const StakeUnstake = ({ farm, userFarmItem, isPool, isBearly }: IProps) => {
               w="full"
               // maxW={"50%"}
               disabled={(!isEligible && farm.farm.farmId === 49) || (isSrbStaker && farm.farm.farmId === 7)}
+              _hover={{bgColor: (!isEligible && farm.farm.farmId === 49) || (isSrbStaker && farm.farm.farmId === 7) ? "red" : "main",
+              color: (!isEligible && farm.farm.farmId === 49) || (isSrbStaker && farm.farm.farmId === 7) ? "white" : "black"
+            }}
             >
               STAKE {!isPool && "LP"}{" "}
             </ActionButton>
             {!isEligible && farm.farm.farmId === 49 &&
             <Text pl={2} placeSelf={"center"} whiteSpace={"nowrap"}>
-              Add Liquidity in {" "}
+              ❗️ {" "} Add Liquidity in {" "}
               <Link
                 href="https://xexchange.com/liquidity"
                 isExternal
