@@ -94,10 +94,7 @@ const StakeUnstake = ({ farm, userFarmItem, isPool, isBearly }: IProps) => {
     const checkEligibility = async () => {
       try {
         // eslint-disable-next-line react-hooks/rules-of-hooks
-        
-        console.log("RESULT: ", lpProviders);
-        let res = (await lpProviders).some((item) => item.address === address) && farm.farm.farmId === 49;
-        console.log("RES: ", res);
+                let res = (await lpProviders).some((item) => item.address === address) && farm.farm.farmId === 49;
         setIsEligible(res);
       } catch (error) {
         console.error(error);

@@ -49,7 +49,7 @@ const FarmsCard = ({ proteoArr, isPool, othersArr = null }: IProps) => {
       .map((f) => f.stakedToken)
       .concat(proteoArr.map((pf) => pf.tokenIdentifier))
   );
-
+  
   const { tokens } = useGetMultipleElrondTokens(
     unparseMultipleFarms(othersArr.allFarms)
       .map((f) => f.stakedToken)
