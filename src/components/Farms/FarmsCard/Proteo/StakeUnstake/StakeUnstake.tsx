@@ -23,7 +23,7 @@ const StakeUnstake = ({ pf }: IProps) => {
   const handleOpenStake = () => {
     setOpenStake((s) => !s);
   };
-  console.log(pf.type);
+  // console.log(pf.type);
   return (
     <ProteoItemContenxt.Consumer>
       {(value) => {

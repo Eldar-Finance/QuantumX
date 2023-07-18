@@ -12,6 +12,15 @@ interface ILpPrice {
   token: string;
   tokenvalue: string;
 }
+
+interface ITokenPrice {
+  tokenA: string;
+  tokenAprice: string;
+  tokenB: string;
+  tokenBprice: string;
+  contract: string;
+}
+
 export const fetchSmartSwap = async ([tokenA, amountA, tokenB, isSapwToLp]: [
   string,
   string,
@@ -46,5 +55,10 @@ export const fetchSrbNftsByUser = async () => {
 };
 export const fetchTopSmartSwapTokens = async () => {
   const { data } = await api.get<string[]>("/toptokens.php");
+  return data;
+};
+
+export const fetchAllApiPrices = async () => {
+  const { data } = await api.get<ITokenPrice[]>("/pairs.php");
   return data;
 };
