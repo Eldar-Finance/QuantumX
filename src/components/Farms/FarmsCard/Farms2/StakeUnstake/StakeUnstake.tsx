@@ -18,7 +18,8 @@ import MultipleStakeModal from "./MultipleStakeModal";
 import MultipleUnstakeModal from "./MultipleUnstakeModal";
 import { ToolIcon } from "components/Icons/ui";
 import CustomTooltip from "components/CustomTooltip/CustomTooltip";
-import useIsEligibleLpProvider from "views/Pools/hooks/useIsEligibleLpProvider";
+import { IEligibleAddr } from "api/rest/others/EldarSolutions";
+import useGetEligibleAddresses from "utils/hooks/useGetEligibleAddresses";
 
 const StakeModal: any = dynamic(() => import("./StakeModal"));
 const UnstakeModal: any = dynamic(() => import("./UnstkeModal"));
@@ -88,24 +89,8 @@ const StakeUnstake = ({ farm, userFarmItem, isPool, isBearly }: IProps) => {
   }
   let hasuserStaked = Number(userFarmItem?.stakedBalance) > 0;
 
-  const [isEligible, setIsEligible] = useState(false);
-  const lpProviders = useIsEligibleLpProvider();
-  useEffect(() => {
-    const checkEligibility = async () => {
-      try {
-        // eslint-disable-next-line react-hooks/rules-of-hooks
-                let res = (await lpProviders).some((item) => item.address === address) && farm.farm.farmId === 49;
-        setIsEligible(res);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    checkEligibility();
-  }, [address, farm.farm.farmId, lpProviders]);
-
-  // console.log("1: ", isEligible);
-  // console.log("2: ", disabledForFarm49);
+  const { addresses } = useGetEligibleAddresses();
+  const isEligible = addresses.some(provider => provider.address === address);
 
   const handleClickStake = () => {
     if (

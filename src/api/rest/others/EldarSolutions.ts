@@ -21,6 +21,10 @@ interface ITokenPrice {
   contract: string;
 }
 
+interface IEligibleAddr {
+  address: string;
+}
+
 export const fetchSmartSwap = async ([tokenA, amountA, tokenB, isSapwToLp]: [
   string,
   string,
@@ -60,5 +64,10 @@ export const fetchTopSmartSwapTokens = async () => {
 
 export const fetchAllApiPrices = async () => {
   const { data } = await api.get<ITokenPrice[]>("/pairs.php");
+  return data;
+};
+
+export const fetchEligibleAddresses = async () => {
+  const { data } = await api.get<IEligibleAddr[]>("/eligibilityapi.php");
   return data;
 };
