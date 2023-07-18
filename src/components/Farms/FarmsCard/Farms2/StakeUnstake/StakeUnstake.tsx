@@ -18,7 +18,6 @@ import MultipleStakeModal from "./MultipleStakeModal";
 import MultipleUnstakeModal from "./MultipleUnstakeModal";
 import { ToolIcon } from "components/Icons/ui";
 import CustomTooltip from "components/CustomTooltip/CustomTooltip";
-import { IEligibleAddr } from "api/rest/others/EldarSolutions";
 import useGetEligibleAddresses from "utils/hooks/useGetEligibleAddresses";
 
 const StakeModal: any = dynamic(() => import("./StakeModal"));
