@@ -11,7 +11,7 @@ const useIsSrbStaker = () => {
   );
 
   return {
-    isSrbStaker: isOneOfTheNumbersInArray([3, 4, 5, 6, 7], data || []),
+    isSrbStaker: isOneOfTheNumbersInArray([3, 4, 5, 6, 7, 90, 129, 135], data || []),
     isLoading,
     error,
   };
