@@ -15,11 +15,6 @@ const DCAOptions = ({ slectedOption, handleChangeOption }) => {
           onChange={handleChangeOption}
           value={4}
         />
-        <DcaOption
-          text="JEX Custom Portfolio"
-          value={5}
-          onChange={handleChangeOption}
-        />
       </Flex>
     </RadioGroup>
   );
