@@ -23,7 +23,7 @@ export const updsteUserName = async (tag: string, usernameCost: IScPayment) => {
     "updateUsername",
     0,
     [BytesValue.fromUTF8(tag)],
-    10000000,
+    30000000,
     usernameCost.amount
   );
   return res;
@@ -34,7 +34,7 @@ export const replaceExtension = async (extension: IScQxTagExtension) => {
     "replaceExtension",
     0,
     [BytesValue.fromUTF8(extension.extension)],
-    10000000,
+    30000000,
     extension.amount
   );
   return res;
