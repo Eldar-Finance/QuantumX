@@ -3,6 +3,7 @@ import { Box, Flex, Icon, useMediaQuery } from "@chakra-ui/react";
 import { useGetLoginInfo } from "@multiversx/sdk-dapp/hooks";
 import { logout } from "@multiversx/sdk-dapp/utils";
 import logo from "assets/logos/quantumx.svg";
+import logohoot from "assets/logos/logohoot.png";
 import ActionButton from "components/ActionButton/ActionButton";
 import MyContainer from "components/Container/Container";
 import { LightningIcon } from "components/Icons/ui";
@@ -73,7 +74,7 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
             <Box w="fit-content" m="auto">
               <Menu />
             </Box>
-          </Flex>
+          </Flex>  
         )}
         {isLargerThanLg && (
           <Flex w="full" alignItems="center" justifyContent="space-between" gap="10px">
@@ -99,6 +100,7 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
           </Flex>
         )}
       </MyContainer>
+      <Box style={{float:"right",marginRight:"5%",marginTop:"-22px"}}><Link href={"https://hoot.network"}><NextImage src={logohoot} alt="hoot" width={105}/></Link></Box>
     </motion.div>
   );
 };
