@@ -100,7 +100,7 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
           </Flex>
         )}
       </MyContainer>
-      <Box style={{float:"right",marginRight:"5%",marginTop:"-22px"}}><Link href={"https://hoot.network"}><NextImage src={logohoot} alt="hoot" width={105}/></Link></Box>
+      <Box style={{float:"right",marginRight:"5%",marginTop:"-21px"}}><Link href={"https://hoot.network"}><NextImage src={logohoot} alt="hoot" width={105}/></Link></Box>
     </motion.div>
   );
 };
