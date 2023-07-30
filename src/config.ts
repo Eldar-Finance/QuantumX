@@ -137,7 +137,8 @@ export const TOKENS_ID = {
   hypeusdc: "HYPEUSDC-3164e5",
   nfttoken: "NFT-e08b3e",
   wbtc: "WBTC-5349b3",
-  weth: "WETH-b4ca29"
+  weth: "WETH-b4ca29",
+  htm: "HTM-f51d55"
 };
 
 //general configs
