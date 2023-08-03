@@ -90,7 +90,10 @@ const Hypezone = () => {
               <Faucet />
             </Flex>
           </Flex>
-          <Flex transform={{ xs: "none", lg: "translateY(+40px)" }}>
+          <Flex
+            transform={{ xs: "translateY(+80px)", lg: "translateY(+50px)" }}
+            py={{ xs: "20px", lg: "0px" }}
+          >
             { isLoggedIn && (
               <Flex alignItems="center" gap="10px">
                 <Switch size="md" isChecked={isSwitchOn} colorScheme="teal" onChange={handleToggle} />
