@@ -80,9 +80,6 @@ const FarmList = ({
     dispatch(fetchAllFarms());
   }, [dispatch]);
 
-  console.log("userFarm2Info", userFarm2Info);
-  console.log("hypeFarms", hypeFarms);
-
   let displayedFarms = hypeFarms;
   if (switchOn) {
     displayedFarms = hypeFarms.filter((farm) => {

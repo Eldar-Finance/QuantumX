@@ -61,7 +61,6 @@ const Hypezone = () => {
     }
   };
 
-  const onClose = () => {};
   return (
     <Layout>
       <MyContainer pb="70px">
