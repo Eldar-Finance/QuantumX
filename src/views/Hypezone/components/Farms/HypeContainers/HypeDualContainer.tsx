@@ -12,9 +12,10 @@ import FarmList from "../FarmsList/FarmList";
 
 interface IProps {
   ids: number[];
+  isSwitchOn?: boolean;
 }
 
-const HypeDualContainer = ({ ids }: IProps) => {
+const HypeDualContainer = ({ ids, isSwitchOn }: IProps) => {
   const { isStaker: isSrbStaker } = useSrbStaker();
   const { accountToken } = useGetAccountToken(toknesID.rare);
   const { hasForFee } = useUserHaasFee();
@@ -44,6 +45,7 @@ const HypeDualContainer = ({ ids }: IProps) => {
       isPool
       disableIds={hasForFee ? [] : ids}
       disableComponent={<DisableComponent />}
+      switchOn={isSwitchOn}
     />
   );
 };
