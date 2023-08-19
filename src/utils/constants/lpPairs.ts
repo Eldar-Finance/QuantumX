@@ -300,4 +300,11 @@ export const pairs = [
     token2lp: "RARE-99e8b0",
     token1lp: "LEGLD-d74da9",
   },
+  {
+    lpname: "CUMBWEGLD",
+    lpidentifier: "CUMBWEGLD-7912ad",
+    lpprice: "0",
+    token2lp: "CUMB-8b7006",
+    token1lp: "WEGLD-bd4d79",
+  }
 ];
