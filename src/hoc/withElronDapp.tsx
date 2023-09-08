@@ -31,9 +31,6 @@ const TransactionsToastList: any = dynamic(
   { ssr: false }
 );
 
-// console.log(network);
-// console.log(EnvironmentsEnum.mainnet);
-
 const withElronDapp = (Component) => (props) => {
   return (
     <>
