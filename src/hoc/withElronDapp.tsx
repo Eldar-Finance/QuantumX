@@ -32,7 +32,7 @@ const TransactionsToastList: any = dynamic(
 );
 
 const withElronDapp = (Component) => (props) => {
-  return (
+  return ( 
     <>
       <AxiosInterceptorContext.Provider>
         {/* @ts-ignore */}
