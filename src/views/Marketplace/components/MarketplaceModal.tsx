@@ -55,7 +55,7 @@ const ModalComponent = ({ username, extension, amount, tokenId, isOwned, onClose
                         {tokenId && tokenId == 'EGLD' ?
                             <>
                                 <Flex justifyContent="center" gap="10px">
-                                    <Text fontSize="20px">{getRealBalance(amount, 18)}</Text>
+                                    <Text fontSize="20px">{Number(getRealBalance(amount, 18))}</Text>
                                     <NextImage
                                         src={egld}
                                         alt=""
