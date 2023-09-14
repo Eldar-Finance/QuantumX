@@ -45,7 +45,6 @@ export const contractAddress = {
     "erd1qqqqqqqqqqqqqpgqvpkd3g3uwludduv3797j54qt6c888wa59w2shntt6z",
   hypeFaucet: "erd1qqqqqqqqqqqqqpgq2srxelqexsxkg82rr8ygwsq684faa2syu7zs4qa7tx",
   qxtags: "erd1qqqqqqqqqqqqqpgqs8zrk6uq5z6r5lm07cvmtuw2hxm4d8uru7zszqp8vx",
-  hoot: "erd1qqqqqqqqqqqqqpgqej80fe43a223dgh6g0076ncvghh2l6z4u7zs9hqujc",
   // proteo farms
   usdcProteo: "erd1qqqqqqqqqqqqqpgq3lh80a92d49am3t2pfzheapdxtykzt5kznyqsjhfrx",
   proteoEgldNonElite:

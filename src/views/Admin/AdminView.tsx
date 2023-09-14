@@ -13,7 +13,6 @@ import ElBadges from "./Views/Badges/ElBadges/ElBadges";
 import Farms from "./Views/Farms/Farms";
 import QxTags from "./Views/QxTags/QxTags";
 import SmartSwap from "./Views/Swap/SmarSwap";
-import Hoot from "./Views/Hoot/Hoot";
 
 const DCAAdmin: any = dynamic(() => import("./Views/DCAAdmin/DCAAdmin"));
 const ProteoElite: any = dynamic(
@@ -100,14 +99,6 @@ const AdminView = () => {
               tabPanel: (
                 <LayOut>
                   <QxTags />
-                </LayOut>
-              ),
-            },
-            {
-              tabText: "Hoot",
-              tabPanel: (
-                <LayOut>
-                  <Hoot />
                 </LayOut>
               ),
             },
