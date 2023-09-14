@@ -2,7 +2,6 @@ import { Flex, Input, Text } from "@chakra-ui/react";
 import { Address, AddressValue, BytesValue } from "@multiversx/sdk-core/out";
 import { scCall } from "api/sc/calls";
 import ActionButton from "components/ActionButton/ActionButton";
-
 import { useFormik } from "formik";
 import * as yup from "yup";
 
