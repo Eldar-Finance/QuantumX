@@ -109,7 +109,9 @@ const AdminView = () => {
   );
 };
 
+
 export default withElronDapp(WrapperPages(AdminView));
+
 
 const LayOut = ({ children }) => {
   return (
