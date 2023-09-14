@@ -1,5 +1,5 @@
 import { Flex, Input, Text } from "@chakra-ui/react";
-import { BytesValue } from "@multiversx/sdk-core/out";
+import { Address, AddressValue, BytesValue } from "@multiversx/sdk-core/out";
 import { scCall } from "api/sc/calls";
 import ActionButton from "components/ActionButton/ActionButton";
 
@@ -13,12 +13,14 @@ const validationSchema = yup.object({
 const RemoveEarner = () => {
   const formik = useFormik({
     initialValues: {
-      name: "",
+      address: "",
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      const name = values.name;
-      scCall("tagsWsp", "removeEarner", [BytesValue.fromUTF8(name)]);
+      const address = values.address;
+      scCall("tagsWsp", "removeEarner", [
+        new AddressValue(new Address(address))
+      ]);
     },
   });
 
@@ -38,9 +40,9 @@ const RemoveEarner = () => {
           mb={4}
           w="full"
           onChange={formik.handleChange}
-          isInvalid={formik.touched.name && Boolean(formik.errors.name)}
-          placeholder="Label Name"
-          name="name"
+          isInvalid={formik.touched.address && Boolean(formik.errors.address)}
+          placeholder="Address"
+          name="address"
         />
 
         <ActionButton type="submit" px={8} py={5}>
