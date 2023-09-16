@@ -1,6 +1,12 @@
 import { Flex, Input, Text } from "@chakra-ui/react";
-import { Address, AddressValue, BytesValue } from "@multiversx/sdk-core/out";
+import {
+  Address,
+  AddressValue,
+  BigUIntValue,
+  BytesValue,
+} from "@multiversx/sdk-core/out";
 import { scCall } from "api/sc/calls";
+import BigNumber from "bignumber.js";
 import ActionButton from "components/ActionButton/ActionButton";
 
 import { useFormik } from "formik";
@@ -8,18 +14,28 @@ import * as yup from "yup";
 
 const validationSchema = yup.object({
   name: yup.string(),
+  address: yup.string(),
+  percent: yup.number(),
 });
 
-const RemoveEarner = () => {
+const AddEarner = () => {
+  // const { triggerTx } = useScTransaction();
+
   const formik = useFormik({
     initialValues: {
+      name: "",
       address: "",
+      percent: "",
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
+      const name = values.name;
       const address = values.address;
-      scCall("hootWsp", "removeEarner", [
-        new AddressValue(new Address(address))
+      const percent = Number(values.percent) * 100;
+      scCall("hootWsp", "addEarner", [
+        new AddressValue(new Address(address)),
+        BytesValue.fromUTF8(name),
+        new BigUIntValue(new BigNumber(percent)),
       ]);
     },
   });
@@ -33,9 +49,17 @@ const RemoveEarner = () => {
         maxW={{ xs: "300px", tablet: "450px" }}
       >
         <Text as="h2" fontSize={"1.8rem"} mb={5}>
-          Remove Earner
+          Add Earner
         </Text>
 
+        <Input
+          mb={4}
+          w="full"
+          onChange={formik.handleChange}
+          isInvalid={formik.touched.name && Boolean(formik.errors.name)}
+          placeholder="Label Name"
+          name="name"
+        />
         <Input
           mb={4}
           w="full"
@@ -43,6 +67,14 @@ const RemoveEarner = () => {
           isInvalid={formik.touched.address && Boolean(formik.errors.address)}
           placeholder="Address"
           name="address"
+        />
+        <Input
+          mb={4}
+          w="full"
+          onChange={formik.handleChange}
+          isInvalid={formik.touched.percent && Boolean(formik.errors.percent)}
+          placeholder="Percent"
+          name="percent"
         />
 
         <ActionButton type="submit" px={8} py={5}>
@@ -53,4 +85,4 @@ const RemoveEarner = () => {
   );
 };
 
-export default RemoveEarner;
+export default AddEarner;

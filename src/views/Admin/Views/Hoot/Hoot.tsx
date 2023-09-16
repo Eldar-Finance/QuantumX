@@ -24,8 +24,8 @@ const Hoot = () => {
             </Flex>
           </Flex>
 
-          {/* <AddEarner />
-          <RemoveEarner /> */}
+          <AddEarner />
+          <RemoveEarner />
         </Box>
         <Flex flexDir={"column"} rowGap={8}>
           <EarnersTable />
