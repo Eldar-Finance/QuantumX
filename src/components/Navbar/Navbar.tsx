@@ -1,5 +1,5 @@
 // import logo from "assets/logos/quantumx.png";
-import { Box, Flex, Icon, useMediaQuery } from "@chakra-ui/react";
+import { Box, Flex, Icon, useBreakpoint, useBreakpointValue, useMediaQuery } from "@chakra-ui/react";
 import { useGetLoginInfo } from "@multiversx/sdk-dapp/hooks";
 import { logout } from "@multiversx/sdk-dapp/utils";
 import logo from "assets/logos/quantumx.svg";
@@ -34,6 +34,9 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
   const handleConnect = () => {
     dispatch(openLogin(true));
   };
+
+  const hootBannerMarginTop = isLargerThanLg ? "0px" : "-65px";
+
   return (
     <motion.div initial={{ y: -100 }} whileInView={{ y: 0 }}>
       <MyContainer
@@ -100,7 +103,11 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
           </Flex>
         )}
       </MyContainer>
-      <Box style={{float:"right",marginRight:"5%"}}><Link href={"https://hoot.network"}><NextImage src={logohoot} alt="hoot" width={45}/></Link></Box>
+      <Box style={{float:"right",marginRight:"3%", marginTop: hootBannerMarginTop}}>
+        <Link href={"https://hoot.network"}>
+          <NextImage src={logohoot} alt="hoot" width={45}/>
+        </Link>
+      </Box>
     </motion.div>
   );
 };
