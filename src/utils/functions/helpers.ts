@@ -20,7 +20,7 @@ export const getReturnedDataOfscCall = async (workspace, txHash, funcName) => {
     address: address,
     abi: abiRegistry,
   });
-  const transactionOnNetwork = await provider.getTransaction(txHash);
+  const transactionOnNetwork = await provider.getTransaction(txHash); // add True as 2nd argument
   const endpointDefinition = contract.getEndpoint(funcName);
 
   const res = parser.parseOutcome(transactionOnNetwork, endpointDefinition);
