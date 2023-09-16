@@ -12,6 +12,7 @@ import { useAppSelector } from "utils/hooks/redux";
 import ElBadges from "./Views/Badges/ElBadges/ElBadges";
 import Farms from "./Views/Farms/Farms";
 import QxTags from "./Views/QxTags/QxTags";
+import Hoot from "./Views/Hoot/Hoot";
 import SmartSwap from "./Views/Swap/SmarSwap";
 
 const DCAAdmin: any = dynamic(() => import("./Views/DCAAdmin/DCAAdmin"));
@@ -69,15 +70,14 @@ const AdminView = () => {
                 </LayOut>
               ),
             },
-
-            {
-              tabText: "Proteo",
-              tabPanel: (
-                <LayOut>
-                  <ProteoElite userAddress={myConnectedAddress} />
-                </LayOut>
-              ),
-            },
+            // {
+            //   tabText: "Proteo",
+            //   tabPanel: (
+            //     <LayOut>
+            //       <ProteoElite userAddress={myConnectedAddress} />
+            //     </LayOut>
+            //   ),
+            // },
             /* {
               tabText: "Fastp2pSwap",
               tabPanel: (
@@ -99,6 +99,14 @@ const AdminView = () => {
               tabPanel: (
                 <LayOut>
                   <QxTags />
+                </LayOut>
+              ),
+            },
+            {
+              tabText: "Hoot",
+              tabPanel: (
+                <LayOut>
+                  <Hoot />
                 </LayOut>
               ),
             },
