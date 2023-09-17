@@ -1,7 +1,6 @@
 import { Box, Flex, Grid, useDisclosure, VStack } from "@chakra-ui/react";
 import AddEarner from "./AddEarner/AddEarner";
 import EarnersTable from "./EarnersTable/EarnersTable";
-// import Fees from "./Fees/Fees";
 import PuaseButton from "./PuaseButton/PuaseButton";
 import RemoveEarner from "./RemoveEarner/RemoveEarner";
 import ResumeButton from "./ResumeButton/ResumeButton";
@@ -29,9 +28,6 @@ const Hoot = () => {
           <EarnersTable />
         </Flex>
       </Grid>
-      {/* <VStack spacing="20" w="full">
-        <Fees />
-      </VStack> */}
     </Box>
   );
 };
