@@ -115,9 +115,10 @@ const NftList = () => {
               decimals: offer2.elrondToken?.decimals,
             })}{" "}
             {formatTokenI(offer2.token)} <br /> Get an Abominator
-            <br /> <br /> Available NFTs: {offer2.numberOfAvilableNfts}
+            <br /> <br /> Available NFTs: <br /> {offer2.numberOfAvilableNfts}
           </Text>
         }
+        disabled={offer2.numberOfAvilableNfts === 0}
       />
       <NftCard
         token={offer3.token}
@@ -131,7 +132,7 @@ const NftList = () => {
               decimals: offer3.elrondToken?.decimals,
             })}{" "}
             {formatTokenI(offer3.token)} <br /> Get a random Mice
-            <br /> <br /> Available NFTs: {offer3.numberOfAvilableNfts}
+            <br /> <br /> Available NFTs: <br /> {offer3.numberOfAvilableNfts}
           </Text>
         }
         disabled={offer3.numberOfAvilableNfts === 0}
@@ -152,10 +153,11 @@ const NftList = () => {
             )}{" "}
             {formatTokenI(offer4.token)}
             <br /> Get a random Cow
-            <br /> <br /> Available NFTs: {offer4.numberOfAvilableNfts}
+            <br /> <br /> Available NFTs: <br /> {offer4.numberOfAvilableNfts}
           </Text>
         }
         onSubmit={() => handleSubmitHubOffer(offer4)}
+        disabled={offer4.numberOfAvilableNfts === 0}
       />
       <NftCard
         iamge={gnogenImage}
@@ -173,10 +175,11 @@ const NftList = () => {
             )}{" "}
             {formatTokenI(offer5.token)}
             <br /> Get a random Gnogon
-            <br /> <br /> Available NFTs: {offer5.numberOfAvilableNfts}
+            <br /> <br /> Available NFTs: <br /> {offer5.numberOfAvilableNfts}
           </Text>
         }
         onSubmit={() => handleSubmitHubOffer(offer5)}
+        disabled={offer5.numberOfAvilableNfts === 0}
       />
       <NftCard
         iamge={srbImage}
@@ -194,10 +197,11 @@ const NftList = () => {
             )}{" "}
             {formatTokenI(offer6.token)}
             <br /> Get a random SRB
-            <br /> <br /> Available NFTs: {offer6.numberOfAvilableNfts}
+            <br /> <br /> Available NFTs: <br /> {offer6.numberOfAvilableNfts}
           </Text>
         }
         onSubmit={() => handleSubmitHubOffer(offer6)}
+        disabled={offer6.numberOfAvilableNfts === 0}
       />
       <NftCard
         iamge={pepeImage}
@@ -215,10 +219,11 @@ const NftList = () => {
             )}{" "}
             {formatTokenI(offer7.token)}
             <br /> Get a random Pepe
-            <br /> <br /> Available NFTs: {offer7.numberOfAvilableNfts}
+            <br /> <br /> Available NFTs: <br /> {offer7.numberOfAvilableNfts}
           </Text>
         }
         onSubmit={() => handleSubmitHubOffer(offer7)}
+        disabled={offer7.numberOfAvilableNfts === 0}
       />
     </Center>
   );

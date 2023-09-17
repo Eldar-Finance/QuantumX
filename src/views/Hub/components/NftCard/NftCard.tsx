@@ -32,8 +32,9 @@ const NftCard = ({ iamge, onSubmit, text, token, disabled }: IProps) => {
         w="full"
         mt={8}
         fontWeight="900"
-        onClick={onSubmit}
+        onClick={!disabled ? onSubmit : () => {}}
         disabled={disabled || formatBalance(accountToken, true) === 0}
+        opacity={disabled ? 0.3 : 1}
       >
         Buy Now
       </ActionButton>
