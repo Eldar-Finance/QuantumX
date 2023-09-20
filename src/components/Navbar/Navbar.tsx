@@ -3,7 +3,7 @@ import { Box, Flex, Icon, useBreakpoint, useBreakpointValue, useMediaQuery } fro
 import { useGetLoginInfo } from "@multiversx/sdk-dapp/hooks";
 import { logout } from "@multiversx/sdk-dapp/utils";
 import logo from "assets/logos/quantumx.svg";
-import logohoot from "assets/logos/hoottestbadge.png";
+import logohoot from "assets/logos/hootlogo.png";
 import ActionButton from "components/ActionButton/ActionButton";
 import MyContainer from "components/Container/Container";
 import { LightningIcon } from "components/Icons/ui";
@@ -105,7 +105,7 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
       </MyContainer>
       <Box style={{float:"right",marginRight:"3%", marginTop: hootBannerMarginTop}}>
         <Link href={"https://hoot.network"}>
-          <NextImage src={logohoot} alt="hoot" width={45}/>
+          <NextImage src={logohoot} alt="" width={45}/>
         </Link>
       </Box>
     </motion.div>
