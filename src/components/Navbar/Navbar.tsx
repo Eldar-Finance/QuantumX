@@ -3,7 +3,7 @@ import { Box, Flex, Icon, useBreakpoint, useBreakpointValue, useMediaQuery } fro
 import { useGetLoginInfo } from "@multiversx/sdk-dapp/hooks";
 import { logout } from "@multiversx/sdk-dapp/utils";
 import logo from "assets/logos/quantumx.svg";
-import logohoot from "assets/logos/hootlogo.png";
+import logohoot from "assets/logos/logohoot.png";
 import ActionButton from "components/ActionButton/ActionButton";
 import MyContainer from "components/Container/Container";
 import { LightningIcon } from "components/Icons/ui";
