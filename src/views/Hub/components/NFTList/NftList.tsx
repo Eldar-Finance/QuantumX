@@ -137,7 +137,7 @@ const NftList = () => {
         }
         disabled={offer3.numberOfAvilableNfts === 0}
       />
-      <NftCard
+      {/* <NftCard
         iamge={cowImage}
         token={offer4.token}
         text={
@@ -180,7 +180,7 @@ const NftList = () => {
         }
         onSubmit={() => handleSubmitHubOffer(offer5)}
         disabled={offer5.numberOfAvilableNfts === 0}
-      />
+      /> */}
       <NftCard
         iamge={srbImage}
         token={offer6.token}
