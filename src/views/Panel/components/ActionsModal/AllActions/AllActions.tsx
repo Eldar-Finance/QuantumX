@@ -47,9 +47,17 @@ const AllActions = ({ handleView, farm }: IProps) => {
             alignItems="center"
           >
             <Text flex={1}>
-              Delete the farm (funds will be automatically returned to stakers)
+              Delete the farm.
             </Text>
-
+            <Text fontSize={'sm'} mt={5}>
+              1 - staked funds will be returned to stakers
+            </Text>
+            <Text fontSize={'sm'}>
+              2 - run until not failed
+            </Text>
+            <Text fontSize={'sm'} mb={5}>
+              3 - unclaimed rewards will be lost
+            </Text>
             <ActionButton
               bg="danger"
               // onClick={() => deleteFarm(farm.farm.farmId)}
