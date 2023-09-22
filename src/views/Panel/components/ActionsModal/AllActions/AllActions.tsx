@@ -52,7 +52,12 @@ const AllActions = ({ handleView, farm }: IProps) => {
 
             <ActionButton
               bg="danger"
-              onClick={() => deleteFarm(farm.farm.farmId)}
+              // onClick={() => deleteFarm(farm.farm.farmId)}
+              onClick={() => {}}
+              disabled={true}
+              // change pointer
+              cursor={"not-allowed"}
+
             >
               Delete Farm
             </ActionButton>
