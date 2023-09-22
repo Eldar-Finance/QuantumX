@@ -78,9 +78,9 @@ const AllActions = ({ handleView, farm }: IProps) => {
           >
             <Box flex={1} mb={3}>
               <Text>Deposit rewards for the period you want.</Text>
-              <Text>
+              <Text mt={2} fontSize={'sm'}>
                 Every new deposit will place the rewards exactly after the
-                previous one.
+                previous one <u><b>unless</b></u> you select the checkbox "Bypass..."
               </Text>
             </Box>
 
