@@ -116,7 +116,7 @@ const StakeUnstake = ({
             onClick={() => setOpenStake((s) => !s)}
             variant={"outline"}
             w="full"
-            disabled={
+            isDisabled={
               disable ||
               (!isSrbStaker && farm.farm.farmId === 7) ||
               new BigNumber(maxAmountToStake).isLessThan(0)
@@ -133,7 +133,7 @@ const StakeUnstake = ({
         <Center flexDir={"column"} w="full" flex={1}>
           <ActionButton
             onClick={() => setOpenUnstakeStake((s) => !s)}
-            disabled={disable || disableUnstake}
+            isDisabled={disable || disableUnstake}
             w={isBearly ? "full" : { xs: "full", md: "50%" }}
           >
             UNSTAKE

@@ -44,6 +44,16 @@ const Avilable = ({ farm, userFarmRewards }: IProps) => {
 
   const showCompound = farm.compound;
 
+  console.log("⚠️ ~ file: Avilable.tsx:48 ~ Avilable ~ userFarmRewards:::", userFarmRewards)
+  console.log("⚠️ ~ file: Avilable.tsx:48 ~ Avilable ~ farm:::", farm)
+  let x = userFarmRewards.reduce(
+    (acc, current) => (
+      farm.farm.farmId === current.farmId ? (acc += current.harvestableAmount) : acc
+      ),
+    0
+  ) === 0;
+  console.log("⚠️ ~ file: Avilable.tsx:54 ~ Avilable ~ x:::", x)
+  
   return (
     <Box>
       <Flex w="full" justifyContent={"space-between"}>
@@ -86,7 +96,7 @@ const Avilable = ({ farm, userFarmRewards }: IProps) => {
           <Flex gap={3}>
             <ActionButton
               onClick={handleHarvest}
-              disabled={
+              isDisabled={
                 userFarmRewards.reduce(
                   (acc, current) => (acc += current.harvestableAmount),
                   0
