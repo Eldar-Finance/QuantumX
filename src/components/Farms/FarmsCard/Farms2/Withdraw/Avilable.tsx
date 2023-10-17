@@ -101,7 +101,7 @@ const Avilable = ({ farm, userFarmRewards }: IProps) => {
                 textTransform={"uppercase"}
                 onClick={handleCompound}
                 bg="rgb(175, 175, 175)"
-                disabled={
+                isDisabled={
                   userFarmRewards.reduce(
                     (acc, current) => (acc += current.harvestableAmount),
                     0
