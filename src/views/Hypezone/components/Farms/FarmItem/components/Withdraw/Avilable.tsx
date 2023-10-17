@@ -23,9 +23,6 @@ interface IProps {
 }
 
 const Avilable = ({ farm, userFarmRewards, disable }: IProps) => {
-  console.log("⚠️ ~ file: Avilable.tsx:26 ~ Avilable ~ farm:::", farm)
-  console.log("⚠️ ~ file: Avilable.tsx:26 ~ Avilable ~ disable:::", disable)
-  console.log("⚠️ ~ file: Avilable.tsx:26 ~ Avilable ~ userFarmRewards:::", userFarmRewards)
   const { tokens: rewardsTokens } = useGetMultipleElrondTokens(
     userFarmRewards.map((r) => r.rewardToken)
   );
