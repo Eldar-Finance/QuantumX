@@ -19,6 +19,7 @@ import MultipleUnstakeModal from "./MultipleUnstakeModal";
 import { ToolIcon } from "components/Icons/ui";
 import CustomTooltip from "components/CustomTooltip/CustomTooltip";
 import useGetEligibleAddresses from "utils/hooks/useGetEligibleAddresses";
+import { farmsTobeShutDown } from "views/Farms/constants";
 
 const StakeModal: any = dynamic(() => import("./StakeModal"));
 const UnstakeModal: any = dynamic(() => import("./UnstkeModal"));
@@ -119,7 +120,7 @@ const StakeUnstake = ({ farm, userFarmItem, isPool, isBearly }: IProps) => {
               variant={"outline"}
               w="full"
               // maxW={"50%"}
-              isDisabled={(!isEligible && farm.farm.farmId === 49) || (!isSrbStaker && farm.farm.farmId === 7)}
+              isDisabled={(!isEligible && farm.farm.farmId === 49) || (!isSrbStaker && farm.farm.farmId === 7) || farmsTobeShutDown.includes(farm.farm.farmId)}
               _hover={{bgColor: (!isEligible && farm.farm.farmId === 49) || (!isSrbStaker && farm.farm.farmId === 7) ? "red" : "main",
               color: (!isEligible && farm.farm.farmId === 49) || (!isSrbStaker && farm.farm.farmId === 7) ? "white" : "black"
             }}

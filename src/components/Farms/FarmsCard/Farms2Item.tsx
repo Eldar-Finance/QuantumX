@@ -8,6 +8,7 @@ import {
   Flex,
   Grid,
   Text,
+  Tooltip,
 } from "@chakra-ui/react";
 import NextImage from "components/NextImage/NextImage";
 
@@ -31,7 +32,7 @@ import { useAppDispatch } from "utils/hooks/redux";
 import useGetElrondToken from "utils/hooks/useGetElrondToken";
 import useGetMultipleElrondTokens from "utils/hooks/useGetMultipleElrondTokens";
 import useGetMultiplePrices from "utils/hooks/useGetMultiplePrices";
-import { farms2Data } from "views/Farms/constants";
+import { farms2Data, farmsTobeShutDown } from "views/Farms/constants";
 import useApr from "views/Pools/hooks/useApr";
 import useCanUsePool7 from "views/Pools/hooks/useIsSrbStaker";
 import EarnedRewards from "./Farms2/EarnedRewards/EarnedRewards";
@@ -126,9 +127,9 @@ const Farms2Item = ({
             <Grid
               w="full"
               flexDir={{ xs: "column", md: "row" }}
-              templateColumns={{ xs: "1fr", md: "1fr 1fr 1fr 1fr 1fr" }}
+              templateColumns={{ xs: "1fr", md: "1.1fr 0.1fr 1fr 1fr 1fr 1fr" }}
             >
-              <Flex gap={3} flexDir={"column"} mt={4}>
+              <Flex gap={3} flexDir={"row"} mt={0}>
                 {stakingToken ? (
                   <>
                     {formatTokenI(stakingToken.name).slice(-2) === "LP" ? (
@@ -217,6 +218,27 @@ const Farms2Item = ({
                   <Flex></Flex>
                 )}
               </Flex>
+              <Flex
+                  ml={2}
+                  flexDir={"column"}
+                  justifyContent="center"
+                  alignItems={{xs: "flex-end", md: "center"}}
+                  height="100%"
+                  mt={{ xs: othersStakedTokens.length > 0 ? "-40px" : "-20px", md: "0" }} // added mt prop to move the component up if screen is xs
+                >
+                  {farmsTobeShutDown.includes(farm.farm.farmId) && (
+                    <Box fontSize={"lg"}>
+                      <Tooltip
+                        label="Harvest your rewards and unstake your funds. Pool/Farm will be terminated soon."
+                        aria-label="A tooltip"
+                        bg={"black.base"}
+                        color={"white"}
+                      >
+                        ⚠️
+                      </Tooltip>
+                    </Box>
+                  )}
+                </Flex>
               <Flex flexDir={"column"} textAlign="center" h="full">
                 <Text color="white.400">Staked Balance</Text>
                 <Flex

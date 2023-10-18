@@ -120,3 +120,12 @@ export const farms2Data = {
     scFarmAddress: "",
   },
 };
+
+export const farmsTobeShutDown = [22, 26, 27, 36, 37, 47, 49];
+
+// 1) bonez-hype - id 37
+// 2) rare-bonez - id 36
+// 3) hypelegld - id 47
+// 4) rareusdc-wegld - id 49
+// 5) hypeusdc-hype - id 22
+// 6) 25, 26, 27 (the bear pools)

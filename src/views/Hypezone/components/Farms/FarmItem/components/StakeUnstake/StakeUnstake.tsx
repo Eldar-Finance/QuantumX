@@ -17,6 +17,7 @@ import useIsBearFarm from "views/Pools/hooks/useIsBearFarm";
 import useCanUsePool7 from "views/Pools/hooks/useIsSrbStaker";
 import MultipleStakeModal from "./MultipleStakeModal";
 import MultipleUnstakeModal from "./MultipleUnstakeModal";
+import { farmsTobeShutDown } from "views/Farms/constants";
 
 const StakeModal: any = dynamic(() => import("./StakeModal"));
 const UnstakeModal: any = dynamic(() => import("./UnstkeModal"));
@@ -119,7 +120,8 @@ const StakeUnstake = ({
             isDisabled={
               disable ||
               (!isSrbStaker && farm.farm.farmId === 7) ||
-              new BigNumber(maxAmountToStake).isLessThan(0)
+              new BigNumber(maxAmountToStake).isLessThan(0) ||
+              farmsTobeShutDown.includes(farm.farm.farmId)
             }
           >
             STAKE {!isPool && "LP"}{" "}
