@@ -119,9 +119,9 @@ const StakeUnstake = ({ farm, userFarmItem, isPool, isBearly }: IProps) => {
               variant={"outline"}
               w="full"
               // maxW={"50%"}
-              isDisabled={(!isEligible && farm.farm.farmId === 49) || (isSrbStaker && farm.farm.farmId === 7)}
-              _hover={{bgColor: (!isEligible && farm.farm.farmId === 49) || (isSrbStaker && farm.farm.farmId === 7) ? "red" : "main",
-              color: (!isEligible && farm.farm.farmId === 49) || (isSrbStaker && farm.farm.farmId === 7) ? "white" : "black"
+              isDisabled={(!isEligible && farm.farm.farmId === 49) || (!isSrbStaker && farm.farm.farmId === 7)}
+              _hover={{bgColor: (!isEligible && farm.farm.farmId === 49) || (!isSrbStaker && farm.farm.farmId === 7) ? "red" : "main",
+              color: (!isEligible && farm.farm.farmId === 49) || (!isSrbStaker && farm.farm.farmId === 7) ? "white" : "black"
             }}
             >
               STAKE {!isPool && "LP"}{" "}
