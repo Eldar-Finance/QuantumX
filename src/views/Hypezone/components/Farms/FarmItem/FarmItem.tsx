@@ -250,10 +250,11 @@ const Farms2Item = ({
                   {farmsTobeShutDown.includes(farm.farm.farmId) && (
                     <Box fontSize={"lg"}>
                       <Tooltip
-                        label="Harvest your rewards and unstake your funds. Pool/Farm will be terminated soon."
+                        label="Harvest your rewards and unstake your funds. Pool/Farm will be terminated soon. Staking is disabled."
                         aria-label="A tooltip"
                         bg={"black.base"}
                         color={"white"}
+                        fontSize={"16px"}
                       >
                         ⚠️
                       </Tooltip>
