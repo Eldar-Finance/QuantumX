@@ -7,7 +7,8 @@ import { formatBalance } from "utils/functions/formatBalance";
 import { useAppSelector } from "utils/hooks/redux";
 import useGetAccountToken from "utils/hooks/useGetAccountToken";
 import { routeNames } from "utils/routes";
-import { fetchCanUserClaim, fetchFarmunbondingPeriod } from "./sc";
+import { fetchCanUserClaim, fetchFarmunbondingPeriod, fetchUserHarvestableRewards } from "./sc";
+import { IScFungibleReward, IScUserFarmRewards } from "utils/types/sc.interface";
 
 export const useSrbStaker = () => {
   const address = useAppSelector(selectUserAddress);
@@ -77,3 +78,23 @@ export const useUserHaasFee = () => {
   };
 };
 // dont worry this is a comment :) main 4
+
+export const useGetUserHarvestableRewards = (farmId: number) => {
+  const address = useAppSelector(selectUserAddress);
+
+  const { data: userHarvestableRewards, isLoading: isLoadingUserHarvestableRewards, error: errorUserHarvestableRewards } = useSwr<IScUserFarmRewards[]>(
+    address ? `farms2:calcHarvestableRewards:${address}` : null,
+    async () => {
+      return await fetchUserHarvestableRewards(address, farmId);
+    },
+    {
+      fallbackData: [],
+    }
+  );
+
+  return {
+      userHarvestableRewards,
+      isLoadingUserHarvestableRewards,
+      errorUserHarvestableRewards
+  };
+}

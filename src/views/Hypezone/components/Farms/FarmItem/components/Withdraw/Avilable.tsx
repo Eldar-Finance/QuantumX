@@ -51,7 +51,7 @@ const Avilable = ({ farm, userFarmRewards, disable }: IProps) => {
     manualImage = bearImage;
   }
   const showCompound = farm.compound;
-
+  
   return (
     <Box>
       <Flex w="full" justifyContent={"space-between"}>

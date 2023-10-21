@@ -117,6 +117,11 @@ export interface IScPayment {
   nonce: number;
 }
 
+export interface IScFungibleReward {
+  rewardToken: string;
+  harvestableAmount: string;
+}
+
 export interface IScQxTagInfo {
   username: string;
   extension: string;

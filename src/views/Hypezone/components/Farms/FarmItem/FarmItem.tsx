@@ -44,6 +44,7 @@ import EarnedRewards from "./components/EarnedRewards/EarnedRewards";
 import EarnTokens from "./components/EarnTokens/EarnTokens";
 import StakeUnstake from "./components/StakeUnstake/StakeUnstake";
 import Avilable from "./components/Withdraw/Avilable";
+// import { useGetUserHarvestableRewards } from "views/Hypezone/utils/hooks";
 
 interface IProps {
   farm: IScFarmItem;
@@ -78,6 +79,8 @@ const Farms2Item = ({
   maxStakingAmount,
   fixedStakedBalance,
 }: IProps) => {
+  // const {userHarvestableRewards, isLoadingUserHarvestableRewards, errorUserHarvestableRewards} = useGetUserHarvestableRewards(farm.farm.farmId);
+
   const { token: stakingToken } = useGetElrondToken(farm.farm.stakingToken);
   const { tokens: othersStakedTokens } = useGetMultipleElrondTokens(
     farm?.extraPools.map((item) => item.stakedToken)
@@ -122,8 +125,6 @@ const Farms2Item = ({
     stakedTokenPrice,
     fixedStakedBalance
   );
-
-  // console.log(farm.farm.farmId)
 
   return (
     <FarmItemContext.Provider value={{ farm }}>
@@ -370,6 +371,7 @@ const Farms2Item = ({
 
                 <PanelBox>
                   <Avilable farm={farm} userFarmRewards={farmUserRewards} />
+                  {/* <Avilable farm={farm} userFarmRewards={farmUserRewards ? farmUserRewards : userHarvestableRewards} /> */}
                 </PanelBox>
                 <PanelBox gridColumn={{ xs: "auto", md: "1/3" }}>
                   <StakeUnstake

@@ -1,4 +1,4 @@
-import { Address, AddressValue } from "@multiversx/sdk-core/out";
+import { Address, AddressValue, BigIntValue, BytesValue } from "@multiversx/sdk-core/out";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { scQuery } from "api/sc/queries";
 import { pairs } from "utils/constants/lpPairs";
