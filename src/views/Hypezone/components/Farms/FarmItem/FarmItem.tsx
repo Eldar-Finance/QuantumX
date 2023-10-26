@@ -380,6 +380,7 @@ const Farms2Item = ({
                     isPool={isPool}
                     disable={disable}
                     maxStakingAmount={maxStakingAmount}
+                    farmUserRewards={farmUserRewards}
                   />
                 </PanelBox>
               </Grid>

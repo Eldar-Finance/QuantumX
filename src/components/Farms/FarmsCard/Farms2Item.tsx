@@ -343,6 +343,7 @@ const Farms2Item = ({
               farm={farm}
               userFarmItem={farmUserInfoArr[0]}
               isPool={isPool}
+              farmUserRewards={farmUserRewards}
             />
           </PanelBox>
         </Grid>

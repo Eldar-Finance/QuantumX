@@ -11,7 +11,7 @@ import { useAppSelector } from "utils/hooks/redux";
 import useCountDown from "utils/hooks/useCountDown";
 import useGetElrondToken from "utils/hooks/useGetElrondToken";
 import useGetQuantumxFarmsFees from "utils/hooks/useGetQuantumxFarmsFees";
-import { IScFarmItem, IScUserFarmInfo } from "utils/types/sc.interface";
+import { IScFarmItem, IScUserFarmInfo, IScUserFarmRewards } from "utils/types/sc.interface";
 import useIsBearFarm from "views/Pools/hooks/useIsBearFarm";
 import useCanUsePool7 from "views/Pools/hooks/useIsSrbStaker";
 import MultipleStakeModal from "./MultipleStakeModal";
@@ -29,6 +29,7 @@ interface IProps {
   userFarmItem: IScUserFarmInfo;
   isPool?: boolean;
   isBearly?: boolean;
+  farmUserRewards?: IScUserFarmRewards[];
 }
 
 const useGetFarmTimeForUnstake = (statsRes, userFarmItem) => {
@@ -60,7 +61,7 @@ const useGetFarmTimeForUnstake = (statsRes, userFarmItem) => {
   return biggerTime;
 };
 
-const StakeUnstake = ({ farm, userFarmItem, isPool, isBearly }: IProps) => {
+const StakeUnstake = ({ farm, userFarmItem, isPool, isBearly, farmUserRewards }: IProps) => {
   const [openStake, setOpenStake] = useState(false);
   const [openUnstakeStake, setOpenUnstakeStake] = useState(false);
   const { token: stakingToken } = useGetElrondToken(farm.farm.stakingToken);
@@ -70,6 +71,10 @@ const StakeUnstake = ({ farm, userFarmItem, isPool, isBearly }: IProps) => {
   const currentEpoch = statsRes?.data?.epoch;
   const { farmFee } = useGetQuantumxFarmsFees(farm.farm.farmId);
   const isAFarmBoost = useIsBearFarm(farm);
+
+  const shouldUserHarvestWarning = farmUserRewards?.some(
+    (reward) => reward.harvestableAmount > 0
+  );
 
   const epochDiffrence = userFarmItem?.unboundingEpoch
     ? currentEpoch - userFarmItem.unboundingEpoch
@@ -139,24 +144,29 @@ const StakeUnstake = ({ farm, userFarmItem, isPool, isBearly }: IProps) => {
               </Link> 
             </Text>}
           </VStack>
-        <Center flex="1" flexDir={"column"} w="full" maxW={"50%"}>
+        <Center flex="1" flexDir={"column"} w="full" maxW={"50%"} position={"relative"}>
           <ActionButton
             onClick={() => setOpenUnstakeStake((s) => !s)}
-            isDisabled={disableUnstake}
+            isDisabled={disableUnstake || shouldUserHarvestWarning}
             w={isBearly ? "full" : { xs: "full", md: "50%" }}
           >
             UNSTAKE
           </ActionButton>
+          {shouldUserHarvestWarning && 
+            <Text color={"yellow.300"} fontSize={"16px"} position={"absolute"} top={{sm: "42px", md: "-35px"}} right={{sm: "5px", md: "75px"}} whiteSpace={"nowrap"}>
+              ⚠️ {" "} Harvest your rewards before unstaking.
+            </Text>
+          }
         </Center>
       </Flex>
-      <Flex w="full" justifyContent={"center"} mt={3}>
+      <Flex w="full" justifyContent={"center"} mt={2}>
         {hasuserStaked && disableUnstake && epochDiffrence !== 777 && (
-          <Text fontSize={"smaller"} mt={1} color="darkgray">
+          <Text fontSize={"md"} mt={1} color="darkgray">
             ⚠️ {" "} {timeToUnstake} remaining to unstake
           </Text>
         )}
         {epochDiffrence <= 0 && farmFee?.earlyUnbondingFee > 0 && (
-          <Text fontSize={"smaller"} color="darkgray" mt={1}>
+          <Text fontSize={"md"} color="darkgray" mt={1}>
             ⚠️ {" "} {timeToUnstake} remaining to unstake with 0% penalty
           </Text>
         )}
