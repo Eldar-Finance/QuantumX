@@ -147,7 +147,7 @@ const Farms2Item = ({
                 templateColumns={{ xs: "1fr", md: "1fr 0.1fr 1fr 1fr 1fr 1fr" }}
               >
                 <Flex gap={3} flexDir={"row"} mt={0}>
-                  <Flex flexDir={"column"} justifyContent="center" alignItems="center">
+                  <Flex flexDir={"column"} justifyContent="center" >
                     {stakingToken ? (
                       <>
                         {formatTokenI(stakingToken.name).slice(-2) === "LP" ? (
