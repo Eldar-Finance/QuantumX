@@ -315,7 +315,11 @@ export const scCall = async (
   workspace: WspTypes,
   funcName: string,
   args: any = [],
-  gasLimit: number = 60000000
+  gasLimit: number = 60000000,
+  processingMessage: string = defaultProcessingMessage,
+  successMessage: string = defaultSuccessMessage,
+  errorMessage: string = defaultPerrorMessage,
+  transactionDuration: number = defaulttransactionDuration
 ) => {
   let { simpleAddress } = getInterface(workspace);
 
@@ -336,7 +340,13 @@ export const scCall = async (
     .withChainID(ChainId)
     .buildTransaction();
 
-  let transactionInput = { tx: tx };
+  let transactionInput = {
+    tx: tx,
+    processingMessage: processingMessage,
+    successMessage: successMessage,
+    errorMessage: errorMessage,
+    transactionDuration: transactionDuration,
+  };
 
   return await sendTransaction(transactionInput);
 };

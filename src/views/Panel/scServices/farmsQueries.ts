@@ -55,3 +55,13 @@ export const fetchStakersReport = async ([key, id]: [string, number]) => {
 
   return finalData;
 };
+
+export const fetchFarmIds = async () => {
+  const res = await scQuery("farms2", "farmIds");
+  let data = res?.firstValue?.valueOf();
+  if (data) {
+    data = data.map((id) => id.toNumber());
+  }
+
+  return data as Number[];
+};
