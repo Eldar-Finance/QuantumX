@@ -674,9 +674,23 @@
             "outputs": []
         },
         {
-            "name": "forceHarvestAllUsers",
-            "onlyOwner": true,
+            "name": "forceHarvestAuto",
             "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "user",
+                    "type": "Address"
+                },
+                {
+                    "name": "farm_id",
+                    "type": "BigUint"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "getUsersToAutoHarvest",
+            "mutability": "readonly",
             "inputs": [
                 {
                     "name": "farm_id",
@@ -685,7 +699,8 @@
             ],
             "outputs": [
                 {
-                    "type": "bytes"
+                    "type": "variadic<tuple<Address,BigUint,u64,u64>>",
+                    "multi_result": true
                 }
             ]
         },

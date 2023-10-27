@@ -40,7 +40,7 @@ const Farms = () => {
         </Flex>
       </Grid>
       <VStack spacing="20" w="full">
-        {/* <AutoHarvest/> */}
+        <AutoHarvest/>
         <Fees />
         <StakedTokens />
         <RewardToken />

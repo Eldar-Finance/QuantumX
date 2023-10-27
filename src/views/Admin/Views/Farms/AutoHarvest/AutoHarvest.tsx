@@ -7,7 +7,7 @@ const AutoHarvest = () => {
       <RunAutoHarvest
         placeholder="Farm ID"
         title="Run Auto Harvest"
-        scFunc="forceHarvestAllUsers"
+        scFunc="forceHarvestAuto"
         isAmount={false}
       />
     </Box>

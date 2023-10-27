@@ -1,7 +1,7 @@
 import { BigUIntValue } from "@multiversx/sdk-core/out";
 import { scQuery } from "api/sc/queries";
 import BigNumber from "bignumber.js";
-import { IScFarms2StakersReport } from "utils/types/sc.interface";
+import { IScFarms2StakersReport, IScUserToAutoHarvest } from "utils/types/sc.interface";
 
 export const fetchFarmsFees = async () => {
   const res = await scQuery("farms2", "getFees");
@@ -64,4 +64,25 @@ export const fetchFarmIds = async () => {
   }
 
   return data as Number[];
+};
+
+export const fetchUsersToAutoHarvest = async (farmId: any) => {
+  
+  const res = await scQuery("farms2", "getUsersToAutoHarvest", [new BigUIntValue(new BigNumber(farmId))]);
+  console.log("⚠️ ~ file: farmsQueries.ts:72 ~ fetchUsersToAutoHarvest ~ res:::", res)
+
+  let data = res?.firstValue?.valueOf();
+  console.log("⚠️ ~ file: farmsQueries.ts:74 ~ fetchUsersToAutoHarvest ~ data:::", data)
+
+  const finalData: IScUserToAutoHarvest[] = data.map((data) => {
+    const res: IScUserToAutoHarvest = {
+      address: data.field0.bech32(),
+      stakePercentage: data.field1.toNumber() * 100 / data.field2.toNumber(),
+      epochsSinceLastHarvest: data.field3.toNumber(),
+    };
+    return res;
+  });
+  console.log("⚠️ ~ file: farmsQueries.ts:84 ~ constfinalData:IScUserToAutoHarvest[]=data.map ~ finalData:::", finalData)
+
+  return finalData;
 };
