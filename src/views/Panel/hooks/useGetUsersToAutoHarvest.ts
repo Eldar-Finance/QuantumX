@@ -1,11 +1,11 @@
 import useSWR from "swr";
 import { fetchFarmIds, fetchUsersToAutoHarvest } from "../scServices/farmsQueries";
 
-const useGetUsersToAutoHarvest = (farmId: any) => {
+const useGetUsersToAutoHarvest = (farmIds: Number[]) => {
   const { data, isLoading, error } = useSWR(
     "farms2:getUsersToAutoHarvest",
     async () => {
-      return await fetchUsersToAutoHarvest(farmId);
+      return await fetchUsersToAutoHarvest(farmIds);
     },
     {
       fallbackData: [],

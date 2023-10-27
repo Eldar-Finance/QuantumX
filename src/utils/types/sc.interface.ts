@@ -143,6 +143,7 @@ export interface IScQxTagMarketplace extends IScPayment{
 }
 
 export interface IScUserToAutoHarvest {
+  farmId: string;
   address: string;
   stakePercentage: number;
   epochsSinceLastHarvest: number;

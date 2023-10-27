@@ -66,23 +66,28 @@ export const fetchFarmIds = async () => {
   return data as Number[];
 };
 
-export const fetchUsersToAutoHarvest = async (farmId: any) => {
+export const fetchUsersToAutoHarvest = async (farmIds: Number[]) => {
   
-  const res = await scQuery("farms2", "getUsersToAutoHarvest", [new BigUIntValue(new BigNumber(farmId))]);
-  console.log("⚠️ ~ file: farmsQueries.ts:72 ~ fetchUsersToAutoHarvest ~ res:::", res)
+  let result = [];
 
-  let data = res?.firstValue?.valueOf();
-  console.log("⚠️ ~ file: farmsQueries.ts:74 ~ fetchUsersToAutoHarvest ~ data:::", data)
+  for (let i = 0; i < farmIds.length; i++) {
+    const farmId = farmIds[i];
+    
+    const res = await scQuery("farms2", "getUsersToAutoHarvest", [new BigUIntValue(new BigNumber(farmId.toString()))]);
+    let data = res?.firstValue?.valueOf();
 
-  const finalData: IScUserToAutoHarvest[] = data.map((data) => {
-    const res: IScUserToAutoHarvest = {
-      address: data.field0.bech32(),
-      stakePercentage: data.field1.toNumber() * 100 / data.field2.toNumber(),
-      epochsSinceLastHarvest: data.field3.toNumber(),
-    };
-    return res;
-  });
-  console.log("⚠️ ~ file: farmsQueries.ts:84 ~ constfinalData:IScUserToAutoHarvest[]=data.map ~ finalData:::", finalData)
+    const finalData: IScUserToAutoHarvest[] = data.map((data) => {
+      const res: IScUserToAutoHarvest = {
+        farmId: farmId.toString(),
+        address: data.field0.bech32(),
+        stakePercentage: data.field1.toNumber() * 100 / data.field2.toNumber(),
+        epochsSinceLastHarvest: data.field3.toNumber(),
+      };
+      return res;
+    });
 
-  return finalData;
+    result = [...result, ...finalData];
+  }
+
+  return result;
 };

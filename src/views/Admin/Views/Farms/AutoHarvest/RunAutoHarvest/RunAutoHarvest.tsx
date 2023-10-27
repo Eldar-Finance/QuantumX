@@ -62,22 +62,12 @@ const RunAutoHarvest = ({ isAmount, scFunc, placeholder, title }: IProps) => {
   });
 
   const { farmIds } = useGetFarmIds();
-  const { usersToAutoHarvest, isLoading, error } = useGetUsersToAutoHarvest(formik.values.id);
+  const { usersToAutoHarvest, isLoading, error } = useGetUsersToAutoHarvest(farmIds);
 
-  useEffect(() => {
-    setUsers(usersToAutoHarvest);
-  }
-  , [usersToAutoHarvest]);
-
-  // useEffect(() => {
-  //   setUsers([]);
-  // }, [formik.values.id]);
-  
-  const handleFarmIdChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleChangeFarmId = (e) => {
     formik.handleChange(e);
-    // Your custom logic here
-    setUsers([])
-  };
+    setUsers(usersToAutoHarvest.filter((user) => user.farmId === e.target.value.toString()));
+  }
 
   return (
     <form onSubmit={formik.handleSubmit}>
@@ -91,7 +81,7 @@ const RunAutoHarvest = ({ isAmount, scFunc, placeholder, title }: IProps) => {
           {title}
         </Text>
         <Select
-          onChange={handleFarmIdChange}
+          onChange={handleChangeFarmId}
           variant="filled"
           bg="#0F1535"
           mb={4}
