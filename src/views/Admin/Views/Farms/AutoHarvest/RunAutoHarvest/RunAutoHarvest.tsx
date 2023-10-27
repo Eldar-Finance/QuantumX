@@ -1,4 +1,4 @@
-import { Box, Flex, Input, Select, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, Input, Select, Text } from "@chakra-ui/react";
 import { Address, AddressValue, U64Value } from "@multiversx/sdk-core/out";
 import { gasLimit } from "api/net.config";
 import { scCall } from "api/sc/calls";
@@ -14,6 +14,7 @@ import useGetFarmCreators from "views/Panel/hooks/useGetFarmCreators";
 import useGetFarmIds from "views/Panel/hooks/useGetFarmIds";
 import useGetUsersToAutoHarvest from "views/Panel/hooks/useGetUsersToAutoHarvest";
 import * as yup from "yup";
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 const validationSchema = yup.object({
   value: yup.number(),
@@ -30,6 +31,14 @@ interface IProps {
 const RunAutoHarvest = ({ isAmount, scFunc, placeholder, title }: IProps) => {
   const [gasLimit, setGasLimit] = useState(200000000);
   const [users, setUsers] = useState([]);
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = () => {
+    setCopied(true);
+    setTimeout(() => {
+      setCopied(false);
+    }, 2000);
+  };
 
   const handleChangeGasLimit = () => (e) => {
     setGasLimit(e.target.value);
@@ -65,8 +74,13 @@ const RunAutoHarvest = ({ isAmount, scFunc, placeholder, title }: IProps) => {
   const { usersToAutoHarvest, isLoading, error } = useGetUsersToAutoHarvest(farmIds);
 
   const handleChangeFarmId = (e) => {
+    formik.values.user = "";
     formik.handleChange(e);
     setUsers(usersToAutoHarvest.filter((user) => user.farmId === e.target.value.toString()));
+  }
+
+  const handleChangeSelectedUser = (e) => {
+    formik.handleChange(e);
   }
 
   return (
@@ -106,7 +120,7 @@ const RunAutoHarvest = ({ isAmount, scFunc, placeholder, title }: IProps) => {
           })}
         </Select>
         <Select
-          onChange={formik.handleChange}
+          onChange={handleChangeSelectedUser}
           variant="filled"
           bg="#0F1535"
           mb={4}
@@ -137,6 +151,16 @@ const RunAutoHarvest = ({ isAmount, scFunc, placeholder, title }: IProps) => {
             );
           })}
         </Select>
+
+        {formik.values.user != "" && (
+          <Flex alignItems="center" padding={3} mb={3}>
+            <CopyToClipboard text={formik.values.user} onCopy={handleCopy}>
+              <Button size="sm" variant="outline" colorScheme="blue">
+                {copied ? "Copied!" : "Copy Address"}
+              </Button>
+            </CopyToClipboard>
+          </Flex>
+        )}
 
         <Input
           mb={4}
