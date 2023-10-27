@@ -166,7 +166,7 @@ const RunAutoHarvest = ({ isAmount, scFunc, placeholder, title }: IProps) => {
           mb={4}
           w="full"
           onChange={handleChangeGasLimit()}
-          placeholder={`Current value: ${gasLimit.toLocaleString()}`}
+          placeholder={`Gas Limit: (current value: ${gasLimit.toLocaleString()})`}
           name="gas"
         />
 
