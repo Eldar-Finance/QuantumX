@@ -100,6 +100,7 @@ const StakeModal = ({
       }
     },
   });
+
   const handleAmount = (percent: number) => {
     let userRealAmount = 0;
     if (userToken) {

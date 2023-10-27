@@ -24,7 +24,7 @@ const AllActions = ({ handleView, farm }: IProps) => {
             justifyContent={"center"}
             alignItems="center"
           >
-            <Text mb={3}>Early Unbonding Fee : {farm.earlyUnbondingFee}%</Text>
+            <Text mb={3}>Early Unbonding Fee: {farm.earlyUnbondingFee}%</Text>
 
             <ActionButton onClick={() => handleView(1)}>Edit Fees</ActionButton>
           </PanelBox>
@@ -47,12 +47,25 @@ const AllActions = ({ handleView, farm }: IProps) => {
             alignItems="center"
           >
             <Text flex={1}>
-              Delete the farm (funds will be automatically returned to stakers)
+              Delete the farm.
             </Text>
-
+            <Text fontSize={'sm'} mt={5}>
+              1 - staked funds will be returned to stakers
+            </Text>
+            <Text fontSize={'sm'}>
+              2 - run until not failed
+            </Text>
+            <Text fontSize={'sm'} mb={5}>
+              3 - unclaimed rewards will be lost
+            </Text>
             <ActionButton
               bg="danger"
-              onClick={() => deleteFarm(farm.farm.farmId)}
+              // onClick={() => deleteFarm(farm.farm.farmId)}
+              onClick={() => {}}
+              disabled={true}
+              // change pointer
+              cursor={"not-allowed"}
+
             >
               Delete Farm
             </ActionButton>
@@ -65,9 +78,9 @@ const AllActions = ({ handleView, farm }: IProps) => {
           >
             <Box flex={1} mb={3}>
               <Text>Deposit rewards for the period you want.</Text>
-              <Text>
+              <Text mt={2} fontSize={'sm'}>
                 Every new deposit will place the rewards exactly after the
-                previous one.
+                previous one <u><b>unless</b></u> you select the checkbox &ldquo;Bypass...&rdquo;
               </Text>
             </Box>
 

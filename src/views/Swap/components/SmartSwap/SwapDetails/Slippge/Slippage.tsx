@@ -26,12 +26,12 @@ const Slippage = () => {
 
         <Box>
           <Text color="white.500" mb={3}>
-            Your transaction will revert if the output amount is more than{" "}
-            {slipapge}% below the one displayed.
+            Your transaction will revert if the increases more than{" "}
+            {slipapge}%.
           </Text>
 
-          <Flex w="full" gap={2} flexDir={{ xs: "column", tablet: "row" }}>
-            <Flex gap={2}>
+          <Flex w="full" gap={2} >
+            <Flex gap={1}>
               {slippageSlecctions.map((slippageOption) => {
                 return (
                   <SlippageBox
@@ -49,13 +49,14 @@ const Slippage = () => {
               flex={1}
               borderColor={"main"}
               borderRadius="md"
+              w={"100px"}
             >
               <Input
                 h="auto"
                 outline={"none"}
                 border="none"
                 placeholder="Custom"
-                py={2}
+                py={1}
                 _active={{
                   outline: "none",
                   border: "none",
@@ -97,15 +98,18 @@ const SlippageBox = ({ slippage, active, onClick }: IProps) => {
       borderColor={"main"}
       bg={active ? "main" : "transparent"}
       color={active ? "black" : "white"}
-      px={"15px"}
-      py="10px"
+      px={"8px"}
+      py="4px"
       borderRadius={"md"}
       cursor="pointer"
       _hover={{
         bg: "main",
         color: "black",
       }}
+      fontSize={"sm"}
       onClick={onClick}
+      textAlign="center"
+      lineHeight="2"
     >
       {slippage}%
     </Box>

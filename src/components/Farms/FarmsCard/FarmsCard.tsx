@@ -13,7 +13,7 @@ import {
   IScUserFarmRewards,
 } from "utils/types/sc.interface";
 import Farms2Item from "./Farms2Item";
-import ProteoFarmItem from "./ProteoFarmItem";
+// import ProteoFarmItem from "./ProteoFarmItem";
 
 interface IProps {
   proteoArr: IProteoFarm[];
@@ -49,7 +49,7 @@ const FarmsCard = ({ proteoArr, isPool, othersArr = null }: IProps) => {
       .map((f) => f.stakedToken)
       .concat(proteoArr.map((pf) => pf.tokenIdentifier))
   );
-
+  
   const { tokens } = useGetMultipleElrondTokens(
     unparseMultipleFarms(othersArr.allFarms)
       .map((f) => f.stakedToken)
@@ -85,10 +85,11 @@ const FarmsCard = ({ proteoArr, isPool, othersArr = null }: IProps) => {
     >
       {farmStored.map((farm, i) => {
         if (farm.type === "proteo") {
-          if (!farm.farm.stakedCoin) return null;
-          return (
-            <ProteoFarmItem tvl={farm.totalLocked} key={i} pf={farm.farm} />
-          );
+          return null
+          // if (!farm.farm.stakedCoin) return null;
+          // return (
+          //   <ProteoFarmItem tvl={farm.totalLocked} key={i} pf={farm.farm} />
+          // );
         } else {
           if (!farm.farm.farm.farmId) return null;
           return (

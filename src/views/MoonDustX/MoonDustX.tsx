@@ -16,7 +16,7 @@ const ConverterView = () => {
   }, [dispatch]);
   return (
     <Layout>
-      <MyContainer maxW="730px" mt={-8} mb={20}>
+      <MyContainer maxW="730px" mt={-2} mb={20}>
         <TitlePage
           title="MoonDustX"
           subtitle={

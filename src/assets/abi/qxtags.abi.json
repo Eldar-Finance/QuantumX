@@ -1,11 +1,11 @@
 {
     "buildInfo": {
         "rustc": {
-            "version": "1.67.0-nightly",
-            "commitHash": "b7bc90fea3b441234a84b49fdafeb75815eebbab",
-            "commitDate": "2022-11-21",
+            "version": "1.72.0-nightly",
+            "commitHash": "04075b32021932e3e8f6ab55d519b3b3494b6ef9",
+            "commitDate": "2023-06-22",
             "channel": "Nightly",
-            "short": "rustc 1.67.0-nightly (b7bc90fea 2022-11-21)"
+            "short": "rustc 1.72.0-nightly (04075b320 2023-06-22)"
         },
         "contractCrate": {
             "name": "qxtags",
@@ -509,58 +509,8 @@
             "inputs": [],
             "outputs": [
                 {
-                    "type": "variadic<Address>",
+                    "type": "variadic<multi<bytes,tuple<Address,u64>>>",
                     "multi_result": true
-                }
-            ]
-        },
-        {
-            "name": "earnerName",
-            "mutability": "readonly",
-            "inputs": [
-                {
-                    "name": "address",
-                    "type": "Address"
-                }
-            ],
-            "outputs": [
-                {
-                    "type": "bytes"
-                }
-            ]
-        },
-        {
-            "name": "earnerPercentage",
-            "mutability": "readonly",
-            "inputs": [
-                {
-                    "name": "address",
-                    "type": "Address"
-                }
-            ],
-            "outputs": [
-                {
-                    "type": "BigUint"
-                }
-            ]
-        },
-        {
-            "name": "maxPercentage",
-            "mutability": "readonly",
-            "inputs": [],
-            "outputs": [
-                {
-                    "type": "BigUint"
-                }
-            ]
-        },
-        {
-            "name": "earnersTotalPercentage",
-            "mutability": "readonly",
-            "inputs": [],
-            "outputs": [
-                {
-                    "type": "BigUint"
                 }
             ]
         },
@@ -584,11 +534,21 @@
             ]
         },
         {
+            "name": "earnersTotalPercentage",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "u64"
+                }
+            ]
+        },
+        {
             "name": "addEarner",
             "mutability": "mutable",
             "inputs": [
                 {
-                    "name": "name",
+                    "name": "label",
                     "type": "bytes"
                 },
                 {
@@ -597,7 +557,7 @@
                 },
                 {
                     "name": "percentage",
-                    "type": "BigUint"
+                    "type": "u64"
                 }
             ],
             "outputs": []
@@ -607,8 +567,8 @@
             "mutability": "mutable",
             "inputs": [
                 {
-                    "name": "address",
-                    "type": "Address"
+                    "name": "label",
+                    "type": "bytes"
                 }
             ],
             "outputs": []
@@ -619,7 +579,7 @@
             "inputs": [],
             "outputs": [
                 {
-                    "type": "variadic<tuple<bytes,Address,BigUint>>",
+                    "type": "variadic<tuple<bytes,Address,u64>>",
                     "multi_result": true
                 }
             ]

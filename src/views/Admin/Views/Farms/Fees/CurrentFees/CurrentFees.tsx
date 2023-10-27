@@ -10,18 +10,18 @@ const CurrentFees = () => {
       <Heading mb={3}>Current Fees Values : </Heading>
       <Flex gap={"40px"} flexWrap="wrap" w="full">
         <Text>
-          General Fee : {formatBalance({ balance: fees.earners, decimals: 2 })}{" "}
+          General Fee: {formatBalance({ balance: fees.earners, decimals: 2 })}{" "}
           %
         </Text>
         <Text>
-          Harvest Fee : {formatBalance({ balance: fees.harvest, decimals: 2 })}{" "}
+          Harvest Fee: {formatBalance({ balance: fees.harvest, decimals: 2 })}{" "}
           %
         </Text>
         <Text>
-          Creator Fee : {formatBalance({ balance: fees.creator })} EGLD
+          Creator Fee: {formatBalance({ balance: fees.creator })} EGLD
         </Text>
         <Text>
-          Farm Creation Fee : {formatBalance({ balance: fees.farmCreation })}{" "}
+          Farm Creation Fee: {formatBalance({ balance: fees.farmCreation })}{" "}
           EGLD
         </Text>
       </Flex>

@@ -14,10 +14,10 @@ const CurrentFees = () => {
         ) : (
           <>
             <Text>
-              Fee : {formatBalance({ balance: fees.fee, decimals: 2 })} %
+              Fee: {formatBalance({ balance: fees.fee, decimals: 2 })} %
             </Text>
             <Text>
-              LP Fee : {formatBalance({ balance: fees.lpFee, decimals: 2 })} %
+              LP Fee: {formatBalance({ balance: fees.lpFee, decimals: 2 })} %
             </Text>
           </>
         )}

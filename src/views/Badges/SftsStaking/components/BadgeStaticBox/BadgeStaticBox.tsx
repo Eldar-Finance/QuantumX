@@ -1,11 +1,11 @@
 import { Box, Center, CenterProps, Text } from "@chakra-ui/react";
 import { ReactNode } from "react";
-interface IProps extends CenterProps {
-  title: string;
-  content: ReactNode;
-}
+// interface IProps extends CenterProps {
+//   title: string;
+//   content: ReactNode;
+// }
 
-const BadgeStaticBox = ({ title, content, ...props }: IProps) => {
+const BadgeStaticBox = ({ title, content, ...props }) => {
   return (
     <Center
       flexDir={"column"}

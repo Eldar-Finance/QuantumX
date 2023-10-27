@@ -5,11 +5,11 @@ import {
   proteoEgldEliteWsp,
   zpayEgldEliteDualWsp,
 } from "api/sc/sc";
-import aeroEgld from "assets/logos/aeroegl.png";
+// import aeroEgld from "assets/logos/aeroegl.png";
 import epunkUsdcimg from "assets/logos/epunksusdc.png";
-import proteoEgldLpImg from "assets/logos/proteolp.png";
+//import proteoEgldLpImg from "assets/logos/proteolp.png";
 
-import zpayWegldImg from "assets/logos/zpaywegld.png";
+// import zpayWegldImg from "assets/logos/zpaywegld.png";
 import NextImage from "components/NextImage/NextImage";
 
 
@@ -18,57 +18,57 @@ import rareUsdcImage from "assets/logos/rare-usdc.png";
 import { IProteoFarm } from "utils/types/farms.interface";
 
 export const proteoFarms: {
-  ZPAYWEGLD: IProteoFarm;
-  AEROWEGLD: IProteoFarm;
-  PROTEOEGLDLP: IProteoFarm;
+  // ZPAYWEGLD: IProteoFarm;
+  // AEROWEGLD: IProteoFarm;
+  // PROTEOEGLDLP: IProteoFarm;
   // CYBERWEGLD: IProteoFarm;
 } = {
-  PROTEOEGLDLP: {
-    hc: 20,
-    Icon: <NextImage alt="" src={proteoEgldLpImg} width={45} />,
-    stakedCoin: "PROTEO-EGLD",
-    wsp: proteoEgldEliteWsp,
-    token: "PROTEOEGLDLP",
-    aprEndpoint: "/proteoegldapi.php",
-    tokenIdentifier: toknesID.proteoEgldLp,
-    getFarm:
-      "https://arda.run/swap?from=single-wallet-&to=lpMaiar-wallet-PROTEOEGLD-baf054",
-    viewContract: "https://explorer.elrond.com/tokens/PROTEOEGLD-baf054",
-    seePair: "https://e-compass.io/maiars/chart/proteo/wegld",
-    type: "farm",
-  },
-  ZPAYWEGLD: {
-    hc: 20,
-    Icon: <NextImage alt="" src={zpayWegldImg} width={45} />,
-    stakedCoin: "ZPAY-WEGLD",
-    wsp: zpayEgldEliteDualWsp,
-    token: "ZPAYWEGLD",
-    aprEndpoint: "/zpayegldapi.php",
-    tokenIdentifier: toknesID.zpayWegldLp,
-    tokenRewards: { name: "ZPAY", tokenI: toknesID.zpay },
-    endpointDefinition: "getMyStakedInfoLPDUALFARMS",
-    getFarm:
-      "https://arda.run/swap?from=single-wallet-&to=lpMaiar-wallet-ZPAYWEGLD-34e5c1",
-    viewContract: "https://explorer.elrond.com/tokens/ZPAYWEGLD-34e5c1",
-    seePair: "https://e-compass.io/maiars/chart/zpay/wegld",
-    type: "farm",
-  },
-  AEROWEGLD: {
-    hc: 20,
-    Icon: <NextImage alt="" src={aeroEgld} width={45} />,
-    stakedCoin: "AERO-WEGLD",
-    wsp: aeroWegldWsp,
-    token: "AEROWEGLD",
-    aprEndpoint: "/aeroegldapi.php",
-    tokenIdentifier: toknesID.aerowegld,
-    tokenRewards: { name: "AERO", tokenI: toknesID.aero },
-    endpointDefinition: "getMyStakedInfoLPDUALFARMS",
-    getFarm:
-      "https://arda.run/swap?from=single-wallet-&to=lpMaiar-wallet-AEROWEGLD-81cc37",
-    viewContract: "https://explorer.elrond.com/tokens/AEROWEGLD-81cc37",
-    seePair: "https://e-compass.io/maiars/chart/aero/wegld",
-    type: "farm",
-  },
+  // PROTEOEGLDLP: {
+  //   hc: 20,
+  //   Icon: <NextImage alt="" src={proteoEgldLpImg} width={45} />,
+  //   stakedCoin: "PROTEO-EGLD",
+  //   wsp: proteoEgldEliteWsp,
+  //   token: "PROTEOEGLDLP",
+  //   aprEndpoint: "/proteoegldapi.php",
+  //   tokenIdentifier: toknesID.proteoEgldLp,
+  //   getFarm:
+  //     "https://arda.run/swap?from=single-wallet-&to=lpMaiar-wallet-PROTEOEGLD-baf054",
+  //   viewContract: "https://explorer.elrond.com/tokens/PROTEOEGLD-baf054",
+  //   seePair: "https://e-compass.io/maiars/chart/proteo/wegld",
+  //   type: "farm",
+  // },
+  // ZPAYWEGLD: {
+  //   hc: 20,
+  //   Icon: <NextImage alt="" src={zpayWegldImg} width={45} />,
+  //   stakedCoin: "ZPAY-WEGLD",
+  //   wsp: zpayEgldEliteDualWsp,
+  //   token: "ZPAYWEGLD",
+  //   aprEndpoint: "/zpayegldapi.php",
+  //   tokenIdentifier: toknesID.zpayWegldLp,
+  //   tokenRewards: { name: "ZPAY", tokenI: toknesID.zpay },
+  //   endpointDefinition: "getMyStakedInfoLPDUALFARMS",
+  //   getFarm:
+  //     "https://arda.run/swap?from=single-wallet-&to=lpMaiar-wallet-ZPAYWEGLD-34e5c1",
+  //   viewContract: "https://explorer.elrond.com/tokens/ZPAYWEGLD-34e5c1",
+  //   seePair: "https://e-compass.io/maiars/chart/zpay/wegld",
+  //   type: "farm",
+  // },
+  // AEROWEGLD: {
+  //   hc: 20,
+  //   Icon: <NextImage alt="" src={aeroEgld} width={45} />,
+  //   stakedCoin: "AERO-WEGLD",
+  //   wsp: aeroWegldWsp,
+  //   token: "AEROWEGLD",
+  //   aprEndpoint: "/aeroegldapi.php",
+  //   tokenIdentifier: toknesID.aerowegld,
+  //   tokenRewards: { name: "AERO", tokenI: toknesID.aero },
+  //   endpointDefinition: "getMyStakedInfoLPDUALFARMS",
+  //   getFarm:
+  //     "https://arda.run/swap?from=single-wallet-&to=lpMaiar-wallet-AEROWEGLD-81cc37",
+  //   viewContract: "https://explorer.elrond.com/tokens/AEROWEGLD-81cc37",
+  //   seePair: "https://e-compass.io/maiars/chart/aero/wegld",
+  //   type: "farm",
+  // },
   // CYBERWEGLD: {
   //   hc: 20,
   //   Icon: <NextImage alt="" src={cyberWegldImage} width={45} />,
@@ -120,3 +120,12 @@ export const farms2Data = {
     scFarmAddress: "",
   },
 };
+
+export const farmsTobeShutDown = [22, 26, 27, 36, 37, 47, 49];
+
+// 1) bonez-hype - id 37
+// 2) rare-bonez - id 36
+// 3) hypelegld - id 47
+// 4) rareusdc-wegld - id 49
+// 5) hypeusdc-hype - id 22
+// 6) 25, 26, 27 (the bear pools)

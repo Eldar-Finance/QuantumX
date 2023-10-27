@@ -40,7 +40,7 @@ const DcaCard = () => {
   }, [dispatch, whiteListedTokens.data]);
 
   return (
-    <Box mb={10}>
+    <Box mb={10} minW={'90%'}>
       <Grid
         gridTemplateColumns={{ xs: "1fr" }}
         position={"relative"}

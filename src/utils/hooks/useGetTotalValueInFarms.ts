@@ -12,8 +12,8 @@ import useGetMultipleElrondTokens from "./useGetMultipleElrondTokens";
 import { allHypeFarms } from "views/Hypezone/utils/constants";
 
 const useGetTotalValueInFarms = () => {
-  const { data } = useAppSelector((state) => state.proteo.generalInfoApp);
-  const generalInfoAppData = data;
+  // const { data } = useAppSelector((state) => state.proteo.generalInfoApp);
+  // const generalInfoAppData = data;
   const [totalValueLocked, setTotalValueLocked] = useState<number>();
   const { data: allFarms } = useSelector(selectAllFarms2);
   const farms2 = allFarms.filter(
@@ -33,41 +33,41 @@ const useGetTotalValueInFarms = () => {
       if (
         lpPrices.length > 0 &&
         tokens.length > 0 &&
-        generalInfoAppData &&
+        // generalInfoAppData &&
         farms2.length > 0
       ) {
         let totalLockedonProteoFarms = 0;
 
         // fetch all lp prices that we need in usdc
         // get amount locked on proteo farms in dollars
-        for (let i = 0; i < proteoFarmsArr.length; i++) {
-          // get static data about proteo farm
-          const pf = proteoFarmsArr[i];
+        // for (let i = 0; i < proteoFarmsArr.length; i++) {
+        //   // get static data about proteo farm
+        //   const pf = proteoFarmsArr[i];
 
-          // extrac tokenIdentifier and decimals from proteo farm
-          const { tokenIdentifier, decimals } = pf;
+        //   // extrac tokenIdentifier and decimals from proteo farm
+        //   const { tokenIdentifier, decimals } = pf;
 
-          if (generalInfoAppData) {
-            const tokenInfo = generalInfoAppData.tokensInfo.find(
-              (ti) => ti.tokenI === tokenIdentifier
-            );
-            let tokenPrice = 0;
+        //   if (generalInfoAppData) {
+        //     const tokenInfo = generalInfoAppData.tokensInfo.find(
+        //       (ti) => ti.tokenI === tokenIdentifier
+        //     );
+        //     let tokenPrice = 0;
 
-            const price = lpPrices.find(
-              (lp) => lp.token === formatTokenI(tokenIdentifier)
-            )?.price;
-            if (price) {
-              tokenPrice = Number(price);
-            }
+        //     const price = lpPrices.find(
+        //       (lp) => lp.token === formatTokenI(tokenIdentifier)
+        //     )?.price;
+        //     if (price) {
+        //       tokenPrice = Number(price);
+        //     }
 
-            if (tokenInfo && tokenInfo.staked !== 0) {
-              totalLockedonProteoFarms += formatBalanceDolar(
-                { balance: tokenInfo?.staked, decimals: decimals },
-                tokenPrice
-              );
-            }
-          }
-        }
+        //     if (tokenInfo && tokenInfo.staked !== 0) {
+        //       totalLockedonProteoFarms += formatBalanceDolar(
+        //         { balance: tokenInfo?.staked, decimals: decimals },
+        //         tokenPrice
+        //       );
+        //     }
+        //   }
+        // }
 
         // get amount locked on quantumn sc farms in dollars
         for (let i = 0; i < farms2.length; i++) {
@@ -100,7 +100,7 @@ const useGetTotalValueInFarms = () => {
       }
     };
     func();
-  }, [farms2, generalInfoAppData, lpPrices, tokens]);
+  }, [farms2, lpPrices, tokens]);
 
   return totalValueLocked;
 };

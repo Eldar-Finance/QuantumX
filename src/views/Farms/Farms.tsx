@@ -81,7 +81,7 @@ const Farms = () => {
             }}
             tabsProps={{
               w: "full",
-              mt: 14,
+              mt: { xs: "25px", md: "50px" },
             }}
             tabListWarapperProps={{
               display: "flex",

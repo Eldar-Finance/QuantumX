@@ -117,6 +117,11 @@ export interface IScPayment {
   nonce: number;
 }
 
+export interface IScFungibleReward {
+  rewardToken: string;
+  harvestableAmount: string;
+}
+
 export interface IScQxTagInfo {
   username: string;
   extension: string;
@@ -135,4 +140,11 @@ export interface IScQxTagMarketplace extends IScPayment{
   username: string;
   extension: string;
   address: string;
+}
+
+export interface IScUserToAutoHarvest {
+  farmId: string;
+  address: string;
+  stakePercentage: number;
+  epochsSinceLastHarvest: number;
 }

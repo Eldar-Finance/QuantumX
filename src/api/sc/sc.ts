@@ -21,6 +21,8 @@ import rewardsAbi from "assets/abi/rewards.abi.json";
 import sftsRewardsAbi from "assets/abi/sft-rewards-sc.abi.json";
 import smartSwapAbi from "assets/abi/smartswaps.abi.json";
 import xoxnoSrbPoolAbi from "assets/abi/xoxno_srb_pool_info.json";
+import hootAbi from "assets/abi/hoot.abi.json";
+
 //end abos import
 
 /* Queries */
@@ -130,7 +132,8 @@ export type WspTypes =
   | "hubWsp"
   | "cyberWegld"
   | "hypezoneWsp"
-  | "tagsWsp";
+  | "tagsWsp"
+  | "hootWsp";
 
 export const getInterface = (workspace: WspTypes) => {
   let address = null;
@@ -316,7 +319,12 @@ export const getInterface = (workspace: WspTypes) => {
       abiUrl = qxTagsAbi;
       implementsInterfaces = "QxTags";
       break;
-
+    case "hootWsp":
+      simpleAddress = contractAddr.hoot;
+      address = new Address(simpleAddress);
+      abiUrl = hootAbi;
+      implementsInterfaces = "Hoot";
+      break;
     default:
       break;
   }

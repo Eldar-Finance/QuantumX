@@ -115,6 +115,6 @@ export async function createFarm(
         )
       ),
     ],
-    10000000
+    70000000
   );
 }

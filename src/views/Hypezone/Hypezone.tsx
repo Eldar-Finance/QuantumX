@@ -1,4 +1,4 @@
-import { Box, Flex } from "@chakra-ui/react";
+import { Box, Flex, Switch } from "@chakra-ui/react";
 import { toknesID } from "api/net.config";
 import MyContainer from "components/Container/Container";
 // import Title from "components/Farms/Title/Title";
@@ -32,6 +32,7 @@ const Hypezone = () => {
   const [isOpenRareModal, setIsOpenRareModal] = useState(false);
   const hypeTvl = useGetTotalValueInHype();
   const { isLoggedIn } = useAuthentication();
+  const [isSwitchOn, setIsSwitchOn] = useState(false);
 
   useEffect(() => {
     dispatch(fetchAllFarms());
@@ -54,7 +55,12 @@ const Hypezone = () => {
     }
   }, [accountToken, error, isLoading, isLoggedIn]);
 
-  const onClose = () => {};
+  const handleToggle = () => {
+    if (!isLoading) { // Only run the logic if the data fetching is completed
+      setIsSwitchOn(!isSwitchOn);
+    }
+  };
+
   return (
     <Layout>
       <MyContainer pb="70px">
@@ -84,10 +90,21 @@ const Hypezone = () => {
               <Faucet />
             </Flex>
           </Flex>
-          <HypeDualContainer ids={dualPoolIds} />
-          <HypeFarmContainer ids={hypeFarmIds} />
-          <HypePools1Container ids={hypePools1Ids} />
-          <HypePools2Container ids={hypePools2Ids} />
+          <Flex
+            transform={{ xs: "translateY(+80px)", lg: "translateY(+50px)" }}
+            py={{ xs: "20px", lg: "0px" }}
+          >
+            { isLoggedIn && (
+              <Flex alignItems="center" gap="10px">
+                <Switch size="md" isChecked={isSwitchOn} colorScheme="teal" onChange={handleToggle} />
+                <Box>My Pools / Farms</Box>
+              </Flex>
+            )}
+          </Flex>
+          <HypeDualContainer ids={dualPoolIds} isSwitchOn={isSwitchOn}/>
+          <HypeFarmContainer ids={hypeFarmIds} isSwitchOn={isSwitchOn}/>
+          <HypePools1Container ids={hypePools1Ids} isSwitchOn={isSwitchOn}/>
+          <HypePools2Container ids={hypePools2Ids} isSwitchOn={isSwitchOn}/>
         </Flex>
         {/* <UserNeedRareModal isOpen={isOpenRareModal} onClose={onClose} /> */}
       </MyContainer>

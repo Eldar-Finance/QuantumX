@@ -15,7 +15,8 @@ const validationSchema = yup.object({
 const ForceWithdraw = () => {
   const formik = useFormik({
     initialValues: {
-      title: proteoFarms.AEROWEGLD.token,
+      //title: proteoFarms.AEROWEGLD.token,
+      title: '',
     },
     validationSchema: validationSchema,
     onSubmit: async () => {},

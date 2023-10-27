@@ -12,11 +12,12 @@ import { useAppSelector } from "utils/hooks/redux";
 import useCountDown from "utils/hooks/useCountDown";
 import useGetElrondToken from "utils/hooks/useGetElrondToken";
 import useGetQuantumxFarmsFees from "utils/hooks/useGetQuantumxFarmsFees";
-import { IScFarmItem, IScUserFarmInfo } from "utils/types/sc.interface";
+import { IScFarmItem, IScUserFarmInfo, IScUserFarmRewards } from "utils/types/sc.interface";
 import useIsBearFarm from "views/Pools/hooks/useIsBearFarm";
 import useCanUsePool7 from "views/Pools/hooks/useIsSrbStaker";
 import MultipleStakeModal from "./MultipleStakeModal";
 import MultipleUnstakeModal from "./MultipleUnstakeModal";
+import { farmsTobeShutDown } from "views/Farms/constants";
 
 const StakeModal: any = dynamic(() => import("./StakeModal"));
 const UnstakeModal: any = dynamic(() => import("./UnstkeModal"));
@@ -28,6 +29,7 @@ interface IProps {
   isBearly?: boolean;
   disable?: boolean;
   maxStakingAmount?: string;
+  farmUserRewards?: IScUserFarmRewards[];
 }
 
 const useGetFarmTimeForUnstake = (statsRes, userFarmItem) => {
@@ -66,6 +68,7 @@ const StakeUnstake = ({
   isBearly,
   disable,
   maxStakingAmount,
+  farmUserRewards
 }: IProps) => {
   const [openStake, setOpenStake] = useState(false);
   const [openUnstakeStake, setOpenUnstakeStake] = useState(false);
@@ -80,6 +83,10 @@ const StakeUnstake = ({
   const epochDiffrence = userFarmItem?.unboundingEpoch
     ? currentEpoch - userFarmItem.unboundingEpoch
     : 777;
+
+  const shouldUserHarvestWarning = farmUserRewards?.some(
+    (reward) => reward.harvestableAmount > 0
+  );
 
   const timeToUnstake = useGetFarmTimeForUnstake(statsRes, userFarmItem);
 
@@ -116,10 +123,11 @@ const StakeUnstake = ({
             onClick={() => setOpenStake((s) => !s)}
             variant={"outline"}
             w="full"
-            disabled={
+            isDisabled={
               disable ||
               (!isSrbStaker && farm.farm.farmId === 7) ||
-              new BigNumber(maxAmountToStake).isLessThan(0)
+              new BigNumber(maxAmountToStake).isLessThan(0) ||
+              farmsTobeShutDown.includes(farm.farm.farmId)
             }
           >
             STAKE {!isPool && "LP"}{" "}
@@ -130,25 +138,32 @@ const StakeUnstake = ({
             </Text>
           )}
         </Flex>
-        <Center flexDir={"column"} w="full" flex={1}>
+        <Center flex="1" flexDir={"column"} w="full" maxW={"50%"} position={"relative"}>
           <ActionButton
             onClick={() => setOpenUnstakeStake((s) => !s)}
-            disabled={disable || disableUnstake}
+            isDisabled={disable || disableUnstake || shouldUserHarvestWarning}
             w={isBearly ? "full" : { xs: "full", md: "50%" }}
           >
             UNSTAKE
           </ActionButton>
-          {hasuserStaked && disableUnstake && epochDiffrence !== 777 && (
-            <Text fontSize={"smaller"} mt={1} color="darkgray">
-              {timeToUnstake} remaining to unstake
+          {shouldUserHarvestWarning && 
+            <Text opacity={0.7} color={"yellow.300"} fontSize={"16px"} position={"absolute"} top={{sm: "42px", md: "-35px"}} right={{sm: "5px", md: "75px"}} whiteSpace={"nowrap"}>
+              ⚠️ {" "} Harvest your rewards before unstaking.
             </Text>
-          )}
-          {epochDiffrence <= 0 && farmFee?.earlyUnbondingFee > 0 && (
-            <Text fontSize={"sm"} color="darkgray" mt={1}>
-              {timeToUnstake} remaining to unstake with 0% penalty
-            </Text>
-          )}
+          }
         </Center>
+      </Flex>
+      <Flex w="full" justifyContent={"center"} mt={2}>
+        {hasuserStaked && disableUnstake && epochDiffrence !== 777 && (
+          <Text fontSize={"md"} mt={1} color="darkgray">
+            ⚠️ {" "} {timeToUnstake} remaining to unstake
+          </Text>
+        )}
+        {epochDiffrence <= 0 && farmFee?.earlyUnbondingFee > 0 && (
+          <Text fontSize={"md"} color="darkgray" mt={1}>
+            ⚠️ {" "} {timeToUnstake} remaining to unstake with 0% penalty
+          </Text>
+        )}
       </Flex>
       {openStake &&
         (farm?.extraPools?.length > 0 ? (

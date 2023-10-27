@@ -357,6 +357,7 @@ export const userAccount = createSlice({
 });
 
 export const selectUserAddress = (state) => state.userAccount.connectedAddress;
+// export const selectUserAddress = (state) => "erd...";
 export const selectUserTokens = (state) => state.userAccount.tableData;
 export const selectMexPairs = (state) => state.userAccount.mexPairs;
 export const selectEgldBalance = (state) => state.userAccount.egldBalance.data;

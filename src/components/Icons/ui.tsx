@@ -6,7 +6,7 @@ import {
   IconProps,
   Image,
 } from "@chakra-ui/react";
-import EgldLogoImg from "assets/logos/egldlogo.png";
+import EgldLogoImg from "assets/logos/egld.png";
 import multiversxLogo from "assets/logos/multiversx.svg";
 import MexLockdLogoImg from "assets/logos/newlkmex.svg";
 import proteoImg from "assets/logos/proteo.png";
@@ -27,6 +27,7 @@ export const DotsIcon = createIcon({
     </svg>
   ),
 });
+
 export const BookIcon = createIcon({
   displayName: "BookIcon",
   viewBox: "0 0 16 15",

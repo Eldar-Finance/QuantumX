@@ -12,8 +12,9 @@ const Faucet = () => {
   const { canUserClaim } = useUserCanClaim();
   const handleClaim = async () => {
     let txs = [];
-    const t1 = await getTxForRareFee(info.cost.token, info.cost.amount);
-    txs.push(t1);
+    // RARE fee disabled for now
+    // const t1 = await getTxForRareFee(info.cost.token, info.cost.amount);
+    // txs.push(t1);
     const claimTx = await scCallOnlyTx("hypezoneWsp", "claim", [], 10000000);
     txs.push(claimTx);
 

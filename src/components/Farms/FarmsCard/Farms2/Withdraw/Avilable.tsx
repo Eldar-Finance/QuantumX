@@ -30,7 +30,7 @@ const Avilable = ({ farm, userFarmRewards }: IProps) => {
       "farms2",
       "harvest",
       [new BigUIntValue(new BigNumber(farm.farm.farmId))],
-      farm.farm.rewardToken === "" ? 500000000 : 180000000
+      farm.farm.farmId === 8 ? 500000000 : 360000000
     );
   };
 
@@ -43,7 +43,7 @@ const Avilable = ({ farm, userFarmRewards }: IProps) => {
   }
 
   const showCompound = farm.compound;
-
+  
   return (
     <Box>
       <Flex w="full" justifyContent={"space-between"}>
@@ -86,7 +86,7 @@ const Avilable = ({ farm, userFarmRewards }: IProps) => {
           <Flex gap={3}>
             <ActionButton
               onClick={handleHarvest}
-              disabled={
+              isDisabled={
                 userFarmRewards.reduce(
                   (acc, current) => (acc += current.harvestableAmount),
                   0
@@ -101,7 +101,7 @@ const Avilable = ({ farm, userFarmRewards }: IProps) => {
                 textTransform={"uppercase"}
                 onClick={handleCompound}
                 bg="rgb(175, 175, 175)"
-                disabled={
+                isDisabled={
                   userFarmRewards.reduce(
                     (acc, current) => (acc += current.harvestableAmount),
                     0

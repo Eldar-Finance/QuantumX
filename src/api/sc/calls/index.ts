@@ -115,6 +115,52 @@ export const MultiESDTNFTTransfer = async (
   }
 };
 
+export const MultiESDTNFTTransferOnlyTx = async (
+  wsp: WspTypes,
+  funcName: string,
+  tokens: {
+    collection: string;
+    nonce: number;
+    value: number;
+  }[],
+  args: any[] = [],
+  gasL: number = 100000000
+) => {
+  try {
+    const sender = store.getState().userAccount.connectedAddress;
+    const senderAddress = new Address(sender);
+
+    let { simpleAddress } = getInterface(wsp);
+    const receiverAddress = new Address(simpleAddress);
+
+    const contract = new SmartContract({ address: receiverAddress});
+    let interaction = new Interaction(contract, new ContractFunction(funcName), args);
+
+    const data = tokens.flatMap((nft) => {
+      const nftData = TokenTransfer.metaEsdtFromBigInteger(
+        nft.collection,
+        nft.nonce,
+        new BigNumber(nft.value),
+      );
+      return nftData;
+    });
+  
+    if (data.length > 0) {
+      let tx = interaction
+      .withSender(senderAddress)
+      .useThenIncrementNonceOf(new Account(senderAddress)) // den xerw an xreiazetai auto
+      .withMultiESDTNFTTransfer(data)
+      .withGasLimit(gasL)
+      .withChainID(ChainId)
+      .buildTransaction();
+
+      return tx;
+    }
+  } catch (error) {
+    console.log("error", error);
+  }
+};
+
 export const ESDTTransferToUser = async ({
   token,
   receiver,
@@ -269,7 +315,11 @@ export const scCall = async (
   workspace: WspTypes,
   funcName: string,
   args: any = [],
-  gasLimit: number = 60000000
+  gasLimit: number = 60000000,
+  processingMessage: string = defaultProcessingMessage,
+  successMessage: string = defaultSuccessMessage,
+  errorMessage: string = defaultPerrorMessage,
+  transactionDuration: number = defaulttransactionDuration
 ) => {
   let { simpleAddress } = getInterface(workspace);
 
@@ -290,7 +340,13 @@ export const scCall = async (
     .withChainID(ChainId)
     .buildTransaction();
 
-  let transactionInput = { tx: tx };
+  let transactionInput = {
+    tx: tx,
+    processingMessage: processingMessage,
+    successMessage: successMessage,
+    errorMessage: errorMessage,
+    transactionDuration: transactionDuration,
+  };
 
   return await sendTransaction(transactionInput);
 };

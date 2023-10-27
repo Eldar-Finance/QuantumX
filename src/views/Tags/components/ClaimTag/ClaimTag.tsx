@@ -109,8 +109,7 @@ const ClaimTag = () => {
     <TagCard textAlign={"center"} as="form" onSubmit={formik.handleSubmit}>
       <Heading fontSize={"md"} mb={10}>
         {" "}
-        Your QuantumXTag should contain alphanumeric characters (a-z an 0-9
-        only)
+        Your QuantumXTag should contain only alphanumeric characters (Aa-Zz and 0-9).
       </Heading>
 
       <Flex
@@ -136,6 +135,7 @@ const ClaimTag = () => {
           }}
           selectedExtention={formik.values.extention}
           specificCollection={data}
+          itemClicked={true}
         />
       </Flex>
       <Flex mb={14} fontSize={"sm"} color="tomato">

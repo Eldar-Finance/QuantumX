@@ -88,49 +88,45 @@ const FarmAccordion = ({
       index={accordionIndex}
       onChange={handleChangePoolIndex}
     >
-      {farmStored.map((farm) => {
+      {farmStored.map((farm, i) => {
         if (farm.type === "farms2") {
           if (!farm.farm.farm.farmId) return null;
           return (
-            <BlurComponent
-              // blur={true && farm.farm.farm.farmId !== hypeFarmIds[0]}
-              key={farm.farm.farm.farmId}
-            >
-              <Farms2Item
-                farm={farm.farm}
-                tvl={farm.totalLocked}
-                farmUserInfoArr={othersArr.userFarmInfo.filter((userFarm) => {
+            <Farms2Item
+              key={i}
+              farm={farm.farm}
+              tvl={farm.totalLocked}
+              farmUserInfoArr={othersArr.userFarmInfo.filter((userFarm) => {
+                return userFarm.farmId === farm.farm.farm.farmId;
+              })}
+              farmUserRewards={othersArr.userFarm2Rewards.filter(
+                (userFarm) => {
                   return userFarm.farmId === farm.farm.farm.farmId;
-                })}
-                farmUserRewards={othersArr.userFarm2Rewards.filter(
-                  (userFarm) => {
-                    return userFarm.farmId === farm.farm.farm.farmId;
-                  }
-                )}
-                stakedTokenPrice={farm.stakedTokenPrice}
-                isPool={isPool}
-                logoSize={isPool ? 40 : 27}
-                multifarmRewardsLeft={
-                  multifarmRewardsLeft.find(
-                    (mfr) => mfr.farmId === farm.farm.farm.farmId
-                  )?.rewardsLeft || []
                 }
-                disable={Boolean(
-                  disableIds?.find((id) => id === farm.farm.farm.farmId)
-                )}
-                disableComponent={disableComponent}
-                maxStakingAmount={
-                  noRestrictionsIds?.includes(farm.farm.farm.farmId)
-                    ? null
-                    : maxStakingAmount
-                }
-                fixedStakedBalance={
-                  noRestrictionsIds?.includes(farm.farm.farm.farmId)
-                    ? null
-                    : fixedStakedBalance
-                }
-              />
-            </BlurComponent>
+              )}
+              stakedTokenPrice={farm.stakedTokenPrice}
+              isPool={isPool}
+              logoSize={isPool ? 40 : 27}
+              multifarmRewardsLeft={
+                multifarmRewardsLeft.find(
+                  (mfr) => mfr.farmId === farm.farm.farm.farmId
+                )?.rewardsLeft || []
+              }
+              disable={Boolean(
+                disableIds?.find((id) => id === farm.farm.farm.farmId)
+              )}
+              disableComponent={disableComponent}
+              maxStakingAmount={
+                noRestrictionsIds?.includes(farm.farm.farm.farmId)
+                  ? null
+                  : maxStakingAmount
+              }
+              fixedStakedBalance={
+                noRestrictionsIds?.includes(farm.farm.farm.farmId)
+                  ? null
+                  : fixedStakedBalance
+              }
+            />
           );
         }
       })}

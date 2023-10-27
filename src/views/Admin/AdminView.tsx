@@ -12,13 +12,10 @@ import { useAppSelector } from "utils/hooks/redux";
 import ElBadges from "./Views/Badges/ElBadges/ElBadges";
 import Farms from "./Views/Farms/Farms";
 import QxTags from "./Views/QxTags/QxTags";
+import Hoot from "./Views/Hoot/Hoot";
 import SmartSwap from "./Views/Swap/SmarSwap";
 
 const DCAAdmin: any = dynamic(() => import("./Views/DCAAdmin/DCAAdmin"));
-const ProteoElite: any = dynamic(
-  () => import("./Views/ProteoElite/ProteoElite")
-);
-const FastSwap: any = dynamic(() => import("./Views/FastSwap/FastSwap"));
 
 const AdminView = () => {
   const Router = useRouter();
@@ -69,23 +66,6 @@ const AdminView = () => {
                 </LayOut>
               ),
             },
-
-            {
-              tabText: "Proteo",
-              tabPanel: (
-                <LayOut>
-                  <ProteoElite userAddress={myConnectedAddress} />
-                </LayOut>
-              ),
-            },
-            /* {
-              tabText: "Fastp2pSwap",
-              tabPanel: (
-                <LayOut>
-                  <FastSwap />
-                </LayOut>
-              ),
-            }, */
             {
               tabText: "Rewards",
               tabPanel: (
@@ -102,6 +82,14 @@ const AdminView = () => {
                 </LayOut>
               ),
             },
+            {
+              tabText: "Hoot",
+              tabPanel: (
+                <LayOut>
+                  <Hoot />
+                </LayOut>
+              ),
+            },
           ]}
         />
       </Box>
@@ -109,7 +97,9 @@ const AdminView = () => {
   );
 };
 
+
 export default withElronDapp(WrapperPages(AdminView));
+
 
 const LayOut = ({ children }) => {
   return (

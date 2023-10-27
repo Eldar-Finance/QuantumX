@@ -1,11 +1,11 @@
 {
     "buildInfo": {
         "rustc": {
-            "version": "1.67.0-nightly",
-            "commitHash": "b7bc90fea3b441234a84b49fdafeb75815eebbab",
-            "commitDate": "2022-11-21",
+            "version": "1.72.0-nightly",
+            "commitHash": "04075b32021932e3e8f6ab55d519b3b3494b6ef9",
+            "commitDate": "2023-06-22",
             "channel": "Nightly",
-            "short": "rustc 1.67.0-nightly (b7bc90fea 2022-11-21)"
+            "short": "rustc 1.72.0-nightly (04075b320 2023-06-22)"
         },
         "contractCrate": {
             "name": "farms",
@@ -519,6 +519,21 @@
             "outputs": []
         },
         {
+            "name": "setTokenDecimals",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "token",
+                    "type": "EgldOrEsdtTokenIdentifier"
+                },
+                {
+                    "name": "decimals",
+                    "type": "BigUint"
+                }
+            ],
+            "outputs": []
+        },
+        {
             "name": "forceAddCreator",
             "onlyOwner": true,
             "mutability": "mutable",
@@ -637,6 +652,57 @@
                 }
             ],
             "outputs": []
+        },
+        {
+            "name": "forceHarvest",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "caller",
+                    "type": "Address"
+                },
+                {
+                    "name": "farm_id",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "reward_payments",
+                    "type": "variadic<tuple<EgldOrEsdtTokenIdentifier,BigUint>>",
+                    "multi_arg": true
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "forceHarvestAuto",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "user",
+                    "type": "Address"
+                },
+                {
+                    "name": "farm_id",
+                    "type": "BigUint"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "getUsersToAutoHarvest",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "farm_id",
+                    "type": "BigUint"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "variadic<tuple<Address,BigUint,u64,u64>>",
+                    "multi_result": true
+                }
+            ]
         },
         {
             "name": "calcHarvestableRewards",
@@ -1041,6 +1107,16 @@
             ]
         },
         {
+            "name": "lastExcessEpoch",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "u64"
+                }
+            ]
+        },
+        {
             "name": "farmIds",
             "mutability": "readonly",
             "inputs": [],
@@ -1248,6 +1324,21 @@
         },
         {
             "name": "tempRewards",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "token",
+                    "type": "EgldOrEsdtTokenIdentifier"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "tokenDecimals",
             "mutability": "readonly",
             "inputs": [
                 {
@@ -1539,6 +1630,30 @@
         },
         {
             "name": "forceRecoverFunds",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "token_identifier",
+                    "type": "EgldOrEsdtTokenIdentifier"
+                },
+                {
+                    "name": "token_nonce",
+                    "type": "u64"
+                },
+                {
+                    "name": "amount",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "receiver",
+                    "type": "Address"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "unstakeAll",
             "onlyOwner": true,
             "mutability": "mutable",
             "inputs": [

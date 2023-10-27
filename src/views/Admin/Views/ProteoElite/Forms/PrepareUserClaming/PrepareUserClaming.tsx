@@ -19,7 +19,8 @@ const validationSchema = yup.object({
 const PrepareUserClaming = () => {
   const formik = useFormik({
     initialValues: {
-      tokenI: proteoFarms.PROTEOEGLDLP.token,
+      //tokenI: proteoFarms.PROTEOELGDLP.token,
+      tokenI: '',
       reward: "",
       sproteo: "",
     },

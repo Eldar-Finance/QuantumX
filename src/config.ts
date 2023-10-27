@@ -45,6 +45,7 @@ export const contractAddress = {
     "erd1qqqqqqqqqqqqqpgqvpkd3g3uwludduv3797j54qt6c888wa59w2shntt6z",
   hypeFaucet: "erd1qqqqqqqqqqqqqpgq2srxelqexsxkg82rr8ygwsq684faa2syu7zs4qa7tx",
   qxtags: "erd1qqqqqqqqqqqqqpgqs8zrk6uq5z6r5lm07cvmtuw2hxm4d8uru7zszqp8vx",
+  hoot: "erd1qqqqqqqqqqqqqpgqej80fe43a223dgh6g0076ncvghh2l6z4u7zs9hqujc",
   // proteo farms
   usdcProteo: "erd1qqqqqqqqqqqqqpgq3lh80a92d49am3t2pfzheapdxtykzt5kznyqsjhfrx",
   proteoEgldNonElite:
@@ -135,11 +136,14 @@ export const TOKENS_ID = {
   usdt: "USDT-f8c08c",
   busd: "BUSD-40b57e",
   hypeusdc: "HYPEUSDC-3164e5",
-  nfttoken: "NFT-e08b3e"
+  nfttoken: "NFT-e08b3e",
+  wbtc: "WBTC-5349b3",
+  weth: "WETH-b4ca29",
+  htm: "HTM-f51d55"
 };
 
 //general configs
-export const walletConnectV2ProjectId = "bb4a880517d6fcc65cdb9cac0a238b4e";
+export const walletConnectV2ProjectId = "6bec64742092caa5f1b382312bb17be2";
 export const apiTimeout = 6000;
 export const TOOLS_API_URL = "https://tools.multiversx.com";
 export const sampleAuthenticatedDomains = [TOOLS_API_URL];

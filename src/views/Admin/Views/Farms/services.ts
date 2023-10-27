@@ -58,6 +58,6 @@ export async function forceCreateFarm(
         farm.allowMultipleRewardsTokens ? "" : farm.rewardTokenI
       ),
     ],
-    10000000
+    70000000
   );
 }

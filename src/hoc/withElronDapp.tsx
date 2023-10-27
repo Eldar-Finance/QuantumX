@@ -31,11 +31,8 @@ const TransactionsToastList: any = dynamic(
   { ssr: false }
 );
 
-// console.log(network);
-// console.log(EnvironmentsEnum.mainnet);
-
 const withElronDapp = (Component) => (props) => {
-  return (
+  return ( 
     <>
       <AxiosInterceptorContext.Provider>
         {/* @ts-ignore */}
@@ -46,7 +43,7 @@ const withElronDapp = (Component) => (props) => {
             environment={network.id}
             customNetworkConfig={{
               name: "quantumxConfig",
-              walletConnectV2ProjectId: "cf388e978587b4cba673b4080fb9d89b",
+              walletConnectV2ProjectId: "6bec64742092caa5f1b382312bb17be2",
             }}
             dappConfig={{
               shouldUseWebViewProvider: true,
