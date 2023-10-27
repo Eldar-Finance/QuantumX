@@ -28,8 +28,10 @@ interface IProps {
   isAmount?: boolean;
 }
 
+const gas = 180000000;
+
 const RunAutoHarvest = ({ isAmount, scFunc, placeholder, title }: IProps) => {
-  const [gasLimit, setGasLimit] = useState(200000000);
+  const [gasLimit, setGasLimit] = useState(gas);
   const [users, setUsers] = useState([]);
   const [copied, setCopied] = useState(false);
 
@@ -43,7 +45,7 @@ const RunAutoHarvest = ({ isAmount, scFunc, placeholder, title }: IProps) => {
   const handleChangeGasLimit = () => (e) => {
     setGasLimit(e.target.value);
     if (e.target.value === "") {
-      setGasLimit(200000000);
+      setGasLimit(gas);
     }
   }
 
@@ -111,7 +113,7 @@ const RunAutoHarvest = ({ isAmount, scFunc, placeholder, title }: IProps) => {
           <Box as="option" value={""} bg="#252943 !important">
             Select Farm ID
           </Box>
-          {farmIds.map((item) => {
+          {farmIds.sort((a, b) => Number(a) - Number(b)).map((item) => {
             return (
               <Box key={item.toString()} as="option" value={item.toString()} bg="#252943 !important">
                 {item}
@@ -141,7 +143,7 @@ const RunAutoHarvest = ({ isAmount, scFunc, placeholder, title }: IProps) => {
             ... Loading ...
           </Box>}
           {users.length > 0 && users.sort((a, b) => b.stakePercentage - a.stakePercentage).map((item) => {
-            const firstFourChars = item.address.substring(0, 4);
+            const firstFourChars = item.address.substring(0, 3);
             const lastFourChars = item.address.substring(item.address.length - 4);
             const epochs = item.epochsSinceLastHarvest > 1000 ? "never" : item.epochsSinceLastHarvest.toString()+' epochs';
             return (
@@ -166,7 +168,7 @@ const RunAutoHarvest = ({ isAmount, scFunc, placeholder, title }: IProps) => {
           mb={4}
           w="full"
           onChange={handleChangeGasLimit()}
-          placeholder={`Gas Limit: (current value: ${gasLimit.toLocaleString()})`}
+          placeholder={`Gas Limit (current value: ${gasLimit.toLocaleString()})`}
           name="gas"
         />
 
