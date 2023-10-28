@@ -1,4 +1,4 @@
-import { Box, Center, Flex, Switch, extendTheme } from "@chakra-ui/react";
+import { Box, Center, Flex, Icon, Switch, Tooltip, extendTheme } from "@chakra-ui/react";
 import FarmsCard from "components/Farms/FarmsCard/FarmsCard";
 import Search from "components/Farms/Search/Search";
 import { useEffect, useState } from "react";
@@ -12,6 +12,9 @@ import { formatTokenI } from "utils/functions/tokens";
 import { proteoFarmsArr } from "views/Farms/constants";
 import { selectUserAddress } from "redux/slices/userAcount/account-slice";
 import { useAppSelector } from "utils/hooks/redux";
+import { InfoIcon, InfoOutlineIcon } from "@chakra-ui/icons";
+import AutoHarvestInfoModal from "views/Admin/Views/Farms/AutoHarvestInfoModal";
+import ActionButton from "components/ActionButton/ActionButton";
 
 const FarmsList = () => {
   const userFarm2Info = useSelector(selectUserFarms2Info);
@@ -87,10 +90,20 @@ const FarmsList = () => {
     }
   };
 
+  const isSmallDevice = window.innerWidth <= 768;
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const handleInfoModal = async () => {
+      setModalOpen(!modalOpen);
+  };
+
   return (
     <>
       <Flex w="full" justifyContent={"flex-end"} mt={{ xs: "10px", md: "30px" }}>
-      <Flex w="full" gap="50px" alignItems="center" justifyContent={"flex-end"} mt={{ xs: "30px", md: "30px" }}>
+        {!isSmallDevice && <Flex w="50px" alignItems="center" justifyContent={"flex-start"} mt={{ xs: "30px", md: "30px" }} onClick={handleInfoModal}>
+          <InfoIcon color="white" ml="3" boxSize={6} onClick={handleInfoModal}/>
+        </Flex>}
+        <Flex w="full" gap={isSmallDevice ? "15px" : "50px"} alignItems="center" justifyContent={isSmallDevice ? "flex-start" : "flex-end"} mt={{ xs: "30px", md: "30px" }} whiteSpace={"nowrap"}>
           { address && (<Flex alignItems="center" gap="10px">
               <Switch size="md" isChecked={isOpen} colorScheme="teal" onChange={handleToggle} />
               <Box>My Farms</Box>
@@ -98,8 +111,14 @@ const FarmsList = () => {
           )}
           <Search onChange={handleSearch}/>
         </Flex>
+        {isSmallDevice && <Flex w="20px" alignItems="center" justifyContent={"flex-end"} mt={{ xs: "30px", md: "30px" }} onClick={handleInfoModal}>
+          <InfoIcon color="white" ml="3" boxSize={6} onClick={handleInfoModal}/>
+        </Flex>}
       </Flex>
-      <Center mt={{ xs: "15px", md: "30px" }} w="full">
+      {modalOpen && 
+        <AutoHarvestInfoModal onClose={() => setModalOpen(false)}/>
+      }
+      <Center mt={{ xs: "15px", md: "20px" }} w="full">
         <FarmsCard
           proteoArr={proteoFarmsArrToSearch}
           othersArr={{
