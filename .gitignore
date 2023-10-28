@@ -46,3 +46,4 @@ src/api/net.config.ts
 tsconfig.tsbuildinfo
 
 /.vscode
+package-lock.json
