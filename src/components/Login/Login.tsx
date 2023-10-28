@@ -177,23 +177,38 @@ const Login = ({ isLoginOpen }) => {
         </Flex>
         <Center flexDir={"column"} w="full" textAlign={"center"}>
           <Box color="white.400" mb={"31px"}>
-            <Text mb="11px">If you’re on desktop, try X DeFi Wallet</Text>
-            <Text>If you’re on mobile, try X Portal</Text>
+            <Text mb="11px">If you’re on desktop, try DeFi Wallet, Web Wallet, or xAlias.</Text>
+            <Text>If you’re on mobile, try xPortal.</Text>
           </Box>
 
           <Text mb="11px">New to MultiverX?</Text>
-          <Box borderBottom={"1px solid white"}>
+          <Text>
+            {" "}
             <ChakraLink
               isExternal
-              href=""
+              href="https://xalias.com/"
               fontSize={"md"}
+              borderBottom={"1px solid white"}
               _hover={{
                 textDecoration: "none",
               }}
             >
-              Learn How to setup a wallet
+              Try xAlias
+            </ChakraLink>{" "}
+            using your Google account or {" "}
+            <ChakraLink
+              isExternal
+              href="https://docs.multiversx.com/wallet/overview"
+              fontSize={"md"}
+              borderBottom={"1px solid white"}
+              _hover={{
+                textDecoration: "none",
+              }}
+            >
+              read the docs
             </ChakraLink>
-          </Box>
+            {" "} about wallets.
+          </Text>
         </Center>
       </ModalBody>
     </MyModal>
