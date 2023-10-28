@@ -1,6 +1,6 @@
 import { ButtonProps } from "@chakra-ui/react";
 import { BigUIntValue } from "@multiversx/sdk-core/out";
-import { useTrackTransactionStatus } from "@multiversx/sdk-dapp/hooks";
+import { useTrackTransactionStatus } from "@multiversx/sdk-dapp/hooks/transactions/useTrackTransactionStatus";
 import { contractAddr } from "api/net.config";
 import { fastSwapInJex } from "api/sc/calls/swap/fastSwap";
 import { scQuery } from "api/sc/queries";

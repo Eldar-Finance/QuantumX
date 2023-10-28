@@ -11,7 +11,7 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import { useGetAccountInfo } from "@multiversx/sdk-dapp/hooks";
+import { useGetAccountInfo } from "@multiversx/sdk-dapp/hooks/account/useGetAccountInfo";
 import { contractAddr } from "api/net.config";
 import { EGLDPayment } from "api/sc/calls";
 import ActionButton from "components/ActionButton/ActionButton";

@@ -1,6 +1,6 @@
 // import logo from "assets/logos/quantumx.png";
 import { Box, Flex, Icon, useBreakpoint, useBreakpointValue, useMediaQuery } from "@chakra-ui/react";
-import { useGetLoginInfo } from "@multiversx/sdk-dapp/hooks";
+import { useGetLoginInfo } from "@multiversx/sdk-dapp/hooks/account/useGetLoginInfo";
 import { logout } from "@multiversx/sdk-dapp/utils";
 import logo from "assets/logos/quantumx.svg";
 import logohoot from "assets/logos/logohoot.png";

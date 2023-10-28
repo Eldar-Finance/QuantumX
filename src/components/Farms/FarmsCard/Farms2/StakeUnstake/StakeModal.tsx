@@ -11,7 +11,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { BigIntValue } from "@multiversx/sdk-core/out";
-import { useTrackTransactionStatus } from "@multiversx/sdk-dapp/hooks";
+import { useTrackTransactionStatus } from "@multiversx/sdk-dapp/hooks/transactions/useTrackTransactionStatus";
 import { contractAddr } from "api/net.config";
 import { EGLDPayment, ESDTTransfer } from "api/sc/calls";
 import BigNumber from "bignumber.js";

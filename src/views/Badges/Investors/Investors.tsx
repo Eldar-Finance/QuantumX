@@ -8,7 +8,7 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
-import { useTrackTransactionStatus } from "@multiversx/sdk-dapp/hooks";
+import { useTrackTransactionStatus } from "@multiversx/sdk-dapp/hooks/transactions/useTrackTransactionStatus";
 import { scCall } from "api/sc/calls";
 import { sftsRewardsWsp } from "api/sc/sc";
 import ActionButton from "components/ActionButton/ActionButton";

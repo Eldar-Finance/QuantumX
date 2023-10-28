@@ -11,7 +11,7 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import { useTrackTransactionStatus } from "@multiversx/sdk-dapp/hooks";
+import { useTrackTransactionStatus } from "@multiversx/sdk-dapp/hooks/transactions/useTrackTransactionStatus";
 import { contractAddr, toknesID } from "api/net.config";
 import { ESDTTransfer } from "api/sc/calls";
 import ActionButton from "components/ActionButton/ActionButton";

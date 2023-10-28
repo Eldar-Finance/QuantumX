@@ -12,7 +12,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { BigUIntValue } from "@multiversx/sdk-core/out";
-import { useTrackTransactionStatus } from "@multiversx/sdk-dapp/hooks";
+import { useTrackTransactionStatus } from "@multiversx/sdk-dapp/hooks/transactions/useTrackTransactionStatus";
 import { MultiESDTNFTTransfer, MultiESDTNFTTransferOnlyTx } from "api/sc/calls";
 import { sendMultipleTransactions } from "api/sc/sc";
 import BigNumber from "bignumber.js";

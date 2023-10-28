@@ -1,5 +1,5 @@
 import { Spinner } from "@chakra-ui/react";
-import { useGetLoginInfo } from "@multiversx/sdk-dapp/hooks";
+import { useGetLoginInfo } from "@multiversx/sdk-dapp/hooks/account/useGetLoginInfo";
 import ActionButton from "components/ActionButton/ActionButton";
 import Link from "next/link";
 import { routeNames } from "utils/routes";

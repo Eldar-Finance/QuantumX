@@ -4,11 +4,17 @@ import dynamic from "next/dynamic";
 
 import { EnvironmentsEnum } from "@multiversx/sdk-dapp/types";
 import { AxiosInterceptorContext } from "@multiversx/sdk-dapp/wrappers/AxiosInterceptorContext";
-import { DappProvider } from "@multiversx/sdk-dapp/wrappers/DappProvider";
-
 import { Box } from "@chakra-ui/react";
 import { network } from "api/net.config";
 import { sampleAuthenticatedDomains } from "../config";
+
+export const DappProvider = dynamic(
+  async () => {
+    return (await import('@multiversx/sdk-dapp/wrappers/DappProvider')).DappProvider;
+  },
+  { ssr: false }
+);
+
 const SignTransactionsModals: any = dynamic(
   async () => {
     return (await import("@multiversx/sdk-dapp/UI/SignTransactionsModals"))

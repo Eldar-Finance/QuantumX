@@ -1,6 +1,7 @@
 /* eslint-disable react/display-name */
 /* eslint-disable react-hooks/rules-of-hooks */
-import { useGetAccountInfo, useGetLoginInfo } from "@multiversx/sdk-dapp/hooks";
+import { useGetAccountInfo } from "@multiversx/sdk-dapp/hooks/account/useGetAccountInfo";
+import { useGetLoginInfo } from "@multiversx/sdk-dapp/hooks/account/useGetLoginInfo";
 import dynamic from "next/dynamic";
 import { useEffect } from "react";
 import {
