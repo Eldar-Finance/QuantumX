@@ -53,6 +53,10 @@ const NftList = () => {
     ...offers[8],
     elrondToken: tokens.find((t) => t.identifier === offers[8].token),
   };
+  const offer8 = {
+    ...offers[9],
+    elrondToken: tokens.find((t) => t.identifier === offers[9].token),
+  };
 
   const handleSubmitHubOffer = (offer) => {
     const funcName = "buyNft";
@@ -183,25 +187,25 @@ const NftList = () => {
       /> */}
       <NftCard
         iamge={srbImage}
-        token={offer6.token}
+        token={offer8.token}
         text={
           <Text>
             Pay{" "}
             {formatBalance(
               {
-                balance: offer6.price,
-                decimals: offer6.elrondToken?.decimals,
+                balance: offer8.price,
+                decimals: offer8.elrondToken?.decimals,
               },
               false,
               8
             )}{" "}
-            {formatTokenI(offer6.token)}
+            {formatTokenI(offer8.token)}
             <br /> Get a random SRB
-            <br /> <br /> Available NFTs: <br /> {offer6.numberOfAvilableNfts}
+            <br /> <br /> Available NFTs: <br /> {offer8.numberOfAvilableNfts}
           </Text>
         }
-        onSubmit={() => handleSubmitHubOffer(offer6)}
-        disabled={offer6.numberOfAvilableNfts === 0}
+        onSubmit={() => handleSubmitHubOffer(offer8)}
+        disabled={offer8.numberOfAvilableNfts === 0}
       />
       <NftCard
         iamge={pepeImage}
