@@ -101,7 +101,12 @@ export const formatPrecision = (num, customPrecision?: number) => {
     }
   }
 
-  return new BigNumber(num).toFixed(precision);
+  if (customPrecision) {
+    return new BigNumber(num).toFixed(precision);
+  } else {
+    return Number(new BigNumber(num).toFixed(precision));
+  }
+  
 };
 
 export const formatNumber = (number?: number | string) => {

@@ -113,8 +113,8 @@ const MultipleStakeModal = ({
 
   const handleAmount = (percent: number) => {
     if (userToken) {
-      const userTokenAmount = formatBalance(userToken, true);
-      const userRealAmount = percent * userTokenAmount;
+      const userTokenAmount = formatBalance(userToken, true, userToken.decimals);
+      const userRealAmount = new BigNumber(userTokenAmount).multipliedBy(percent).toFixed(userToken.decimals);
       const finalAmount = preventExponetialNotation(userRealAmount);
 
       formik.setFieldValue("amount", finalAmount, false);

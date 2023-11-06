@@ -89,9 +89,10 @@ const StakeModal = ({ isOpen, onClose, farm, isPool, token }: IProps) => {
     if (userToken) {
       const userTokenAmount = formatBalance(userToken, true, userToken.decimals);
       const userRealAmount = new BigNumber(userTokenAmount).multipliedBy(percent).toFixed(userToken.decimals);
+      console.log("⚠️ ~ file: StakeModal.tsx:92 ~ handleAmount ~ userRealAmount::::", userRealAmount)
       const finalAmount = preventExponetialNotation(userRealAmount);
 
-      formik.setFieldValue("amount", userRealAmount, false);
+      formik.setFieldValue("amount", finalAmount, false);
     }
   };
   
