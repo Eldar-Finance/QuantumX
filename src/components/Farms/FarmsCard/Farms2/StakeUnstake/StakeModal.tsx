@@ -133,7 +133,7 @@ const StakeModal = ({ isOpen, onClose, farm, isPool, token }: IProps) => {
               <AmountBox percent={25} onClick={() => handleAmount(0.25)} />
               <AmountBox percent={50} onClick={() => handleAmount(0.5)} />
               <AmountBox percent={75} onClick={() => handleAmount(0.75)} />
-              <AmountBox percent={100} onClick={() => handleAmount(0.99)} />
+              <AmountBox percent={100} onClick={() => handleAmount(1)} />
             </Flex>
           </Box>
         </ModalBody>

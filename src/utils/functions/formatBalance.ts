@@ -11,7 +11,7 @@ export const formatBalance = (
     const intBalance = Number(strBalance);
     const formatedBalance = getRealBalance(intBalance, token.decimals);
 
-    const finalBinance = formatPrecision(formatedBalance, customPrecision);
+    const finalBinance = formatPrecision(formatedBalance, customPrecision ? customPrecision : token.decimals);
 
     if (retrunNumber) {
       return finalBinance;
