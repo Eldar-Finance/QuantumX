@@ -42,7 +42,7 @@ const StakeModal = ({ isOpen, onClose, farm, isPool, token }: IProps) => {
     amount: yup
       .number()
       .required()
-      .max(formatBalance(userToken, true)*0.99),
+      .max(formatBalance(userToken, true)),
   });
 
   const [sessionId, setSessionId] = useState();
@@ -133,7 +133,7 @@ const StakeModal = ({ isOpen, onClose, farm, isPool, token }: IProps) => {
               <AmountBox percent={25} onClick={() => handleAmount(0.25)} />
               <AmountBox percent={50} onClick={() => handleAmount(0.5)} />
               <AmountBox percent={75} onClick={() => handleAmount(0.75)} />
-              <AmountBox percent={100} onClick={() => handleAmount(1)} />
+              <AmountBox percent={100} onClick={() => handleAmount(0.99)} />
             </Flex>
           </Box>
         </ModalBody>
