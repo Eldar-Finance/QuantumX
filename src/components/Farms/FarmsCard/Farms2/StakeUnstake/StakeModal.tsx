@@ -84,15 +84,17 @@ const StakeModal = ({ isOpen, onClose, farm, isPool, token }: IProps) => {
       setSessionId(res);
     },
   });
+
   const handleAmount = (percent: number) => {
     if (userToken) {
-      const userTokenAmount = formatBalance(userToken, true);
-      const userRealAmount = percent * userTokenAmount;
+      const userTokenAmount = formatBalance(userToken, true, userToken.decimals);
+      const userRealAmount = new BigNumber(userTokenAmount).multipliedBy(percent).toFixed(userToken.decimals);
       const finalAmount = preventExponetialNotation(userRealAmount);
 
-      formik.setFieldValue("amount", finalAmount, false);
+      formik.setFieldValue("amount", userRealAmount, false);
     }
   };
+  
   return (
     <MyModal bg="black.baseDark" isOpen={isOpen} onClose={onClose}>
       <form onSubmit={formik.handleSubmit}>
