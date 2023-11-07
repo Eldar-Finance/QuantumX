@@ -10,7 +10,7 @@ export const formatBalance = (
     const strBalance = token.balance;
 
     const intBalance = new BigNumber(strBalance).toFixed(0);
-    const formatedBalance = getRealBalance(intBalance, token.decimals);
+    const formatedBalance = getRealBalance(intBalance, token.decimals, true);
 
     const finalBinance = formatPrecision(formatedBalance, customPrecision);
 
@@ -65,7 +65,7 @@ export const getRealBalance = (
   if (returnBigNumber) {
     return real;
   }
-  return new BigNumber(real).toFixed(decimal ?? 18);
+  return real.toNumber();
 };
 
 export const formatPrecision = (num, customPrecision?: number) => {
