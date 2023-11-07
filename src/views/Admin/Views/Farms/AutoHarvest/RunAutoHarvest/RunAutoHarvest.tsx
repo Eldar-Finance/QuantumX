@@ -28,7 +28,7 @@ interface IProps {
   isAmount?: boolean;
 }
 
-const gas = 180000000;
+const gas = 250000000;
 
 const RunAutoHarvest = ({ isAmount, scFunc, placeholder, title }: IProps) => {
   const [gasLimit, setGasLimit] = useState(gas);
