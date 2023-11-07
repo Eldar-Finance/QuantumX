@@ -3,6 +3,7 @@ import {
   BooleanValue,
   BytesValue,
 } from "@multiversx/sdk-core/out";
+import { gasLimit } from "api/net.config";
 import {
   EGLDPayment,
   MultESDTNFTTranferOrEgldPayment,
@@ -14,7 +15,7 @@ import { IElrondToken } from "utils/types/elrond.interface";
 export async function deleteFarm(farmId: number) {
   const res = await scCall("farms2", "deleteFarm", [
     new BigUIntValue(new BigNumber(farmId)),
-  ]);
+  ], 250000000);
 
   return res;
 }
