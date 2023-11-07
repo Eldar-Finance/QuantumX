@@ -15,7 +15,7 @@ import { IElrondToken } from "utils/types/elrond.interface";
 export async function deleteFarm(farmId: number) {
   const res = await scCall("farms2", "deleteFarm", [
     new BigUIntValue(new BigNumber(farmId)),
-  ], 250000000);
+  ], 400000000);
 
   return res;
 }
