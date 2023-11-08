@@ -60,22 +60,23 @@ const StakeModal = ({ isOpen, onClose, farm, isPool, token }: IProps) => {
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      const amount = new BigNumber(values.amount).toNumber();
+      const amount = new BigNumber(values.amount).multipliedBy(Math.pow(10, token.decimals || 18));
 
       let res = null;
       if (farm.farm.stakingToken === "EGLD") {
         res = await EGLDPayment(
           "farms2",
           "stake",
-          amount,
+          null,
           [new BigIntValue(new BigNumber(farm.farm.farmId))],
-          50000000
+          50000000,
+          amount
         );
       } else {
         res = await ESDTTransfer({
           funcName: "stake",
           token: { identifier: token.identifier, decimals: token.decimals },
-          val: amount,
+          realValue: amount,
           args: [new BigIntValue(new BigNumber(farm.farm.farmId))],
           contractAddr: contractAddr.farms2,
           gasL: 50000000,
@@ -89,7 +90,6 @@ const StakeModal = ({ isOpen, onClose, farm, isPool, token }: IProps) => {
     if (userToken) {
       const userTokenAmount = formatBalance(userToken, true, userToken.decimals);
       const userRealAmount = new BigNumber(userTokenAmount).multipliedBy(percent).toFixed(userToken.decimals);
-      console.log("⚠️ ~ file: StakeModal.tsx:92 ~ handleAmount ~ userRealAmount::::", userRealAmount)
       const finalAmount = preventExponetialNotation(userRealAmount);
 
       formik.setFieldValue("amount", finalAmount, false);
