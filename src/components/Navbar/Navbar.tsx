@@ -1,5 +1,5 @@
 // import logo from "assets/logos/quantumx.png";
-import { Box, Flex, Icon, useBreakpoint, useBreakpointValue, useMediaQuery } from "@chakra-ui/react";
+import { Box, Flex, Icon, Text, useBreakpoint, useBreakpointValue, useMediaQuery } from "@chakra-ui/react";
 import { useGetLoginInfo } from "@multiversx/sdk-dapp/hooks/account/useGetLoginInfo";
 import { logout } from "@multiversx/sdk-dapp/utils";
 import logo from "assets/logos/quantumx.svg";
@@ -67,7 +67,7 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
                     bg={isLoggedIn ? "danger" : "main"}
                     ml="2px"
                   >
-                    <Icon as={LightningIcon} />
+                    {isLoggedIn ? <Icon as={LightningIcon} pb={"2px"} /> : <Text>Connect</Text>}
                   </ActionButton>
                 )}
               </Flex>
