@@ -7,6 +7,7 @@ export interface IRoute {
   soon?: boolean;
   forAdmins?: boolean;
   isNew?: boolean;
+  color?: string;
 }
 export const routeNames = {
   home: "/",
@@ -33,15 +34,15 @@ export const routes: {
   farms: IRoute;
   pools: IRoute;
   hub: IRoute;
-  dca: IRoute;
+  // dca: IRoute;
   rewards: IRoute;
   // heroes: IRoute;
   admin: IRoute;
   panel: IRoute;
   hypezone: IRoute;
-  converter: IRoute;
+  // converter: IRoute;
   moondustx: IRoute;
-  marketplace: IRoute;
+  // marketplace: IRoute;
 } = {
   dashboard: {
     path: routeNames.dashboard,
@@ -101,18 +102,19 @@ export const routes: {
   //   name: "QuantumX Heroes",
   //   onModal: true,
   // },
-
   panel: {
     path: routeNames.panel,
     name: "Quantum Panel",
     onModal: true,
+    color: "warning",
   },
   admin: {
     path: routeNames.admin,
     name: "Admin Panel",
     onModal: true,
     forAdmins: true,
-  },
+    color: "danger",
+  }
 };
 
 const getRoutesArr = () => {

@@ -8,9 +8,10 @@ interface IProps {
   onlyMobile?: boolean;
   soon?: boolean;
   isNew?: boolean;
+  textColor?: string;
 }
 
-const MenuItem = ({ href, onlyMobile, soon, name, isNew }: IProps) => {
+const MenuItem = ({ href, onlyMobile, soon, name, isNew, textColor }: IProps) => {
   const mobileProps = {
     display: { lg: "none", xs: "block" },
   };
@@ -42,7 +43,7 @@ const MenuItem = ({ href, onlyMobile, soon, name, isNew }: IProps) => {
           }}
           {...aditionalProps}
         >
-          <Box w="full" py={3} px={5}>
+          <Box w="full" py={3} px={5} textColor={textColor}>
             {name}
           </Box>
         </Box>

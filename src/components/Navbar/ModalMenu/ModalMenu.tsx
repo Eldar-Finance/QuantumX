@@ -59,6 +59,7 @@ const ModalMenu = ({ onClose }: IProps) => {
             soon={route.soon}
             isNew={route.isNew}
             onlyMobile={route.onModalAndNavbar}
+            textColor={route.color}
           />
         );
       })}
