@@ -5,6 +5,7 @@ import {
   CardHeader,
   Center,
   Flex,
+  Grid,
   HStack,
   Link,
   Spinner,
@@ -51,14 +52,14 @@ const BadgesCard = () => {
 
   return (
     <Card px={5} bg="secondary">
-      <CardHeader mb={3} flexDir="column">
-        <Flex justifyContent="space-between" w={"full"}>
-          <Box>
+      <CardHeader mb={1} flexDir="column">
+        <Flex justifyContent="space-between" w={"full"} flexDirection={{sm: "column", md: "row"}} gap={4}>
+          <Box alignSelf={"center"}>
             <Text
-              fontSize={"4xl"}
+              fontSize={"3xl"}
               as="h2"
               fontWeight={"extrabold"}
-              display={{ xs: "none", md: "block" }}
+              // display={{ xs: "none", md: "block" }}
               color="white"
             >
               Staking
@@ -66,11 +67,11 @@ const BadgesCard = () => {
           </Box>
           <HStack spacing={{ xs: "10px", movil: "20px", md: "40px" }}>
             <Text
-              fontSize={{ xs: "lg", md: "xl" }}
+              fontSize={{ xs: "md", md: "xl" }}
               whiteSpace="nowrap"
               color="white"
             >
-              Buy on
+              Buy STFs in
             </Text>
             <Link
               isExternal
@@ -92,117 +93,115 @@ const BadgesCard = () => {
             </Link>
           </HStack>
         </Flex>
-        <Center>
-          <Text
-            fontSize={"4xl"}
-            as="h2"
-            fontWeight={"extrabold"}
-            mt={8}
-            display={{ xs: "block", md: "none" }}
-          >
-            Staking
-          </Text>
-        </Center>
       </CardHeader>
-      <CardBody px={{ xs: "0px", md: "15px" }}>
+      <CardBody px={{ xs: "0px", md: "0px" }}>
         <Card bg="black.baseDark">
           <CardBody>
             <Box w={"full"}>
               <BadgesStatics />
-              <Center
-                flexDir={{ xs: "column", md: "row" }}
-                justifyContent={{ xs: "center", lg: "flex-start" }}
-                alignItems={{ xs: "center", md: "flex-start" }}
-                mb={12}
-              >
-                <ClaimRewardsButton />
-                <StakeButton
-                  sfts={sfts}
-                  address={address}
-                  disabled={
-                    sfts.length === 0 ||
-                    isUserSftsInUnlocking ||
-                    isSftsClaimable
-                  }
-                />
-              </Center>
-              {isStakerUser ? (
-                <Flex
-                  justifyContent={"space-around"}
-                  flexWrap="wrap"
-                  alignItems={"center"}
-                >
-                  {sftsInStaking.map((sft) => {
-                    if (sft.amount === 0) {
-                      return null;
-                    }
-                    let name = "";
-                    switch (sft.nonce) {
-                      case 1:
-                        name = "Marble Gold Badge";
-                        break;
+              <Card bg="black.base" my={10}>
+                <CardBody>
+                  {isStakerUser ? (
+                    <Flex
+                      justifyContent={"space-around"}
+                      flexWrap="wrap"
+                      alignItems={"center"}
+                      textColor={"white"}
+                      mt={5}
+                    >
+                      {sftsInStaking.map((sft) => {
+                        if (sft.amount === 0) {
+                          return null;
+                        }
+                        let name = "";
+                        switch (sft.nonce) {
+                          case 1:
+                            name = "Marble Gold Badge";
+                            break;
 
-                      case 2:
-                        name = "Marble Silver Badge";
-                        break;
+                          case 2:
+                            name = "Marble Silver Badge";
+                            break;
 
-                      case 3:
-                        name = "Rose Gold Badge";
-                        break;
+                          case 3:
+                            name = "Rose Gold Badge";
+                            break;
 
-                      default:
-                        break;
-                    }
+                          default:
+                            break;
+                        }
 
-                    const parseSft = {
-                      collection: sft.tokenI,
-                      balance: sft.amount,
-                      name: name,
-                      nonce: sft.nonce,
-                    };
-                    return (
-                      <SFtsItem
-                        isHoverEffect={false}
-                        key={sft.tokenI + sft.nonce}
-                        sft={parseSft}
-                        videoProps={{
-                          w: { xs: "200px", md: "300px" },
-                          height: { xs: "110px", md: "167px" },
-                        }}
-                        imageProps={{
-                          w: "240px",
-                          h: "240px",
-                          // height: { xs: "110px", md: "167px" },
-                        }}
-                      />
-                    );
-                  })}
-                </Flex>
-              ) : (
-                <Box my={8} fontSize="md" textAlign={"center"}>
-                  {eldarSftsWithStatus.status === "succeeded" ? (
-                    <Box>
-                      {isUserSftsInUnlocking ? (
-                        <Text>Retrieve available in {biggerTime}</Text>
+                        const parseSft = {
+                          collection: sft.tokenI,
+                          balance: sft.amount,
+                          name: name,
+                          nonce: sft.nonce,
+                        };
+                        return (
+                          <SFtsItem
+                            isHoverEffect={false}
+                            key={sft.tokenI + sft.nonce}
+                            sft={parseSft}
+                            videoProps={{
+                              w: { xs: "200px", md: "300px" },
+                              height: { xs: "110px", md: "167px" },
+                            }}
+                            imageProps={{
+                              w: "240px",
+                              h: "240px",
+                              // height: { xs: "110px", md: "167px" },
+                            }}
+                          />
+                        );
+                      })}
+                    </Flex>
+                  ) : (
+                    <Box fontSize="md" textAlign={"center"}>
+                      {eldarSftsWithStatus.status === "succeeded" ? (
+                        <Box>
+                          {isUserSftsInUnlocking ? (
+                            <Text>Retrieve available in {biggerTime}</Text>
+                          ) : (
+                            <Text>
+                              {isSftsClaimable
+                                ? "Your sft’s are ready to claim"
+                                : " You have not staked any sft’s yet , if you have some press the stake button"}
+                            </Text>
+                          )}
+                        </Box>
                       ) : (
-                        <Text>
-                          {isSftsClaimable
-                            ? "Your sft’s are ready to claim"
-                            : " You have not staked any sft’s yet , if you have some press the stake button"}
-                        </Text>
+                        <Spinner />
                       )}
                     </Box>
-                  ) : (
-                    <Spinner />
                   )}
-                </Box>
-              )}
-              {isStakerUser && <UnStakeButton mb={3} />}
-              {(isUserSftsInUnlocking || isSftsClaimable) && (
-                <ClaimSftsButton
-                  disabled={!isSftsClaimable && !isUserSftsInUnlocking}
-                />
-              )}
+                </CardBody>
+              </Card>
+              <Grid
+                  templateColumns={{sm: "repeat(2, 1fr)", md: "repeat(4, 1fr)"}}
+                  gap={{sm: 5, md: 20}}
+                  justifyContent={"space-between"}
+                  justifySelf={"space-between"}
+                  alignItems={"space-between"}
+                  // mt={2}
+                  w={"full"}
+                >
+                  <StakeButton
+                      sfts={sfts}
+                      address={address}
+                      disabled={
+                        sfts.length === 0 ||
+                        isUserSftsInUnlocking ||
+                        isSftsClaimable
+                      }
+                      w={"full"}
+                    />
+                  {isStakerUser && <UnStakeButton w={"full"}/>}
+                  {(isUserSftsInUnlocking || isSftsClaimable) && (
+                    <ClaimSftsButton w={"full"}
+                      disabled={!isSftsClaimable && !isUserSftsInUnlocking}
+                    />
+                  )}
+                </Grid>
             </Box>
           </CardBody>
         </Card>

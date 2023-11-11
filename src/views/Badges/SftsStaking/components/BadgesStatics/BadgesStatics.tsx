@@ -1,4 +1,4 @@
-import { Box, Center, Flex, Spinner, Text } from "@chakra-ui/react";
+import { Box, Center, Flex, Grid, HStack, Spinner, Text } from "@chakra-ui/react";
 import { toknesID } from "api/net.config";
 import Image from "next/image";
 import { memo, useEffect, useState } from "react";
@@ -6,6 +6,7 @@ import { formatBalance } from "utils/functions/formatBalance";
 import { useAppSelector } from "utils/hooks/redux";
 import useGetElrondToken from "utils/hooks/useGetElrondToken";
 import BadgeStaticBox from "../BadgeStaticBox/BadgeStaticBox";
+import ClaimRewardsButton from "../ClaimRewardsButton/ClaimRewardsButton";
 
 const BadgesStatics = () => {
   const { InStakingPeriod } = useAppSelector(
@@ -68,53 +69,61 @@ const BadgesStatics = () => {
       justifyContent={{ xs: "center", lg: "space-between" }}
       alignItems="center"
       w={"full"}
-      mb={6}
+      // mb={6}
+      gap={{sm: 10}}
       flexDir={{ xs: "column", lg: "row" }}
     >
       <Flex alignItems={"flex-start"} flexWrap="wrap">
-        <Flex flexDir={{ xs: "column", md: "row" }}>
+        <Flex flexDir={{ xs: "column", md: "row" }} alignItems={{ xs: "center", md: "flex-start" }}>
           <BadgeStaticBox
             alignItems={"flex-start"}
             justifyContent="flex-start"
             title={" My Staked Badges"}
             content={`${sftsInStaking}  Badges`}
           />
-          <Center flexDir={"column"} justifyContent="flex-start" mr={2}>
-            <Text fontSize={"12px"} color="gray.500" whiteSpace={"nowrap"}>
-              You have earned
-            </Text>
-            {stfsRewards?.claimed && (
-              <>
-                {stfsRewards.claimed.map((claimedReward) => {
-                  return (
-                    <StaticInfo
-                      amount={claimedReward.value}
-                      token={claimedReward.tokenI}
-                      key={claimedReward.token}
-                    />
-                  );
-                })}
-              </>
-            )}
-          </Center>
-          <Center flexDir={"column"} justifyContent="flex-start">
-            <Text fontSize={"12px"} color="gray.500" whiteSpace={"nowrap"}>
-              Available to claim
-            </Text>
-            {stfsRewards?.claimable && (
-              <>
-                {stfsRewards.claimable.map((claimableReward) => {
-                  return (
-                    <StaticInfo
-                      amount={claimableReward.value}
-                      token={claimableReward.tokenI}
-                      key={claimableReward.token}
-                    />
-                  );
-                })}
-              </>
-            )}
-          </Center>
+          <Flex flexDir={{sm: "column", md: "row"}} w={"full"}>
+            <HStack gap={8}>
+              <Center flexDir={"column"} justifyContent="flex-start">
+                <Text fontSize={"12px"} color="gray.500" whiteSpace={"nowrap"}>
+                  You have earned
+                </Text>
+                {stfsRewards?.claimed && (
+                  <>
+                    {stfsRewards.claimed.map((claimedReward) => {
+                      return (
+                        <StaticInfo
+                          amount={claimedReward.value}
+                          token={claimedReward.tokenI}
+                          key={claimedReward.token}
+                        />
+                      );
+                    })}
+                  </>
+                )}
+              </Center>
+              <Center flexDir={"column"} justifyContent="flex-start">
+                <Text fontSize={"12px"} color="gray.500" whiteSpace={"nowrap"}>
+                  Available to claim
+                </Text>
+                {stfsRewards?.claimable && (
+                  <>
+                    {stfsRewards.claimable.map((claimableReward) => {
+                      return (
+                        <StaticInfo
+                          amount={claimableReward.value}
+                          token={claimableReward.tokenI}
+                          key={claimableReward.token}
+                        />
+                      );
+                    })}
+                  </>
+                )}
+              </Center>
+            </HStack>
+            <Center m={4}>
+              <ClaimRewardsButton w={"120px"}/>
+            </Center>
+          </Flex>
         </Flex>
       </Flex>
       <Flex

@@ -1,26 +1,27 @@
-import { Box, Text } from "@chakra-ui/react";
+import { Box, Flex, Text } from "@chakra-ui/react";
 import BadgesCard from "./components/BadgesCard/BadgesCard";
+import TitlePage from "components/TitlePage/TitlePage";
 
 const SftsStaking = () => {
   return (
     <Box width={"full"}>
-      <Text
-        as={"h1"}
-        fontSize="4xl"
-        fontWeight={"extrabold"}
-        textAlign="center"
-      >
-        QuantumX Rewards
-      </Text>
-      <Text
-        as={"h3"}
-        fontWeight="extrabold"
-        fontSize="xl"
-        mb={5}
-        textAlign="center"
-      >
-        Support QuantumX and earn rewards just by holding your SFTs forever.
-      </Text>
+      <TitlePage
+          title="QuantumX Rewards"
+          subtitle={
+            <Flex
+              as="span"
+              alignItems={"center"}
+              justifyContent="center"
+              textAlign="center"
+              flexWrap={"wrap"}
+            >
+              <Text>
+                Support QuantumX and earn rewards just by holding your SFTs forever.
+              </Text>
+            </Flex>
+          }
+          mb={10}
+        />
       <BadgesCard />
     </Box>
   );

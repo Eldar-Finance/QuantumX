@@ -5,6 +5,7 @@ import {
   CardHeader,
   Center,
   Flex,
+  HStack,
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
@@ -73,10 +74,10 @@ const InvestorsCard = () => {
         <Flex justifyContent="space-between" w={"full"}>
           <Box>
             <Text
-              fontSize={"4xl"}
+              fontSize={"3xl"}
               as="h2"
               fontWeight={"extrabold"}
-              display={{ xs: "none", md: "block" }}
+              // display={{ xs: "none", md: "block" }}
               color="white"
             >
               Early Supporter
@@ -87,46 +88,48 @@ const InvestorsCard = () => {
       <CardBody px={{ xs: "0px", md: "15px" }}>
         <Card bg="black.baseDark">
           <CardBody>
-            <Flex gap={"25px"} alignItems="center">
-              <ActionButton onClick={handleClaim} disabled={!userCanClaim}>
+            <Flex gap={"25px"} alignItems="center" flexDir={{sm: "column", md: "row"}}>
+              <HStack gap={8}>
+                <Center flexDir={"column"}>
+                  <Text fontSize={"12px"} color="gray.500" whiteSpace={"nowrap"}>
+                    You have earned
+                  </Text>
+                  {rewardsInfo?.claimed && (
+                    <>
+                      {rewardsInfo.claimed.map((claimedReward) => {
+                        return (
+                          <EarlyInvestorRewards
+                            amount={claimedReward.amount}
+                            token={claimedReward.token}
+                            key={claimedReward.token}
+                          />
+                        );
+                      })}
+                    </>
+                  )}
+                </Center>
+                <Center flexDir={"column"}>
+                  <Text fontSize={"12px"} color="gray.500" whiteSpace={"nowrap"}>
+                    Available to claim
+                  </Text>
+                  {rewardsInfo?.claimable && (
+                    <>
+                      {rewardsInfo.claimable.map((claimableReward) => {
+                        return (
+                          <EarlyInvestorRewards
+                            amount={claimableReward.amount}
+                            token={claimableReward.token}
+                            key={claimableReward.token}
+                          />
+                        );
+                      })}
+                    </>
+                  )}
+                </Center>
+              </HStack>
+              <ActionButton w={"120px"} onClick={handleClaim} disabled={!userCanClaim}>
                 Claim
               </ActionButton>
-              <Center flexDir={"column"}>
-                <Text fontSize={"12px"} color="gray.500" whiteSpace={"nowrap"}>
-                  You have earned
-                </Text>
-                {rewardsInfo?.claimed && (
-                  <>
-                    {rewardsInfo.claimed.map((claimedReward) => {
-                      return (
-                        <EarlyInvestorRewards
-                          amount={claimedReward.amount}
-                          token={claimedReward.token}
-                          key={claimedReward.token}
-                        />
-                      );
-                    })}
-                  </>
-                )}
-              </Center>
-              <Center flexDir={"column"}>
-                <Text fontSize={"12px"} color="gray.500" whiteSpace={"nowrap"}>
-                  Available to claim
-                </Text>
-                {rewardsInfo?.claimable && (
-                  <>
-                    {rewardsInfo.claimable.map((claimableReward) => {
-                      return (
-                        <EarlyInvestorRewards
-                          amount={claimableReward.amount}
-                          token={claimableReward.token}
-                          key={claimableReward.token}
-                        />
-                      );
-                    })}
-                  </>
-                )}
-              </Center>
             </Flex>
           </CardBody>
         </Card>
