@@ -60,7 +60,10 @@ const MoonDustXCard = () => {
       </Flex>
       <SelectTokens />
       <Flex w="full" mt={4}>
-        <ActionButton onClick={() => dispatch(selectAllTokens())}>
+        <ActionButton
+          variant={"outline"}
+          onClick={() => dispatch(selectAllTokens())}
+        >
           Select All
         </ActionButton>
       </Flex>

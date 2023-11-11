@@ -25,9 +25,11 @@ const ConvertButton = () => {
   return (
     <ActionButton
       onClick={handleSubmit}
+      minW={"40%"}
       mt={16}
       disabled={swapInfo.length === 0}
       fontWeight="600"
+      alignSelf={"center"}
     >
       Convert tokens
     </ActionButton>
