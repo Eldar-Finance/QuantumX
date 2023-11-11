@@ -20,7 +20,7 @@ const SftsStaking = () => {
               </Text>
             </Flex>
           }
-          mb={10}
+          mb={{sm: 8, md: 8}}
         />
       <BadgesCard />
     </Box>

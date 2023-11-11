@@ -9,7 +9,7 @@ interface TitlePageProps extends CenterProps {
 const TitlePage = ({ title, subtitle, ...props }: TitlePageProps) => {
   return (
     <Center textAlign={"center"} flexDir="column" {...props}>
-      <Heading mb={8} as="h1" fontSize={"3xl"}>
+      <Heading mb={4} as="h1" fontSize={"3xl"}>
         {title}
       </Heading>
       {subtitle && (

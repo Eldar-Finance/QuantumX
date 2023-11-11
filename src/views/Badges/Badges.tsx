@@ -30,7 +30,7 @@ const BadgesView = () => {
 
   return (
     <Layout>
-      <Box p={"4"} minH="95vh">
+      <Box px={"4"} minH="95vh">
         <Box width={{ xs: "100%", md: "90%" }} marginX={"auto"} height="100%">
           <Center width={"95%"} margin="auto" flexDir={"column"} gap={"50px"}>
             <SftsStaking />
