@@ -2,11 +2,12 @@ import { Box, Center, Flex, Grid, HStack, Spinner, Text } from "@chakra-ui/react
 import { toknesID } from "api/net.config";
 import Image from "next/image";
 import { memo, useEffect, useState } from "react";
-import { formatBalance } from "utils/functions/formatBalance";
+import { formatBalance, formatBalanceDolar } from "utils/functions/formatBalance";
 import { useAppSelector } from "utils/hooks/redux";
 import useGetElrondToken from "utils/hooks/useGetElrondToken";
 import BadgeStaticBox from "../BadgeStaticBox/BadgeStaticBox";
 import ClaimRewardsButton from "../ClaimRewardsButton/ClaimRewardsButton";
+import useGetMultipleElrondTokens from "utils/hooks/useGetMultipleElrondTokens";
 
 const BadgesStatics = () => {
   const { InStakingPeriod } = useAppSelector(
@@ -63,6 +64,32 @@ const BadgesStatics = () => {
     });
     setSftsInStaking(_sftsInStaking);
   }, [InStakingPeriod]);
+
+  const [totalDollarValue, updateTotalDollarValue] = useState(0);
+  // get a list of the tokens
+  const tokens = stfsRewards?.totalRewards?.map((r) => r.tokenI);
+  // get the price of tokens
+  const elrondTokens = useGetMultipleElrondTokens(tokens);
+  // update the total dollar value when the price of tokens changes
+  useEffect(() => {
+    if (stfsRewards?.totalRewards) {
+      let _totalDollarValue = 0;
+      stfsRewards.totalRewards.forEach((r) => {
+        const elrondToken = elrondTokens.tokens.find((t) => t.identifier === r.tokenI);
+        if (elrondToken) {
+          // r.amount * elrondToken.price
+          _totalDollarValue += formatBalanceDolar(
+            {
+              balance: r.value,
+              decimals: elrondToken.decimals,
+            },
+            elrondToken.price
+          );
+        }
+      });
+      updateTotalDollarValue(_totalDollarValue);
+    }
+  }, [elrondTokens]);
 
   return (
     <Flex
@@ -142,11 +169,16 @@ const BadgesStatics = () => {
             <>
               {stfsRewards?.totalRewards.map((r) => {
                 return (
-                  <StaticInfo amount={r.value} token={r.tokenI} key={r.token} />
+                  <StaticInfo amount={r.value} token={r.tokenI} key={r.token}
+                  />
                 );
               })}
             </>
           )}
+          <Text fontSize={"14px"} color="gray.500" whiteSpace={"nowrap"}>
+            {/* calc the total $ of rewards by adding their $ value */}
+            Total: &nbsp; ${totalDollarValue}
+          </Text>
         </Center>
       </Flex>
     </Flex>
@@ -157,6 +189,7 @@ export default memo(BadgesStatics);
 
 const StaticInfo = ({ token, amount }) => {
   const { token: elrondToken, isLoading } = useGetElrondToken(token);
+
   return (
     <Center
       flexDir={"column"}
