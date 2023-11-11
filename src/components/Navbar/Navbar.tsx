@@ -88,7 +88,7 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
             <Box w="fit-content" m="auto" flex="1" display="flex" justifyContent="center">
               <Menu />
             </Box>
-            <QTagButton />
+            <QTagButton/>
             <ActionButton
               px={{ xs: "30px", "2xl": "40px" }}
               fontSize={{ xs: "14px", "2xl": "md" }}

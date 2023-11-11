@@ -1,4 +1,4 @@
-import { Spinner } from "@chakra-ui/react";
+import { Box, Spinner } from "@chakra-ui/react";
 import { useGetLoginInfo } from "@multiversx/sdk-dapp/hooks/account/useGetLoginInfo";
 import ActionButton from "components/ActionButton/ActionButton";
 import Link from "next/link";
@@ -9,7 +9,7 @@ const QTagButton = () => {
   const { tagInfo, isLoading } = useGetUserQTag();
   const { isLoggedIn } = useGetLoginInfo();
   return (
-    <>
+    <Box minW={"120px"}>
       {isLoggedIn && (
         <ActionButton
           as={Link}
@@ -21,7 +21,7 @@ const QTagButton = () => {
           {tagInfo.tag || (isLoading ? <Spinner size={"sm"} /> : "Claim QxTag")}
         </ActionButton>
       )}
-    </>
+    </Box>
   );
 };
 
