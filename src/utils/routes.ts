@@ -58,7 +58,7 @@ export const routes: {
   pools: {
     path: routeNames.Pools,
     name: "Pools",
-    onModalAndNavbar: true,
+    // onModalAndNavbar: true,
   },
   hypezone: {
     path: routeNames.hypezone,
