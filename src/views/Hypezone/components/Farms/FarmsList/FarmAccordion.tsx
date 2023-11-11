@@ -82,7 +82,8 @@ const FarmAccordion = ({
   return (
     <Accordion
       allowMultiple
-      borderRadius={"xl"}
+      borderColor={"black.100"}
+      borderRadius={"2xl"}
       overflow="hidden"
       w="full"
       index={accordionIndex}

@@ -77,7 +77,8 @@ const FarmsCard = ({ proteoArr, isPool, othersArr = null }: IProps) => {
   return (
     <Accordion
       allowMultiple
-      borderRadius={"xl"}
+      borderColor={"black.100"}
+      borderRadius={"2xl"}
       overflow="hidden"
       w="full"
       index={accordionIndex}
