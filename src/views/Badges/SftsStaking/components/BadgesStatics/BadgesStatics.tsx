@@ -89,7 +89,7 @@ const BadgesStatics = () => {
       });
       updateTotalDollarValue(_totalDollarValue);
     }
-  }, [elrondTokens]);
+  }, [elrondTokens, stfsRewards.totalRewards]);
 
   return (
     <Flex
