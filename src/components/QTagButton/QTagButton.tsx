@@ -17,6 +17,7 @@ const QTagButton = () => {
           href={routeNames.qtags}
           fontWeight={"500"}
           fontSize={{ xs: "14px", "2xl": "md" }}
+          h={{xs: "32px", md: "40px"}}
         >
           {tagInfo.tag || (isLoading ? <Spinner size={"sm"} /> : "Claim QxTag")}
         </ActionButton>
