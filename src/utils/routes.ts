@@ -68,34 +68,34 @@ export const routes: {
   hub: {
     path: routeNames.hub,
     name: "Hub",
-    onModal: true,
+    onModalAndNavbar: true,
   },
-  dca: {
-    path: routeNames.dca,
-    name: "Dollar Cost Averaging",
-    onModal: true,
-  },
+  // dca: {
+  //   path: routeNames.dca,
+  //   name: "Dollar Cost Averaging",
+  //   onModal: true,
+  // },
   rewards: {
     path: routeNames.rewards,
     name: "QuantumX Rewards",
     onModal: true,
   },
-  converter: {
-    path: routeNames.converter,
-    name: "Raretopia",
-    onModalAndNavbar: true,
-  },
+  // converter: {
+  //   path: routeNames.converter,
+  //   name: "Raretopia",
+  //   onModalAndNavbar: true,
+  // },
   moondustx: {
     path: routeNames.moondustx,
     name: "MoonDustX",
     onModal: true,
   },
-  marketplace: {
-    path: routeNames.marketplace,
-    name: "QXTags Marketplace",
-    onModal: true,
-    isNew: true,
-  },
+  // marketplace: {
+  //   path: routeNames.marketplace,
+  //   name: "QXTags Marketplace",
+  //   onModal: true,
+  //   isNew: true,
+  // },
   // heroes: {
   //   path: routeNames.heroes,
   //   name: "QuantumX Heroes",
