@@ -13,7 +13,7 @@ import useGetJexPrice from "utils/hooks/useGetJexPrice";
 import useGetMultipleElrondTokens from "utils/hooks/useGetMultipleElrondTokens";
 import useGetMultiplePrices from "utils/hooks/useGetMultiplePrices";
 
-const useApr = (
+const  useApr = (
   farm: IScFarmItem,
   multifarmRewardsLeft: IScFarm2RewardsLeft[],
   stakedTokenPrice: number,

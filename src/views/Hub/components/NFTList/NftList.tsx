@@ -18,7 +18,7 @@ import NftCard from "../NftCard/NftCard";
 const NftList = () => {
   const { offers } = useGetOffers();
   const { tokens } = useGetMultipleElrondTokens(
-    offers ? [offers[0].token, offers[1].token, offers[3].token, offers[4].token, offers[6].token, offers[7].token, offers[8].token] : []
+    offers ? [offers[0].token, offers[1].token, offers[3].token, offers[4].token, offers[6].token, offers[7].token, offers[8].token, offers[10].token] : []
   );
 
   // console.log(offers);
@@ -34,8 +34,8 @@ const NftList = () => {
     elrondToken: tokens.find((t) => t.identifier === offers[0].token),
   };
   const offer3 = {
-    ...offers[3],
-    elrondToken: tokens.find((t) => t.identifier === offers[3].token),
+    ...offers[10],
+    elrondToken: tokens.find((t) => t.identifier === offers[10].token),
   };
   const offer4 = {
     ...offers[4],
