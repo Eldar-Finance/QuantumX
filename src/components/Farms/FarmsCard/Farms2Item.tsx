@@ -245,7 +245,7 @@ const Farms2Item = ({
                 </Flex>
               <Flex flexDir={"column"} textAlign="center" h="full" justifyContent={"center"} gap={vertGap}>
                 <Text color="white.400">Staked Balance</Text>
-                <>
+                {farmUserInfoArr.length > 0 ? <>
                   {farmUserInfoArr.map((farmUserInfo) => {
                     const token =
                       farmUserInfo.stakedToken === stakingToken.identifier
@@ -280,7 +280,7 @@ const Farms2Item = ({
                       </Text>
                     );
                   })}
-                </>
+                </> : <Text>0 ($ 0)</Text>}
               </Flex>
               <Flex
                 flexDir={"column"}
