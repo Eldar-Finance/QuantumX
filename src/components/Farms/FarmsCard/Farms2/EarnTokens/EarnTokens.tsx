@@ -7,9 +7,10 @@ import { Fragment } from "react";
 import useGetMultipleElrondTokens from "utils/hooks/useGetMultipleElrondTokens";
 interface IProps {
   userRewardsTokensIdentifiers: string[];
+  vertGap?: number;
 }
 
-const EarnTokens = ({ userRewardsTokensIdentifiers }: IProps) => {
+const EarnTokens = ({ userRewardsTokensIdentifiers, vertGap }: IProps) => {
   const { tokens: rewardsTokens } = useGetMultipleElrondTokens(
     userRewardsTokensIdentifiers.slice(0, 5)
   );
@@ -22,8 +23,9 @@ const EarnTokens = ({ userRewardsTokensIdentifiers }: IProps) => {
       textAlign="center"
       h="full"
       justifyContent={"center"}
+      gap={vertGap || 0}
     >
-      <Text color="white.400" mb={2} textAlign="center">
+      <Text color="white.400" textAlign="center">
         Earn
       </Text>
       <Center gap={2}>

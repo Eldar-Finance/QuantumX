@@ -109,7 +109,9 @@ const Farms2Item = ({
   const { isSrbStaker } = useCanUsePool7();
 
   const { apr, apy } = useApr(farm, multifarmRewardsLeft, stakedTokenPrice);
-  console.log("⚠️ ~ file: Farms2Item.tsx:112 ~ apr::::", farm.stakedToken, apr, Number(apr), apy, tvl)
+  // console.log("⚠️ ~ file: Farms2Item.tsx:112 ~ apr::::", farm.stakedToken, apr, Number(apr), apy, tvl)
+
+  const vertGap = 2;
 
   return (
     <AccordionItem w="full">
@@ -241,14 +243,9 @@ const Farms2Item = ({
                     </Box>
                   )}
                 </Flex>
-              <Flex flexDir={"column"} textAlign="center" h="full">
+              <Flex flexDir={"column"} textAlign="center" h="full" justifyContent={"center"} gap={vertGap}>
                 <Text color="white.400">Staked Balance</Text>
-                <Flex
-                  flexDir={"column"}
-                  justifyContent={"space-between"}
-                  flex={1}
-                  py={2}
-                >
+                <>
                   {farmUserInfoArr.map((farmUserInfo) => {
                     const token =
                       farmUserInfo.stakedToken === stakingToken.identifier
@@ -283,13 +280,14 @@ const Farms2Item = ({
                       </Text>
                     );
                   })}
-                </Flex>
+                </>
               </Flex>
               <Flex
                 flexDir={"column"}
                 textAlign="center"
                 h="full"
                 justifyContent={"center"}
+                gap={vertGap}
               >
                 <Text textTransform={"uppercase"} color="white.400">
                   Apr / Apy
@@ -305,17 +303,24 @@ const Farms2Item = ({
                 textAlign="center"
                 h="full"
                 justifyContent={"center"}
+                gap={vertGap}
               >
                 {price > 0 ?
-                <><Text color="white.400">Total Value Locked</Text>
-                <Text>$ {formatNumber(tvl)}</Text></> :
-                <><Text color="white.400">Total Tokens Locked</Text>
-                <Text>{formatBalance({
-                  balance: farm?.stakedBalance,
-                  decimals: stakingToken?.decimals,
-                })}</Text></>}
+                <>
+                  <Text color="white.400">Total Value Locked</Text>
+                  <Text>$ {formatNumber(tvl)}</Text>
+                </> :
+                <>
+                  <Text color="white.400">Total Tokens Locked</Text>
+                  <Text>{formatBalance({
+                      balance: farm?.stakedBalance,
+                      decimals: stakingToken?.decimals,
+                    })}
+                  </Text>
+                </>}
               </Flex>
               <EarnTokens
+                vertGap={vertGap}
                 userRewardsTokensIdentifiers={
                   farm.farm.rewardToken === ""
                     ? multifarmRewardsLeft.map((r) => r.token)
