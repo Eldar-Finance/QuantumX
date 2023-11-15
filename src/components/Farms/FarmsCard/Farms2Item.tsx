@@ -109,7 +109,7 @@ const Farms2Item = ({
   const { isSrbStaker } = useCanUsePool7();
 
   const { apr, apy } = useApr(farm, multifarmRewardsLeft, stakedTokenPrice);
-  // console.log("⚠️ ~ file: Farms2Item.tsx:112 ~ apr::::", farm.stakedToken, apr, Number(apr), apy, tvl)
+  console.log("⚠️ ~ file: Farms2Item.tsx:112 ~ apr::::", farm.stakedToken, apr, Number(apr), apy, tvl)
 
   return (
     <AccordionItem w="full">
@@ -306,10 +306,14 @@ const Farms2Item = ({
                 h="full"
                 justifyContent={"center"}
               >
-                <Text color="white.400">Total Value Locked</Text>
                 {price > 0 ?
-                <Text>$ {formatNumber(tvl)}</Text> :
-                <Text>-</Text>}
+                <><Text color="white.400">Total Value Locked</Text>
+                <Text>$ {formatNumber(tvl)}</Text></> :
+                <><Text color="white.400">Total Tokens Locked</Text>
+                <Text>{formatBalance({
+                  balance: farm?.stakedBalance,
+                  decimals: stakingToken?.decimals,
+                })}</Text></>}
               </Flex>
               <EarnTokens
                 userRewardsTokensIdentifiers={
