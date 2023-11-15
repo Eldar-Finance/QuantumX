@@ -264,16 +264,17 @@ const Farms2Item = ({
                     </Box>
                   )}
                 </Flex>
-                <Flex flexDir={"column"} textAlign="center" h="full"
+                <Flex flexDir={"column"} textAlign="center" justifyContent={"center"} h="full"
                   gap={vertGap}
                 >
                   <Text color="white.400">Staked Balance</Text>
 
-                  <Flex
+                  {/* <Flex
                     flexDir={"column"}
-                    justifyContent={"space-between"}
+                    justifyContent={"center"}
                     flex={1}
-                  >
+                  > */}
+                  {farmUserInfoArr.length > 0 ? <>
                     {farmUserInfoArr.map((farmUserInfo) => {
                       const token =
                         farmUserInfo.stakedToken === stakingToken.identifier
@@ -308,7 +309,8 @@ const Farms2Item = ({
                         </Text>
                       );
                     })}
-                  </Flex>
+                    </> : <Text>0 ($ 0)</Text>}
+                  {/* </Flex> */}
                 </Flex>
                 <Flex
                   flexDir={"column"}
