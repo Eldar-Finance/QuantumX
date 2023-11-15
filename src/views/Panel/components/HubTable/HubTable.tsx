@@ -7,6 +7,7 @@ import { formatBalance } from "utils/functions/formatBalance";
 import { formatTokenI } from "utils/functions/tokens";
 import { useAppDispatch, useAppSelector } from "utils/hooks/redux";
 import { hubColumns, IHubCreatorTableInfo } from "./columns";
+import useGetMultipleElrondTokens from "utils/hooks/useGetMultipleElrondTokens";
 
 const HubTable = () => {
   const dispatch = useAppDispatch();
@@ -15,13 +16,15 @@ const HubTable = () => {
     dispatch(fetchCreatorInfo());
   }, [dispatch]);
 
+  const { tokens } = useGetMultipleElrondTokens(data.map((d) => d.token));
+
   const tableData: IHubCreatorTableInfo[] = data.map((creatorInfo) => {
     const data: IHubCreatorTableInfo = {
       available: creatorInfo.nftsNonces.length,
       collection: creatorInfo.collection,
       cost: `${formatBalance({
         balance: creatorInfo.price,
-        decimals: 18,
+        decimals: tokens.find((t) => t.identifier === creatorInfo.token)?.decimals || 18,
       })} ${formatTokenI(creatorInfo.token)}`,
       id: creatorInfo.id,
       withdrawable: `${formatBalance({
