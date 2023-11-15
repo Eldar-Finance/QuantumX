@@ -109,6 +109,7 @@ const Farms2Item = ({
   const { isSrbStaker } = useCanUsePool7();
 
   const { apr, apy } = useApr(farm, multifarmRewardsLeft, stakedTokenPrice);
+  // console.log("⚠️ ~ file: Farms2Item.tsx:112 ~ apr::::", farm.stakedToken, apr, Number(apr), apy, tvl)
 
   return (
     <AccordionItem w="full">
@@ -261,8 +262,6 @@ const Farms2Item = ({
                       (tp) => tp.tokenI === farmUserInfo.stakedToken
                     )?.price;
 
-                    console.log("price", price);
-
                     return (
                       <Text key={farmUserInfo.stakedToken}>
                         {formatBalance({
@@ -295,9 +294,11 @@ const Farms2Item = ({
                 <Text textTransform={"uppercase"} color="white.400">
                   Apr / Apy
                 </Text>
+                {apr != '0 %' && apr != 'NaN %' ? 
                 <Text>
-                  {apr} / {apy}
-                </Text>
+                    {apr}&nbsp; / &nbsp;{apy}
+                </Text> :
+                <Text>Huge</Text>}
               </Flex>
               <Flex
                 flexDir={"column"}
@@ -306,7 +307,9 @@ const Farms2Item = ({
                 justifyContent={"center"}
               >
                 <Text color="white.400">Total Value Locked</Text>
-                <Text>$ {formatNumber(tvl)}</Text>
+                {price > 0 ?
+                <Text>$ {formatNumber(tvl)}</Text> :
+                <Text>-</Text>}
               </Flex>
               <EarnTokens
                 userRewardsTokensIdentifiers={

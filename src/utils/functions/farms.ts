@@ -222,7 +222,7 @@ export const aprFarms = (
                     365) /
                     epochDifference
                 ).toString()
-              ) + "%";
+              ) + " %";
           }
         } else {
           if (multifarmRewardsLeft) {
@@ -272,7 +272,7 @@ export const aprFarms = (
                       365) /
                       epochDifference
                   ).toString()
-                ) + "%";
+                ) + " %";
             }
           }
         }
@@ -322,7 +322,7 @@ export const aprFarms = (
                     365) /
                     epochDifference
                 ).toString()
-              ) + "%";
+              ) + " %";
           }
         } else {
           if (multifarmRewardsLeft) {
@@ -386,7 +386,7 @@ export const aprFarms = (
                       365) /
                       epochDifference
                   ).toString()
-                ) + "%";
+                ) + " %";
             }
           }
         }

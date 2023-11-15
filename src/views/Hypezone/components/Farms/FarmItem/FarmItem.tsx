@@ -316,13 +316,11 @@ const Farms2Item = ({
                 <Text textTransform={"uppercase"} color="white.400">
                   Apr / Apy
                 </Text>
-                {farm.farm.farmId !== 41 && farm.farm.farmId !== 52 && farm.farm.farmId !== 53 ? (
+                {apr != '0 %' && apr != 'NaN %' ? 
                 <Text>
-                    {apr} / {apy}
-                      </Text>
-                  ) : (
-                      <Text>Variable but HUGE</Text>
-                  )}
+                    {apr}&nbsp; / &nbsp;{apy}
+                </Text> :
+                <Text>Huge</Text>}
                 </Flex>
                 <Flex
                   flexDir={"column"}
