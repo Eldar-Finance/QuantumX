@@ -85,7 +85,7 @@ const NftList = () => {
               decimals: offer1.elrondToken?.decimals,
             })}{" "}
             {formatTokenI(offer1.token)} <br /> Get a VIP CARD
-            <br /> <br /> Available NFTs: <br /> {offer2.numberOfAvilableNfts}
+            <br /> <br /> Available NFTs: <br /> {offer1.numberOfAvilableNfts}
           </Text>
         }
         disabled={offer1.numberOfAvilableNfts === 0}
