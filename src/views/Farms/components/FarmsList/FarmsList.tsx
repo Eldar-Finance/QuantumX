@@ -15,6 +15,7 @@ import { useAppSelector } from "utils/hooks/redux";
 import { InfoIcon, InfoOutlineIcon } from "@chakra-ui/icons";
 import AutoHarvestInfoModal from "views/Admin/Views/Farms/AutoHarvestInfoModal";
 import ActionButton from "components/ActionButton/ActionButton";
+import HarvestAll from "components/Farms/HarvestAll/HarvestAll";
 
 const FarmsList = () => {
   const userFarm2Info = useSelector(selectUserFarms2Info);
@@ -97,13 +98,28 @@ const FarmsList = () => {
       setModalOpen(!modalOpen);
   };
 
+  // const userHarvestableFarms = userFarm2Rewards.data.filter((farm) => {
+  //   return farm.harvestableAmount > 0 && farms2ToSearch.some((f) => f.farm.farmId === farm.farmId);
+  // });
+  // console.log("⚠️ ~ harvestable farms: ", userHarvestableFarms)
+
   return (
     <>
-      <Flex w="full" justifyContent={"flex-end"} mt={{ xs: "10px", md: "30px" }}>
-        {!isSmallDevice && <Flex w="50px" alignItems="center" justifyContent={"flex-start"} mt={{ xs: "30px", md: "30px" }} onClick={handleInfoModal}>
-          <InfoIcon color="white" ml="3" boxSize={6} onClick={handleInfoModal}/>
+      <Flex w="full" justifyContent={"flex-end"} mt={"1px"}>
+        {!isSmallDevice && <Flex w="150px" alignItems="center" justifyContent={"flex-start"} mt={{ xs: "30px", md: "30px" }} onClick={handleInfoModal}>
+          {/* <InfoIcon color="white" ml="3" boxSize={6} onClick={handleInfoModal}/> */}
+          <ActionButton
+              height={"30px"}
+              bg="white"
+              // mt={5}
+              onClick={handleInfoModal}
+              disabled={false}
+              fontSize={"15px"}
+          >
+              <InfoIcon/> &nbsp;&nbsp; Auto-Harvest
+          </ActionButton>
         </Flex>}
-        <Flex w="full" gap={isSmallDevice ? "15px" : "50px"} alignItems="center" justifyContent={isSmallDevice ? "flex-start" : "flex-end"} mt={{ xs: "30px", md: "30px" }} whiteSpace={"nowrap"}>
+        <Flex w="full" gap={isSmallDevice ? "15px" : "10px"} alignItems="center" justifyContent={isSmallDevice ? "flex-start" : "flex-end"} mt={{ xs: "30px", md: "30px" }} whiteSpace={"nowrap"}>
           { address && (<Flex alignItems="center" gap="10px">
               <Switch size="md" isChecked={isOpen} colorScheme="teal" onChange={handleToggle} />
               <Box>My Farms</Box>
@@ -118,7 +134,7 @@ const FarmsList = () => {
       {modalOpen && 
         <AutoHarvestInfoModal onClose={() => setModalOpen(false)}/>
       }
-      <Center mt={{ xs: "15px", md: "20px" }} w="full">
+      <Center mt={"15px"} w="full">
         <FarmsCard
           proteoArr={proteoFarmsArrToSearch}
           othersArr={{
