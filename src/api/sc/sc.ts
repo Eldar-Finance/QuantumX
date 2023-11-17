@@ -178,13 +178,6 @@ export const getInterface = (workspace: WspTypes) => {
       implementsInterfaces = "ProteoElite";
 
       break;
-    case jexSwapWsp:
-      simpleAddress = contractAddr.jexSawp;
-      address = new Address(simpleAddress);
-      abiUrl = jexSwapAbi;
-      implementsInterfaces = "Jex";
-
-      break;
     case farms2Wsp:
       simpleAddress = contractAddr.farms2;
       address = new Address(simpleAddress);

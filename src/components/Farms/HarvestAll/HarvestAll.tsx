@@ -30,7 +30,7 @@ const HarvestAll = ({
   harvestableFarms = harvestableFarms.filter((farm) => farm.farmId !== 8);
 
   const minDollarvalue = 1;
-  const feeToken = toknesID?.rare || "";
+  const feeToken = toknesID.rare || "";
   const feeTokenName = feeToken.split('-')[0];
   const feeAmount = 4.2069; 
   const { accountToken } = useGetAccountToken(feeToken);
