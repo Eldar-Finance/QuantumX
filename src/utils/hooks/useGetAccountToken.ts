@@ -20,7 +20,11 @@ const useGetAccountToken = (identifier: string) => {
     {
       onErrorRetry: (error, key, config, revalidate, { retryCount }) => {
         // Never retry on 404.
-        if (error.response.status === 404) return;
+        try {
+          if (error?.response.status === 404) return;
+        } catch (error) {
+          console.log(error);
+        }
 
         // Only retry up to 10 times.
         if (retryCount >= 10) return;
