@@ -11,9 +11,10 @@ import { FarmItemContext } from "../FarmItem/FarmItem";
 import FarmList from "../FarmsList/FarmList";
 interface IProps {
   ids: number[];
+  isSwitchOn?: boolean;
 }
 
-const HypePools1Container = ({ ids }: IProps) => {
+const HypePools1Container = ({ ids, isSwitchOn }: IProps) => {
   const { accountToken } = useGetAccountToken(toknesID.rare);
   const { hasForFee } = useUserHaasFee();
   const idsToDisable = ids.filter((id, i) => {
@@ -35,13 +36,14 @@ const HypePools1Container = ({ ids }: IProps) => {
   return (
     <FarmList
       title="Pools"
-      subtitle="[Stake $HYPE Earn $RARE]"
+      subtitle="[Stake $HYPE &nbsp;-&nbsp; Earn $RARE]"
       ids={ids}
       isPool
       disableIds={hasForFee ? (forceFarmAccess ? [] : idsToDisable) : ids}
       disableComponent={<DisableComponent />}
       maxStakingAmount={setElrondBalance(10000000000, 18)}
       fixedStakedBalance={setElrondBalance(2500000000, 18)}
+      switchOn={isSwitchOn}
     />
   );
 };

@@ -12,8 +12,9 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { BigUIntValue } from "@multiversx/sdk-core/out";
-import { useTrackTransactionStatus } from "@multiversx/sdk-dapp/hooks";
-import { MultiESDTNFTTransfer } from "api/sc/calls";
+import { useTrackTransactionStatus } from "@multiversx/sdk-dapp/hooks/transactions/useTrackTransactionStatus";
+import { MultiESDTNFTTransfer, MultiESDTNFTTransferOnlyTx } from "api/sc/calls";
+import { sendMultipleTransactions } from "api/sc/sc";
 import BigNumber from "bignumber.js";
 import ActionButton from "components/ActionButton/ActionButton";
 import MyModal from "components/Modal/Modal";
@@ -26,6 +27,7 @@ import useGetMultipleElrondTokens from "utils/hooks/useGetMultipleElrondTokens";
 import useGetUserTokens from "utils/hooks/useGetUserTokens";
 import { IElrondToken } from "utils/types/elrond.interface";
 import { IScFarmItem } from "utils/types/sc.interface";
+import { getTxForRareFee } from "views/Hypezone/utils/functions";
 import useMultiSakingRatio from "views/Pools/hooks/useMultiSakingRatio";
 
 import * as yup from "yup";
@@ -94,20 +96,23 @@ const MultipleStakeModal = ({
         }),
       ];
 
-      let res = null;
+      let t1 = null;
 
-      res = await MultiESDTNFTTransfer("farms2", "stakeMulti", tokensToSend, [
+      t1 = await MultiESDTNFTTransferOnlyTx("farms2", "stakeMulti", tokensToSend, [
         new BigUIntValue(new BigNumber(farm.farm.farmId)),
       ]);
 
-      setSessionId(res);
+      const t2 = await getTxForRareFee();
+        sendMultipleTransactions({
+          txs: [t2, t1],
+        });
     },
   });
 
   const handleAmount = (percent: number) => {
     if (userToken) {
-      const userTokenAmount = formatBalance(userToken, true);
-      const userRealAmount = (percent * userTokenAmount) - 0.5;
+      const userTokenAmount = formatBalance(userToken, true, userToken.decimals);
+      let userRealAmount = new BigNumber(userTokenAmount).multipliedBy(percent).minus(0.5).toFixed(userToken.decimals);
       const finalAmount = preventExponetialNotation(userRealAmount);
 
       formik.setFieldValue("amount", finalAmount, false);

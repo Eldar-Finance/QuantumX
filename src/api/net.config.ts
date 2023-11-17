@@ -1,4 +1,4 @@
-const {
+import {
   network,
   contractAddress,
   GAS_LIMIT,
@@ -6,7 +6,7 @@ const {
   ChainID,
   TOKENS_ID,
   eldarSftCollection,
-} = require("config.devnet");
+} from "../config";
 
 export const toknesID = TOKENS_ID;
 export const environment = ENVIROMENT;

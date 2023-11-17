@@ -8,8 +8,9 @@ export const formatBalance = (
 ) => {
   if (token) {
     const strBalance = token.balance;
-    const intBalance = Number(strBalance);
-    const formatedBalance = getRealBalance(intBalance, token.decimals);
+
+    const intBalance = new BigNumber(strBalance).toFixed(0);
+    const formatedBalance = getRealBalance(intBalance, token.decimals, true);
 
     const finalBinance = formatPrecision(formatedBalance, customPrecision);
 
@@ -29,6 +30,7 @@ export const formatBalance = (
   }
   return null;
 };
+
 export const formatBalanceDolar = (
   token: { balance: string | number; decimals?: number },
   price: number,
@@ -99,7 +101,12 @@ export const formatPrecision = (num, customPrecision?: number) => {
     }
   }
 
-  return Number(new BigNumber(num).toFixed(precision));
+  if (customPrecision) {
+    return new BigNumber(num).toFixed(precision);
+  } else {
+    return Number(new BigNumber(num).toFixed(precision));
+  }
+  
 };
 
 export const formatNumber = (number?: number | string) => {

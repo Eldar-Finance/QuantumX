@@ -18,7 +18,7 @@ export const sendUserTokens = async (
 ) => {
   const sender = store.getState().userAccount.connectedAddress;
 
-  console.log(Number(fee));
+  // console.log(Number(fee));
 
   if (token.identifier === "EGLD") {
     const tx = new Transaction({

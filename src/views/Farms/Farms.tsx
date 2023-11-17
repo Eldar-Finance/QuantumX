@@ -28,6 +28,9 @@ import { useAppDispatch, useAppSelector } from "utils/hooks/redux";
 import useGetTotalValueInFarms from "utils/hooks/useGetTotalValueInFarms";
 import BearlyBonding from "./components/BearlyBonding/BearlyBonding";
 import FarmsList from "./components/FarmsList/FarmsList";
+import { useSelector } from "react-redux";
+import { selectFarms, selectUserFarms2Rewards } from "redux/slices/farms2/farms2-slice";
+import HarvestAll from "components/Farms/HarvestAll/HarvestAll";
 
 const Farms = () => {
   const dispatch = useAppDispatch();
@@ -59,6 +62,13 @@ const Farms = () => {
   useEffect(() => {
     dispatch(fetchAllFarms());
   }, [dispatch]);
+
+  const farms2 = useSelector(selectFarms);
+  const userFarm2Rewards = useSelector(selectUserFarms2Rewards);
+  const userHarvestableFarms = userFarm2Rewards.data.filter((farm) => {
+    return farm.harvestableAmount > 0 && farms2.some((f) => f.farm.farmId === farm.farmId);
+  });
+
   return (
     <Layout>
       <MyContainer pb="70px">
@@ -75,13 +85,14 @@ const Farms = () => {
             subtitle="Stake Liquidity Pool (LP) tokens"
             amount={totalValueLocked}
           />
+          <HarvestAll harvestableFarms={userHarvestableFarms} type="farms"/>
           <MyTabs
             tabListProps={{
               overflow: "auto",
             }}
             tabsProps={{
               w: "full",
-              mt: 14,
+              mt: { xs: "25px", md: "50px" },
             }}
             tabListWarapperProps={{
               display: "flex",

@@ -32,7 +32,7 @@ export async function compound(
       "farms2",
       "compound",
       [new BigUIntValue(new BigNumber(farm.farm.farmId))],
-      180000000
+      360000000
     );
   } else {
     if (isSapwToLp) {
@@ -49,7 +49,7 @@ export async function compound(
           new BigUIntValue(new BigNumber(swapLpData[0].NrSwaps)),
           ...multiswapArgs,
         ],
-        180000000
+        360000000
       );
     } else {
       const dataToSend = getNormalSwapArgs(swapInfo, 2);
@@ -57,7 +57,7 @@ export async function compound(
         "farms2",
         "compound",
         [new BigUIntValue(new BigNumber(farm.farm.farmId)), ...dataToSend],
-        180000000
+        360000000
       );
     }
   }

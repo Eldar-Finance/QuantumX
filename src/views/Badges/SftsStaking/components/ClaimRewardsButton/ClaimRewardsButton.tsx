@@ -1,5 +1,5 @@
-import { Box, useDisclosure } from "@chakra-ui/react";
-import { useTrackTransactionStatus } from "@multiversx/sdk-dapp/hooks";
+import { Box, Center, useDisclosure } from "@chakra-ui/react";
+import { useTrackTransactionStatus } from "@multiversx/sdk-dapp/hooks/transactions/useTrackTransactionStatus";
 import { scCall } from "api/sc/calls";
 import { sftsRewardsWsp } from "api/sc/sc";
 import ActionButton from "components/ActionButton/ActionButton";
@@ -10,7 +10,7 @@ import { getReturnedDataOfscCall } from "utils/functions/helpers";
 import { useAppSelector } from "utils/hooks/redux";
 import RewardsModal from "../RewardsModal/RewardsModal";
 
-const ClaimRewardsButton = () => {
+const ClaimRewardsButton = ({ ...props }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [rewards, setRewards] = useState([]);
   const [sessionId, setSessionId] = useState<string>();
@@ -49,19 +49,20 @@ const ClaimRewardsButton = () => {
     setSessionId(res.sessionId);
   };
   return (
-    <Box>
+    <Center>
       <ActionButton
-        ml={2}
-        px={6}
-        mb={4}
+        // ml={2}
+        // px={6}
+        // mb={4}
         onClick={handleClaimRewards}
         disabled={!isRewards}
+        {...props}
       >
         Claim
       </ActionButton>
 
       <RewardsModal rewards={rewards} onClose={onClose} isOpen={isOpen} />
-    </Box>
+    </Center>
   );
 };
 

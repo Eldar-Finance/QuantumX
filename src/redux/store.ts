@@ -1,6 +1,5 @@
 import { Action, configureStore, ThunkAction } from "@reduxjs/toolkit";
 import converterReducer from "./slices/converter/converter-slice";
-import lkmexAveragingReducer from "./slices/dca/dca-slice";
 import eldarSftsReducer from "./slices/eldarSfts/eldarSfts";
 import elrondReducer from "./slices/elrond/elrond-slice";
 import farms2Reducer from "./slices/farms2/farms2-slice";
@@ -18,7 +17,6 @@ export function makeStore() {
       userAccount: userAccountReducer,
       fastSwap: fastSwapReducer,
       smartSwap: smartSwapReducer,
-      lkmexAveraging: lkmexAveragingReducer,
       elrond: elrondReducer,
       proteo: proteoReducer,
       farms2: farms2Reducer,

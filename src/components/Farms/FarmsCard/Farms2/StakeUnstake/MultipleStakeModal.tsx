@@ -12,7 +12,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { BigUIntValue } from "@multiversx/sdk-core/out";
-import { useTrackTransactionStatus } from "@multiversx/sdk-dapp/hooks";
+import { useTrackTransactionStatus } from "@multiversx/sdk-dapp/hooks/transactions/useTrackTransactionStatus";
 import { MultiESDTNFTTransfer } from "api/sc/calls";
 import BigNumber from "bignumber.js";
 import ActionButton from "components/ActionButton/ActionButton";
@@ -113,8 +113,8 @@ const MultipleStakeModal = ({
 
   const handleAmount = (percent: number) => {
     if (userToken) {
-      const userTokenAmount = formatBalance(userToken, true);
-      const userRealAmount = percent * userTokenAmount;
+      const userTokenAmount = formatBalance(userToken, true, userToken.decimals);
+      const userRealAmount = new BigNumber(userTokenAmount).multipliedBy(percent).toFixed(userToken.decimals);
       const finalAmount = preventExponetialNotation(userRealAmount);
 
       formik.setFieldValue("amount", finalAmount, false);

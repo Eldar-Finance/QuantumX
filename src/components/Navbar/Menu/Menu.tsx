@@ -20,7 +20,7 @@ const Menu = () => {
       alignItems={"center"}
       borderRadius={"full"}
       position="relative"
-      fontSize={{ xs: "xs", md: "inherit" }}
+      fontSize={{ xs: "sm", md: "inherit" }}
     >
       {routesArr.map((route) => {
         if (route.onModal || route.onModalAndNavbar) {

@@ -16,7 +16,7 @@ const Dashboard = () => {
         flexDir={"column"}
         alignItems={"center"}
         h="full"
-        gap="25px"
+        gap={{ xs: "10px", md: "25px" }}
         overflow={"auto"}
       >
         <TotalAmount />

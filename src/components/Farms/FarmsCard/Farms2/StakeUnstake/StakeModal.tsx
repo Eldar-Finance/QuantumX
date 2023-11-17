@@ -11,7 +11,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { BigIntValue } from "@multiversx/sdk-core/out";
-import { useTrackTransactionStatus } from "@multiversx/sdk-dapp/hooks";
+import { useTrackTransactionStatus } from "@multiversx/sdk-dapp/hooks/transactions/useTrackTransactionStatus";
 import { contractAddr } from "api/net.config";
 import { EGLDPayment, ESDTTransfer } from "api/sc/calls";
 import BigNumber from "bignumber.js";
@@ -60,22 +60,23 @@ const StakeModal = ({ isOpen, onClose, farm, isPool, token }: IProps) => {
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      const amount = new BigNumber(values.amount).toNumber();
+      const amount = new BigNumber(values.amount).multipliedBy(Math.pow(10, token.decimals || 18));
 
       let res = null;
       if (farm.farm.stakingToken === "EGLD") {
         res = await EGLDPayment(
           "farms2",
           "stake",
-          amount,
+          null,
           [new BigIntValue(new BigNumber(farm.farm.farmId))],
-          50000000
+          50000000,
+          amount
         );
       } else {
         res = await ESDTTransfer({
           funcName: "stake",
           token: { identifier: token.identifier, decimals: token.decimals },
-          val: amount,
+          realValue: amount,
           args: [new BigIntValue(new BigNumber(farm.farm.farmId))],
           contractAddr: contractAddr.farms2,
           gasL: 50000000,
@@ -84,15 +85,17 @@ const StakeModal = ({ isOpen, onClose, farm, isPool, token }: IProps) => {
       setSessionId(res);
     },
   });
+
   const handleAmount = (percent: number) => {
     if (userToken) {
-      const userTokenAmount = formatBalance(userToken, true);
-      const userRealAmount = percent * userTokenAmount;
+      const userTokenAmount = formatBalance(userToken, true, userToken.decimals);
+      const userRealAmount = new BigNumber(userTokenAmount).multipliedBy(percent).toFixed(userToken.decimals);
       const finalAmount = preventExponetialNotation(userRealAmount);
 
       formik.setFieldValue("amount", finalAmount, false);
     }
   };
+  
   return (
     <MyModal bg="black.baseDark" isOpen={isOpen} onClose={onClose}>
       <form onSubmit={formik.handleSubmit}>

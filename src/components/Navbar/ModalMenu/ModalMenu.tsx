@@ -39,6 +39,7 @@ const ModalMenu = ({ onClose }: IProps) => {
       flexDir={"column"}
       p={0}
       overflow="hidden"
+      fontSize={{ xs: "inherit", md: "inherit" }}
     >
       {routesArr.map((route) => {
         if (!route.onModal && !route.onModalAndNavbar) {
@@ -58,6 +59,7 @@ const ModalMenu = ({ onClose }: IProps) => {
             soon={route.soon}
             isNew={route.isNew}
             onlyMobile={route.onModalAndNavbar}
+            textColor={route.color}
           />
         );
       })}

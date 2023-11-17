@@ -10,6 +10,7 @@ import RemoveEarner from "./RemoveEarner/RemoveEarner";
 import ResumeButton from "./ResumeButton/ResumeButton";
 import RewardToken from "./RewardToken/RewardToken";
 import StakedTokens from "./StakedTokens/Tokens";
+import AutoHarvest from "./AutoHarvest/AutoHarvest";
 
 const Farms = () => {
   const { isOpen, onToggle } = useDisclosure();
@@ -39,6 +40,7 @@ const Farms = () => {
         </Flex>
       </Grid>
       <VStack spacing="20" w="full">
+        <AutoHarvest/>
         <Fees />
         <StakedTokens />
         <RewardToken />

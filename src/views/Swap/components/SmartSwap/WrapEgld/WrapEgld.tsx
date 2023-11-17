@@ -1,5 +1,5 @@
 import { Box, Center, Flex, Text, useDisclosure } from "@chakra-ui/react";
-import { useGetAccountInfo } from "@multiversx/sdk-dapp/hooks";
+import { useGetAccountInfo } from "@multiversx/sdk-dapp/hooks/account/useGetAccountInfo";
 import { toknesID } from "api/net.config";
 import ActionButton from "components/ActionButton/ActionButton";
 import { EgldlogoIcon, WegldLogoIcon } from "components/Icons/ui";

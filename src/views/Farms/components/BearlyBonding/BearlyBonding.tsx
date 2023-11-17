@@ -12,7 +12,7 @@ const BearlyBonding = () => {
     selectMultiFarms2RewardsLeft
   );
   const bearlyFarms = allFarms.filter((f) => {
-    return f.farm.rewardToken === "" && f.extraPools.length === 0;
+    return f.farm.farmId === 8 && f.farm.rewardToken === "" && f.extraPools.length === 0;
   });
 
   return (

@@ -30,10 +30,10 @@ const Title = ({
         bg="black.baseDark"
         maxW="600px"
         mx="auto"
-        borderRadius={"xl"}
+        borderRadius={"2xl"}
         flexDir="column"
       >
-        <Heading as="h4" fontSize={"md"} color="white.400" fontWeight={"400"}>
+        <Heading as="h4" fontSize={"md"} color="white.400" fontWeight={"500"}>
           {tvlText}
         </Heading>
         <Text fontSize={"2xl"} fontWeight="600">

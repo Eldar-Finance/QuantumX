@@ -3,10 +3,13 @@ import { formatTokenI } from "utils/functions/tokens";
 import { useGetFarmsLpPrices } from "./useGetFarmsLpPrices";
 import { useGetMultiJextPrices } from "./useGetJexPrice";
 import useGetMultipleElrondTokens from "./useGetMultipleElrondTokens";
+import { useEffect, useState } from "react";
+import useGetApiTokensPrices from "./useGetApiTokensPrices";
 
 const useGetMultiplePrices = (tokensIdentifiers: string[]) => {
   const { prices: lpPrices, isLoading } = useGetFarmsLpPrices();
   const { tokens } = useGetMultipleElrondTokens(tokensIdentifiers);
+  const { apiTokens } = useGetApiTokensPrices();
   const { jexPrices } = useGetMultiJextPrices(
     tokensIdentifiers.filter((id) => jexTokens.includes(id))
   );
@@ -27,6 +30,15 @@ const useGetMultiplePrices = (tokensIdentifiers: string[]) => {
           (etoken) => etoken.identifier === idenfier
         );
         price = elrondToken?.price || 0;
+
+        if (price == 0) {
+
+          const ourApiToken = apiTokens.find(
+            (token) => token.tokenA === idenfier
+          );
+
+          price = Number(ourApiToken?.tokenAprice) || 0;
+        }
       }
     }
     const data = {

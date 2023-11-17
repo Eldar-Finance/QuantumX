@@ -34,6 +34,8 @@ interface IProps {
   maxStakingAmount?: string;
   fixedStakedBalance?: string;
   noRestrictionsIds?: number[];
+  switchOn?: boolean;
+  showSwitch?: boolean;
 }
 
 const blur = false;
@@ -48,6 +50,7 @@ const FarmList = ({
   maxStakingAmount,
   fixedStakedBalance,
   noRestrictionsIds,
+  switchOn,
 }: IProps) => {
   const dispatch = useAppDispatch();
   const address = useAppSelector(selectUserAddress);
@@ -55,6 +58,7 @@ const FarmList = ({
   const hypeFarms = farms2.filter((farm) => ids.includes(farm.farm.farmId));
   const userFarm2Info = useAppSelector(selectUserFarms2Info);
   const userFarm2Rewards = useAppSelector(selectUserFarms2Rewards);
+
   useEffect(() => {
     if (address) {
       //farms from oteher farms (Quantumn smart constract)
@@ -75,13 +79,24 @@ const FarmList = ({
   useEffect(() => {
     dispatch(fetchAllFarms());
   }, [dispatch]);
+
+  let displayedFarms = hypeFarms;
+  if (switchOn) {
+    displayedFarms = hypeFarms.filter((farm) => {
+      return userFarm2Info.data.some(
+        (userFarm) =>
+          userFarm.farmId === farm.farm.farmId &&
+          Number(userFarm.stakedBalance) > 0
+    );
+  })};
+
   return (
-    <Box mt={20}>
+    displayedFarms.length > 0 && <Box mt={20}>
       <Flex mb={6} gap={4} transform={{ xs: "none", lg: "translateX(-50px)" }}>
         <Box>
           <NextImage src={hypeImage} alt="Hypezone" width={60} height={60} />
         </Box>
-        <Flex gap={2} alignItems="center">
+        <Flex gap={2} alignItems="center" justifyContent={"flex-start"} w={"full"}>
           <Heading fontSize={"3xl"}>{title}</Heading>
           {subtitle && <Text>{subtitle}</Text>}
         </Flex>
@@ -89,7 +104,7 @@ const FarmList = ({
       <BlurComponent blur={blur}>
         <FarmAccordion
           othersArr={{
-            allFarms: hypeFarms,
+            allFarms: displayedFarms,
             userFarmInfo: userFarm2Info.data,
             userFarm2Rewards: userFarm2Rewards.data,
           }}

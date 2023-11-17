@@ -37,6 +37,7 @@ const ChangeTag = () => {
   const [data, setData] = useState(null);
   const userAddress = useAppSelector(selectUserAddress);
   const [sellTagModalOpen, setSellTagModalOpen] = useState(false);
+  const [activeButton, setActiveButton] = useState("updateUsername");
 
   const isTagAvailable = async (username: string, extension: string): Promise<Boolean> => {
     return getIsTagAvailable(username, extension);
@@ -131,7 +132,8 @@ const ChangeTag = () => {
   const handleUpdateUsername = () => {
     setCanUpdateUsername(true);
     setCanUpdateExtension(false);
-
+    setActiveButton('updateUsername');
+  
     const userExtension = extensionsInfo.find(
       (ext) => ext.extension === tagInfo.extension
     );
@@ -143,12 +145,14 @@ const ChangeTag = () => {
   const handleUpdateExtension = () => {
     setCanUpdateUsername(false);
     setCanUpdateExtension(true);
+    setActiveButton('updateExtension');
 
     formik.setFieldValue("tag", tagInfo.username, true);
   };
 
   const handleSellTag = () => {
     setSellTagModalOpen(true);
+    setActiveButton('sellTag')
   }
 
   const isInvalid = formik.touched.tag && Boolean(formik.errors.tag);
@@ -156,19 +160,19 @@ const ChangeTag = () => {
   return (
     //@ts-ignore
     <TagCard as="form" onSubmit={formik.handleSubmit} maxW={"800px"}>
-      <Heading fontSize={"md"} mb={3}>
+      <Heading fontSize={"md"} mb={5}>
         {" "}
-        Your QuantumXTag : {tagInfo.tag}
+        Your QuantumXTag: &nbsp;&nbsp; {tagInfo.tag}
       </Heading>
 
       <Flex mb={10} gap={4} flexDir={{ xs: "column", md: "row" }}>
-        <ActionButton onClick={handleUpdateUsername}>
+        <ActionButton onClick={handleUpdateUsername} style={{opacity: activeButton === 'updateUsername' ? 1 : 0.5 }}>
           Update Username
         </ActionButton>
-        <ActionButton onClick={handleUpdateExtension}>
+        <ActionButton onClick={handleUpdateExtension} style={{opacity: activeButton === 'updateExtension' ? 1 : 0.5 }}>
           Replace Extension
         </ActionButton>
-        <ActionButton onClick={() => handleSellTag()}>
+        <ActionButton onClick={() => handleSellTag()} style={{opacity: activeButton === 'sellTag' ? 1 : 0.5 }}>
           Sell Tag
         </ActionButton>
       </Flex>
@@ -195,9 +199,12 @@ const ChangeTag = () => {
           onSelect={(selectedExtension) => {
             formik.setFieldValue("extention", selectedExtension);
             formik.setFieldError("tag", null); // clear the tag error
+            setActiveButton("updateExtension");
+            handleUpdateExtension;
           }}
           selectedExtention={formik.values.extention}
           specificCollection={data}
+          itemClicked={activeButton === "updateExtension"}
         />
       </Flex>
       <Flex mb={14} fontSize={"sm"} color="tomato">

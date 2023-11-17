@@ -7,7 +7,7 @@ const IndexPage = () => {
     <Fragment>
       <MetaHead
         metaTitle="QuantumX Network - Hub"
-        metaDescription="An exclusive NFT Minter for teams to leverage their projects"
+        metaDescription="An exclusive NFT Minter for teams to leverage their projects."
       />
       <Hub />
     </Fragment>

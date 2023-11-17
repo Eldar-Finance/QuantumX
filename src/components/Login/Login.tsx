@@ -3,16 +3,18 @@ import {
   Center,
   Link as ChakraLink,
   Flex,
+  HStack,
   Heading,
   ModalBody,
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
 import AngleRightImg from "assets/ui-elemts/angleRight2.svg";
+import GoogleLarge from "assets/ui-elemts/googleLarge.svg";
+import GoogleSmall from "assets/ui-elemts/google.svg";
 import { CloseIcon, LegerIcon, MultiversxLogo } from "components/Icons/ui";
 import NextImage from "components/NextImage/NextImage";
 import MyModal from "../Modal/Modal";
-
 import { WebWalletLoginButtonPropsType } from "@multiversx/sdk-dapp/UI/webWallet/WebWalletLoginButton";
 import dynamic from "next/dynamic";
 import { openLogin } from "redux/slices/settings/settings-reducer";
@@ -56,6 +58,15 @@ const WebWalletLoginButton: any = dynamic(
   { ssr: false }
 ) as WebWalletLoginButtonPropsType;
 
+const XaliasLoginButton: any = dynamic(
+  async () => {
+    return (
+      await import("@multiversx/sdk-dapp/UI/webWallet/XaliasLoginButton/XaliasLoginButton")
+    ).XaliasLoginButton;
+  },
+  { ssr: false }
+);
+
 const mobileText = (
   <Flex
     _focusVisible={{
@@ -68,6 +79,7 @@ const mobileText = (
     <MultiversxLogo fontSize={"12.28px"} mt="4px" /> PORTAL{" "}
   </Flex>
 );
+
 const defiWallet = (
   <Flex
     mb={0}
@@ -81,6 +93,7 @@ const defiWallet = (
     DeFi Wallet
   </Flex>
 );
+
 const webWallet = (
   <Flex
     mb={0}
@@ -93,6 +106,7 @@ const webWallet = (
     <MultiversxLogo fontSize={"12.28px"} mt="4px" /> Web Wallet{" "}
   </Flex>
 );
+
 const legerWallet = (
   <Flex
     alignItems={"center"}
@@ -105,6 +119,32 @@ const legerWallet = (
     {" "}
     <LegerIcon />
     Ledger{" "}
+  </Flex>
+);
+
+const xAliasWallet = (
+  <Flex
+    mb={0}
+    _focusVisible={{
+      outline: "none",
+    }}
+    gap={"2px"}
+  >
+    {" "}
+    <MultiversxLogo fontSize={"12.28px"} mt="4px" /> Alias{" "}
+  </Flex>
+);
+
+const operaWallet = (
+  <Flex
+    mb={0}
+    _focusVisible={{
+      outline: "none",
+    }}
+    gap={"2px"}
+  >
+    {" "}
+    <MultiversxLogo fontSize={"12.28px"} mt="4px" /> Opera Wallet{" "}
   </Flex>
 );
 
@@ -165,6 +205,14 @@ const Login = ({ isLoginOpen }) => {
                 nativeAuth
               />
             </LoginMethod>
+            <LoginMethod isXAlias={true}>
+              <XaliasLoginButton
+                callbackRoute={routeNames.home}
+                shouldRenderDefaultCss={false}
+                loginButtonText={xAliasWallet}
+                nativeAuth
+              />
+            </LoginMethod>
             <LoginMethod>
               {" "}
               <LedgerLoginButton
@@ -177,23 +225,38 @@ const Login = ({ isLoginOpen }) => {
         </Flex>
         <Center flexDir={"column"} w="full" textAlign={"center"}>
           <Box color="white.400" mb={"31px"}>
-            <Text mb="11px">If you’re on desktop, try X DeFi Wallet</Text>
-            <Text>If you’re on mobile, try X Portal</Text>
+            <Text mb="11px">If you’re on desktop, try DeFi Wallet, Web Wallet, or xAlias.</Text>
+            <Text>If you’re on mobile, try xPortal.</Text>
           </Box>
 
           <Text mb="11px">New to MultiverX?</Text>
-          <Box borderBottom={"1px solid white"}>
+          <Text>
+            {" "}
             <ChakraLink
               isExternal
-              href=""
+              href="https://xalias.com/"
               fontSize={"md"}
+              borderBottom={"1px solid white"}
               _hover={{
                 textDecoration: "none",
               }}
             >
-              Learn How to setup a wallet
+              Try xAlias
+            </ChakraLink>{" "}
+            using your Google account or {" "}
+            <ChakraLink
+              isExternal
+              href="https://docs.multiversx.com/wallet/overview"
+              fontSize={"md"}
+              borderBottom={"1px solid white"}
+              _hover={{
+                textDecoration: "none",
+              }}
+            >
+              read the docs
             </ChakraLink>
-          </Box>
+            {" "} about wallets.
+          </Text>
         </Center>
       </ModalBody>
     </MyModal>
@@ -202,8 +265,11 @@ const Login = ({ isLoginOpen }) => {
 
 export default Login;
 
-const LoginMethod = ({ children, onClick = undefined }) => {
+const LoginMethod = ({ children, onClick = undefined, isXAlias = false}) => {
   const bg = useColorModeValue("lightGray.lighter", "");
+  const isSmallDevice = window.innerWidth <= 768;
+  const googleImage = isSmallDevice ? GoogleSmall : GoogleLarge;
+  const googleImageWidth = isSmallDevice ? "32" : "160";
   return (
     <Flex
       fontSize="18px"
@@ -238,13 +304,17 @@ const LoginMethod = ({ children, onClick = undefined }) => {
             bg: "#0c0b0b",
           },
         },
+        "&:hover": {
+          bg: "#0c0b0b",
+        }
       }}
     >
       {children}
 
-      <Box position={"absolute"} right={"22px"}>
-        <NextImage src={AngleRightImg} alt="" />
-      </Box>
+      <HStack position={"absolute"} right={"22px"} gap={{sm: 5, md: 25}}>
+        {isXAlias && <NextImage src={googleImage} alt="Sign-in with Google" width={googleImageWidth}/>}
+        <NextImage src={AngleRightImg} alt="Go" />
+      </HStack>
     </Flex>
   );
 };

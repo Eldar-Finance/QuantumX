@@ -115,6 +115,52 @@ export const MultiESDTNFTTransfer = async (
   }
 };
 
+export const MultiESDTNFTTransferOnlyTx = async (
+  wsp: WspTypes,
+  funcName: string,
+  tokens: {
+    collection: string;
+    nonce: number;
+    value: number;
+  }[],
+  args: any[] = [],
+  gasL: number = 100000000
+) => {
+  try {
+    const sender = store.getState().userAccount.connectedAddress;
+    const senderAddress = new Address(sender);
+
+    let { simpleAddress } = getInterface(wsp);
+    const receiverAddress = new Address(simpleAddress);
+
+    const contract = new SmartContract({ address: receiverAddress});
+    let interaction = new Interaction(contract, new ContractFunction(funcName), args);
+
+    const data = tokens.flatMap((nft) => {
+      const nftData = TokenTransfer.metaEsdtFromBigInteger(
+        nft.collection,
+        nft.nonce,
+        new BigNumber(nft.value),
+      );
+      return nftData;
+    });
+  
+    if (data.length > 0) {
+      let tx = interaction
+      .withSender(senderAddress)
+      .useThenIncrementNonceOf(new Account(senderAddress)) // den xerw an xreiazetai auto
+      .withMultiESDTNFTTransfer(data)
+      .withGasLimit(gasL)
+      .withChainID(ChainId)
+      .buildTransaction();
+
+      return tx;
+    }
+  } catch (error) {
+    console.log("error", error);
+  }
+};
+
 export const ESDTTransferToUser = async ({
   token,
   receiver,
@@ -204,7 +250,7 @@ export const ESDTTransfer = async ({
   contractAddr: string;
   args?: any[];
   gasL?: number;
-  realValue?: string | number | null;
+  realValue?: string | number | null | BigNumber;
 }) => {
   const tokenIdentifier = token.identifier;
   const multiplyier = Math.pow(10, token.decimals || 18);
@@ -269,7 +315,11 @@ export const scCall = async (
   workspace: WspTypes,
   funcName: string,
   args: any = [],
-  gasLimit: number = 60000000
+  gasLimit: number = 60000000,
+  processingMessage: string = defaultProcessingMessage,
+  successMessage: string = defaultSuccessMessage,
+  errorMessage: string = defaultPerrorMessage,
+  transactionDuration: number = defaulttransactionDuration
 ) => {
   let { simpleAddress } = getInterface(workspace);
 
@@ -290,7 +340,13 @@ export const scCall = async (
     .withChainID(ChainId)
     .buildTransaction();
 
-  let transactionInput = { tx: tx };
+  let transactionInput = {
+    tx: tx,
+    processingMessage: processingMessage,
+    successMessage: successMessage,
+    errorMessage: errorMessage,
+    transactionDuration: transactionDuration,
+  };
 
   return await sendTransaction(transactionInput);
 };
@@ -580,4 +636,63 @@ export const EsdtTranferAndUnwrapEgld = async (
     .buildTransaction();
 
   return await sendMultipleTransactions({ txs: [tx1, tx2] });
+};
+
+export const MultipleHarvestCalls = async (
+  workspace: WspTypes,
+  funcName: string,
+  farmIds: number[],
+  feeToken: any,
+  feeAmount: number,
+  gasLimit: number = 60000000,
+) => {
+  console.log("⚠️ ~ file: index.ts:649 ~ feeAmount::::", feeAmount)
+  console.log("⚠️ ~ file: index.ts:649 ~ feeToken::::", feeToken)
+  const transactions = [];
+  const sender = store.getState().userAccount.connectedAddress;
+  const senderAddress = new Address(sender);
+  const { simpleAddress: scAddress } = getInterface(workspace);
+  const receiverAddress = new Address(scAddress);
+  // xSafe address
+  const feeReceiver = "erd1qqqqqqqqqqqqqpgqt05mernfnhy6uf46y7ldmpxxs77200pgu76sr6cd2v";
+
+  // Fee
+  const tokenIdentifier = feeToken.identifier;
+  console.log("⚠️ ~ file: index.ts:659 ~ tokenIdentifier::::", tokenIdentifier)
+  const multiplyier = Math.pow(10, feeToken.decimals || 18);
+  console.log("⚠️ ~ file: index.ts:661 ~ multiplyier::::", multiplyier)
+  const finalValue = feeAmount * multiplyier;
+  console.log("⚠️ ~ file: index.ts:663 ~ finalValue::::", finalValue)
+  const bgFinalValue = new BigNumber(finalValue).toFixed(0);
+  console.log("⚠️ ~ file: index.ts:665 ~ bgFinalValue::::", bgFinalValue)
+
+  const factory = new TransferTransactionsFactory(new GasEstimator());
+  const transfer = TokenTransfer.fungibleFromBigInteger(tokenIdentifier, bgFinalValue, feeToken.decimals);
+  
+  const tx = factory.createESDTTransfer({
+      tokenTransfer: transfer,
+      sender: senderAddress,
+      receiver: new Address(feeReceiver),
+      chainID: ChainId,
+      gasLimit: 10000000
+  });
+
+  transactions.push(tx);
+
+  // Harvests
+  farmIds.forEach((id) => {
+    const contract = new SmartContract({ address: new Address(receiverAddress)});
+    let interaction = new Interaction(contract, new ContractFunction(funcName), [new BigUIntValue(new BigNumber(id))]);
+
+    let tx = interaction
+    .withSender(senderAddress)
+    .useThenIncrementNonceOf(new Account(senderAddress)) // den xerw an xreiazetai auto
+    .withGasLimit(gasLimit)
+    .withChainID(ChainId)
+    .buildTransaction();
+
+    transactions.push(tx);
+  });
+
+  return await sendMultipleTransactions({ txs: transactions });
 };

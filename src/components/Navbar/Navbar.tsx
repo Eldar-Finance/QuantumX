@@ -1,6 +1,6 @@
 // import logo from "assets/logos/quantumx.png";
-import { Box, Flex, Icon, useMediaQuery } from "@chakra-ui/react";
-import { useGetLoginInfo } from "@multiversx/sdk-dapp/hooks";
+import { Box, Flex, Icon, Text, useBreakpoint, useBreakpointValue, useMediaQuery } from "@chakra-ui/react";
+import { useGetLoginInfo } from "@multiversx/sdk-dapp/hooks/account/useGetLoginInfo";
 import { logout } from "@multiversx/sdk-dapp/utils";
 import logo from "assets/logos/quantumx.svg";
 import ActionButton from "components/ActionButton/ActionButton";
@@ -33,13 +33,14 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
   const handleConnect = () => {
     dispatch(openLogin(true));
   };
+
   return (
     <motion.div initial={{ y: -100 }} whileInView={{ y: 0 }}>
       <MyContainer
         bg="black.light"
         borderRadius={{ xs: "xl", "2xl": "3xl" }}
-        py={{ xs: "15px", "2xl": "40px" }}
-        px={!isLargerThanLg ? "30px" : "80px"}
+        py={{ xs: "15px", "lg": "40px" }}
+        px={!isLargerThanLg ? "15px" : "80px"}
         display="flex"
         justifyContent={onlyConnectButton ? "flex-end" : "space-between"}
         fontSize={{ xs: "sm", "2xl": "md" }}
@@ -49,15 +50,16 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
         alignItems={"center"}
       >
         {!isLargerThanLg && (
-          <Flex w="full" alignItems="center" justifyContent="space-between" direction="column" gap="10px">
+          <Flex w="full" alignItems="center" justifyContent="space-between" direction="column" gap="20px">
             <Flex w="full" alignItems="center" justifyContent="space-between">
               <Link href="/">
                 <NextImage src={logo} alt="QuantumX" width={100} />
               </Link>
               <Flex alignItems="center" justifyContent="flex-end" flex="1">
-                <QTagButton />
+                <QTagButton/>
                 {!onlyConnectButton && (
                   <ActionButton
+                    h={{xs: "32px"}}
                     fontSize={{ xs: "14px", "2xl": "md" }}
                     fontWeight="600"
                     display={{ xs: "block", md: "none" }}
@@ -65,15 +67,15 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
                     bg={isLoggedIn ? "danger" : "main"}
                     ml="2px"
                   >
-                    <Icon as={LightningIcon} />
+                    {isLoggedIn ? <Icon as={LightningIcon} pb={"2px"} /> : <Text>Connect</Text>}
                   </ActionButton>
                 )}
               </Flex>
             </Flex>
-            <Box w="fit-content" m="auto">
+            <Box w="fit">
               <Menu />
             </Box>
-          </Flex>
+          </Flex>  
         )}
         {isLargerThanLg && (
           <Flex w="full" alignItems="center" justifyContent="space-between" gap="10px">
@@ -84,7 +86,7 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
             <Box w="fit-content" m="auto" flex="1" display="flex" justifyContent="center">
               <Menu />
             </Box>
-            <QTagButton />
+            <QTagButton/>
             <ActionButton
               px={{ xs: "30px", "2xl": "40px" }}
               fontSize={{ xs: "14px", "2xl": "md" }}

@@ -215,9 +215,11 @@ export interface IElrondToken {
   supply: string | number;
   circulatingSupply: string | number;
 }
+
 export interface IELrondTOkenWithBalance extends IElrondToken {
   balance: number | string;
 }
+
 export interface IElrondAccountToken {
   type: ElrondType;
   identifier: string;

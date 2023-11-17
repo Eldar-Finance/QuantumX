@@ -20,7 +20,7 @@ import {
   EsdtTranferAndUnwrapEgld,
   wrapEgldAndEsdtTranfer,
 } from "api/sc/calls";
-import { EGLD_VAL, getInterface, sendMultipleTransactions } from "api/sc/sc";
+import { EGLD_VAL, getInterface, sendMultipleTransactions, wrapEgldpWspShard1 } from "api/sc/sc";
 import BigNumber from "bignumber.js";
 import store from "redux/store";
 import { setElrondBalance } from "utils/functions/formatBalance";
@@ -84,7 +84,7 @@ export const swap = async (
   // if user want EGLD -> WEGLD
   if (fromToken.token === "EGLD" && toField.token === toknesID.wegld) {
     return await EGLDPayment(
-      contractAddr.wrapEgldShar1,
+      wrapEgldpWspShard1,
       "wrapEgld",
       Number(fromToken.value),
       [],

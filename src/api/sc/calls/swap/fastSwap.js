@@ -68,7 +68,7 @@ export const fastSwapInJex = async (orders, scaddress) => {
       value: value,
       receiver: new Address(scaddress),
       data: payload,
-      gasLimit: 80000000,
+      gasLimit: 120000000,
       chainID: ChainId,
     });
 

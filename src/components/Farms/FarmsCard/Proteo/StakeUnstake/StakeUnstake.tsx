@@ -23,7 +23,7 @@ const StakeUnstake = ({ pf }: IProps) => {
   const handleOpenStake = () => {
     setOpenStake((s) => !s);
   };
-  console.log(pf.type);
+  // console.log(pf.type);
   return (
     <ProteoItemContenxt.Consumer>
       {(value) => {
@@ -90,12 +90,11 @@ const StakeUnstake = ({ pf }: IProps) => {
                     variant={"solid"}
                     w="full"
                     maxW={"500px"}
-                    style={pf.type != "pool" ? { pointerEvents: "none", opacity: 0.2 } : {}}
+                    style={{ pointerEvents: "none", opacity: 0.2 }}
                   >
                     STAKE {pf.type != "pool" && "LP"}
                   </ActionButton>
                 </Center>
-                {pf.type != "pool" &&
                 <Flex
                   justifyContent={"flex-end"}
                   alignItems="center"
@@ -112,9 +111,8 @@ const StakeUnstake = ({ pf }: IProps) => {
                       </Box>
                     }
                   />
-
                   <Text ml={1}>Staking is disabled</Text>
-                </Flex>}
+                </Flex>
               </Center>
               <Center flexDir={"column"} w="full">
                 <Center flex="1">

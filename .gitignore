@@ -44,3 +44,6 @@ public/sw.js.map
 src/api/net.config.ts
 .env
 tsconfig.tsbuildinfo
+
+/.vscode
+package-lock.json

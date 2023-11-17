@@ -16,9 +16,10 @@ interface IProps {
   selectedExtention: IScQxTagExtension;
   specificCollection?: { [key: string]: boolean };
   disabled?: boolean;
+  itemClicked?: boolean;
 }
 
-const ExtensionSelect = ({ onSelect, disabled, selectedExtention, specificCollection }: IProps) => {
+const ExtensionSelect = ({ onSelect, disabled, selectedExtention, specificCollection, itemClicked }: IProps) => {
   const { extensionsInfo } = useGetExtensionsList();
 
   const filteredExtensions = extensionsInfo.filter((extension) => {
@@ -47,6 +48,9 @@ const ExtensionSelect = ({ onSelect, disabled, selectedExtention, specificCollec
           rightIcon={<ChevronDownIcon />}
           position={"relative"}
           disabled={disabled}
+          style={{
+            opacity: itemClicked ? 1 : 0.5,
+          }}
         >
           {selectedExtention ? (
             `.${selectedExtention?.extension}`

@@ -286,4 +286,25 @@ export const pairs = [
     token2lp: "WEGLD-bd4d79",
     token1lp: "RARE-99e8b0",
   },
+  {
+    lpname: "HYPELEGLD",
+    lpidentifier: "HYPELEGLD-d65493",
+    lpprice: "0",
+    token2lp: "HYPE-619661",
+    token1lp: "LEGLD-d74da9",
+  },
+  {
+    lpname: "RARELEGLD",
+    lpidentifier: "RARELEGLD-55ef1d",
+    lpprice: "0",
+    token2lp: "RARE-99e8b0",
+    token1lp: "LEGLD-d74da9",
+  },
+  {
+    lpname: "CUMBWEGLD",
+    lpidentifier: "CUMBWEGLD-7912ad",
+    lpprice: "0",
+    token2lp: "CUMB-8b7006",
+    token1lp: "WEGLD-bd4d79",
+  }
 ];
