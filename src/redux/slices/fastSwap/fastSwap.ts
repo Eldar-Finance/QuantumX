@@ -7,7 +7,6 @@ import {
   fetchAllTokens,
   fetchBalances,
   fetchClaimableTokens,
-  fetchDefaultFeeA,
   fetchEarnersInfo,
   fetchFeesInfo,
   fetchOffers,
@@ -257,18 +256,6 @@ export const fastSwap = createSlice({
         state.claimableTokens.status = "failed";
         state.claimableTokens.error = action.error.message;
       })
-      // fetchDefaultFeeA
-      .addCase(fetchDefaultFeeA.pending, (state) => {
-        state.defaultFeeA.status = "loading";
-      })
-      .addCase(fetchDefaultFeeA.fulfilled, (state, action) => {
-        state.defaultFeeA.status = "succeeded";
-        state.defaultFeeA.data = action.payload;
-      })
-      .addCase(fetchDefaultFeeA.rejected, (state, action) => {
-        state.defaultFeeA.status = "failed";
-        state.defaultFeeA.error = action.error.message;
-      });
   },
 });
 
