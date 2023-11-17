@@ -16,7 +16,7 @@ export const getFeeBasedInEpoch = (epoch) => {
   return fee;
 };
 
-export const getBigerTime = (days: number, hours: number, minutes: number, seconds: number): string => {
+export const getBigerTime = (days, hours, minutes, seconds) => {
   if (days > 0) {
     return `${days} day${days > 1 ? 's' : ''}`;
   } else if (hours > 0) {
