@@ -15,7 +15,6 @@ import QxTags from "./Views/QxTags/QxTags";
 import Hoot from "./Views/Hoot/Hoot";
 import SmartSwap from "./Views/Swap/SmarSwap";
 
-const DCAAdmin: any = dynamic(() => import("./Views/DCAAdmin/DCAAdmin"));
 
 const AdminView = () => {
   const Router = useRouter();
@@ -55,14 +54,6 @@ const AdminView = () => {
               tabPanel: (
                 <LayOut>
                   <SmartSwap />
-                </LayOut>
-              ),
-            },
-            {
-              tabText: "DCA",
-              tabPanel: (
-                <LayOut>
-                  <DCAAdmin address={myConnectedAddress} />
                 </LayOut>
               ),
             },
