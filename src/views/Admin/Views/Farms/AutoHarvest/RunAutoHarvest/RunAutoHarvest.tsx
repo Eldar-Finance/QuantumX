@@ -28,7 +28,7 @@ interface IProps {
   isAmount?: boolean;
 }
 
-const gas = 180000000;
+const gas = 250000000;
 
 const RunAutoHarvest = ({ isAmount, scFunc, placeholder, title }: IProps) => {
   const [gasLimit, setGasLimit] = useState(gas);
@@ -108,18 +108,18 @@ const RunAutoHarvest = ({ isAmount, scFunc, placeholder, title }: IProps) => {
             bg: "#0F1535",
           }}
           cursor="pointer"
-          name="id"
-        >
-          <Box as="option" value={""} bg="#252943 !important">
-            Select Farm ID
-          </Box>
-          {farmIds.sort((a, b) => Number(a) - Number(b)).map((item) => {
-            return (
-              <Box key={item.toString()} as="option" value={item.toString()} bg="#252943 !important">
-                {item}
-              </Box>
-            );
-          })}
+            name="id"
+          >
+            <Box as="option" value={""} bg="#252943 !important">
+              Select Farm ID
+            </Box>
+            {farmIds.sort((a, b) => Number(a) - Number(b)).map((item) => {
+              return (
+                <Box key={item.toString()} as="option" value={item.toString()} bg="#252943 !important">
+                  {String(item)}
+                </Box>
+              );
+            })}
         </Select>
         <Select
           onChange={handleChangeSelectedUser}

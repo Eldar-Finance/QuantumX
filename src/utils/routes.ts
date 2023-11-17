@@ -7,6 +7,7 @@ export interface IRoute {
   soon?: boolean;
   forAdmins?: boolean;
   isNew?: boolean;
+  color?: string;
 }
 export const routeNames = {
   home: "/",
@@ -33,15 +34,15 @@ export const routes: {
   farms: IRoute;
   pools: IRoute;
   hub: IRoute;
-  dca: IRoute;
+  // dca: IRoute;
   rewards: IRoute;
   // heroes: IRoute;
   admin: IRoute;
   panel: IRoute;
   hypezone: IRoute;
-  converter: IRoute;
+  // converter: IRoute;
   moondustx: IRoute;
-  marketplace: IRoute;
+  // marketplace: IRoute;
 } = {
   dashboard: {
     path: routeNames.dashboard,
@@ -58,7 +59,7 @@ export const routes: {
   pools: {
     path: routeNames.Pools,
     name: "Pools",
-    onModalAndNavbar: true,
+    // onModalAndNavbar: true,
   },
   hypezone: {
     path: routeNames.hypezone,
@@ -68,51 +69,52 @@ export const routes: {
   hub: {
     path: routeNames.hub,
     name: "Hub",
-    onModal: true,
+    onModalAndNavbar: true,
   },
-  dca: {
-    path: routeNames.dca,
-    name: "Dollar Cost Averaging",
-    onModal: true,
-  },
+  // dca: {
+  //   path: routeNames.dca,
+  //   name: "Dollar Cost Averaging",
+  //   onModal: true,
+  // },
   rewards: {
     path: routeNames.rewards,
     name: "QuantumX Rewards",
     onModal: true,
   },
-  converter: {
-    path: routeNames.converter,
-    name: "Raretopia",
-    onModalAndNavbar: true,
-  },
+  // converter: {
+  //   path: routeNames.converter,
+  //   name: "Raretopia",
+  //   onModalAndNavbar: true,
+  // },
   moondustx: {
     path: routeNames.moondustx,
     name: "MoonDustX",
     onModal: true,
   },
-  marketplace: {
-    path: routeNames.marketplace,
-    name: "QXTags Marketplace",
-    onModal: true,
-    isNew: true,
-  },
+  // marketplace: {
+  //   path: routeNames.marketplace,
+  //   name: "QXTags Marketplace",
+  //   onModal: true,
+  //   isNew: true,
+  // },
   // heroes: {
   //   path: routeNames.heroes,
   //   name: "QuantumX Heroes",
   //   onModal: true,
   // },
-
   panel: {
     path: routeNames.panel,
     name: "Quantum Panel",
     onModal: true,
+    color: "warning",
   },
   admin: {
     path: routeNames.admin,
     name: "Admin Panel",
     onModal: true,
     forAdmins: true,
-  },
+    color: "danger",
+  }
 };
 
 const getRoutesArr = () => {

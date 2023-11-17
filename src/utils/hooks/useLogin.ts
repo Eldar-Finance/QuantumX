@@ -1,4 +1,4 @@
-import { useGetLoginInfo } from "@multiversx/sdk-dapp/hooks";
+import { useGetLoginInfo } from "@multiversx/sdk-dapp/hooks/account/useGetLoginInfo";
 import { logout } from "@multiversx/sdk-dapp/utils";
 import { useRouter } from "next/router";
 import { openLogin } from "redux/slices/settings/settings-reducer";

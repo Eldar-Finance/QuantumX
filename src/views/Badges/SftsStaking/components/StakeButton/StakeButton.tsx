@@ -1,9 +1,10 @@
-import { Box, useDisclosure } from "@chakra-ui/react";
+import { Box, Center, useDisclosure } from "@chakra-ui/react";
 import { contractAddr } from "api/net.config";
 import { ESDTNFTTransfer } from "api/sc/calls";
 import ActionButton from "components/ActionButton/ActionButton";
 import { memo } from "react";
 import SelectSftsModal from "./SelectSftsModal/SelectSftsModal";
+
 const StakeButton = ({ sfts, address, ...props }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -25,8 +26,8 @@ const StakeButton = ({ sfts, address, ...props }) => {
   };
 
   return (
-    <Box>
-      <ActionButton ml={2} onClick={onOpen} {...props}>
+    <Center>
+      <ActionButton onClick={onOpen} {...props}>
         Stake
       </ActionButton>
 
@@ -38,7 +39,7 @@ const StakeButton = ({ sfts, address, ...props }) => {
           onConfirm={handleSubmit}
         />
       )}
-    </Box>
+    </Center>
   );
 };
 

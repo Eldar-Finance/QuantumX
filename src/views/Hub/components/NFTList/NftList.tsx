@@ -4,6 +4,7 @@ import { contractAddr } from "api/net.config";
 import { EGLDPayment, ESDTTransfer } from "api/sc/calls";
 import srbImage from "assets/hub/srbcatalog.jpg";
 import vacineImage from "assets/hub/vacine.png";
+import vipImage from "assets/hub/vip.png";
 import miceCityImage from "assets/hub/miceCityImage.jpg";
 import cowImage from "assets/hub/cow.jpg";
 import pepeImage from "assets/hub/pepe.jpg";
@@ -18,40 +19,30 @@ import NftCard from "../NftCard/NftCard";
 const NftList = () => {
   const { offers } = useGetOffers();
   const { tokens } = useGetMultipleElrondTokens(
-    offers ? [offers[0].token, offers[1].token, offers[3].token, offers[4].token, offers[6].token, offers[7].token, offers[8].token] : []
+    offers ? [offers[8].token, offers[9].token, offers[10].token, offers[11].token] : []
   );
-
-  // console.log(offers);
 
   if (!offers || !tokens) return null;
 
   const offer1 = {
-    ...offers[1],
-    elrondToken: tokens.find((t) => t.identifier === offers[1].token),
+    ...offers[11],
+    elrondToken: tokens.find((t) => t.identifier === offers[11].token),
   };
   const offer2 = {
     ...offers[0],
     elrondToken: tokens.find((t) => t.identifier === offers[0].token),
   };
   const offer3 = {
-    ...offers[3],
-    elrondToken: tokens.find((t) => t.identifier === offers[3].token),
-  };
-  const offer4 = {
-    ...offers[4],
-    elrondToken: tokens.find((t) => t.identifier === offers[4].token),
-  };
-  const offer5 = {
-    ...offers[7],
-    elrondToken: tokens.find((t) => t.identifier === offers[7].token),
-  };
-  const offer6 = {
-    ...offers[6],
-    elrondToken: tokens.find((t) => t.identifier === offers[6].token),
+    ...offers[10],
+    elrondToken: tokens.find((t) => t.identifier === offers[10].token),
   };
   const offer7 = {
     ...offers[8],
     elrondToken: tokens.find((t) => t.identifier === offers[8].token),
+  };
+  const offer8 = {
+    ...offers[9],
+    elrondToken: tokens.find((t) => t.identifier === offers[9].token),
   };
 
   const handleSubmitHubOffer = (offer) => {
@@ -82,27 +73,23 @@ const NftList = () => {
 
   return (
     <Center flexWrap={"wrap"} gap={12} mt={8}>
-      {/* <NftCard
-        iamge={srbImage}
+      <NftCard
         token={offer1.token}
+        iamge={vipImage}
+        onSubmit={() => handleSubmitHubOffer(offer1)}
         text={
           <Text>
             Pay{" "}
-            {formatBalance(
-              {
-                balance: offer1.price,
-                decimals: offer1.elrondToken?.decimals,
-              },
-              false,
-              8
-            )}{" "}
-            {formatTokenI(offer1.token)}
-            <br /> Get a random SRB
-            <br /> <br /> Available NFTs: {offer1.numberOfAvilableNfts}
+            {formatBalance({
+              balance: offer1.price,
+              decimals: offer1.elrondToken?.decimals,
+            })}{" "}
+            {formatTokenI(offer1.token)} <br /> Get a VIP CARD
+            <br /> <br /> Available NFTs: <br /> {offer1.numberOfAvilableNfts}
           </Text>
         }
-        onSubmit={() => handleSubmitHubOffer(offer1)}
-      /> */}
+        disabled={offer1.numberOfAvilableNfts === 0}
+      />
       <NftCard
         token={offer2.token}
         iamge={vacineImage}
@@ -183,25 +170,25 @@ const NftList = () => {
       /> */}
       <NftCard
         iamge={srbImage}
-        token={offer6.token}
+        token={offer8.token}
         text={
           <Text>
             Pay{" "}
             {formatBalance(
               {
-                balance: offer6.price,
-                decimals: offer6.elrondToken?.decimals,
+                balance: offer8.price,
+                decimals: offer8.elrondToken?.decimals,
               },
               false,
               8
             )}{" "}
-            {formatTokenI(offer6.token)}
+            {formatTokenI(offer8.token)}
             <br /> Get a random SRB
-            <br /> <br /> Available NFTs: <br /> {offer6.numberOfAvilableNfts}
+            <br /> <br /> Available NFTs: <br /> {offer8.numberOfAvilableNfts}
           </Text>
         }
-        onSubmit={() => handleSubmitHubOffer(offer6)}
-        disabled={offer6.numberOfAvilableNfts === 0}
+        onSubmit={() => handleSubmitHubOffer(offer8)}
+        disabled={offer8.numberOfAvilableNfts === 0}
       />
       <NftCard
         iamge={pepeImage}

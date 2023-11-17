@@ -24,6 +24,7 @@ export const contractAddress = {
   faucet: "erd1qqqqqqqqqqqqqpgqam4ypfqlhv8y2xqtd8r46h8kkmhlja7l24usdruc5y",
   rps: "erd1qqqqqqqqqqqqqpgqntetdqumf93lnykcmz7kz9gsh8kj8qrz24usrdys05",
   rpsRewards: "erd1qqqqqqqqqqqqqpgq5c3afwz5kq5kc5jxzqpsnvrj68hz9f8c24usns0985",
+  wrapEgld: "erd1qqqqqqqqqqqqqpgq7ykazrzd905zvnlr88dpfw06677lxe9w0n4suz00uh"
 };
 
 /* Referral */

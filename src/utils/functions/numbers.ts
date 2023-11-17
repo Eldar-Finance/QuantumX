@@ -14,17 +14,21 @@ export function numberWithCommas(x, decimals = false) {
 }
 
 export function preventExponetialNotation(x: any) {
-  return ("" + +x).replace(/(-?)(\d*)\.?(\d*)e([+-]\d+)/, function(
-    a,
-    b,
-    c,
-    d,
-    e
-  ) {
-    return e < 0
-      ? b + "0." + Array(1 - e - c.length).join("0") + c + d
-      : b + c + d + Array(e - d.length + 1).join("0");
-  });
+  var data = String(x).split(/[eE]/);
+  if(data.length== 1) return data[0];
+
+  var  z = '', sign = x < 0? '-':'',
+  str = data[0].replace('.', ''),
+  mag = Number(data[1])+ 1;
+
+  if(mag<0){
+      z = sign + '0.';
+      while(mag++) z += '0';
+      return z + str.replace(/^\-/,'');
+  }
+  mag -= str.length;  
+  while(mag--) z += '0';
+  return str + z;
 }
 
 // function to cut a number with a lot zeros after decimal point and ... and show last part of the number

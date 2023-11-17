@@ -1,9 +1,8 @@
 // import logo from "assets/logos/quantumx.png";
-import { Box, Flex, Icon, useBreakpoint, useBreakpointValue, useMediaQuery } from "@chakra-ui/react";
-import { useGetLoginInfo } from "@multiversx/sdk-dapp/hooks";
+import { Box, Flex, Icon, Text, useBreakpoint, useBreakpointValue, useMediaQuery } from "@chakra-ui/react";
+import { useGetLoginInfo } from "@multiversx/sdk-dapp/hooks/account/useGetLoginInfo";
 import { logout } from "@multiversx/sdk-dapp/utils";
 import logo from "assets/logos/quantumx.svg";
-import logohoot from "assets/logos/logohoot.png";
 import ActionButton from "components/ActionButton/ActionButton";
 import MyContainer from "components/Container/Container";
 import { LightningIcon } from "components/Icons/ui";
@@ -35,8 +34,6 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
     dispatch(openLogin(true));
   };
 
-  const hootBannerMarginTop = isLargerThanLg ? "0px" : "-65px";
-
   return (
     <motion.div initial={{ y: -100 }} whileInView={{ y: 0 }}>
       <MyContainer
@@ -59,9 +56,10 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
                 <NextImage src={logo} alt="QuantumX" width={100} />
               </Link>
               <Flex alignItems="center" justifyContent="flex-end" flex="1">
-                <QTagButton />
+                <QTagButton/>
                 {!onlyConnectButton && (
                   <ActionButton
+                    h={{xs: "32px"}}
                     fontSize={{ xs: "14px", "2xl": "md" }}
                     fontWeight="600"
                     display={{ xs: "block", md: "none" }}
@@ -69,12 +67,12 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
                     bg={isLoggedIn ? "danger" : "main"}
                     ml="2px"
                   >
-                    <Icon as={LightningIcon} />
+                    {isLoggedIn ? <Icon as={LightningIcon} pb={"2px"} /> : <Text>Connect</Text>}
                   </ActionButton>
                 )}
               </Flex>
             </Flex>
-            <Box w="fit-content" m="auto">
+            <Box w="fit">
               <Menu />
             </Box>
           </Flex>  
@@ -88,7 +86,7 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
             <Box w="fit-content" m="auto" flex="1" display="flex" justifyContent="center">
               <Menu />
             </Box>
-            <QTagButton />
+            <QTagButton/>
             <ActionButton
               px={{ xs: "30px", "2xl": "40px" }}
               fontSize={{ xs: "14px", "2xl": "md" }}
@@ -103,11 +101,6 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
           </Flex>
         )}
       </MyContainer>
-      <Box style={{float:"right",marginRight:"3%", marginTop: hootBannerMarginTop}}>
-        <Link href={"https://hoot.network"}>
-          <NextImage src={logohoot} alt="" width={45}/>
-        </Link>
-      </Box>
     </motion.div>
   );
 };

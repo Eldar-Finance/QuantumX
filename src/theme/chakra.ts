@@ -177,6 +177,7 @@ const customTheme = extendTheme({
 
     secondary: "#232526",
     main: "#22F7DD",
+    warning: "#faac02",
     danger: "#A04C4C",
   },
 

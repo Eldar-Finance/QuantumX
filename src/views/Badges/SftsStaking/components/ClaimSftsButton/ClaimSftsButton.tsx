@@ -9,7 +9,7 @@ const ClaimSftsButton = ({ ...props }) => {
   };
 
   return (
-    <Center w="full">
+    <Center>
       <ActionButton onClick={handleClaimSfts} {...props}>
         Retrieve SFTs
       </ActionButton>

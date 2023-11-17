@@ -35,6 +35,10 @@ import { formatTokenI } from "utils/functions/tokens";
 import { useAppDispatch, useAppSelector } from "utils/hooks/redux";
 import useGetTotalValuePools from "utils/hooks/useGetTotalValuePools";
 import { proteoPoolsArr } from "./constants";
+import { InfoIcon } from "@chakra-ui/icons";
+import AutoHarvestInfoModal from "views/Admin/Views/Farms/AutoHarvestInfoModal";
+import HarvestAll from "components/Farms/HarvestAll/HarvestAll";
+import ActionButton from "components/ActionButton/ActionButton";
 
 const Pools = () => {
   const dispatch = useAppDispatch();
@@ -157,6 +161,17 @@ const Pools = () => {
     }
   };
 
+  const isSmallDevice = window.innerWidth <= 768;
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const handleInfoModal = async () => {
+      setModalOpen(!modalOpen);
+  };
+
+  const userHarvestableFarms = userFarm2Rewards.data.filter((farm) => {
+    return farm.harvestableAmount > 0 && farms2.some((f) => f.farm.farmId === farm.farmId);
+  });
+
   return (
     <Layout>
       <MyContainer pb="100px">
@@ -174,15 +189,37 @@ const Pools = () => {
             amount={totalValueLocked}
             tvlText = "Total value Locked in Pools"
           />
-          <Flex w="full" gap="50px" alignItems="center" justifyContent={"flex-end"} mt={{ xs: "40px", md: "70px" }}>
-            { address && (<Flex alignItems="center" gap="10px">
-                <Switch size="md" isChecked={isOpen} colorScheme="teal" onChange={handleToggle} />
-                <Box>My Pools</Box>
-              </Flex>
-            )}
-            <Search onChange={handleSearch}/>
+          <HarvestAll harvestableFarms={userHarvestableFarms} type="pools"/>
+          <Flex w="full" justifyContent={"flex-end"} mt={"1px"}>
+            {!isSmallDevice && <Flex w="150px" alignItems="end" justifyContent={"flex-end"} mt={{ xs: "30px", md: "30px" }} onClick={handleInfoModal}>
+              {/* <InfoIcon color="white" ml="3" boxSize={6} onClick={handleInfoModal}/> */}
+              <ActionButton
+                  height={"30px"}
+                  bg="white"
+                  // mt={5}
+                  onClick={handleInfoModal}
+                  disabled={false}
+                  fontSize={"15px"}
+              >
+                  <InfoIcon/> &nbsp;&nbsp; Auto-Harvest
+              </ActionButton>
+            </Flex>}
+            <Flex w="full" gap={isSmallDevice ? "15px" : "10px"} alignItems="center" justifyContent={isSmallDevice ? "flex-start" : "flex-end"} mt={{ xs: "30px", md: "50px" }} whiteSpace={"nowrap"}>
+              { address && (<Flex alignItems="center" gap="10px">
+                  <Switch size="md" isChecked={isOpen} colorScheme="teal" onChange={handleToggle} />
+                  <Box>My Pools</Box>
+                </Flex>
+              )}
+              <Search onChange={handleSearch}/>
+            </Flex>
+            {isSmallDevice && <Flex w="20px" alignItems="center" justifyContent={"flex-end"} mt={{ xs: "30px", md: "30px" }} onClick={handleInfoModal}>
+              <InfoIcon color="white" ml="3" boxSize={6} onClick={handleInfoModal}/>
+            </Flex>}
           </Flex>
-          <Center mt={{ xs: "15px", md: "30px" }} w="full">
+          {modalOpen && 
+            <AutoHarvestInfoModal onClose={() => setModalOpen(false)}/>
+          }
+          <Center mt={"15px"} w="full">
             <ProteoFarmsCard
               proteoArr={proteoPoolsArrToSearch}
               othersArr={{

@@ -11,9 +11,10 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import { useGetAccountInfo } from "@multiversx/sdk-dapp/hooks";
+import { useGetAccountInfo } from "@multiversx/sdk-dapp/hooks/account/useGetAccountInfo";
 import { contractAddr } from "api/net.config";
 import { EGLDPayment } from "api/sc/calls";
+import { wrapEgldpWsp } from "api/sc/sc";
 import ActionButton from "components/ActionButton/ActionButton";
 import MyModal from "components/Modal/Modal";
 
@@ -43,7 +44,7 @@ const WrapModal = ({ isOpenModal, onCloseModal }) => {
   const handleSubmit = async () => {
     if (amount) {
       const res = await EGLDPayment(
-        contractAddr.wrapEgld,
+        wrapEgldpWsp,
         "wrapEgld",
         amount,
         [],

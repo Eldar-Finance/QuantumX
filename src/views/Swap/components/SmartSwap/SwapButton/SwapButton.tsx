@@ -1,5 +1,5 @@
 import { ButtonProps } from "@chakra-ui/react";
-import { useTrackTransactionStatus } from "@multiversx/sdk-dapp/hooks";
+import { useTrackTransactionStatus } from "@multiversx/sdk-dapp/hooks/transactions/useTrackTransactionStatus";
 import ActionButton from "components/ActionButton/ActionButton";
 import { useState } from "react";
 import {

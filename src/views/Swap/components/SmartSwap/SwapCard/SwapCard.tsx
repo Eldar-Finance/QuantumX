@@ -23,14 +23,22 @@ import { ILpSmartSwap, INomalSmartSwap } from "utils/types/others.interface";
 import useGetSwapInfo from "views/Swap/hooks/useGetSwapInfo";
 import FeeInfo from "../FeeInfo/FeeInfo";
 import SwapDetails from "../SwapDetails/SwapDetails";
+import React, { useState } from 'react';
+
 
 const SwapCard = () => {
   const fromToken = useAppSelector(selectFromField);
   const toToken = useAppSelector(selectToField);
   const dispatch = useAppDispatch();
   const router = useRouter();
-  const handleChangeFromField = (token) => {
-    dispatch(setFromTokenValue(token));
+  const [isNumberEntered, setIsNumberEntered] = useState(false);
+
+  const handleChangeFromField = (value) => {
+    // Update state based on whether the input is a valid number
+    setIsNumberEntered(!isNaN(value) && value.trim() !== '');
+
+    // Existing logic in your handleChangeFromField
+    dispatch(setFromTokenValue(value));
   };
 
   const { data, isLoading, isSapwToLp } = useGetSwapInfo();
@@ -90,25 +98,25 @@ const SwapCard = () => {
       width={"full"}
       flexDir={"column"}
       justifyContent={"flex-start"}
-      alignItems={"center"}
+      alignItems={"left"}
     >
-      <Heading textAlign="center" fontSize={"3xl"}>
-        Smart Swap
+      <Heading as="h1" ml={"15px"} fontSize={"xl"}>
+        Swap
       </Heading>
 
-      <Text mb={4}>xExchange/Jungle DEX aggregator</Text>
       <Box
         maxWidth={"500px"}
         width={"full"}
         mb={0}
         borderRadius="30px"
         position="relative"
-        pt={2}
+        pt={4}
       >
         <Box>
           <Flex flexDir={"column"} width={"full"}>
-            <Center flexDir={"column"} position="relative">
+            <Center flexDir={"column"} position="relative" mb={"20px"}>
               <TextField
+                sxProps={{borderColor: "transparent" , backgroundColor:"black.base"}}
                 label={"You send"}
                 id="from"
                 isMaxToken
@@ -122,7 +130,7 @@ const SwapCard = () => {
                   (isSapwToLp ? data[1]?.dollarAmount : data[0]?.dollarAmount)
                 }
               />
-              <Center position={"absolute"} bottom={"-20px"} zIndex={2}>
+              <Center  position={"absolute"} bottom={"-30px"} zIndex={2}>
                 <IconButton
                   onClick={handleExchangeFields}
                   borderRadius={"1.5rem"}
@@ -137,13 +145,11 @@ const SwapCard = () => {
               </Center>
             </Center>
             <TextField
+              sxProps={{borderColor: "transparent" , backgroundColor:"black.base"}}
               label={"You receive"}
               id="to"
               handleClickToken={handleOnSelectToToken}
               field={toToken}
-              sxProps={{
-                marginBottom: "15px",
-              }}
               // @ts-ignore
               disabled={true}
               isLoadingAmount={isLoading}
@@ -157,16 +163,19 @@ const SwapCard = () => {
             {toToken.token && (
               <Flex justifyContent={"flex-end"} mt={-2} color="#24918a"></Flex>
             )}
-
-            <SwapDetails />
-
+            {isNumberEntered && (
+              <SwapDetails />
+            )}
             <SwapButton
               bg={"black.dark"}
               color="main"
-              py="20px"
+              py="15px"
+              width="60%"
+              alignContent="center"
               swapInfo={data}
               isSapwToLp={isSapwToLp}
               // disableButton={disableButton}
+              style={{ margin: 'auto' , marginTop:'40px'}}
             />
 
             <FeeInfo />

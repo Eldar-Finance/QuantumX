@@ -20,7 +20,6 @@ const SellTagModal = ({ onClose }) => {
 
     const validationSchema = Yup.object({
         inputValue: Yup.number()
-            .nullable(true)
             .typeError('Input value must be a number')
             .required('Input value is required'),
     });

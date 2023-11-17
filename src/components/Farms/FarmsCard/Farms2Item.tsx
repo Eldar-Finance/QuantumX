@@ -109,6 +109,9 @@ const Farms2Item = ({
   const { isSrbStaker } = useCanUsePool7();
 
   const { apr, apy } = useApr(farm, multifarmRewardsLeft, stakedTokenPrice);
+  // console.log("⚠️ ~ file: Farms2Item.tsx:112 ~ apr::::", farm.stakedToken, apr, Number(apr), apy, tvl)
+
+  const vertGap = 2;
 
   return (
     <AccordionItem w="full">
@@ -123,13 +126,15 @@ const Farms2Item = ({
           w="full"
           fontSize={{ xs: "14px", lg: "md" }}
         >
-          <Box flex="1" textAlign="left" w="full">
+          <Box flex="1" textAlign="left" w="full" py={1}>
             <Grid
               w="full"
               flexDir={{ xs: "column", md: "row" }}
-              templateColumns={{ xs: "1fr", md: "1.1fr 0.1fr 1fr 1fr 1fr 1fr" }}
+              templateColumns={{ xs: "1fr", md: "0.25fr 0.01fr 1fr"}}
+              gap={{ xs: "4", md: "1" }}
             >
-              <Flex gap={3} flexDir={"row"} mt={0}>
+              {/* TOKENS */}
+              <Flex gap={3} flexDir={"row"} justifyContent={{sm: "center", md: "flex-start"}}>
                 {stakingToken ? (
                   <>
                     {formatTokenI(stakingToken.name).slice(-2) === "LP" ? (
@@ -218,6 +223,7 @@ const Farms2Item = ({
                   <Flex></Flex>
                 )}
               </Flex>
+              {/* NOTICE */}
               <Flex
                   ml={2}
                   flexDir={"column"}
@@ -239,85 +245,115 @@ const Farms2Item = ({
                       </Tooltip>
                     </Box>
                   )}
-                </Flex>
-              <Flex flexDir={"column"} textAlign="center" h="full">
-                <Text color="white.400">Staked Balance</Text>
+              </Flex>
+              <Grid
+                w="full"
+                templateColumns={{ xs: "1fr 1fr", md: "1fr 1fr 1fr 1fr" }}
+                gap={{ xs: "4", md: "1" }}
+              >
+                {/* STAKED */}
                 <Flex
                   flexDir={"column"}
-                  justifyContent={"space-between"}
-                  flex={1}
-                  py={2}
+                  textAlign="center"
+                  h="full"
+                  justifyContent={"center"}
+                  gap={vertGap}
                 >
-                  {farmUserInfoArr.map((farmUserInfo) => {
-                    const token =
-                      farmUserInfo.stakedToken === stakingToken.identifier
-                        ? stakingToken
-                        : othersStakedTokens.find(
-                            (item) =>
-                              item.identifier === farmUserInfo.stakedToken
-                          );
+                  <Text color="white.400">Staked Balance</Text>
+                  {farmUserInfoArr.length > 0 ? <>
+                    {farmUserInfoArr.map((farmUserInfo) => {
+                      const token =
+                        farmUserInfo.stakedToken === stakingToken.identifier
+                          ? stakingToken
+                          : othersStakedTokens.find(
+                              (item) =>
+                                item.identifier === farmUserInfo.stakedToken
+                            );
 
-                    const price = prices.find(
-                      (tp) => tp.tokenI === farmUserInfo.stakedToken
-                    )?.price;
+                      const price = prices.find(
+                        (tp) => tp.tokenI === farmUserInfo.stakedToken
+                      )?.price;
 
-                    console.log("price", price);
-
-                    return (
-                      <Text key={farmUserInfo.stakedToken}>
-                        {formatBalance({
-                          balance: farmUserInfo?.stakedBalance,
-                          decimals: token?.decimals,
-                        })}{" "}
-                        <Box as="span" whiteSpace={"nowrap"}>
-                          (${" "}
-                          {formatBalanceDolar(
-                            {
-                              balance: farmUserInfo?.stakedBalance,
-                              decimals: token?.decimals,
-                            },
-                            price,
-                            true
-                          )}
-                          )
-                        </Box>
-                      </Text>
-                    );
-                  })}
+                      return (
+                        <Text key={farmUserInfo.stakedToken}>
+                          {formatBalance({
+                            balance: farmUserInfo?.stakedBalance,
+                            decimals: token?.decimals,
+                          })}{" "}
+                          <Box as="span" whiteSpace={"nowrap"}>
+                            (${" "}
+                            {formatBalanceDolar(
+                              {
+                                balance: farmUserInfo?.stakedBalance,
+                                decimals: token?.decimals,
+                              },
+                              price,
+                              true
+                            )}
+                            )
+                          </Box>
+                        </Text>
+                      );
+                    })}
+                  </> : <Text>0 ($ 0)</Text>}
                 </Flex>
-              </Flex>
-              <Flex
-                flexDir={"column"}
-                textAlign="center"
-                h="full"
-                justifyContent={"center"}
-              >
-                <Text textTransform={"uppercase"} color="white.400">
-                  Apr / Apy
-                </Text>
-                <Text>
-                  {apr} / {apy}
-                </Text>
-              </Flex>
-              <Flex
-                flexDir={"column"}
-                textAlign="center"
-                h="full"
-                justifyContent={"center"}
-              >
-                <Text color="white.400">Total Value Locked</Text>
-                <Text>$ {formatNumber(tvl)}</Text>
-              </Flex>
-              <EarnTokens
-                userRewardsTokensIdentifiers={
-                  farm.farm.rewardToken === ""
-                    ? multifarmRewardsLeft.map((r) => r.token)
-                    : [farm.farm.rewardToken]
-                }
-              />
+                {/* APR */}
+                <Flex
+                  flexDir={"column"}
+                  textAlign="center"
+                  h="full"
+                  justifyContent={"center"}
+                  gap={vertGap}
+                >
+                  <Text textTransform={"uppercase"} color="white.400">
+                    Apr / Apy
+                  </Text>
+                  {apr != '0 %' && apr != 'NaN %' ? 
+                  <Text>
+                      {apr}&nbsp; / &nbsp;{apy}
+                  </Text> :
+                  <Text>Huge</Text>}
+                </Flex>
+                {/* TVL */}
+                <Flex
+                  flexDir={"column"}
+                  textAlign="center"
+                  h="full"
+                  justifyContent={"center"}
+                  gap={vertGap}
+                >
+                  {price > 0 ?
+                  <>
+                    <Text color="white.400">Total Value Locked</Text>
+                    <Text>$ {formatNumber(tvl)}</Text>
+                  </> :
+                  <>
+                    <Text color="white.400">Total Tokens Locked</Text>
+                    <Text>{formatBalance({
+                        balance: farm?.stakedBalance,
+                        decimals: stakingToken?.decimals,
+                      })}
+                    </Text>
+                  </>}
+                </Flex>
+                {/* EARNED */}
+                <EarnTokens
+                  vertGap={vertGap}
+                  userRewardsTokensIdentifiers={
+                    farm.farm.rewardToken === ""
+                      ? multifarmRewardsLeft.map((r) => r.token)
+                      : [farm.farm.rewardToken]
+                  }
+                />
+              </Grid>
             </Grid>
           </Box>
-          <AccordionIcon color="main" />
+          <AccordionIcon
+            color="main"
+            py={{xs: "3", md: "0"}}
+            alignSelf={{sm: "flex-start", md: "center"}}
+            h="full"
+          />
         </AccordionButton>
       </Box>
       <AccordionPanel pb={4} w="full" bg="black.base">

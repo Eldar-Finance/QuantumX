@@ -1,6 +1,6 @@
 import { Box, Center, Flex, Heading, Link, Text } from "@chakra-ui/react";
 import styled from "@emotion/styled";
-import { useGetLoginInfo } from "@multiversx/sdk-dapp/hooks";
+import { useGetLoginInfo } from "@multiversx/sdk-dapp/hooks/account/useGetLoginInfo";
 import angleRightIcon from "assets/ui-elemts/angleRight.svg";
 import ActionButton from "components/ActionButton/ActionButton";
 import { BookIcon, MultiversxIcon } from "components/Icons/ui";

@@ -5,6 +5,8 @@ import hypey from "assets/logos/hypey.png";
 import NextImage from "components/NextImage/NextImage";
 import ActionButton from "components/ActionButton/ActionButton";
 import HypezoneInfoModal from "components/Farms/HypezoneInfo/HypezoneInfoModal";
+import { InfoIcon } from '@chakra-ui/icons';
+import AutoHarvestInfoModal from 'views/Admin/Views/Farms/AutoHarvestInfoModal';
 interface IProps {
     title: string;
     subtitle: string;
@@ -19,8 +21,15 @@ const HypezoneTitle = ({
     tvlText = "Total value Locked in Farms",
 }: IProps) => {
 
-    const [modalOpen, setModalOpen] = useState(false);
+    const [feesModalOpen, setFeesModalOpen] = useState(false);
 
+    const handleFeesModal = async () => {
+        setFeesModalOpen(!feesModalOpen);
+    };
+
+    const isSmallDevice = window.innerWidth <= 768;
+    const [modalOpen, setModalOpen] = useState(false);
+  
     const handleInfoModal = async () => {
         setModalOpen(!modalOpen);
     };
@@ -58,17 +67,33 @@ const HypezoneTitle = ({
                     </Text>
                 </Center>
                 <ActionButton
+                    height={"30px"}
+                    bg="white"
+                    mt={5}
+                    onClick={handleFeesModal}
+                    disabled={false}
+                    mr={"5"}
+                >
+                    <InfoIcon/> &nbsp;&nbsp; Fees
+                </ActionButton>
+                <ActionButton
+                    height={"30px"}
                     bg="white"
                     mt={5}
                     onClick={handleInfoModal}
                     disabled={false}
                 >
-                    INFO / FEES
+                    <InfoIcon/> &nbsp;&nbsp; Auto-Harvest
                 </ActionButton>
+                {feesModalOpen && 
+                    <HypezoneInfoModal 
+                        onClose={() => setFeesModalOpen(false)}
+                    />
+                }
                 {modalOpen && 
-                <HypezoneInfoModal 
-                    onClose={() => setModalOpen(false)}
-                />
+                    <AutoHarvestInfoModal
+                        onClose={() => setModalOpen(false)}
+                    />
                 }
             </Box>
         </>

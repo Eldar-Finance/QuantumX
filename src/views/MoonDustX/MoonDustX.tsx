@@ -1,4 +1,4 @@
-import { Flex } from "@chakra-ui/react";
+import { Flex, Text } from "@chakra-ui/react";
 import MyContainer from "components/Container/Container";
 import Layout from "components/Layout/Layout";
 import TitlePage from "components/TitlePage/TitlePage";
@@ -27,8 +27,12 @@ const ConverterView = () => {
               textAlign="center"
               flexWrap={"wrap"}
             >
-              Welcome to MoonDustX! Convert all your favorite tokens to WEGLD or
-              USDC in one click. Easy, fast, and secure.
+              <Text>
+                Convert your small balances to any of our carefully selected tokens - in just one click.
+              </Text>
+              <Text>
+                Easy, fast, and secure.
+              </Text>
             </Flex>
           }
           mb={10}

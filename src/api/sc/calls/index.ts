@@ -250,7 +250,7 @@ export const ESDTTransfer = async ({
   contractAddr: string;
   args?: any[];
   gasL?: number;
-  realValue?: string | number | null;
+  realValue?: string | number | null | BigNumber;
 }) => {
   const tokenIdentifier = token.identifier;
   const multiplyier = Math.pow(10, token.decimals || 18);
@@ -636,4 +636,63 @@ export const EsdtTranferAndUnwrapEgld = async (
     .buildTransaction();
 
   return await sendMultipleTransactions({ txs: [tx1, tx2] });
+};
+
+export const MultipleHarvestCalls = async (
+  workspace: WspTypes,
+  funcName: string,
+  farmIds: number[],
+  feeToken: any,
+  feeAmount: number,
+  gasLimit: number = 60000000,
+) => {
+  console.log("⚠️ ~ file: index.ts:649 ~ feeAmount::::", feeAmount)
+  console.log("⚠️ ~ file: index.ts:649 ~ feeToken::::", feeToken)
+  const transactions = [];
+  const sender = store.getState().userAccount.connectedAddress;
+  const senderAddress = new Address(sender);
+  const { simpleAddress: scAddress } = getInterface(workspace);
+  const receiverAddress = new Address(scAddress);
+  // xSafe address
+  const feeReceiver = "erd1qqqqqqqqqqqqqpgqt05mernfnhy6uf46y7ldmpxxs77200pgu76sr6cd2v";
+
+  // Fee
+  const tokenIdentifier = feeToken.identifier;
+  console.log("⚠️ ~ file: index.ts:659 ~ tokenIdentifier::::", tokenIdentifier)
+  const multiplyier = Math.pow(10, feeToken.decimals || 18);
+  console.log("⚠️ ~ file: index.ts:661 ~ multiplyier::::", multiplyier)
+  const finalValue = feeAmount * multiplyier;
+  console.log("⚠️ ~ file: index.ts:663 ~ finalValue::::", finalValue)
+  const bgFinalValue = new BigNumber(finalValue).toFixed(0);
+  console.log("⚠️ ~ file: index.ts:665 ~ bgFinalValue::::", bgFinalValue)
+
+  const factory = new TransferTransactionsFactory(new GasEstimator());
+  const transfer = TokenTransfer.fungibleFromBigInteger(tokenIdentifier, bgFinalValue, feeToken.decimals);
+  
+  const tx = factory.createESDTTransfer({
+      tokenTransfer: transfer,
+      sender: senderAddress,
+      receiver: new Address(feeReceiver),
+      chainID: ChainId,
+      gasLimit: 10000000
+  });
+
+  transactions.push(tx);
+
+  // Harvests
+  farmIds.forEach((id) => {
+    const contract = new SmartContract({ address: new Address(receiverAddress)});
+    let interaction = new Interaction(contract, new ContractFunction(funcName), [new BigUIntValue(new BigNumber(id))]);
+
+    let tx = interaction
+    .withSender(senderAddress)
+    .useThenIncrementNonceOf(new Account(senderAddress)) // den xerw an xreiazetai auto
+    .withGasLimit(gasLimit)
+    .withChainID(ChainId)
+    .buildTransaction();
+
+    transactions.push(tx);
+  });
+
+  return await sendMultipleTransactions({ txs: transactions });
 };

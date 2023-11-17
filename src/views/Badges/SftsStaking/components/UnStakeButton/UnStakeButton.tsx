@@ -18,14 +18,14 @@ const UnStakeButton = ({ ...props }) => {
   };
 
   return (
-    <Center w="full">
+    <Center>
       <ActionButton
         onClick={onOpen}
         // @ts-ignore
         disabled={InStakingPeriod === 0}
         {...props}
       >
-        UnStake
+        Unstake
       </ActionButton>
 
       <UnStakeModal onClose={onClose} isOpen={isOpen} onClick={handleSubmit} />

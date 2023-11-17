@@ -240,12 +240,6 @@ export const getInterface = (workspace: WspTypes) => {
       abiUrl = proteoEliteFakeAbi;
       implementsInterfaces = "ProteoEliteFake";
       break;
-    case egldRideWsp:
-      simpleAddress = contractAddr.egldRide;
-      address = new Address(simpleAddress);
-      abiUrl = proteoEliteFakeAbi;
-      implementsInterfaces = "ProteoEliteFake";
-      break;
     case aeroWegldWsp:
       simpleAddress = contractAddr.aeroEgldEliteDual;
       address = new Address(simpleAddress);
