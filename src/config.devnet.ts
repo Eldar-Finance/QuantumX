@@ -97,4 +97,5 @@ export const TOKENS_ID = {
   egldRideLp: " EGLDRIDE-3263c5",
   wegld: "WEGLD-d7c6bb",
   mex: "MEX-dc289c",
+  rare: "",
 };
