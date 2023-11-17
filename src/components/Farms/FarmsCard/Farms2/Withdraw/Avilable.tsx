@@ -47,7 +47,7 @@ const Avilable = ({ farm, userFarmRewards }: IProps) => {
   return (
     <Box>
       <Flex w="full" justifyContent={"space-between"}>
-        <Text color="white.400">Available to withdraw</Text>
+        <Text color="white.400">Available to harvest</Text>
         <VStack>
           {rewardsTokens.map((rewardsToken) => {
             const rewardInfo = userFarmRewards.find(
