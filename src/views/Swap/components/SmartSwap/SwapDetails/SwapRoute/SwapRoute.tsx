@@ -51,7 +51,7 @@ const SwapRoute = () => {
           {finalRoutes.map((route, i) => {
             return (
               <li key={i}>
-                <Text fontSize={"lsm"}>
+                <Text fontSize={"lsm"} color="white.500">
                   {route.token1} {"->"} {route.token2}
                 </Text>
               </li>
