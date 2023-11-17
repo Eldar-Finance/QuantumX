@@ -153,7 +153,7 @@ const StakeUnstake = ({ farm, userFarmItem, isPool, isBearly, farmUserRewards }:
             UNSTAKE
           </ActionButton>
           {shouldUserHarvestWarning && 
-            <Text opacity={0.7} color={"yellow.300"} fontSize={"16px"} position={"absolute"} top={{sm: "42px", md: "-35px"}} right={{sm: "5px", md: "75px"}} whiteSpace={"nowrap"}>
+            <Text opacity={0.7} color={"yellow.300"} fontSize={"16px"} position={"absolute"} top={{sm: "42px", md: "-35px"}} right={{sm: "5px", md: "auto"}} whiteSpace={"nowrap"}>
               ⚠️ {" "} Harvest your rewards before unstaking.
             </Text>
           }

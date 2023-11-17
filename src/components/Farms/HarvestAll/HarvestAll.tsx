@@ -112,7 +112,7 @@ const HarvestAll = ({
           <Text fontSize={"lg"} fontWeight="500">
             ${estRewardsValueRounded}
           </Text>
-          {harvestableFarms.length > 0 && <Text fontSize={"md"} fontWeight={"300"} ml={1} mt={0.5}>
+          {harvestableFarms.length > 0 && estRewardsValue > 0 && <Text fontSize={"md"} fontWeight={"300"} ml={1} mt={0.5}>
             from {harvestableFarms.length} {harvestableFarms.length > 1 ? type : type.slice(0, -1)}
           </Text>}
         </HStack>
