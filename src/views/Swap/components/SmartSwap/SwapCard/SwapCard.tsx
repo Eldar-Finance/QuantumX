@@ -100,7 +100,7 @@ const SwapCard = () => {
       justifyContent={"flex-start"}
       alignItems={"left"}
     >
-      <Heading style={{ marginLeft:'25px' }} fontSize={"l"}>
+      <Heading as="h1" ml={"15px"} fontSize={"xl"}>
         Swap
       </Heading>
 
@@ -110,13 +110,13 @@ const SwapCard = () => {
         mb={0}
         borderRadius="30px"
         position="relative"
-        pt={2}
+        pt={4}
       >
         <Box>
-          <Flex style={{backgroundColor:'#121212',borderRadius:'30px'}} flexDir={"column"} width={"full"}>
-            <Center style={{borderRadius:'20px'}} flexDir={"column"} position="relative">
+          <Flex flexDir={"column"} width={"full"}>
+            <Center flexDir={"column"} position="relative" mb={"20px"}>
               <TextField
-              sxProps={{border:'10px solid #121212',backgroundColor:'#242526'}}
+                sxProps={{borderColor: "transparent" , backgroundColor:"black.base"}}
                 label={"You send"}
                 id="from"
                 isMaxToken
@@ -130,7 +130,7 @@ const SwapCard = () => {
                   (isSapwToLp ? data[1]?.dollarAmount : data[0]?.dollarAmount)
                 }
               />
-              <Center  position={"absolute"} bottom={"-20px"} zIndex={2}>
+              <Center  position={"absolute"} bottom={"-30px"} zIndex={2}>
                 <IconButton
                   onClick={handleExchangeFields}
                   borderRadius={"1.5rem"}
@@ -145,7 +145,7 @@ const SwapCard = () => {
               </Center>
             </Center>
             <TextField
-            sxProps={{border:'10px solid #121212',backgroundColor:'#242526', marginBottom:'25px'}}
+              sxProps={{borderColor: "transparent" , backgroundColor:"black.base"}}
               label={"You receive"}
               id="to"
               handleClickToken={handleOnSelectToToken}
@@ -163,10 +163,9 @@ const SwapCard = () => {
             {toToken.token && (
               <Flex justifyContent={"flex-end"} mt={-2} color="#24918a"></Flex>
             )}
-
-          {isNumberEntered && (
-                  <SwapDetails />
-                )}
+            {isNumberEntered && (
+              <SwapDetails />
+            )}
             <SwapButton
               bg={"black.dark"}
               color="main"

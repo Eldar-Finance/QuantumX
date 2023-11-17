@@ -17,8 +17,9 @@ const Swap = () => {
       >
         <Card
           maxW={"620px"}
+          bg={"black.baseDark"}
           style={{
-            backgroundColor: '#121212', // replace 'black' with your desired color or variable
+            // backgroundColor: 'black.baseDark', // replace 'black' with your desired color or variable
             padding: '20px', // for xs screens, adjust as needed
             paddingTop: '30px !important', // Note: !important might not work in inline styles
             borderRadius: '30px', // for xs screens, adjust as needed
