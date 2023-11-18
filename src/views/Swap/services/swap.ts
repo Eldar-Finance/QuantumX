@@ -80,13 +80,14 @@ export const swap = async (
   }
 
   const dataToSend = getNormalSwapArgs(swapInfo, slipapge);
+  console.log("⚠️ ~ file: swap.ts:83 ~ dataToSend::::", dataToSend)
 
   // if user want EGLD -> WEGLD
   if (fromToken.token === "EGLD" && toField.token === toknesID.wegld) {
     return await EGLDPayment(
       wrapEgldpWspShard1,
       "wrapEgld",
-      Number(fromToken.value),
+      fromToken.value,
       [],
       60000000
     );
@@ -95,7 +96,7 @@ export const swap = async (
     if (fromToken.token === toknesID.wegld && toField.token === "EGLD") {
       return await ESDTTransfer({
         funcName: "unwrapEgld",
-        val: Number(fromToken.value),
+        val: fromToken.value,
         token: fromElrondToken,
         contractAddr: contractAddr.wrapEgldShar1,
         gasL: 60000000,
@@ -104,7 +105,7 @@ export const swap = async (
       // if User want to send EGLD
       if (fromToken.token === "EGLD") {
         return await wrapEgldAndEsdtTranfer(
-          Number(fromToken.value),
+          fromToken.value,
           scEndpoint,
           dataToSend,
           contractAddr.smartSwap,
@@ -115,7 +116,7 @@ export const swap = async (
         if (toField.token === "EGLD") {
           return await EsdtTranferAndUnwrapEgld(
             fromElrondToken,
-            Number(fromToken.value),
+            fromToken.value,
             swapInfo[swapInfo.length - 1].amountReceiv,
             scEndpoint,
             dataToSend,
@@ -127,7 +128,7 @@ export const swap = async (
           return await ESDTTransfer({
             funcName: scEndpoint,
             token: fromElrondToken,
-            val: Number(fromToken.value),
+            val: fromToken.value,
             contractAddr: contractAddr.smartSwap,
             args: dataToSend,
             gasL: gas,
@@ -224,12 +225,12 @@ export const swapLp = async (
       {
         collection: lpSwapInfo.token1identifier,
         nonce: 0,
-        value: Number(lpSwapInfo.token1lpamount),
+        value: lpSwapInfo.token1lpamount,
       },
       {
         collection: lpSwapInfo.token2identifier,
         nonce: 0,
-        value: Number(lpSwapInfo.token2lpamount),
+        value: lpSwapInfo.token2lpamount,
       },
     ],
     lpSwapArg,
@@ -245,13 +246,13 @@ export const lpSwapTx = async (
   tokens: {
     collection: string;
     nonce: number;
-    value: number;
+    value: any;
   }[],
   swapLpArgs: any[],
   slipapge: number,
   inputToken: {
     token: IElrondToken;
-    value: string;
+    value: any;
   },
   swapLpData: INomalSmartSwap[]
 ) => {

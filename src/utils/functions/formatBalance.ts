@@ -102,9 +102,9 @@ export const formatPrecision = (num, customPrecision?: number) => {
   }
 
   if (customPrecision) {
-    return new BigNumber(num).toFixed(precision);
+    return new BigNumber(num).toFixed(precision, BigNumber.ROUND_DOWN);
   } else {
-    return Number(new BigNumber(num).toFixed(precision));
+    return Number(new BigNumber(num).toFixed(precision, BigNumber.ROUND_DOWN));
   }
   
 };
