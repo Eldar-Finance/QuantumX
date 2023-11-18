@@ -24,9 +24,29 @@ import useGetSwapInfo from "views/Swap/hooks/useGetSwapInfo";
 import FeeInfo from "../FeeInfo/FeeInfo";
 import SwapDetails from "../SwapDetails/SwapDetails";
 import React, { useState } from 'react';
+import {Aggregator, ChainId} from '@ashswap/ash-sdk-js';
+import { Address } from "@multiversx/sdk-core/out";
+import { sendTransactions } from "@multiversx/sdk-dapp/services";
+import ActionButton from "components/ActionButton/ActionButton";
+
+const getAshResults = async () => {
+  // Permit the user to convert one EGLD to ASH with a 0.1% slippage.
+  // Based on the fee configuration, xPortal will also receive a small amount of fees.
+  // const xPortalProtocol = 'erd...';
+  const agService = new Aggregator({chainId: ChainId.Mainnet});
+  const interaction = await agService.aggregate('EGLD', 'ASH-a642d1', 1e18, 100);
+  // remember to set the sender (caller) before sending the tx
+  const tx = interaction.withSender(new Address('erd1lnmfa5p9j6qy40kjtrf0wfq6cl056car6hyvrq5uxdcalc2gu7zsrwalel')).check().buildTransaction();
+  console.log("⚠️ ~ SwapCard.tsx:40 ~ getAshResults: ", tx)
+  // sign and send tx to the network
+  // sendTransactions({
+  //     transactions: [tx],
+  // })
+}
 
 
 const SwapCard = () => {
+
   const fromToken = useAppSelector(selectFromField);
   const toToken = useAppSelector(selectToField);
   const dispatch = useAppDispatch();
@@ -100,6 +120,9 @@ const SwapCard = () => {
       justifyContent={"flex-start"}
       alignItems={"left"}
     >
+      <ActionButton onClick={getAshResults}>
+        Try ASH
+      </ActionButton>
       <Heading as="h1" ml={"15px"} fontSize={"xl"}>
         Swap
       </Heading>
