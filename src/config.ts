@@ -88,7 +88,7 @@ export const network = {
   apiTimeout: 10000,
 };
 
-export const GAS_LIMIT = 60000000;
+export const GAS_LIMIT = 90000000;
 
 export const eldarSftCollection = "ELBADGES-2efe5c";
 
