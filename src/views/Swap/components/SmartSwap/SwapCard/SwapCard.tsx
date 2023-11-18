@@ -38,6 +38,7 @@ const getAshResults = async () => {
   // remember to set the sender (caller) before sending the tx
   const tx = interaction.withSender(new Address('erd1lnmfa5p9j6qy40kjtrf0wfq6cl056car6hyvrq5uxdcalc2gu7zsrwalel')).check().buildTransaction();
   console.log("⚠️ ~ SwapCard.tsx:40 ~ getAshResults: ", tx)
+  console.log("⚠️ ~ SwapCard.tsx:40 ~ data: ", tx.getData().toString())
   // sign and send tx to the network
   // sendTransactions({
   //     transactions: [tx],
