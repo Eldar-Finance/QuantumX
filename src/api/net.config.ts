@@ -6,7 +6,7 @@ import {
   ChainID,
   TOKENS_ID,
   eldarSftCollection,
-} from "../config.devnet";
+} from "../config";
 
 export const toknesID = TOKENS_ID;
 export const environment = ENVIROMENT;
