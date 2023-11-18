@@ -63,6 +63,7 @@ const SwapCard = () => {
   };
 
   const { data, isLoading, isSapwToLp } = useGetSwapInfo();
+  // console.log("⚠️ ~ file: SwapCard.tsx:66 ~ SwapCard ~ data::::", data)
 
   useEffect(() => {
     if (data) {
@@ -121,9 +122,6 @@ const SwapCard = () => {
       justifyContent={"flex-start"}
       alignItems={"left"}
     >
-      <ActionButton onClick={getAshResults}>
-        Try ASH
-      </ActionButton>
       <Heading as="h1" ml={"15px"} fontSize={"xl"}>
         Swap
       </Heading>

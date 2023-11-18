@@ -12,7 +12,7 @@ const FeeInfo = () => {
       <CustomTooltip
         maxWidth={"300px"}
         text={
-          <Box color="black" fontSize={"md"}>
+          <Box color="GrayText" fontSize={"sm"}>
             <Flex flexDir={"column"}>
               <Text fontWeight={"800"}>Single token in Input and Output</Text>
               <Text>

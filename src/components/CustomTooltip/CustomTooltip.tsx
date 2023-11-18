@@ -30,7 +30,7 @@ const CustomTooltip = ({
       hasArrow
       label={text}
       isOpen={open}
-      bg="main"
+      bg="black.baseDark"
       maxWidth={maxWidth || "250px"}
       aria-label="info tooltip"
       fontWeight={"medium"}
