@@ -1,7 +1,7 @@
 import { Box, Flex, Input, InputProps, Spinner, Text } from "@chakra-ui/react";
 import styled from "@emotion/styled";
 import ActionButton from "components/ActionButton/ActionButton";
-import { formatBalance, formatNumber } from "utils/functions/formatBalance";
+import { formatBalance, formatNumber, formatPrecision } from "utils/functions/formatBalance";
 import { preventExponetialNotation } from "utils/functions/numbers";
 import useGetAccountToken from "utils/hooks/useGetAccountToken";
 import useGetElrondToken from "utils/hooks/useGetElrondToken";
@@ -92,7 +92,7 @@ const TextField = ({
         <Flex alignItems={"center"} mb={2}>
           {field.token && isMaxToken && (
             <ActionButton
-              onClick={() => onClickMaxtoken(formatBalance(accountToken, true))}
+              onClick={() => onClickMaxtoken(formatBalance(accountToken, true, accountToken.decimals))}
               textTransform={"uppercase"}
               variant={"solid"}
               fontSize={{ xs: "sm", md: "md" }}

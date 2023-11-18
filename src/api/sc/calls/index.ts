@@ -644,7 +644,7 @@ export const MultipleHarvestCalls = async (
   farmIds: number[],
   feeToken: any,
   feeAmount: number,
-  gasLimit: number = 60000000,
+  gasLimit: number = 90000000,
 ) => {
   console.log("⚠️ ~ file: index.ts:649 ~ feeAmount::::", feeAmount)
   console.log("⚠️ ~ file: index.ts:649 ~ feeToken::::", feeToken)
