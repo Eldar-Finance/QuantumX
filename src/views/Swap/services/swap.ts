@@ -80,7 +80,6 @@ export const swap = async (
   }
 
   const dataToSend = getNormalSwapArgs(swapInfo, slipapge);
-  console.log("⚠️ ~ file: swap.ts:83 ~ dataToSend::::", dataToSend)
 
   // if user want EGLD -> WEGLD
   if (fromToken.token === "EGLD" && toField.token === toknesID.wegld) {
