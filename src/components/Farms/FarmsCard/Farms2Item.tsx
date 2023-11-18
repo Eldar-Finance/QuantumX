@@ -40,6 +40,7 @@ import EarnTokens from "./Farms2/EarnTokens/EarnTokens";
 import StakeUnstake from "./Farms2/StakeUnstake/StakeUnstake";
 import Avilable from "./Farms2/Withdraw/Avilable";
 // import { AiOutlinePlus } from 'react-icons/ai';
+
 interface IProps {
   farm: IScFarmItem;
   farmUserInfoArr: IScUserFarmInfo[];
@@ -356,7 +357,7 @@ const Farms2Item = ({
           />
         </AccordionButton>
       </Box>
-      <AccordionPanel pb={4} w="full" bg="black.base">
+      <AccordionPanel pb={4} w="full" bg="black.baseDark">
         <Grid flex="1" templateColumns={{ xs: "1fr", md: "1fr 1fr" }} gap="4">
           <PanelBox>
             <Flex justifyContent={"center"} textAlign={"center"} gap={5}>
@@ -370,7 +371,6 @@ const Farms2Item = ({
               />
             </Flex>
           </PanelBox>
-
           <PanelBox>
             <Avilable farm={farm} userFarmRewards={farmUserRewards} />
           </PanelBox>
@@ -398,10 +398,11 @@ export default Farms2Item;
 const PanelBox = ({ children, ...props }: PropsWithChildren<BoxProps>) => {
   return (
     <Box
+      bg="black.base"
       p="4"
-      border={"1px solid "}
-      borderColor="white.400"
-      borderRadius={"lg"}
+      // border={"1px solid "}
+      // borderColor="white.400"
+      borderRadius={"xl"}
       {...props}
     >
       {children}

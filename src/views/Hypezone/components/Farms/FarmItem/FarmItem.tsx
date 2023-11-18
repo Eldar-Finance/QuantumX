@@ -380,7 +380,7 @@ const Farms2Item = ({
             />
           </AccordionButton>
         </Box>
-        <AccordionPanel w="full" bg="black.base" p={0}>
+        <AccordionPanel w="full" bg="black.baseDark" p={0}>
           {disable ? (
             <Box w="full">{disableComponent}</Box>
           ) : (
@@ -403,7 +403,6 @@ const Farms2Item = ({
                     />
                   </Flex>
                 </PanelBox>
-
                 <PanelBox>
                   <Avilable farm={farm} userFarmRewards={farmUserRewards} />
                   {/* <Avilable farm={farm} userFarmRewards={farmUserRewards ? farmUserRewards : userHarvestableRewards} /> */}
@@ -433,9 +432,10 @@ const PanelBox = ({ children, ...props }: PropsWithChildren<BoxProps>) => {
   return (
     <Box
       p="4"
-      border={"1px solid "}
-      borderColor="white.400"
-      borderRadius={"lg"}
+      bg="black.base"
+      // border={"1px solid "}
+      // borderColor="white.400"
+      borderRadius={"xl"}
       {...props}
     >
       {children}
