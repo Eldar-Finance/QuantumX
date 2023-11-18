@@ -42,7 +42,7 @@ const StakeModal = ({ isOpen, onClose, farm, isPool, token }: IProps) => {
     amount: yup
       .number()
       .required()
-      .max(formatBalance(userToken, true, userToken.decimals)),
+      .max(formatBalance(userToken, true, userToken?.decimals)),
   });
 
   const [sessionId, setSessionId] = useState();
