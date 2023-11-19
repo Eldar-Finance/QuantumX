@@ -1,66 +1,106 @@
-import Card from "components/Card/Card";
-import MyContainer from "components/Container/Container";
-
-import Layout from "components/Layout/Layout";
-import withElronDapp from "hoc/withElronDapp";
-import WrapperPages from "hoc/WrapperPages";
-import SwapCard from "./components/SmartSwap/SwapCard/SwapCard";
-import { Text , Image , Flex } from "@chakra-ui/react";
+import React, { useState } from 'react';
+import { Box, Card, Flex, IconButton, Image, Text } from '@chakra-ui/react';
+import { ChevronRightIcon, ChevronLeftIcon } from '@chakra-ui/icons';
+import SwapCard from './components/SmartSwap/SwapCard/SwapCard';
+import Layout from 'components/Layout/Layout';
+import MyContainer from 'components/Container/Container';
+import withElronDapp from 'hoc/withElronDapp';
+import WrapperPages from 'hoc/WrapperPages';
 
 const Swap = () => {
+  const [isSecondCardOpen, setIsSecondCardOpen] = useState(false);
+
+  const toggleSecondCard = () => {
+    setIsSecondCardOpen(!isSecondCardOpen);
+  };
+
   return (
     <Layout>
       <MyContainer
-        display={"flex"}
-        flexDir="column"
-        alignItems={"center"}
-        pb={"50px"}
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+        pb="50px"
       >
-        <Card
-      maxW={"620px"}
-      bg={"black.baseDark"}
-      borderRadius="30px"
-      border="1px solid"
-      borderColor="transparent"
-      p={{ sm: "10px", md: "20px" }}
-      position="relative" // Set the Card's position to relative
-    >
-      <Image
-        alt="fire"
-        src="https://i.ibb.co/MPFd8PQ/firelkk12.png" // Replace with your image URL
-        position="absolute" // Position the image absolutely
-        top="-1%" // Align top edge with the card's top edge
-        left="2%" // Align left edge with the card's left edge
-        width={{ sm: "0px", md: "100px" }} // Adjust the size as needed
-        height="auto" // Maintain the aspect ratio
-        zIndex="1" // Ensure the image is above other content
-        transform="translate(-50%, -50%)"
-      />
-      <SwapCard />
-    </Card>
-        
         <Flex
-  mt={"40px"}
-  align="center" // This ensures the logo is aligned with the text
->
-  <Text
-    fontSize={{ xs: "sm", md: "md" }}
-    color={"white.500"}
-  >
-    Powered by 
-  </Text>
-  <Image
-    alt="ash"
-    src="https://app.ashswap.io/logo.png" // Replace with your logo URL
-    width={{ xs: "64px", md: "96px" }} // Set the width to match your text size or as desired
-    ignoreFallback // Optional: prevents showing an alternative text when the image is loadin
-    ml={2}
-    marginTop={"-10px"}
-  />
-</Flex>
+          direction={{ base: "column", md: "row" }}
+          width="100%"
+          align="stretch"
+          justify="center"
+          gap="4"
+        >
+          {/* First Card */}
+          <Card
+            maxW="620px"
+            bg="black.baseDark"
+            borderRadius="30px"
+            border="1px solid"
+            borderColor="transparent"
+            p={{ base: "10px", md: "20px" }}
+            position="relative"
+            mb={{ base: 4, md: 0 }}
+          >
+            <SwapCard />
+            <IconButton
+              aria-label="Toggle second card"
+              icon={isSecondCardOpen ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+              position="absolute"
+              right="-30px"
+              top="50%"
+              transform="translateY(-50%)"
+              zIndex="2"
+              onClick={toggleSecondCard}
+              variant="ghost"
+              background="none"
+              fontSize={"3xl"}
+              size={"xl"}
+            />
+          </Card>
 
+          {/* Expandable Second Card */}
+          {isSecondCardOpen && (
+            <Card
+              width="620px"
+              bg="black.baseDark"
+              borderRadius="10px"
+              border="1px solid"
+              borderColor="transparent"
+              p={{ base: "10px", md: "20px" }}
+              position="relative"
+              height="100%" // Ensure the height matches the first card
+              
+            >
+              <Box height="100%" overflow="hidden">
+                <iframe
+                  src="https://test.e-compass.io/quantumx/embed/MAIAR/RIDE/WEGLD/60"
+                  title="QuantumX"
+                  width="100%"
+                  height="500px" // Adjust the height to match the content of the iframe
+                  style={{ border: 'none' }}
+                />
+              </Box>
+            </Card>
+          )}
+        </Flex>
 
-
+        {/* Footer Text and Image */}
+        <Flex
+          mt="40px"
+          align="center"
+        >
+          <Text
+            fontSize={{ base: "sm", md: "md" }}
+            color="white.500"
+          >
+            Powered by 
+          </Text>
+          <Image
+            src="https://app.ashswap.io/logo.png"
+            width={{ base: "64px", md: "96px" }}
+            ml={2}
+            ignoreFallback
+          />
+        </Flex>
       </MyContainer>
     </Layout>
   );
