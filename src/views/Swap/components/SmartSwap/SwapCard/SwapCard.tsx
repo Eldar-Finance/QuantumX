@@ -207,7 +207,7 @@ const SwapCard = () => {
   // NEW SWAP DATA
   //
   const [swapPaths, setSwapPaths] = useState(null);
-  // console.log("⚠️ ~ file: SwapCard.tsx:192 ~ swapPaths:", swapPaths)
+  console.log("⚠️ ~ file: SwapCard.tsx:192 ~ swapPaths:", swapPaths)
 
   useEffect(() => {
     const handleCalculateNewSwapData = () => {
@@ -271,6 +271,21 @@ const SwapCard = () => {
       setInteraction(null);
     }
   }, [fromToken?.value, toToken.decimals, toToken.identifier]);
+
+  //
+  // CNDITIONS
+  //
+  const hasEnoughBalance = useMemo(() => {
+    // if (!fromToken.value) {
+    //   return true;
+    // }
+    // else 
+    if (accountToken) {
+      return BigNumber(accountToken.balance).gte(BigNumber(Number(fromToken?.value || 0) * Math.pow(10, accountToken.decimals)));
+    }
+    return false;
+  }, [accountToken, fromToken?.value]);
+  console.log("⚠️ ~ file: SwapCard.tsx:288 ~ hasEnoughBalance:", hasEnoughBalance)
 
   return (
     <Flex
@@ -357,6 +372,8 @@ const SwapCard = () => {
               alignContent="center"
               style={{ margin: 'auto' , marginTop:'40px'}}
               interaction={interaction}
+              disabled={!hasEnoughBalance || !swapPaths ? true : false}
+              disabledMessage={hasEnoughBalance ? "Enter an amount" : "Insufficient balance"}
             />
 
             <FeeInfo />

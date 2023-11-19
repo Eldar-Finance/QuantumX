@@ -5,64 +5,60 @@ import { sendTransactions } from "@multiversx/sdk-dapp/services";
 import { sendTransaction } from "api/sc/sc";
 import ActionButton from "components/ActionButton/ActionButton";
 import { useState } from "react";
+import { openLogin } from "redux/slices/settings/settings-reducer";
 import {
   selectFromField,
   selectSlippage,
 } from "redux/slices/smartSwaps/smartSwaps";
+import store from "redux/store";
 
-import { useAppSelector } from "utils/hooks/redux";
+import { useAppDispatch, useAppSelector } from "utils/hooks/redux";
 import useGetElrondToken from "utils/hooks/useGetElrondToken";
 import { INomalSmartSwap, ISmartSwapData } from "utils/types/others.interface";
 import { swap, swapLp } from "views/Swap/services/swap";
 
 interface IProps extends ButtonProps {
-  interaction: Interaction
+  interaction: Interaction,
+  disabled?: boolean,
+  disabledMessage?: string,
 }
 
-const SLIPAGE = 2.5;
-
 const SwapButton = ({
-  interaction,
-  ...props
-}: IProps) => {
-  // const [sessionId, setSessionId] = useState<string>();
-  // const slipapge = useAppSelector(selectSlippage);
-
-  // const toField = useAppSelector((state) => state.smartSwap.toField);
-  // const fromToken = useAppSelector(selectFromField);
-  // const { token: fromElrondToken } = useGetElrondToken(fromToken.token);
-
-  // const txs = useTrackTransactionStatus({
-  //   transactionId: sessionId,
-  //   onSuccess: (txI) => {
-  //     if (window) {
-  //       window.location.reload();
-  //     }
-  //   },
-  // });
-
-  const handleSwap = async () => {
-    // console.log("⚠️ ~ file: SwapButton.tsx:46 ~ interaction:", interaction)
-    const tx = interaction.buildTransaction();
-    // console.log("⚠️ ~ file: SwapButton.tsx:47 ~ tx:", tx)
-
-    const res = await sendTransaction({tx: tx});
+    interaction,
+    disabled,
+    disabledMessage,
+    ...props
+  }: IProps) => {
+    const userAddress = store.getState().userAccount.connectedAddress;
+  
+    const dispatch = useAppDispatch();
+    const handleConnect = () => {
+      dispatch(openLogin(true));
+    };
+  
+    const handleSwap = async () => {
+      const tx = interaction.buildTransaction();
+      const res = await sendTransaction({tx: tx});
+    };
+  
+    return (
+      <ActionButton
+        mt={8}
+        height={"auto"}
+        variant={"ghost"}
+        borderRadius={"12px"}
+        padding={"20px"}
+        width={"full"}
+        onClick={!userAddress ? handleConnect : handleSwap}
+        {...props}
+        isDisabled={disabled}
+      >
+        {!userAddress ? "Connect your wallet" :
+          disabled ? disabledMessage:
+            interaction ? "Swap" :
+              "Error"}
+      </ActionButton>
+    );
   };
-
-  return (
-    <ActionButton
-      mt={8}
-      height={"auto"}
-      variant={"ghost"}
-      borderRadius={"12px"}
-      padding={"20px"}
-      width={"full"}
-      onClick={handleSwap}
-      {...props}
-    >
-      {interaction ? "Swap" : "Enter an amount"}
-    </ActionButton>
-  );
-};
-
-export default SwapButton;
+  
+  export default SwapButton;
