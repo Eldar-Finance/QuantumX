@@ -153,12 +153,12 @@ const Login = ({ isLoginOpen }) => {
   const dispatch = useAppDispatch();
 
   const router = useRouter();
-  console.log("⚠️ ~ file: Login.tsx:156 ~ router:", router, router.asPath)
   const redirectPath = router.asPath === "/" ? routeNames.home : router.asPath;
 
   const handleClose = () => {
     dispatch(openLogin(false));
   };
+
   return (
     <MyModal
       onClose={handleClose}
