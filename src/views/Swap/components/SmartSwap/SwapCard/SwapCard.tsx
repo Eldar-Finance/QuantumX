@@ -57,7 +57,7 @@ const SwapCard = () => {
       return agg;
     }
   }, [chainId]);
-  console.log("⚠️ ~ file: SwapCard.tsx:51 ~ ashSwapAggregator:", ashSwapAggregator)
+  // console.log("⚠️ ~ file: SwapCard.tsx:51 ~ ashSwapAggregator:", ashSwapAggregator)
 
   //
   // TOKENS
@@ -230,7 +230,7 @@ const SwapCard = () => {
   // SWAP BUTTON
   //
   const [interaction, setInteraction] = useState(null);
-  console.log("⚠️ ~ file: SwapCard.tsx:223 ~ interaction:", interaction)
+  // console.log("⚠️ ~ file: SwapCard.tsx:223 ~ interaction:", interaction)
 
   useEffect(() => {
     const handleCreateInteractionFromSwapData = () => {

@@ -42,9 +42,9 @@ const SwapButton = ({
   // });
 
   const handleSwap = async () => {
-    console.log("⚠️ ~ file: SwapButton.tsx:46 ~ interaction:", interaction)
+    // console.log("⚠️ ~ file: SwapButton.tsx:46 ~ interaction:", interaction)
     const tx = interaction.buildTransaction();
-    console.log("⚠️ ~ file: SwapButton.tsx:47 ~ tx:", tx)
+    // console.log("⚠️ ~ file: SwapButton.tsx:47 ~ tx:", tx)
 
     const res = await sendTransaction({tx: tx});
   };

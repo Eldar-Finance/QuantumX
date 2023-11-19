@@ -10,7 +10,7 @@ import { MdOutlinePriceChange } from "react-icons/md";
 import { swap } from "views/Swap/services/swap";
 
 const SwapRoute = ({ swapPaths }: { swapPaths?: SorSwapResponse }) => {
-  console.log("⚠️ ~ file: SwapRoute.tsx:9 ~ swapPaths:", swapPaths)
+  // console.log("⚠️ ~ file: SwapRoute.tsx:9 ~ swapPaths:", swapPaths)
   const { data, isSapwToLp } = useGetSwapInfo();
 
   const routes = swapPaths.swaps?.map((path) => {
