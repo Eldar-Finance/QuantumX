@@ -26,7 +26,7 @@ const Swap = () => {
       position="relative" // Set the Card's position to relative
     >
       <Image
-        src="https://i.ibb.co/j8GF7Sz/firelk2.png" // Replace with your image URL
+        src="https://i.ibb.co/MPFd8PQ/firelkk12.png" // Replace with your image URL
         position="absolute" // Position the image absolutely
         top="1%" // Align top edge with the card's top edge
         left="2%" // Align left edge with the card's left edge
