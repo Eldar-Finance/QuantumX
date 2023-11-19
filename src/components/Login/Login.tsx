@@ -20,6 +20,7 @@ import dynamic from "next/dynamic";
 import { openLogin } from "redux/slices/settings/settings-reducer";
 import { useAppDispatch } from "utils/hooks/redux";
 import { routeNames } from "utils/routes";
+import { useRouter } from "next/router";
 
 const ExtensionLoginButton: any = dynamic(
   async () => {
@@ -151,6 +152,10 @@ const operaWallet = (
 const Login = ({ isLoginOpen }) => {
   const dispatch = useAppDispatch();
 
+  const router = useRouter();
+  console.log("⚠️ ~ file: Login.tsx:156 ~ router:", router, router.asPath)
+  const redirectPath = router.asPath === "/" ? routeNames.home : router.asPath;
+
   const handleClose = () => {
     dispatch(openLogin(false));
   };
@@ -185,13 +190,13 @@ const Login = ({ isLoginOpen }) => {
             {" "}
             <LoginMethod>
               <ExtensionLoginButton
-                callbackRoute={routeNames.home}
+                callbackRoute={redirectPath}
                 loginButtonText={defiWallet}
               />
             </LoginMethod>
             <LoginMethod>
               <WalletConnectLoginButton
-                callbackRoute={routeNames.home}
+                callbackRoute={redirectPath}
                 shouldRenderDefaultCss={false}
                 loginButtonText={mobileText}
                 isWalletConnectV2={true}
@@ -199,7 +204,7 @@ const Login = ({ isLoginOpen }) => {
             </LoginMethod>
             <LoginMethod>
               <WebWalletLoginButton
-                callbackRoute={routeNames.home}
+                callbackRoute={redirectPath}
                 shouldRenderDefaultCss={false}
                 loginButtonText={webWallet}
                 nativeAuth
@@ -207,7 +212,7 @@ const Login = ({ isLoginOpen }) => {
             </LoginMethod>
             <LoginMethod isXAlias={true}>
               <XaliasLoginButton
-                callbackRoute={routeNames.home}
+                callbackRoute={redirectPath}
                 shouldRenderDefaultCss={false}
                 loginButtonText={xAliasWallet}
                 nativeAuth
@@ -216,7 +221,7 @@ const Login = ({ isLoginOpen }) => {
             <LoginMethod>
               {" "}
               <LedgerLoginButton
-                callbackRoute={routeNames.home}
+                callbackRoute={redirectPath}
                 shouldRenderDefaultCss={false}
                 loginButtonText={legerWallet}
               />
