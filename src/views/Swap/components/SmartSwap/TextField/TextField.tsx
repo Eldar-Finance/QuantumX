@@ -48,10 +48,9 @@ const TextField = ({
       px={4}
       borderRadius={"20px"}
       border={"1px solid"}
-      borderColor={"main"}
       sx={sxProps}
       position={"relative"}
-      bg="scondary"
+      bg="secondary"
       fontSize={{ xs: "sm", md: "md" }}
     >
       <Flex justifyContent={"space-between"}>

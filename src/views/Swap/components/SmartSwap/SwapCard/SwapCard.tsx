@@ -7,9 +7,11 @@ import BigNumber from "bignumber.js";
 import { ExchangeIcon } from "components/Icons/ui";
 import { ArrowUpDownIcon } from "@chakra-ui/icons";
 import { useRouter } from "next/dist/client/router";
-import { use, useEffect } from "react";
+import { use, useEffect, useMemo } from "react";
 import { FetchWhitelistedTokens } from "redux/slices/smartSwaps/funcs";
-
+import {
+  selectSlippage,
+} from "redux/slices/smartSwaps/smartSwaps";
 import { updateURLParams } from "utils/functions/routes";
 import { useAppDispatch, useAppSelector } from "utils/hooks/redux";
 import { ILpSmartSwap, INomalSmartSwap } from "utils/types/others.interface";
@@ -26,6 +28,7 @@ import { set } from "lodash";
 import useGetMultipleElrondTokens from "utils/hooks/useGetMultipleElrondTokens";
 import useGetAccountToken from "utils/hooks/useGetAccountToken";
 import useGetAccountTokens from "utils/hooks/useGetAccountTokens";
+import store from "redux/store";
 
 const getAshChainId = () => {
   if (network.id == "mainnet") {
@@ -42,8 +45,19 @@ export interface SwapToken {
 }
 
 const SwapCard = () => {
+  const userAddress = store.getState().userAccount.connectedAddress;
+  const [receiverAddress, setReiceverAddress] = useState(null);
   const router = useRouter();
   const chainId = getAshChainId();
+  const slipapge = useAppSelector(selectSlippage);
+  const ashSwapAggregator = useMemo(() => {
+    if (chainId) {
+      const agg = new Aggregator({ chainId: chainId });
+      // setReiceverAddress(agg.address.valueHex);
+      return agg;
+    }
+  }, [chainId]);
+  console.log("⚠️ ~ file: SwapCard.tsx:51 ~ ashSwapAggregator:", ashSwapAggregator)
 
   //
   // TOKENS
@@ -71,7 +85,6 @@ const SwapCard = () => {
   useEffect(() => {
     let isMounted = true;
     const fetchTokens = async () => {
-      let ashSwapAggregator = new Aggregator({chainId: chainId});
       const tokens = await ashSwapAggregator.getTokens();
       const formattedTokens = tokens.map((token) => {
         return {
@@ -90,7 +103,7 @@ const SwapCard = () => {
     return () => {
       isMounted = false;
     };
-  }, [chainId]);
+  }, [ashSwapAggregator, chainId]);
   
   useEffect(() => {
     if (router.query.fromToken) {
@@ -186,22 +199,22 @@ const SwapCard = () => {
   // NEW SWAP DATA
   //
   const [swapPaths, setSwapPaths] = useState(null);
+  // console.log("⚠️ ~ file: SwapCard.tsx:192 ~ swapPaths:", swapPaths)
+
   useEffect(() => {
     const handleCalculateNewSwapData = () => {
-      let ashSwapAggregator = new Aggregator({chainId: chainId});
-
       const multiplier = Math.pow(10, fromToken?.decimals || 0);
       const finalValue = BigNumber(fromToken.value).times(multiplier).toString();
-      
+
       ashSwapAggregator.getPaths(fromToken.identifier, toToken.identifier, finalValue).then((p) => {
         setSwapPaths(p);
       });
-    }
+    };
 
     if (fromToken.identifier && fromToken.value && toToken.identifier) {
       handleCalculateNewSwapData();
     }
-  }, [chainId, fromToken?.decimals, fromToken.identifier, fromToken.value, router.query.fromToken, toToken]);
+  }, [ashSwapAggregator, chainId, fromToken, router.query.fromToken, toToken.identifier]);
 
   useEffect(() => {
     if (swapPaths && swapPaths?.returnAmount && fromToken?.value) {
@@ -211,9 +224,45 @@ const SwapCard = () => {
         value: swapPaths?.returnAmount || null,
       });
     }
-  }
-  , [fromToken?.value, swapPaths, swapPaths?.returnAmount, toToken.decimals, toToken.identifier]);
+  }, [swapPaths, fromToken, toToken.identifier, toToken.decimals]);
 
+  //
+  // SWAP BUTTON
+  //
+  const [interaction, setInteraction] = useState(null);
+  console.log("⚠️ ~ file: SwapCard.tsx:223 ~ interaction:", interaction)
+
+  useEffect(() => {
+    const handleCreateInteractionFromSwapData = () => {
+      ashSwapAggregator.aggregateFromPaths(swapPaths, slipapge*100).then((i) => {
+        setInteraction(
+          i.withSender(
+            new Address(userAddress)
+          )
+        );
+      });
+    };
+
+    if (swapPaths && swapPaths?.swaps && fromToken?.value) {
+      handleCreateInteractionFromSwapData();
+    }
+  }
+  , [ashSwapAggregator, fromToken?.value, slipapge, swapPaths, userAddress]);
+
+  //
+  // RESET
+  //
+  useEffect(() => {
+    if (!fromToken?.value) {
+      setSwapPaths(null);
+      setToToken({
+        identifier: toToken.identifier,
+        decimals: toToken.decimals,
+        value: null,
+      });
+      setInteraction(null);
+    }
+  }, [fromToken?.value, toToken.decimals, toToken.identifier]);
 
   return (
     <Flex
@@ -236,7 +285,7 @@ const SwapCard = () => {
       >
         <Box>
           <Flex flexDir={"column"} width={"full"}>
-            <Center flexDir={"column"} position="relative" mb={"20px"}>
+            <Center flexDir={"column"} position="relative" mb={"10px"}>
               <TextField
                 sxProps={{borderColor: "transparent" , backgroundColor:"black.base"}}
                 label={"You send"}
@@ -254,7 +303,7 @@ const SwapCard = () => {
                 }
                 swapTokens={swapTokens}
               />
-              <Center  position={"absolute"} bottom={"-30px"} zIndex={2}>
+              <Center  position={"absolute"} bottom={"-25px"} zIndex={2}>
                 <IconButton
                   onClick={handleExchangeFields}
                   borderRadius={"1.5rem"}
@@ -266,7 +315,7 @@ const SwapCard = () => {
                   _hover={{ bg: "black.baseDark" }}
                   disabled={false}
                 >
-                  <ArrowUpDownIcon color={"white"} />
+                  <ArrowUpDownIcon color={"main"} />
                 </IconButton>
               </Center>
             </Center>
@@ -289,8 +338,8 @@ const SwapCard = () => {
             {/* {toToken?.identifier && (
               <Flex justifyContent={"flex-end"} mt={-2} color="#24918a"></Flex>
             )} */}
-            {fromToken?.value && (
-              <SwapDetails/>
+            {fromToken?.value && swapPaths && (
+              <SwapDetails swapPaths={swapPaths} />
             )}
             <SwapButton
               bg={"black.dark"}
@@ -298,11 +347,8 @@ const SwapCard = () => {
               py="15px"
               width="60%"
               alignContent="center"
-              // swapInfo={data}
-              isSapwToLp={false}
-              disableButton={true}
-              isDisabled={true}
               style={{ margin: 'auto' , marginTop:'40px'}}
+              interaction={interaction}
             />
 
             <FeeInfo />

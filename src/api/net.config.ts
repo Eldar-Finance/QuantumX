@@ -7,7 +7,7 @@ import {
   TOKENS_ID,
   eldarSftCollection,
   swapTopTokens,
-} from "../config";
+} from "../config.devnet";
 
 export const toknesID = TOKENS_ID;
 export const environment = ENVIROMENT;

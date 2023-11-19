@@ -14,7 +14,7 @@ const Swap = () => {
         display={"flex"}
         flexDir="column"
         alignItems={"center"}
-        pb={"500px"}
+        pb={"50px"}
       >
         <Card
           maxW={"620px"}
@@ -22,11 +22,12 @@ const Swap = () => {
           style={{
             // backgroundColor: 'black.baseDark', // replace 'black' with your desired color or variable
             // padding: '20px', // for xs screens, adjust as needed
-            paddingTop: '30px !important', // Note: !important might not work in inline styles
+            // paddingTop: '30px !important', // Note: !important might not work in inline styles
             borderRadius: '30px', // for xs screens, adjust as needed
             border: '1px solid',
             borderColor: 'transparent' // replace 'main' with your color or variable
           }}
+          p={{sm: "10px", md: "20px"}}
         >
           <SwapCard />
         </Card>

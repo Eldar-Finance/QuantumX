@@ -1,5 +1,8 @@
 import { ButtonProps } from "@chakra-ui/react";
+import { Interaction } from "@multiversx/sdk-core/out";
 import { useTrackTransactionStatus } from "@multiversx/sdk-dapp/hooks/transactions/useTrackTransactionStatus";
+import { sendTransactions } from "@multiversx/sdk-dapp/services";
+import { sendTransaction } from "api/sc/sc";
 import ActionButton from "components/ActionButton/ActionButton";
 import { useState } from "react";
 import {
@@ -13,51 +16,37 @@ import { INomalSmartSwap, ISmartSwapData } from "utils/types/others.interface";
 import { swap, swapLp } from "views/Swap/services/swap";
 
 interface IProps extends ButtonProps {
-  disableButton?: boolean;
-  isSapwToLp: boolean;
-  swapInfo?: ISmartSwapData[];
+  interaction: Interaction
 }
 
 const SLIPAGE = 2.5;
 
 const SwapButton = ({
-  disableButton,
-  isSapwToLp,
-  swapInfo,
+  interaction,
   ...props
 }: IProps) => {
-  const [sessionId, setSessionId] = useState<string>();
-  const slipapge = useAppSelector(selectSlippage);
+  // const [sessionId, setSessionId] = useState<string>();
+  // const slipapge = useAppSelector(selectSlippage);
 
-  const toField = useAppSelector((state) => state.smartSwap.toField);
-  const fromToken = useAppSelector(selectFromField);
-  const { token: fromElrondToken } = useGetElrondToken(fromToken.token);
+  // const toField = useAppSelector((state) => state.smartSwap.toField);
+  // const fromToken = useAppSelector(selectFromField);
+  // const { token: fromElrondToken } = useGetElrondToken(fromToken.token);
 
-  const txs = useTrackTransactionStatus({
-    transactionId: sessionId,
-    onSuccess: (txI) => {
-      if (window) {
-        window.location.reload();
-      }
-    },
-  });
+  // const txs = useTrackTransactionStatus({
+  //   transactionId: sessionId,
+  //   onSuccess: (txI) => {
+  //     if (window) {
+  //       window.location.reload();
+  //     }
+  //   },
+  // });
 
   const handleSwap = async () => {
-    if (swapInfo && swapInfo.length > 0 && fromElrondToken) {
-      const gas = 90000000;
-      if (!isSapwToLp) {
-        swap(
-          swapInfo as INomalSmartSwap[],
-          slipapge,
-          fromToken,
-          toField,
-          fromElrondToken,
-          gas
-        );
-      } else {
-        swapLp(swapInfo, slipapge, fromToken, toField, fromElrondToken, gas);
-      }
-    }
+    console.log("⚠️ ~ file: SwapButton.tsx:46 ~ interaction:", interaction)
+    const tx = interaction.buildTransaction();
+    console.log("⚠️ ~ file: SwapButton.tsx:47 ~ tx:", tx)
+
+    const res = await sendTransaction({tx: tx});
   };
 
   return (
@@ -71,7 +60,7 @@ const SwapButton = ({
       onClick={handleSwap}
       {...props}
     >
-      {toField.value ? "Swap" : "Enter an amount"}
+      {interaction ? "Swap" : "Enter an amount"}
     </ActionButton>
   );
 };

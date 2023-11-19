@@ -1,65 +1,102 @@
-import { Box, Center, Flex, Icon, Text } from "@chakra-ui/react";
+import { SorSwapResponse } from "@ashswap/ash-sdk-js/out";
+import { Box, Center, Flex, HStack, Icon, Text } from "@chakra-ui/react";
 import { SwapIcon } from "components/Icons/ui";
+import { CiRoute } from "react-icons/ci";
 import { formatTokenI } from "utils/functions/tokens";
 import { ILpSmartSwap, INomalSmartSwap } from "utils/types/others.interface";
 import useGetSwapInfo from "views/Swap/hooks/useGetSwapInfo";
+import { TbSum } from "react-icons/tb";
+import { MdOutlinePriceChange } from "react-icons/md";
+import { swap } from "views/Swap/services/swap";
 
-const SwapRoute = () => {
+const SwapRoute = ({ swapPaths }: { swapPaths?: SorSwapResponse }) => {
+  console.log("⚠️ ~ file: SwapRoute.tsx:9 ~ swapPaths:", swapPaths)
   const { data, isSapwToLp } = useGetSwapInfo();
 
-  const routes = data
-    ? data.map((swapData, i) => {
-        if (!isSapwToLp) {
-          const d: INomalSmartSwap = swapData as INomalSmartSwap;
-          return {
-            token1: formatTokenI(d.token1),
-            token2: formatTokenI(d.token2),
-          };
-        } else {
-          if (i === 0) {
-            const d: ILpSmartSwap = swapData as ILpSmartSwap;
-            return {
-              token1: "",
-              token2: formatTokenI(d.lptokenidentifier),
-            };
-          } else {
-            const d: INomalSmartSwap = swapData as INomalSmartSwap;
-            return {
-              token1: formatTokenI(d.token1),
-              token2: formatTokenI(d.token2),
-            };
-          }
-        }
-      })
-    : [];
+  const routes = swapPaths.swaps?.map((path) => {
+    return {
+      token1: formatTokenI(path.assetIn),
+      token2: formatTokenI(path.assetOut),
+    };
+  });
 
   let finalRoutes = routes;
-  if (finalRoutes.length > 0 && isSapwToLp) {
-    finalRoutes = [...routes.filter((d, i) => i > 0), routes[0]];
-  }
+  // if (routes.length > 0) {
+  //   finalRoutes = [...routes.filter((d, i) => i > 0), routes[0]];
+  // }
 
+  const priceImpact = Number(swapPaths?.priceImpact?.toFixed(7)) * 100;
+  const roundedPriceImpact = priceImpact.toFixed(5);
+
+  const displayPriceImpact = roundedPriceImpact.length > 5 ? Math.round(priceImpact*10000) / 10000 : roundedPriceImpact;
+  
   return (
-    <Flex w="full" gap={"15px"} alignItems="flex-start">
-      <Center bg="black.base" boxSize={"44px"} borderRadius="full">
-        <Icon as={SwapIcon} />
-      </Center>
-      <Box>
-        <Text flex={1} fontSize={{ xs: "sm", md: "18px" }} mb={2} mt={2}>
-          Swap route
-        </Text>
-        <ul>
-          {finalRoutes.map((route, i) => {
-            return (
-              <li key={i}>
-                <Text fontSize={"lsm"} color="white.500">
-                  {route.token1} {"->"} {route.token2}
-                </Text>
-              </li>
-            );
-          })}
-        </ul>
-      </Box>
-    </Flex>
+    <HStack w={"full"} h={"full"} flex={1}>
+      <Flex
+        h={"full"}
+        w="full"
+        gap={"10px"}
+        alignSelf={"flex-start"}
+        bg={"black.baseDark"}
+        p={2}
+        borderRadius={"20px"}
+        flex={1} // Add this line
+      >
+        <Center bg="black.base" boxSize={"40px"} borderRadius="full">
+          <CiRoute color={"#22F7DD"} size={"26"}/>
+        </Center>
+        <Box>
+          <Text flex={1} fontSize={{ xs: "16px", md: "18px" }} mb={2} mt={2}>
+            Swap routes
+          </Text>
+          <ul>
+            {finalRoutes.map((route, i) => {
+              return (
+                <li key={i}>
+                  <Text fontSize={"lsm"} color="white.500">
+                    {route.token1} {"->"} {route.token2}
+                  </Text>
+                </li>
+              );
+            })}
+          </ul>
+        </Box>
+      </Flex>
+      <Flex
+        w="full"
+        gap={"15px"}
+        alignSelf={"flex-start"}
+        bg={"black.baseDark"}
+        p={2}
+        borderRadius={"20px"}
+        flex={1} // Add this line
+        h={"full"}
+      >
+        <Center bg="black.base" boxSize={"40px"} borderRadius="full">
+          <MdOutlinePriceChange color={"#22F7DD"} size={"26"}/>
+        </Center>
+        <Box>
+          <Text flex={1} fontSize={{ xs: "16px", md: "18px" }} mb={2} mt={2}>
+            Price Impact
+          </Text>
+          <ul>
+            {/* {finalRoutes.map((route, i) => {
+              return (
+                <li key={i}>
+                  <Text fontSize={"lsm"} color="white.500">
+                    {route.token1} {"->"} {route.token2}
+                  </Text>
+                </li>
+              );
+            })} */}
+            
+            <Text fontSize={"lsm"} color="white.500">
+              {displayPriceImpact} %
+            </Text>
+          </ul>
+        </Box>
+      </Flex>
+    </HStack>
   );
 };
 
