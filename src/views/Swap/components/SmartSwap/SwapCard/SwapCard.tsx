@@ -85,7 +85,15 @@ const SwapCard = () => {
   useEffect(() => {
     let isMounted = true;
     const fetchTokens = async () => {
-      const tokens = await ashSwapAggregator.getTokens();
+      let tokens = await ashSwapAggregator.getTokens();
+      if (!tokens.find((token) => token.id === "EGLD")) {
+        tokens = [...tokens, {
+          id: "EGLD",
+          decimal: 18,
+          coingeckoId: ""
+        }];
+      }
+
       const formattedTokens = tokens.map((token) => {
         return {
           identifier: token.id,
@@ -211,7 +219,7 @@ const SwapCard = () => {
       });
     };
 
-    if (fromToken.identifier && fromToken.value && toToken.identifier) {
+    if (fromToken.identifier && Number(fromToken.value) > 0 && toToken.identifier) {
       handleCalculateNewSwapData();
     }
   }, [ashSwapAggregator, chainId, fromToken, router.query.fromToken, toToken.identifier]);
