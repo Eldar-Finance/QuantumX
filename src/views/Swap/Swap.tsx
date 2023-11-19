@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Card, Flex, IconButton, Image, Text } from '@chakra-ui/react';
+import { Box, Card, Flex, IconButton, Image, Link, Text } from '@chakra-ui/react';
 import { ChevronRightIcon, ChevronLeftIcon } from '@chakra-ui/icons';
 import SwapCard from './components/SmartSwap/SwapCard/SwapCard';
 import Layout from 'components/Layout/Layout';
@@ -94,12 +94,19 @@ const Swap = () => {
           >
             Powered by 
           </Text>
-          <Image
-            src="https://app.ashswap.io/logo.png"
-            width={{ base: "64px", md: "96px" }}
-            ml={2}
-            ignoreFallback
-          />
+          <Link
+            href="https://app.ashswap.io/swap/"
+            isExternal
+          >
+            <Image
+              alt='ash'
+              src="https://app.ashswap.io/logo.png"
+              width={{ base: "64px", md: "96px" }}
+              ml={2}
+              mt={-2}
+              ignoreFallback
+            />
+          </Link>
         </Flex>
       </MyContainer>
     </Layout>
