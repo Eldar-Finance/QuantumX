@@ -26,10 +26,10 @@ const Swap = () => {
       position="relative" // Set the Card's position to relative
     >
       <Image
-        src="https://i.ibb.co/4VRmcSx/firel.png" // Replace with your image URL
+        src="https://i.ibb.co/HFqck8V/firel2.png" // Replace with your image URL
         position="absolute" // Position the image absolutely
         top="1%" // Align top edge with the card's top edge
-        left="0%" // Align left edge with the card's left edge
+        left="2%" // Align left edge with the card's left edge
         width={{ sm: "0px", md: "100px" }} // Adjust the size as needed
         height="auto" // Maintain the aspect ratio
         zIndex="1" // Ensure the image is above other content
