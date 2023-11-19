@@ -9,6 +9,8 @@ import { TbSum } from "react-icons/tb";
 import { MdOutlinePriceChange } from "react-icons/md";
 import { swap } from "views/Swap/services/swap";
 import React, { useState } from 'react';
+import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons';
+
 
 const SwapRoute = ({ swapPaths }: { swapPaths?: SorSwapResponse }) => {
   // console.log("⚠️ ~ file: SwapRoute.tsx:9 ~ swapPaths:", swapPaths)
@@ -51,37 +53,30 @@ const SwapRoute = ({ swapPaths }: { swapPaths?: SorSwapResponse }) => {
       <Text flex={1} fontSize={{ xs: '16px', md: '18px' }} mb={2} mt={2}>
         Swap routes
       </Text>
-      <ul>
-        {finalRoutes.map((route, i) => {
-          // Only render the "+" button next to the first route
-          if (i === 0) {
-            return (
-              <Flex key={i} align="center">
-                <Text fontSize={'lsm'} color="white.500">
-                  {route.token1} {'->'} {route.token2}
-                </Text>
-                {finalRoutes.length > 1 && !showAllRoutes && (
-                  <Button size="xs" onClick={() => setShowAllRoutes(true)} ml={2}>
-                    +
-                  </Button>
-                )}
-              </Flex>
-            );
-          }
-          // Render the rest of the routes only if showAllRoutes is true
-          return showAllRoutes ? (
-            <li key={i}>
-              <Text fontSize={'lsm'} color="white.500">
-                {route.token1} {'->'} {route.token2}
-              </Text>
-            </li>
-          ) : null;
-        })}
-      </ul>
-      {showAllRoutes && finalRoutes.length > 1 && (
-        <Button size="xs" onClick={() => setShowAllRoutes(false)} mt={2}>
-          -
-        </Button>
+      <Flex align="center" justify="space-between">
+        <Text as="li" style={{ listStyleType: 'none' }}  fontSize={'lsm'} color="white.500">
+          {finalRoutes[0].token1} {'->'} {finalRoutes[0].token2}
+        </Text>
+        {finalRoutes.length > 1 && (
+          <Button 
+            size="xs" 
+            onClick={() => setShowAllRoutes(prev => !prev)} 
+            variant="ghost"
+            _hover={{ background: 'none' }}
+            _active={{ background: 'none' }}
+          >
+            {showAllRoutes ? <ChevronUpIcon /> : <ChevronDownIcon />}
+          </Button>
+        )}
+      </Flex>
+      {showAllRoutes && (
+        <Box as="ul" style={{ listStyleType: 'none' }}  mt={2}>
+          {finalRoutes.slice(1).map((route, i) => (
+            <Text as="li" fontSize={'lsm'} color="white.500" key={i + 1}>
+              {route.token1} {'->'} {route.token2}
+            </Text>
+          ))}
+        </Box>
       )}
     </Box>
       </Flex>
