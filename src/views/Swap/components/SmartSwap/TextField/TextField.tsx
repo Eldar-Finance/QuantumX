@@ -8,6 +8,16 @@ import useGetElrondToken from "utils/hooks/useGetElrondToken";
 import SelectCurrency from "./commons/SelectCurrency/SelectCurrency";
 import { SwapToken } from "../SwapCard/SwapCard";
 
+function formatNumberWithMaxFiveDecimals(num) {
+  if (typeof num !== 'number') return num; // Return the value as is if it's not a number
+
+  // Convert to a string with up to 5 decimal places
+  const formatted = num.toFixed(5);
+
+  // Remove trailing zeros and the decimal point if it's an integer
+  return formatted.replace(/(\.\d*?)0+$/, '$1').replace(/\.$/, '');
+}
+
 interface IProps extends InputProps {
   label: string;
   id: "from" | "to";
@@ -64,22 +74,13 @@ const TextField = ({
             {label}
           </Text>
         </label>
-        {accountToken && (
-          <Text color={"white.400"}>
-            <Box as="span" mr="28px">
-              {" "}
-              Balance:
-            </Box>{" "}
-            {formatBalance(accountToken) || 0}
-          </Text>
-        )}
       </Flex>
 
-      <Box
+      <Box 
         width={"full"}
         sx={{
           borderRadius: "0.45rem",
-
+          zIndex: 2,
           marginTop: "5px",
           fontSize: "1.4rem",
           display: "flex",
@@ -88,47 +89,66 @@ const TextField = ({
           justifyContent: "space-between",
         }}
       >
-        <Flex alignItems={"center"} mb={2}>
-          {field.identifier && hasMaxButton && (
-            <ActionButton
-              onClick={() => onClickMaxtoken(formatBalance(accountToken, true, accountToken.decimals))}
-              textTransform={"uppercase"}
-              variant={"solid"}
-              fontSize={{ xs: "sm", md: "md" }}
-              height={"2rem"}
-              width={"auto"}
-              minWidth={"unset"}
-              padding={"0.5rem"}
-              fontWeight={"400"}
-              color={"main"}
-              bg="transparent"
-              mr={1}
-            >
-              MAX
-            </ActionButton>
-          )}
-
-          <SelectCurrency
+        
+          <Box zIndex={2}>
+          <SelectCurrency 
+          
             field={id}
             handleClickToken={handleClickToken}
             token={token}
             disable={disableChangeToken}
             swapTokens={swapTokens}
           />
-        </Flex>
-        <Flex flexDir={"column"} w="full" transform={"translateY(-5px)"}>
+          </Box>
+
+        <Flex alignItems="center" mt={2}>
+
+        {accountToken && (
+          <Text color={"white.400"} fontSize={"sm"}>
+              <Box as="span" m="5px">
+                  Balance:
+              </Box>
+              {formatBalance(accountToken) || 0}
+          </Text>
+      )}
+    {field.identifier && hasMaxButton && (
+        <ActionButton
+            onClick={() => onClickMaxtoken(formatBalance(accountToken, true, accountToken.decimals))}
+            textTransform={"uppercase"}
+            variant={"solid"}
+            fontSize={"sm"} // Adjust font size as needed
+            height={"1.5rem"} // Adjust height as needed
+            width={"auto"}
+            minWidth={"unset"}
+            padding={"0.25rem"} // Adjust padding as needed
+            fontWeight={"400"}
+            color={"main"}
+            bg="transparent"
+            mr={1} // Adjust margin as needed
+        >
+            Max
+        </ActionButton>
+    )}
+
+    
+ </Flex>
+
+
+        <Flex flexDir={"column"} w="full" transform={"translateY(-5px)"} >
           {isLoadingAmount ? (
             <Box w="full">
               <Spinner />
             </Box>
           ) : (
-            <InputS
-              value={field.value ?? ""}
+            <InputS 
+              value={field.value ? formatNumberWithMaxFiveDecimals(Number(field.value)) : ""}
+              //value={field.value ?? ""}
               fontSize={"3xl"}
               fontWeight={"500"}
               id={id}
               px={0}
               mr={2}
+              marginTop={"-60px"}
               _focus={{
                 border: "none",
                 outline: "none",
@@ -146,11 +166,13 @@ const TextField = ({
               minLength={1}
               maxLength={79}
               spellCheck="false"
+              position="relative" bottom="0"
+              zIndex={0}
               {...props}
             />
           )}
           {dollarAmount && (
-            <Text color={"grayText"}>
+            <Text color={"grayText"} fontSize={"sm"}>
               ≈ ${formatNumber(preventExponetialNotation(dollarAmount))}
             </Text>
           )}
