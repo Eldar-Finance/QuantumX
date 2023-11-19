@@ -36,6 +36,10 @@ const CustomTooltip = ({
       fontWeight={"medium"}
       borderRadius={"12px"}
       p={4}
+      borderLeft={"2px solid #22F6DC"}
+      borderBottom={"2px solid #FF005C"}
+      borderRight={"2px solid #FF005C"}
+      borderTop={"2px solid #22F6DC"}
     >
       {children || (
         <Box
