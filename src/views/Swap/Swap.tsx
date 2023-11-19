@@ -5,6 +5,7 @@ import Layout from "components/Layout/Layout";
 import withElronDapp from "hoc/withElronDapp";
 import WrapperPages from "hoc/WrapperPages";
 import SwapCard from "./components/SmartSwap/SwapCard/SwapCard";
+import { Text } from "@chakra-ui/react";
 
 const Swap = () => {
   return (
@@ -20,7 +21,7 @@ const Swap = () => {
           bg={"black.baseDark"}
           style={{
             // backgroundColor: 'black.baseDark', // replace 'black' with your desired color or variable
-            padding: '20px', // for xs screens, adjust as needed
+            // padding: '20px', // for xs screens, adjust as needed
             paddingTop: '30px !important', // Note: !important might not work in inline styles
             borderRadius: '30px', // for xs screens, adjust as needed
             border: '1px solid',
@@ -28,8 +29,14 @@ const Swap = () => {
           }}
         >
           <SwapCard />
-          {/* p2p is hidden */}
         </Card>
+        <Text
+          fontSize={{ xs: "sm", md: "md" }}
+          color={"white.500"}
+          mt={"40px"}
+        >
+          Powered by AshSwap
+        </Text>
       </MyContainer>
     </Layout>
   );

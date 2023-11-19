@@ -5,18 +5,11 @@ import TextField from "../TextField/TextField";
 
 import BigNumber from "bignumber.js";
 import { ExchangeIcon } from "components/Icons/ui";
+import { ArrowUpDownIcon } from "@chakra-ui/icons";
 import { useRouter } from "next/dist/client/router";
-import { useEffect } from "react";
+import { use, useEffect } from "react";
 import { FetchWhitelistedTokens } from "redux/slices/smartSwaps/funcs";
-import {
-  excahngeFields,
-  selectFromField,
-  selectToField,
-  setFromToken,
-  setFromTokenValue,
-  setToToken,
-  setToTokenValue,
-} from "redux/slices/smartSwaps/smartSwaps";
+
 import { updateURLParams } from "utils/functions/routes";
 import { useAppDispatch, useAppSelector } from "utils/hooks/redux";
 import { ILpSmartSwap, INomalSmartSwap } from "utils/types/others.interface";
@@ -28,92 +21,199 @@ import {Aggregator, ChainId} from '@ashswap/ash-sdk-js';
 import { Address } from "@multiversx/sdk-core/out";
 import { sendTransactions } from "@multiversx/sdk-dapp/services";
 import ActionButton from "components/ActionButton/ActionButton";
+import { network, toknesID } from "api/net.config";
+import { set } from "lodash";
+import useGetMultipleElrondTokens from "utils/hooks/useGetMultipleElrondTokens";
+import useGetAccountToken from "utils/hooks/useGetAccountToken";
+import useGetAccountTokens from "utils/hooks/useGetAccountTokens";
 
-const getAshResults = async () => {
-  // Permit the user to convert one EGLD to ASH with a 0.1% slippage.
-  // Based on the fee configuration, xPortal will also receive a small amount of fees.
-  // const xPortalProtocol = 'erd...';
-  const agService = new Aggregator({chainId: ChainId.Mainnet});
-  const interaction = await agService.aggregate('EGLD', 'ASH-a642d1', 1e18, 100);
-  // remember to set the sender (caller) before sending the tx
-  const tx = interaction.withSender(new Address('erd1lnmfa5p9j6qy40kjtrf0wfq6cl056car6hyvrq5uxdcalc2gu7zsrwalel')).check().buildTransaction();
-  console.log("⚠️ ~ SwapCard.tsx:40 ~ getAshResults: ", tx)
-  console.log("⚠️ ~ SwapCard.tsx:40 ~ data: ", tx.getData().toString())
-  // sign and send tx to the network
-  // sendTransactions({
-  //     transactions: [tx],
-  // })
+const getAshChainId = () => {
+  if (network.id == "mainnet") {
+    return ChainId.Mainnet;
+  } else if (network.id == "devnet") {
+    return ChainId.Devnet;
+  }
 }
 
+export interface SwapToken {
+  identifier: string;
+  decimals?: number;
+  value?: string;
+}
 
 const SwapCard = () => {
-
-  const fromToken = useAppSelector(selectFromField);
-  const toToken = useAppSelector(selectToField);
-  const dispatch = useAppDispatch();
   const router = useRouter();
-  const [isNumberEntered, setIsNumberEntered] = useState(false);
+  const chainId = getAshChainId();
 
-  const handleChangeFromField = (value) => {
-    // Update state based on whether the input is a valid number
-    setIsNumberEntered(!isNaN(value) && value.trim() !== '');
+  //
+  // TOKENS
+  //
+  const [swapTokens, setSwapTokens] = useState([]);
+  const [fromToken, setFromToken] = useState<SwapToken>({
+    identifier: toknesID.usdc,
+    decimals: 6,
+    value: null,
+  });
+  const [toToken, setToToken] = useState<SwapToken>({
+    identifier: toknesID.wegld,
+    decimals: 18,
+    value: null,
+  });
 
-    // Existing logic in your handleChangeFromField
-    dispatch(setFromTokenValue(value));
-  };
+  const { tokens: elrondTokens } = useGetMultipleElrondTokens(swapTokens.map((token) => token.identifier));
+  // console.log("⚠️ ~ file: SwapCard.tsx:72 ~ elrondTokens:", elrondTokens)
 
-  const { data, isLoading, isSapwToLp } = useGetSwapInfo();
-  // console.log("⚠️ ~ file: SwapCard.tsx:66 ~ SwapCard ~ data::::", data)
+  const { accountToken } = useGetAccountToken(fromToken.identifier);
+  // console.log("⚠️ ~ file: SwapCard.tsx:71 ~ accountTokens:", accountTokens)
+  const [maxBalance, setMaxBalance] = useState(null);
+
 
   useEffect(() => {
-    if (data) {
-      if (!isSapwToLp) {
-        const swapData = data[data.length - 1] as INomalSmartSwap;
-        dispatch(
-          setToTokenValue(new BigNumber(swapData.amountReceiv).toFixed(4))
-        );
-      } else {
-        const swapData = data[0] as ILpSmartSwap;
-        let lpValue = new BigNumber(swapData.lpamounttoreceive).toFixed(4);
-        if (Number(lpValue) < 0.00000000001) {
-          lpValue = new BigNumber(swapData.lpamounttoreceive).toFixed(25);
-        }
+    let isMounted = true;
+    const fetchTokens = async () => {
+      let ashSwapAggregator = new Aggregator({chainId: chainId});
+      const tokens = await ashSwapAggregator.getTokens();
+      const formattedTokens = tokens.map((token) => {
+        return {
+          identifier: token.id,
+          decimals: token.decimal,
+          coingeckoId: token.coingeckoId,
+        };
+      });
 
-        let toValue = lpValue;
-
-        dispatch(setToTokenValue(toValue));
+      if (isMounted) {
+        setSwapTokens(formattedTokens);
       }
-    }
-  }, [data, dispatch, isSapwToLp]);
-  useEffect(() => {
-    dispatch(FetchWhitelistedTokens());
-  }, [dispatch]);
+    };
 
-  const handleOnSelectFromToken = (token) => {
-    const fromToken = token.identifier;
-    updateURLParams({ fromToken });
-    dispatch(setFromToken(token.identifier));
-  };
-  const handleOnSelectToToken = (token) => {
-    const toToken = token.identifier;
-    updateURLParams({ toToken });
-    dispatch(setToToken(token.identifier));
-  };
-  const handleExchangeFields = () => {
-    dispatch(excahngeFields());
-  };
-  const handleMaxFromField = (amount) => {
-    dispatch(setFromTokenValue(amount));
-  };
-
+    fetchTokens();
+    return () => {
+      isMounted = false;
+    };
+  }, [chainId]);
+  
   useEffect(() => {
     if (router.query.fromToken) {
-      dispatch(setFromToken(router.query.fromToken as string));
+      // console.log("⚠️ ~ file: SwapCard.tsx:92 ~ fromToken:", router.query.fromToken)
+      setFromToken({
+        identifier: router.query.fromToken.toString(),
+      });
     }
     if (router.query.toToken) {
-      dispatch(setToToken(router.query.toToken as string));
+      // console.log("⚠️ ~ file: SwapCard.tsx:92 ~ toToken:", router.query.toToken)
+      setToToken({
+        identifier: router.query.toToken.toString(),
+      });
     }
-  }, [dispatch, router]);
+  }, [router, swapTokens]);
+  // console.log("⚠️ ~ file: SwapCard.tsx:50 ~ SwapCard ~ fromToken::::", fromToken)
+  // console.log("⚠️ ~ file: SwapCard.tsx:52 ~ SwapCard ~ toToken::::", toToken)
+
+  //
+  // FIELDS
+  //
+  const handleChangeFromField = (value) => {
+    if (!value || value == "") {
+      setToToken({
+        identifier: toToken.identifier,
+        decimals: toToken.decimals,
+        value: null,
+      });
+    }
+    if (!fromToken?.decimals) {
+      setFromToken({
+        identifier: fromToken.identifier,
+        decimals: swapTokens.find((token) => token.identifier === fromToken.identifier).decimals,
+        value: value !== "" ? value : null,
+      });
+    } else {
+      setFromToken({
+        identifier: fromToken.identifier,
+        decimals: fromToken.decimals,
+        value: value !== "" ? value : null,
+      });
+    }
+  };
+
+  const handleOnSelectFromToken = (token) => {
+    const tokenIdentifier = token.identifier;
+    updateURLParams({ fromToken: tokenIdentifier });
+    setFromToken({
+      identifier: tokenIdentifier,
+      decimals: token.decimals,
+      value: fromToken.value,
+    });
+  };
+
+  const handleOnSelectToToken = (token) => {
+    const tokenIdentifier = token.identifier;
+    updateURLParams({ toToken: tokenIdentifier });
+    setToToken({
+      identifier: tokenIdentifier,
+      decimals: token.decimals,
+      value: toToken.value,
+    });
+  };
+
+  const handleExchangeFields = () => {
+    setFromToken({
+      identifier: toToken.identifier,
+      decimals: toToken.decimals,
+      value: null,
+    });
+    setToToken({
+      identifier: fromToken.identifier,
+      decimals: fromToken.decimals,
+      value: null,
+    });
+    const fromTokenId = fromToken.identifier;
+    const toTokenId = toToken.identifier;
+    updateURLParams({ fromToken: fromTokenId, toToken: toTokenId });
+  };
+
+  const handleMaxFromField = () => {
+      const multiplier = Math.pow(10, accountToken.decimals);
+      const finalValue = BigNumber(accountToken.balance).div(multiplier).toString();
+      setFromToken({
+        identifier: fromToken.identifier,
+        decimals: accountToken.decimals,
+        value: finalValue,
+      });
+    // }
+  };
+
+  //
+  // NEW SWAP DATA
+  //
+  const [swapPaths, setSwapPaths] = useState(null);
+  useEffect(() => {
+    const handleCalculateNewSwapData = () => {
+      let ashSwapAggregator = new Aggregator({chainId: chainId});
+
+      const multiplier = Math.pow(10, fromToken?.decimals || 0);
+      const finalValue = BigNumber(fromToken.value).times(multiplier).toString();
+      
+      ashSwapAggregator.getPaths(fromToken.identifier, toToken.identifier, finalValue).then((p) => {
+        setSwapPaths(p);
+      });
+    }
+
+    if (fromToken.identifier && fromToken.value && toToken.identifier) {
+      handleCalculateNewSwapData();
+    }
+  }, [chainId, fromToken?.decimals, fromToken.identifier, fromToken.value, router.query.fromToken, toToken]);
+
+  useEffect(() => {
+    if (swapPaths && swapPaths?.returnAmount && fromToken?.value) {
+      setToToken({
+        identifier: toToken.identifier,
+        decimals: toToken.decimals,
+        value: swapPaths?.returnAmount || null,
+      });
+    }
+  }
+  , [fromToken?.value, swapPaths, swapPaths?.returnAmount, toToken.decimals, toToken.identifier]);
+
 
   return (
     <Flex
@@ -141,28 +241,32 @@ const SwapCard = () => {
                 sxProps={{borderColor: "transparent" , backgroundColor:"black.base"}}
                 label={"You send"}
                 id="from"
-                isMaxToken
+                hasMaxButton
                 onChange={(e) => handleChangeFromField(e.target.value)}
                 handleClickToken={handleOnSelectFromToken}
                 onClickMaxtoken={handleMaxFromField}
                 field={fromToken}
-                disableChangeToken={isSapwToLp}
+                disableChangeToken={false}
                 dollarAmount={
-                  data &&
-                  (isSapwToLp ? data[1]?.dollarAmount : data[0]?.dollarAmount)
+                  fromToken.value ?
+                  (elrondTokens.find((token) => token.identifier === fromToken.identifier)?.price
+                  * BigNumber(fromToken.value).toNumber()).toString() : ""
                 }
+                swapTokens={swapTokens}
               />
               <Center  position={"absolute"} bottom={"-30px"} zIndex={2}>
                 <IconButton
                   onClick={handleExchangeFields}
                   borderRadius={"1.5rem"}
                   aria-label="change-positions"
-                  bg="main"
+                  bg="black.base"
                   boxSize={"50px"}
-                  disabled={isSapwToLp}
+                  border={"5px solid"}
+                  borderColor={"black.baseDark"}
+                  _hover={{ bg: "black.baseDark" }}
+                  disabled={false}
                 >
-                  <ExchangeIcon />
-                  {/* {positionNormal ? <AiOutlineArrowDown /> : <AiOutlineArrowUp />} */}
+                  <ArrowUpDownIcon color={"white"} />
                 </IconButton>
               </Center>
             </Center>
@@ -170,23 +274,23 @@ const SwapCard = () => {
               sxProps={{borderColor: "transparent" , backgroundColor:"black.base"}}
               label={"You receive"}
               id="to"
+              hasMaxButton={false}
               handleClickToken={handleOnSelectToToken}
               field={toToken}
-              // @ts-ignore
-              disabled={true}
-              isLoadingAmount={isLoading}
+              isDisabled={true}
+              isLoadingAmount={false}
               dollarAmount={
-                data &&
-                (isSapwToLp
-                  ? data[0]?.dollarAmount
-                  : data[data.length - 1]?.dollarAmount)
+                toToken.value && fromToken.value ?
+                (elrondTokens.find((token) => token.identifier === toToken.identifier)?.price
+                * BigNumber(toToken.value).toNumber()).toString() : ""
               }
+              swapTokens={swapTokens.filter((token) => token.identifier !== fromToken.identifier)}
             />
-            {toToken.token && (
+            {/* {toToken?.identifier && (
               <Flex justifyContent={"flex-end"} mt={-2} color="#24918a"></Flex>
-            )}
-            {isNumberEntered && (
-              <SwapDetails />
+            )} */}
+            {fromToken?.value && (
+              <SwapDetails/>
             )}
             <SwapButton
               bg={"black.dark"}
@@ -194,9 +298,10 @@ const SwapCard = () => {
               py="15px"
               width="60%"
               alignContent="center"
-              swapInfo={data}
-              isSapwToLp={isSapwToLp}
-              // disableButton={disableButton}
+              // swapInfo={data}
+              isSapwToLp={false}
+              disableButton={true}
+              isDisabled={true}
               style={{ margin: 'auto' , marginTop:'40px'}}
             />
 

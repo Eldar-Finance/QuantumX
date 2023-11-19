@@ -10,6 +10,7 @@ export const getTokens = async (address: string, size?: number) => {
     `/accounts/${address}/tokens?size=${size || 200}`
   );
 };
+
 export const fetchAccountTokenById = async ([identifier, address]: [
   string,
   string
@@ -19,16 +20,30 @@ export const fetchAccountTokenById = async ([identifier, address]: [
   );
   return res.data;
 };
+
+export const fetchAccountTokensByIds = async ([address, identifiers]: [
+  string,
+  string[]
+]): Promise<IElrondAccountToken[]> => {
+  const res = await axiosEldron.get<IElrondAccountToken[]>(
+    `/accounts/${address}/tokens?identifiers=${identifiers.join("%2C")}`
+  );
+  return res.data;
+};
+
 export const getTokensByNfts = async (address, nfts) => {
   return await axiosEldron.get(`/accounts/${address}/nfts/${nfts}`);
 };
+
 export const getMexPairs = async () => {
   return await axiosEldron.get("/mex/pairs?size=150");
 };
+
 export const getEgldBalance = async (address): Promise<IElrondUserAccount> => {
   const res = await axiosEldron.get<IElrondUserAccount>(`/accounts/${address}`);
   return res.data;
 };
+
 export const getNfts = async ({
   address,
   parameters,

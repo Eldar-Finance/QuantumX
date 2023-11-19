@@ -1,4 +1,4 @@
-import { Box, Flex, Input, InputProps, Spinner, Text } from "@chakra-ui/react";
+import { As, Box, Flex, Input, InputProps, Spinner, Text } from "@chakra-ui/react";
 import styled from "@emotion/styled";
 import ActionButton from "components/ActionButton/ActionButton";
 import { formatBalance, formatNumber, formatPrecision } from "utils/functions/formatBalance";
@@ -6,21 +6,20 @@ import { preventExponetialNotation } from "utils/functions/numbers";
 import useGetAccountToken from "utils/hooks/useGetAccountToken";
 import useGetElrondToken from "utils/hooks/useGetElrondToken";
 import SelectCurrency from "./commons/SelectCurrency/SelectCurrency";
+import { SwapToken } from "../SwapCard/SwapCard";
 
 interface IProps extends InputProps {
   label: string;
   id: "from" | "to";
   handleClickToken: (token: any) => void;
   onClickMaxtoken?: (maxBalance: number) => void;
-  isMaxToken: boolean;
-  field: {
-    token?: string;
-    value?: string;
-  };
+  hasMaxButton: boolean;
+  field: SwapToken;
   sxProps?: any;
   isLoadingAmount?: boolean;
   disableChangeToken?: boolean;
   dollarAmount?: string;
+  swapTokens: SwapToken[];
 }
 
 const TextField = ({
@@ -28,17 +27,18 @@ const TextField = ({
   id,
   handleClickToken,
   onClickMaxtoken,
-  isMaxToken,
+  hasMaxButton,
   field,
   disableChangeToken,
   sxProps,
   isLoadingAmount,
   dollarAmount,
+  swapTokens,
   ...props
 }: IProps) => {
-  const { token, isLoading } = useGetElrondToken(field.token);
+  const { token, isLoading } = useGetElrondToken(field.identifier);
 
-  const { accountToken } = useGetAccountToken(field.token);
+  const { accountToken } = useGetAccountToken(field.identifier);
   return (
     <Box
       mb={"10px"}
@@ -90,7 +90,7 @@ const TextField = ({
         }}
       >
         <Flex alignItems={"center"} mb={2}>
-          {field.token && isMaxToken && (
+          {field.identifier && hasMaxButton && (
             <ActionButton
               onClick={() => onClickMaxtoken(formatBalance(accountToken, true, accountToken.decimals))}
               textTransform={"uppercase"}
@@ -114,6 +114,7 @@ const TextField = ({
             handleClickToken={handleClickToken}
             token={token}
             disable={disableChangeToken}
+            swapTokens={swapTokens}
           />
         </Flex>
         <Flex flexDir={"column"} w="full" transform={"translateY(-5px)"}>

@@ -107,12 +107,12 @@ export const TOKENS_ID = {
   lkmex: "LKMEX-3b7d9a",
   sProteo: "SPROTEO-c75f56",
   egld: "EGLD",
-  usdc: "USDC-8d4068",
+  usdc: "USDC-350c4e",
   proteoEgldLp: "PROTEOEGLD-8b31a0",
   ride: "RIDE-6e4c49",
   egldRideLp: " EGLDRIDE-3263c5",
-  wegld: "WEGLD-d7c6bb",
-  mex: "MEX-dc289c",
+  wegld: "WEGLD-a28c59",
+  mex: "MEX-a659d0",
   zpay: "ZPAY-247875",
   zpayWegldLp: "ZPAYWEGLD-34e5c1",
   aero: "AERO-458bbf",
@@ -138,5 +138,9 @@ export const TOKENS_ID = {
   nfttoken: "NFT-e08b3e",
   wbtc: "WBTC-5349b3",
   weth: "WETH-b4ca29",
-  htm: "HTM-f51d55"
+  htm: "HTM-f51d55",
+  ash: "ASH-e3d1b7"
 };
+
+export const swapTopTokens = [ TOKENS_ID.egld, TOKENS_ID.wegld, TOKENS_ID.usdc,
+TOKENS_ID.mex, TOKENS_ID.ash ];

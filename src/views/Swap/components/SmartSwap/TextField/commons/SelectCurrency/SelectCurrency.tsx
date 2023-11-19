@@ -15,7 +15,7 @@ const CurrencyModal: any = dynamic(() =>
   import("../CurrencyModal/CurrencyModal")
 );
 
-const SelectCurrency = ({ token, handleClickToken, field, disable }) => {
+const SelectCurrency = ({ token, handleClickToken, field, disable, swapTokens }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const handleClickTokenAndClose = (data) => {
     onClose();
@@ -110,6 +110,7 @@ const SelectCurrency = ({ token, handleClickToken, field, disable }) => {
           isOpen={isOpen}
           onClose={onClose}
           handleClickToken={handleClickTokenAndClose}
+          swapTokens={swapTokens}
         />
       )}
     </>

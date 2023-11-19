@@ -142,6 +142,8 @@ export const TOKENS_ID = {
   htm: "HTM-f51d55"
 };
 
+export const swapTopTokens = [ TOKENS_ID.egld, TOKENS_ID.wegld, TOKENS_ID.usdc ];
+
 //general configs
 export const walletConnectV2ProjectId = "6bec64742092caa5f1b382312bb17be2";
 export const apiTimeout = 6000;

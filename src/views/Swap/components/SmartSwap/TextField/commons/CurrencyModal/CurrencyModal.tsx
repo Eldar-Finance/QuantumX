@@ -26,12 +26,16 @@ import useGetMultipleElrondTokens from "utils/hooks/useGetMultipleElrondTokens";
 import useGetTopSmartSwapTokens from "utils/hooks/useGetTopSmartSwapTokens";
 import { IElrondToken } from "utils/types/elrond.interface";
 import useSelectSmarSwapTokens from "views/Swap/hooks/useSelectSmarSwapTokens";
+import { SwapToken } from "../../../SwapCard/SwapCard";
+import { useState } from "react";
+import { SwapTopTokens } from "api/net.config";
 
 interface IProps {
   field: "from" | "to";
   isOpen: boolean;
   onClose: () => void;
   handleClickToken: (t: IElrondToken) => void;
+  swapTokens: SwapToken[];
 }
 
 const CurrencyModal = ({
@@ -39,12 +43,13 @@ const CurrencyModal = ({
   onClose,
   handleClickToken,
   field,
+  swapTokens,
 }: IProps) => {
   const [order, setOrder] = React.useState<"desc" | "asc">("desc");
-  const tokens = useAppSelector((state) => state.smartSwap.tokens);
-  const fromTokenIdentifier = useAppSelector(selectFromToken);
-  const { tokens: topTokens } = useGetTopSmartSwapTokens();
-  const [tokenList, setTokenList] = React.useState([]);
+  const [tokenList, setTokenList] = useState([]);
+
+  // const { tokens: topTokens } = useGetTopSmartSwapTokens();
+  const {tokens: elrondTokens, isLoading: isLoadingTokens, isError} = useGetMultipleElrondTokens(swapTokens.map((t) => t.identifier));
 
   const handleSearch = (e) => {
     const query = e.target.value;
@@ -84,14 +89,8 @@ const CurrencyModal = ({
     });
   };
 
-  const { elrondTokens } = useSelectSmarSwapTokens(
-    fromTokenIdentifier,
-    tokens,
-    field
-  );
-  const { tokens: topElrondTokens } = useGetMultipleElrondTokens(topTokens);
-  const diplayTokens =
-    tokenList && tokenList.length > 0 ? tokenList : elrondTokens;
+  const { tokens: topElrondTokens } = useGetMultipleElrondTokens(swapTokens.map((t) => t.identifier).filter((t) => SwapTopTokens.includes(t)));
+  const diplayTokens = tokenList && tokenList.length > 0 ? tokenList : elrondTokens;
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} size={"lg"} isCentered>
