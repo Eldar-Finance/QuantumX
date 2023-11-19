@@ -29,11 +29,11 @@ const SelectCurrency = ({ token, handleClickToken, field, disable, swapTokens })
           variant="unstyled"
           sx={{
             borderRadius: "12px",
-            padding: { xs: "10px", md: "10px 15px" },
             display: "flex",
             cursor: "pointer",
             position: "relative",
           }}
+          px={{ xs: "10px", md: "15px" }}
           bg="black.base"
           _hover={{
             background: "rgba(255,255,255,0.1)",
@@ -55,10 +55,6 @@ const SelectCurrency = ({ token, handleClickToken, field, disable, swapTokens })
                 height: "24px",
                 marginRight: 2,
                 boxShadow: "rgb(255 255 255 / 8%) 0px 6px 10px",
-                display: {
-                  xs: "none",
-                  md: "block",
-                },
               }}
             >
               {token.assets?.img ? (
@@ -74,7 +70,6 @@ const SelectCurrency = ({ token, handleClickToken, field, disable, swapTokens })
           <Box
             sx={{
               flex: "1",
-
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
@@ -88,7 +83,7 @@ const SelectCurrency = ({ token, handleClickToken, field, disable, swapTokens })
               </Text>
             </Box>
             <Center
-              mr={-2}
+              ml={2}
               sx={{
                 display: "flex",
                 alignItems: "center",
