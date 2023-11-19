@@ -53,7 +53,7 @@ const TextField = ({
     <Box
       mb={"10px"}
       width={"full"}
-      p={"30px"}
+      p={"10px"}
       pb={"10px"}
       px={4}
       borderRadius={"20px"}
@@ -61,9 +61,9 @@ const TextField = ({
       sx={sxProps}
       position={"relative"}
       bg="secondary"
-      fontSize={{ xs: "sm", md: "md" }}
+      fontSize={{ xs: "sm", md: "16px" }}
     >
-      <Flex justifyContent={"space-between"}>
+      <Flex justifyContent={"space-between"} color={"white.500"}>
         <label htmlFor={id}>
           <Text
             variant="body1"

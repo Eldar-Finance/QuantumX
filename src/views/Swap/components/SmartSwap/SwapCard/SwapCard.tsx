@@ -294,7 +294,8 @@ const SwapCard = () => {
       justifyContent={"flex-start"}
       alignItems={"left"}
     >
-      <Heading as="h1" ml={"15px"} fontSize={"xl"}>
+      <Heading as="h1" fontSize={"xl"} fontWeight={"bold"} mb={1} ml={5}
+      >
         Swap
       </Heading>
 
@@ -329,11 +330,11 @@ const SwapCard = () => {
               <Center  position={"absolute"} bottom={"-25px"} zIndex={2}>
                 <IconButton
                   onClick={handleExchangeFields}
-                  borderRadius={"1.5rem"}
+                  borderRadius={"2.5rem"}
                   aria-label="change-positions"
                   bg="black.base"
-                  boxSize={"50px"}
-                  border={"5px solid"}
+                  boxSize={"55px"}
+                  border={"7px solid"}
                   borderColor={"black.baseDark"}
                   _hover={{ bg: "black.baseDark" }}
                   disabled={false}
@@ -372,7 +373,7 @@ const SwapCard = () => {
               alignContent="center"
               style={{ margin: 'auto' , marginTop:'40px'}}
               interaction={interaction}
-              disabled={!hasEnoughBalance || !swapPaths ? true : false}
+              disabled={!hasEnoughBalance || !swapPaths && userAddress!="" ? true : false}
               disabledMessage={hasEnoughBalance ? "Enter an amount" : "Insufficient balance"}
             />
 
