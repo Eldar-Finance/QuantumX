@@ -26,7 +26,7 @@ const Swap = () => {
       position="relative" // Set the Card's position to relative
     >
       <Image
-        src="https://app.ashswap.io/_next/static/media/fire.3dfa8a39.png" // Replace with your image URL
+        src="https://i.ibb.co/4VRmcSx/firel.png" // Replace with your image URL
         position="absolute" // Position the image absolutely
         top="1%" // Align top edge with the card's top edge
         left="0%" // Align left edge with the card's left edge
