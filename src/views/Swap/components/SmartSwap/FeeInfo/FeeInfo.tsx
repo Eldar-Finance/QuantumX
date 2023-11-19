@@ -19,12 +19,15 @@ const FeeInfo = () => {
                 {formatBalance({ balance: fees.fee, decimals: 3 })}% fee
               </Text>
             </Flex>
-            <Flex flexDir={"column"}>
+            {
+            /* <Flex flexDir={"column"}>
               <Text fontWeight={"800"}>LP Token</Text>
               <Text>
                 {formatBalance({ balance: fees.lpFee, decimals: 2 })}% fee
               </Text>
-            </Flex>
+            </Flex> */
+          }
+
           </Box>
         }
         iconSize={"14px"}

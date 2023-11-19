@@ -366,12 +366,16 @@ const SwapCard = () => {
               <SwapDetails swapPaths={swapPaths} />
             )}
             <SwapButton
-              bg={"black.dark"}
-              color="main"
-              py="15px"
-              width="60%"
+              //bg={"#22F6DC"}
+              bg={"linear-gradient(315deg, #FF005C 50%, #22F6DC 50% 100%);"}
+              filter={"brightness(90%)"}
+              color="black"
+              py="17px"
+              width="100%"
               alignContent="center"
-              style={{ margin: 'auto' , marginTop:'40px'}}
+              fontWeight={"900"}
+              fontSize={"1.2em"}
+              style={{ margin: 'auto' , marginTop:'20px'}}
               interaction={interaction}
               disabled={!hasEnoughBalance || !swapPaths && userAddress!="" ? true : false}
               disabledMessage={hasEnoughBalance ? "Enter an amount" : "Insufficient balance"}
