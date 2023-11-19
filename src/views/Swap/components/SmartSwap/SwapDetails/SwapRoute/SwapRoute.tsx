@@ -1,5 +1,5 @@
 import { SorSwapResponse } from "@ashswap/ash-sdk-js/out";
-import { Box, Center, Flex, HStack, Icon, Text } from "@chakra-ui/react";
+import { Box, Center, Flex, HStack, Icon, Text , Button } from "@chakra-ui/react";
 import { SwapIcon } from "components/Icons/ui";
 import { CiRoute } from "react-icons/ci";
 import { formatTokenI } from "utils/functions/tokens";
@@ -8,6 +8,7 @@ import useGetSwapInfo from "views/Swap/hooks/useGetSwapInfo";
 import { TbSum } from "react-icons/tb";
 import { MdOutlinePriceChange } from "react-icons/md";
 import { swap } from "views/Swap/services/swap";
+import React, { useState } from 'react';
 
 const SwapRoute = ({ swapPaths }: { swapPaths?: SorSwapResponse }) => {
   // console.log("⚠️ ~ file: SwapRoute.tsx:9 ~ swapPaths:", swapPaths)
@@ -29,6 +30,7 @@ const SwapRoute = ({ swapPaths }: { swapPaths?: SorSwapResponse }) => {
   const roundedPriceImpact = priceImpact.toFixed(5);
 
   const displayPriceImpact = roundedPriceImpact.length > 5 ? Math.round(priceImpact*10000) / 10000 : roundedPriceImpact;
+  const [showAllRoutes, setShowAllRoutes] = useState(false);
   
   return (
     <HStack w={"full"} h={"full"} flex={1}>
@@ -46,21 +48,42 @@ const SwapRoute = ({ swapPaths }: { swapPaths?: SorSwapResponse }) => {
           <CiRoute color={"#22F7DD"} size={"26"}/>
         </Center>
         <Box>
-          <Text flex={1} fontSize={{ xs: "16px", md: "18px" }} mb={2} mt={2}>
-            Swap routes
-          </Text>
-          <ul>
-            {finalRoutes.map((route, i) => {
-              return (
-                <li key={i}>
-                  <Text fontSize={"lsm"} color="white.500">
-                    {route.token1} {"->"} {route.token2}
-                  </Text>
-                </li>
-              );
-            })}
-          </ul>
-        </Box>
+      <Text flex={1} fontSize={{ xs: '16px', md: '18px' }} mb={2} mt={2}>
+        Swap routes
+      </Text>
+      <ul>
+        {finalRoutes.map((route, i) => {
+          // Only render the "+" button next to the first route
+          if (i === 0) {
+            return (
+              <Flex key={i} align="center">
+                <Text fontSize={'lsm'} color="white.500">
+                  {route.token1} {'->'} {route.token2}
+                </Text>
+                {finalRoutes.length > 1 && !showAllRoutes && (
+                  <Button size="xs" onClick={() => setShowAllRoutes(true)} ml={2}>
+                    +
+                  </Button>
+                )}
+              </Flex>
+            );
+          }
+          // Render the rest of the routes only if showAllRoutes is true
+          return showAllRoutes ? (
+            <li key={i}>
+              <Text fontSize={'lsm'} color="white.500">
+                {route.token1} {'->'} {route.token2}
+              </Text>
+            </li>
+          ) : null;
+        })}
+      </ul>
+      {showAllRoutes && finalRoutes.length > 1 && (
+        <Button size="xs" onClick={() => setShowAllRoutes(false)} mt={2}>
+          -
+        </Button>
+      )}
+    </Box>
       </Flex>
       <Flex
         w="full"
