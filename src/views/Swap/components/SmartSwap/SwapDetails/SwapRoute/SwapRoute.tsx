@@ -46,16 +46,16 @@ const SwapRoute = ({ swapPaths }: { swapPaths?: SorSwapResponse }) => {
         borderRadius={"20px"}
         flex={1} // Add this line
       >
-        <Center bg="black.base" boxSize={"40px"} borderRadius="full">
-          <CiRoute color={"#22F7DD"} size={"26"}/>
+        <Center bg="black.base" boxSize={"34px"} borderRadius="full">
+          <CiRoute color={"#22F7DD"} size={"22"}/>
         </Center>
         <Box>
-      <Text flex={1} fontSize={{ xs: '16px', md: '18px' }} mb={2} mt={2}>
+      <Text flex={1} fontSize={'16px'} my={1}>
         Swap routes
       </Text>
       <Flex align="center" justify="space-between">
-        <Text as="li" style={{ listStyleType: 'none' }}  fontSize={'lsm'} color="white.500">
-          {finalRoutes[0].token1} {'->'} {finalRoutes[0].token2}
+        <Text as="li" style={{ listStyleType: 'none' }}  fontSize={'xsm'} color="white.500">
+          {finalRoutes?.[0].token1} {'->'} {finalRoutes?.[0].token2}
         </Text>
         {finalRoutes.length > 1 && (
           <Button 
@@ -70,9 +70,9 @@ const SwapRoute = ({ swapPaths }: { swapPaths?: SorSwapResponse }) => {
         )}
       </Flex>
       {showAllRoutes && (
-        <Box as="ul" style={{ listStyleType: 'none' }}  mt={2}>
+        <Box as="ul" style={{ listStyleType: 'none' }}  mt={-1}>
           {finalRoutes.slice(1).map((route, i) => (
-            <Text as="li" fontSize={'lsm'} color="white.500" key={i + 1}>
+            <Text as="li" fontSize={'xsm'} color="white.500" key={i + 1}>
               {route.token1} {'->'} {route.token2}
             </Text>
           ))}
@@ -90,11 +90,11 @@ const SwapRoute = ({ swapPaths }: { swapPaths?: SorSwapResponse }) => {
         flex={1} // Add this line
         h={"full"}
       >
-        <Center bg="black.base" boxSize={"40px"} borderRadius="full">
-          <MdOutlinePriceChange color={"#22F7DD"} size={"26"}/>
+        <Center bg="black.base" boxSize={"34px"} borderRadius="full">
+          <MdOutlinePriceChange color={"#22F7DD"} size={"22"}/>
         </Center>
         <Box>
-          <Text flex={1} fontSize={{ xs: "16px", md: "18px" }} mb={2} mt={2}>
+          <Text flex={1} fontSize={'16px'} my={1}>
             Price Impact
           </Text>
           <ul>

@@ -207,7 +207,7 @@ const SwapCard = () => {
   // NEW SWAP DATA
   //
   const [swapPaths, setSwapPaths] = useState(null);
-  console.log("⚠️ ~ file: SwapCard.tsx:192 ~ swapPaths:", swapPaths)
+  // console.log("⚠️ ~ file: SwapCard.tsx:192 ~ swapPaths:", swapPaths)
 
   useEffect(() => {
     const handleCalculateNewSwapData = () => {
@@ -285,7 +285,7 @@ const SwapCard = () => {
     }
     return false;
   }, [accountToken, fromToken?.value]);
-  console.log("⚠️ ~ file: SwapCard.tsx:288 ~ hasEnoughBalance:", hasEnoughBalance)
+  // console.log("⚠️ ~ file: SwapCard.tsx:288 ~ hasEnoughBalance:", hasEnoughBalance)
 
   return (
     <Flex

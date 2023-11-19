@@ -104,7 +104,7 @@ const TextField = ({
         <Flex alignItems="center" mt={2}>
 
         {accountToken && (
-          <Text color={"white.400"} fontSize={"sm"}>
+          <Text color={"white.400"} fontSize={"sm"} mx={1} pr={!hasMaxButton ? 1 : 0}>
               <Box as="span" m="5px">
                   Balance:
               </Box>
@@ -172,7 +172,7 @@ const TextField = ({
             />
           )}
           {dollarAmount && (
-            <Text color={"grayText"} fontSize={"sm"}>
+            <Text color={"grayText"} fontSize={"sm"} mt={hasMaxButton ? "5px" : "6px"}>
               ≈ ${formatNumber(preventExponetialNotation(dollarAmount))}
             </Text>
           )}

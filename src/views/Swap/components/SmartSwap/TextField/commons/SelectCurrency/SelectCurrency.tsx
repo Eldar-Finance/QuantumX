@@ -33,7 +33,7 @@ const SelectCurrency = ({ token, handleClickToken, field, disable, swapTokens })
             cursor: "pointer",
             position: "relative",
           }}
-          px={{ xs: "10px", md: "15px" }}
+          px={{ xs: "8px", md: "8px" }}
           bg="black.base"
           _hover={{
             background: "rgba(255,255,255,0.1)",

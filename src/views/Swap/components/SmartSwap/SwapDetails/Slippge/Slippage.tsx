@@ -26,17 +26,17 @@ const Slippage = () => {
       p={2}
       borderRadius={"20px"}
     >
-      <Center bg="black.base" boxSize={"40px"} borderRadius="full">
-        <MdCurrencyExchange size={"20"} color="#22F7DD"/>
+      <Center bg="black.base" boxSize={"34px"} borderRadius="full">
+        <MdCurrencyExchange size={"18"} color="#22F7DD"/>
       </Center>
       <Box flex={1}>
-        <Text flex={1} fontSize={{ xs: "16px", md: "18px" }} mb={2} mt={2}>
+        <Text flex={1} fontSize={'16px'} my={1}>
           Slippage
         </Text>
 
         <Box>
           <Text color="white.500" mb={3} fontSize={"sm"}>
-            Your transaction will revert if the price increases more than{" "}
+            The swap will fail if the price increases more than{" "}
             {slipapge}%.
           </Text>
 
