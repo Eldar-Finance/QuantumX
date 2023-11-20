@@ -53,26 +53,26 @@ const SwapRoute = ({ swapPaths }: { swapPaths?: SorSwapResponse }) => {
       <Text flex={1} fontSize={'16px'} my={1}>
         Swap routes
       </Text>
-      <Flex align="center" justify="space-between">
-        <Text as="li" style={{ listStyleType: 'none' }}  fontSize={'xsm'} color="white.500">
+      <Flex align="center" justify="space-between" mt={-2}>
+        {finalRoutes.length > 0 && <Text as="li" style={{ listStyleType: 'none' }} whiteSpace={"nowrap"} fontSize={'lsm'} color="white.500">
           {finalRoutes?.[0].token1} {'->'} {finalRoutes?.[0].token2}
-        </Text>
+        </Text>}
         {finalRoutes.length > 1 && (
           <Button 
-            size="xs" 
+            size="sm" 
             onClick={() => setShowAllRoutes(prev => !prev)} 
             variant="ghost"
             _hover={{ background: 'none' }}
             _active={{ background: 'none' }}
           >
-            {showAllRoutes ? <ChevronUpIcon /> : <ChevronDownIcon />}
+            {showAllRoutes ? <ChevronUpIcon color={"main"} /> : <ChevronDownIcon color={"main"}/>}
           </Button>
         )}
       </Flex>
       {showAllRoutes && (
         <Box as="ul" style={{ listStyleType: 'none' }}  mt={-1}>
           {finalRoutes.slice(1).map((route, i) => (
-            <Text as="li" fontSize={'xsm'} color="white.500" key={i + 1}>
+            <Text as="li" fontSize={'lsm'} color="white.500" key={i + 1}>
               {route.token1} {'->'} {route.token2}
             </Text>
           ))}

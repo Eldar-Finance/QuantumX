@@ -72,6 +72,7 @@ export const contractAddress = {
       "erd1qqqqqqqqqqqqqpgqvvn3s8ndrxqu6ndgnvsfp4sx9wgtv9z2znyqrfyhsf",
   // others farms
   egldRide: "erd1qqqqqqqqqqqqqpgqvfnfcgycfd53ch57hxgzxe8p203uu5e8znyqeqvyc7",
+  ashswap: "erd1qqqqqqqqqqqqqpgqv2njkmqxlu0ac77lyjxhjyqutrw2zt9tu7zs3aasnt"
 };
 
 export const eldarSftCollection = "TESTSFT-76f5c3";
