@@ -30,6 +30,7 @@ import useGetAccountToken from "utils/hooks/useGetAccountToken";
 import useGetAccountTokens from "utils/hooks/useGetAccountTokens";
 import store from "redux/store";
 import useGetAshSwapFee from "utils/hooks/useGetAshSwapFee";
+import { unwrapEgld, wrapEgld } from "api/sc/calls";
 
 const getAshChainId = () => {
   if (network.id == "mainnet") {
@@ -218,8 +219,38 @@ const SwapCard = () => {
         decimals: accountToken.decimals,
         value: finalValue,
       });
-    // }
   };
+
+  const handleWrapUnwrap = async () => {
+    if (isWrapEgld) {
+      return wrapEgld(fromToken.value);
+    } else if (isUnwrapEgld) {
+      return unwrapEgld(fromToken.value);
+    }
+  }
+
+  //
+  // CONDITIONS
+  //
+  const hasEnoughBalance = useMemo(() => {
+    // if (!fromToken.value) {
+    //   return true;
+    // }
+    // else 
+    if (accountToken) {
+      return BigNumber(accountToken.balance).gte(BigNumber(Number(fromToken?.value || 0) * Math.pow(10, accountToken.decimals)));
+    }
+    return false;
+  }, [accountToken, fromToken?.value]);
+  // console.log("⚠️ ~ file: SwapCard.tsx:288 ~ hasEnoughBalance:", hasEnoughBalance)
+
+  const isWrapEgld = useMemo(() => {
+    return fromToken.identifier === toknesID.egld && toToken.identifier === toknesID.wegld;
+  }, [fromToken.identifier, toToken.identifier]);
+
+  const isUnwrapEgld = useMemo(() => {
+    return fromToken.identifier === toknesID.wegld && toToken.identifier === toknesID.egld;
+  }, [fromToken.identifier, toToken.identifier]);
 
   //
   // NEW SWAP DATA
@@ -230,34 +261,34 @@ const SwapCard = () => {
   useEffect(() => {
     const handleCalculateNewSwapData = () => {
       const multiplier = Math.pow(10, fromToken?.decimals || 0);
-      const finalValue = BigNumber(fromToken.value).times(multiplier).toString();
+      const finalInputAmount = getValueAfterFee(fromToken.value, fee);
+      const finalValue = BigNumber(finalInputAmount).times(multiplier).toString();
 
       ashSwapAggregator.getPaths(fromToken.identifier, toToken.identifier, finalValue).then((p) => {
         setSwapPaths(p);
       });
     };
 
-    if (fromToken.identifier && Number(fromToken.value) > 0 && toToken.identifier) {
+    if (fromToken.identifier && Number(fromToken.value) > 0 && toToken.identifier && !isWrapEgld && !isUnwrapEgld) {
       handleCalculateNewSwapData();
     }
-  }, [ashSwapAggregator, fromToken?.decimals, fromToken.identifier, fromToken.value, toToken.identifier]);
+  }, [ashSwapAggregator, fee, fromToken?.decimals, fromToken.identifier, fromToken.value, isUnwrapEgld, isWrapEgld, toToken.identifier]);
 
   useEffect(() => {
     if (swapPaths && swapPaths?.returnAmount && fromToken?.value) {
       setToToken({
         identifier: toToken.identifier,
         decimals: toToken.decimals,
-        value: getValueAfterFee(swapPaths?.returnAmount, fee) || null,
+        value: swapPaths?.returnAmount || null,
       });
     }
   }, [swapPaths, fromToken, toToken.identifier, toToken.decimals, fee]);
 
   //
-  // SWAP BUTTON
+  // INTERACTION DATA
   //
   const [interaction, setInteraction] = useState(null);
   // console.log("⚠️ ~ file: SwapCard.tsx:223 ~ interaction:", interaction)
-
   useEffect(() => {
     const handleCreateInteractionFromSwapData = () => {
       ashSwapAggregator.aggregateFromPaths(swapPaths, slipapge*100).then((i) => {
@@ -269,11 +300,25 @@ const SwapCard = () => {
       });
     };
 
-    if (swapPaths && swapPaths?.swaps && fromToken?.value) {
+    if (swapPaths && fromToken?.value) {
       handleCreateInteractionFromSwapData();
     }
   }
   , [ashSwapAggregator, fromToken?.value, slipapge, swapPaths, userAddress]);
+
+  //
+  // WRAP - UNWRAP
+  //
+  useEffect(() => {
+    if (isWrapEgld || isUnwrapEgld) {
+      setToToken({
+        identifier: toToken.identifier,
+        decimals: toToken.decimals,
+        value: fromToken.value,
+      });
+    }
+  }
+  , [fromToken.value, isUnwrapEgld, isWrapEgld, toToken.decimals, toToken.identifier]);
 
   //
   // RESET
@@ -289,21 +334,6 @@ const SwapCard = () => {
       setInteraction(null);
     }
   }, [fromToken?.value, toToken.decimals, toToken.identifier]);
-
-  //
-  // CNDITIONS
-  //
-  const hasEnoughBalance = useMemo(() => {
-    // if (!fromToken.value) {
-    //   return true;
-    // }
-    // else 
-    if (accountToken) {
-      return BigNumber(accountToken.balance).gte(BigNumber(Number(fromToken?.value || 0) * Math.pow(10, accountToken.decimals)));
-    }
-    return false;
-  }, [accountToken, fromToken?.value]);
-  // console.log("⚠️ ~ file: SwapCard.tsx:288 ~ hasEnoughBalance:", hasEnoughBalance)
 
   return (
     <Flex
@@ -383,23 +413,42 @@ const SwapCard = () => {
             {fromToken?.value && swapPaths && (
               <SwapDetails swapPaths={swapPaths} />
             )}
-            <SwapButton
-              //bg={"#22F6DC"}
-              bg={"linear-gradient(315deg, #FF005C 50%, #22F6DC 50% 100%);"}
-              filter={"brightness(90%)"}
-              color="black"
-              py="17px"
-              width="100%"
-              alignContent="center"
-              fontWeight={"900"}
-              fontSize={"1.2em"}
-              style={{ margin: 'auto' , marginTop:'20px'}}
-              interaction={interaction}
-              disabled={!hasEnoughBalance || !swapPaths && userAddress!="" ? true : false}
-              disabledMessage={hasEnoughBalance ? "Enter an amount" : "Insufficient balance"}
-            />
-
-            <FeeInfo />
+            {!isWrapEgld && !isUnwrapEgld ? 
+              <SwapButton
+                //bg={"#22F6DC"}
+                bg={"linear-gradient(315deg, #FF005C 50%, #22F6DC 50% 100%);"}
+                filter={"brightness(90%)"}
+                color="black"
+                py="17px"
+                width="100%"
+                alignContent="center"
+                fontWeight={"900"}
+                fontSize={"1.2em"}
+                style={{ margin: 'auto' , marginTop:'20px'}}
+                interaction={interaction}
+                actualInputAmount={BigNumber(fromToken.value).times(Math.pow(10, fromToken.decimals)).toString()}
+                disabled={!hasEnoughBalance || !swapPaths || userAddress=="" ? true : false}
+                disabledMessage={hasEnoughBalance ? "Enter an amount" : "Insufficient balance"}
+              /> :
+              <SwapButton
+                //bg={"#22F6DC"}
+                bg={"linear-gradient(315deg, #FF005C 50%, #22F6DC 50% 100%);"}
+                filter={"brightness(90%)"}
+                color="black"
+                py="17px"
+                width="100%"
+                alignContent="center"
+                fontWeight={"900"}
+                fontSize={"1.2em"}
+                style={{ margin: 'auto' , marginTop:'20px'}}
+                disabled={!hasEnoughBalance || userAddress=="" || !fromToken.value ? true : false}
+                disabledMessage={hasEnoughBalance ? "Enter an amount" : "Insufficient balance"}
+                defaultMessage={isWrapEgld ? "Wrap" : "Unwrap"}
+                isWrapOrUnwrap={true}
+                wrapUnwrapCall={handleWrapUnwrap}
+              />
+            }
+            <FeeInfo fee={fee * 100}/>
           </Flex>
         </Box>
       </Box>
