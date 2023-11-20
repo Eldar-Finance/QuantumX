@@ -164,6 +164,8 @@ const SwapCard = () => {
       decimals: token.decimals,
       value: fromToken.value,
     });
+    setSwapPaths(null);
+    setInteraction(null);
   };
 
   const handleOnSelectToToken = (token) => {
@@ -174,6 +176,8 @@ const SwapCard = () => {
       decimals: token.decimals,
       value: toToken.value,
     });
+    setSwapPaths(null);
+    setInteraction(null);
   };
 
   const handleExchangeFields = () => {

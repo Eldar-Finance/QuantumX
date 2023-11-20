@@ -41,6 +41,7 @@ const Swap = () => {
       >
         {/* The image now uses negative values to sit outside the top left corner */}
         <Image
+          alt='fire'
           src="https://i.ibb.co/MPFd8PQ/firelkk12.png" // Replace with your image URL
           position="absolute"
           top="0%" // Adjust this value as needed to move the image up
