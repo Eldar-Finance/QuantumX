@@ -57,19 +57,21 @@ export const contractAddress = {
   egldLkmexSwap:
     "erd1qqqqqqqqqqqqqpgqazxylsxny9vgw9xw9t3xkk79ljvgs6dk97wsn5760y",
   jexSawp: "erd1qqqqqqqqqqqqqpgqawkm2tlyyz6vtg02fcr5w02dyejp8yrw0y8qlucnj2",
+  wrapEgldShar0:
+    "erd1qqqqqqqqqqqqqpgqqkwzsxkjc83vlfex9dmznwm7tjvxlqqkpauqx0n782",
   wrapEgldShar1:
-      "erd1qqqqqqqqqqqqqpgqhe8t5jewej70zupmh44jurgn29psua5l2jps3ntjj3",
-    wrapEgldShar2:
-      "erd1qqqqqqqqqqqqqpgqmuk0q2saj0mgutxm4teywre6dl8wqf58xamqdrukln",
-    fastp2pswap: "erd1qqqqqqqqqqqqqpgq3gz6kc7q5zm2zdluhtcn8g0fg8vwyxvk64qsu8p6ja",
-    upgradeHero: "erd1qqqqqqqqqqqqqpgqfr69nye37kwcjlxqv652k555jyw0uaegu7zs5rlw9f",
-    xoxnoSrbPool:
-      "erd1qqqqqqqqqqqqqpgqvpkd3g3uwludduv3797j54qt6c888wa59w2shntt6z",
-    // proteo farms
-    aeroEgldEliteDual:
-      "erd1qqqqqqqqqqqqqpgqnedra5da464rkcektgzyv0qxcgqgyh26znyq8q4phx",
-    cyberWegkdElite:
-      "erd1qqqqqqqqqqqqqpgqvvn3s8ndrxqu6ndgnvsfp4sx9wgtv9z2znyqrfyhsf",
+    "erd1qqqqqqqqqqqqqpgqpv09kfzry5y4sj05udcngesat07umyj70n4sa2c0rp",
+  wrapEgldShar2:
+    "erd1qqqqqqqqqqqqqpgqvn9ew0wwn7a3pk053ezex98497hd4exqdg0q8v2e0c",
+  fastp2pswap: "erd1qqqqqqqqqqqqqpgq3gz6kc7q5zm2zdluhtcn8g0fg8vwyxvk64qsu8p6ja",
+  upgradeHero: "erd1qqqqqqqqqqqqqpgqfr69nye37kwcjlxqv652k555jyw0uaegu7zs5rlw9f",
+  xoxnoSrbPool:
+    "erd1qqqqqqqqqqqqqpgqvpkd3g3uwludduv3797j54qt6c888wa59w2shntt6z",
+  // proteo farms
+  aeroEgldEliteDual:
+    "erd1qqqqqqqqqqqqqpgqnedra5da464rkcektgzyv0qxcgqgyh26znyq8q4phx",
+  cyberWegkdElite:
+    "erd1qqqqqqqqqqqqqpgqvvn3s8ndrxqu6ndgnvsfp4sx9wgtv9z2znyqrfyhsf",
   // others farms
   egldRide: "erd1qqqqqqqqqqqqqpgqvfnfcgycfd53ch57hxgzxe8p203uu5e8znyqeqvyc7",
   ashswap: "erd1qqqqqqqqqqqqqpgqv2njkmqxlu0ac77lyjxhjyqutrw2zt9tu7zs3aasnt"
