@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from "utils/hooks/redux";
 import { CiRoute } from "react-icons/ci";
 import { MdCurrencyExchange } from "react-icons/md";
 import { useState } from "react";
-const slippageSlecctions = [0.5, 1, 5];
+const slippageSlecctions = [1, 5];
 
 const Slippage = () => {
   const [usesInput, setUsesInput] = useState(false);
@@ -35,12 +35,12 @@ const Slippage = () => {
         </Text>
 
         <Box>
-          <Text color="white.500" mb={3} fontSize={"sm"}>
+          {/* <Text color="white.500" mb={1} fontSize={"13px"}>
             The swap will fail if the price increases more than{" "}
             {slipapge}%.
-          </Text>
+          </Text> */}
 
-          <Flex w="full" gap={2} direction={"row"}>
+          <Flex w="full" gap={1} pt={1} pl={-1} direction={"row"}>
             <Flex gap={1}>
               {slippageSlecctions.map((slippageOption) => {
                 return (
