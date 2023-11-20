@@ -31,15 +31,25 @@ const Swap = () => {
         >
           {/* First Card */}
           <Card
-            maxW="620px"
-            bg="black.baseDark"
-            borderRadius="30px"
-            border="1px solid"
-            borderColor="transparent"
-            p={{ base: "10px", md: "20px" }}
-            position="relative"
-            mb={{ base: 4, md: 0 }}
-          >
+        maxW={"620px"}
+        bg={"black.baseDark"}
+        borderRadius="30px"
+        border="1px solid"
+        borderColor="transparent"
+        p={{ sm: "10px", md: "20px" }}
+        position="relative"
+      >
+        {/* The image now uses negative values to sit outside the top left corner */}
+        <Image
+          src="https://i.ibb.co/MPFd8PQ/firelkk12.png" // Replace with your image URL
+          position="absolute"
+          top="0%" // Adjust this value as needed to move the image up
+          left="2%" // Adjust this value as needed to move the image left
+          width={{ sm: "70px", md: "100px" }} // Adjust the size as needed
+          height="auto"
+          zIndex="2" // Ensure the image is above other content
+          transform="translate(-50%, -50%)" // Center the image's top-left corner precisely at the card's top-left corner
+        />
             <SwapCard />
             <IconButton
               aria-label="Toggle second card"
@@ -54,6 +64,11 @@ const Swap = () => {
               background="none"
               fontSize={"3xl"}
               size={"xl"}
+              sx={{
+                '@media screen and (max-width: 480px)': { // Adjust the breakpoint as needed
+                  display: 'none',
+                },
+              }}
             />
           </Card>
 

@@ -294,7 +294,7 @@ const SwapCard = () => {
       justifyContent={"flex-start"}
       alignItems={"left"}
     >
-      <Heading as="h1" fontSize={"xl"} fontWeight={"bold"} mb={1} ml={5}
+      <Heading as="h1" fontSize={"m"} fontWeight={"bold"} mb={1} ml={5}
       >
         Swap
       </Heading>
