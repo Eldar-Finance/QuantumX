@@ -230,8 +230,7 @@ const SwapCard = () => {
   useEffect(() => {
     const handleCalculateNewSwapData = () => {
       const multiplier = Math.pow(10, fromToken?.decimals || 0);
-      const inputAmount = getValueAfterFee(fromToken.value, fee);
-      const finalValue = BigNumber(inputAmount).times(multiplier).toString();
+      const finalValue = BigNumber(fromToken.value).times(multiplier).toString();
 
       ashSwapAggregator.getPaths(fromToken.identifier, toToken.identifier, finalValue).then((p) => {
         setSwapPaths(p);
@@ -241,23 +240,23 @@ const SwapCard = () => {
     if (fromToken.identifier && Number(fromToken.value) > 0 && toToken.identifier) {
       handleCalculateNewSwapData();
     }
-  }, [ashSwapAggregator, chainId, fee, fromToken, router.query.fromToken, toToken.identifier]);
+  }, [ashSwapAggregator, fromToken?.decimals, fromToken.identifier, fromToken.value, toToken.identifier]);
 
   useEffect(() => {
     if (swapPaths && swapPaths?.returnAmount && fromToken?.value) {
       setToToken({
         identifier: toToken.identifier,
         decimals: toToken.decimals,
-        value: swapPaths?.returnAmount || null,
+        value: getValueAfterFee(swapPaths?.returnAmount, fee) || null,
       });
     }
-  }, [swapPaths, fromToken, toToken.identifier, toToken.decimals]);
+  }, [swapPaths, fromToken, toToken.identifier, toToken.decimals, fee]);
 
   //
   // SWAP BUTTON
   //
   const [interaction, setInteraction] = useState(null);
-  console.log("⚠️ ~ file: SwapCard.tsx:223 ~ interaction:", interaction)
+  // console.log("⚠️ ~ file: SwapCard.tsx:223 ~ interaction:", interaction)
 
   useEffect(() => {
     const handleCreateInteractionFromSwapData = () => {
