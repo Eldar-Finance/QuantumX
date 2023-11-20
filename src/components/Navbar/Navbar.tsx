@@ -17,6 +17,7 @@ import { getWebUrl } from "utils/routes";
 import Menu1 from "./Menu/Menu";
 import { breakpoints } from "theme/chakra";
 import React from 'react';
+import CoinTab2 from "views/Dashboard/components/Dashtabs/WalletTab/CoinTab2";
 import { FiLogOut } from 'react-icons/fi'; // Assuming you're using react-icons for the icon
 
 import {
@@ -114,9 +115,10 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
           <Box alignContent={"center"}/* Add custom styles for inner content */>
          
             <AddressSection3/>
-            <Divider paddingBottom={"10px"} paddingTop={"10px"}/>
+            <Divider marginBottom={"10px"} paddingTop={"10px"}/>
            
           </Box>
+          <Box> <CoinTab2/></Box>
            
             <QTagButton/>
             <Box as="button" display="flex" alignItems="center" onClick={handleLogout} width="100%" textAlign="left" paddingY="2">
