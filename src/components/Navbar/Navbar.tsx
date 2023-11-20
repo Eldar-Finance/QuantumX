@@ -14,8 +14,20 @@ import { useRouter } from "next/router";
 import { openLogin } from "redux/slices/settings/settings-reducer";
 import { useAppDispatch } from "utils/hooks/redux";
 import { getWebUrl } from "utils/routes";
-import Menu from "./Menu/Menu";
+import Menu1 from "./Menu/Menu";
 import { breakpoints } from "theme/chakra";
+import React from 'react';
+import {
+  Button,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  IconButton
+} from '@chakra-ui/react';
+import { ChevronDownIcon } from '@chakra-ui/icons';
+import AddressSection2 from "views/Dashboard/components/AddressSection/AddessSection2";
+import AddressSection3 from "views/Dashboard/components/AddressSection/AdressSection3";
 
 interface IProps {
   onlyConnectButton?: boolean;
@@ -73,7 +85,7 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
               </Flex>
             </Flex>
             <Box w="fit">
-              <Menu />
+              <Menu1 />
             </Box>
           </Flex>  
         )}
@@ -82,22 +94,40 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
             <Link href={"/"}>
               <NextImage src={logo} alt="QuantumX" width={128} height={38} />
             </Link>
-            <Box ml="150px" />
+            <Box ml="0px" />
             <Box w="fit-content" m="auto" flex="1" display="flex" justifyContent="center">
-              <Menu />
+              <Menu1 />
             </Box>
-            <QTagButton/>
-            <ActionButton
-              px={{ xs: "30px", "2xl": "40px" }}
-              fontSize={{ xs: "14px", "2xl": "md" }}
-              fontWeight="500"
-              display={{ xs: "none", md: "block" }}
-              onClick={isLoggedIn ? handleLogout : handleConnect}
-              bg={isLoggedIn ? "danger" : "main"}
-              color={isLoggedIn ? "white" : "black"}
-            >
-              {isLoggedIn ? "Disconnect" : "Connect"}
-            </ActionButton>
+            
+            
+
+
+
+            <Box>
+      {isLoggedIn ? (
+        // Dropdown for the logged-in state
+        <Menu>
+          <MenuButton as={Button} rightIcon={<ChevronDownIcon />} variant="outline" size="lg"><AddressSection2 /></MenuButton>
+          <MenuList width={"200px"}>
+           <AddressSection3/>
+            <MenuItem><QTagButton/></MenuItem>
+            <MenuItem onClick={handleLogout}>Disconnect</MenuItem>
+          </MenuList>
+        </Menu>
+      ) : (
+        // Regular button for the logged-out state
+        <Button
+          onClick={handleConnect}
+          size="lg"
+        >
+          Connect
+        </Button>
+      )}
+    </Box>
+
+
+
+
           </Flex>
         )}
       </MyContainer>

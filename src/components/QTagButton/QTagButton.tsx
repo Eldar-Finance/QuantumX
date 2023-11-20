@@ -18,6 +18,7 @@ const QTagButton = () => {
           fontWeight={"500"}
           fontSize={{ xs: "14px", "2xl": "md" }}
           h={{xs: "32px", md: "40px"}}
+          variant={"ghost"}
         >
           {tagInfo.tag || (isLoading ? <Spinner size={"sm"} /> : "Claim QxTag")}
         </ActionButton>

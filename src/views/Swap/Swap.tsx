@@ -77,8 +77,9 @@ const Swap = () => {
             <Card
               width="620px"
               bg="black.baseDark"
-              borderRadius="10px"
+              borderRadius="30px"
               border="1px solid"
+              marginLeft={"-15px"}
               borderColor="transparent"
               p={{ base: "10px", md: "20px" }}
               position="relative"
