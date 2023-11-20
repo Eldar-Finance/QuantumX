@@ -31,7 +31,7 @@ export const getReturnedDataOfscCall = async (workspace, txHash, funcName) => {
 export const getScOfWrapedEgld = (shard: number): string => {
   switch (shard) {
     case 0:
-      return contractAddr.wrapEgld;
+      return contractAddr.wrapEgldShar0;
     case 1:
       return contractAddr.wrapEgldShar1;
     case 2:
@@ -39,6 +39,5 @@ export const getScOfWrapedEgld = (shard: number): string => {
 
     default:
       return contractAddr.wrapEgldShar1;
-      break;
   }
 };
