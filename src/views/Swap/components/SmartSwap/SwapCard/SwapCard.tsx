@@ -197,7 +197,7 @@ const SwapCard = () => {
     setFromToken({
       identifier: toToken.identifier,
       decimals: toToken.decimals,
-      value: null,
+      value: fromToken.value || null,
     });
     setToToken({
       identifier: fromToken.identifier,
@@ -257,7 +257,7 @@ const SwapCard = () => {
   // SWAP BUTTON
   //
   const [interaction, setInteraction] = useState(null);
-  // console.log("⚠️ ~ file: SwapCard.tsx:223 ~ interaction:", interaction)
+  console.log("⚠️ ~ file: SwapCard.tsx:223 ~ interaction:", interaction)
 
   useEffect(() => {
     const handleCreateInteractionFromSwapData = () => {
