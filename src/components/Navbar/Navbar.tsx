@@ -1,5 +1,5 @@
 // import logo from "assets/logos/quantumx.png";
-import { Box, Flex, Icon, Text, useBreakpoint, useBreakpointValue, useMediaQuery } from "@chakra-ui/react";
+import { Box, Flex, Icon, Text, useBreakpoint, useBreakpointValue, useMediaQuery,Divider } from "@chakra-ui/react";
 import { useGetLoginInfo } from "@multiversx/sdk-dapp/hooks/account/useGetLoginInfo";
 import { logout } from "@multiversx/sdk-dapp/utils";
 import logo from "assets/logos/quantumx.svg";
@@ -17,6 +17,8 @@ import { getWebUrl } from "utils/routes";
 import Menu1 from "./Menu/Menu";
 import { breakpoints } from "theme/chakra";
 import React from 'react';
+import { FiLogOut } from 'react-icons/fi'; // Assuming you're using react-icons for the icon
+
 import {
   Button,
   Menu,
@@ -108,10 +110,19 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
         // Dropdown for the logged-in state
         <Menu>
           <MenuButton as={Button} rightIcon={<ChevronDownIcon />} variant="outline" size="lg"><AddressSection2 /></MenuButton>
-          <MenuList width={"200px"}>
-           <AddressSection3/>
-            <MenuItem><QTagButton/></MenuItem>
-            <MenuItem onClick={handleLogout}>Disconnect</MenuItem>
+          <MenuList bg={"#242526"} minWidth="240px" width="auto" p={4}>
+          <Box alignContent={"center"}/* Add custom styles for inner content */>
+         
+            <AddressSection3/>
+            <Divider paddingBottom={"10px"} paddingTop={"10px"}/>
+           
+          </Box>
+           
+            <QTagButton/>
+            <Box as="button" display="flex" alignItems="center" onClick={handleLogout} width="100%" textAlign="left" paddingY="2">
+            <Box as={FiLogOut} mr={2} />
+            <Text>Disconnect</Text>
+          </Box>
           </MenuList>
         </Menu>
       ) : (
