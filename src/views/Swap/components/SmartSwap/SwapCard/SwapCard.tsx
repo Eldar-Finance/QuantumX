@@ -29,6 +29,7 @@ import useGetMultipleElrondTokens from "utils/hooks/useGetMultipleElrondTokens";
 import useGetAccountToken from "utils/hooks/useGetAccountToken";
 import useGetAccountTokens from "utils/hooks/useGetAccountTokens";
 import store from "redux/store";
+import useGetAshSwapFee from "utils/hooks/useGetAshSwapFee";
 
 const getAshChainId = () => {
   if (network.id == "mainnet") {
@@ -36,6 +37,10 @@ const getAshChainId = () => {
   } else if (network.id == "devnet") {
     return ChainId.Devnet;
   }
+}
+
+const getValueAfterFee = (value, fee) => {
+  return BigNumber(value).times(BigNumber(1).minus(BigNumber(fee))).toString();
 }
 
 export interface SwapToken {
@@ -50,6 +55,8 @@ const SwapCard = () => {
   const router = useRouter();
   const chainId = getAshChainId();
   const slipapge = useAppSelector(selectSlippage);
+  const { fee } = useGetAshSwapFee();
+
   const ashSwapAggregator = useMemo(() => {
     if (chainId) {
       const agg = new Aggregator({ chainId: chainId });
@@ -174,7 +181,7 @@ const SwapCard = () => {
     setToToken({
       identifier: tokenIdentifier,
       decimals: token.decimals,
-      value: toToken.value,
+      value: null,
     });
     setSwapPaths(null);
     setInteraction(null);
@@ -216,7 +223,8 @@ const SwapCard = () => {
   useEffect(() => {
     const handleCalculateNewSwapData = () => {
       const multiplier = Math.pow(10, fromToken?.decimals || 0);
-      const finalValue = BigNumber(fromToken.value).times(multiplier).toString();
+      const inputAmount = getValueAfterFee(fromToken.value, fee);
+      const finalValue = BigNumber(inputAmount).times(multiplier).toString();
 
       ashSwapAggregator.getPaths(fromToken.identifier, toToken.identifier, finalValue).then((p) => {
         setSwapPaths(p);
@@ -226,7 +234,7 @@ const SwapCard = () => {
     if (fromToken.identifier && Number(fromToken.value) > 0 && toToken.identifier) {
       handleCalculateNewSwapData();
     }
-  }, [ashSwapAggregator, chainId, fromToken, router.query.fromToken, toToken.identifier]);
+  }, [ashSwapAggregator, chainId, fee, fromToken, router.query.fromToken, toToken.identifier]);
 
   useEffect(() => {
     if (swapPaths && swapPaths?.returnAmount && fromToken?.value) {
