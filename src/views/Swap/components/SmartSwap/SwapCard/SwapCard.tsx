@@ -165,14 +165,18 @@ const SwapCard = () => {
 
   const handleOnSelectFromToken = (token) => {
     const tokenIdentifier = token.identifier;
-    updateURLParams({ fromToken: tokenIdentifier });
-    setFromToken({
-      identifier: tokenIdentifier,
-      decimals: token.decimals,
-      value: fromToken.value,
-    });
-    setSwapPaths(null);
-    setInteraction(null);
+    if (tokenIdentifier === toToken.identifier) {
+      handleExchangeFields();
+    } else {
+      updateURLParams({ fromToken: tokenIdentifier });
+      setFromToken({
+        identifier: tokenIdentifier,
+        decimals: token.decimals,
+        value: fromToken.value,
+      });
+      setSwapPaths(null);
+      setInteraction(null);
+    }
   };
 
   const handleOnSelectToToken = (token) => {
@@ -188,6 +192,8 @@ const SwapCard = () => {
   };
 
   const handleExchangeFields = () => {
+    const fromTokenId = toToken.identifier;
+    const toTokenId = fromToken.identifier;
     setFromToken({
       identifier: toToken.identifier,
       decimals: toToken.decimals,
@@ -198,9 +204,10 @@ const SwapCard = () => {
       decimals: fromToken.decimals,
       value: null,
     });
-    const fromTokenId = fromToken.identifier;
-    const toTokenId = toToken.identifier;
+
     updateURLParams({ fromToken: fromTokenId, toToken: toTokenId });
+    setSwapPaths(null);
+    setInteraction(null);
   };
 
   const handleMaxFromField = () => {
