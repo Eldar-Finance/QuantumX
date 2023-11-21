@@ -16,7 +16,7 @@ import { useAppDispatch } from "utils/hooks/redux";
 import { getWebUrl } from "utils/routes";
 import Menu1 from "./Menu/Menu";
 import { breakpoints } from "theme/chakra";
-import React from 'react';
+import React, { useState } from 'react';
 import CoinTab2 from "views/Dashboard/components/Dashtabs/WalletTab/CoinTab2";
 import { FiLogOut } from 'react-icons/fi'; // Assuming you're using react-icons for the icon
 
@@ -41,6 +41,7 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
   const location = useRouter().asPath;
   const { isLoggedIn } = useGetLoginInfo();
   const [isLargerThanLg] = useMediaQuery(`(min-width: ${breakpoints["md"]})`);
+  const [isMenuOpen, setMenuOpen] = useState(false);
 
   const handleLogout = () => {
     logout(getWebUrl(location));
@@ -108,13 +109,13 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
             <Box>
               {isLoggedIn ? (
                 // Dropdown for the logged-in state
-                <Menu>
+                <Menu onOpen={() => setMenuOpen(true)} onClose={() => setMenuOpen(false)}>
                   <MenuButton
                     as={Button}
                     rightIcon={<ChevronDownIcon />}
                     size="md"
                     bg={"black.baseDark"}
-                    color={"white"}
+                    color={isMenuOpen ? "black" : "white"}
                     px={5}
                     py={6}
                     gap={5}
