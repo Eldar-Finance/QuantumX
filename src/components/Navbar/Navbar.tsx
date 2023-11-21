@@ -110,9 +110,9 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
       {isLoggedIn ? (
         // Dropdown for the logged-in state
         <Menu>
-          <MenuButton as={Button} rightIcon={<ChevronDownIcon />} variant="outline" size="lg"><AddressSection2 /></MenuButton>
+          <MenuButton as={Button} rightIcon={<ChevronDownIcon />} variant="outline" border={'0px solid white'} size="lg"><AddressSection2 /></MenuButton>
           <MenuList bg={"#242526"} minWidth="240px" width="auto" p={4}>
-          <Box alignContent={"center"}/* Add custom styles for inner content */>
+          <Box alignContent={"center"}>
          
             <AddressSection3/>
             <Divider marginBottom={"10px"} paddingTop={"10px"}/>
