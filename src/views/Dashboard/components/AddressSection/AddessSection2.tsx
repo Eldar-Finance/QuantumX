@@ -10,13 +10,24 @@ const AddressSection2 = () => {
   const { hasCopied, onCopy } = useClipboard(address);
   return (
     <Box
-      display={"flex"}
-      justifyContent={"center"}
-      fontSize={"0.5em"}
-    >
-      {formatAddress(address)}
+  display={"flex"}
+  alignItems={"center"} // Align items vertically center
+  justifyContent={"center"}
+  fontSize={"0.5em"}
+>
+  <img
+    src={`https://id.maiar.com/users/photos/profile/${address}`}
+    alt="Profile"
+    style={{
+      width: '40px', // Small size, adjust as needed
+      height: '40px', // Maintain aspect ratio
+      borderRadius: '30%', // Make the image round
+      marginRight: '5px', // Space between image and text
+    }}
+  />
+  {formatAddress(address)}
+</Box>
 
-    </Box>
   );
 };
 
