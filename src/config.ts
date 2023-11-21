@@ -142,11 +142,12 @@ export const TOKENS_ID = {
   nfttoken: "NFT-e08b3e",
   wbtc: "WBTC-5349b3",
   weth: "WETH-b4ca29",
-  htm: "HTM-f51d55"
+  htm: "HTM-f51d55",
+  ash: "ASH-a642d1"
 };
 
-export const swapTopTokens = [ TOKENS_ID.egld, TOKENS_ID.wegld, TOKENS_ID.usdc ];
-
+export const swapTopTokens = [ TOKENS_ID.egld, TOKENS_ID.wegld, TOKENS_ID.usdc,
+  TOKENS_ID.htm, TOKENS_ID.crt, TOKENS_ID.ash, TOKENS_ID.rare ];
 //general configs
 export const walletConnectV2ProjectId = "6bec64742092caa5f1b382312bb17be2";
 export const apiTimeout = 6000;

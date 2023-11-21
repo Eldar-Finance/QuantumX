@@ -23,10 +23,6 @@ const Slippage = ({ swapPaths }: { swapPaths?: SorSwapResponse }) => {
   const handleUpdateSlippage = (newSlippage: number) => {
     dispatch(updateSlippage(newSlippage));
   };
-
-  const handleClearSlippage = () => {
-    dispatch(updateSlippage(0));
-  };
   
   return (
     <HStack w={"full"} h={"full"} flex={1}>
