@@ -8,14 +8,16 @@ import useGetElrondToken from "utils/hooks/useGetElrondToken";
 import SelectCurrency from "./commons/SelectCurrency/SelectCurrency";
 import { SwapToken } from "../SwapCard/SwapCard";
 
-function formatNumberWithMaxFiveDecimals(num) {
-  if (typeof num !== 'number') return num; // Return the value as is if it's not a number
+function formatNumberWithMaxDecimals(num: number | string, decimals = 5): string {
+  console.log("⚠️ ~ file: TextField.tsx:12 ~ num:", num)
+  if (typeof num !== 'number') return num.toString(); // Return the value as is if it's not a number
 
   // Convert to a string with up to 5 decimal places
-  const formatted = num.toFixed(5);
+  const formatted = num.toFixed(decimals);
+  console.log("⚠️ ~ file: TextField.tsx:17 ~ formatted:", formatted)
 
   // Remove trailing zeros and the decimal point if it's an integer
-  return formatted.replace(/(\.\d*?)0+$/, '$1').replace(/\.$/, '');
+  return formatted.replace(/(\.\d*?[1-9])0+$/, '$1').replace(/\.0+$/, '');
 }
 
 interface IProps extends InputProps {
@@ -89,51 +91,44 @@ const TextField = ({
           justifyContent: "space-between",
         }}
       >
-        
-          <Box zIndex={2}>
-          <SelectCurrency 
-          
-            field={id}
-            handleClickToken={handleClickToken}
-            token={token}
-            disable={disableChangeToken}
-            swapTokens={swapTokens}
-          />
-          </Box>
-
+        <Box zIndex={2}>
+        <SelectCurrency 
+          field={id}
+          handleClickToken={handleClickToken}
+          token={token}
+          disable={disableChangeToken}
+          swapTokens={swapTokens}
+        />
+        </Box>
         <Flex alignItems="center" mt={2}>
-
-        {accountToken && (
-          <Text color={"white.400"} fontSize={"sm"} mx={1} pr={!hasMaxButton ? 1 : 0}>
-              <Box as="span" m="5px">
-                  Balance:
-              </Box>
-              {formatBalance(accountToken) || 0}
-          </Text>
-      )}
-    {field.identifier && hasMaxButton && (
-        <ActionButton
-            onClick={() => onClickMaxtoken(formatBalance(accountToken, true, accountToken.decimals))}
-            textTransform={"uppercase"}
-            variant={"solid"}
-            fontSize={"sm"} // Adjust font size as needed
-            height={"1.5rem"} // Adjust height as needed
-            width={"auto"}
-            minWidth={"unset"}
-            padding={"0.25rem"} // Adjust padding as needed
-            fontWeight={"400"}
-            color={"main"}
-            bg="transparent"
-            mr={1} // Adjust margin as needed
-        >
-            Max
-        </ActionButton>
-    )}
-
-    
- </Flex>
-
-
+          {accountToken && (
+            <Text color={"white.400"} fontSize={"sm"} mx={1} pr={!hasMaxButton ? 1 : 0}>
+                <Box as="span" m="5px">
+                    Balance:
+                </Box>
+                {formatBalance(accountToken) || 0}
+            </Text>
+          )}
+          {field.identifier && hasMaxButton && (
+            <ActionButton
+                onClick={() => onClickMaxtoken(formatBalance(accountToken, false, accountToken.decimals))}
+                textTransform={"uppercase"}
+                variant={"solid"}
+                fontSize={"sm"} // Adjust font size as needed
+                height={"1.5rem"} // Adjust height as needed
+                width={"auto"}
+                minWidth={"unset"}
+                padding={"0.25rem"} // Adjust padding as needed
+                fontWeight={"400"}
+                color={"main"}
+                bg="transparent"
+                mr={1} // Adjust margin as needed
+                zIndex={1}
+            >
+                Max
+            </ActionButton>
+          )}
+        </Flex>
         <Flex flexDir={"column"} w="full" transform={"translateY(-5px)"} >
           {isLoadingAmount ? (
             <Box w="full">
@@ -141,7 +136,8 @@ const TextField = ({
             </Box>
           ) : (
             <InputS 
-              value={field.value ? formatNumberWithMaxFiveDecimals(Number(field.value)) : ""}
+              // value={field.value ? formatNumberWithMaxDecimals(Number(field.value), 8) : ""}
+              value={field.value ? field.value : ""}
               //value={field.value ?? ""}
               fontSize={"3xl"}
               fontWeight={"500"}

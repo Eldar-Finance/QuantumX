@@ -41,7 +41,7 @@ const getAshChainId = () => {
 }
 
 const getValueAfterFee = (value, fee) => {
-  return BigNumber(value).times(BigNumber(1).minus(BigNumber(fee))).toString();
+  return BigNumber(value).times(BigNumber(1).minus(BigNumber(fee))).toFixed(18).toString();
 }
 
 export interface SwapToken {
@@ -219,13 +219,17 @@ const SwapCard = ({setGraphTokens} : {setGraphTokens: any }) => {
 
   const handleMaxFromField = () => {
       const multiplier = Math.pow(10, accountToken.decimals);
+      console.log("⚠️ ~ file: SwapCard.tsx:222 ~ multiplier:", multiplier)
       const finalValue = BigNumber(accountToken.balance).div(multiplier).toString();
+      console.log("⚠️ ~ file: SwapCard.tsx:224 ~ finalValue:", finalValue)
       setFromToken({
         identifier: fromToken.identifier,
         decimals: accountToken.decimals,
         value: finalValue,
       });
   };
+  console.log("⚠️ ~ file: SwapCard.tsx:226 ~ setFromToken:", fromToken)
+
 
   const handleWrapUnwrap = async () => {
     if (isWrapEgld) {
@@ -270,9 +274,13 @@ const SwapCard = ({setGraphTokens} : {setGraphTokens: any }) => {
       const finalInputAmount = getValueAfterFee(fromToken.value, fee);
       const finalValue = BigNumber(finalInputAmount).times(multiplier).toString();
 
-      ashSwapAggregator.getPaths(fromToken.identifier, toToken.identifier, finalValue).then((p) => {
-        setSwapPaths(p);
-      });
+      try {
+        ashSwapAggregator.getPaths(fromToken.identifier, toToken.identifier, finalValue).then((p) => {
+          setSwapPaths(p);
+        });
+      } catch (error) {
+        console.log("⚠️ ~ file: SwapCard.tsx:207 ~ error:", error)
+      }
     };
 
     if (fromToken.identifier && Number(fromToken.value) > 0 && toToken.identifier && !isWrapEgld && !isUnwrapEgld) {
@@ -297,13 +305,17 @@ const SwapCard = ({setGraphTokens} : {setGraphTokens: any }) => {
   // console.log("⚠️ ~ file: SwapCard.tsx:223 ~ interaction:", interaction)
   useEffect(() => {
     const handleCreateInteractionFromSwapData = () => {
-      ashSwapAggregator.aggregateFromPaths(swapPaths, slipapge*100).then((i) => {
-        setInteraction(
-          i.withSender(
-            new Address(userAddress)
-          )
-        );
-      });
+      try {
+        ashSwapAggregator.aggregateFromPaths(swapPaths, slipapge*100).then((i) => {
+          setInteraction(
+            i.withSender(
+              new Address(userAddress)
+            )
+          );
+        });
+      } catch (error) {
+        console.log("⚠️ ~ file: SwapCard.tsx:237 ~ error:", error)
+      }
     };
 
     if (swapPaths && fromToken?.value) {
