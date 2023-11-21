@@ -29,22 +29,23 @@ const SwapRoute = ({ swapPaths }: { swapPaths?: SorSwapResponse }) => {
   // }
 
   const priceImpact = Number(swapPaths?.priceImpact?.toFixed(7)) * 100;
-  const roundedPriceImpact = priceImpact.toFixed(5);
+  const roundedPriceImpact = priceImpact.toFixed(6);
 
-  const displayPriceImpact = roundedPriceImpact.length > 5 ? Math.round(priceImpact*10000) / 10000 : roundedPriceImpact;
+  const displayPriceImpact = roundedPriceImpact.length > 6 ? Math.round(priceImpact*1000000) / 1000000 : roundedPriceImpact;
   const [showAllRoutes, setShowAllRoutes] = useState(false);
   
   return (
     <HStack w={"full"} h={"full"} flex={1}>
       <Flex
         h={"full"}
-        w="full"
+        w="50%"
         gap={"10px"}
         alignSelf={"flex-start"}
         bg={"black.baseDark"}
         p={2}
         borderRadius={"20px"}
         flex={1} // Add this line
+        minH={"75px"}
       >
         <Center bg="black.base" boxSize={"34px"} borderRadius="full">
           <CiRoute color={"#22F7DD"} size={"22"}/>
@@ -53,7 +54,7 @@ const SwapRoute = ({ swapPaths }: { swapPaths?: SorSwapResponse }) => {
       <Text flex={1} fontSize={'16px'} my={1}>
         Swap routes
       </Text>
-      <Flex align="center" justify="space-between" mt={-2}>
+      <Flex align="center" justify="space-between" mt={-1}>
         {finalRoutes.length > 0 && <Text as="li" style={{ listStyleType: 'none' }} whiteSpace={"nowrap"} fontSize={'lsm'} color="white.500">
           {finalRoutes?.[0].token1} {'->'} {finalRoutes?.[0].token2}
         </Text>}
@@ -81,7 +82,7 @@ const SwapRoute = ({ swapPaths }: { swapPaths?: SorSwapResponse }) => {
     </Box>
       </Flex>
       <Flex
-        w="full"
+        w="50%"
         gap={"15px"}
         alignSelf={"flex-start"}
         bg={"black.baseDark"}
@@ -89,6 +90,7 @@ const SwapRoute = ({ swapPaths }: { swapPaths?: SorSwapResponse }) => {
         borderRadius={"20px"}
         flex={1} // Add this line
         h={"full"}
+        minH={"75px"}
       >
         <Center bg="black.base" boxSize={"34px"} borderRadius="full">
           <MdOutlinePriceChange color={"#22F7DD"} size={"22"}/>

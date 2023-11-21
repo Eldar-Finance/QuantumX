@@ -66,6 +66,8 @@ export const contractAddress = {
     "erd1qqqqqqqqqqqqqpgqnedra5da464rkcektgzyv0qxcgqgyh26znyq8q4phx",
   cyberWegkdElite:
     "erd1qqqqqqqqqqqqqpgqvvn3s8ndrxqu6ndgnvsfp4sx9wgtv9z2znyqrfyhsf",
+  ashswap:
+    ""
 };
 export const gatewayAddress = "https://gateway.multiversx.com/";
 
