@@ -51,22 +51,43 @@ const CoinTab2 = () => {
     setData(orderData);
   }, [tableData.data, egldData, egldPrice]);
 
+  // Limit the number of tokens to display to 5
+  const displayedTokens = data.slice(0, 5);
+
   return (
-    <Box w="full" maxW={"200px"} mx="auto" minH="10vh" overflow={"auto"}>
+    <>
+      <style>
+        {`
+          .thin-scrollbar::-webkit-scrollbar {
+            width: 5px; /* Adjust the width as needed */
+          }
+          .thin-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1; /* Track color */
+          }
+          .thin-scrollbar::-webkit-scrollbar-thumb {
+            background: #888; /* Thumb color */
+          }
+          .thin-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #555; /* Thumb hover color */
+          }
+        `}
+      </style>
+    <Box w="full" maxW={"200px"} mx="auto" maxH="200px" overflowY={"auto"} className="thin-scrollbar">
       <List spacing={3}>
-        {data.map((token, index) => (
-          <ListItem key={index}pb={2} mb={2}>
+        {displayedTokens.map((token, index) => (
+          <ListItem key={index} pb={2} mb={2}>
             <Flex alignItems="center" justifyContent="space-between">
               <Flex alignItems="center">
                 <Box mr={3}>{token.assets.img}</Box>
                 <Text fontSize={"xs"} fontWeight="bold">{token.name}</Text>
               </Flex>
-              <Text>{token.tokenBalance}</Text>
+              <Text marginRight="10px">{token.tokenBalance}</Text>
             </Flex>
           </ListItem>
         ))}
       </List>
     </Box>
+    </>
   );
 };
 
