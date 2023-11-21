@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Card, Flex, IconButton, Image, Link, Text } from '@chakra-ui/react';
 import { ChevronRightIcon, ChevronLeftIcon } from '@chakra-ui/icons';
 import SwapCard from './components/SmartSwap/SwapCard/SwapCard';
@@ -10,7 +10,28 @@ import WrapperPages from 'hoc/WrapperPages';
 const Swap = () => {
   const [isSecondCardOpen, setIsSecondCardOpen] = useState(false);
   const [graphTokens, setGraphTokens] = useState([]);
-  console.log("⚠️ ~ file: Swap.tsx:13 ~ graphTokens:", graphTokens)
+  const [tok1, setVariable1] = useState('');
+  const [tok2, setVariable2] = useState('');
+  //console.log("⚠️ ~ file: Swap.tsx:13 ~ graphTokens:", graphTokens)
+  const [url, setUrl] = useState(`https://test.e-compass.io/quantumx/embed/MAIAR/${tok2}/USDC/60`);
+  useEffect(() => {
+    setUrl(`https://test.e-compass.io/quantumx/embed/MAIAR/${tok2}/USDC/60`);
+}, [tok2]); // This will trigger the effect whenever token2 changes
+
+
+
+  useEffect(() => {
+    if (graphTokens.length >= 1) {
+      const token1 = graphTokens[0].split('-')[0];
+      setVariable1(token1);
+    }
+  
+    if (graphTokens.length >= 2) {
+      const token2 = graphTokens[1].split('-')[0];
+      setVariable2(token2);
+      console.log(token2);
+    }
+  }, [graphTokens]);
 
   const toggleSecondCard = () => {
     setIsSecondCardOpen(!isSecondCardOpen);
@@ -91,7 +112,7 @@ const Swap = () => {
             >
               <Box height="100%" overflow="hidden">
                 <iframe
-                  src="https://test.e-compass.io/quantumx/embed/MAIAR/RIDE/WEGLD/60"
+                  src={url}
                   title="QuantumX"
                   width="100%"
                   height="500px" // Adjust the height to match the content of the iframe
