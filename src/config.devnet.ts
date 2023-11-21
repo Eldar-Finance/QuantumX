@@ -53,9 +53,28 @@ export const contractAddress = {
     "erd1qqqqqqqqqqqqqpgqu693lwsewjvs5f9mssk0fpfex00q77zfznyq4cd0rt",
   proteoEgldElite:
     "erd1qqqqqqqqqqqqqpgqg8mf09tewy8r0etq7l4sut4flvkv7rpdznyqsda52l",
-
+  exchange: "erd1qqqqqqqqqqqqqpgqmua7hcd05yxypyj7sv7pffrquy9gf86s535qxct34s",
+  egldLkmexSwap:
+    "erd1qqqqqqqqqqqqqpgqazxylsxny9vgw9xw9t3xkk79ljvgs6dk97wsn5760y",
+  jexSawp: "erd1qqqqqqqqqqqqqpgqawkm2tlyyz6vtg02fcr5w02dyejp8yrw0y8qlucnj2",
+  wrapEgldShar0:
+    "erd1qqqqqqqqqqqqqpgqqkwzsxkjc83vlfex9dmznwm7tjvxlqqkpauqx0n782",
+  wrapEgldShar1:
+    "erd1qqqqqqqqqqqqqpgqpv09kfzry5y4sj05udcngesat07umyj70n4sa2c0rp",
+  wrapEgldShar2:
+    "erd1qqqqqqqqqqqqqpgqvn9ew0wwn7a3pk053ezex98497hd4exqdg0q8v2e0c",
+  fastp2pswap: "erd1qqqqqqqqqqqqqpgq3gz6kc7q5zm2zdluhtcn8g0fg8vwyxvk64qsu8p6ja",
+  upgradeHero: "erd1qqqqqqqqqqqqqpgqfr69nye37kwcjlxqv652k555jyw0uaegu7zs5rlw9f",
+  xoxnoSrbPool:
+    "erd1qqqqqqqqqqqqqpgqvpkd3g3uwludduv3797j54qt6c888wa59w2shntt6z",
+  // proteo farms
+  aeroEgldEliteDual:
+    "erd1qqqqqqqqqqqqqpgqnedra5da464rkcektgzyv0qxcgqgyh26znyq8q4phx",
+  cyberWegkdElite:
+    "erd1qqqqqqqqqqqqqpgqvvn3s8ndrxqu6ndgnvsfp4sx9wgtv9z2znyqrfyhsf",
   // others farms
   egldRide: "erd1qqqqqqqqqqqqqpgqvfnfcgycfd53ch57hxgzxe8p203uu5e8znyqeqvyc7",
+  ashswap: "erd1qqqqqqqqqqqqqpgqv2njkmqxlu0ac77lyjxhjyqutrw2zt9tu7zs3aasnt"
 };
 
 export const eldarSftCollection = "TESTSFT-76f5c3";
@@ -91,10 +110,40 @@ export const TOKENS_ID = {
   lkmex: "LKMEX-3b7d9a",
   sProteo: "SPROTEO-c75f56",
   egld: "EGLD",
-  usdc: "USDC-8d4068",
+  usdc: "USDC-350c4e",
   proteoEgldLp: "PROTEOEGLD-8b31a0",
   ride: "RIDE-6e4c49",
   egldRideLp: " EGLDRIDE-3263c5",
-  wegld: "WEGLD-d7c6bb",
-  mex: "MEX-dc289c",
+  wegld: "WEGLD-a28c59",
+  mex: "MEX-a659d0",
+  zpay: "ZPAY-247875",
+  zpayWegldLp: "ZPAYWEGLD-34e5c1",
+  aero: "AERO-458bbf",
+  aerowegld: "AEROWEGLD-81cc37",
+  proteo: "PROTEO-0c7311",
+  crt: "CRT-52decf",
+  koson: "KOSON-5dd4fa",
+  rare: "RARE-99e8b0",
+  rareUsdcLp: "RAREUSDC-e4a7f8",
+  prick: "PRICK-744592",
+  bear: "BEAR-f9c271",
+  kro: "KRO-df97ec",
+  estar: "ESTAR-461bab",
+  jex: "JEX-9040ca",
+  epunks: "EPUNKS-dc0f59",
+  cyberwegld: "CYBERWEGLD-45a866",
+  cyber: "CYBER-489c1c",
+  bonez: "BONEZ-ff9a73",
+  hype: "HYPE-619661",
+  usdt: "USDT-f8c08c",
+  busd: "BUSD-40b57e",
+  hypeusdc: "HYPEUSDC-3164e5",
+  nfttoken: "NFT-e08b3e",
+  wbtc: "WBTC-5349b3",
+  weth: "WETH-b4ca29",
+  htm: "HTM-f51d55",
+  ash: "ASH-e3d1b7"
 };
+
+export const swapTopTokens = [ TOKENS_ID.egld, TOKENS_ID.wegld, TOKENS_ID.usdc,
+TOKENS_ID.mex, TOKENS_ID.ash ];

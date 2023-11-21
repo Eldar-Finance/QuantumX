@@ -8,7 +8,7 @@ import {
   TransactionPayload,
   ContractCallPayloadBuilder
 } from "@multiversx/sdk-core/out";
-import { ChainId, toknesID } from "api/net.config";
+import { ChainId, contractAddr, toknesID } from "api/net.config";
 import {
   EGLD_VAL,
   WspTypes,
@@ -21,6 +21,7 @@ import store from "redux/store";
 import { getScOfWrapedEgld } from "utils/functions/helpers";
 import { AbiRegistry, SmartContract, U32Value, Interaction, TokenTransfer, GasEstimator, TransferTransactionsFactory, Account} from "@multiversx/sdk-core";
 import { sendTransactions } from "@multiversx/sdk-dapp/services";
+import { network } from "config.testnet";
 
 /* Messages */
 const defaultProcessingMessage = "Processing transaction";
@@ -538,6 +539,32 @@ export const MultESDTNFTTranferOrEgldPayment = async (
   return await sendMultipleTransactions({ txs: transactions });
 };
 
+export const wrapEgld = async (
+  egldAmount: number | string,
+  gasLimit: number = 3000000
+) => {
+  const sender = store.getState().userAccount.connectedAddress;
+  const senderAddress = new Address(sender);
+
+  const value = new BigNumber(egldAmount).multipliedBy(EGLD_VAL).toFixed(0);
+
+  const shard = store.getState().userAccount.connectedShard;
+  const wrapContractBasedOnShard = getScOfWrapedEgld(shard);
+
+  const wrapContract = new SmartContract({ address: new Address(wrapContractBasedOnShard)});
+  let interaction = new Interaction(wrapContract, new ContractFunction("wrapEgld"), []);
+
+  let tx1 = interaction
+    .withSender(senderAddress)
+    .useThenIncrementNonceOf(new Account(senderAddress))
+    .withValue(value)
+    .withGasLimit(gasLimit)
+    .withChainID(ChainId)
+    .buildTransaction();
+
+  return await sendTransaction({ tx: tx1 });
+};
+
 export const wrapEgldAndEsdtTranfer = async (
   egldAmount: number | string,
   funcName: string,
@@ -580,6 +607,34 @@ export const wrapEgldAndEsdtTranfer = async (
   .buildTransaction();
 
   return await sendMultipleTransactions({ txs: [tx1, tx2] });
+};
+
+export const unwrapEgld = async (
+  wegldAmount: number | string,
+  gasLimit: number = 3000000
+) => {
+  const sender = store.getState().userAccount.connectedAddress;
+  const senderAddress = new Address(sender);
+
+  const tokenIdentifier = toknesID.wegld;
+  const multiplyier = Math.pow(10, 18);
+  const finalValue = BigNumber(wegldAmount).times(multiplyier).toFixed(0);
+
+  const shard = store.getState().userAccount.connectedShard;
+  const wrapContractBasedOnShard = getScOfWrapedEgld(shard);
+
+  const wrapContract = new SmartContract({ address: new Address(wrapContractBasedOnShard)});
+  let interaction = new Interaction(wrapContract, new ContractFunction("unwrapEgld"), []);
+
+  let tx1 = interaction
+  .withSender(senderAddress)
+  .useThenIncrementNonceOf(new Account(senderAddress))
+  .withSingleESDTTransfer(TokenTransfer.fungibleFromBigInteger(tokenIdentifier, finalValue))
+  .withGasLimit(gasLimit)
+  .withChainID(ChainId)
+  .buildTransaction();
+
+  return await sendTransaction({ tx: tx1 });
 };
 
 export const EsdtTranferAndUnwrapEgld = async (
@@ -644,7 +699,7 @@ export const MultipleHarvestCalls = async (
   farmIds: number[],
   feeToken: any,
   feeAmount: number,
-  gasLimit: number = 60000000,
+  gasLimit: number = 90000000,
 ) => {
   console.log("⚠️ ~ file: index.ts:649 ~ feeAmount::::", feeAmount)
   console.log("⚠️ ~ file: index.ts:649 ~ feeToken::::", feeToken)

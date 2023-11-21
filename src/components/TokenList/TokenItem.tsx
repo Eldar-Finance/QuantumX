@@ -78,7 +78,7 @@ const TokenItem = ({
         )}
       </Flex>
       {showBalance && (
-        <Box>
+        <Box fontSize={"md"} color={"white.500"}>
           <Text>{formatBalance(token as IELrondTOkenWithBalance)}</Text>
         </Box>
       )}

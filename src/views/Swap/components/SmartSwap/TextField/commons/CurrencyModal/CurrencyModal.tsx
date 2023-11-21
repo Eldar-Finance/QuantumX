@@ -4,6 +4,7 @@ import {
   Button,
   Center,
   Flex,
+  HStack,
   IconButton,
   Image,
   Input,
@@ -26,12 +27,18 @@ import useGetMultipleElrondTokens from "utils/hooks/useGetMultipleElrondTokens";
 import useGetTopSmartSwapTokens from "utils/hooks/useGetTopSmartSwapTokens";
 import { IElrondToken } from "utils/types/elrond.interface";
 import useSelectSmarSwapTokens from "views/Swap/hooks/useSelectSmarSwapTokens";
+import { SwapToken } from "../../../SwapCard/SwapCard";
+import { useState } from "react";
+import { SwapTopTokens } from "api/net.config";
+import useGetAccountTokens from "utils/hooks/useGetAccountTokens";
+import useGetUserTokens from "utils/hooks/useGetUserTokens";
 
 interface IProps {
   field: "from" | "to";
   isOpen: boolean;
   onClose: () => void;
   handleClickToken: (t: IElrondToken) => void;
+  swapTokens: SwapToken[];
 }
 
 const CurrencyModal = ({
@@ -39,25 +46,37 @@ const CurrencyModal = ({
   onClose,
   handleClickToken,
   field,
+  swapTokens,
 }: IProps) => {
   const [order, setOrder] = React.useState<"desc" | "asc">("desc");
-  const tokens = useAppSelector((state) => state.smartSwap.tokens);
-  const fromTokenIdentifier = useAppSelector(selectFromToken);
-  const { tokens: topTokens } = useGetTopSmartSwapTokens();
-  const [tokenList, setTokenList] = React.useState([]);
+  const [tokenList, setTokenList] = useState([]);
 
+  // const { tokens: topTokens } = useGetTopSmartSwapTokens();
+  let {tokens: elrondTokens, isLoading: isLoadingTokens, isError} = useGetMultipleElrondTokens(swapTokens.map((t) => t.identifier));
+  const [ accountTokens ] = useGetUserTokens("", false);
+  elrondTokens = elrondTokens.map((t) => {
+    const accountToken = accountTokens?.find((at) => at.identifier === t.identifier);
+    return {
+      ...t,
+      balance: accountToken?.balance || 0,
+    }
+  });
+  
   const handleSearch = (e) => {
     const query = e.target.value;
 
     if (query === "") {
       setTokenList(null);
     } else {
-      const newTokenList = elrondTokens.filter((token) => {
+      let newTokenList = elrondTokens.filter((token) => {
         return (
           token.ticker.toString().toLowerCase().indexOf(query.toLowerCase()) >
           -1
         );
       });
+
+      // add in list
+
 
       setTokenList(newTokenList);
     }
@@ -84,14 +103,8 @@ const CurrencyModal = ({
     });
   };
 
-  const { elrondTokens } = useSelectSmarSwapTokens(
-    fromTokenIdentifier,
-    tokens,
-    field
-  );
-  const { tokens: topElrondTokens } = useGetMultipleElrondTokens(topTokens);
-  const diplayTokens =
-    tokenList && tokenList.length > 0 ? tokenList : elrondTokens;
+  const { tokens: topElrondTokens } = useGetMultipleElrondTokens(swapTokens.map((t) => t.identifier).filter((t) => SwapTopTokens.includes(t)));
+  const diplayTokens = tokenList && tokenList.length > 0 ? tokenList : elrondTokens;
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} size={"lg"} isCentered>
@@ -103,14 +116,15 @@ const CurrencyModal = ({
         pt={6}
         width={"90%"}
         maxWidth={"420px"}
+        minHeight={"500px"}
       >
-        <Flex px={"20px"} alignItems={"center"}>
+        <Flex px={"20px"} alignItems={"center"} mt={-3}>
           <Text fontSize={"md"} mr={3}>
-            Select a token
+            Select a token to {field === "from" ? "send" : "receive"}
           </Text>
-          <CutomTooltip
+          {/* <CutomTooltip
             text={"Find a token by searching for its name or symbol."}
-          />
+          /> */}
         </Flex>
 
         <ModalCloseButton
@@ -119,20 +133,41 @@ const CurrencyModal = ({
           _focus={{ boxShadow: "none" }}
         />
 
-        <ModalBody px={0}>
+        <ModalBody px={0} pt={5}>
           <Box px={"20px"}>
-            <Input onChange={handleSearch} />
-            <Flex flexWrap={"wrap"} w="full" gap={3} mt={3}>
+            <Input
+              onChange={handleSearch}
+              placeholder="Search for a token"
+              _active={
+                {
+                  outline: "none",
+                  borderColor: "main",
+                }
+              }
+              _focusVisible={
+                {
+                  outline: "none",
+                  borderColor: "main",
+                }
+              }
+              _hover={
+                {
+                  outline: "none",
+                  borderColor: "main",
+                }
+              }
+            />
+            <Flex flexWrap={"wrap"} w="full" gap={2} mt={3}>
               {topElrondTokens.map((t) => {
                 return (
                   <Center
                     key={t.identifier}
-                    border="1px solid"
-                    borderColor={"GrayText"}
-                    rounded="md"
+                    // border="1px solid"
+                    // borderColor={"GrayText"}
+                    rounded="15px"
                     px={2}
                     py={1}
-                    background="transparent"
+                    background="black.baseLight"
                     color="white"
                     cursor="pointer"
                     _hover={{
@@ -142,7 +177,7 @@ const CurrencyModal = ({
                     onClick={() => handleClickToken(t)}
                     as={Button}
                     disabled={
-                      elrondTokens.findIndex(
+                      elrondTokens?.findIndex(
                         (token) => t.identifier === token.identifier
                       ) === -1
                     }
@@ -169,7 +204,7 @@ const CurrencyModal = ({
                         )}
                       </>
                     )}
-                    <Text ml={2}>
+                    <Text ml={1} fontSize={"md"}>
                       {t.identifier !== t.ticker
                         ? t.ticker || t.name || t.identifier || ""
                         : t.name || t.ticker || t.identifier || ""}
@@ -178,13 +213,14 @@ const CurrencyModal = ({
                 );
               })}
             </Flex>
-            <Flex justifyContent={"space-between"} mt={6}>
-              <Text>Token Name</Text>
+            <Flex gap={2} mt={4} borderTop={"1px solid"} borderColor={"white.200"} w="full">
+              <Text mt={3}>Token Name</Text>
               <IconButton
+                mt={3}
                 aria-label="Invert Order"
                 background={"gray.800"}
                 borderRadius={"5px"}
-                height={"auto"}
+                height={"30px"}
                 textColor={"gray.200"}
                 _hover={{
                   background: "none",
@@ -207,6 +243,7 @@ const CurrencyModal = ({
           <TokenList
             handleClickToken={handleClickToken}
             tokens={diplayTokens}
+            showBalance={true}
           />
         </ModalBody>
       </ModalContent>

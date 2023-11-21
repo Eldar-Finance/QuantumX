@@ -20,8 +20,8 @@ const EarnedRewards = ({ userRewards, multifarmRewardsLeft }: IProps) => {
 
   return (
     <Flex flexDir={"column"}>
-      <Text color="white.400" fontSize={"sm"}>
-        EARNED REWARDS
+      <Text color="white.400">
+        Earned Rewards
       </Text>
       {rewardsTokens.map((rewardsToken) => {
         const rewardInfo = userRewards.find(

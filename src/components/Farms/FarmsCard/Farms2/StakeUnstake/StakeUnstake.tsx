@@ -109,7 +109,7 @@ const StakeUnstake = ({ farm, userFarmItem, isPool, isBearly, farmUserRewards }:
   return (
     <Flex h="full" flexDir={"column"} w="full">
       <Text color="white.400">
-        STAKE {formatTokenI(farm.farm.stakingToken)} {!isPool && "LP"}{" "}
+        Stake {formatTokenI(farm.farm.stakingToken)} {!isPool && "LP"}{" "}
         {isAFarmBoost && (
           <Box as="span" color="white">
             <Link href={"https://xoxno.com/collection/SRB-61daf7"} isExternal>
@@ -119,31 +119,31 @@ const StakeUnstake = ({ farm, userFarmItem, isPool, isBearly, farmUserRewards }:
         )}
       </Text>
       <Flex mt="2" gap="3" flex={1} alignItems="center" w="full">
-          <VStack w="full" maxW="50%" position="relative" top={(!isEligible && farm.farm.farmId === 49) ? 4 : 0}>
-            <ActionButton
-              onClick={handleClickStake}
-              variant={"outline"}
-              w="full"
-              // maxW={"50%"}
-              isDisabled={(!isEligible && farm.farm.farmId === 49) || (!isSrbStaker && farm.farm.farmId === 7) || farmsTobeShutDown.includes(farm.farm.farmId)}
-              _hover={{bgColor: (!isEligible && farm.farm.farmId === 49) || (!isSrbStaker && farm.farm.farmId === 7) ? "red" : "main",
-              color: (!isEligible && farm.farm.farmId === 49) || (!isSrbStaker && farm.farm.farmId === 7) ? "white" : "black"
-            }}
+        <VStack w="full" maxW="50%" position="relative" top={(!isEligible && farm.farm.farmId === 49) ? 4 : 0}>
+          <ActionButton
+            onClick={handleClickStake}
+            variant={"outline"}
+            w="full"
+            // maxW={"50%"}
+            isDisabled={(!isEligible && farm.farm.farmId === 49) || (!isSrbStaker && farm.farm.farmId === 7) || farmsTobeShutDown.includes(farm.farm.farmId)}
+            _hover={{bgColor: (!isEligible && farm.farm.farmId === 49) || (!isSrbStaker && farm.farm.farmId === 7) ? "red" : "main",
+            color: (!isEligible && farm.farm.farmId === 49) || (!isSrbStaker && farm.farm.farmId === 7) ? "white" : "black"
+          }}
+          >
+            STAKE {!isPool && "LP"}{" "}
+          </ActionButton>
+          {!isEligible && farm.farm.farmId === 49 &&
+          <Text pl={2} placeSelf={"center"} whiteSpace={"nowrap"}>
+            ❗️ {" "} Add Liquidity in {" "}
+            <Link
+              href="https://xexchange.com/liquidity"
+              isExternal
+              color="main"
             >
-              STAKE {!isPool && "LP"}{" "}
-            </ActionButton>
-            {!isEligible && farm.farm.farmId === 49 &&
-            <Text pl={2} placeSelf={"center"} whiteSpace={"nowrap"}>
-              ❗️ {" "} Add Liquidity in {" "}
-              <Link
-                href="https://xexchange.com/liquidity"
-                isExternal
-                color="main"
-              >
-                {" "} xExchange
-              </Link> 
-            </Text>}
-          </VStack>
+              {" "} xExchange
+            </Link> 
+          </Text>}
+        </VStack>
         <Center flex="1" flexDir={"column"} w="full" maxW={"50%"} position={"relative"}>
           <ActionButton
             onClick={() => setOpenUnstakeStake((s) => !s)}
@@ -159,7 +159,7 @@ const StakeUnstake = ({ farm, userFarmItem, isPool, isBearly, farmUserRewards }:
           }
         </Center>
       </Flex>
-      <Flex w="full" justifyContent={"center"} mt={2}>
+      <Flex w="full" justifyContent={"center"} mt={shouldUserHarvestWarning ? 5 : 2}>
         {hasuserStaked && disableUnstake && epochDiffrence !== 777 && (
           <Text fontSize={"md"} mt={1} color="darkgray">
             ⚠️ {" "} {timeToUnstake} remaining to unstake

@@ -5,7 +5,7 @@ import Link from "next/link";
 import { routeNames } from "utils/routes";
 import useGetUserQTag from "views/Tags/hooks/useGetQTag";
 
-const QTagButton = () => {
+const QTagButton = ({...props}) => {
   const { tagInfo, isLoading } = useGetUserQTag();
   const { isLoggedIn } = useGetLoginInfo();
   return (
@@ -18,6 +18,8 @@ const QTagButton = () => {
           fontWeight={"500"}
           fontSize={{ xs: "14px", "2xl": "md" }}
           h={{xs: "32px", md: "40px"}}
+          variant={"ghost"}
+          {...props}
         >
           {tagInfo.tag || (isLoading ? <Spinner size={"sm"} /> : "Claim QxTag")}
         </ActionButton>

@@ -22,6 +22,7 @@ import sftsRewardsAbi from "assets/abi/sft-rewards-sc.abi.json";
 import smartSwapAbi from "assets/abi/smartswaps.abi.json";
 import xoxnoSrbPoolAbi from "assets/abi/xoxno_srb_pool_info.json";
 import hootAbi from "assets/abi/hoot.abi.json";
+import ashswapAbi from "assets/abi/ashswap.abi.json";
 
 //end abos import
 
@@ -133,7 +134,8 @@ export type WspTypes =
   | "cyberWegld"
   | "hypezoneWsp"
   | "tagsWsp"
-  | "hootWsp";
+  | "hootWsp"
+  | "ashswapWsp";
 
 export const getInterface = (workspace: WspTypes) => {
   let address = null;
@@ -176,13 +178,6 @@ export const getInterface = (workspace: WspTypes) => {
       address = new Address(simpleAddress);
       abiUrl = proteoEliteAbi;
       implementsInterfaces = "ProteoElite";
-
-      break;
-    case jexSwapWsp:
-      simpleAddress = contractAddr.jexSawp;
-      address = new Address(simpleAddress);
-      abiUrl = jexSwapAbi;
-      implementsInterfaces = "Jex";
 
       break;
     case farms2Wsp:
@@ -319,6 +314,12 @@ export const getInterface = (workspace: WspTypes) => {
       abiUrl = hootAbi;
       implementsInterfaces = "Hoot";
       break;
+    case "ashswapWsp":
+      simpleAddress = contractAddr.ashswap;
+      address = new Address(simpleAddress);
+      abiUrl = ashswapAbi;
+      implementsInterfaces = "AshSwap";
+      break;
     default:
       break;
   }
@@ -350,6 +351,7 @@ export const wrapEgldpWsp = "wrapEgld";
 export const wrapEgldpWspShard1 = "wrapEgldShard1";
 export const wrapEgldpWspShard2 = "wrapEgldShard2";
 export const hub = "hubWsp";
+export const ashswapWsp = "ashswapWsp";
 
 // proteo farms
 export const usdcProteoWsp = "usdcProteo";

@@ -61,7 +61,6 @@ const Avilable = ({ farm, userFarmRewards, disable }: IProps) => {
             const rewardInfo = userFarmRewards.find(
               (r) => r.rewardToken === rewardsToken.identifier
             );
-
             return (
               <Flex key={rewardsToken.identifier} alignItems={"center"} gap={2}>
                 <Text>
@@ -87,6 +86,9 @@ const Avilable = ({ farm, userFarmRewards, disable }: IProps) => {
               </Flex>
             );
           })}
+          {rewardsTokens.length === 0 && (
+            <Text color="white.400">0 {farm.farm.rewardToken.toString().split('-')[0]}</Text>
+          )}
         </VStack>
       </Flex>
       <Flex flexDir={"column"}>

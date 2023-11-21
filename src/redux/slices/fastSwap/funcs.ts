@@ -6,7 +6,7 @@ import { getTokens } from "api/rest/elrondApi/accounts";
 import { getFromAllTokens } from "api/rest/elrondApi/tokens";
 import { getOffers } from "api/rest/others/Jex";
 import { scQuery } from "api/sc/queries";
-import { fastp2pSwapWsp, jexSwapWsp } from "api/sc/sc";
+import { fastp2pSwapWsp } from "api/sc/sc";
 import egldLogo from "assets/logos/egld.svg";
 import BigNumber from "bignumber.js";
 import { formatPrecision } from "utils/functions/formatBalance";
@@ -147,14 +147,6 @@ export const fetchClaimableTokens = createAsyncThunk(
       };
     });
     return data;
-  }
-);
-export const fetchDefaultFeeA = createAsyncThunk(
-  "fastSwap/fetchDefaultFeeA",
-  async () => {
-    const res = await scQuery(jexSwapWsp, "getDefaultFeesTokenA");
-    const data = res.firstValue.valueOf().toNumber();
-    return data / 10;
   }
 );
 

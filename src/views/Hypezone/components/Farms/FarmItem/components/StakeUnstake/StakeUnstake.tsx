@@ -108,7 +108,7 @@ const StakeUnstake = ({
   return (
     <Flex h="full" flexDir={"column"} w="full">
       <Text color="white.400">
-        STAKE {formatTokenI(farm.farm.stakingToken)} {!isPool && "LP"}{" "}
+        Stake {formatTokenI(farm.farm.stakingToken)} {!isPool && "LP"}{" "}
         {isAFarmBoost && (
           <Box as="span" color="white">
             <Link href={"https://xoxno.com/collection/SRB-61daf7"} isExternal>
@@ -153,7 +153,7 @@ const StakeUnstake = ({
           }
         </Center>
       </Flex>
-      <Flex w="full" justifyContent={"center"} mt={2}>
+      <Flex w="full" justifyContent={"center"} mt={shouldUserHarvestWarning ? 5 : 2}>
         {hasuserStaked && disableUnstake && epochDiffrence !== 777 && (
           <Text fontSize={"md"} mt={1} color="darkgray">
             ⚠️ {" "} {timeToUnstake} remaining to unstake
