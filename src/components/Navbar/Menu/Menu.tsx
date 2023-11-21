@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { isActiveRoute, routesArr } from "utils/routes";
 import ModalMenu from "../ModalMenu/ModalMenu";
+import { ImageQxAshFire } from "views/Swap/Swap";
 
 const Menu = () => {
   const { isOpen, onClose, onOpen, onToggle } = useDisclosure();
@@ -46,6 +47,13 @@ const Menu = () => {
                 >
                   NEW
                 </Box>
+              )}
+
+              {route.name === "Swap" && (
+                <ImageQxAshFire
+                  width={{sm: "20px", md: "30px"}}
+                  transform="translate(-80%, -30%)"
+                />
               )}
             </Flex>
           </Link>
