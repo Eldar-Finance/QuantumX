@@ -1,4 +1,4 @@
-import { Box, Center, Flex, Heading, IconButton, Text } from "@chakra-ui/react";
+import { Box, Center, Flex, Heading, IconButton, Text, useEditable } from "@chakra-ui/react";
 
 import SwapButton from "../SwapButton/SwapButton";
 import TextField from "../TextField/TextField";
@@ -50,7 +50,7 @@ export interface SwapToken {
   value?: string;
 }
 
-const SwapCard = () => {
+const SwapCard = ({setGraphTokens} : {setGraphTokens: any }) => {
   const userAddress = store.getState().userAccount.connectedAddress;
   const [receiverAddress, setReiceverAddress] = useState(null);
   const router = useRouter();
@@ -137,6 +137,12 @@ const SwapCard = () => {
   }, [router, swapTokens]);
   // console.log("⚠️ ~ file: SwapCard.tsx:50 ~ SwapCard ~ fromToken::::", fromToken)
   // console.log("⚠️ ~ file: SwapCard.tsx:52 ~ SwapCard ~ toToken::::", toToken)
+
+  useEffect(() => {
+    if (fromToken?.identifier && toToken?.identifier) {
+      setGraphTokens([fromToken.identifier, toToken.identifier]);
+    }
+  } , [fromToken.identifier, setGraphTokens, toToken.identifier]);
 
   //
   // FIELDS

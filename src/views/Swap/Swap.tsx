@@ -9,6 +9,8 @@ import WrapperPages from 'hoc/WrapperPages';
 
 const Swap = () => {
   const [isSecondCardOpen, setIsSecondCardOpen] = useState(false);
+  const [graphTokens, setGraphTokens] = useState([]);
+  console.log("⚠️ ~ file: Swap.tsx:13 ~ graphTokens:", graphTokens)
 
   const toggleSecondCard = () => {
     setIsSecondCardOpen(!isSecondCardOpen);
@@ -51,7 +53,7 @@ const Swap = () => {
           zIndex="2" // Ensure the image is above other content
           transform="translate(-50%, -50%)" // Center the image's top-left corner precisely at the card's top-left corner
         />
-            <SwapCard />
+            <SwapCard setGraphTokens={setGraphTokens}/>
             <IconButton
               aria-label="Toggle second card"
               icon={isSecondCardOpen ? <ChevronLeftIcon /> : <ChevronRightIcon />}
