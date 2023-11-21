@@ -29,7 +29,6 @@ const Swap = () => {
     if (graphTokens.length >= 2) {
       const token2 = graphTokens[1].split('-')[0];
       setVariable2(token2);
-      console.log(token2);
     }
   }, [graphTokens]);
 

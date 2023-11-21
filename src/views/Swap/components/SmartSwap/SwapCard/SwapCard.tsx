@@ -219,16 +219,13 @@ const SwapCard = ({setGraphTokens} : {setGraphTokens: any }) => {
 
   const handleMaxFromField = () => {
       const multiplier = Math.pow(10, accountToken.decimals);
-      console.log("⚠️ ~ file: SwapCard.tsx:222 ~ multiplier:", multiplier)
       const finalValue = BigNumber(accountToken.balance).div(multiplier).toString();
-      console.log("⚠️ ~ file: SwapCard.tsx:224 ~ finalValue:", finalValue)
       setFromToken({
         identifier: fromToken.identifier,
         decimals: accountToken.decimals,
         value: finalValue,
       });
   };
-  console.log("⚠️ ~ file: SwapCard.tsx:226 ~ setFromToken:", fromToken)
 
 
   const handleWrapUnwrap = async () => {
