@@ -126,14 +126,14 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
                   >
                     <AddressSection2 />
                   </MenuButton>
-                  <MenuList bg={"#242526"} minWidth="240px" width="auto" p={4}>
+                  <MenuList bg={"#242526"} minWidth="240px" width="auto" p={4} ml={-2}>
                     <Box alignContent={"center"}>
                       <AddressSection3/>
                       <Divider marginBottom={"10px"} paddingTop={"10px"}/>
                     </Box>
-                    <Box>
+                    {/* <Box>
                       <CoinTab2/>
-                    </Box>
+                    </Box> */}
                     <QTagButton/>
                     <Box as="button" display="flex" alignItems="center" onClick={handleLogout} width="100%" textAlign="left" paddingY="2">
                       <Box as={FiLogOut} mr={2} />
