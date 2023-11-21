@@ -72,11 +72,9 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
                 <NextImage src={logo} alt="QuantumX" width={100} />
               </Link>
               <Flex alignItems="center" justifyContent="flex-end" flex="1" gap={2}>
-                {isLoggedIn && <ActionButton
-                  h={{xs: "32px"}}
-                >
-                  <QTagButton w="fit" textColor={"black"}/>
-                </ActionButton>}
+                {isLoggedIn &&
+                  <QTagButton w="fit" textColor={"black"} bg="main" borderRadius={"md"} h={{xs: "32px"}}/>
+                }
                 {!onlyConnectButton && (
                   <ActionButton
                     h={{xs: "32px"}}
