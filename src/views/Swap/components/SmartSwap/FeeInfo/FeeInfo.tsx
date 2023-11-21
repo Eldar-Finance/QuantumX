@@ -3,28 +3,30 @@ import CustomTooltip from "components/CustomTooltip/CustomTooltip";
 import { formatBalance } from "utils/functions/formatBalance";
 import { useGetFees } from "views/Admin/Views/Swap/hooks";
 
-const FeeInfo = () => {
+const FeeInfo = ({ fee } : { fee: number}) => {
   const { fees } = useGetFees();
 
   if (!fees) return null;
   return (
     <Flex justifyContent={"center"} color="GrayText" mt={4}>
       <CustomTooltip
-        maxWidth={"300px"}
+        maxWidth={"400px"}
         text={
-          <Box color="GrayText" fontSize={"sm"}>
-            <Flex flexDir={"column"}>
-              <Text fontWeight={"800"}>Single token in Input and Output</Text>
+          <Box color="GrayText" fontSize={"sm"} >
+            {/* <Flex flexDir={"column"}> */}
               <Text>
-                {formatBalance({ balance: fees.fee, decimals: 3 })}% fee
+                {fee}% fee on the input token
               </Text>
-            </Flex>
-            <Flex flexDir={"column"}>
+            {/* </Flex> */}
+            {
+            /* <Flex flexDir={"column"}>
               <Text fontWeight={"800"}>LP Token</Text>
               <Text>
                 {formatBalance({ balance: fees.lpFee, decimals: 2 })}% fee
               </Text>
-            </Flex>
+            </Flex> */
+          }
+
           </Box>
         }
         iconSize={"14px"}

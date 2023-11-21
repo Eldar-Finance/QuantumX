@@ -13,7 +13,7 @@ const MyContainer = ({ children, large, ...props }: IProps) => {
         md: "768px",
         lg: "94vw",
       }}
-      px={{ xs: "15px", lg: large ? "30px" : "0", "2xl": large ? "60px" : "0" }}
+      px={{ xs: "12px", lg: large ? "30px" : "0", "2xl": large ? "60px" : "0" }}
       {...props}
     >
       {children}

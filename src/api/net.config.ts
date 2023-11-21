@@ -6,6 +6,7 @@ import {
   ChainID,
   TOKENS_ID,
   eldarSftCollection,
+  swapTopTokens,
 } from "../config";
 
 export const toknesID = TOKENS_ID;
@@ -14,4 +15,5 @@ export const contractAddr = contractAddress;
 export const gasLimit = GAS_LIMIT;
 export const ChainId = ChainID;
 export const EldarSftCollection = eldarSftCollection;
+export const SwapTopTokens = swapTopTokens;
 export { network };

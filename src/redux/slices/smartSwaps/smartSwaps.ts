@@ -41,7 +41,7 @@ const initialState: ISmartSwapState = {
     usdcWhitelisted: [],
     error: "",
   },
-  slippage: 1,
+  slippage: 0.5,
 };
 
 export const smartSwap = createSlice({

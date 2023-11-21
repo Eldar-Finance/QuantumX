@@ -1,0 +1,370 @@
+{
+    "buildInfo": {
+        "rustc": {
+            "version": "1.72.0-nightly",
+            "commitHash": "04075b32021932e3e8f6ab55d519b3b3494b6ef9",
+            "commitDate": "2023-06-22",
+            "channel": "Nightly",
+            "short": "rustc 1.72.0-nightly (04075b320 2023-06-22)"
+        },
+        "contractCrate": {
+            "name": "ashswap",
+            "version": "0.0.0"
+        },
+        "framework": {
+            "name": "multiversx-sc",
+            "version": "0.44.0"
+        }
+    },
+    "name": "AshSwap",
+    "constructor": {
+        "inputs": [
+            {
+                "name": "ashswap_address",
+                "type": "Address"
+            },
+            {
+                "name": "fee_percentage",
+                "type": "BigUint"
+            },
+            {
+                "name": "wegld_identifier",
+                "type": "TokenIdentifier"
+            }
+        ],
+        "outputs": []
+    },
+    "endpoints": [
+        {
+            "name": "swap",
+            "mutability": "mutable",
+            "payableInTokens": [
+                "*"
+            ],
+            "inputs": [
+                {
+                    "name": "steps",
+                    "type": "List<AggregatorStep>"
+                },
+                {
+                    "name": "limits",
+                    "type": "List<TokenAmount>"
+                },
+                {
+                    "name": "egld_return",
+                    "type": "bool"
+                },
+                {
+                    "name": "protocol",
+                    "type": "optional<Address>",
+                    "multi_arg": true
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "ashswapAddress",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "Address"
+                }
+            ]
+        },
+        {
+            "name": "feePercentage",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "wegldIdentifier",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "TokenIdentifier"
+                }
+            ]
+        },
+        {
+            "name": "isScPaused",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "bool"
+                }
+            ]
+        },
+        {
+            "name": "pauseSc",
+            "mutability": "mutable",
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "name": "resumeSc",
+            "mutability": "mutable",
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "name": "withdraw",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "token_identifier",
+                    "type": "EgldOrEsdtTokenIdentifier"
+                },
+                {
+                    "name": "token_nonce",
+                    "type": "u64"
+                },
+                {
+                    "name": "amount",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "receiver",
+                    "type": "Address"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "withOwnerRights",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<Address>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "addOwnerRights",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "addresses",
+                    "type": "variadic<Address>",
+                    "multi_arg": true
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "removeOwnerRights",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "addresses",
+                    "type": "variadic<Address>",
+                    "multi_arg": true
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "earners",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<Address>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "earnerName",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "address",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "bytes"
+                }
+            ]
+        },
+        {
+            "name": "earnerPercentage",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "address",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "maxPercentage",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "earnersTotalPercentage",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "addEarner",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "address",
+                    "type": "Address"
+                },
+                {
+                    "name": "name",
+                    "type": "bytes"
+                },
+                {
+                    "name": "percentage",
+                    "type": "BigUint"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "removeEarner",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "address",
+                    "type": "Address"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "getEarnersInfo",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<tuple<bytes,Address,BigUint>>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "setAshswapAddress",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "address",
+                    "type": "Address"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "setFeePercentage",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "percentage",
+                    "type": "BigUint"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "setWegldIdentifier",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "identifier",
+                    "type": "TokenIdentifier"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "view",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": []
+        }
+    ],
+    "events": [],
+    "esdtAttributes": [],
+    "hasCallback": false,
+    "types": {
+        "AggregatorStep": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "token_in",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "token_out",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "amount_in",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "pool_address",
+                    "type": "Address"
+                },
+                {
+                    "name": "function_name",
+                    "type": "bytes"
+                },
+                {
+                    "name": "arguments",
+                    "type": "List<bytes>"
+                }
+            ]
+        },
+        "TokenAmount": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "token",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "amount",
+                    "type": "BigUint"
+                }
+            ]
+        }
+    }
+}

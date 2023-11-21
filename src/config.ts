@@ -32,6 +32,7 @@ export const contractAddress = {
   proteoElite: "erd1qqqqqqqqqqqqqpgq2ntt20af2emxtyy9g7uzsusr3zf5zknn64qsxjqggw",
   jexSawp: "erd1qqqqqqqqqqqqqpgqawkm2tlyyz6vtg02fcr5w02dyejp8yrw0y8qlucnj2",
   wrapEgld: "erd1qqqqqqqqqqqqqpgqvc7gdl0p4s97guh498wgz75k8sav6sjfjlwqh679jy",
+  wrapEgldShar0: "erd1qqqqqqqqqqqqqpgqvc7gdl0p4s97guh498wgz75k8sav6sjfjlwqh679jy",
   wrapEgldShar1:
     "erd1qqqqqqqqqqqqqpgqhe8t5jewej70zupmh44jurgn29psua5l2jps3ntjj3",
   wrapEgldShar2:
@@ -65,6 +66,8 @@ export const contractAddress = {
     "erd1qqqqqqqqqqqqqpgqnedra5da464rkcektgzyv0qxcgqgyh26znyq8q4phx",
   cyberWegkdElite:
     "erd1qqqqqqqqqqqqqpgqvvn3s8ndrxqu6ndgnvsfp4sx9wgtv9z2znyqrfyhsf",
+  ashswap:
+    "erd1qqqqqqqqqqqqqpgqfpxvzz7s3ws2at75g8lz92r4z5r24gl4u7zsz63spm"
 };
 export const gatewayAddress = "https://gateway.multiversx.com/";
 
@@ -139,9 +142,12 @@ export const TOKENS_ID = {
   nfttoken: "NFT-e08b3e",
   wbtc: "WBTC-5349b3",
   weth: "WETH-b4ca29",
-  htm: "HTM-f51d55"
+  htm: "HTM-f51d55",
+  ash: "ASH-a642d1"
 };
 
+export const swapTopTokens = [ TOKENS_ID.egld, TOKENS_ID.wegld, TOKENS_ID.usdc,
+  TOKENS_ID.htm, TOKENS_ID.crt, TOKENS_ID.ash, TOKENS_ID.rare ];
 //general configs
 export const walletConnectV2ProjectId = "6bec64742092caa5f1b382312bb17be2";
 export const apiTimeout = 6000;

@@ -1,13 +1,14 @@
-import { Stack } from "@chakra-ui/react";
+import { HStack, Stack, VStack } from "@chakra-ui/react";
 import Slippage from "./Slippge/Slippage";
 import SwapRoute from "./SwapRoute/SwapRoute";
+import { SorSwapResponse } from "@ashswap/ash-sdk-js/out";
 
-const SwapDetails = () => {
+const SwapDetails = ({ swapPaths }: { swapPaths?: SorSwapResponse }) => {
   return (
-    <Stack w="full" spacing={"10px"} mt="20px">
-      <SwapRoute />
-      <Slippage />
-    </Stack>
+    <VStack w="full" mt="10px" fontSize={"10px"} bg={"black.base"} gap={3} p={3} borderRadius={"20px"}>
+      <Slippage swapPaths={swapPaths}/>
+      <SwapRoute swapPaths={swapPaths}/>
+    </VStack>
   );
 };
 
