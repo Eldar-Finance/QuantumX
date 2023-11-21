@@ -133,10 +133,10 @@ const Swap = () => {
           >
             Powered by 
           </Text>
-          <Link
+          {/* <Link
             href="https://app.ashswap.io/swap/"
             isExternal
-          >
+          > */}
             <Image
               alt='ash'
               src="https://app.ashswap.io/logo.png"
@@ -145,7 +145,7 @@ const Swap = () => {
               mt={-2}
               ignoreFallback
             />
-          </Link>
+          {/* </Link> */}
         </Flex>
       </MyContainer>
     </Layout>
