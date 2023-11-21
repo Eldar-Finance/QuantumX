@@ -10,14 +10,14 @@ import useSWR from "swr";
 
 const useGetAccountTokens = (identifiers: string[]) => {
   const address = useSelector(selectUserAddress);
-  const {
+  let {
     data: elrondTokenData,
     error: elrondTokenError,
     isLoading: elrondTokenLoading,
   } = useSWR(
     address !== "" && identifiers.length > 0
       ? [address, identifiers]
-      : null,
+      : ["", []],
       fetchAccountTokensByIds,
     {
       onErrorRetry: (error, key, config, revalidate, { retryCount }) => {
@@ -45,18 +45,23 @@ const useGetAccountTokens = (identifiers: string[]) => {
   //   address !== "" && identifiers.includes("EGLD") ? address : null,
   //   getEgldBalance
   // );
+  // console.log("⚠️ ~ file: useGetAccountTokens.ts:45 ~ egldData:", egldData)
 
-  // const data =
-  //   identifiers.includes("EGLD")
-  //     ? {
-  //         identifier: "EGLD",
-  //         nonce: 0,
-  //         name: null,
-  //         balance: "0",
-  //         decimals: 18,
-  //         ...egldData,
-  //       }
-  //     : elrondTokenData;
+  // const data = identifiers.includes("EGLD")
+  //   ? {
+  //       identifier: "EGLD",
+  //       nonce: 0,
+  //       name: null,
+  //       balance: "0",
+  //       decimals: 18,
+  //       ...egldData,
+  //     }
+  //   : elrondTokenData;
+
+  // // const finalData = [...elrondTokenData, data];
+  // elrondTokenData.push(data);
+
+  // console.log("⚠️ ~ file: useGetAccountTokens.ts:69 ~ finalData:", finalData)
 
   return {
     accountTokens: elrondTokenData,

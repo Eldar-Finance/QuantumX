@@ -6,11 +6,12 @@ const TokenList = ({
   tokens,
   showIdent = false,
   showBalance = false,
-  hoverBg = "",
+  hoverBg = "black.baseDark",
 }) => {
   if (!tokens) {
     return null;
   }
+
   return (
     <Box width={"full"} maxHeight={"320px"} overflow={"auto"}>
       {tokens.map((token) => (

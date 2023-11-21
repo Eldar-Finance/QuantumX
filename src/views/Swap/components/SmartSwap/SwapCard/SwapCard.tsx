@@ -256,7 +256,7 @@ const SwapCard = () => {
   // NEW SWAP DATA
   //
   const [swapPaths, setSwapPaths] = useState(null);
-  console.log("⚠️ ~ file: SwapCard.tsx:192 ~ swapPaths:", swapPaths)
+  // console.log("⚠️ ~ file: SwapCard.tsx:192 ~ swapPaths:", swapPaths)
 
   useEffect(() => {
     const handleCalculateNewSwapData = () => {
@@ -288,7 +288,7 @@ const SwapCard = () => {
   // INTERACTION DATA
   //
   const [interaction, setInteraction] = useState(null);
-  console.log("⚠️ ~ file: SwapCard.tsx:223 ~ interaction:", interaction)
+  // console.log("⚠️ ~ file: SwapCard.tsx:223 ~ interaction:", interaction)
   useEffect(() => {
     const handleCreateInteractionFromSwapData = () => {
       ashSwapAggregator.aggregateFromPaths(swapPaths, slipapge*100).then((i) => {

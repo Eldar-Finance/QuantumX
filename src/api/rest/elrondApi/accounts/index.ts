@@ -25,6 +25,7 @@ export const fetchAccountTokensByIds = async ([address, identifiers]: [
   string,
   string[]
 ]): Promise<IElrondAccountToken[]> => {
+
   const res = await axiosEldron.get<IElrondAccountToken[]>(
     `/accounts/${address}/tokens?identifiers=${identifiers.join("%2C")}`
   );
