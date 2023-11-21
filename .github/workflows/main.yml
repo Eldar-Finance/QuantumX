@@ -13,15 +13,7 @@ jobs:
           token: 6165290967:AAF3iJDXIBwpQ6BrCOWdE0AhfRLHZKN1RDA
           message: |
             Commit by:   ${{github.actor}}
-<<<<<<< HEAD
-<<<<<<< HEAD
-            On repo:       qx
-=======
             On repo:       Qx
->>>>>>> main
-=======
-            On repo:       qx
->>>>>>> devnet
             On branch:   ${{github.ref_name}}
             Message:      ${{github.event.commits[0].message}}
 
