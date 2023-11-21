@@ -78,7 +78,7 @@ const CoinTab2 = () => {
           <ListItem key={index} pb={2} mb={2}>
             <Flex alignItems="center" justifyContent="space-between">
               <Flex alignItems="center">
-                <Box mr={3}>{token.assets.img}</Box>
+                {/* <Box mr={3}>{token.assets.img}</Box> */}
                 <Text fontSize={"xs"} fontWeight="bold">{token.name}</Text>
               </Flex>
               <Text marginRight="10px">{token.tokenBalance}</Text>

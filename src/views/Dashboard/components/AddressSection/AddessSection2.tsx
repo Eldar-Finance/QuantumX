@@ -18,6 +18,11 @@ const AddressSection2 = () => {
   <img
     src={`https://id.maiar.com/users/photos/profile/${address}`}
     alt="Profile"
+    onError={(e) => {
+      const target = e.target as HTMLImageElement;
+      target.onerror = null;
+      target.src = 'https://pbs.twimg.com/profile_images/1611302688699858946/Dbs4USUR_400x400.jpg'; // Replace with your default image URL
+    }}
     style={{
       width: '40px', // Small size, adjust as needed
       height: '40px', // Maintain aspect ratio
