@@ -1,6 +1,6 @@
 export const formatAddress = (
   address: string,
-  subStr1: number = 10,
+  subStr1: number = 7,
   subStr2: number = 6
 ): string => {
   const addr = address || "";

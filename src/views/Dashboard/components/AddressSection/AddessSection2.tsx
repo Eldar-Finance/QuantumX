@@ -13,7 +13,7 @@ const AddressSection2 = () => {
   display={"flex"}
   alignItems={"center"} // Align items vertically center
   justifyContent={"center"}
-  fontSize={"0.5em"}
+  fontSize={"0.7em"}
 >
   <img
     src={`https://id.maiar.com/users/photos/profile/${address}`}
