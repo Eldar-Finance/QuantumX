@@ -70,8 +70,12 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
               <Link href="/">
                 <NextImage src={logo} alt="QuantumX" width={100} />
               </Link>
-              <Flex alignItems="center" justifyContent="flex-end" flex="1">
-                <QTagButton/>
+              <Flex alignItems="center" justifyContent="flex-end" flex="1" gap={2}>
+                {isLoggedIn && <ActionButton
+                  h={{xs: "32px"}}
+                >
+                  <QTagButton w="fit" textColor={"black"}/>
+                </ActionButton>}
                 {!onlyConnectButton && (
                   <ActionButton
                     h={{xs: "32px"}}
@@ -97,50 +101,56 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
             <Link href={"/"}>
               <NextImage src={logo} alt="QuantumX" width={128} height={38} />
             </Link>
-            <Box ml="0px" />
+            {isLoggedIn && <Box ml="100px" />}
             <Box w="fit-content" m="auto" flex="1" display="flex" justifyContent="center">
               <Menu1 />
             </Box>
-            
-            
-
-
-
             <Box>
-      {isLoggedIn ? (
-        // Dropdown for the logged-in state
-        <Menu>
-          <MenuButton as={Button} rightIcon={<ChevronDownIcon />} variant="outline" border={'0px solid white'} size="lg"><AddressSection2 /></MenuButton>
-          <MenuList bg={"#242526"} minWidth="240px" width="auto" p={4}>
-          <Box alignContent={"center"}>
-         
-            <AddressSection3/>
-            <Divider marginBottom={"10px"} paddingTop={"10px"}/>
-           
-          </Box>
-          <Box> <CoinTab2/></Box>
-           
-            <QTagButton/>
-            <Box as="button" display="flex" alignItems="center" onClick={handleLogout} width="100%" textAlign="left" paddingY="2">
-            <Box as={FiLogOut} mr={2} />
-            <Text>Disconnect</Text>
-          </Box>
-          </MenuList>
-        </Menu>
-      ) : (
-        // Regular button for the logged-out state
-        <Button
-          onClick={handleConnect}
-          size="lg"
-        >
-          Connect
-        </Button>
-      )}
-    </Box>
-
-
-
-
+              {isLoggedIn ? (
+                // Dropdown for the logged-in state
+                <Menu>
+                  <MenuButton
+                    as={Button}
+                    rightIcon={<ChevronDownIcon />}
+                    size="md"
+                    bg={"black.baseDark"}
+                    color={"white"}
+                    px={5}
+                    py={6}
+                    gap={5}
+                    alignItems={"center"}
+                    borderRadius={"full"}
+                    position="relative"
+                    fontSize={{ xs: "sm", md: "inherit" }}
+                  >
+                    <AddressSection2 />
+                  </MenuButton>
+                  <MenuList bg={"#242526"} minWidth="240px" width="auto" p={4}>
+                    <Box alignContent={"center"}>
+                      <AddressSection3/>
+                      <Divider marginBottom={"10px"} paddingTop={"10px"}/>
+                    </Box>
+                    <Box>
+                      <CoinTab2/>
+                    </Box>
+                    <QTagButton/>
+                    <Box as="button" display="flex" alignItems="center" onClick={handleLogout} width="100%" textAlign="left" paddingY="2">
+                      <Box as={FiLogOut} mr={2} />
+                      <Text>Disconnect</Text>
+                    </Box>
+                  </MenuList>
+                </Menu>
+              ) : (
+                // Regular button for the logged-out state
+                <ActionButton
+                  onClick={handleConnect}
+                  px={5}
+                  // size="md"
+                >
+                  Connect
+                </ActionButton>
+              )}
+            </Box>
           </Flex>
         )}
       </MyContainer>
