@@ -237,25 +237,6 @@
             ]
         },
         {
-            "name": "earnerHasEarned",
-            "mutability": "readonly",
-            "inputs": [
-                {
-                    "name": "address",
-                    "type": "Address"
-                },
-                {
-                    "name": "token",
-                    "type": "EgldOrEsdtTokenIdentifier"
-                }
-            ],
-            "outputs": [
-                {
-                    "type": "BigUint"
-                }
-            ]
-        },
-        {
             "name": "addEarner",
             "mutability": "mutable",
             "inputs": [
@@ -295,28 +276,6 @@
                     "multi_result": true
                 }
             ]
-        },
-        {
-            "name": "useEvents",
-            "mutability": "readonly",
-            "inputs": [],
-            "outputs": [
-                {
-                    "type": "bool"
-                }
-            ]
-        },
-        {
-            "name": "setUseEvents",
-            "onlyOwner": true,
-            "mutability": "mutable",
-            "inputs": [
-                {
-                    "name": "val",
-                    "type": "bool"
-                }
-            ],
-            "outputs": []
         },
         {
             "name": "setAshswapAddress",
