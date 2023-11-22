@@ -64,35 +64,44 @@ const NFTLiquidityInterface = () => {
   };    
 
   return (
-    <><Box flex={"row"} width={"450px"} mb={"10px"}
-          p={"10px"} pb={"10px"} px={4} borderRadius={"20px"}
-          position={"relative"} bg="secondary" fontSize={{ xs: "sm", md: "16px" }}>
-
-          {/* Flex container for selected NFT and button */}
-          <Flex justifyContent={selectedNFT ? "space-between" : "center"} alignItems="center" width="full">
-              {/* Display the selected NFT details */}
-              {selectedNFT && (
-                  <Box 
-                  display="flex" 
-                  flexDirection="column" 
-                  alignItems="center" 
-                  justifyContent="center" 
-                  textAlign="center"
-                >
-                  <Image borderRadius={"25px"} src={selectedNFT.url} width="120px" alt={selectedNFT.name} />
-                  <Text>{selectedNFT.name}</Text>
-                  <Text>Rank: {selectedNFT.rank}</Text>
-                </Box>
-
-              )}
-              <Button onClick={handleOpenModal}>Select NFT</Button>
-          </Flex>
-          {/* NFT Selection Modal */}
-          <NFTModal
-              isOpen={isModalOpen}
-              onClose={handleCloseModal}
-              onNftSelect={handleNftSelect} />
-      </Box>
+    <><Box 
+    flex={"row"} 
+    width={{ base: "100%", md: "450px" }}  // Set width to 100%
+    maxWidth={"450px"} // Set maximum width to 450px
+    mb={"10px"}
+    p={"10px"} 
+    pb={"10px"} 
+    px={4} 
+    borderRadius={"20px"}
+    position={"relative"} 
+    bg="secondary" 
+    fontSize={{ xs: "sm", md: "16px" }}
+  >
+    {/* Flex container for selected NFT and button */}
+    <Flex justifyContent={selectedNFT ? "space-between" : "center"} alignItems="center" width="full">
+        {/* Display the selected NFT details */}
+        {selectedNFT && (
+            <Box 
+              display="flex" 
+              flexDirection="column" 
+              alignItems="center" 
+              justifyContent="center" 
+              textAlign="center"
+            >
+              <Image borderRadius={"25px"} src={selectedNFT.url} width="120px" alt={selectedNFT.name} />
+              <Text>{selectedNFT.name}</Text>
+              <Text>Rank: {selectedNFT.rank}</Text>
+            </Box>
+        )}
+        <Button onClick={handleOpenModal}>Select NFT</Button>
+    </Flex>
+    {/* NFT Selection Modal */}
+    <NFTModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        onNftSelect={handleNftSelect} />
+  </Box>
+  
       {selectedNFT && (
           <><Box
           maxWidth={"450px"} mb={"10px"}
