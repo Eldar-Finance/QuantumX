@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box, List, ListItem, Flex, Text } from '@chakra-ui/react';
+import { Box, List, ListItem, Flex, Text , Image } from '@chakra-ui/react';
 import { selectUserAddress, selectEgldBalance, selectUserAccountData } from "redux/slices/userAcount/account-slice";
 import { fetchEgld, fetchTokens } from "redux/slices/userAcount/funcs";
 import { useAppDispatch, useAppSelector } from "utils/hooks/redux";
@@ -78,7 +78,24 @@ const CoinTab2 = () => {
           <ListItem key={index} pb={2} mb={2}>
             <Flex alignItems="center" justifyContent="space-between">
               <Flex alignItems="center">
-                {/* <Box mr={3}>{token.assets.img}</Box> */}
+              <Box
+              sx={{
+                borderRadius: "1.5rem",
+                width: "24px",
+                height: "24px",
+                marginRight: 2,
+                boxShadow: "rgb(255 255 255 / 8%) 0px 6px 10px",
+              }}
+            >
+              {token.assets?.img ? (
+                token.assets?.img
+              ) : (
+                <Image
+                  src={token.assets?.svgUrl || token.assets?.static.src || ""}
+                  alt={token.assets?.description || ""}
+                />
+              )}
+            </Box>
                 <Text fontSize={"xs"} fontWeight="bold">{token.name}</Text>
               </Flex>
               <Text marginRight="10px">{token.tokenBalance}</Text>
