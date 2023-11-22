@@ -8,7 +8,7 @@ import { SwapToken } from '../components/SmartSwap/SwapCard/SwapCard';
 import ActionButton from 'components/ActionButton/ActionButton';
 import { NFTLiquidSell } from 'api/sc/calls';
 
-const NFTLiquidityInterface = () => {
+const NFTLiquidityInterface = ({...props}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedNFT, setSelectedNFT] = useState(null);
   const [royalties, setRoyalties] = useState(null); 
@@ -64,21 +64,22 @@ const NFTLiquidityInterface = () => {
   };    
 
   return (
-    <><Box 
-    flex={"row"} 
-    width={{ base: "100%", md: "450px" }}  // Set width to 100%
-    maxWidth={"450px"} // Set maximum width to 450px
-    mb={"10px"}
-    p={"10px"} 
-    pb={"10px"} 
-    px={4} 
-    borderRadius={"20px"}
-    position={"relative"} 
-    bg="secondary" 
-    fontSize={{ xs: "sm", md: "16px" }}
-  >
-    {/* Flex container for selected NFT and button */}
-    <Flex justifyContent={selectedNFT ? "space-between" : "center"} alignItems="center" width="full">
+    <Box w={"full"}>
+      <Box 
+        flex={"row"} 
+        width={"full"}  // Set width to 100%
+        mb={"10px"}
+        p={"10px"} 
+        pb={"10px"} 
+        px={4} 
+        borderRadius={"20px"}
+        position={"relative"} 
+        bg="secondary" 
+        fontSize={{ xs: "sm", md: "16px" }}
+        {...props}
+      >
+      {/* Flex container for selected NFT and button */}
+      <Flex justifyContent={selectedNFT ? "space-between" : "center"} alignItems="center" width="full">
         {/* Display the selected NFT details */}
         {selectedNFT && (
             <Box 
@@ -94,16 +95,16 @@ const NFTLiquidityInterface = () => {
             </Box>
         )}
         <Button onClick={handleOpenModal}>Select NFT</Button>
-    </Flex>
+      </Flex>
     {/* NFT Selection Modal */}
     <NFTModal
         isOpen={isModalOpen}
         onClose={handleCloseModal}
         onNftSelect={handleNftSelect} />
-  </Box>
-  
-      {selectedNFT && (
-          <><Box
+    </Box>
+    {selectedNFT && (
+      <>
+        <Box
           maxWidth={"450px"} mb={"10px"}
           p={"10px"} pb={"10px"} px={4} borderRadius={"20px"}
           position={"relative"} bg="secondary" fontSize={{ xs: "sm", md: "16px" }}
@@ -115,32 +116,32 @@ const NFTLiquidityInterface = () => {
             <Divider borderColor="gray.600" />
             <Text> After sale you will get <Text as="span" float="right"> {selectedNFT.price.toFixed(4) - selectedNFT.price.toFixed(4) * 0.1 - selectedNFT.price.toFixed(4) * 0.01} EGLD </Text> </Text>
           </VStack>
-        </Box><Box>
-            <Center mt="4">
-              <ActionButton
-                bg={"linear-gradient(315deg, #FF005C 50%, #22F6DC 50% 100%);"}
-                filter={"brightness(90%)"}
-                color="black"
-                py="17px"
-                width="100%"
-                alignContent="center"
-                fontWeight={"900"}
-                fontSize={"1.2em"}
-                style={{ margin: 'auto', marginTop: '20px' }}
-                height={"auto"}
-                variant={"solid"}
-                borderRadius={"12px"}
-                padding={"20px"}
-                onClick={() => handleSwapNft(selectedNFT)}
-              >
-                Sell Now
-              </ActionButton>
-            </Center>
-          </Box></>
-          )}
-      
+        </Box>
+        <Box>
+          <Center mt="4">
+            <ActionButton
+              bg={"linear-gradient(315deg, #FF005C 50%, #22F6DC 50% 100%);"}
+              filter={"brightness(90%)"}
+              color="black"
+              py="17px"
+              width="100%"
+              alignContent="center"
+              fontWeight={"900"}
+              fontSize={"1.2em"}
+              style={{ margin: 'auto', marginTop: '20px' }}
+              height={"auto"}
+              variant={"solid"}
+              borderRadius={"12px"}
+              padding={"20px"}
+              onClick={() => handleSwapNft(selectedNFT)}
+            >
+              Sell Now
+            </ActionButton>
+          </Center>
+        </Box>
       </>
-    
+      )}
+    </Box>
   );
 };
 

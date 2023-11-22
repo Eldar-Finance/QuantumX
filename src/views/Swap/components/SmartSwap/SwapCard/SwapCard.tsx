@@ -1,4 +1,4 @@
-import { Box, Center, Flex, Heading, IconButton, Text, useEditable } from "@chakra-ui/react";
+import { Box, BoxProps, Center, Flex, FlexProps, Heading, IconButton, Text, useEditable } from "@chakra-ui/react";
 
 import SwapButton from "../SwapButton/SwapButton";
 import TextField from "../TextField/TextField";
@@ -7,7 +7,7 @@ import BigNumber from "bignumber.js";
 import { ExchangeIcon } from "components/Icons/ui";
 import { ArrowUpDownIcon } from "@chakra-ui/icons";
 import { useRouter } from "next/dist/client/router";
-import { use, useEffect, useMemo } from "react";
+import { PropsWithChildren, use, useEffect, useMemo } from "react";
 import { FetchWhitelistedTokens } from "redux/slices/smartSwaps/funcs";
 import {
   selectSlippage,
@@ -52,7 +52,7 @@ export interface SwapToken {
   value?: string;
 }
 
-const SwapCard = ({setGraphTokens} : {setGraphTokens: any }) => {
+const SwapCard = ({setGraphTokens, setIsNftSwap} : {setGraphTokens: any, setIsNftSwap: any}) => {
   const userAddress = store.getState().userAccount.connectedAddress;
   const [receiverAddress, setReiceverAddress] = useState(null);
   const router = useRouter();
@@ -358,19 +358,22 @@ const SwapCard = ({setGraphTokens} : {setGraphTokens: any }) => {
 
   return (
     <Flex
-      width={"full"}
-      flexDir={"column"}
-      justifyContent={"flex-start"}
-      alignItems={"left"}
+      width="100%" // Set the width to 100% to make it full width
+      flexDir="column"
+      justifyContent="flex-start"
+      alignItems="left"
     >
-      <Flex  mb={1} ml={5}>
+      <Flex width="100%" mb={1} ml={5} gap={2} zIndex={10} w={"full"}>
         <Heading
           as="h1"
           fontSize={"m"}
           fontWeight={"bold"}
           cursor={"pointer"}
           color={isNFTLiquidityActive ? "gray" : "highlighted"} // Replace with your active style
-          onClick={() => setIsNFTLiquidityActive(false)}
+          onClick={() => {
+            setIsNFTLiquidityActive(false)
+            setIsNftSwap(false)
+          }}
         >
           Swap
         </Heading>
@@ -380,13 +383,16 @@ const SwapCard = ({setGraphTokens} : {setGraphTokens: any }) => {
           fontWeight={"bold"}
           cursor={"pointer"}
           color={!isNFTLiquidityActive ? "gray" : "highlighted"} // Replace with your active style
-          onClick={() => setIsNFTLiquidityActive(true)}
+          onClick={() => {
+            setIsNFTLiquidityActive(true)
+            setIsNftSwap(true)
+          }}
         >
           NFT Swap
         </Heading>
       </Flex>
       <Box
-        maxWidth={"500px"}
+        // maxWidth={"500px"}
         width={"full"}
         mb={0}
         borderRadius="30px"
