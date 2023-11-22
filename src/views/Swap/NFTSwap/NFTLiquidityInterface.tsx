@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Image, Text, Box, Flex, Center, VStack, Divider } from '@chakra-ui/react';
+import { Button, Image, Text, Box, Flex, Center, VStack, Divider, HStack } from '@chakra-ui/react';
 import NFTModal from './NFTModal'; // Adjust the path if necessary
 import TextField from '../components/SmartSwap/TextField/TextField';
 import { updateURLParams } from 'utils/functions/routes';
@@ -64,84 +64,87 @@ const NFTLiquidityInterface = ({...props}) => {
   };    
 
   return (
-    <Box w={"full"}>
-      <Box 
-        flex={"row"} 
+    <VStack gap={10}>
+      <HStack 
         width={"full"}  // Set width to 100%
-        mb={"10px"}
-        p={"10px"} 
-        pb={"10px"} 
-        px={4} 
+        py={5}
+        px={45} 
         borderRadius={"20px"}
         position={"relative"} 
-        bg="secondary" 
-        fontSize={{ xs: "sm", md: "16px" }}
+        bg="black.base" 
+        justifyContent={selectedNFT ? "space-between" : "center"}
+        alignItems="center"
         {...props}
       >
-      {/* Flex container for selected NFT and button */}
-      <Flex justifyContent={selectedNFT ? "space-between" : "center"} alignItems="center" width="full">
-        {/* Display the selected NFT details */}
         {selectedNFT && (
-            <Box 
-              display="flex" 
-              flexDirection="column" 
-              alignItems="center" 
-              justifyContent="center" 
-              textAlign="center"
-            >
-              <Image borderRadius={"25px"} src={selectedNFT.url} width="120px" alt={selectedNFT.name} />
-              <Text>{selectedNFT.name}</Text>
-              <Text>Rank: {selectedNFT.rank}</Text>
-            </Box>
+          <Box 
+            display="flex" 
+            flexDirection="column" 
+            alignItems="center" 
+            justifyContent="center" 
+            textAlign="center"
+          >
+            <Image borderRadius={"25px"} src={selectedNFT.url} width="120px" alt={selectedNFT.name} />
+            <Text>{selectedNFT.name}</Text>
+            <Text>Rank: {selectedNFT.rank}</Text>
+          </Box>
         )}
-        <Button onClick={handleOpenModal}>Select NFT</Button>
-      </Flex>
-    {/* NFT Selection Modal */}
-    <NFTModal
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-        onNftSelect={handleNftSelect} />
-    </Box>
-    {selectedNFT && (
-      <>
-        <Box
-          maxWidth={"450px"} mb={"10px"}
-          p={"10px"} pb={"10px"} px={4} borderRadius={"20px"}
-          position={"relative"} bg="secondary" fontSize={{ xs: "sm", md: "16px" }}
+        <ActionButton onClick={handleOpenModal}>Select NFT</ActionButton>
+        <NFTModal
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          onNftSelect={handleNftSelect}
+        />
+      </HStack>
+      {selectedNFT && (
+        <VStack
+          width={"full"}  // Set width to 100%
+          py={5}
+          borderRadius={"20px"}
+          position={"relative"} 
+          bg="black.base" 
+          justifyContent={selectedNFT ? "space-between" : "center"}
+          alignItems="center"
+          {...props}
         >
-          <VStack spacing={4} align="stretch">
-            <Text> Your Sell Now <Text as="span" float="right"> {selectedNFT.price.toFixed(4)} EGLD </Text> </Text>
-            <Text> XOXNO fee (1%) <Text as="span" float="right"> {selectedNFT.price.toFixed(4) * 0.01} EGLD </Text> </Text>
-            <Text> Creator Royalties ({royalties}%) <Text as="span" float="right"> {selectedNFT.price.toFixed(4) * (royalties / 100)}  EGLD </Text> </Text>
-            <Divider borderColor="gray.600" />
-            <Text> After sale you will get <Text as="span" float="right"> {selectedNFT.price.toFixed(4) - selectedNFT.price.toFixed(4) * 0.1 - selectedNFT.price.toFixed(4) * 0.01} EGLD </Text> </Text>
-          </VStack>
-        </Box>
-        <Box>
-          <Center mt="4">
-            <ActionButton
-              bg={"linear-gradient(315deg, #FF005C 50%, #22F6DC 50% 100%);"}
-              filter={"brightness(90%)"}
-              color="black"
-              py="17px"
-              width="100%"
-              alignContent="center"
-              fontWeight={"900"}
-              fontSize={"1.2em"}
-              style={{ margin: 'auto', marginTop: '20px' }}
-              height={"auto"}
-              variant={"solid"}
-              borderRadius={"12px"}
-              padding={"20px"}
-              onClick={() => handleSwapNft(selectedNFT)}
-            >
-              Sell Now
-            </ActionButton>
-          </Center>
-        </Box>
-      </>
+          <Box
+            // maxWidth={"450px"} mb={"10px"}
+            p={"10px"} pb={"10px"} px={4} borderRadius={"20px"}
+            position={"relative"}  fontSize={{ xs: "sm", md: "16px" }}
+          >
+            <VStack spacing={4} align="stretch">
+              <Text> Your Sell Now <Text as="span" float="right"> {selectedNFT.price.toFixed(4)} EGLD </Text> </Text>
+              <Text> XOXNO fee (1%) <Text as="span" float="right"> {selectedNFT.price.toFixed(4) * 0.01} EGLD </Text> </Text>
+              <Text> Creator Royalties ({royalties}%) <Text as="span" float="right"> {selectedNFT.price.toFixed(4) * (royalties / 100)}  EGLD </Text> </Text>
+              <Divider borderColor="gray.600" />
+              <Text> After sale you will get <Text as="span" float="right"> {selectedNFT.price.toFixed(4) - selectedNFT.price.toFixed(4) * 0.1 - selectedNFT.price.toFixed(4) * 0.01} EGLD </Text> </Text>
+            </VStack>
+          </Box>
+          <Box>
+            <Center mt="4">
+              <ActionButton
+                bg={"linear-gradient(315deg, #FF005C 50%, #22F6DC 50% 100%);"}
+                filter={"brightness(90%)"}
+                color="black"
+                py="17px"
+                width="100%"
+                alignContent="center"
+                fontWeight={"900"}
+                fontSize={"1.2em"}
+                style={{ margin: 'auto', marginTop: '20px' }}
+                height={"auto"}
+                variant={"solid"}
+                borderRadius={"12px"}
+                padding={"20px"}
+                onClick={() => handleSwapNft(selectedNFT)}
+              >
+                Sell Now
+              </ActionButton>
+            </Center>
+          </Box>
+        </VStack>
       )}
-    </Box>
+    </VStack>
   );
 };
 
