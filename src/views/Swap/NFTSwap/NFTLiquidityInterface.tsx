@@ -5,6 +5,8 @@ import TextField from '../components/SmartSwap/TextField/TextField';
 import { updateURLParams } from 'utils/functions/routes';
 import { toknesID } from 'api/net.config';
 import { SwapToken } from '../components/SmartSwap/SwapCard/SwapCard';
+import ActionButton from 'components/ActionButton/ActionButton';
+import { NFTLiquidSell } from 'api/sc/calls';
 
 const NFTLiquidityInterface = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -55,6 +57,12 @@ const NFTLiquidityInterface = () => {
     });
   };
 
+  const handleSwapNft = async (nft) => {
+    console.log("⚠️ ~ file: NFTLiquidityInterface.tsx:60 ~ nft:", nft, nft.collection, nft.nonce, nft.offerId)
+    if (!nft.colllection || !nft.nonce || !nft.offerId) {
+      NFTLiquidSell(nft.collection, nft.nonce, nft.offerId);
+    }
+  };    
 
   return (
     <><Box flex={"row"} width={"450px"} mb={"10px"}
@@ -80,15 +88,12 @@ const NFTLiquidityInterface = () => {
               )}
               <Button onClick={handleOpenModal}>Select NFT</Button>
           </Flex>
-
-
           {/* NFT Selection Modal */}
           <NFTModal
               isOpen={isModalOpen}
               onClose={handleCloseModal}
               onNftSelect={handleNftSelect} />
       </Box>
-      
       {selectedNFT && (
           <><Box
           maxWidth={"450px"} mb={"10px"}
@@ -104,19 +109,24 @@ const NFTLiquidityInterface = () => {
           </VStack>
         </Box><Box>
             <Center mt="4">
-              <Button
+              <ActionButton
                 bg={"linear-gradient(315deg, #FF005C 50%, #22F6DC 50% 100%);"}
                 filter={"brightness(90%)"}
                 color="black"
-                py="20px"
+                py="17px"
                 width="100%"
                 alignContent="center"
                 fontWeight={"900"}
                 fontSize={"1.2em"}
                 style={{ margin: 'auto', marginTop: '20px' }}
+                height={"auto"}
+                variant={"solid"}
+                borderRadius={"12px"}
+                padding={"20px"}
+                onClick={() => handleSwapNft(selectedNFT)}
               >
                 Sell Now
-              </Button>
+              </ActionButton>
             </Center>
           </Box></>
           )}

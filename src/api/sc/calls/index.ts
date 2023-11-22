@@ -751,3 +751,34 @@ export const MultipleHarvestCalls = async (
 
   return await sendMultipleTransactions({ txs: transactions });
 };
+
+export const NFTLiquidSell = async (
+  collectionIdentifier: string,
+  nftNonce: number,
+  offerId: number,
+  gasLimit: number = 30000000,
+) => {
+  try {
+    const sender = store.getState().userAccount.connectedAddress;
+    const senderAddress = new Address(sender);
+  
+    const args = [new BigUIntValue(offerId)];
+    const contract = new SmartContract({ address: new Address(contractAddr.xoxnoLiquidSell)});
+    let interaction = new Interaction(contract, new ContractFunction("acceptGlobalOffer"), args);
+  
+    let tx = interaction
+      .withSender(senderAddress)
+      .useThenIncrementNonceOf(new Account(senderAddress))
+      .withSingleESDTNFTTransfer(TokenTransfer.nonFungible(collectionIdentifier, nftNonce))
+      .withExplicitReceiver(senderAddress)
+      .withGasLimit(gasLimit)
+      .withChainID(ChainId)
+      .buildTransaction();
+  
+    let transactionInput = { tx: tx };
+  
+    return await sendTransaction(transactionInput);
+  } catch (error) {
+    console.log("error", error);
+  }
+};

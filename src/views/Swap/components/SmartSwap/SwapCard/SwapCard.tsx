@@ -385,10 +385,6 @@ const SwapCard = ({setGraphTokens} : {setGraphTokens: any }) => {
           NFT Swap
         </Heading>
       </Flex>
-
-
-
-
       <Box
         maxWidth={"500px"}
         width={"full"}
@@ -399,7 +395,7 @@ const SwapCard = ({setGraphTokens} : {setGraphTokens: any }) => {
       >
         {isNFTLiquidityActive ? (
         // The new NFT 2 Liquidity interface goes here
-        <NFTLiquidityInterface></NFTLiquidityInterface>
+        <NFTLiquidityInterface/>
       ) : (
         <Box>
           <Flex flexDir={"column"} width={"full"}>
