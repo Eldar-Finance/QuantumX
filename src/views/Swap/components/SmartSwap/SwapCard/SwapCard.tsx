@@ -369,7 +369,7 @@ const SwapCard = ({setGraphTokens} : {setGraphTokens: any }) => {
           fontSize={"m"}
           fontWeight={"bold"}
           cursor={"pointer"}
-          color={isNFTLiquidityActive ? "normal" : "highlighted"} // Replace with your active style
+          color={isNFTLiquidityActive ? "gray" : "highlighted"} // Replace with your active style
           onClick={() => setIsNFTLiquidityActive(false)}
         >
           Swap
@@ -379,7 +379,7 @@ const SwapCard = ({setGraphTokens} : {setGraphTokens: any }) => {
           fontSize={"m"}
           fontWeight={"bold"}
           cursor={"pointer"}
-          color={!isNFTLiquidityActive ? "normal" : "highlighted"} // Replace with your active style
+          color={!isNFTLiquidityActive ? "gray" : "highlighted"} // Replace with your active style
           onClick={() => setIsNFTLiquidityActive(true)}
         >
           NFT Swap

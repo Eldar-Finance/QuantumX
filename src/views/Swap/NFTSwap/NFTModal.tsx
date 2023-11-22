@@ -5,9 +5,7 @@ import {
   ModalContent, 
   ModalHeader, 
   ModalBody, 
-  ModalFooter, 
   ModalCloseButton, 
-  Button, 
   Image, 
   Grid, 
   Box, 
@@ -20,7 +18,6 @@ const NFTModal = ({ isOpen, onClose, onNftSelect }) => {
   const { nfts, isLoading: isNftsLoading, isError } = useGetUserNfts();
   const [filteredNfts, setFilteredNfts] = useState([]);
   const [isProcessing, setIsProcessing] = useState(false);
-  const [selectedNft, setSelectedNft] = useState(null);
 
   const checkNftOffers = async (nft) => {
     const query = {
@@ -68,20 +65,14 @@ const NFTModal = ({ isOpen, onClose, onNftSelect }) => {
   }, [nfts]);
 
   const handleNftClick = (nft) => {
-    setSelectedNft(nft);
-  };
-
-  const handleConfirmClick = () => {
-    if (selectedNft) {
-      onNftSelect(selectedNft);
-      onClose();
-    }
+    onNftSelect(nft);
+    onClose();
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} isCentered>
+    <Modal  isOpen={isOpen} onClose={onClose} isCentered>
       <ModalOverlay />
-      <ModalContent maxW="700px" maxH="80vh" overflowY="auto">
+      <ModalContent bg="secondary"  maxW="700px" maxH="80vh" overflowY="auto">
         <ModalHeader>Select an NFT</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
@@ -95,6 +86,11 @@ const NFTModal = ({ isOpen, onClose, onNftSelect }) => {
             <Grid templateColumns="repeat(3, 1fr)" gap={4}>
               {filteredNfts.map((nft) => (
                 <Box 
+                  display="flex" 
+                  flexDirection="column" 
+                  alignItems="center" 
+                  justifyContent="center" 
+                  textAlign="center"
                   key={nft.identifier} 
                   onClick={() => handleNftClick(nft)} 
                   cursor="pointer"
@@ -103,21 +99,15 @@ const NFTModal = ({ isOpen, onClose, onNftSelect }) => {
                   width="200px"
                   overflow="hidden"
                   p="2"
-                  textAlign="center"
                 >
-                  <Image src={nft.url} alt={nft.name} boxSize="90px" objectFit="cover" />
+                  <Image borderRadius={"25px"} src={nft.url} alt={nft.name} boxSize="90px" objectFit="cover" />
                   <Text mt="2">{nft.name}</Text>
-                  {nft.price && <Text mt="2">Price: {nft.price}</Text>}
+                  {nft.price && <Text mt="2">Price: {nft.price.toFixed(4)} EGLD</Text>}
                 </Box>
               ))}
             </Grid>
           )}
         </ModalBody>
-        <ModalFooter>
-          <Button onClick={handleConfirmClick} disabled={!selectedNft} colorScheme="blue">
-            Confirm Selection
-          </Button>
-        </ModalFooter>
       </ModalContent>
     </Modal>
   );

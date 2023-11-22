@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Image, Text, Box, Flex, Center } from '@chakra-ui/react';
+import { Button, Image, Text, Box, Flex, Center, VStack, Divider } from '@chakra-ui/react';
 import NFTModal from './NFTModal'; // Adjust the path if necessary
 import TextField from '../components/SmartSwap/TextField/TextField';
 import { updateURLParams } from 'utils/functions/routes';
@@ -48,23 +48,47 @@ const NFTLiquidityInterface = () => {
           <Flex justifyContent="space-between" alignItems="center">
               {/* Display the selected NFT details */}
               {selectedNFT && (
-                  <Box>
-                      <Image src={selectedNFT.url} width="120px" alt={selectedNFT.name} />
-                      <Text>{selectedNFT.name}</Text>
-                      <Text>{selectedNFT.description}</Text>
-                      {selectedNFT.price && <Text>Price: {selectedNFT.price.toFixed(4)} EGLD</Text>}
-                      
-                  </Box>
+                  <Box 
+                  display="flex" 
+                  flexDirection="column" 
+                  alignItems="center" 
+                  justifyContent="center" 
+                  textAlign="center"
+                >
+                  <Image borderRadius={"25px"} src={selectedNFT.url} width="120px" alt={selectedNFT.name} />
+                  <Text>{selectedNFT.name}</Text>
+                  <Text>{selectedNFT.description}</Text>
+                </Box>
 
               )}
               <Button onClick={handleOpenModal}>Select NFT</Button>
           </Flex>
+
+
           {/* NFT Selection Modal */}
           <NFTModal
               isOpen={isModalOpen}
               onClose={handleCloseModal}
               onNftSelect={handleNftSelect} />
-      </Box><Box>
+      </Box>
+      
+      {selectedNFT && (
+          <Box 
+          width={"450px"} mb={"10px"}
+          p={"10px"} pb={"10px"} px={4} borderRadius={"20px"}
+          position={"relative"} bg="secondary" fontSize={{ xs: "sm", md: "16px" }}
+          >
+            <VStack spacing={4} align="stretch">
+              <Text> Your Sell Now <Text as="span" float="right"> {selectedNFT.price.toFixed(4)} EGLD </Text> </Text>
+              <Text> XOXNO fee (1%) <Text as="span" float="right"> {selectedNFT.price.toFixed(4)*0.01} EGLD </Text> </Text>
+              <Text> Creator Royalties (10%) <Text as="span" float="right"> {selectedNFT.price.toFixed(4)*0.1}  EGLD </Text> </Text>
+              <Divider borderColor="gray.600" />
+              <Text> After sale you will get <Text as="span" float="right"> {selectedNFT.price.toFixed(4) -  selectedNFT.price.toFixed(4)*0.1 - selectedNFT.price.toFixed(4)*0.01} EGLD </Text> </Text>
+            </VStack>
+          </Box>
+          )}
+      
+      <Box>
               <Center mt="4">
                   <Button
                       bg={"linear-gradient(315deg, #FF005C 50%, #22F6DC 50% 100%);"}
