@@ -42,8 +42,8 @@ const getAshChainId = () => {
   }
 }
 
-const getValueAfterFee = (value, fee) => {
-  return BigNumber(value).times(BigNumber(1).minus(BigNumber(fee))).toFixed(18).toString();
+const getValueAfterFee = (token, fee) => {
+  return BigNumber(token.value).times(BigNumber(1).minus(BigNumber(fee))).toFixed(18).toString();
 }
 
 export interface SwapToken {
@@ -274,8 +274,8 @@ const SwapCard = ({setGraphTokens} : {setGraphTokens: any }) => {
   useEffect(() => {
     const handleCalculateNewSwapData = () => {
       const multiplier = Math.pow(10, fromToken?.decimals || 0);
-      const finalInputAmount = getValueAfterFee(fromToken.value, fee);
-      const finalValue = BigNumber(finalInputAmount).times(multiplier).toString();
+      const finalInputAmount = getValueAfterFee(fromToken, fee);
+      const finalValue = BigNumber(finalInputAmount).times(multiplier).toFixed(0).toString();
 
       try {
         ashSwapAggregator.getPaths(fromToken.identifier, toToken.identifier, finalValue).then((p) => {
@@ -289,7 +289,7 @@ const SwapCard = ({setGraphTokens} : {setGraphTokens: any }) => {
     if (fromToken.identifier && Number(fromToken.value) > 0 && toToken.identifier && !isWrapEgld && !isUnwrapEgld) {
       handleCalculateNewSwapData();
     }
-  }, [ashSwapAggregator, fee, fromToken?.decimals, fromToken.identifier, fromToken.value, isUnwrapEgld, isWrapEgld, toToken.identifier]);
+  }, [ashSwapAggregator, fee, fromToken, isUnwrapEgld, isWrapEgld, toToken.identifier]);
 
   useEffect(() => {
     if (swapPaths && swapPaths?.returnAmount && fromToken?.value) {

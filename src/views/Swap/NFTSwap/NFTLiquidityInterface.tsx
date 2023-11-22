@@ -58,7 +58,6 @@ const NFTLiquidityInterface = () => {
   };
 
   const handleSwapNft = async (nft) => {
-    console.log("⚠️ ~ file: NFTLiquidityInterface.tsx:60 ~ nft:", nft, nft.collection, nft.nonce, nft.offerId)
     if (!nft.colllection || !nft.nonce || !nft.offerId) {
       NFTLiquidSell(nft.collection, nft.nonce, nft.offerId);
     }

@@ -9,15 +9,15 @@ import SelectCurrency from "./commons/SelectCurrency/SelectCurrency";
 import { SwapToken } from "../SwapCard/SwapCard";
 
 function formatNumberWithMaxDecimals(num: number | string, decimals = 5): string {
-  console.log("⚠️ ~ file: TextField.tsx:12 ~ num:", num)
   if (typeof num !== 'number') return num.toString(); // Return the value as is if it's not a number
 
   // Convert to a string with up to 5 decimal places
-  const formatted = num.toFixed(decimals);
-  console.log("⚠️ ~ file: TextField.tsx:17 ~ formatted:", formatted)
+  let formatted = num.toFixed(decimals);
 
   // Remove trailing zeros and the decimal point if it's an integer
-  return formatted.replace(/(\.\d*?[1-9])0+$/, '$1').replace(/\.0+$/, '');
+  formatted = formatted.replace(/(\.\d*?)0+$/, '$1').replace(/\.0+$/, '');
+
+  return formatted;
 }
 
 interface IProps extends InputProps {
@@ -136,8 +136,12 @@ const TextField = ({
             </Box>
           ) : (
             <InputS 
-              // value={field.value ? formatNumberWithMaxDecimals(Number(field.value), 8) : ""}
-              value={field.value ? field.value : ""}
+              value={field.value ?
+                id == "to" ?
+                  formatNumberWithMaxDecimals(Number(field.value), 8)
+                  : formatNumberWithMaxDecimals(Number(field.value), field.decimals)
+                : ""}
+              // value={field.value ? field.value : ""}
               //value={field.value ?? ""}
               fontSize={"3xl"}
               fontWeight={"500"}
