@@ -7,17 +7,15 @@ import useGetAccountToken from "utils/hooks/useGetAccountToken";
 import useGetElrondToken from "utils/hooks/useGetElrondToken";
 import SelectCurrency from "./commons/SelectCurrency/SelectCurrency";
 import { SwapToken } from "../SwapCard/SwapCard";
+import BigNumber from "bignumber.js";
 
-function formatNumberWithMaxDecimals(num: number | string, decimals = 5): string {
-  if (typeof num !== 'number') return num.toString(); // Return the value as is if it's not a number
+function formatNumberWithMaxDecimals(num: number | string, decimals = 5): string | number {
+  const decimalCount = (num.toString().split('.')[1] || '').length;
 
-  // Convert to a string with up to 5 decimal places
-  let formatted = num.toFixed(decimals);
-
-  // Remove trailing zeros and the decimal point if it's an integer
-  formatted = formatted.replace(/(\.\d*?)0+$/, '$1').replace(/\.0+$/, '');
-
-  return formatted;
+  if (decimalCount) {
+    num = formatPrecision(num, Math.min(decimals, decimalCount));
+  }
+  return num;
 }
 
 interface IProps extends InputProps {
@@ -138,8 +136,8 @@ const TextField = ({
             <InputS 
               value={field.value ?
                 id == "to" ?
-                  formatNumberWithMaxDecimals(Number(field.value), 8)
-                  : formatNumberWithMaxDecimals(Number(field.value), field.decimals)
+                  formatNumberWithMaxDecimals(Number(field.value), 7)
+                  : formatNumberWithMaxDecimals(Number(field.value), Math.min(9, field.decimals))
                 : ""}
               // value={field.value ? field.value : ""}
               //value={field.value ?? ""}
@@ -162,7 +160,7 @@ const TextField = ({
               autoComplete="off"
               autoCorrect="off"
               type={id === "from" ? "number" : "text"}
-              placeholder="0.0"
+              placeholder="0.00"
               minLength={1}
               maxLength={79}
               spellCheck="false"
