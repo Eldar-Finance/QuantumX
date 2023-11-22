@@ -115,7 +115,7 @@ const NFTLiquidityInterface = () => {
                 fontSize={"1.2em"}
                 style={{ margin: 'auto', marginTop: '20px' }}
               >
-                Swap
+                Sell Now
               </Button>
             </Center>
           </Box></>

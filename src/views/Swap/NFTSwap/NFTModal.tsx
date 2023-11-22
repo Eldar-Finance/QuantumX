@@ -38,7 +38,9 @@ const NFTModal = ({ isOpen, onClose, onNftSelect }) => {
     const data = await response.json();
     const hasOffers = data.resources && data.resources.length > 0;
     const price = hasOffers ? parseFloat(data.resources[0].price) / Math.pow(10, 18) : null;
-    return { hasOffers, price };
+    const offerId = hasOffers ? data.resources[0].offerId : null;
+    
+    return { hasOffers, price, offerId };
   };
 
   useEffect(() => {
@@ -48,9 +50,9 @@ const NFTModal = ({ isOpen, onClose, onNftSelect }) => {
         const nftsWithOffers = [];
         for (const nft of nfts) {
           try {
-            const { hasOffers, price } = await checkNftOffers(nft);
+            const { hasOffers, price, offerId } = await checkNftOffers(nft);
             if (hasOffers) {
-              nftsWithOffers.push({ ...nft, price });
+              nftsWithOffers.push({ ...nft, price, offerId });
             }
           } catch (error) {
             console.error('Error fetching offers for NFT:', error);
@@ -70,9 +72,9 @@ const NFTModal = ({ isOpen, onClose, onNftSelect }) => {
   };
 
   return (
-    <Modal  isOpen={isOpen} onClose={onClose} isCentered>
+    <Modal isOpen={isOpen} onClose={onClose} isCentered>
       <ModalOverlay />
-      <ModalContent bg="secondary"  maxW="700px" maxH="80vh" overflowY="auto">
+      <ModalContent bg="secondary" maxW="700px" maxH="80vh" overflowY="auto">
         <ModalHeader>Select an NFT</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
@@ -103,6 +105,7 @@ const NFTModal = ({ isOpen, onClose, onNftSelect }) => {
                   <Image borderRadius={"25px"} src={nft.url} alt={nft.name} boxSize="90px" objectFit="cover" />
                   <Text mt="2">{nft.name}</Text>
                   {nft.price && <Text mt="2">Price: {nft.price.toFixed(4)} EGLD</Text>}
+                  {nft.offerId && <Text mt="2">Offer ID: {nft.offerId}</Text>}
                 </Box>
               ))}
             </Grid>
