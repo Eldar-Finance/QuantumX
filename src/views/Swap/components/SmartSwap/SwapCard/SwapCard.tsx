@@ -31,6 +31,8 @@ import useGetAccountTokens from "utils/hooks/useGetAccountTokens";
 import store from "redux/store";
 import useGetAshSwapFee from "utils/hooks/useGetAshSwapFee";
 import { unwrapEgld, wrapEgld } from "api/sc/calls";
+import CoinTab from "views/Dashboard/components/Dashtabs/WalletTab/CoinTab";
+import NFTLiquidityInterface from "views/Swap/NFTSwap/NFTLiquidityInterface";
 
 const getAshChainId = () => {
   if (network.id == "mainnet") {
@@ -236,6 +238,10 @@ const SwapCard = ({setGraphTokens} : {setGraphTokens: any }) => {
     }
   }
 
+  const [isNFTLiquidityActive, setIsNFTLiquidityActive] = useState(false);
+
+
+
   //
   // CONDITIONS
   //
@@ -357,10 +363,31 @@ const SwapCard = ({setGraphTokens} : {setGraphTokens: any }) => {
       justifyContent={"flex-start"}
       alignItems={"left"}
     >
-      <Heading as="h1" fontSize={"m"} fontWeight={"bold"} mb={1} ml={5}
-      >
-        Swap
-      </Heading>
+      <Flex  mb={1} ml={5}>
+        <Heading
+          as="h1"
+          fontSize={"m"}
+          fontWeight={"bold"}
+          cursor={"pointer"}
+          color={isNFTLiquidityActive ? "normal" : "highlighted"} // Replace with your active style
+          onClick={() => setIsNFTLiquidityActive(false)}
+        >
+          Swap
+        </Heading>
+        <Heading marginLeft={"10px"}
+          as="h1"
+          fontSize={"m"}
+          fontWeight={"bold"}
+          cursor={"pointer"}
+          color={!isNFTLiquidityActive ? "normal" : "highlighted"} // Replace with your active style
+          onClick={() => setIsNFTLiquidityActive(true)}
+        >
+          NFT Swap
+        </Heading>
+      </Flex>
+
+
+
 
       <Box
         maxWidth={"500px"}
@@ -370,6 +397,10 @@ const SwapCard = ({setGraphTokens} : {setGraphTokens: any }) => {
         position="relative"
         pt={4}
       >
+        {isNFTLiquidityActive ? (
+        // The new NFT 2 Liquidity interface goes here
+        <NFTLiquidityInterface></NFTLiquidityInterface>
+      ) : (
         <Box>
           <Flex flexDir={"column"} width={"full"}>
             <Center flexDir={"column"} position="relative" mb={"10px"}>
@@ -466,6 +497,7 @@ const SwapCard = ({setGraphTokens} : {setGraphTokens: any }) => {
             <FeeInfo fee={fee * 100}/>
           </Flex>
         </Box>
+        )}
       </Box>
     </Flex>
   );
