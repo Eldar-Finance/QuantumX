@@ -9,6 +9,21 @@ import { SwapToken } from '../components/SmartSwap/SwapCard/SwapCard';
 const NFTLiquidityInterface = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedNFT, setSelectedNFT] = useState(null);
+  const [royalties, setRoyalties] = useState(null); 
+
+  const fetchRoyalties = async (nftIdentifier) => {
+    try {
+      const response = await fetch(`https://api.multiversx.com/nfts/${nftIdentifier}`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch NFT royalties');
+      }
+      const data = await response.json();
+      return data.royalties; // Assuming the API returns a 'royalties' field
+    } catch (error) {
+      console.error('Error fetching NFT royalties:', error);
+      return null;
+    }
+  };
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -18,7 +33,9 @@ const NFTLiquidityInterface = () => {
     setIsModalOpen(false);
   };
 
-  const handleNftSelect = (nft) => {
+  const handleNftSelect = async (nft) => {
+    const fetchedRoyalties = await fetchRoyalties(nft.identifier);
+    setRoyalties(fetchedRoyalties);
     setSelectedNFT(nft);
     handleCloseModal();
   };
@@ -45,7 +62,7 @@ const NFTLiquidityInterface = () => {
           position={"relative"} bg="secondary" fontSize={{ xs: "sm", md: "16px" }}>
 
           {/* Flex container for selected NFT and button */}
-          <Flex justifyContent="space-between" alignItems="center">
+          <Flex justifyContent={selectedNFT ? "space-between" : "center"} alignItems="center" width="full">
               {/* Display the selected NFT details */}
               {selectedNFT && (
                   <Box 
@@ -57,7 +74,7 @@ const NFTLiquidityInterface = () => {
                 >
                   <Image borderRadius={"25px"} src={selectedNFT.url} width="120px" alt={selectedNFT.name} />
                   <Text>{selectedNFT.name}</Text>
-                  <Text>{selectedNFT.description}</Text>
+                  <Text>Rank: {selectedNFT.rank}</Text>
                 </Box>
 
               )}
@@ -73,38 +90,38 @@ const NFTLiquidityInterface = () => {
       </Box>
       
       {selectedNFT && (
-          <Box 
-          width={"450px"} mb={"10px"}
+          <><Box
+          maxWidth={"450px"} mb={"10px"}
           p={"10px"} pb={"10px"} px={4} borderRadius={"20px"}
           position={"relative"} bg="secondary" fontSize={{ xs: "sm", md: "16px" }}
-          >
-            <VStack spacing={4} align="stretch">
-              <Text> Your Sell Now <Text as="span" float="right"> {selectedNFT.price.toFixed(4)} EGLD </Text> </Text>
-              <Text> XOXNO fee (1%) <Text as="span" float="right"> {selectedNFT.price.toFixed(4)*0.01} EGLD </Text> </Text>
-              <Text> Creator Royalties (10%) <Text as="span" float="right"> {selectedNFT.price.toFixed(4)*0.1}  EGLD </Text> </Text>
-              <Divider borderColor="gray.600" />
-              <Text> After sale you will get <Text as="span" float="right"> {selectedNFT.price.toFixed(4) -  selectedNFT.price.toFixed(4)*0.1 - selectedNFT.price.toFixed(4)*0.01} EGLD </Text> </Text>
-            </VStack>
-          </Box>
+        >
+          <VStack spacing={4} align="stretch">
+            <Text> Your Sell Now <Text as="span" float="right"> {selectedNFT.price.toFixed(4)} EGLD </Text> </Text>
+            <Text> XOXNO fee (1%) <Text as="span" float="right"> {selectedNFT.price.toFixed(4) * 0.01} EGLD </Text> </Text>
+            <Text> Creator Royalties ({royalties}%) <Text as="span" float="right"> {selectedNFT.price.toFixed(4) * (royalties / 100)}  EGLD </Text> </Text>
+            <Divider borderColor="gray.600" />
+            <Text> After sale you will get <Text as="span" float="right"> {selectedNFT.price.toFixed(4) - selectedNFT.price.toFixed(4) * 0.1 - selectedNFT.price.toFixed(4) * 0.01} EGLD </Text> </Text>
+          </VStack>
+        </Box><Box>
+            <Center mt="4">
+              <Button
+                bg={"linear-gradient(315deg, #FF005C 50%, #22F6DC 50% 100%);"}
+                filter={"brightness(90%)"}
+                color="black"
+                py="20px"
+                width="100%"
+                alignContent="center"
+                fontWeight={"900"}
+                fontSize={"1.2em"}
+                style={{ margin: 'auto', marginTop: '20px' }}
+              >
+                Swap
+              </Button>
+            </Center>
+          </Box></>
           )}
       
-      <Box>
-              <Center mt="4">
-                  <Button
-                      bg={"linear-gradient(315deg, #FF005C 50%, #22F6DC 50% 100%);"}
-                      filter={"brightness(90%)"}
-                      color="black"
-                      py="20px"
-                      width="100%"
-                      alignContent="center"
-                      fontWeight={"900"}
-                      fontSize={"1.2em"}
-                      style={{ margin: 'auto', marginTop: '20px' }}
-                  >
-                      Swap
-                  </Button>
-              </Center>
-          </Box></>
+      </>
     
   );
 };
