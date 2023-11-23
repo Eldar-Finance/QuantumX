@@ -52,9 +52,11 @@ export interface SwapToken {
   value?: string;
 }
 
+const egldFee = 0.001;
+
 const SwapCard = ({setGraphTokens, setIsNftSwap} : {setGraphTokens: any, setIsNftSwap: any}) => {
   const userAddress = store.getState().userAccount.connectedAddress;
-  const [receiverAddress, setReiceverAddress] = useState(null);
+  const [isNFTLiquidityActive, setIsNFTLiquidityActive] = useState(false);
   const router = useRouter();
   const chainId = getAshChainId();
   const slipapge = useAppSelector(selectSlippage);
@@ -221,7 +223,9 @@ const SwapCard = ({setGraphTokens, setIsNftSwap} : {setGraphTokens: any, setIsNf
 
   const handleMaxFromField = () => {
       const multiplier = Math.pow(10, accountToken.decimals);
-      const finalValue = BigNumber(accountToken.balance).div(multiplier).toString();
+      const finalValue = fromToken.identifier == "EGLD" ?
+        BigNumber(accountToken.balance).div(multiplier).minus(egldFee).toString() :
+        BigNumber(accountToken.balance).div(multiplier).toString();
       setFromToken({
         identifier: fromToken.identifier,
         decimals: accountToken.decimals,
@@ -238,10 +242,6 @@ const SwapCard = ({setGraphTokens, setIsNftSwap} : {setGraphTokens: any, setIsNf
     }
   }
 
-  const [isNFTLiquidityActive, setIsNFTLiquidityActive] = useState(false);
-
-
-
   //
   // CONDITIONS
   //
@@ -250,12 +250,16 @@ const SwapCard = ({setGraphTokens, setIsNftSwap} : {setGraphTokens: any, setIsNf
     //   return true;
     // }
     // else 
+    const fee = fromToken.identifier == "EGLD" ? egldFee : 0;
     if (accountToken) {
-      return BigNumber(accountToken.balance).gte(BigNumber(Number(fromToken?.value || 0) * Math.pow(10, accountToken.decimals)));
+      return BigNumber(accountToken.balance).gte(
+        BigNumber(fromToken?.value).times(Math.pow(10, accountToken.decimals)).plus(
+          BigNumber(fee * Math.pow(10, 18))
+        )
+      );
     }
     return false;
-  }, [accountToken, fromToken?.value]);
-  // console.log("⚠️ ~ file: SwapCard.tsx:288 ~ hasEnoughBalance:", hasEnoughBalance)
+  }, [accountToken, fromToken.identifier, fromToken?.value]);
 
   const isWrapEgld = useMemo(() => {
     return fromToken.identifier === toknesID.egld && toToken.identifier === toknesID.wegld;
