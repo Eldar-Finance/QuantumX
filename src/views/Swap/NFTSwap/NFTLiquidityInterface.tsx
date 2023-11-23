@@ -13,7 +13,7 @@ import { formatPrecision } from 'utils/functions/formatBalance';
 const NFTLiquidityInterface = ({...props}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedNFT, setSelectedNFT] = useState(null);
-  const [royalties, setRoyalties] = useState(null); 
+  // const [royalties, setRoyalties] = useState(null); 
 
   const fetchRoyalties = async (nftIdentifier) => {
     try {
@@ -39,7 +39,7 @@ const NFTLiquidityInterface = ({...props}) => {
 
   const handleNftSelect = async (nft) => {
     const fetchedRoyalties = await fetchRoyalties(nft.identifier);
-    setRoyalties(fetchedRoyalties);
+    // setRoyalties(fetchedRoyalties);
     setSelectedNFT(nft);
     handleCloseModal();
   };
@@ -63,8 +63,16 @@ const NFTLiquidityInterface = ({...props}) => {
     if (!nft.colllection || !nft.nonce || !nft.offerId) {
       NFTLiquidSell(nft.collection, nft.nonce, nft.offerId);
     }
-  };    
+  };
+
+  const price = selectedNFT?.price || 0;
+  const xoxnoFee = price * 0.01;
+  const royalties = price * selectedNFT?.royalties / 100 || 0;
+  const finalEarning = price - xoxnoFee - royalties;
+  
   console.log("⚠️ ~ file: NFTLiquidityInterface.tsx:65 ~ nft:", selectedNFT)
+
+  console.log("⚠️ ~ file: NFTLiquidityInterface.tsx:69 ~ price:", price, xoxnoFee, royalties, finalEarning)
 
   return (
     <VStack gap={10}>
@@ -88,11 +96,11 @@ const NFTLiquidityInterface = ({...props}) => {
             textAlign="center"
             fontSize={"md"}
             bg={"black.base"}
-            border={"1px solid"}
+            border={"2px solid"}
             borderColor={"main"}
-            borderRadius={"20px"}
+            borderRadius={"21px"}
           >
-            <Image borderRadius={"20px"} src={selectedNFT.url} width="120px" alt={selectedNFT.name} />
+            <Image borderRadius={"18px"} src={selectedNFT.url} maxWidth="124px" alt={selectedNFT.name} />
             {/* <Text>{selectedNFT.name}</Text>
             <Text>Rank: {selectedNFT.rank}</Text> */}
           </Box>
@@ -129,14 +137,14 @@ const NFTLiquidityInterface = ({...props}) => {
             w={"full"}
           >
             <HStack justifyContent={"space-between"}>
-              <Text color="white.600"> Sell for </Text> <Text as="span" float="right"> {selectedNFT.price.toFixed(4)} EGLD </Text>
+              <Text color="white.600"> Sell for </Text> <Text as="span" float="right"> {formatPrecision(price)} EGLD </Text>
             </HStack>
             <HStack justifyContent={"space-between"}>
-              <Text color="white.600"> XOXNO fee (1%) </Text> <Text as="span" float="right"> {selectedNFT.price.toFixed(4) * 0.01} EGLD </Text>
+              <Text color="white.600"> XOXNO fee (1%) </Text> <Text as="span" float="right"> {formatPrecision(xoxnoFee)} EGLD </Text>
             </HStack>
             <HStack justifyContent={"space-between"}>
-              <Text color="white.600"> Royalties ({royalties}%) </Text>
-              <Text as="span" float="right"> {formatPrecision(selectedNFT.price * royalties / 100)}  EGLD </Text>
+              <Text color="white.600"> Royalties ({selectedNFT.royalties}%) </Text>
+              <Text as="span" float="right"> {formatPrecision(royalties)} EGLD </Text>
             </HStack>
 
             <Divider borderColor="white.500" />
@@ -144,7 +152,7 @@ const NFTLiquidityInterface = ({...props}) => {
             <HStack justifyContent={"space-between"} fontWeight={"semibold"}>
               <Text> You receive </Text>
               <Text as="span" float="right">
-                {selectedNFT.price.toFixed(4) - selectedNFT.price.toFixed(4) * 0.1 - selectedNFT.price.toFixed(4) * 0.01} EGLD
+                {formatPrecision(finalEarning)} EGLD
               </Text>
             </HStack>
           </VStack>
