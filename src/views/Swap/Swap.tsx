@@ -132,10 +132,14 @@ const Swap = () => {
           > */}
             <Image
               alt='ash'
-              src="https://app.ashswap.io/logo.png"
+              src={
+                isNftSwap ?
+                "https://xoxno.com/_next/image?url=%2Fimg%2Fsymbols%2Fxoxno_banner.png&w=256&q=100" :
+                "https://app.ashswap.io/logo.png"
+              }
               width={{ base: "64px", md: "96px" }}
               ml={2}
-              mt={-2}
+              mt={isNftSwap ? 0 : -2}
               ignoreFallback
             />
           {/* </Link> */}
