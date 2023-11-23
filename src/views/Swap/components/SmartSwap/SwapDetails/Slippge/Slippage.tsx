@@ -1,4 +1,4 @@
-import { Box, Center, Flex, HStack, Icon, Input, Text } from "@chakra-ui/react";
+import { Box, Center, Flex, HStack, Icon, Input, Text, useMediaQuery } from "@chakra-ui/react";
 import { SwapIcon } from "components/Icons/ui";
 import {
   selectSlippage,
@@ -7,19 +7,27 @@ import {
 import { useAppDispatch, useAppSelector } from "utils/hooks/redux";
 import { CiRoute } from "react-icons/ci";
 import { MdCurrencyExchange } from "react-icons/md";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { CloseIcon } from "@chakra-ui/icons";
 import { MdAttachMoney } from "react-icons/md";
 import { SorSwapResponse } from "@ashswap/ash-sdk-js/out";
 import { formatPrecision } from "utils/functions/formatBalance";
-
-const slippageSlecctions = [0.5, 1];
+import { breakpoints } from "theme/chakra";
 
 const Slippage = ({ swapPaths }: { swapPaths?: SorSwapResponse }) => {
   // const [usesInput, setUsesInput] = useState(false);
   const slipapge = useAppSelector(selectSlippage);
   const dispatch = useAppDispatch();
   
+  let slippageSlecctions; // = [0.5, 1, 2];
+
+  const [isLargerThanLg] = useMediaQuery(`(min-width: ${breakpoints["md"]})`);
+  if (!isLargerThanLg) {
+    slippageSlecctions = [0.5, 1];
+  } else {
+    slippageSlecctions = [0.5, 1, 2];
+  }
+
   const handleUpdateSlippage = (newSlippage: number) => {
     dispatch(updateSlippage(newSlippage));
   };
