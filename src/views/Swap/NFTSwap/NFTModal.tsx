@@ -10,7 +10,8 @@ import {
   Grid, 
   Box, 
   Text, 
-  Spinner
+  Spinner,
+  VStack
 } from '@chakra-ui/react';
 import useGetUserNfts from 'utils/hooks/useGetUserNfts';
 
@@ -74,7 +75,10 @@ const NFTModal = ({ isOpen, onClose, onNftSelect }) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered>
       <ModalOverlay />
-      <ModalContent bg="secondary" maxW="700px" maxH="80vh" overflowY="auto">
+      <ModalContent
+        bg={"black.baseLight"} mx={5} maxW={{md: "680px"}} maxH="80vh"
+        overflowY="auto" borderRadius={"20px"}
+      >
         <ModalHeader>Select an NFT</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
@@ -82,10 +86,10 @@ const NFTModal = ({ isOpen, onClose, onNftSelect }) => {
           {isError && <Text>Error fetching NFTs.</Text>}
           {isProcessing ? (
             <Box display="flex" justifyContent="center" alignItems="center" height="100%">
-              <Spinner size="xl" />
+              <Spinner size="xl" my={20}/>
             </Box>
           ) : (
-            <Grid templateColumns="repeat(3, 1fr)" gap={4}>
+            <Grid templateColumns={{sm: "repeat(2, 1fr)", md: "repeat(3, 1fr)"}} gap={4}>
               {filteredNfts.map((nft) => (
                 <Box 
                   display="flex" 
@@ -96,16 +100,26 @@ const NFTModal = ({ isOpen, onClose, onNftSelect }) => {
                   key={nft.identifier} 
                   onClick={() => handleNftClick(nft)} 
                   cursor="pointer"
-                  borderWidth="1px" 
-                  borderRadius="lg" 
-                  width="200px"
+                  borderRadius="20px"
+                  bg={"black.baseDark"}
+                  width={{sm: "160px", md: "180px"}}
                   overflow="hidden"
-                  p="2"
+                  p={2}
+                  border="2px solid"
+                  borderColor={"transparent"}
+                  _hover={{
+                    borderColor: "main"
+                  }}
                 >
-                  <Image borderRadius={"25px"} src={nft.url} alt={nft.name} boxSize="90px" objectFit="cover" />
-                  <Text mt="2">{nft.name}</Text>
-                  {nft.price && <Text mt="2">Price: {nft.price.toFixed(4)} EGLD</Text>}
-                  {nft.offerId && <Text mt="2">Offer ID: {nft.offerId}</Text>}
+                  <Image borderRadius={"20px"} src={nft.url} alt={"No image available"}
+                    boxSize="140px" 
+                    objectFit="cover"
+                    width={"full"}
+                  />
+                  <VStack fontSize={"sm"} mt={3} gap={2}>
+                    <Text>{nft.name}</Text>
+                    {nft.price && <Text>{nft.price.toFixed(4)} EGLD</Text>}
+                  </VStack>
                 </Box>
               ))}
             </Grid>
