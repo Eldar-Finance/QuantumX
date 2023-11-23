@@ -70,10 +70,6 @@ const NFTLiquidityInterface = ({...props}) => {
   const royalties = price * selectedNFT?.royalties / 100 || 0;
   const finalEarning = price - xoxnoFee - royalties;
   
-  console.log("⚠️ ~ file: NFTLiquidityInterface.tsx:65 ~ nft:", selectedNFT)
-
-  console.log("⚠️ ~ file: NFTLiquidityInterface.tsx:69 ~ price:", price, xoxnoFee, royalties, finalEarning)
-
   return (
     <VStack gap={10}>
       <HStack 

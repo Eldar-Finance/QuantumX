@@ -116,9 +116,9 @@ const NFTModal = ({ isOpen, onClose, onNftSelect }) => {
                     objectFit="cover"
                     width={"full"}
                   />
-                  <VStack fontSize={"sm"} mt={3} gap={2}>
-                    <Text>{nft.name}</Text>
-                    {nft.price && <Text>{nft.price.toFixed(4)} EGLD</Text>}
+                  <VStack fontSize={"14px"} mt={3} gap={2}>
+                    <Text color={"whiteAlpha.800"}>{nft.name}</Text>
+                    {nft.price && <Text fontWeight={"semibold"}>{nft.price.toFixed(4)} EGLD</Text>}
                   </VStack>
                 </Box>
               ))}
