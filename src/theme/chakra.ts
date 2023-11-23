@@ -152,6 +152,7 @@ const customTheme = extendTheme({
       light: "#242526",
       base: "#151515",
       baseDark: "#1E1E1E",
+      baseDarker: "#1C1C1C",
       baseLight: "#2A2A2A",
       dark: "#000000",
       50: "rgba(0, 0, 0, 0.05)",
