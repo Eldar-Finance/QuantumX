@@ -119,6 +119,7 @@ const NFTLiquidityInterface = ({...props}) => {
           bg="black.base" 
           justifyContent={selectedNFT ? "space-between" : "center"}
           alignItems="center"
+          pb={10}
           {...props}
         >
           <VStack 
@@ -126,7 +127,7 @@ const NFTLiquidityInterface = ({...props}) => {
             align="stretch"
             justifyContent={"space-between"}
             width={"full"}
-            py={5}
+            py={4}
             px={10}
             borderRadius={"20px"}
             position={"relative"}
