@@ -1,4 +1,4 @@
-import { Box, Center, Flex, Heading, IconButton, Text, useEditable } from "@chakra-ui/react";
+import { Box, BoxProps, Center, Flex, FlexProps, Heading, IconButton, Text, useEditable } from "@chakra-ui/react";
 
 import SwapButton from "../SwapButton/SwapButton";
 import TextField from "../TextField/TextField";
@@ -7,7 +7,7 @@ import BigNumber from "bignumber.js";
 import { ExchangeIcon } from "components/Icons/ui";
 import { ArrowUpDownIcon } from "@chakra-ui/icons";
 import { useRouter } from "next/dist/client/router";
-import { use, useEffect, useMemo } from "react";
+import { PropsWithChildren, use, useEffect, useMemo } from "react";
 import { FetchWhitelistedTokens } from "redux/slices/smartSwaps/funcs";
 import {
   selectSlippage,
@@ -31,6 +31,8 @@ import useGetAccountTokens from "utils/hooks/useGetAccountTokens";
 import store from "redux/store";
 import useGetAshSwapFee from "utils/hooks/useGetAshSwapFee";
 import { unwrapEgld, wrapEgld } from "api/sc/calls";
+import CoinTab from "views/Dashboard/components/Dashtabs/WalletTab/CoinTab";
+import NFTLiquidityInterface from "views/Swap/NFTSwap/NFTLiquidityInterface";
 
 const getAshChainId = () => {
   if (network.id == "mainnet") {
@@ -40,8 +42,8 @@ const getAshChainId = () => {
   }
 }
 
-const getValueAfterFee = (value, fee) => {
-  return BigNumber(value).times(BigNumber(1).minus(BigNumber(fee))).toFixed(18).toString();
+const getValueAfterFee = (token, fee) => {
+  return BigNumber(token.value).times(BigNumber(1).minus(BigNumber(fee))).toFixed(18).toString();
 }
 
 export interface SwapToken {
@@ -50,7 +52,7 @@ export interface SwapToken {
   value?: string;
 }
 
-const SwapCard = ({setGraphTokens} : {setGraphTokens: any }) => {
+const SwapCard = ({setGraphTokens, setIsNftSwap} : {setGraphTokens: any, setIsNftSwap: any}) => {
   const userAddress = store.getState().userAccount.connectedAddress;
   const [receiverAddress, setReiceverAddress] = useState(null);
   const router = useRouter();
@@ -236,6 +238,10 @@ const SwapCard = ({setGraphTokens} : {setGraphTokens: any }) => {
     }
   }
 
+  const [isNFTLiquidityActive, setIsNFTLiquidityActive] = useState(false);
+
+
+
   //
   // CONDITIONS
   //
@@ -268,8 +274,8 @@ const SwapCard = ({setGraphTokens} : {setGraphTokens: any }) => {
   useEffect(() => {
     const handleCalculateNewSwapData = () => {
       const multiplier = Math.pow(10, fromToken?.decimals || 0);
-      const finalInputAmount = getValueAfterFee(fromToken.value, fee);
-      const finalValue = BigNumber(finalInputAmount).times(multiplier).toString();
+      const finalInputAmount = getValueAfterFee(fromToken, fee);
+      const finalValue = BigNumber(finalInputAmount).times(multiplier).toFixed(0).toString();
 
       try {
         ashSwapAggregator.getPaths(fromToken.identifier, toToken.identifier, finalValue).then((p) => {
@@ -283,7 +289,7 @@ const SwapCard = ({setGraphTokens} : {setGraphTokens: any }) => {
     if (fromToken.identifier && Number(fromToken.value) > 0 && toToken.identifier && !isWrapEgld && !isUnwrapEgld) {
       handleCalculateNewSwapData();
     }
-  }, [ashSwapAggregator, fee, fromToken?.decimals, fromToken.identifier, fromToken.value, isUnwrapEgld, isWrapEgld, toToken.identifier]);
+  }, [ashSwapAggregator, fee, fromToken, isUnwrapEgld, isWrapEgld, toToken.identifier]);
 
   useEffect(() => {
     if (swapPaths && swapPaths?.returnAmount && fromToken?.value) {
@@ -352,24 +358,51 @@ const SwapCard = ({setGraphTokens} : {setGraphTokens: any }) => {
 
   return (
     <Flex
-      width={"full"}
-      flexDir={"column"}
-      justifyContent={"flex-start"}
-      alignItems={"left"}
+      width="100%" // Set the width to 100% to make it full width
+      flexDir="column"
+      justifyContent="flex-start"
+      alignItems="left"
     >
-      <Heading as="h1" fontSize={"m"} fontWeight={"bold"} mb={1} ml={5}
-      >
-        Swap
-      </Heading>
-
+      <Flex width="100%" mb={1} ml={5} gap={2} zIndex={10} w={"full"}>
+        <Heading
+          as="h1"
+          fontSize={"m"}
+          fontWeight={"bold"}
+          cursor={"pointer"}
+          color={isNFTLiquidityActive ? "gray" : "highlighted"} // Replace with your active style
+          onClick={() => {
+            setIsNFTLiquidityActive(false)
+            setIsNftSwap(false)
+          }}
+        >
+          Swap
+        </Heading>
+        <Heading marginLeft={"10px"}
+          as="h1"
+          fontSize={"m"}
+          fontWeight={"bold"}
+          cursor={"pointer"}
+          color={!isNFTLiquidityActive ? "gray" : "highlighted"} // Replace with your active style
+          onClick={() => {
+            setIsNFTLiquidityActive(true)
+            setIsNftSwap(true)
+          }}
+        >
+          NFT Swap
+        </Heading>
+      </Flex>
       <Box
-        maxWidth={"500px"}
+        // maxWidth={"500px"}
         width={"full"}
         mb={0}
         borderRadius="30px"
         position="relative"
         pt={4}
       >
+        {isNFTLiquidityActive ? (
+        // The new NFT 2 Liquidity interface goes here
+        <NFTLiquidityInterface/>
+      ) : (
         <Box>
           <Flex flexDir={"column"} width={"full"}>
             <Center flexDir={"column"} position="relative" mb={"10px"}>
@@ -466,6 +499,7 @@ const SwapCard = ({setGraphTokens} : {setGraphTokens: any }) => {
             <FeeInfo fee={fee * 100}/>
           </Flex>
         </Box>
+        )}
       </Box>
     </Flex>
   );

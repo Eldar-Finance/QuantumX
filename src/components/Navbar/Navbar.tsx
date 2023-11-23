@@ -100,7 +100,7 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
             <Link href={"/"}>
               <NextImage src={logo} alt="QuantumX" width={128} height={38} />
             </Link>
-            {isLoggedIn && <Box ml="100px" />}
+            {isLoggedIn && <Box ml="80px" />}
             <Box w="fit-content" m="auto" flex="1" display="flex" justifyContent="center">
               <Menu1 />
             </Box>

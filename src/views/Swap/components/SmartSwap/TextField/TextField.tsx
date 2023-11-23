@@ -7,17 +7,15 @@ import useGetAccountToken from "utils/hooks/useGetAccountToken";
 import useGetElrondToken from "utils/hooks/useGetElrondToken";
 import SelectCurrency from "./commons/SelectCurrency/SelectCurrency";
 import { SwapToken } from "../SwapCard/SwapCard";
+import BigNumber from "bignumber.js";
 
-function formatNumberWithMaxDecimals(num: number | string, decimals = 5): string {
-  console.log("⚠️ ~ file: TextField.tsx:12 ~ num:", num)
-  if (typeof num !== 'number') return num.toString(); // Return the value as is if it's not a number
+function formatNumberWithMaxDecimals(num: number | string, decimals = 5): string | number {
+  const decimalCount = (num.toString().split('.')[1] || '').length;
 
-  // Convert to a string with up to 5 decimal places
-  const formatted = num.toFixed(decimals);
-  console.log("⚠️ ~ file: TextField.tsx:17 ~ formatted:", formatted)
-
-  // Remove trailing zeros and the decimal point if it's an integer
-  return formatted.replace(/(\.\d*?[1-9])0+$/, '$1').replace(/\.0+$/, '');
+  if (decimalCount) {
+    num = formatPrecision(num, Math.min(decimals, decimalCount));
+  }
+  return num;
 }
 
 interface IProps extends InputProps {
@@ -136,8 +134,12 @@ const TextField = ({
             </Box>
           ) : (
             <InputS 
-              // value={field.value ? formatNumberWithMaxDecimals(Number(field.value), 8) : ""}
-              value={field.value ? field.value : ""}
+              value={field.value ?
+                id == "to" ?
+                  formatNumberWithMaxDecimals(Number(field.value), 7)
+                  : formatNumberWithMaxDecimals(Number(field.value), Math.min(9, field.decimals))
+                : ""}
+              // value={field.value ? field.value : ""}
               //value={field.value ?? ""}
               fontSize={"3xl"}
               fontWeight={"500"}
@@ -158,7 +160,7 @@ const TextField = ({
               autoComplete="off"
               autoCorrect="off"
               type={id === "from" ? "number" : "text"}
-              placeholder="0.0"
+              placeholder="0.00"
               minLength={1}
               maxLength={79}
               spellCheck="false"

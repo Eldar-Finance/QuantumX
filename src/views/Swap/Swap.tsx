@@ -10,6 +10,7 @@ import WrapperPages from 'hoc/WrapperPages';
 const Swap = () => {
   const [isSecondCardOpen, setIsSecondCardOpen] = useState(false);
   const [graphTokens, setGraphTokens] = useState([]);
+  const [isNftSwap, setIsNftSwap] = useState(false);
   const [tok1, setVariable1] = useState('');
   const [tok2, setVariable2] = useState('');
   //console.log("⚠️ ~ file: Swap.tsx:13 ~ graphTokens:", graphTokens)
@@ -43,6 +44,7 @@ const Swap = () => {
         flexDirection="column"
         alignItems="center"
         pb="50px"
+        width="100%"
       >
         <Flex
           direction={{ base: "column", md: "row" }}
@@ -53,37 +55,38 @@ const Swap = () => {
         >
           {/* First Card */}
           <Card
-        maxW={"620px"}
-        bg={"black.baseDark"}
-        borderRadius="30px"
-        border="1px solid"
-        borderColor="transparent"
-        p={{ sm: "10px", md: "20px" }}
-        position="relative"
-      >
-        {/* The image now uses negative values to sit outside the top left corner */}
-        <ImageQxAshFire/>
-            <SwapCard setGraphTokens={setGraphTokens}/>
-            <IconButton
-              aria-label="Toggle second card"
-              icon={isSecondCardOpen ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-              position="absolute"
-              right="-30px"
-              top="50%"
-              transform="translateY(-50%)"
-              zIndex="2"
-              onClick={toggleSecondCard}
-              variant="ghost"
-              background="none"
-              fontSize={"3xl"}
-              size={"xl"}
-              sx={{
-                '@media screen and (max-width: 480px)': { // Adjust the breakpoint as needed
-                  display: 'none',
-                },
-              }}
-            />
-          </Card>
+            maxW={"520px"}
+            width="100%"
+            bg={"black.baseDark"}
+            borderRadius="30px"
+            border="1px solid"
+            borderColor="transparent"
+            p={{ sm: "10px", md: "20px" }}
+            position="relative"
+          >
+          {/* The image now uses negative values to sit outside the top left corner */}
+          <ImageQxAshFire/>
+              <SwapCard setGraphTokens={setGraphTokens} setIsNftSwap={setIsNftSwap}/>
+              {!isNftSwap && <IconButton
+                aria-label="Toggle second card"
+                icon={isSecondCardOpen ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+                position="absolute"
+                right="-30px"
+                top="50%"
+                transform="translateY(-50%)"
+                zIndex="2"
+                onClick={toggleSecondCard}
+                variant="ghost"
+                background="none"
+                fontSize={"3xl"}
+                size={"xl"}
+                sx={{
+                  '@media screen and (max-width: 480px)': { // Adjust the breakpoint as needed
+                    display: 'none',
+                  },
+                }}
+              />}
+            </Card>
 
           {/* Expandable Second Card */}
           {isSecondCardOpen && (
@@ -129,10 +132,14 @@ const Swap = () => {
           > */}
             <Image
               alt='ash'
-              src="https://app.ashswap.io/logo.png"
+              src={
+                isNftSwap ?
+                "https://xoxno.com/_next/image?url=%2Fimg%2Fsymbols%2Fxoxno_banner.png&w=256&q=100" :
+                "https://app.ashswap.io/logo.png"
+              }
               width={{ base: "64px", md: "96px" }}
               ml={2}
-              mt={-2}
+              mt={isNftSwap ? 0 : -2}
               ignoreFallback
             />
           {/* </Link> */}
