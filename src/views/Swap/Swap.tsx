@@ -6,6 +6,10 @@ import Layout from 'components/Layout/Layout';
 import MyContainer from 'components/Container/Container';
 import withElronDapp from 'hoc/withElronDapp';
 import WrapperPages from 'hoc/WrapperPages';
+import { PiChartLine, PiChartLineBold } from "react-icons/pi";
+import { HiOutlineChartBarSquare } from "react-icons/hi2";
+
+
 
 const Swap = () => {
   const [isSecondCardOpen, setIsSecondCardOpen] = useState(false);
@@ -69,12 +73,11 @@ const Swap = () => {
               <SwapCard setGraphTokens={setGraphTokens} setIsNftSwap={setIsNftSwap}/>
               {!isNftSwap && <IconButton
                 aria-label="Toggle second card"
-                icon={isSecondCardOpen ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+                icon={isSecondCardOpen ? < HiOutlineChartBarSquare style={{ width: '30px', height: '30px' }} />: <HiOutlineChartBarSquare style={{ width: '30px', height: '30px' }} />              }
                 position="absolute"
-                right="-30px"
-                top="50%"
-                transform="translateY(-50%)"
-                zIndex="2"
+                right="40px"
+                top="5%"
+                zIndex="4"
                 onClick={toggleSecondCard}
                 variant="ghost"
                 background="none"
@@ -82,7 +85,10 @@ const Swap = () => {
                 size={"xl"}
                 sx={{
                   '@media screen and (max-width: 480px)': { // Adjust the breakpoint as needed
-                    display: 'none',
+                    //display: 'none',
+                    //display: 'none',
+                    top: "2%",
+                    zIndex:"4"
                   },
                 }}
               />}
@@ -100,6 +106,14 @@ const Swap = () => {
               p={{ base: "10px", md: "20px" }}
               position="relative"
               height="100%" // Ensure the height matches the first card
+              sx={{
+                '@media screen and (max-width: 480px)': { // Adjust the breakpoint as needed
+                  //display: 'none',
+                  //display: 'none',
+                  width:"100%",
+                  marginLeft:"-5px"
+                },
+              }}
               
             >
               <Box height="100%" overflow="hidden">

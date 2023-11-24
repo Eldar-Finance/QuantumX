@@ -98,7 +98,7 @@ const CoinTab2 = () => {
             </Box>
                 <Text fontSize={"xs"} fontWeight="bold">{token.name}</Text>
               </Flex>
-              <Text marginRight="10px">{token.tokenBalance}</Text>
+              <Text marginRight="10px">{formatBalance(token)}</Text>
             </Flex>
           </ListItem>
         ))}
