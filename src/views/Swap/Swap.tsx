@@ -88,7 +88,8 @@ const Swap = () => {
                     //display: 'none',
                     //display: 'none',
                     top: "2%",
-                    zIndex:"4"
+                    zIndex:"4",
+                    right: "28px";
                   },
                 }}
               />}
