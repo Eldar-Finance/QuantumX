@@ -76,7 +76,7 @@ const Swap = () => {
                 icon={isSecondCardOpen ? < HiOutlineChartBarSquare style={{ width: '30px', height: '30px' }} />: <HiOutlineChartBarSquare style={{ width: '30px', height: '30px' }} />              }
                 position="absolute"
                 right="40px"
-                top="5%"
+                top="4%"
                 zIndex="4"
                 onClick={toggleSecondCard}
                 variant="ghost"
