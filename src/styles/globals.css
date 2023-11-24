@@ -1,3 +1,8 @@
+#dapp-modal{
+  /* color: black; */
+  z-index: 9999
+}
+
 a:hover{
   text-decoration: none !important;
 }
