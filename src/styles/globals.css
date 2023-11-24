@@ -21,10 +21,10 @@ ul{
   height: 18px;
 }
 
-.toast{
+/* .toast{
   background-color: #e9ecef;
   border-radius: 4px;
-  box-shadow: 0 0 10px 0 rgba(0,0,0,.1);
+  box-shadow: 0 0 10px 0 rgba(0,0,0,0.1);
   padding: 10px 20px;
   margin-bottom: 10px;
   position: relative;
@@ -33,15 +33,10 @@ ul{
 }
 
 .transactions-toast-class {
-  /* color: #22F7DD; */
   background-color: #2A2A2A!important;
   border-radius: 20px!important;
   padding: 10px!important;
-  dapp-custom-toast: {
-    color: red!important;
-    background-color: red!important;
-  };
-}
+} */
 
 .sign-transactions-class {
   backdrop-filter: blur(2px);
@@ -51,28 +46,24 @@ ul{
   background-color: #1C1C1C!important;
   border-radius: 15px!important;
   border: none!important;
-  /* color: #22F7DD!important; */
 }
 
 .dapp-modal-dialog-content-body {
   background-color: #1C1C1C!important;
   border-radius: 15px!important;
   border: none!important;
-  /* color: #22F7DD!important; */
-  /* padding-top: 15%!important;
-  padding-bottom: 15%!important; */
-  button {
-    background-color: #A04C4C!important;
-    color: black!important;
-    border-radius: 15px!important;
-    border: none!important;
-  }
+}
+
+.dapp-modal-dialog-close-button {
+  color: black!important;
+  background-color: #A04C4C!important;
+  border-radius: 15px!important;
+  border: none!important;
 }
 
 .dapp-transaction-toast {
   color: white!important;
   background-color: #2A2A2A!important;
-  /* border-radius: 20px!important; */
   padding: 10px!important;
   margin-right: 30px!important;
   margin-right: 30px!important;
@@ -81,7 +72,6 @@ ul{
 .dapp-custom-toast {
   color: white!important;
   background-color: #2A2A2A!important;
-  /* border-radius: 20px!important; */
   padding: 10px!important;
   margin-right: 30px!important;
   margin-right: 30px!important;
