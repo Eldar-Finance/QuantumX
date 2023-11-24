@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Card, Flex, IconButton, Image, Link, Text } from '@chakra-ui/react';
+import { Box, Card, Center, Flex, IconButton, Image, Link, Modal, ModalCloseButton, Text, useMediaQuery } from '@chakra-ui/react';
 import { ChevronRightIcon, ChevronLeftIcon } from '@chakra-ui/icons';
 import SwapCard from './components/SmartSwap/SwapCard/SwapCard';
 import Layout from 'components/Layout/Layout';
@@ -8,8 +8,28 @@ import withElronDapp from 'hoc/withElronDapp';
 import WrapperPages from 'hoc/WrapperPages';
 import { PiChartLine, PiChartLineBold } from "react-icons/pi";
 import { HiOutlineChartBarSquare } from "react-icons/hi2";
+import MyModal from 'components/Modal/Modal';
+import { breakpoints } from 'theme/chakra';
 
-
+export function ChartIcon(isSecondCardOpen: boolean) {
+  return (
+    <Center
+      bg={isSecondCardOpen ? 'main' : 'black.base'}
+      boxSize={"32px"}
+      color={isSecondCardOpen ? 'black.base' : 'main'}
+      borderRadius="full"
+      border={"2px solid"}
+      borderColor="transparent"
+      _hover={{
+        bg: isSecondCardOpen ? 'main' : 'black.base',
+        color: isSecondCardOpen ? 'black.base' : 'main',
+        borderColor: "main"
+      }}
+    >
+      <PiChartLine size={"20"}/>
+    </Center>
+  )
+}
 
 const Swap = () => {
   const [isSecondCardOpen, setIsSecondCardOpen] = useState(false);
@@ -17,7 +37,9 @@ const Swap = () => {
   const [isNftSwap, setIsNftSwap] = useState(false);
   const [tok1, setVariable1] = useState('');
   const [tok2, setVariable2] = useState('');
-  //console.log("⚠️ ~ file: Swap.tsx:13 ~ graphTokens:", graphTokens)
+
+  const [isLargeScreen] = useMediaQuery(`(min-width: ${breakpoints["md"]})`);
+  
   const [url, setUrl] = useState(`https://test.e-compass.io/quantumx/embed/MAIAR/${tok2}/USDC/60`);
   useEffect(() => {
     setUrl(`https://test.e-compass.io/quantumx/embed/MAIAR/${tok2}/USDC/60`);
@@ -67,69 +89,83 @@ const Swap = () => {
             borderColor="transparent"
             p={{ sm: "10px", md: "20px" }}
             position="relative"
+            direction={"row"}
           >
-          {/* The image now uses negative values to sit outside the top left corner */}
-          <ImageQxAshFire/>
-              <SwapCard setGraphTokens={setGraphTokens} setIsNftSwap={setIsNftSwap}/>
-              {!isNftSwap && <IconButton
-                aria-label="Toggle second card"
-                icon={isSecondCardOpen ? < HiOutlineChartBarSquare style={{ width: '30px', height: '30px' }} />: <HiOutlineChartBarSquare style={{ width: '30px', height: '30px' }} />              }
-                position="absolute"
-                right="40px"
-                top="4%"
-                zIndex="4"
+            {/* The image now uses negative values to sit outside the top left corner */}
+            <ImageQxAshFire/>
+            <SwapCard setGraphTokens={setGraphTokens} setIsNftSwap={setIsNftSwap}/>
+            {!isNftSwap && <IconButton
+                aria-label="Toggle chart"
+                icon={ChartIcon(isSecondCardOpen)}
+                variant={"none"}
+                zIndex="15"
                 onClick={toggleSecondCard}
-                variant="ghost"
-                background="none"
                 fontSize={"3xl"}
                 size={"xl"}
-                sx={{
-                  '@media screen and (max-width: 480px)': { // Adjust the breakpoint as needed
-                    //display: 'none',
-                    //display: 'none',
-                    top: "2%",
-                    zIndex:"4",
-                    right: "28px",
-                  },
-                }}
+                w={"fit-content"}
+                h={"fit-content"}
+                mr={-20}
+                ml={-8}
+                mt={-1}
               />}
-            </Card>
+          </Card>
 
           {/* Expandable Second Card */}
-          {isSecondCardOpen && (
-            <Card
-              width="620px"
-              bg="black.baseDark"
-              borderRadius="30px"
-              border="1px solid"
-              marginLeft={"-15px"}
-              borderColor="transparent"
-              p={{ base: "10px", md: "20px" }}
-              position="relative"
-              height="100%" // Ensure the height matches the first card
-              sx={{
-                '@media screen and (max-width: 480px)': { // Adjust the breakpoint as needed
-                  //display: 'none',
-                  //display: 'none',
-                  width:"100%",
-                  marginLeft:"-5px"
-                },
-              }}
-              
+          {isSecondCardOpen && ( !isLargeScreen ?
+            <MyModal
+              isOpen={isSecondCardOpen}
+              onClose={toggleSecondCard}
+              isCentered
+              bg={"transparent"}
+              // size={"full"}
+              width={"95%"}
             >
-              <Box height="100%" overflow="hidden">
-                <iframe
-                  src={url}
-                  title="QuantumX"
-                  width="100%"
-                  height="500px" // Adjust the height to match the content of the iframe
-                  style={{ border: 'none' }}
-                />
-              </Box>
-            </Card>
-          )}
+              <ModalCloseButton mt={-12} color={"main"} bg={"black.baseDark"} borderRadius={"full"}/>
+              <Card
+              maxW={"520px"}
+              width="100%"
+              bg={"black.baseDark"}
+              borderRadius="30px"
+              // border="1px solid"
+              // borderColor="transparent"
+              p={{ sm: "10px", md: "20px" }}
+              position="relative"
+              height="100%" // Ensure the height matches the first card              
+              >
+                <Box height="100%" overflow="hidden" borderRadius={"30px"}>
+                  <iframe
+                    src={url}
+                    title="QuantumX"
+                    width="100%"
+                    height="650px" // Adjust the height to match the content of the iframe
+                    // style={{ border: 'none' }}
+                  />
+                </Box>
+              </Card>
+            </MyModal> :
+             <Card
+             maxW={"520px"}
+             width="100%"
+             bg={"black.baseDark"}
+             borderRadius="30px"
+             // border="1px solid"
+             // borderColor="transparent"
+             p={{ sm: "10px", md: "20px" }}
+             position="relative"
+             height="100%" // Ensure the height matches the first card              
+             >
+               <Box height="100%" overflow="hidden" borderRadius={"30px"}>
+                 <iframe
+                   src={url}
+                   title="QuantumX"
+                   width="100%"
+                   height="628px" // Adjust the height to match the content of the iframe
+                   // style={{ border: 'none' }}
+                 />
+               </Box>
+             </Card>)
+          }
         </Flex>
-
         {/* Footer Text and Image */}
         <Flex
           mt="40px"
