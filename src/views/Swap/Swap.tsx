@@ -89,7 +89,7 @@ const Swap = () => {
                     //display: 'none',
                     top: "2%",
                     zIndex:"4",
-                    right: "28px";
+                    right: "28px",
                   },
                 }}
               />}
