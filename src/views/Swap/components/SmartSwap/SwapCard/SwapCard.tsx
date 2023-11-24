@@ -52,7 +52,7 @@ export interface SwapToken {
   value?: string;
 }
 
-const egldFee = 0.001;
+const egldFee = 0.01;
 
 const SwapCard = ({setGraphTokens, setIsNftSwap} : {setGraphTokens: any, setIsNftSwap: any}) => {
   const userAddress = store.getState().userAccount.connectedAddress;
