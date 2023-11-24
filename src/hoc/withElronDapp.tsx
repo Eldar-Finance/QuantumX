@@ -4,9 +4,10 @@ import dynamic from "next/dynamic";
 
 import { EnvironmentsEnum } from "@multiversx/sdk-dapp/types";
 import { AxiosInterceptorContext } from "@multiversx/sdk-dapp/wrappers/AxiosInterceptorContext";
-import { Box } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 import { network } from "api/net.config";
 import { sampleAuthenticatedDomains } from "../config";
+import classNames from "classnames";
 
 export const DappProvider = dynamic(
   async () => {
@@ -55,13 +56,19 @@ const withElronDapp = (Component) => (props) => {
               shouldUseWebViewProvider: true,
             }}
           >
-            <Box color="black">
-              <TransactionsToastList />
-              <NotificationModal />
-              <SignTransactionsModals className="custom-class-for-modals" />
-            </Box>
-            <AxiosInterceptorContext.Listener />
-            <Component {...props} />
+            <AxiosInterceptorContext.Listener>
+              <TransactionsToastList
+                // customToastClassName="transactions-toast-class"
+                // transactionToastClassName="transactions-toast-class"
+                successfulToastLifetime={6000}
+              />
+              <NotificationModal/>
+              <SignTransactionsModals
+                verifyReceiverScam={true}
+                className="sign-transactions-class"
+              />
+              <Component {...props} />
+            </AxiosInterceptorContext.Listener>
           </DappProvider>
         </AxiosInterceptorContext.Interceptor>
       </AxiosInterceptorContext.Provider>
