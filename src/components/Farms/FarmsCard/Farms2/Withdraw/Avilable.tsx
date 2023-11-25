@@ -19,6 +19,7 @@ interface IProps {
 }
 
 const Avilable = ({ farm, userFarmRewards }: IProps) => {
+  console.log("⚠️ ~ file: Avilable.tsx:22 ~ userFarmRewards:", userFarmRewards)
   const { tokens: rewardsTokens } = useGetMultipleElrondTokens(
     userFarmRewards.map((r) => r.rewardToken)
   );
@@ -30,7 +31,7 @@ const Avilable = ({ farm, userFarmRewards }: IProps) => {
       "farms2",
       "harvest",
       [new BigUIntValue(new BigNumber(farm.farm.farmId))],
-      farm.farm.farmId === 8 ? 500000000 : 360000000
+      farm.farm.farmId === 8 ? 400000000 : 200000000
     );
   };
 
