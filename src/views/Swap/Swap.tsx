@@ -122,15 +122,15 @@ const Swap = () => {
             >
               <ModalCloseButton mt={-12} color={"main"} bg={"black.baseDark"} borderRadius={"full"}/>
               <Card
-              maxW={"520px"}
-              width="100%"
-              bg={"black.baseDark"}
-              borderRadius="30px"
-              // border="1px solid"
-              // borderColor="transparent"
-              p={{ sm: "10px", md: "20px" }}
-              position="relative"
-              height="100%" // Ensure the height matches the first card              
+                maxW={"520px"}
+                width="100%"
+                bg={"black.baseDark"}
+                borderRadius="30px"
+                // border="1px solid"
+                // borderColor="transparent"
+                p={{ sm: "10px", md: "20px" }}
+                position="relative"
+                height="100%" // Ensure the height matches the first card              
               >
                 <Box height="100%" overflow="hidden" borderRadius={"30px"}>
                   <iframe
@@ -143,7 +143,7 @@ const Swap = () => {
                 </Box>
               </Card>
             </MyModal> :
-            <Card
+            (!isNftSwap && <Card
               maxW={"520px"}
               width="100%"
               bg={"black.baseDark"}
@@ -164,6 +164,7 @@ const Swap = () => {
                  />
                </Box>
              </Card>)
+            )
           }
         </Flex>
         {/* Footer Text and Image */}
