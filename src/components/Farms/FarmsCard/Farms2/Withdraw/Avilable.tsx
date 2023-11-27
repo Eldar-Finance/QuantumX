@@ -19,7 +19,6 @@ interface IProps {
 }
 
 const Avilable = ({ farm, userFarmRewards }: IProps) => {
-  console.log("⚠️ ~ file: Avilable.tsx:22 ~ userFarmRewards:", userFarmRewards)
   const { tokens: rewardsTokens } = useGetMultipleElrondTokens(
     userFarmRewards.map((r) => r.rewardToken)
   );

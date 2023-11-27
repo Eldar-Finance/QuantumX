@@ -22,8 +22,8 @@ const MainSection = () => {
   return (
     <Center flexDir={"column"} m="auto" maxW={"692px"} textAlign={"center"}>
       <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}>
-        <Heading as="h1" fontSize={{ xs: "3xl", md: "7xl" }} mb="30px">
-          A dimension in the Multivers only accessible through{" "}
+        <Heading as="h1" fontSize={{ xs: "3xl", md: "7xl" }} mb="30px" mx={50}>
+          A dimension in the Multiverse only accessible through{" "}
           <Box as="span" bg="main" bgClip={"text"}>
             {" "}
             DeFi magic.

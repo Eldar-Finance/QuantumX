@@ -106,7 +106,7 @@ const Swap = () => {
                 h={"fit-content"}
                 mr={-20}
                 ml={-8}
-                mt={-1}
+                mt={-2}
               />}
           </Card>
 
@@ -143,16 +143,16 @@ const Swap = () => {
                 </Box>
               </Card>
             </MyModal> :
-             <Card
-             maxW={"520px"}
-             width="100%"
-             bg={"black.baseDark"}
-             borderRadius="30px"
-             // border="1px solid"
-             // borderColor="transparent"
-             p={{ sm: "10px", md: "20px" }}
-             position="relative"
-             height="100%" // Ensure the height matches the first card              
+            <Card
+              maxW={"520px"}
+              width="100%"
+              bg={"black.baseDark"}
+              borderRadius="30px"
+              // border="1px solid"
+              // borderColor="transparent"
+              p={{ sm: "10px", md: "20px" }}
+              position="relative"
+              height="100%" // Ensure the height matches the first card              
              >
                <Box height="100%" overflow="hidden" borderRadius={"30px"}>
                  <iframe
