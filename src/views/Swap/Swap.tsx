@@ -40,10 +40,11 @@ const Swap = () => {
 
   const [isLargeScreen] = useMediaQuery(`(min-width: ${breakpoints["md"]})`);
   
-  const [url, setUrl] = useState(`https://test.e-compass.io/quantumx/embed/MAIAR/${tok2}/USDC/60`);
+  const ecompassLink = `https://test.e-compass.io/quantumx/embed/MAIAR/${tok2 != "EGLD" ? tok2 : "WEGLD"}/USDC/60`;
+  const [url, setUrl] = useState(ecompassLink);
   useEffect(() => {
-    setUrl(`https://test.e-compass.io/quantumx/embed/MAIAR/${tok2}/USDC/60`);
-}, [tok2]); // This will trigger the effect whenever token2 changes
+    setUrl(ecompassLink);
+}, [ecompassLink]); // This will trigger the effect whenever token2 changes
 
 
 
