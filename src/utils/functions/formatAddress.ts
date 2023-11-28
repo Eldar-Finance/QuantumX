@@ -1,7 +1,7 @@
 export const formatAddress = (
   address: string,
-  subStr1: number = 7,
-  subStr2: number = 6
+  subStr1: number = 5,
+  subStr2: number = 4
 ): string => {
   const addr = address || "";
   return (

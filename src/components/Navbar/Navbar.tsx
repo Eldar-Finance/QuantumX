@@ -19,6 +19,12 @@ import { breakpoints } from "theme/chakra";
 import React, { useState } from 'react';
 import CoinTab2 from "views/Dashboard/components/Dashtabs/WalletTab/CoinTab2";
 import { FiLogOut } from 'react-icons/fi'; // Assuming you're using react-icons for the icon
+import { Modal, ModalOverlay, ModalContent, useDisclosure } from "@chakra-ui/react";
+import BuyTab from "views/Dashboard/components/Dashtabs/BuyTab/BuyTab"; //
+import { AiTwotoneEuroCircle } from "react-icons/ai";
+import { FaHashtag } from "react-icons/fa";
+
+
 
 import {
   Button,
@@ -42,6 +48,7 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
   const { isLoggedIn } = useGetLoginInfo();
   const [isLargerThanLg] = useMediaQuery(`(min-width: ${breakpoints["md"]})`);
   const [isMenuOpen, setMenuOpen] = useState(false);
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const handleLogout = () => {
     logout(getWebUrl(location));
@@ -72,22 +79,69 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
                 <NextImage src={logo} alt="QuantumX" width={100} />
               </Link>
               <Flex alignItems="center" justifyContent="flex-end" flex="1" gap={2}>
-                {isLoggedIn &&
-                  <QTagButton w="fit" textColor={"black"} bg="main" borderRadius={"md"} h={{xs: "32px"}}/>
-                }
-                {!onlyConnectButton && (
-                  <ActionButton
-                    h={{xs: "32px"}}
-                    fontSize={{ xs: "14px", "2xl": "md" }}
-                    fontWeight="600"
-                    display={{ xs: "block", md: "none" }}
-                    onClick={isLoggedIn ? handleLogout : handleConnect}
-                    bg={isLoggedIn ? "danger" : "main"}
-                    ml="2px"
+              <Box>
+              {isLoggedIn ? (
+                // Dropdown for the logged-in state
+                <Menu onOpen={() => setMenuOpen(true)} onClose={() => setMenuOpen(false)}>
+                  <MenuButton
+                    as={Button}
+                    rightIcon={<ChevronDownIcon />}
+                    size="sm"
+                    bg={"black.baseDark"}
+                    color={isMenuOpen ? "black" : "white"}
+                    alignItems={"center"}
+                    borderRadius={"full"}
+                    position="relative"
+                    fontSize={{ xs: "sm", md: "inherit" }}
                   >
-                    {isLoggedIn ? <Icon as={LightningIcon} pb={"2px"} /> : <Text>Connect</Text>}
-                  </ActionButton>
-                )}
+                    <AddressSection2/>
+                  </MenuButton>
+                  <MenuList
+                  zIndex={"6"}
+                    bg={"black.base"}
+                    minWidth="260px"
+                    width="auto"
+                    p={4}
+                    ml={-5}
+                    border={"none"}
+                  >
+                    <Box alignContent={"center"}>
+                      <AddressSection3/>
+                      <Divider marginBottom={"20px"} paddingTop={"20px"}/>
+                    </Box>
+                    <Box my={5}>
+                      <CoinTab2/>
+                      <Divider marginBottom={"20px"} paddingTop={"20px"}/>
+                    </Box> 
+                    <Button  leftIcon={<Icon as={AiTwotoneEuroCircle} />} fontWeight={"500"}
+                    fontSize={{ xs: "14px", "2xl": "md" }}
+                    h={{xs: "32px", md: "40px"}} variant={"ghost"} onClick={onOpen}>Buy Crypto</Button>
+                    <QTagButton leftIcon={<Icon as={FaHashtag} />}/>
+                    <Modal isOpen={isOpen} onClose={onClose} isCentered>
+                    <ModalOverlay />
+                    <ModalContent>
+                      <BuyTab />
+                    </ModalContent>
+                  </Modal>
+                    <Box pl={4} gap={2} as="button" fontWeight={"500"}
+                    fontSize={{ xs: "14px", "2xl": "md" }}
+                    h={{xs: "32px", md: "40px"}} display="flex" alignItems="center" onClick={handleLogout} width="100%" textAlign="left" paddingY="2">
+                    <Box as={FiLogOut} />
+                    <Text>Disconnect</Text>
+                    </Box>
+                  </MenuList>
+                </Menu>
+              ) : (
+                // Regular button for the logged-out state
+                <ActionButton
+                  onClick={handleConnect}
+                  px={5}
+                  // size="md"
+                >
+                  Connect
+                </ActionButton>
+              )}
+            </Box>
               </Flex>
             </Flex>
             <Box w="fit">
@@ -140,10 +194,17 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
                       <CoinTab2/>
                       <Divider marginBottom={"20px"} paddingTop={"20px"}/>
                     </Box> 
-                    <QTagButton/>
+                    <Button  leftIcon={<Icon as={AiTwotoneEuroCircle} />} variant={"ghost"} onClick={onOpen}>Buy Crypto</Button>
+                    <QTagButton leftIcon={<Icon as={FaHashtag} />}/>
+                    <Modal isOpen={isOpen} onClose={onClose} isCentered>
+                    <ModalOverlay />
+                    <ModalContent>
+                      <BuyTab />
+                    </ModalContent>
+                  </Modal>
                     <Box pl={4} gap={2} as="button" display="flex" alignItems="center" onClick={handleLogout} width="100%" textAlign="left" paddingY="2">
-                      <Text>Disconnect</Text>
-                      <Box as={FiLogOut} />
+                    <Box as={FiLogOut} />
+                    <Text>Disconnect</Text>
                     </Box>
                   </MenuList>
                 </Menu>

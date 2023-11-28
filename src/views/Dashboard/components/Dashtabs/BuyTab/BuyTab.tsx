@@ -4,20 +4,22 @@ import styled from "@emotion/styled";
 
 const BuyTab = () => {
   return (
-    <WrapperS w="full" h="400px" mb={"100px"}>
+    <WrapperS w="full">
       <Center
         maxW={"700px"}
         m="auto"
         h="390px"
         borderRadius={"lg"}
         overflow="hidden"
+        background={"black"}
       >
         <iframe
           width="100%"
           height="100%"
           frameBorder="none"
           allow="camera"
-          src="https://widget.changelly.com?from=eur&to=egld&amount=50&address=&fromDefault=eur&toDefault=egld&merchant_id=635cd9927ad3&payment_id=&v=3"
+          color="black"
+          src="https://widget.changelly.com?from=eur%2Cusd&to=egld&amount=50&address=&fromDefault=eur&toDefault=egld&merchant_id=MEdittd0p-jm_BZ1&payment_id=&v=3&type=no-rev-share&color=22F6DC&headerId=1&logo=hide&buyButtonTextId=1"
         >
           Can't load widget
         </iframe>
