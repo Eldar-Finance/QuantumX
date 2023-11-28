@@ -1,8 +1,17 @@
 /* eslint-disable react/no-unescaped-entities */
 import { Box, Center } from "@chakra-ui/react";
 import styled from "@emotion/styled";
+import { selectUserAddress } from "redux/slices/userAcount/account-slice";
+import { useAppSelector } from "utils/hooks/redux";
+import React, { useState, useEffect } from 'react';
+
+
 
 const BuyTab = () => {
+
+  const address = useAppSelector(selectUserAddress);
+  const [iframeSrc, setIframeSrc] = useState('');
+
   return (
     <WrapperS w="full">
       <Center
@@ -13,16 +22,16 @@ const BuyTab = () => {
         overflow="hidden"
         background={"black"}
       >
+       {address ? (
         <iframe
+          src={`https://widget.changelly.com?from=eur&to=egld&amount=30&address=${address}&fromDefault=eur&toDefault=egld&merchant_id=635cd9927ad3&payment_id=&v=3`}
           width="100%"
           height="100%"
-          frameBorder="none"
-          allow="camera"
-          color="black"
-          src="https://widget.changelly.com?from=eur%2Cusd&to=egld&amount=50&address=&fromDefault=eur&toDefault=egld&merchant_id=MEdittd0p-jm_BZ1&payment_id=&v=3&type=no-rev-share&color=22F6DC&headerId=1&logo=hide&buyButtonTextId=1"
-        >
-          Can't load widget
+          frameBorder="0">
         </iframe>
+      ) : (
+        <div>Loading...</div> // Or any other placeholder you prefer
+      )}
       </Center>
     </WrapperS>
   );
