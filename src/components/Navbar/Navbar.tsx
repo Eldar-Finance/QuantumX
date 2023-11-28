@@ -97,7 +97,7 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
                     <AddressSection2/>
                   </MenuButton>
                   <MenuList
-                  zIndex={"6"}
+                  zIndex={"32"}
                     bg={"black.base"}
                     minWidth="260px"
                     width="auto"

@@ -29,7 +29,7 @@ export const routeNames = {
 };
 
 export const routes: {
-  dashboard: IRoute;
+  //dashboard: IRoute;
   swap: IRoute;
   farms: IRoute;
   pools: IRoute;
@@ -44,10 +44,10 @@ export const routes: {
   moondustx: IRoute;
   // marketplace: IRoute;
 } = {
-  dashboard: {
-    path: routeNames.dashboard,
-    name: "Dashboard",
-  },
+ // dashboard: {
+   // path: routeNames.dashboard,
+    //name: "Dashboard",
+  //},
   swap: {
     path: routeNames.swap,
     name: "Swap",
