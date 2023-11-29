@@ -37,6 +37,7 @@ import {
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import AddressSection2 from "views/Dashboard/components/AddressSection/AddessSection2";
 import AddressSection3 from "views/Dashboard/components/AddressSection/AdressSection3";
+import TotalAmount from "views/Dashboard/components/TotalAmount/TotalAmount";
 
 interface IProps {
   onlyConnectButton?: boolean;
@@ -107,7 +108,9 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
                   >
                     <Box alignContent={"center"}>
                       <AddressSection3/>
-                      <Divider marginBottom={"20px"} paddingTop={"20px"}/>
+                      <Divider marginBottom={"10px"} paddingTop={"10px"}/>
+                      <TotalAmount />
+                      <Divider marginBottom={"10px"} paddingTop={"10px"}/>
                     </Box>
                     <Box my={5}>
                       <CoinTab2/>
@@ -188,10 +191,13 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
                   >
                     <Box alignContent={"center"}>
                       <AddressSection3/>
-                      <Divider marginBottom={"20px"} paddingTop={"20px"}/>
+                      <Divider marginBottom={"10px"} paddingTop={"10px"}/>
+                      <TotalAmount />
+                      <Divider marginBottom={"10px"} paddingTop={"10px"}/>
                     </Box>
                     <Box my={5}>
                       <CoinTab2/>
+                      
                       <Divider marginBottom={"20px"} paddingTop={"20px"}/>
                     </Box> 
                     <Button  leftIcon={<Icon as={AiTwotoneEuroCircle} />} variant={"ghost"} onClick={onOpen}>Buy Crypto</Button>

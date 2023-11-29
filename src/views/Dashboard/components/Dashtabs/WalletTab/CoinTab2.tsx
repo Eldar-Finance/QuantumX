@@ -75,7 +75,7 @@ const CoinTab2 = () => {
     <Box w="full" maxW={"200px"} mx="auto" maxH="200px" overflowY={"auto"} className="thin-scrollbar">
       <List spacing={3}>
         {displayedTokens.map((token, index) => (
-          <ListItem key={index} pb={2} mb={2}>
+          <ListItem key={index} >
             <Flex alignItems="center" justifyContent="space-between">
               <Flex alignItems="center">
               <Box
@@ -98,8 +98,14 @@ const CoinTab2 = () => {
             </Box>
                 <Text fontSize={"xs"} fontWeight="bold">{token.name}</Text>
               </Flex>
+              <Flex direction={"column"}>
               <Text marginRight="10px">{formatBalance(token)}</Text>
+              <Text fontSize={"0.8em"} color={"gray"} textAlign={"end"} marginRight="10px">${formatBalanceDolar(token, token.price)}</Text>
+              </Flex>
+              
+              
             </Flex>
+            
           </ListItem>
         ))}
       </List>

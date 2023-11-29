@@ -46,11 +46,11 @@ const TotalAmount = () => {
   return (
     <Center
       position={"relative"}
-      p="20px 50px 20px 30px"
+      p="10px 10px 10px 10px"
       bg="black.dark"
       borderRadius="xl"
     >
-      <Text fontSize={"4xl"} fontWeight="500">
+      <Text fontSize={"xl"} fontWeight="500">
         {showBalance
           ? `$${balanceDisplayed}`
           : createStringWithCharAndLenght(
@@ -58,17 +58,7 @@ const TotalAmount = () => {
               balanceDisplayed.toString().length
             )}
       </Text>
-      <Center
-        position={"absolute"}
-        boxSize="70px"
-        bg="black.baseDark"
-        borderRadius={"15px"}
-        right={"-35px"}
-        cursor="pointer"
-        onClick={hideBalance}
-      >
-        <Icon as={showBalance ? ViewOffIcon : EyeIcon} fontSize={"18px"} />
-      </Center>
+
     </Center>
   );
 };
