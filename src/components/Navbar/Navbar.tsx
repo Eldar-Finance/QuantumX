@@ -23,6 +23,8 @@ import { Modal, ModalOverlay, ModalContent, useDisclosure } from "@chakra-ui/rea
 import BuyTab from "views/Dashboard/components/Dashtabs/BuyTab/BuyTab"; //
 import { AiTwotoneEuroCircle } from "react-icons/ai";
 import { FaHashtag } from "react-icons/fa";
+import { PiBridgeThin } from "react-icons/pi";
+
 
 
 
@@ -38,6 +40,7 @@ import { ChevronDownIcon } from '@chakra-ui/icons';
 import AddressSection2 from "views/Dashboard/components/AddressSection/AddessSection2";
 import AddressSection3 from "views/Dashboard/components/AddressSection/AdressSection3";
 import TotalAmount from "views/Dashboard/components/TotalAmount/TotalAmount";
+import BuyTab2 from "views/Dashboard/components/Dashtabs/BuyTab/BuyTab2";
 
 interface IProps {
   onlyConnectButton?: boolean;
@@ -49,7 +52,9 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
   const { isLoggedIn } = useGetLoginInfo();
   const [isLargerThanLg] = useMediaQuery(`(min-width: ${breakpoints["md"]})`);
   const [isMenuOpen, setMenuOpen] = useState(false);
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [isBuyCryptoModalOpen, setIsBuyCryptoModalOpen] = useState(false);
+const [isBridgeModalOpen, setIsBridgeModalOpen] = useState(false);
+
 
   const handleLogout = () => {
     logout(getWebUrl(location));
@@ -116,16 +121,23 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
                       <CoinTab2/>
                       <Divider marginBottom={"20px"} paddingTop={"20px"}/>
                     </Box> 
-                    <Button  leftIcon={<Icon as={AiTwotoneEuroCircle} />} fontWeight={"500"}
-                    fontSize={{ xs: "14px", "2xl": "md" }}
-                    h={{xs: "32px", md: "40px"}} variant={"ghost"} onClick={onOpen}>Buy Crypto</Button>
+                    <Button leftIcon={<Icon as={AiTwotoneEuroCircle} />} variant={"ghost"} onClick={() => setIsBuyCryptoModalOpen(true)}>Buy Crypto</Button>
+                    <Button leftIcon={<Icon as={PiBridgeThin} />} variant={"ghost"} onClick={() => setIsBridgeModalOpen(true)}>Bridge</Button>
                     <QTagButton leftIcon={<Icon as={FaHashtag} />}/>
-                    <Modal isOpen={isOpen} onClose={onClose} isCentered>
-                    <ModalOverlay />
-                    <ModalContent>
-                      <BuyTab />
-                    </ModalContent>
-                  </Modal>
+
+                    <Modal isOpen={isBuyCryptoModalOpen} onClose={() => setIsBuyCryptoModalOpen(false)} isCentered>
+                      <ModalOverlay />
+                      <ModalContent>
+                        <BuyTab />
+                      </ModalContent>
+                    </Modal>
+
+                    <Modal isOpen={isBridgeModalOpen} onClose={() => setIsBridgeModalOpen(false)} isCentered>
+                      <ModalOverlay />
+                      <ModalContent>
+                        <BuyTab2 />
+                      </ModalContent>
+                    </Modal>
                     <Box pl={4} gap={2} as="button" fontWeight={"500"}
                     fontSize={{ xs: "14px", "2xl": "md" }}
                     h={{xs: "32px", md: "40px"}} display="flex" alignItems="center" onClick={handleLogout} width="100%" textAlign="left" paddingY="2">
@@ -200,14 +212,24 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
                       
                       <Divider marginBottom={"20px"} paddingTop={"20px"}/>
                     </Box> 
-                    <Button  leftIcon={<Icon as={AiTwotoneEuroCircle} />} variant={"ghost"} onClick={onOpen}>Buy Crypto</Button>
+                    <Button leftIcon={<Icon as={AiTwotoneEuroCircle} />} variant={"ghost"} onClick={() => setIsBuyCryptoModalOpen(true)}>Buy Crypto</Button>
+                    <Button leftIcon={<Icon as={PiBridgeThin} />} variant={"ghost"} onClick={() => setIsBridgeModalOpen(true)}>Bridge</Button>
                     <QTagButton leftIcon={<Icon as={FaHashtag} />}/>
-                    <Modal isOpen={isOpen} onClose={onClose} isCentered>
-                    <ModalOverlay />
-                    <ModalContent>
-                      <BuyTab />
-                    </ModalContent>
-                  </Modal>
+
+                    <Modal isOpen={isBuyCryptoModalOpen} onClose={() => setIsBuyCryptoModalOpen(false)} isCentered>
+                      <ModalOverlay />
+                      <ModalContent>
+                        <BuyTab />
+                      </ModalContent>
+                    </Modal>
+
+                    <Modal isOpen={isBridgeModalOpen} onClose={() => setIsBridgeModalOpen(false)} isCentered>
+                      <ModalOverlay />
+                      <ModalContent>
+                        <BuyTab2 />
+                      </ModalContent>
+                    </Modal>
+
                     <Box pl={4} gap={2} as="button" display="flex" alignItems="center" onClick={handleLogout} width="100%" textAlign="left" paddingY="2">
                     <Box as={FiLogOut} />
                     <Text>Disconnect</Text>
