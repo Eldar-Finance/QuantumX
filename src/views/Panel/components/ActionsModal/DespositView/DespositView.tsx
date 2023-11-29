@@ -22,6 +22,7 @@ import { useFormik } from "formik";
 import { memo, useEffect, useMemo, useRef, useState } from "react";
 import { formatBalance, setElrondBalance } from "utils/functions/formatBalance";
 import { formatTokenI } from "utils/functions/tokens";
+import useGetAccountToken from "utils/hooks/useGetAccountToken";
 import useGetElrondToken from "utils/hooks/useGetElrondToken";
 import useGetUserTokens from "utils/hooks/useGetUserTokens";
 import { IELrondTOkenWithBalance } from "utils/types/elrond.interface";
@@ -53,7 +54,7 @@ const skipRender = (prevProps: IProps, nextProps: IProps) => {
 
 // eslint-disable-next-line react/display-name
 const DepositView = memo(({ onClose, farm }: IProps) => {
-  const { token } = useGetElrondToken(farm.rewardToken);
+  const { accountToken: token } = useGetAccountToken(farm.rewardToken);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const elrondToken = useMemo(() => token, [token.identifier]);
   const isOneToken = farm.rewardToken !== "";
@@ -273,10 +274,14 @@ const InputComponent = ({
 
   const handleMax = () => {
     const realmax = new BigNumber(field.tokenDetail.balance).toString();
-    const inputMax = formatBalance({
-      balance: realmax,
-      decimals: field.tokenDetail.decimals,
-    });
+    const inputMax = formatBalance(
+      {
+        balance: realmax,
+        decimals: field.tokenDetail.decimals,
+      },
+      true,
+      field.tokenDetail.decimals
+    );
     inputRef.current.setValue(inputMax);
 
     onMax(realmax, i);
