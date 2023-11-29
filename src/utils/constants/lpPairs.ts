@@ -306,5 +306,12 @@ export const pairs = [
     lpprice: "0",
     token2lp: "CUMB-8b7006",
     token1lp: "WEGLD-bd4d79",
+  },
+  {
+    lpname: "PADAWWEGLD",
+    lpidentifier: "PADAWWEGLD-652cd3",
+    lpprice: "0",
+    token2lp: "PADAWAN-a17f58",
+    token1lp: "WEGLD-bd4d79",
   }
 ];
