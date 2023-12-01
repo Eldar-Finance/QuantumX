@@ -42,12 +42,9 @@ const  useApr = (
   const { jexPrice: bonezPrice } = useGetJexPrice(
     multifarmRewardsLeft.find((r) => r.token === toknesID.bonez)?.token
   );
-  
   const { tokens: rewardsTokens } = useGetMultipleElrondTokens(
     multifarmRewardsLeft ? multifarmRewardsLeft.map((f) => f.token) : []
   );
-
-  
 
   const price = stakedTokenPrice;
   let apr: string = "-";

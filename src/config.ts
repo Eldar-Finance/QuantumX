@@ -145,8 +145,7 @@ export const TOKENS_ID = {
   wbtc: "WBTC-5349b3",
   weth: "WETH-b4ca29",
   htm: "HTM-f51d55",
-  ash: "ASH-a642d1",
-  padawan: "PADAWAN-a17f58",
+  ash: "ASH-a642d1"
 };
 
 export const swapTopTokens = [ TOKENS_ID.egld, TOKENS_ID.wegld, TOKENS_ID.usdc,
