@@ -6,14 +6,14 @@ import { IElrondToken } from "utils/types/elrond.interface";
 // export const getFromAllTokens = async () => {
 //   return await axiosEldron.get("/tokens?size=10000");
 // };
-export const getFromAllTokens = async ({
+export const getFromAllTokens2 = async ({
   size = 400,
   name = undefined,
   identifier = undefined,
   identifiers = undefined,
   search = undefined,
 }) => {
-  return await axiosEldron.get<IElrondToken[]>("/tokens", {
+  return await axiosNewEl.get<IElrondToken[]>("/tokens", {
     params: {
       identifier,
       identifiers,
@@ -24,8 +24,8 @@ export const getFromAllTokens = async ({
   });
 };
 
-export const getTokenPrice = async (identifier: string) => {
-  const res = axiosEldron.get<{ price: number }>(
+export const getTokenPrice2 = async (identifier: string) => {
+  const res = axiosNewEl.get<{ price: number }>(
     `/tokens/${identifier}?fields=price`
   );
 
