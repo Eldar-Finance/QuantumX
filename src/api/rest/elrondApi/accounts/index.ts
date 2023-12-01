@@ -37,7 +37,7 @@ export const getTokensByNfts = async (address, nfts) => {
 };
 
 export const getMexPairs = async () => {
-  return await axiosEldron.get("/mex/pairs?size=320");
+  return await axiosEldron.get("/mex/pairs?size=200");
 };
 
 export const getEgldBalance = async (address): Promise<IElrondUserAccount> => {
