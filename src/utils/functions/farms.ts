@@ -7,6 +7,10 @@ import { IScFarm2RewardsLeft, IScFarmItem } from "utils/types/sc.interface";
 import { orderSimpleData } from "./array";
 import { formatBalanceDolar, formatNumber } from "./formatBalance";
 import { preventExponetialNotation } from "./numbers";
+import useGetJexPrice from "utils/hooks/useGetJexPrice";
+import { toknesID } from "api/net.config";
+
+
 
 export const getFeeBasedInEpoch = (epoch) => {
   if (epoch === undefined || epoch === null) {
@@ -25,6 +29,8 @@ export const getFeeBasedInEpoch = (epoch) => {
 
   return fee;
 };
+
+
 
 export const haveMaxLimit = (token) => {
   return noMaxTokens.findIndex((t) => t === token) !== -1;
@@ -52,6 +58,7 @@ export const getSortedFarm = (
     // return an array of tokenns infos
     return { ...tokenInfo, pf: pf } as { staked?: number; tokenI; pf: any };
   });
+  
 
   // now we can calc the total locked balance
   const proteoFarmTotalLockedBalanceArr: IFarmWithTvl[] = prteoTokenInfo.map(
@@ -155,6 +162,9 @@ export const aprFarms = (
 ) => {
   let apr: string | number = "-";
 
+  const padawanPrice= useGetJexPrice('PADAWAN-a17f58');
+  console.log(padawanPrice.jexPrice)
+
   if (
     price &&
     stakingToken &&
@@ -206,7 +216,25 @@ export const aprFarms = (
                 100 *
                 365) /
               epochDifference;
-          } else {
+          } else if (rewardTokens.identifier=='PADAWAN-a17f58'){
+            apr =
+              formatNumber(
+                preventExponetialNotation(
+                  ((formatBalanceDolar(
+                    {
+                      balance: farm.totalRewardsLeft,
+                      decimals: rewardTokens.decimals,
+                    },
+                    padawanPrice.jexPrice
+                  ) /
+                    totalDollarStakedAmount) *
+                    100 *
+                    365) /
+                    epochDifference
+                ).toString()
+              ) + " %";
+
+          }else {
             apr =
               formatNumber(
                 preventExponetialNotation(
@@ -407,11 +435,14 @@ export const apyFarms = (apr: number | string) => {
       new BigNumber(apr).dividedBy(100).dividedBy(compoundingPeriods)
     )
   )
+  
     .pow(compoundingPeriods)
 
     .minus(1)
     .multipliedBy(100)
     .toFixed(2);
+
+
 
   return apy;
 };
