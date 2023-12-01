@@ -52,7 +52,7 @@ const CoinTab2 = () => {
   }, [tableData.data, egldData, egldPrice]);
 
   // Limit the number of tokens to display to 5
-  const displayedTokens = data.slice(0, 5);
+  const displayedTokens = data.slice(0, 25);
 
   return (
     <>
