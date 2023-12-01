@@ -86,7 +86,7 @@ export const network = {
   name: "Mainnet",
   egldLabel: "EGLD",
   walletAddress: "https://wallet.multiversx.com",
-  apiAddress: "https://next-api.multiversx.com",
+  apiAddress: "https://api.multiversx.com",
   gatewayAddress: "https://gateway.multiversx.com",
   explorerAddress: "http://explorer.multiversx.com",
   graphQlAddress: "https://exchange-graph.multiversx.com/graphql",
