@@ -106,7 +106,7 @@ const StakeUnstake = ({ farm, userFarmItem, isPool, isBearly, farmUserRewards }:
     }
   };
 
-  const padawanMaxCap = 247_000000000000000000; // 247 LP
+  const padawanMaxCap = 380_000000000000000000; // 247 LP
   const isPadawanFull = farm.farm.farmId === 54 && farm.stakedBalance >= padawanMaxCap || false;
   const disableMessage = isPadawanFull ? "FARM IS FULL" : isPool ? "STAKE" : "STAKE LP";
 
