@@ -313,5 +313,12 @@ export const pairs = [
     lpprice: "0",
     token2lp: "PADAWAN-a17f58",
     token1lp: "WEGLD-bd4d79",
+  },
+  {
+    lpname: "WAGMIUSDC",
+    lpidentifier: "WAGMIUSDC-b996b4",
+    lpprice: "0",
+    token2lp: "WAGMI-3f803d",
+    token1lp: "USDC-c76f1f",
   }
 ];

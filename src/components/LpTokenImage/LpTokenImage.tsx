@@ -4,6 +4,7 @@ import { pairs } from "utils/constants/lpPairs";
 import useGetMultipleElrondTokens from "utils/hooks/useGetMultipleElrondTokens";
 import { IElrondToken } from "utils/types/elrond.interface";
 
+
 interface IProps {
   lpToken: IElrondToken;
 }
@@ -20,7 +21,12 @@ const LpTokenImage = ({ lpToken }: IProps) => {
   return (
     <Flex>
       <Image src={tokens[0].assets.svgUrl} alt="" width={27} height={27} />
-      <Image src={tokens[1].assets.svgUrl} alt="" width={27} height={27} />
+      <Image 
+    src={tokens[1].identifier === "WAGMI-3f803d" ? "/images/wagmi.png" : tokens[1].assets.svgUrl} 
+    alt="" 
+    width={27} 
+    height={27} 
+/>
     </Flex>
   );
 };
