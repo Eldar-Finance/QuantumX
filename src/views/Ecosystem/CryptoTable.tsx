@@ -58,8 +58,11 @@ const CryptoTable = () => {
   };
 
   const handleBuyClick = (token) => {
-    console.log('Buy', token);
+    const baseUrl = "https://quantumx.network/swap";
+    const url = `${baseUrl}?toToken=${token.identifier}&fromToken=EGLD`;
+    window.location.href = url; // Opens the link in the same tab
   };
+  
 
   if (loading) return <Box>Loading...</Box>;
   if (error) return <Box>Error: {error.message}</Box>;
@@ -77,8 +80,13 @@ const CryptoTable = () => {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           marginBottom="20px"
+          width={"30%"}
+          float={"left"}
+          background={"#151515"}
+          border={"3px solid #242526"}
+          borderRadius={"20px"}
         />
-        <Table variant="stripped" size="md">
+        <Table variant="simple" size="md">
           <Thead>
             <Tr>
               <Th>#</Th>
@@ -92,14 +100,14 @@ const CryptoTable = () => {
           </Thead>
           <Tbody>
             {filteredTokens.map((token, index) => (
-              <Tr key={token.identifier} onClick={() => handleTokenClick(token)} cursor="pointer">
+              <Tr key={token.identifier} cursor="pointer">
                 <Td>{index + 1}</Td>
                 <Td style={{ display: 'flex' }}>
                   <Image marginBottom={"10px"} marginRight={"10px"} src={token.assets.pngUrl} alt={`${token.ticker} logo`} boxSize="30px" />
                   {token.name}
                 </Td>
                 <Td>
-                  <Button size="sm" colorScheme="green" onClick={(e) => {
+                  <Button variant={"outline"} size="sm" colorScheme="green" onClick={(e) => {
                     e.stopPropagation();
                     handleBuyClick(token);
                   }}>
@@ -147,11 +155,11 @@ const CryptoTable = () => {
           marginBottom="20px"
         />
         {filteredTokens.map((token, index) => (
-          <Box key={token.identifier} borderBottom="1px solid gray" p={2} onClick={() => handleTokenClick(token)}>
+          <Box key={token.identifier} borderBottom="1px solid gray" p={2} >
             <Flex justify="space-between" align="center">
               <Image src={token.assets.pngUrl} alt={`${token.ticker} logo`} boxSize="50px" />
               <Text fontWeight="bold">{index + 1}. {token.name} {token.ticker}</Text>
-              <Button size="sm" colorScheme="green" onClick={(e) => {
+              <Button size="sm" colorScheme="green" variant={"outline"} onClick={(e) => {
                 e.stopPropagation();
                 handleBuyClick(token);
               }}>

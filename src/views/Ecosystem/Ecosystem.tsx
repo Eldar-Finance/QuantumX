@@ -2,7 +2,7 @@ import MyContainer from "components/Container/Container";
 import Layout from "components/Layout/Layout";
 import WrapperPages from "hoc/WrapperPages";
 import withElronDapp from "hoc/withElronDapp";
-import TitleSection from "./Titlesection";
+import TitleSection from "./TitleSection";
 import CryptoTable from "./CryptoTable";
 import { Center } from "@chakra-ui/react";
 

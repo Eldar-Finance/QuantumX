@@ -9,10 +9,10 @@ const TitleSection = () => {
 
 
 
-              <Image borderRadius={"25px"} width={"50%"}
+             {/* <Image borderRadius={"25px"} width={"50%"}
               src="https://i.postimg.cc/dtHrQxks/Screenshot-2023-12-06-at-4-58-50-PM-copy.jpg" 
               alt="Description of the image content" 
-            />
+  /> */}
     </Center>
   );
 };
