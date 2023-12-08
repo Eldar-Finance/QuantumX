@@ -38,7 +38,7 @@ const CryptoTable = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const result = await axios('https://api.multiversx.com/tokens?size=500&type=FungibleESDT&sort=marketCap');
+        const result = await axios('https://next-api.multiversx.com/tokens?size=500&type=FungibleESDT&sort=marketCap');
         const validTokens = result.data
           .filter(token => token.price != null && token.assets && token.assets.pngUrl)
           .sort((a, b) => b.marketCap - a.marketCap);
