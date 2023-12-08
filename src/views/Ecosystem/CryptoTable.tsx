@@ -107,7 +107,7 @@ const CryptoTable = () => {
                   {token.name}
                 </Td>
                 <Td>
-                  <Button variant={"outline"} size="sm" colorScheme="green" onClick={(e) => {
+                  <Button colorScheme='teal' variant='outline'onClick={(e) => {
                     e.stopPropagation();
                     handleBuyClick(token);
                   }}>
