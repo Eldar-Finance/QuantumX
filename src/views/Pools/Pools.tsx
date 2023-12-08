@@ -190,6 +190,15 @@ const Pools = () => {
             tvlText = "Total value Locked in Pools"
           />
           <HarvestAll harvestableFarms={userHarvestableFarms} type="pools"/>
+
+          <Link marginTop={"30px"} href="https://bop.ashswap.io?ref=VzYUCcDZFt" isExternal>
+            <img
+              src="https://i.postimg.cc/dtHrQxks/Screenshot-2023-12-06-at-4-58-50-PM-copy.jpg"
+              alt="Description of the image content"
+              style={{ borderRadius: '25px', width: '100%' }}
+            />
+          </Link>
+
           <Flex w="full" justifyContent={"flex-end"} mt={"1px"}>
             {!isSmallDevice && <Flex w="150px" alignItems="end" justifyContent={"flex-end"} mt={{ xs: "30px", md: "30px" }} onClick={handleInfoModal}>
               {/* <InfoIcon color="white" ml="3" boxSize={6} onClick={handleInfoModal}/> */}

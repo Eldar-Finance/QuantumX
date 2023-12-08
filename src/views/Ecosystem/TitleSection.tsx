@@ -1,4 +1,4 @@
-import { Center, Heading , Image } from "@chakra-ui/react";
+import { Center, Heading , Image, Link } from "@chakra-ui/react";
 
 const TitleSection = () => {
   return (
@@ -7,12 +7,15 @@ const TitleSection = () => {
         MultiversX Ecosystem
       </Heading>
 
+      
 
-
-             {/* <Image borderRadius={"25px"} width={"50%"}
-              src="https://i.postimg.cc/dtHrQxks/Screenshot-2023-12-06-at-4-58-50-PM-copy.jpg" 
-              alt="Description of the image content" 
-  /> */}
+      <Link href="https://bop.ashswap.io?ref=VzYUCcDZFt" isExternal>
+      <img
+        src="https://i.postimg.cc/dtHrQxks/Screenshot-2023-12-06-at-4-58-50-PM-copy.jpg"
+        alt="Description of the image content"
+        style={{ borderRadius: '25px', width: '100%' }}
+      />
+    </Link>
     </Center>
   );
 };

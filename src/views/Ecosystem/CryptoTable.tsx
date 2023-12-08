@@ -23,6 +23,7 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import axios from 'axios';
+import { size } from 'lodash';
 
 const CryptoTable = () => {
   const [tokens, setTokens] = useState([]);
@@ -107,12 +108,18 @@ const CryptoTable = () => {
                   {token.name}
                 </Td>
                 <Td>
-                  <Button colorScheme='teal' variant='outline'onClick={(e) => {
+                <Button 
+                  colorScheme='teal' 
+                  variant='outline'
+                  size='xs'  
+                  borderColor='teal'
+                  color='teal'// Set the size to 'sm' for small, or 'xs' for extra small
+                  onClick={(e) => {
                     e.stopPropagation();
                     handleBuyClick(token);
                   }}>
-                    Buy
-                  </Button>
+                  Buy
+                </Button>
                 </Td>
                 <Td isNumeric>${token.price.toFixed(5)}</Td>
                 <Td isNumeric>${token.marketCap.toLocaleString()}</Td>

@@ -167,6 +167,8 @@ const Swap = () => {
              </Card>)
             )
           }
+
+          
         </Flex>
         {/* Footer Text and Image */}
         <Flex
@@ -196,7 +198,12 @@ const Swap = () => {
               ignoreFallback
             />
           {/* </Link> */}
+
+
+          
         </Flex>
+
+        
       </MyContainer>
     </Layout>
   );
