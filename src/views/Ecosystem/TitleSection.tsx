@@ -9,11 +9,11 @@ const TitleSection = () => {
 
       
 
-      <Link href="https://bop.ashswap.io?ref=VzYUCcDZFt" isExternal>
+      <Link  href="https://bop.ashswap.io?ref=VzYUCcDZFt" isExternal>
       <img
         src="https://i.postimg.cc/dtHrQxks/Screenshot-2023-12-06-at-4-58-50-PM-copy.jpg"
         alt="Description of the image content"
-        style={{ borderRadius: '25px', width: '100%' }}
+        style={{ borderRadius: '25px', width: '100%', height:"90px"}}
       />
     </Link>
     </Center>
