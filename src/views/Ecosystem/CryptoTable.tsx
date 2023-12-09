@@ -100,7 +100,7 @@ const CryptoTable = () => {
   };
 
   const handleBuyClick = (token) => {
-    const baseUrl = "https://quantumx.network/swap";
+    const baseUrl = "/swap";
     const url = `${baseUrl}?toToken=${token.identifier}&fromToken=EGLD`;
     window.location.href = url; // Opens the link in the same tab
   };
@@ -118,9 +118,10 @@ const CryptoTable = () => {
     <Flex
       justifyContent="space-evenly"
       flexDirection={{sm: "column", md: "row"}}
-      my={6}
+      gap={{sm: 4, md: 2}}
+      my={{sm: 4, md: 6}}
     >
-      <Center px={6} py={3} borderRadius={"2xl"} bg="black.base" width={"40%"} flexDir="column">
+      <Center px={{sm: 5, md: 20}} mx={5} py={3} borderRadius={"2xl"} bg="black.base" width={"fit"} flexDir="column">
         <Heading as="h4" fontSize={"lg"} color="white.400" fontWeight={"500"}>
           Total Market Cap
         </Heading>
@@ -128,7 +129,7 @@ const CryptoTable = () => {
           ${totalMarketCap.toLocaleString()}
         </Text>
       </Center>
-      <Center px={6} py={3} borderRadius={"2xl"} bg="black.base" width={"40%"} flexDir="column" textAlign={"center"}>
+      <Center px={{sm: 5, md: 20}} py={3} mx={5} borderRadius={"2xl"} bg="black.base" width={"fit"} flexDir="column" textAlign={"center"}>
         <Heading as="h4" fontSize={"lg"} color="white.400" fontWeight={"500"}>
           Total token Transactions
         </Heading>
@@ -172,12 +173,13 @@ const CryptoTable = () => {
           </Thead>
           <Tbody>
             {filteredTokens.map((token, index) => (
-              <Tr key={token.identifier} cursor="pointer">
+              <Tr key={token.identifier} cursor="pointer" borderTop={"2px solid"} borderColor={"black.base"}>
                 <Td>{index + 1}</Td>
                 <Td
                   style={{ display: 'flex' }}
                   alignContent={'center'}
                   alignItems={'center'}
+                  border="none"
                 >
                   <Image mb={1} marginRight={"10px"} src={token.assets.pngUrl} alt={`${token.ticker} logo`} boxSize="30px" />
                   {token.name}
@@ -230,24 +232,26 @@ const CryptoTable = () => {
   } else {
     // Mobile layout
     return (
-      <Box width="100%" marginTop={"50px"} background={"#242526"} borderRadius={"20px"}>
-        <Input 
-          placeholder="Search token..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          marginBottom="20px"
-        />
+      <Box width="100%" marginTop={"50px"} background={"black.baseDark"} borderRadius={"20px"}>
+        {marketInfoBoxes}
         {filteredTokens.map((token, index) => (
-          <Box key={token.identifier} borderBottom="1px solid gray" p={2} >
+          <Box key={token.identifier} borderTop="2px solid" borderColor={"black.base"} p={2} >
             <Flex justify="space-between" align="center">
               <Image src={token.assets.pngUrl} alt={`${token.ticker} logo`} boxSize="50px" />
-              <Text fontWeight="bold">{index + 1}. {token.name} {token.ticker}</Text>
-              <Button size="sm" colorScheme="green" variant={"outline"} onClick={(e) => {
+              <Text fontWeight="bold">{index + 1}. {token.name}</Text>
+              <ActionButton 
+                    width={"60px"}
+                    borderRadius={"lg"}
+                    variant='outline'
+                    size='sm'  
+                    borderColor='teal'
+                    color='teal'
+                    onClick={(e) => {
                 e.stopPropagation();
                 handleBuyClick(token);
               }}>
                 Buy
-              </Button>
+              </ActionButton>
             </Flex>
             <Text>Price: ${token.price.toFixed(5)}</Text>
             <Text>Market Cap: ${token.marketCap.toLocaleString()}</Text>
