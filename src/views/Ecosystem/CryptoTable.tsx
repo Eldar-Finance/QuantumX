@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
   Box,
   Image,
@@ -23,7 +23,6 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import axios from 'axios';
-import { size } from 'lodash';
 
 const CryptoTable = () => {
   const [tokens, setTokens] = useState([]);
@@ -33,6 +32,7 @@ const CryptoTable = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [selectedToken, setSelectedToken] = useState(null);
   const [isLargerThan768] = useMediaQuery("(min-width: 768px)");
+  const [sortConfig, setSortConfig] = useState({ key: null, direction: 'ascending' });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -53,6 +53,30 @@ const CryptoTable = () => {
     fetchData();
   }, []);
 
+  const sortedTokens = useMemo(() => {
+    let sortableTokens = [...tokens];
+    if (sortConfig.key !== null) {
+      sortableTokens.sort((a, b) => {
+        if (a[sortConfig.key] < b[sortConfig.key]) {
+          return sortConfig.direction === 'ascending' ? -1 : 1;
+        }
+        if (a[sortConfig.key] > b[sortConfig.key]) {
+          return sortConfig.direction === 'ascending' ? 1 : -1;
+        }
+        return 0;
+      });
+    }
+    return sortableTokens;
+  }, [tokens, sortConfig]);
+
+  const requestSort = key => {
+    let direction = 'ascending';
+    if (sortConfig.key === key && sortConfig.direction === 'ascending') {
+      direction = 'descending';
+    }
+    setSortConfig({ key, direction });
+  };
+
   const handleTokenClick = (token) => {
     setSelectedToken(token);
     onOpen();
@@ -63,12 +87,11 @@ const CryptoTable = () => {
     const url = `${baseUrl}?toToken=${token.identifier}&fromToken=EGLD`;
     window.location.href = url; // Opens the link in the same tab
   };
-  
 
   if (loading) return <Box>Loading...</Box>;
   if (error) return <Box>Error: {error.message}</Box>;
 
-  const filteredTokens = tokens.filter(token => 
+  const filteredTokens = sortedTokens.filter(token => 
     token.name.toLowerCase().includes(search.toLowerCase())
   );
 
@@ -90,13 +113,13 @@ const CryptoTable = () => {
         <Table variant="simple" size="md">
           <Thead>
             <Tr>
-              <Th>#</Th>
-              <Th>Token</Th>
+              <Th cursor="pointer" onClick={() => requestSort('marketCap')}>#</Th>
+              <Th cursor="pointer" onClick={() => requestSort('name')}>Token</Th>
               <Th></Th>
-              <Th isNumeric>Price</Th>
-              <Th isNumeric>Market Cap</Th>
-              <Th isNumeric>Supply</Th>
-              <Th isNumeric>Holders</Th>
+              <Th isNumeric cursor="pointer" onClick={() => requestSort('price')}>Price</Th>
+              <Th isNumeric cursor="pointer" onClick={() => requestSort('marketCap')}>Market Cap</Th>
+              <Th isNumeric cursor="pointer" onClick={() => requestSort('supply')}>Supply</Th>
+              <Th isNumeric cursor="pointer" onClick={() => requestSort('accounts')}>Holders</Th>
             </Tr>
           </Thead>
           <Tbody>
@@ -108,18 +131,18 @@ const CryptoTable = () => {
                   {token.name}
                 </Td>
                 <Td>
-                <Button 
-                  colorScheme='teal' 
-                  variant='outline'
-                  size='xs'  
-                  borderColor='teal'
-                  color='teal'// Set the size to 'sm' for small, or 'xs' for extra small
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleBuyClick(token);
-                  }}>
-                  Buy
-                </Button>
+                  <Button 
+                    colorScheme='teal' 
+                    variant='outline'
+                    size='xs'  
+                    borderColor='teal'
+                    color='teal'
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleBuyClick(token);
+                    }}>
+                    Buy
+                  </Button>
                 </Td>
                 <Td isNumeric>${token.price.toFixed(5)}</Td>
                 <Td isNumeric>${token.marketCap.toLocaleString()}</Td>
