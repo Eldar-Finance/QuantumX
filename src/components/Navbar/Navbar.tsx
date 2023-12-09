@@ -99,6 +99,7 @@ const [isBridgeModalOpen, setIsBridgeModalOpen] = useState(false);
                     borderRadius={"full"}
                     position="relative"
                     fontSize={{ xs: "sm", md: "inherit" }}
+                    py={5}
                   >
                     <AddressSection2/>
                   </MenuButton>
