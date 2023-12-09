@@ -11,28 +11,27 @@ const AddressSection3 = () => {
   return (
     <Box
       display={"flex"}
-      justifyContent={"center"}
-      alignItems={"flex-end"}
-      marginBottom={"5px"}
-      marginLeft={"10px"}
-      gap={3}
+      justifyContent={"space-between"}
+      // marginBottom={"5px"}
+      // marginLeft={"10px"}
+      // m={2}
+      // gap={3}
     >
       {/* {formatAddress(address)} */}
 
-      <HStack  onClick={onCopy} cursor={"pointer"} gap={1} w={"full"}>
+      <HStack  onClick={onCopy} cursor={"pointer"} gap={2} w={"full"}>
         <Text>
           Copy
         </Text>
         {hasCopied ? (
-          <Icon as={CheckIcon} fontSize={"16px"} />
+          <Icon as={CheckIcon} fontSize={"18px"} mb={0.5}/>
         ) : (
-          <Icon as={CopyIcon} fontSize={"14px"} />
+          <Icon as={CopyIcon} fontSize={"16px"} mb={0.5}/>
         )}
       </HStack>
       {/* <HStack > */}
 
         <Link
-          w={"full"}
           isExternal
           href={`${network.explorerAddress}/accounts/${address}`}
           aria-label="find in explorer"
@@ -43,7 +42,7 @@ const AddressSection3 = () => {
           <Text>
             Explorer view
           </Text>
-          <Search2Icon fontSize={"14px"} />
+          <Search2Icon fontSize={"15px"} mb={0.5}/>
           </HStack>
         </Link>
       {/* </HStack> */}

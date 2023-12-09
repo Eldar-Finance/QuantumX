@@ -1,5 +1,5 @@
 // import logo from "assets/logos/quantumx.png";
-import { Box, Flex, Icon, Text, useBreakpoint, useBreakpointValue, useMediaQuery,Divider } from "@chakra-ui/react";
+import { Box, Flex, Icon, Text, useBreakpoint, useBreakpointValue, useMediaQuery,Divider, VStack } from "@chakra-ui/react";
 import { useGetLoginInfo } from "@multiversx/sdk-dapp/hooks/account/useGetLoginInfo";
 import { logout } from "@multiversx/sdk-dapp/utils";
 import logo from "assets/logos/quantumx.svg";
@@ -103,27 +103,52 @@ const [isBridgeModalOpen, setIsBridgeModalOpen] = useState(false);
                     <AddressSection2/>
                   </MenuButton>
                   <MenuList
-                  zIndex={"32"}
-                    bg={"black.base"}
-                    minWidth="260px"
-                    width="auto"
-                    p={4}
-                    ml={-5}
+                    zIndex={"32"}
+                    bg={"black.baseDark"}
+                    minWidth="300px"
+                    width="full"
+                    px={4}
+                    mt={2}
                     border={"none"}
+                    mx={"15"}
+                    borderRadius={"xl"}
+                    boxShadow={"0px 0px 10px 0px rgba(0,0,0,0.8)"}
+                    fontSize={"md"}
                   >
-                    <Box alignContent={"center"}>
+                    <Box
+                      alignContent={"center"}
+                      px={4}
+                      py={3}
+                      borderRadius={"xl"}
+                      bg={"black.base"}
+                      mb={3}
+                      mt={2}
+                    >
                       <AddressSection3/>
-                      <Divider marginBottom={"10px"} paddingTop={"10px"}/>
-                      <TotalAmount />
-                      <Divider marginBottom={"10px"} paddingTop={"10px"}/>
                     </Box>
-                    <Box my={5}>
+
+                    <Box
+                      alignContent={"center"}
+                      px={4}
+                      pt={6}
+                      borderRadius={"xl"}
+                      bg={"black.base"}
+                      my={3}
+                    >
+                      <TotalAmount />
+                      <Divider mb={4} mt={3}/>
                       <CoinTab2/>
-                      <Divider marginBottom={"20px"} paddingTop={"20px"}/>
-                    </Box> 
-                    <Button leftIcon={<Icon as={AiTwotoneEuroCircle} />} variant={"ghost"} onClick={() => setIsBuyCryptoModalOpen(true)}>Buy Crypto</Button>
-                    <Button leftIcon={<Icon as={PiBridgeThin} />} variant={"ghost"} onClick={() => setIsBridgeModalOpen(true)}>Bridge</Button>
-                    <QTagButton leftIcon={<Icon as={FaHashtag} />}/>
+                    </Box>
+                  
+                    <VStack
+                      align={"flex-start"}
+                      pt={2}
+                    >
+                      <Button pt={1} leftIcon={<Icon as={AiTwotoneEuroCircle} mb={1} boxSize={"20px"}/>} variant={"ghost"} onClick={() => setIsBuyCryptoModalOpen(true)}>Buy Crypto</Button>                    
+                      <Button pt={1} leftIcon={<Icon as={PiBridgeThin} mb={1} boxSize={"20px"}/>} variant={"ghost"} onClick={() => setIsBridgeModalOpen(true)}>Bridge</Button>
+                      <QTagButton leftIcon={<Icon as={FaHashtag} mb={1} boxSize={"20px"}/>}/>
+                      <Button pt={1} leftIcon={<Icon as={FiLogOut} mb={1} boxSize={"20px"}/>} variant={"ghost"} onClick={handleLogout}>Disconnect</Button>
+                    </VStack>
 
                     <Modal isOpen={isBuyCryptoModalOpen} onClose={() => setIsBuyCryptoModalOpen(false)} isCentered>
                       <ModalOverlay />
@@ -138,12 +163,7 @@ const [isBridgeModalOpen, setIsBridgeModalOpen] = useState(false);
                         <BuyTab2 />
                       </ModalContent>
                     </Modal>
-                    <Box pl={4} gap={2} as="button" fontWeight={"500"}
-                    fontSize={{ xs: "14px", "2xl": "md" }}
-                    h={{xs: "32px", md: "40px"}} display="flex" alignItems="center" onClick={handleLogout} width="100%" textAlign="left" paddingY="2">
-                    <Box as={FiLogOut} />
-                    <Text>Disconnect</Text>
-                    </Box>
+
                   </MenuList>
                 </Menu>
               ) : (
@@ -194,27 +214,51 @@ const [isBridgeModalOpen, setIsBridgeModalOpen] = useState(false);
                     <AddressSection2 />
                   </MenuButton>
                   <MenuList
-                    bg={"black.base"}
-                    minWidth="260px"
+                    bg={"black.baseDark"}
+                    minWidth="300px"
                     width="auto"
-                    p={4}
-                    ml={-5}
+                    px={4}
+                    mt={2}
                     border={"none"}
+                    position={"absolute"}
+                    left={"-110px"}
+                    borderRadius={"xl"}
+                    boxShadow={"0px 0px 10px 0px rgba(0,0,0,0.8)"}
                   >
-                    <Box alignContent={"center"}>
+                    <Box
+                      alignContent={"center"}
+                      px={4}
+                      py={3}
+                      borderRadius={"xl"}
+                      bg={"black.base"}
+                      mb={3}
+                      mt={2}
+                    >
                       <AddressSection3/>
-                      <Divider marginBottom={"10px"} paddingTop={"10px"}/>
-                      <TotalAmount />
-                      <Divider marginBottom={"10px"} paddingTop={"10px"}/>
                     </Box>
-                    <Box my={5}>
+
+                    <Box
+                      alignContent={"center"}
+                      px={4}
+                      pt={6}
+                      borderRadius={"xl"}
+                      bg={"black.base"}
+                      my={3}
+                    >
+                      <TotalAmount />
+                      <Divider mb={4} mt={3}/>
                       <CoinTab2/>
-                      
-                      <Divider marginBottom={"20px"} paddingTop={"20px"}/>
-                    </Box> 
-                    <Button leftIcon={<Icon as={AiTwotoneEuroCircle} />} variant={"ghost"} onClick={() => setIsBuyCryptoModalOpen(true)}>Buy Crypto</Button>
-                    <Button leftIcon={<Icon as={PiBridgeThin} />} variant={"ghost"} onClick={() => setIsBridgeModalOpen(true)}>Bridge</Button>
-                    <QTagButton leftIcon={<Icon as={FaHashtag} />}/>
+                    </Box>
+
+                    <VStack
+                      align={"flex-start"}
+                      pt={2}
+                    >
+                      <Button pt={1} leftIcon={<Icon as={AiTwotoneEuroCircle} mb={1} boxSize={"20px"}/>} variant={"ghost"} onClick={() => setIsBuyCryptoModalOpen(true)}>Buy Crypto</Button>                    
+                      <Button pt={1} leftIcon={<Icon as={PiBridgeThin} mb={1} boxSize={"20px"}/>} variant={"ghost"} onClick={() => setIsBridgeModalOpen(true)}>Bridge</Button>
+                      <QTagButton leftIcon={<Icon as={FaHashtag} mb={1} boxSize={"20px"}/>}/>
+                      <Button pt={1} leftIcon={<Icon as={FiLogOut} mb={1} boxSize={"20px"}/>} variant={"ghost"} onClick={handleLogout}>Disconnect</Button>
+                    </VStack>
 
                     <Modal isOpen={isBuyCryptoModalOpen} onClose={() => setIsBuyCryptoModalOpen(false)} isCentered>
                       <ModalOverlay />
@@ -224,16 +268,11 @@ const [isBridgeModalOpen, setIsBridgeModalOpen] = useState(false);
                     </Modal>
 
                     <Modal isOpen={isBridgeModalOpen} onClose={() => setIsBridgeModalOpen(false)} isCentered>
-                      <ModalOverlay />
+                      <ModalOverlay/>
                       <ModalContent>
                         <BuyTab2 />
                       </ModalContent>
                     </Modal>
-
-                    <Box pl={4} gap={2} as="button" display="flex" alignItems="center" onClick={handleLogout} width="100%" textAlign="left" paddingY="2">
-                    <Box as={FiLogOut} />
-                    <Text>Disconnect</Text>
-                    </Box>
                   </MenuList>
                 </Menu>
               ) : (

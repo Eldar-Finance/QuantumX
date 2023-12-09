@@ -12,7 +12,7 @@ const Ecosystem = () => {
       <MyContainer>
         <TitleSection />
         <Center textAlign={"center"}>
-        <CryptoTable></CryptoTable>
+          <CryptoTable/>
         </Center>
       </MyContainer>
     </Layout>
