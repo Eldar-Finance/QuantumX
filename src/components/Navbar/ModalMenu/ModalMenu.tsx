@@ -26,10 +26,10 @@ const ModalMenu = ({ onClose }: IProps) => {
       justifyContent="center"
       alignItems={"center"}
       as={motion.div}
-      w="250px"
+      w={"auto"}
       position={"absolute"}
       right={0}
-      top={70}
+      top={{sm: "120%", md: "130%"}}
       zIndex={20} // @ts-ignore
       initial={{ opacity: 0, y: 50, scale: 0.3 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -40,6 +40,8 @@ const ModalMenu = ({ onClose }: IProps) => {
       p={0}
       overflow="hidden"
       fontSize={{ xs: "inherit", md: "inherit" }}
+      boxShadow={"0px 0px 10px 0px rgba(0,0,0,0.8)"}
+
     >
       {routesArr.map((route) => {
         if (!route.onModal && !route.onModalAndNavbar) {

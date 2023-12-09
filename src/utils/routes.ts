@@ -86,7 +86,7 @@ export const routes: {
    ecosystem: {
      path: routeNames.ecosystem,
      name: "Ecosystem",
-     onModalAndNavbar: true,
+    //  onModalAndNavbar: true,
   },
   // converter: {
   //   path: routeNames.converter,
