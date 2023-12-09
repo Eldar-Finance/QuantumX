@@ -4,16 +4,26 @@ import WrapperPages from "hoc/WrapperPages";
 import withElronDapp from "hoc/withElronDapp";
 import TitleSection from "./TitleSection";
 import CryptoTable from "./CryptoTable";
-import { Center } from "@chakra-ui/react";
+import { Center, Flex } from "@chakra-ui/react";
+import Title from "components/Farms/Title/Title";
 
 const Ecosystem = () => {
   return (
     <Layout>
-      <MyContainer>
-        <TitleSection />
-        <Center textAlign={"center"}>
-          <CryptoTable/>
-        </Center>
+      <MyContainer pb="70px">
+        <Flex
+          w="full"
+          justifyContent={"center"}
+          flexDir="column"
+          alignContent={"center"}
+          maxW="1500px"
+          mx="auto"
+        >
+          <TitleSection />
+          <Center textAlign={"center"}>
+            <CryptoTable/>
+          </Center>
+        </Flex>
       </MyContainer>
     </Layout>
   );

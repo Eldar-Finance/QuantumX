@@ -1,4 +1,4 @@
-import { Box, Center, Flex, Link, Switch } from "@chakra-ui/react";
+import { Box, Center, Flex, Image, Link, Switch } from "@chakra-ui/react";
 import auditImg from "assets/farms/audit.png";
 import MyContainer from "components/Container/Container";
 import ProteoFarmsCard from "components/Farms/FarmsCard/FarmsCard";
@@ -7,7 +7,7 @@ import Title from "components/Farms/Title/Title";
 import Layout from "components/Layout/Layout";
 import withElronDapp from "hoc/withElronDapp";
 import WrapperPages from "hoc/WrapperPages";
-import Image from "next/image";
+import NextImage from "next/image";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { fetchStats } from "redux/slices/elrond/elrond-slice";
@@ -192,10 +192,11 @@ const Pools = () => {
           <HarvestAll harvestableFarms={userHarvestableFarms} type="pools"/>
 
           <Link marginTop={"30px"} href="https://bop.ashswap.io?ref=VzYUCcDZFt" isExternal>
-            <img
+            <Image
               src="https://i.postimg.cc/dtHrQxks/Screenshot-2023-12-06-at-4-58-50-PM-copy.jpg"
               alt="Description of the image content"
-              style={{ borderRadius: '25px', width: '100%' }}
+              style={{ borderRadius: '25px', width: '100%'}}
+              height={{sm: "50px", md: "130px"}}
             />
           </Link>
 
@@ -247,7 +248,7 @@ const Pools = () => {
             isExternal
             href="https://bhero.com/pdf/audits/elrond/SuperRareBears_SmartContract_Audit_FarmsSmartContract_v.0.1.pdf"
           >
-            <Image src={auditImg} alt="audit" height={150} />
+            <NextImage src={auditImg} alt="audit" height={150} />
           </Link>
         </Center>
       </Box>

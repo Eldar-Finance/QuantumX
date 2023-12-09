@@ -1,4 +1,4 @@
-import { Box, Center, Flex, Link } from "@chakra-ui/react";
+import { Box, Center, Flex, Image, Link } from "@chakra-ui/react";
 import auditImg from "assets/farms/audit.png";
 import MyContainer from "components/Container/Container";
 import Title from "components/Farms/Title/Title";
@@ -6,7 +6,6 @@ import Layout from "components/Layout/Layout";
 import MyTabs from "components/MyTabs/MyTabs";
 import withElronDapp from "hoc/withElronDapp";
 import WrapperPages from "hoc/WrapperPages";
-import Image from "next/image";
 import { useEffect } from "react";
 import { fetchStats } from "redux/slices/elrond/elrond-slice";
 import {
@@ -31,6 +30,7 @@ import FarmsList from "./components/FarmsList/FarmsList";
 import { useSelector } from "react-redux";
 import { selectFarms, selectUserFarms2Rewards } from "redux/slices/farms2/farms2-slice";
 import HarvestAll from "components/Farms/HarvestAll/HarvestAll";
+import NextImage from "next/image";
 
 const Farms = () => {
   const dispatch = useAppDispatch();
@@ -87,10 +87,11 @@ const Farms = () => {
           />
           <HarvestAll harvestableFarms={userHarvestableFarms} type="farms"/>
           <Link marginTop={"30px"} href="https://bop.ashswap.io?ref=VzYUCcDZFt" isExternal>
-            <img
+            <Image
               src="https://i.postimg.cc/dtHrQxks/Screenshot-2023-12-06-at-4-58-50-PM-copy.jpg"
               alt="Description of the image content"
-              style={{ borderRadius: '25px', width: '100%' }}
+              style={{ borderRadius: '25px', width: '100%'}}
+              height={{sm: "50px", md: "130px"}}
             />
           </Link>
           <MyTabs
@@ -132,7 +133,7 @@ const Farms = () => {
             isExternal
             href="https://bhero.com/pdf/audits/elrond/SuperRareBears_SmartContract_Audit_FarmsSmartContract_v.0.1.pdf"
           >
-            <Image src={auditImg} alt="audit" height={150} />
+            <NextImage src={auditImg} alt="audit" height={150} />
           </Link>
         </Center>
       </Box>

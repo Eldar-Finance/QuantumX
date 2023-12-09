@@ -21,8 +21,12 @@ import {
   Td,
   useMediaQuery,
   useDisclosure,
+  Grid,
+  Heading,
+  Center,
 } from '@chakra-ui/react';
 import axios from 'axios';
+import Search from 'components/Farms/Search/Search';
 
 const CryptoTable = () => {
   const [tokens, setTokens] = useState([]);
@@ -53,7 +57,7 @@ const CryptoTable = () => {
     fetchData();
   }, []);
 
-   const totalMarketCap = useMemo(() => {
+  const totalMarketCap = useMemo(() => {
     return tokens.reduce((acc, token) => acc + token.marketCap, 0);
   }, [tokens]);
 
@@ -101,11 +105,9 @@ const CryptoTable = () => {
 
   const filteredTokens = sortedTokens.filter(token => 
     token.name.toLowerCase().includes(search.toLowerCase())
-  );
+  ); 
 
- 
-
-  const marketInfoBoxes = (
+  const marketInfoBoxesOriginal = (
     <><Flex justifyContent="center" mb="20px" marginTop={"10px"}>
       <Box p="4" boxShadow="md" borderRadius="lg" bg="#151515" width={"40%"} marginRight={"15px"}>
         <Text fontSize="lg">Total Market Cap</Text>
@@ -131,16 +133,60 @@ const CryptoTable = () => {
       </Flex></>
   );
 
+  // <Center
+  //       px="6"
+  //       py="3"
+  //       textAlign={"center"}
+  //       bg="black.baseDark"
+  //       maxW="600px"
+  //       mx="auto"
+  //       borderRadius={"2xl"}
+  //       flexDir="column"
+  //     >
+  //       <Heading as="h4" fontSize={"md"} color="white.400" fontWeight={"500"}>
+  //         {tvlText}
+  //       </Heading>
+  //       <Text fontSize={"2xl"} fontWeight="600">
+  //         ${formatNumber(amount)}
+  //       </Text>
+  //     </Center>
+
+  const marketInfoBoxes = (
+    <>
+    {/* Stats */}
+    <Flex
+      justifyContent="space-evenly"
+      flexDirection={{sm: "column", md: "row"}}
+      my={6}
+    >
+      <Center px={6} py={3} borderRadius={"2xl"} bg="black.base" width={"40%"} flexDir="column">
+        <Heading as="h4" fontSize={"lg"} color="white.400" fontWeight={"500"}>
+          Total Market Cap
+        </Heading>
+        <Text fontSize={"2xl"} fontWeight="600">
+          ${totalMarketCap.toLocaleString()}
+        </Text>
+      </Center>
+      <Center px={6} py={3} borderRadius={"2xl"} bg="black.base" width={"40%"} flexDir="column" textAlign={"center"}>
+        <Heading as="h4" fontSize={"lg"} color="white.400" fontWeight={"500"}>
+          Total token Transactions
+        </Heading>
+        <Text fontSize="xl" fontWeight="bold">{totalTxs.toLocaleString()}</Text>
+      </Center>
+    </Flex>
+
+    {/* Search */}
+    <Flex w="full" alignItems="center" my={3} justifyContent={"center"} whiteSpace={"nowrap"}>
+      <Search bg="black.base" onChange={(e) => setSearch(e)}/>
+    </Flex>
+    </>
+  );
+
   if (isLargerThan768) {
     // Desktop layout
     return (
-
-      
-
-      <Box width="70%" marginTop={"50px"} background={"#242526"} borderRadius={"20px"} overflowX={{ base: "scroll", md: "hidden" }}>
+      <Box width="70%" marginTop={"50px"} background={"black.baseDark"} borderRadius={"20px"} overflowX={{ base: "scroll", md: "hidden" }}>
         {marketInfoBoxes}
-
-        
         <Table variant="simple" size="md">
           <Thead>
             <Tr>
