@@ -53,6 +53,10 @@ const CryptoTable = () => {
     fetchData();
   }, []);
 
+   const totalMarketCap = useMemo(() => {
+    return tokens.reduce((acc, token) => acc + token.marketCap, 0);
+  }, [tokens]);
+
   const sortedTokens = useMemo(() => {
     let sortableTokens = [...tokens];
     if (sortConfig.key !== null) {
@@ -95,11 +99,17 @@ const CryptoTable = () => {
     token.name.toLowerCase().includes(search.toLowerCase())
   );
 
-  if (isLargerThan768) {
-    // Desktop layout
-    return (
-      <Box width="70%" marginTop={"50px"} background={"#242526"} borderRadius={"20px"} overflowX={{ base: "scroll", md: "hidden" }}>
-        <Input 
+ 
+
+  const marketInfoBoxes = (
+    <><Flex justifyContent="center" mb="20px" marginTop={"10px"}>
+      <Box p="4" boxShadow="md" borderRadius="lg" bg="#151515" width={"90%"}>
+        <Text fontSize="lg">Total Market Cap</Text>
+        <Text fontSize="xs" color={"gray.100"}>Excluding EGLD</Text>
+        <Text fontSize="xl" fontWeight="bold">${totalMarketCap.toLocaleString()}</Text>
+      </Box>
+    </Flex><Flex justifyContent="center" mb="20px" marginTop={"10px"}>
+        <Input
           placeholder="Search token..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
@@ -108,8 +118,20 @@ const CryptoTable = () => {
           float={"left"}
           background={"#151515"}
           border={"3px solid #242526"}
-          borderRadius={"20px"}
-        />
+          borderRadius={"20px"} />
+      </Flex></>
+  );
+
+  if (isLargerThan768) {
+    // Desktop layout
+    return (
+
+      
+
+      <Box width="70%" marginTop={"50px"} background={"#242526"} borderRadius={"20px"} overflowX={{ base: "scroll", md: "hidden" }}>
+        {marketInfoBoxes}
+
+        
         <Table variant="simple" size="md">
           <Thead>
             <Tr>

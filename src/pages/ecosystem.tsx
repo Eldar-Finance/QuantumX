@@ -8,6 +8,7 @@ const IndexPage = () => {
         metaTitle="QuantumX Network - Ecosystem"
         metaDescription="Add description here"
       />
+      
       <Ecosystem />
     </Fragment>
   );
