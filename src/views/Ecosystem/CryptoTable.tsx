@@ -27,6 +27,8 @@ import {
 } from '@chakra-ui/react';
 import axios from 'axios';
 import Search from 'components/Farms/Search/Search';
+import ActionButton from 'components/ActionButton/ActionButton';
+import { set } from 'lodash';
 
 const CryptoTable = () => {
   const [tokens, setTokens] = useState([]);
@@ -36,7 +38,8 @@ const CryptoTable = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [selectedToken, setSelectedToken] = useState(null);
   const [isLargerThan768] = useMediaQuery("(min-width: 768px)");
-  const [sortConfig, setSortConfig] = useState({ key: null, direction: 'ascending' });
+  const [sortConfig, setSortConfig] = useState({ key: "marketCap", direction: 'descending' });
+  const [arrow, setArrow] = useState("⬇"); //↓
 
   useEffect(() => {
     const fetchData = async () => {
@@ -83,8 +86,10 @@ const CryptoTable = () => {
 
   const requestSort = key => {
     let direction = 'ascending';
+    setArrow("⬆"); //↓
     if (sortConfig.key === key && sortConfig.direction === 'ascending') {
       direction = 'descending';
+      setArrow("⬇"); //↑
     }
     setSortConfig({ key, direction });
   };
@@ -105,51 +110,7 @@ const CryptoTable = () => {
 
   const filteredTokens = sortedTokens.filter(token => 
     token.name.toLowerCase().includes(search.toLowerCase())
-  ); 
-
-  const marketInfoBoxesOriginal = (
-    <><Flex justifyContent="center" mb="20px" marginTop={"10px"}>
-      <Box p="4" boxShadow="md" borderRadius="lg" bg="#151515" width={"40%"} marginRight={"15px"}>
-        <Text fontSize="lg">Total Market Cap</Text>
-        <Text fontSize="xs" color={"gray.100"}>Excluding EGLD</Text>
-        <Text fontSize="xl" fontWeight="bold">${totalMarketCap.toLocaleString()}</Text>
-      </Box>
-      <Box p="4" boxShadow="md" borderRadius="lg" bg="#151515" width={"40%"} marginLeft={"15px"}>
-        <Text fontSize="lg">Total Token Transactions</Text>
-        <Text fontSize="xs" color={"gray.100"}></Text>
-        <Text fontSize="xl" fontWeight="bold">{totalTxs.toLocaleString()}</Text>
-      </Box>
-    </Flex><Flex justifyContent="center" mb="20px" marginTop={"10px"}>
-        <Input
-          placeholder="Search token..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          marginBottom="20px"
-          width={"30%"}
-          float={"left"}
-          background={"#151515"}
-          border={"3px solid #242526"}
-          borderRadius={"20px"} />
-      </Flex></>
   );
-
-  // <Center
-  //       px="6"
-  //       py="3"
-  //       textAlign={"center"}
-  //       bg="black.baseDark"
-  //       maxW="600px"
-  //       mx="auto"
-  //       borderRadius={"2xl"}
-  //       flexDir="column"
-  //     >
-  //       <Heading as="h4" fontSize={"md"} color="white.400" fontWeight={"500"}>
-  //         {tvlText}
-  //       </Heading>
-  //       <Text fontSize={"2xl"} fontWeight="600">
-  //         ${formatNumber(amount)}
-  //       </Text>
-  //     </Center>
 
   const marketInfoBoxes = (
     <>
@@ -190,28 +151,43 @@ const CryptoTable = () => {
         <Table variant="simple" size="md">
           <Thead>
             <Tr>
-              <Th cursor="pointer" onClick={() => requestSort('marketCap')}>#</Th>
-              <Th cursor="pointer" onClick={() => requestSort('name')}>Token</Th>
+              <Th cursor="pointer">#</Th>
+              <Th cursor="pointer" onClick={() => requestSort('name')}>
+                {sortConfig.key == 'name' ? arrow : ''} Token
+              </Th>
               <Th></Th>
-              <Th isNumeric cursor="pointer" onClick={() => requestSort('price')}>Price</Th>
-              <Th isNumeric cursor="pointer" onClick={() => requestSort('marketCap')}>Market Cap</Th>
-              <Th isNumeric cursor="pointer" onClick={() => requestSort('supply')}>Supply</Th>
-              <Th isNumeric cursor="pointer" onClick={() => requestSort('accounts')}>Holders</Th>
+              <Th isNumeric cursor="pointer" onClick={() => requestSort('price')}>
+                {sortConfig.key == 'price' ? arrow : ''} Price
+              </Th>
+              <Th isNumeric cursor="pointer" onClick={() => requestSort('marketCap')}>
+              {sortConfig.key == 'marketCap' ? arrow : ''} Market Cap
+              </Th>
+              <Th isNumeric cursor="pointer" onClick={() => requestSort('supply')}>
+              {sortConfig.key == 'supply' ? arrow : ''} Supply
+              </Th>
+              <Th isNumeric cursor="pointer" onClick={() => requestSort('accounts')}>
+              {sortConfig.key == 'accounts' ? arrow : ''} Holders
+              </Th>
             </Tr>
           </Thead>
           <Tbody>
             {filteredTokens.map((token, index) => (
               <Tr key={token.identifier} cursor="pointer">
                 <Td>{index + 1}</Td>
-                <Td style={{ display: 'flex' }}>
-                  <Image marginBottom={"10px"} marginRight={"10px"} src={token.assets.pngUrl} alt={`${token.ticker} logo`} boxSize="30px" />
+                <Td
+                  style={{ display: 'flex' }}
+                  alignContent={'center'}
+                  alignItems={'center'}
+                >
+                  <Image mb={1} marginRight={"10px"} src={token.assets.pngUrl} alt={`${token.ticker} logo`} boxSize="30px" />
                   {token.name}
                 </Td>
                 <Td>
-                  <Button 
-                    colorScheme='teal' 
+                  <ActionButton 
+                    width={"60px"}
+                    borderRadius={"lg"}
                     variant='outline'
-                    size='xs'  
+                    size='sm'  
                     borderColor='teal'
                     color='teal'
                     onClick={(e) => {
@@ -219,7 +195,7 @@ const CryptoTable = () => {
                       handleBuyClick(token);
                     }}>
                     Buy
-                  </Button>
+                  </ActionButton>
                 </Td>
                 <Td isNumeric>${token.price.toFixed(5)}</Td>
                 <Td isNumeric>${token.marketCap.toLocaleString()}</Td>
