@@ -7,7 +7,7 @@ import useGetTokenPrice from "utils/hooks/useGetTokenPrice";
 import { toknesID } from "api/net.config";
 import { formatBalance, formatBalanceDolar } from "utils/functions/formatBalance";
 import orderBy from "lodash/orderBy";
-import { EgldlogoIcon } from "components/Icons/ui";
+import { EgldlogoIcon, MultiversxLogo } from "components/Icons/ui";
 
 const CoinTab2 = () => {
   const dispatch = useAppDispatch();
@@ -42,7 +42,7 @@ const CoinTab2 = () => {
       name: "EGLD",
       ticker: "EGLD",
       decimals: 18,
-      assets: { img: <EgldlogoIcon /> },
+      assets: { img: <MultiversxLogo ml="4px" mt={"2px"}/> },
       price: egldPrice,
       balance: egldData.balance,
     };
@@ -87,6 +87,7 @@ const CoinTab2 = () => {
                     marginRight: 2,
                     boxShadow: "rgb(255 255 255 / 8%) 0px 6px 10px",
                   }}
+                  mb={1}
                 >
                   {token.assets?.img ? (
                     token.assets?.img
