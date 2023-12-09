@@ -57,6 +57,10 @@ const CryptoTable = () => {
     return tokens.reduce((acc, token) => acc + token.marketCap, 0);
   }, [tokens]);
 
+  const totalTxs = useMemo(() => {
+    return tokens.reduce((acc, token) => acc + token.transactions, 0);
+  }, [tokens]);
+
   const sortedTokens = useMemo(() => {
     let sortableTokens = [...tokens];
     if (sortConfig.key !== null) {
@@ -103,10 +107,15 @@ const CryptoTable = () => {
 
   const marketInfoBoxes = (
     <><Flex justifyContent="center" mb="20px" marginTop={"10px"}>
-      <Box p="4" boxShadow="md" borderRadius="lg" bg="#151515" width={"90%"}>
+      <Box p="4" boxShadow="md" borderRadius="lg" bg="#151515" width={"40%"} marginRight={"15px"}>
         <Text fontSize="lg">Total Market Cap</Text>
         <Text fontSize="xs" color={"gray.100"}>Excluding EGLD</Text>
         <Text fontSize="xl" fontWeight="bold">${totalMarketCap.toLocaleString()}</Text>
+      </Box>
+      <Box p="4" boxShadow="md" borderRadius="lg" bg="#151515" width={"40%"} marginLeft={"15px"}>
+        <Text fontSize="lg">Total Token Transactions</Text>
+        <Text fontSize="xs" color={"gray.100"}></Text>
+        <Text fontSize="xl" fontWeight="bold">{totalTxs.toLocaleString()}</Text>
       </Box>
     </Flex><Flex justifyContent="center" mb="20px" marginTop={"10px"}>
         <Input
