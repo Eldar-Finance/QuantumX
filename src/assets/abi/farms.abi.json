@@ -1,11 +1,11 @@
 {
     "buildInfo": {
         "rustc": {
-            "version": "1.72.0-nightly",
-            "commitHash": "04075b32021932e3e8f6ab55d519b3b3494b6ef9",
-            "commitDate": "2023-06-22",
+            "version": "1.71.0-nightly",
+            "commitHash": "a2b1646c597329d0a25efa3889b66650f65de1de",
+            "commitDate": "2023-05-25",
             "channel": "Nightly",
-            "short": "rustc 1.72.0-nightly (04075b320 2023-06-22)"
+            "short": "rustc 1.71.0-nightly (a2b1646c5 2023-05-25)"
         },
         "contractCrate": {
             "name": "farms",
@@ -241,6 +241,32 @@
                 {
                     "name": "fee",
                     "type": "u64"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "setCustomHarvestFee",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "farm_id",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "fee",
+                    "type": "u64"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "clearCustomHarvestFee",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "farm_id",
+                    "type": "BigUint"
                 }
             ],
             "outputs": []
@@ -1280,6 +1306,21 @@
             "outputs": [
                 {
                     "type": "bool"
+                }
+            ]
+        },
+        {
+            "name": "customHarvestFee",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "farm_id",
+                    "type": "BigUint"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "u64"
                 }
             ]
         },
