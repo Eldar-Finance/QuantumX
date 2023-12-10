@@ -131,7 +131,7 @@ const CryptoTable = () => {
       </Center>
       <Center px={{sm: 5, md: 20}} py={3} mx={5} borderRadius={"2xl"} bg="black.base" width={"fit"} flexDir="column" textAlign={"center"}>
         <Heading as="h4" fontSize={"lg"} color="white.400" fontWeight={"500"}>
-          Total token Transactions
+          Total Token Transactions
         </Heading>
         <Text fontSize="xl" fontWeight="bold">{totalTxs.toLocaleString()}</Text>
       </Center>

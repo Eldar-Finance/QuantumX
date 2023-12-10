@@ -1,6 +1,8 @@
 import { Box, Divider, SimpleGrid } from "@chakra-ui/react";
 import CurrentFees from "./CurrentFees/CurrentFees";
 import SetFee from "./SetFee/SetFee";
+import CustomHarvestFees from "./CustomHarvestFees/CustomHarvestFees";
+import SetCustomHarvestFee from "./CustomHarvestFees/SetCustomHarvestFee";
 
 const Fees = () => {
   return (
@@ -22,6 +24,11 @@ const Fees = () => {
           title="Farm Creation Fee"
           scFunc="setFarmCreationCharge"
           isAmount
+        />
+        <CustomHarvestFees />
+        <SetCustomHarvestFee
+          feeLabel="customHarvest"
+          title="Set Custom Harvest Fee"
         />
       </SimpleGrid>
     </Box>
