@@ -12,7 +12,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { openLogin } from "redux/slices/settings/settings-reducer";
-import { useAppDispatch } from "utils/hooks/redux";
+import { useAppDispatch, useAppSelector } from "utils/hooks/redux";
 import { getWebUrl } from "utils/routes";
 import Menu1 from "./Menu/Menu";
 import { breakpoints } from "theme/chakra";
@@ -65,6 +65,9 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
   const handleConnect = () => {
     dispatch(openLogin(true));
   };
+
+  const nrOfNfts = useAppSelector((state) => state.userAccount.nfts.data.length);
+  console.log("⚠️ ~ file: OwnedNfts.tsx:21 ~ nfts:", nrOfNfts)
 
   const LoggedInMenu = () => {
     return (
@@ -145,7 +148,7 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
 
               {/* <OpenL */}
               <Text fontWeight="700">
-                14
+                {nrOfNfts}
               </Text>
             </HStack>
             <Divider mb={4} mt={3}/>
