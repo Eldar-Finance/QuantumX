@@ -1,5 +1,5 @@
 // import logo from "assets/logos/quantumx.png";
-import { Box, Flex, Icon, Text, useBreakpoint, useBreakpointValue, useMediaQuery,Divider, VStack } from "@chakra-ui/react";
+import { Box, Flex, Icon, Text, useBreakpoint, useBreakpointValue, useMediaQuery,Divider, VStack, HStack, Center } from "@chakra-ui/react";
 import { useGetLoginInfo } from "@multiversx/sdk-dapp/hooks/account/useGetLoginInfo";
 import { logout } from "@multiversx/sdk-dapp/utils";
 import logo from "assets/logos/quantumx.svg";
@@ -22,7 +22,7 @@ import { FiLogOut } from 'react-icons/fi'; // Assuming you're using react-icons 
 import { Modal, ModalOverlay, ModalContent, useDisclosure } from "@chakra-ui/react";
 import BuyTab from "views/Dashboard/components/Dashtabs/BuyTab/BuyTab"; //
 import { AiTwotoneEuroCircle } from "react-icons/ai";
-import { FaHashtag } from "react-icons/fa";
+import { FaExternalLinkAlt, FaHashtag } from "react-icons/fa";
 import { PiBridgeThin } from "react-icons/pi";
 
 
@@ -41,6 +41,8 @@ import AddressSection2 from "views/Dashboard/components/AddressSection/AddessSec
 import AddressSection3 from "views/Dashboard/components/AddressSection/AdressSection3";
 import TotalAmount from "views/Dashboard/components/TotalAmount/TotalAmount";
 import BuyTab2 from "views/Dashboard/components/Dashtabs/BuyTab/BuyTab2";
+import OwnedNfts from "views/Dashboard/components/Dashtabs/NftsTab/OwnedNfts/OwnedNfts";
+import OwnedNftsModal from "views/Dashboard/components/Dashtabs/NftsTab/OwnedNfts/OwnedNftsModal/OwnedNfts";
 
 interface IProps {
   onlyConnectButton?: boolean;
@@ -55,6 +57,7 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
   const [isBuyCryptoModalOpen, setIsBuyCryptoModalOpen] = useState(false);
   const [isBridgeModalOpen, setIsBridgeModalOpen] = useState(false);
 
+  const { onClose, onOpen, isOpen } = useDisclosure();
 
   const handleLogout = () => {
     logout(getWebUrl(location));
@@ -120,6 +123,32 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
             bg={"black.base"}
             my={3}
           >
+            <HStack 
+              justifyContent={"space-between"}
+              // position={"relative"}
+              // p={4}
+              // bg="black.dark"
+              borderRadius="xl"
+              alignItems={"flex-end"}
+              display={"flex"}
+              mr={1}
+            >
+              <Center gap={2} onClick={onOpen} cursor={"pointer"}>
+                <Text fontWeight="500">
+                  NFTs
+                </Text>
+                <Center mb={1}>
+                  <FaExternalLinkAlt size={"12px"}/>
+                </Center>
+              </Center>
+              {isOpen && <OwnedNftsModal isOpen={true} onClose={onClose} />}
+
+              {/* <OpenL */}
+              <Text fontWeight="700">
+                14
+              </Text>
+            </HStack>
+            <Divider mb={4} mt={3}/>
             <TotalAmount />
             <Divider mb={4} mt={3}/>
             <CoinTab2/>
