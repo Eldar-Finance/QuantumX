@@ -12,13 +12,16 @@ import MyModal from "components/Modal/Modal";
 interface IProps {
   isOpen: boolean;
   onClose: () => void;
+  setNrOfNfts: (nr: number) => void;
 }
 
-const OwnedNftsModal = ({ isOpen, onClose }: IProps) => {
+const OwnedNftsModal = ({ isOpen, onClose, setNrOfNfts }: IProps) => {
   const dispatch = useAppDispatch();
   const address = useAppSelector(selectUserAddress);
   const nfts = useAppSelector((state) => state.userAccount.nfts);
 
+  setNrOfNfts(nfts.data.length);
+  
   const nftsByCollection = useGroupByField<IElrondNFT[][]>(
     filterNftsWithMedia(nfts.data) ?? [],
     "collection"

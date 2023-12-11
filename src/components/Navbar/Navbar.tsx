@@ -66,7 +66,7 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
     dispatch(openLogin(true));
   };
 
-  const nrOfNfts = useAppSelector((state) => state.userAccount.nfts.data.length);
+  const [nrOfNfts, setNrOfNfts] = useState(0);
 
   const LoggedInMenu = () => {
     return (
@@ -143,11 +143,11 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
                   <FaExternalLinkAlt size={"12px"}/>
                 </Center>
               </Center>
-              {isOpen && <OwnedNftsModal isOpen={true} onClose={onClose} />}
+              {isOpen && <OwnedNftsModal isOpen={true} onClose={onClose} setNrOfNfts={setNrOfNfts}/>}
 
               {/* <OpenL */}
               <Text fontWeight="700">
-                {nrOfNfts}
+                {nrOfNfts > 0 ? nrOfNfts : ""}
               </Text>
             </HStack>
             <Divider mb={4} mt={3}/>
