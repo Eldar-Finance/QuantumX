@@ -29,7 +29,7 @@ const AddressSection3 = () => {
         <Text>
           Send
         </Text>
-        <Icon as={ArrowUpIcon} fontSize={"18px"} mb={0.5}/>
+        <Icon as={ArrowUpIcon} fontSize={"18px"} mb={0}/>
       </HStack>
 
       {isOpen && <TransactionModal isOpen={true} onClose={onClose} />}
@@ -39,9 +39,9 @@ const AddressSection3 = () => {
           Copy
         </Text>
         {hasCopied ? (
-          <Icon as={CheckIcon} fontSize={"18px"} mb={0.5}/>
+          <Icon as={CheckIcon} fontSize={"18px"} mb={0}/>
         ) : (
-          <Icon as={CopyIcon} fontSize={"16px"} mb={0.5}/>
+          <Icon as={CopyIcon} fontSize={"16px"} mb={0}/>
         )}
       </HStack>
 
@@ -56,7 +56,7 @@ const AddressSection3 = () => {
         <Text>
           Explorer
         </Text>
-        <Search2Icon fontSize={"15px"} mb={0.5}/>
+        <Search2Icon fontSize={"15px"} mb={0}/>
         </HStack>
       </Link>
 
