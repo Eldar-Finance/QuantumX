@@ -67,7 +67,6 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
   };
 
   const nrOfNfts = useAppSelector((state) => state.userAccount.nfts.data.length);
-  console.log("⚠️ ~ file: OwnedNfts.tsx:21 ~ nfts:", nrOfNfts)
 
   const LoggedInMenu = () => {
     return (
