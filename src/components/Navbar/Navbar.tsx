@@ -53,7 +53,7 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
   const [isLargerThanLg] = useMediaQuery(`(min-width: ${breakpoints["md"]})`);
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [isBuyCryptoModalOpen, setIsBuyCryptoModalOpen] = useState(false);
-const [isBridgeModalOpen, setIsBridgeModalOpen] = useState(false);
+  const [isBridgeModalOpen, setIsBridgeModalOpen] = useState(false);
 
 
   const handleLogout = () => {
@@ -62,6 +62,96 @@ const [isBridgeModalOpen, setIsBridgeModalOpen] = useState(false);
   const handleConnect = () => {
     dispatch(openLogin(true));
   };
+
+  const LoggedInMenu = () => {
+    return (
+      <Menu onOpen={() => setMenuOpen(true)} onClose={() => setMenuOpen(false)}>
+        <MenuButton
+          as={Button}
+          rightIcon={<ChevronDownIcon />}
+          size="md"
+          bg={"black.baseDark"}
+          color={isMenuOpen ? "black" : "white"}
+          alignItems={"center"}
+          justifyItems={"space-between"}
+          borderRadius={"full"}
+          position="relative"
+          fontSize={{ xs: "sm", md: "inherit" }}
+          py={{ xs: 4, md: 6 }}
+          px={5}
+          gap={2}
+        >
+          <AddressSection2/>
+        </MenuButton>
+        
+        <MenuList
+          bg={"black.baseDark"}
+          minWidth="340px"
+          width="full"
+          px={4}
+          mt={2}
+          border={"none"}
+          // mx={"15"}
+          borderRadius={"xl"}
+          boxShadow={"0px 0px 10px 0px rgba(0,0,0,0.8)"}
+          fontSize={"md"}
+          position={{sm: "relative", md: "relative"}}
+          left={{sm: "14px", md: "80px"}}
+          zIndex={"1000"}
+        >
+
+          <Box
+            alignContent={"center"}
+            px={4}
+            py={3}
+            borderRadius={"xl"}
+            bg={"black.base"}
+            mb={3}
+            mt={2}
+          >
+            <AddressSection3/>
+          </Box>
+
+          <Box
+            alignContent={"center"}
+            px={4}
+            pt={6}
+            borderRadius={"xl"}
+            bg={"black.base"}
+            my={3}
+          >
+            <TotalAmount />
+            <Divider mb={4} mt={3}/>
+            <CoinTab2/>
+          </Box>
+
+          <VStack
+            align={"flex-start"}
+            pt={2}
+          >
+            <Button pt={1} leftIcon={<Icon as={AiTwotoneEuroCircle} mb={1} boxSize={"20px"}/>} variant={"ghost"} onClick={() => setIsBuyCryptoModalOpen(true)}>Buy Crypto</Button>                    
+            <Button pt={1} leftIcon={<Icon as={PiBridgeThin} mb={1} boxSize={"20px"}/>} variant={"ghost"} onClick={() => setIsBridgeModalOpen(true)}>Bridge</Button>
+            <QTagButton leftIcon={<Icon as={FaHashtag} mb={1} boxSize={"20px"}/>}/>
+            <Button pt={1} leftIcon={<Icon as={FiLogOut} mb={1} boxSize={"20px"}/>} variant={"ghost"} onClick={handleLogout}>Disconnect</Button>
+          </VStack>
+
+          <Modal isOpen={isBuyCryptoModalOpen} onClose={() => setIsBuyCryptoModalOpen(false)} isCentered>
+            <ModalOverlay />
+            <ModalContent>
+              <BuyTab />
+            </ModalContent>
+          </Modal>
+
+          <Modal isOpen={isBridgeModalOpen} onClose={() => setIsBridgeModalOpen(false)} isCentered>
+            <ModalOverlay />
+            <ModalContent>
+              <BuyTab2 />
+            </ModalContent>
+          </Modal>
+        </MenuList>
+      </Menu>
+    )
+  }
 
   return (
     <motion.div initial={{ y: -100 }} whileInView={{ y: 0 }}>
@@ -87,86 +177,7 @@ const [isBridgeModalOpen, setIsBridgeModalOpen] = useState(false);
               <Flex alignItems="center" justifyContent="flex-end" flex="1" gap={2}>
               <Box>
               {isLoggedIn ? (
-                // Dropdown for the logged-in state
-                <Menu onOpen={() => setMenuOpen(true)} onClose={() => setMenuOpen(false)}>
-                  <MenuButton
-                    as={Button}
-                    rightIcon={<ChevronDownIcon />}
-                    size="sm"
-                    bg={"black.baseDark"}
-                    color={isMenuOpen ? "black" : "white"}
-                    alignItems={"center"}
-                    borderRadius={"full"}
-                    position="relative"
-                    fontSize={{ xs: "sm", md: "inherit" }}
-                    py={5}
-                  >
-                    <AddressSection2/>
-                  </MenuButton>
-                  <MenuList
-                    zIndex={"32"}
-                    bg={"black.baseDark"}
-                    minWidth="300px"
-                    width="full"
-                    px={4}
-                    mt={2}
-                    border={"none"}
-                    mx={"15"}
-                    borderRadius={"xl"}
-                    boxShadow={"0px 0px 10px 0px rgba(0,0,0,0.8)"}
-                    fontSize={"md"}
-                  >
-                    <Box
-                      alignContent={"center"}
-                      px={4}
-                      py={3}
-                      borderRadius={"xl"}
-                      bg={"black.base"}
-                      mb={3}
-                      mt={2}
-                    >
-                      <AddressSection3/>
-                    </Box>
-
-                    <Box
-                      alignContent={"center"}
-                      px={4}
-                      pt={6}
-                      borderRadius={"xl"}
-                      bg={"black.base"}
-                      my={3}
-                    >
-                      <TotalAmount />
-                      <Divider mb={4} mt={3}/>
-                      <CoinTab2/>
-                    </Box>
-                  
-                    <VStack
-                      align={"flex-start"}
-                      pt={2}
-                    >
-                      <Button pt={1} leftIcon={<Icon as={AiTwotoneEuroCircle} mb={1} boxSize={"20px"}/>} variant={"ghost"} onClick={() => setIsBuyCryptoModalOpen(true)}>Buy Crypto</Button>                    
-                      <Button pt={1} leftIcon={<Icon as={PiBridgeThin} mb={1} boxSize={"20px"}/>} variant={"ghost"} onClick={() => setIsBridgeModalOpen(true)}>Bridge</Button>
-                      <QTagButton leftIcon={<Icon as={FaHashtag} mb={1} boxSize={"20px"}/>}/>
-                      <Button pt={1} leftIcon={<Icon as={FiLogOut} mb={1} boxSize={"20px"}/>} variant={"ghost"} onClick={handleLogout}>Disconnect</Button>
-                    </VStack>
-
-                    <Modal isOpen={isBuyCryptoModalOpen} onClose={() => setIsBuyCryptoModalOpen(false)} isCentered>
-                      <ModalOverlay />
-                      <ModalContent>
-                        <BuyTab />
-                      </ModalContent>
-                    </Modal>
-
-                    <Modal isOpen={isBridgeModalOpen} onClose={() => setIsBridgeModalOpen(false)} isCentered>
-                      <ModalOverlay />
-                      <ModalContent>
-                        <BuyTab2 />
-                      </ModalContent>
-                    </Modal>
-
-                  </MenuList>
-                </Menu>
+                LoggedInMenu()
               ) : (
                 // Regular button for the logged-out state
                 <ActionButton
@@ -196,86 +207,7 @@ const [isBridgeModalOpen, setIsBridgeModalOpen] = useState(false);
             </Box>
             <Box>
               {isLoggedIn ? (
-                // Dropdown for the logged-in state
-                <Menu onOpen={() => setMenuOpen(true)} onClose={() => setMenuOpen(false)}>
-                  <MenuButton
-                    as={Button}
-                    rightIcon={<ChevronDownIcon />}
-                    size="md"
-                    bg={"black.baseDark"}
-                    color={isMenuOpen ? "black" : "white"}
-                    px={5}
-                    py={6}
-                    gap={5}
-                    alignItems={"center"}
-                    borderRadius={"full"}
-                    position="relative"
-                    fontSize={{ xs: "sm", md: "inherit" }}
-                  >
-                    <AddressSection2 />
-                  </MenuButton>
-                  <MenuList
-                    bg={"black.baseDark"}
-                    minWidth="300px"
-                    width="auto"
-                    px={4}
-                    mt={2}
-                    border={"none"}
-                    position={"absolute"}
-                    left={"-110px"}
-                    borderRadius={"xl"}
-                    boxShadow={"0px 0px 10px 0px rgba(0,0,0,0.8)"}
-                  >
-                    <Box
-                      alignContent={"center"}
-                      px={4}
-                      py={3}
-                      borderRadius={"xl"}
-                      bg={"black.base"}
-                      mb={3}
-                      mt={2}
-                    >
-                      <AddressSection3/>
-                    </Box>
-
-                    <Box
-                      alignContent={"center"}
-                      px={4}
-                      pt={6}
-                      borderRadius={"xl"}
-                      bg={"black.base"}
-                      my={3}
-                    >
-                      <TotalAmount />
-                      <Divider mb={4} mt={3}/>
-                      <CoinTab2/>
-                    </Box>
-
-                    <VStack
-                      align={"flex-start"}
-                      pt={2}
-                    >
-                      <Button pt={1} leftIcon={<Icon as={AiTwotoneEuroCircle} mb={1} boxSize={"20px"}/>} variant={"ghost"} onClick={() => setIsBuyCryptoModalOpen(true)}>Buy Crypto</Button>                    
-                      <Button pt={1} leftIcon={<Icon as={PiBridgeThin} mb={1} boxSize={"20px"}/>} variant={"ghost"} onClick={() => setIsBridgeModalOpen(true)}>Bridge</Button>
-                      <QTagButton leftIcon={<Icon as={FaHashtag} mb={1} boxSize={"20px"}/>}/>
-                      <Button pt={1} leftIcon={<Icon as={FiLogOut} mb={1} boxSize={"20px"}/>} variant={"ghost"} onClick={handleLogout}>Disconnect</Button>
-                    </VStack>
-
-                    <Modal isOpen={isBuyCryptoModalOpen} onClose={() => setIsBuyCryptoModalOpen(false)} isCentered>
-                      <ModalOverlay />
-                      <ModalContent>
-                        <BuyTab />
-                      </ModalContent>
-                    </Modal>
-
-                    <Modal isOpen={isBridgeModalOpen} onClose={() => setIsBridgeModalOpen(false)} isCentered>
-                      <ModalOverlay/>
-                      <ModalContent>
-                        <BuyTab2 />
-                      </ModalContent>
-                    </Modal>
-                  </MenuList>
-                </Menu>
+                LoggedInMenu()
               ) : (
                 // Regular button for the logged-out state
                 <ActionButton

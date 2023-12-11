@@ -223,7 +223,7 @@ export const ImageQxAshFire = ({ ...props }) => {
       left="2%" // Adjust this value as needed to move the image left
       width={{ sm: "70px", md: "100px" }} // Adjust the size as needed
       height="auto"
-      zIndex="2" // Ensure the image is above other content
+      // zIndex="2" // Ensure the image is above other content
       transform="translate(-50%, -50%)" // Center the image's top-left corner precisely at the card's top-left corner
       {...props}
     />
