@@ -91,7 +91,7 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
         
         <MenuList
           bg={"black.baseDark"}
-          minWidth="320px"
+          minWidth="340px"
           width="full"
           px={4}
           mt={2}
@@ -101,7 +101,7 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
           boxShadow={"0px 0px 10px 0px rgba(0,0,0,0.8)"}
           fontSize={"md"}
           position={{sm: "relative", md: "absolute"}}
-          left={{sm: "14px", md: "-70px"}}
+          left={{sm: "14px", md: "-88px"}}
           zIndex={"1000"}
         >
 
