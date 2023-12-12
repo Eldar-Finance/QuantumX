@@ -91,7 +91,7 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
         
         <MenuList
           bg={"black.baseDark"}
-          minWidth="340px"
+          minWidth="240px"
           width="full"
           px={4}
           mt={2}
@@ -101,7 +101,7 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
           boxShadow={"0px 0px 10px 0px rgba(0,0,0,0.8)"}
           fontSize={"md"}
           position={{sm: "relative", md: "relative"}}
-          left={{sm: "14px", md: "80px"}}
+          left={{sm: "14px", md: "62px"}}
           zIndex={"1000"}
         >
 
@@ -125,32 +125,6 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
             bg={"black.base"}
             my={3}
           >
-            <HStack 
-              justifyContent={"space-between"}
-              // position={"relative"}
-              // p={4}
-              // bg="black.dark"
-              borderRadius="xl"
-              alignItems={"flex-end"}
-              display={"flex"}
-              mr={1}
-            >
-              <Center gap={2} onClick={onOpen} cursor={"pointer"}>
-                <Text fontWeight="500">
-                  NFTs
-                </Text>
-                <Center mb={1}>
-                  <FaExternalLinkAlt size={"12px"}/>
-                </Center>
-              </Center>
-              {isOpen && <OwnedNftsModal isOpen={true} onClose={onClose} setNrOfNfts={setNrOfNfts}/>}
-
-              {/* <OpenL */}
-              <Text fontWeight="700">
-                {nrOfNfts > 0 ? nrOfNfts : ""}
-              </Text>
-            </HStack>
-            <Divider mb={4} mt={3}/>
             <TotalAmount />
             <Divider mb={4} mt={3}/>
             <CoinTab2/>
