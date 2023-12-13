@@ -101,7 +101,7 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
           boxShadow={"0px 0px 10px 0px rgba(0,0,0,0.8)"}
           fontSize={"md"}
           position={{sm: "relative", md: "absolute"}}
-          left={{sm: "14px", md: "-88px"}}
+          left={{sm: "14px", md: "-85px"}}
           zIndex={"1000"}
         >
 
