@@ -41,7 +41,7 @@ const AddressSection3 = () => {
 
       {isOpen && <TransactionModal isOpen={true} onClose={onClose} />}
     
-      <HStack  onClick={onCopy} cursor={"pointer"} gap={1} justify={"flex-end"}>
+      <HStack  onClick={onCopy} cursor={"pointer"} gap={1} justify={"flex-end"} whiteSpace={"nowrap"}>
         <Text>
           Copy address
         </Text>
