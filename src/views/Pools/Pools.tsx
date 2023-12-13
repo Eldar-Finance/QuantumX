@@ -192,19 +192,6 @@ const Pools = () => {
           />
           <HarvestAll harvestableFarms={userHarvestableFarms} type="pools"/>
 
-          <Link
-            href="/panel"
-            w={"min-content"}  alignSelf={"center"}
-            mt={1}
-          >
-            <ActionButton px={5} py={1} gap={2}>
-              <GoPlusCircle size={"20px"}/>
-              <Text>
-                Create new Pool
-              </Text>
-            </ActionButton>
-          </Link>
-
           <Link marginTop={"30px"} href="https://bop.ashswap.io?ref=VzYUCcDZFt" isExternal>
             <Image
               src="https://i.postimg.cc/dtHrQxks/Screenshot-2023-12-06-at-4-58-50-PM-copy.jpg"
@@ -215,7 +202,7 @@ const Pools = () => {
           </Link>
 
           <Flex w="full" justifyContent={"flex-end"} mt={"1px"}>
-            {!isSmallDevice && <Flex w="150px" alignItems="end" justifyContent={"flex-end"} mt={{ xs: "30px", md: "30px" }} onClick={handleInfoModal}>
+            {!isSmallDevice && <Flex  alignItems="end" gap={3} justifyContent={"flex-end"} mt={{ xs: "30px", md: "30px" }} onClick={handleInfoModal}>
               {/* <InfoIcon color="white" ml="3" boxSize={6} onClick={handleInfoModal}/> */}
               <ActionButton
                   height={"30px"}
@@ -227,18 +214,50 @@ const Pools = () => {
               >
                   <InfoIcon/> &nbsp;&nbsp; Auto-Harvest
               </ActionButton>
+
+              <Link
+                href="/panel"
+                // w={"min-content"}  alignSelf={"center"}
+                mt={1}
+                height={"30px"}
+              >
+                <ActionButton px={5} py={1} gap={2} height={"30px"}>
+                  <GoPlusCircle size={"20px"}/>
+                  <Text>
+                    Create new Pool
+                  </Text>
+                </ActionButton>
+              </Link>
+
             </Flex>}
-            <Flex w="full" gap={isSmallDevice ? "15px" : "10px"} alignItems="center" justifyContent={isSmallDevice ? "flex-start" : "flex-end"} mt={{ xs: "30px", md: "50px" }} whiteSpace={"nowrap"}>
-              { address && (<Flex alignItems="center" gap="10px">
-                  <Switch size="md" isChecked={isOpen} colorScheme="teal" onChange={handleToggle} />
-                  <Box>My Pools</Box>
-                </Flex>
-              )}
-              <Search onChange={handleSearch}/>
+        
+        {isSmallDevice && <Flex gap={2} mr={4} alignItems="center" mt={{ xs: "30px", md: "30px" }}>  
+          <Link
+            href="/panel"
+            w={"min-content"}  alignSelf={"center"}
+            // mt={1}
+            // height={"30px"}
+          >
+            <ActionButton py={1} px={1} gap={1} height={"30px"}>
+              <GoPlusCircle size={"22px"}/>
+              <Text>
+                Create
+              </Text>
+            </ActionButton>
+          </Link>
+
+          <InfoIcon color="white" boxSize={5} onClick={handleInfoModal}/>
+        </Flex>}
+
+        <Flex w="full" gap={isSmallDevice ? "10px" : "10px"} alignItems="center" justifyContent={isSmallDevice ? "flex-start" : "flex-end"} mt={{ xs: "30px", md: "30px" }} whiteSpace={"nowrap"}>
+          { address && (<Flex alignItems="center" gap="5px">
+              <Switch size="md" isChecked={isOpen} colorScheme="teal" onChange={handleToggle} />
+              <Box>My Pools</Box>
             </Flex>
-            {isSmallDevice && <Flex w="20px" alignItems="center" justifyContent={"flex-end"} mt={{ xs: "30px", md: "30px" }} onClick={handleInfoModal}>
-              <InfoIcon color="white" ml="3" boxSize={6} onClick={handleInfoModal}/>
-            </Flex>}
+          )}
+          <Search onChange={handleSearch}/>
+        </Flex>
+
           </Flex>
           {modalOpen && 
             <AutoHarvestInfoModal onClose={() => setModalOpen(false)}/>

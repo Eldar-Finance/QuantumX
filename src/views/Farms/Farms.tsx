@@ -88,19 +88,6 @@ const Farms = () => {
             amount={totalValueLocked}
           />
           <HarvestAll harvestableFarms={userHarvestableFarms} type="farms"/>
-          
-          <Link
-            href="/panel"
-            w={"min-content"}  alignSelf={"center"}
-            mt={1}
-          >
-            <ActionButton px={5} py={1} gap={2}>
-              <GoPlusCircle size={"20px"}/>
-              <Text>
-                Create new Farm
-              </Text>
-            </ActionButton>
-          </Link>
 
           <Link marginTop={"30px"} href="https://bop.ashswap.io?ref=VzYUCcDZFt" isExternal>
             <Image

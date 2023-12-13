@@ -1,5 +1,5 @@
 import { Search2Icon } from "@chakra-ui/icons";
-import { Flex, Icon, Input, FlexProps } from "@chakra-ui/react";
+import { Flex, Icon, Input, FlexProps, ButtonProps, LinkProps, InputProps } from "@chakra-ui/react";
 
 interface IProps {
   onChange: (q: string) => void;
@@ -15,6 +15,7 @@ const Search = ({ onChange, bg }: IProps) => {
       px={4}
       bg={bg || "black.baseDark"}
       borderRadius="md"
+      maxWidth={{sm: "150px", md: "300px"}}
     >
       <Icon as={Search2Icon} color="#747A84" fontSize={"18px"} />
       <Input
