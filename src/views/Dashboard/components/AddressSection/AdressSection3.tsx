@@ -27,7 +27,7 @@ const AddressSection3 = () => {
       // display={"flex"}
       justifyContent={"space-between"}
       gridTemplateColumns={"repeat(2, 1fr)"}
-      gap={3}
+      gap={8}
       my={2}
       mx={1}
     >
