@@ -1,4 +1,4 @@
-import { Box, Center, Flex, Image, Link, Switch } from "@chakra-ui/react";
+import { Box, Center, Flex, Image, Link, Switch, Text } from "@chakra-ui/react";
 import auditImg from "assets/farms/audit.png";
 import MyContainer from "components/Container/Container";
 import ProteoFarmsCard from "components/Farms/FarmsCard/FarmsCard";
@@ -39,6 +39,7 @@ import { InfoIcon } from "@chakra-ui/icons";
 import AutoHarvestInfoModal from "views/Admin/Views/Farms/AutoHarvestInfoModal";
 import HarvestAll from "components/Farms/HarvestAll/HarvestAll";
 import ActionButton from "components/ActionButton/ActionButton";
+import { GoPlusCircle } from "react-icons/go";
 
 const Pools = () => {
   const dispatch = useAppDispatch();
@@ -190,6 +191,19 @@ const Pools = () => {
             tvlText = "Total value Locked in Pools"
           />
           <HarvestAll harvestableFarms={userHarvestableFarms} type="pools"/>
+
+          <Link
+            href="/panel"
+            w={"min-content"}  alignSelf={"center"}
+            mt={1}
+          >
+            <ActionButton px={5} py={1} gap={2}>
+              <GoPlusCircle size={"20px"}/>
+              <Text>
+                Create new Pool
+              </Text>
+            </ActionButton>
+          </Link>
 
           <Link marginTop={"30px"} href="https://bop.ashswap.io?ref=VzYUCcDZFt" isExternal>
             <Image

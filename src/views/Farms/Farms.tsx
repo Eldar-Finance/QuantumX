@@ -1,4 +1,4 @@
-import { Box, Center, Flex, Image, Link } from "@chakra-ui/react";
+import { Box, Center, Flex, HStack, Icon, Image, Link, Text } from "@chakra-ui/react";
 import auditImg from "assets/farms/audit.png";
 import MyContainer from "components/Container/Container";
 import Title from "components/Farms/Title/Title";
@@ -31,6 +31,8 @@ import { useSelector } from "react-redux";
 import { selectFarms, selectUserFarms2Rewards } from "redux/slices/farms2/farms2-slice";
 import HarvestAll from "components/Farms/HarvestAll/HarvestAll";
 import NextImage from "next/image";
+import ActionButton from "components/ActionButton/ActionButton";
+import { GoPlusCircle } from "react-icons/go";
 
 const Farms = () => {
   const dispatch = useAppDispatch();
@@ -86,6 +88,20 @@ const Farms = () => {
             amount={totalValueLocked}
           />
           <HarvestAll harvestableFarms={userHarvestableFarms} type="farms"/>
+          
+          <Link
+            href="/panel"
+            w={"min-content"}  alignSelf={"center"}
+            mt={1}
+          >
+            <ActionButton px={5} py={1} gap={2}>
+              <GoPlusCircle size={"20px"}/>
+              <Text>
+                Create new Farm
+              </Text>
+            </ActionButton>
+          </Link>
+
           <Link marginTop={"30px"} href="https://bop.ashswap.io?ref=VzYUCcDZFt" isExternal>
             <Image
               src="https://i.postimg.cc/dtHrQxks/Screenshot-2023-12-06-at-4-58-50-PM-copy.jpg"
