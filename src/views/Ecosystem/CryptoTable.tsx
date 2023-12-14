@@ -138,7 +138,7 @@ const CryptoTable = () => {
     </Flex>
 
     {/* Search */}
-    <Flex w="full" alignItems="center" my={3} justifyContent={"center"} whiteSpace={"nowrap"}>
+    <Flex w="full" alignItems="center" my={10} justifyContent={"center"} whiteSpace={"nowrap"} minW={"600px"}>
       <Search bg="black.base" onChange={(e) => setSearch(e)}/>
     </Flex>
     </>
