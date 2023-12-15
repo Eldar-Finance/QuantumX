@@ -202,7 +202,7 @@ const Pools = () => {
           </Link>
 
           <Flex w="full" justifyContent={"flex-end"} mt={"1px"}>
-            {!isSmallDevice && <Flex  alignItems="end" gap={3} justifyContent={"flex-end"} mt={{ xs: "30px", md: "30px" }} onClick={handleInfoModal}>
+            {!isSmallDevice && <Flex  alignItems="end" gap={3} justifyContent={"flex-end"} mt={{ xs: "30px", md: "30px" }}>
               {/* <InfoIcon color="white" ml="3" boxSize={6} onClick={handleInfoModal}/> */}
               <ActionButton
                   height={"30px"}

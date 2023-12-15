@@ -107,7 +107,7 @@ const FarmsList = () => {
   return (
     <>
       <Flex w="full" justifyContent={"flex-end"} mt={"1px"}>
-        {!isSmallDevice && <Flex gap={3} alignItems="end" justifyContent={"flex-start"} mt={{ xs: "30px", md: "30px" }} onClick={handleInfoModal}>
+        {!isSmallDevice && <Flex gap={3} alignItems="end" justifyContent={"flex-start"} mt={{ xs: "30px", md: "30px" }}>
           {/* <InfoIcon color="white" ml="3" boxSize={6} onClick={handleInfoModal}/> */}
           <ActionButton
               height={"30px"}
