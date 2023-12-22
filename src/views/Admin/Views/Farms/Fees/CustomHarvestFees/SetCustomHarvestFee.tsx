@@ -31,7 +31,7 @@ const SetCustomHarvestFee = ({ placeholder, title }: IProps) => {
       const fee = Number(values.fee);
       
       if (fee > 0) {
-        scCall("farms2", "SetCustomHarvestFee", [
+        scCall("farms2", "setCustomHarvestFee", [
           new U64Value(new BigNumber(farmId)),
           new U64Value(new BigNumber(fee * 100)),
         ]);
