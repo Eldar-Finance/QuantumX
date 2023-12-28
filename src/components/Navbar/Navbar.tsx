@@ -177,7 +177,7 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
           <Flex w="full" alignItems="center" justifyContent="space-between" direction="column" gap="20px">
             <Flex w="full" alignItems="center" justifyContent="space-between">
               <Link href="/">
-                <NextImage src={logo} alt="QuantumX" width={100} />
+                <NextImage src={logo} alt="QuantumX" width={120} />
               </Link>
               <Flex alignItems="center" justifyContent="flex-end" flex="1" gap={2}>
               <Box>
@@ -187,7 +187,7 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
                 // Regular button for the logged-out state
                 <ActionButton
                   onClick={handleConnect}
-                  px={5}
+                  px={12}
                   // size="md"
                 >
                   Connect
@@ -204,9 +204,9 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
         {isLargerThanLg && (
           <Flex w="full" alignItems="center" justifyContent="space-between" gap="10px">
             <Link href={"/"}>
-              <NextImage src={logo} alt="QuantumX" width={128} height={38} />
+              <NextImage src={logo} alt="QuantumX" width={168} height={38}/>
             </Link>
-            {isLoggedIn && <Box ml="80px" />}
+            {/* {isLoggedIn && <Box ml="20px" />} */}
             <Box w="fit-content" m="auto" flex="1" display="flex" justifyContent="center">
               <Menu1 />
             </Box>
@@ -217,7 +217,7 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
                 // Regular button for the logged-out state
                 <ActionButton
                   onClick={handleConnect}
-                  px={5}
+                  px={14}
                   // size="md"
                 >
                   Connect
