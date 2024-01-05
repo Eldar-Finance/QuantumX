@@ -55,8 +55,7 @@ const skipRender = (prevProps: IProps, nextProps: IProps) => {
 // eslint-disable-next-line react/display-name
 const DepositView = memo(({ onClose, farm }: IProps) => {
   const { accountToken: token } = useGetAccountToken(farm.rewardToken);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const elrondToken = useMemo(() => token, [token.identifier]);
+  const elrondToken = useMemo(() => token, [token]);
   const isOneToken = farm.rewardToken !== "";
 
   const [usersTokens] = useGetUserTokens(null, true);
@@ -93,7 +92,6 @@ const DepositView = memo(({ onClose, farm }: IProps) => {
     if (isOneToken) {
       formik.setFieldValue(`tokens.0.tokenDetail`, elrondToken);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOneToken, elrondToken]);
 
   const handleSelectToken = (selectedToken: IELrondTOkenWithBalance) => {
