@@ -200,7 +200,7 @@ const BearlyCard = ({ farm, multifarmRewardsLeft }: IProps) => {
                 <Flex key={token.identifier} w="full" justify={"space-around"}>
                   <Text fontSize={"2xl"} fontWeight="bold">
                     {formatBalance({
-                      balance: rewardInfo?.harvestableAmount,
+                      balance: rewardInfo?.harvestableAmount || 0,
                       decimals: token.decimals,
                     })}
                   </Text>
