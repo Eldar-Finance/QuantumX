@@ -55,18 +55,11 @@ const skipRender = (prevProps: IProps, nextProps: IProps) => {
 // eslint-disable-next-line react/display-name
 const DepositView = memo(({ onClose, farm }: IProps) => {
   const { accountToken: elrondToken, error, isLoading } = useGetAccountToken(farm.rewardToken);
-  // console.log("⚠️ ~ file: DespositView.tsx:58 ~ elrondToken:", elrondToken)
-  // console.log("⚠️ ~ file: DespositView.tsx:58 ~ error:", error)
-  // console.log("⚠️ ~ file: DespositView.tsx:58 ~ isLoading:", isLoading)
   const isOneToken = farm.rewardToken !== "";
-  // console.log("⚠️ ~ file: DespositView.tsx:62 ~ isOneToken:", isOneToken)
 
   const [tokens] = useGetUserTokens(null, false);
-  // console.log("⚠️ ~ file: DespositView.tsx:65 ~ tokens:", tokens)
   const alltokens: IELrondTOkenWithBalance[] = isOneToken ? tokens.filter((t: { identifier: string; }) => t.identifier == elrondToken.identifier) : tokens;
-  // console.log("⚠️ ~ file: DespositView.tsx:66 ~ alltokens:", alltokens)
   const [selectedTokenId, setSelectedTokenId] = useState<number>(-1);
-  // console.log("⚠️ ~ file: DespositView.tsx:68 ~ selectedTokenId:", selectedTokenId)
 
   const formik = useFormik<{
     days: "";
@@ -295,6 +288,7 @@ const InputComponent = ({
 
     onMax(realmax, i);
   };
+
   return (
     <Box
       key={i}
@@ -334,6 +328,12 @@ const InputComponent = ({
                 width={27}
                 height={27}
               />}
+              {!field.tokenDetail.assets && field.tokenDetail.identifier == "EGLD" ? <NextImage
+                src={"/images/egld.svg"}
+                alt=""
+                width={27}
+                height={27}
+              /> : null}
               <Text fontSize={"14px"} ml={2}>
                 {formatTokenI(field.tokenDetail.ticker)}
               </Text>
