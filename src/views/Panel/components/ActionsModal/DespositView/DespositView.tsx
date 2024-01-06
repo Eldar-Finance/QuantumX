@@ -54,13 +54,19 @@ const skipRender = (prevProps: IProps, nextProps: IProps) => {
 
 // eslint-disable-next-line react/display-name
 const DepositView = memo(({ onClose, farm }: IProps) => {
-  const { accountToken: token } = useGetAccountToken(farm.rewardToken);
-  const elrondToken = useMemo(() => token, [token]);
+  const { accountToken: elrondToken, error, isLoading } = useGetAccountToken(farm.rewardToken);
+  // console.log("⚠️ ~ file: DespositView.tsx:58 ~ elrondToken:", elrondToken)
+  // console.log("⚠️ ~ file: DespositView.tsx:58 ~ error:", error)
+  // console.log("⚠️ ~ file: DespositView.tsx:58 ~ isLoading:", isLoading)
   const isOneToken = farm.rewardToken !== "";
+  // console.log("⚠️ ~ file: DespositView.tsx:62 ~ isOneToken:", isOneToken)
 
-  const [usersTokens] = useGetUserTokens(null, true);
-  const alltokens: IELrondTOkenWithBalance[] = usersTokens;
+  const [tokens] = useGetUserTokens(null, false);
+  // console.log("⚠️ ~ file: DespositView.tsx:65 ~ tokens:", tokens)
+  const alltokens: IELrondTOkenWithBalance[] = isOneToken ? tokens.filter((t: { identifier: string; }) => t.identifier == elrondToken.identifier) : tokens;
+  // console.log("⚠️ ~ file: DespositView.tsx:66 ~ alltokens:", alltokens)
   const [selectedTokenId, setSelectedTokenId] = useState<number>(-1);
+  // console.log("⚠️ ~ file: DespositView.tsx:68 ~ selectedTokenId:", selectedTokenId)
 
   const formik = useFormik<{
     days: "";
@@ -87,12 +93,13 @@ const DepositView = memo(({ onClose, farm }: IProps) => {
       );
     },
   });
+  // console.log("⚠️ ~ file: DespositView.tsx:72 ~ formik:", formik)
 
   useEffect(() => {
     if (isOneToken) {
       formik.setFieldValue(`tokens.0.tokenDetail`, elrondToken);
     }
-  }, [isOneToken, elrondToken]);
+  }, [isOneToken, elrondToken.identifier]);
 
   const handleSelectToken = (selectedToken: IELrondTOkenWithBalance) => {
     formik.setFieldValue(
@@ -111,14 +118,17 @@ const DepositView = memo(({ onClose, farm }: IProps) => {
       },
     ]);
   };
+
   const removeField = (index: number) => {
     const values = [...formik.values.tokens];
     values.splice(index, 1);
     formik.setFieldValue("tokens", values);
   };
+
   const handleChange = (val: string, i: number) => {
     formik.setFieldValue(`tokens.${i}.amount`, val, false);
   };
+
   const transformValue = (val: string, decimals?: number) => {
     if (decimals) {
       return setElrondBalance(Number(val), decimals);
@@ -126,6 +136,7 @@ const DepositView = memo(({ onClose, farm }: IProps) => {
       return "0";
     }
   };
+
   const handleMax = (realmax: string, i: number) => {
     formik.setFieldValue(`tokens.${i}.amount`, realmax, false);
   };
