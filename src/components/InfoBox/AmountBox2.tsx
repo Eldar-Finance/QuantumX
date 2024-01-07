@@ -6,7 +6,7 @@ interface IProps {
   value: number;
 }
 
-const AmountBox1 = ({ value }: IProps) => {
+const AmountBox2 = ({ value }: IProps) => {
   return (
     <GradientBox
       py="20px"
@@ -23,7 +23,7 @@ const AmountBox1 = ({ value }: IProps) => {
   );
 };
 
-export default AmountBox1;
+export default AmountBox2;
 
 const GradientBox = styled(Center)`
   box-shadow: 0 0 6px 0 rgba(157, 96, 212, 0.5);

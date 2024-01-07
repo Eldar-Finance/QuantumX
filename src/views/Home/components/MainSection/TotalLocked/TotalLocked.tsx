@@ -8,7 +8,7 @@ const TotalLocked = () => {
   const totalValueLockedInPools = useGetTotalValuePools();
   const totalValueLockedInHype = useGetTotalValueInHype();
 
-  return <AmountBox2 type="" value={
+  return <AmountBox2 value={
     totalValueLockedInFarms + totalValueLockedInPools + totalValueLockedInHype
   } />;
 };
