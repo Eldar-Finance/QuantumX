@@ -41,7 +41,7 @@ const MainSection = () => {
       <Flex
         justify={"center"}
         gap={"30px"}
-        mb="30px"
+        mb="70px"
         flexDir={{ xs: "column", md: "row" }}
       >
         {!isLoggedIn && (
@@ -81,7 +81,7 @@ const MainSection = () => {
 
       <Center flexDirection={"column"} gap={{xs: "15px", md: "20px"}}>
         <Flex>
-          <motion.div initial={{ y: 25 }} whileInView={{ y: 0 }} >
+          <motion.div initial={{ y: 25 }} whileInView={{ y: 0 }}>
             <TotalLocked />
           </motion.div>
         </Flex>

@@ -17,7 +17,7 @@ const AmountBox1 = ({ type, value }: IProps) => {
       gap={2}
     >
       {/* <Text color="main">TOTAL VALUE LOCKED</Text> */}
-      <Text color="main">{type}</Text>
+      <Text color="main" minW={"80px"}>{type}</Text>
       <Text>$ {formatNumber(value)}</Text>
     </GradientBox>
   );

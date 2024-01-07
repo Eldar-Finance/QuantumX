@@ -16,9 +16,9 @@ const AmountBox2 = ({ value }: IProps) => {
       borderRadius={"xl"}
       gap={2}
     >
-      <Text color="main" fontWeight={"bold"}>TOTAL VALUE LOCKED</Text>
+      <Text color="main" fontWeight={"bold"} fontSize={"xl"}>TOTAL VALUE LOCKED</Text>
       {/* <Text color="main">{type}</Text> */}
-      <Text fontWeight={"bold"}>$ {formatNumber(value)}</Text>
+      <Text fontWeight={"bold"} fontSize={"xl"}>$ {formatNumber(value)}</Text>
     </GradientBox>
   );
 };
