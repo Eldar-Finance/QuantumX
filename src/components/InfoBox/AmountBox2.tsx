@@ -4,21 +4,21 @@ import { formatNumber } from "utils/functions/formatBalance";
 
 interface IProps {
   value: number;
-  type: "FARMS" | "POOLS" | "HYPEZONE";
 }
 
-const AmountBox1 = ({ type, value }: IProps) => {
+const AmountBox1 = ({ value }: IProps) => {
   return (
     <GradientBox
-      p="20px"
+      py="20px"
+      px="40px"
       textAlign={"center"}
       flexDir="column"
       borderRadius={"xl"}
       gap={2}
     >
-      {/* <Text color="main">TOTAL VALUE LOCKED</Text> */}
-      <Text color="main">{type}</Text>
-      <Text>$ {formatNumber(value)}</Text>
+      <Text color="main" fontWeight={"bold"}>TOTAL VALUE LOCKED</Text>
+      {/* <Text color="main">{type}</Text> */}
+      <Text fontWeight={"bold"}>$ {formatNumber(value)}</Text>
     </GradientBox>
   );
 };

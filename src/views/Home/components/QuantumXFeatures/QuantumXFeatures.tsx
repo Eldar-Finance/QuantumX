@@ -23,7 +23,7 @@ const QuantumXFeatures = () => {
             fontWeight={"400"}
             mb="54px"
           >
-            QuantumX is a decentralised platform that provides a tightly
+            QuantumX is a decentralized platform that provides a tightly
             integrated ecosystem of dApps <br /> aiming to get full advantage of
             the power of MultiversX.
           </Heading>
