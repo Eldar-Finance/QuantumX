@@ -79,7 +79,7 @@ const MainSection = () => {
         </motion.div>
       </Flex>
 
-      <Center flexDirection={"column"} gap={{xs: "5px", md: "5px"}}>
+      <Center flexDirection={"column"} gap={2}>
         <Flex>
           <motion.div initial={{ y: 25 }} whileInView={{ y: 0 }}>
             <TotalLocked />

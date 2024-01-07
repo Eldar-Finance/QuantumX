@@ -13,7 +13,6 @@ const AmountBox2 = ({ value }: IProps) => {
       textAlign={"center"}
       flexDir="column"
       borderRadius={"xl"}
-      gap={2}
     >
       <Text color="main" fontWeight={"bold"}>TOTAL VALUE LOCKED</Text>
       {/* <Text color="main">{type}</Text> */}
