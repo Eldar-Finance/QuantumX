@@ -9,7 +9,6 @@ interface IProps {
 const AmountBox2 = ({ value }: IProps) => {
   return (
     <Box
-      pt="10px"
       px="40px"
       textAlign={"center"}
       flexDir="column"
@@ -18,7 +17,7 @@ const AmountBox2 = ({ value }: IProps) => {
     >
       <Text color="main" fontWeight={"bold"}>TOTAL VALUE LOCKED</Text>
       {/* <Text color="main">{type}</Text> */}
-      <Text fontWeight={"bold"} fontSize={"5xl"}>$ {formatNumber(value)}</Text>
+      <Text fontWeight={"bold"} fontSize={"6xl"} py={3}>$ {formatNumber(value)}</Text>
     </Box>
   );
 };
