@@ -1,4 +1,4 @@
-import { Center, Text } from "@chakra-ui/react";
+import { Box, Center, Text } from "@chakra-ui/react";
 import styled from "@emotion/styled";
 import { formatNumber } from "utils/functions/formatBalance";
 
@@ -8,8 +8,8 @@ interface IProps {
 
 const AmountBox2 = ({ value }: IProps) => {
   return (
-    <GradientBox
-      py="20px"
+    <Box
+      py="5px"
       px="40px"
       textAlign={"center"}
       flexDir="column"
@@ -19,7 +19,7 @@ const AmountBox2 = ({ value }: IProps) => {
       <Text color="main" fontWeight={"bold"} fontSize={"xl"}>TOTAL VALUE LOCKED</Text>
       {/* <Text color="main">{type}</Text> */}
       <Text fontWeight={"bold"} fontSize={"xl"}>$ {formatNumber(value)}</Text>
-    </GradientBox>
+    </Box>
   );
 };
 
