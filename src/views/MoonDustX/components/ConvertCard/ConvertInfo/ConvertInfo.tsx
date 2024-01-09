@@ -17,6 +17,7 @@ const ConvertInfo = () => {
   const toTokenToConvert = useAppSelector(selectToTokenDust);
   const { token } = useGetElrondToken(toTokenToConvert);
   const selectedTokens = useAppSelector(selectConvertInfo);
+  // console.log("⚠️ ~ selectedTokens:", selectedTokens)
   const totalAmountOfTokens = selectedTokens.reduce((acc, cur) => {
     return (
       acc +
@@ -25,10 +26,12 @@ const ConvertInfo = () => {
   }, 0);
 
   const totalDollar = selectedTokens.reduce((acc, cur) => {
+    const newVal = new BigNumber(cur.data[0].dollarAmount).toNumber();
     return (
-      acc + new BigNumber(cur.data[cur.data.length - 1].dollarAmount).toNumber()
+      acc + newVal
     );
   }, 0);
+  // console.log("⚠️ ~ totalDollar:", totalDollar)
 
   return (
     <Card as={Flex} p={8} rounded="xl" w="full" flexDir={"column"} mt={8}>
