@@ -26,7 +26,7 @@ export const routeNames = {
   moondustx: "/moondustx",
   qtags: "/qtags",
   marketplace: "/marketplace",
- ecosystem:"/ecosystem",
+  ecosystem:"/ecosystem",
 };
 
 export const routes: {
@@ -66,12 +66,12 @@ export const routes: {
   hypezone: {
     path: routeNames.hypezone,
     name: "Hypezone",
-    onModalAndNavbar: true,
+    // onModalAndNavbar: true,
   },
   hub: {
     path: routeNames.hub,
     name: "Hub",
-    onModalAndNavbar: true,
+    // onModalAndNavbar: true,
   },
   // dca: {
   //   path: routeNames.dca,
@@ -86,7 +86,7 @@ export const routes: {
    ecosystem: {
      path: routeNames.ecosystem,
      name: "Ecosystem",
-    //  onModalAndNavbar: true,
+     onModalAndNavbar: true,
   },
   // converter: {
   //   path: routeNames.converter,
