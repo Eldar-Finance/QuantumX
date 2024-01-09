@@ -17,7 +17,6 @@ const ConvertInfo = () => {
   const toTokenToConvert = useAppSelector(selectToTokenDust);
   const { token } = useGetElrondToken(toTokenToConvert);
   const selectedTokens = useAppSelector(selectConvertInfo);
-  // console.log("⚠️ ~ selectedTokens:", selectedTokens)
   const totalAmountOfTokens = selectedTokens.reduce((acc, cur) => {
     return (
       acc +
@@ -31,7 +30,6 @@ const ConvertInfo = () => {
       acc + newVal
     );
   }, 0);
-  // console.log("⚠️ ~ totalDollar:", totalDollar)
 
   return (
     <Card as={Flex} p={8} rounded="xl" w="full" flexDir={"column"} mt={8}>
