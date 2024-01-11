@@ -20,12 +20,12 @@ const ConvertInfo = () => {
   const totalAmountOfTokens = selectedTokens.reduce((acc, cur) => {
     return (
       acc +
-      new BigNumber(cur.data[cur.data.length - 1].amountReceivDec).toNumber()
+      new BigNumber(cur.data?.[0].amountReceivDec || 0).toNumber()
     );
   }, 0);
 
   const totalDollar = selectedTokens.reduce((acc, cur) => {
-    const newVal = new BigNumber(cur.data[0].dollarAmount).toNumber();
+    const newVal = new BigNumber(cur.data?.[0].dollarAmount || 0).toNumber();
     return (
       acc + newVal
     );
