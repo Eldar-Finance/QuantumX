@@ -26,7 +26,7 @@ const ModalMenu = ({ onClose }: IProps) => {
       justifyContent="center"
       alignItems={"center"}
       as={motion.div}
-      w={"auto"}
+      w={{sm: "45%", md: "28%"}}
       position={"absolute"}
       right={0}
       top={{sm: "120%", md: "130%"}}
