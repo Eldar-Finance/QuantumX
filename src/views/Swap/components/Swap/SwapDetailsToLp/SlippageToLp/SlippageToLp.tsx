@@ -55,7 +55,7 @@ const SlippageToLp = () => {
               {slipapge}%.
             </Text> */}
 
-            <Flex w="full" gap={{sm: 1, md: 2}} pt={1} ml={-3} direction={"row"}>
+            <Flex w="full" gap={{sm: 1, md: 2}} pt={3} ml={-3} direction={"row"}>
               <Flex gap={1}>
                 {slippageSlecctions.map((slippageOption) => {
                   return (
