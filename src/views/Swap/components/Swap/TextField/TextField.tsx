@@ -63,7 +63,7 @@ const TextField = ({
   }
 
   const firstNonZeroDigit: number | null = findFirstNonZeroDigit(field.value);
-
+  
   return (
     <Box
       mb={"10px"}
@@ -184,7 +184,7 @@ const TextField = ({
           )}
           {dollarAmount && (
             <Text color={"grayText"} fontSize={"sm"} mt={hasMaxButton ? "5px" : "6px"}>
-              ≈ ${formatNumber(preventExponetialNotation(dollarAmount))}
+              ≈ ${formatNumber(dollarAmount)}
             </Text>
           )}
         </Flex>
