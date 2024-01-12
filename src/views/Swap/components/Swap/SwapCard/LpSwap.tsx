@@ -101,7 +101,7 @@ const LpSwap = () => {
   dispatch(setToToken(toTokenToLp.identifier));
 
   const fromTokensToLp = swapTokens.filter(
-    (t) => t.identifier == toknesID.wegld || t.identifier == toknesID.usdc
+    (t) => t.identifier == toknesID.wegld || t.identifier == toknesID.usdc || t.identifier == toknesID.egld
   );
 
   const { tokens: elrondTokens } = useGetMultipleElrondTokens(swapTokens.map((token) => token.identifier));
@@ -359,7 +359,7 @@ const LpSwap = () => {
           dollarAmount={
             data &&
               (isSapwToLp
-                ? data[0]?.dollarAmount
+                ? data[0]?.finalvalue
                 : data[data.length - 1]?.dollarAmount)
           }
           swapTokens={toLpTokens.filter((token) => token.identifier !== fromTokenToLp.identifier)}
