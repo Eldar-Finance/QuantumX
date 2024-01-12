@@ -49,6 +49,21 @@ const TextField = ({
   const { token, isLoading } = useGetElrondToken(field.identifier);
 
   const { accountToken } = useGetAccountToken(field.identifier);
+
+  function findFirstNonZeroDigit(numStr: string): number | null {
+    if (!numStr) {
+      return null;
+    }
+    for (let i = 0; i < numStr.length; i++) {
+        if (numStr[i] !== '0' && numStr[i] !== '.') {
+            return i + 1;
+        }
+    }
+    return null;
+  }
+
+  const firstNonZeroDigit: number | null = findFirstNonZeroDigit(field.value);
+
   return (
     <Box
       mb={"10px"}
@@ -136,12 +151,10 @@ const TextField = ({
             <InputS 
               value={field.value ?
                 id == "to" ?
-                  formatNumberWithMaxDecimals(Number(field.value), 7)
+                  formatNumberWithMaxDecimals(Number(field.value), firstNonZeroDigit > 8 ? firstNonZeroDigit : 6)
                   : formatNumberWithMaxDecimals(Number(field.value), Math.min(9, field.decimals))
                 : ""}
-              // value={field.value ? field.value : ""}
-              //value={field.value ?? ""}
-              fontSize={"3xl"}
+              fontSize={{sm: firstNonZeroDigit > 8 ? "md" : "3xl", md: firstNonZeroDigit > 8 ? "30px" : "3xl"}}
               fontWeight={"500"}
               id={id}
               px={0}

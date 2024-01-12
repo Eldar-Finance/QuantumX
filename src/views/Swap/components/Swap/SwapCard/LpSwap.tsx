@@ -8,6 +8,10 @@ import { useRouter } from "next/dist/client/router";
 import { PropsWithChildren, use, useEffect, useMemo } from "react";
 import { FetchWhitelistedTokens } from "redux/slices/smartSwaps/funcs";
 import {
+  selectFromToken,
+  selectFromTokenValue,
+  selectToToken,
+  selectToTokenValue,
   setFromToken,
   setFromTokenValue,
   setToToken,
