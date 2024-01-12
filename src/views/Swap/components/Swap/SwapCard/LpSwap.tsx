@@ -112,36 +112,36 @@ const LpSwap = () => {
   );
   const toLpTokens = allSmartSwapTokens.filter((t) => t.name.includes('LP'));
 
-  // useEffect(() => {
-  //   let isMounted = true;
-  //   const fetchTokens = async () => {
-  //     let tokens = await ashSwapAggregator.getTokens();
-  //     if (!tokens.find((token) => token.id === "EGLD")) {
-  //       tokens = [...tokens, {
-  //         id: "EGLD",
-  //         decimal: 18,
-  //         coingeckoId: ""
-  //       }];
-  //     }
+  useEffect(() => {
+    let isMounted = true;
+    const fetchTokens = async () => {
+      let tokens = await ashSwapAggregator.getTokens();
+      if (!tokens.find((token) => token.id === "EGLD")) {
+        tokens = [...tokens, {
+          id: "EGLD",
+          decimal: 18,
+          coingeckoId: ""
+        }];
+      }
 
-  //     const formattedTokens = tokens.map((token) => {
-  //       return {
-  //         identifier: token.id,
-  //         decimals: token.decimal,
-  //         coingeckoId: token.coingeckoId,
-  //       };
-  //     });
+      const formattedTokens = tokens.map((token) => {
+        return {
+          identifier: token.id,
+          decimals: token.decimal,
+          coingeckoId: token.coingeckoId,
+        };
+      });
 
-  //     if (isMounted) {
-  //       setSwapTokens(formattedTokens);
-  //     }
-  //   };
+      if (isMounted) {
+        setSwapTokens(formattedTokens);
+      }
+    };
 
-  //   fetchTokens();
-  //   return () => {
-  //     isMounted = false;
-  //   };
-  // }, [ashSwapAggregator, chainId]);
+    fetchTokens();
+    return () => {
+      isMounted = false;
+    };
+  }, [ashSwapAggregator, chainId]);
   
   //
   // ROUTER QUERIES
