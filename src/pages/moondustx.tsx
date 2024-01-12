@@ -1,5 +1,6 @@
 import { MetaHead } from "components/MetaHead/MetaHead";
 import MoonDustX from "views/MoonDustX/MoonDustX";
+
 const MoonDustXPage = () => {
   return (
     <>

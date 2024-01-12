@@ -129,7 +129,7 @@ const TextField = ({
         </Flex>
         <Flex flexDir={"column"} w="full" transform={"translateY(-5px)"} >
           {isLoadingAmount ? (
-            <Box w="full">
+            <Box w="full" marginTop={"-35px"}>
               <Spinner />
             </Box>
           ) : (

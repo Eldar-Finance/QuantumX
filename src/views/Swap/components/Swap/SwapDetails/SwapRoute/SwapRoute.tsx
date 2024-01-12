@@ -56,7 +56,7 @@ const SwapRoute = ({ swapPaths }: { swapPaths?: SorSwapResponse }) => {
       </Text>
       <Flex align="center" justify="space-between" mt={-1}>
         {finalRoutes.length > 0 && <Text as="li" style={{ listStyleType: 'none' }} whiteSpace={"nowrap"} fontSize={'lsm'} color="white.500">
-          {finalRoutes?.[0].token1} {'->'} {finalRoutes?.[0].token2}
+          {finalRoutes?.[0].token1} {'→'} {finalRoutes?.[0].token2}
         </Text>}
         {finalRoutes.length > 1 && (
           <Button 
@@ -74,7 +74,7 @@ const SwapRoute = ({ swapPaths }: { swapPaths?: SorSwapResponse }) => {
         <Box as="ul" style={{ listStyleType: 'none' }}  mt={-1}>
           {finalRoutes.slice(1).map((route, i) => (
             <Text as="li" fontSize={'lsm'} color="white.500" key={i + 1}>
-              {route.token1} {'->'} {route.token2}
+              {route.token1} {'→'} {route.token2}
             </Text>
           ))}
         </Box>
@@ -104,7 +104,7 @@ const SwapRoute = ({ swapPaths }: { swapPaths?: SorSwapResponse }) => {
               return (
                 <li key={i}>
                   <Text fontSize={"lsm"} color="white.500">
-                    {route.token1} {"->"} {route.token2}
+                    {route.token1} {"→"} {route.token2}
                   </Text>
                 </li>
               );

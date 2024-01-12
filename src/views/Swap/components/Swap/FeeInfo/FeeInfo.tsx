@@ -3,7 +3,7 @@ import CustomTooltip from "components/CustomTooltip/CustomTooltip";
 import { formatBalance } from "utils/functions/formatBalance";
 import { useGetFees } from "views/Admin/Views/Swap/hooks";
 
-const FeeInfo = ({ fee } : { fee: number}) => {
+const FeeInfo = ({ fee, whichToken } : { fee: number, whichToken: string}) => {
   const { fees } = useGetFees();
 
   if (!fees) return null;
@@ -15,7 +15,7 @@ const FeeInfo = ({ fee } : { fee: number}) => {
           <Box color="GrayText" fontSize={"sm"} >
             {/* <Flex flexDir={"column"}> */}
               <Text>
-                {fee}% fee on the input token
+                {fee}% fee on the {whichToken} token
               </Text>
             {/* </Flex> */}
             {

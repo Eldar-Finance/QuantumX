@@ -54,9 +54,8 @@ export interface SwapToken {
 
 const egldFee = 0.01;
 
-const SwapCard = ({setGraphTokens, setIsNftSwap} : {setGraphTokens: any, setIsNftSwap: any}) => {
+const SwapCard = ({setGraphTokens} : {setGraphTokens: any}) => {
   const userAddress = store.getState().userAccount.connectedAddress;
-  const [isNFTLiquidityActive, setIsNFTLiquidityActive] = useState(false);
   const router = useRouter();
   const chainId = getAshChainId();
   const slipapge = useAppSelector(selectSlippage);
@@ -69,7 +68,6 @@ const SwapCard = ({setGraphTokens, setIsNftSwap} : {setGraphTokens: any, setIsNf
       return agg;
     }
   }, [chainId]);
-  // console.log("⚠️ ~ file: SwapCard.tsx:51 ~ ashSwapAggregator:", ashSwapAggregator)
 
   //
   // TOKENS
@@ -87,12 +85,8 @@ const SwapCard = ({setGraphTokens, setIsNftSwap} : {setGraphTokens: any, setIsNf
   });
 
   const { tokens: elrondTokens } = useGetMultipleElrondTokens(swapTokens.map((token) => token.identifier));
-  // console.log("⚠️ ~ file: SwapCard.tsx:72 ~ elrondTokens:", elrondTokens)
 
   const { accountToken } = useGetAccountToken(fromToken.identifier);
-  // console.log("⚠️ ~ file: SwapCard.tsx:71 ~ accountTokens:", accountTokens)
-  const [maxBalance, setMaxBalance] = useState(null);
-
 
   useEffect(() => {
     let isMounted = true;
@@ -127,20 +121,16 @@ const SwapCard = ({setGraphTokens, setIsNftSwap} : {setGraphTokens: any, setIsNf
   
   useEffect(() => {
     if (router.query.fromToken) {
-      // console.log("⚠️ ~ file: SwapCard.tsx:92 ~ fromToken:", router.query.fromToken)
       setFromToken({
         identifier: router.query.fromToken.toString(),
       });
     }
     if (router.query.toToken) {
-      // console.log("⚠️ ~ file: SwapCard.tsx:92 ~ toToken:", router.query.toToken)
       setToToken({
         identifier: router.query.toToken.toString(),
       });
     }
   }, [router, swapTokens]);
-  // console.log("⚠️ ~ file: SwapCard.tsx:50 ~ SwapCard ~ fromToken::::", fromToken)
-  // console.log("⚠️ ~ file: SwapCard.tsx:52 ~ SwapCard ~ toToken::::", toToken)
 
   useEffect(() => {
     if (fromToken?.identifier && toToken?.identifier) {
@@ -246,19 +236,17 @@ const SwapCard = ({setGraphTokens, setIsNftSwap} : {setGraphTokens: any, setIsNf
   // CONDITIONS
   //
   const hasEnoughBalance = useMemo(() => {
-    // if (!fromToken.value) {
-    //   return true;
-    // }
-    // else 
     const fee = fromToken.identifier == "EGLD" ? egldFee : 0;
     if (accountToken) {
+      if (!fromToken.value) {
+        return true;
+      }
       return BigNumber(accountToken.balance).gte(
         BigNumber(fromToken?.value).times(Math.pow(10, accountToken.decimals)).plus(
           BigNumber(fee * Math.pow(10, 18))
         )
       );
     }
-    return false;
   }, [accountToken, fromToken.identifier, fromToken?.value]);
 
   const isWrapEgld = useMemo(() => {
@@ -273,7 +261,6 @@ const SwapCard = ({setGraphTokens, setIsNftSwap} : {setGraphTokens: any, setIsNf
   // NEW SWAP DATA
   //
   const [swapPaths, setSwapPaths] = useState(null);
-  // console.log("⚠️ ~ file: SwapCard.tsx:192 ~ swapPaths:", swapPaths)
 
   useEffect(() => {
     const handleCalculateNewSwapData = () => {
@@ -361,151 +348,102 @@ const SwapCard = ({setGraphTokens, setIsNftSwap} : {setGraphTokens: any, setIsNf
   }, [fromToken?.value, toToken.decimals, toToken.identifier]);
 
   return (
-    <Flex
-      width="100%" // Set the width to 100% to make it full width
-      flexDir="column"
-      justifyContent="flex-start"
-      alignItems="left"
-    >
-      <Flex width="100%" mb={1} ml={5} gap={2} zIndex={10} w={"full"}>
-        <Heading
-          as="h1"
-          fontSize={"m"}
-          fontWeight={"bold"}
-          cursor={"pointer"}
-          color={isNFTLiquidityActive ? "gray" : "highlighted"} // Replace with your active style
-          onClick={() => {
-            setIsNFTLiquidityActive(false)
-            setIsNftSwap(false)
-          }}
-        >
-          Swap
-        </Heading>
-        <Heading marginLeft={"10px"}
-          as="h1"
-          fontSize={"m"}
-          fontWeight={"bold"}
-          cursor={"pointer"}
-          color={!isNFTLiquidityActive ? "gray" : "highlighted"} // Replace with your active style
-          onClick={() => {
-            setIsNFTLiquidityActive(true)
-            setIsNftSwap(true)
-          }}
-        >
-          NFT Swap
-        </Heading>
-      </Flex>
-      <Box
-        // maxWidth={"500px"}
-        width={"full"}
-        mb={0}
-        borderRadius="30px"
-        position="relative"
-        pt={4}
-      >
-        {isNFTLiquidityActive ? (
-        // The new NFT 2 Liquidity interface goes here
-        <NFTLiquidityInterface/>
-      ) : (
-        <Box>
-          <Flex flexDir={"column"} width={"full"}>
-            <Center flexDir={"column"} position="relative" mb={"10px"}>
-              <TextField
-                sxProps={{borderColor: "transparent" , backgroundColor:"black.base"}}
-                label={"You send"}
-                id="from"
-                hasMaxButton
-                onChange={(e) => handleChangeFromField(e.target.value)}
-                handleClickToken={handleOnSelectFromToken}
-                onClickMaxtoken={handleMaxFromField}
-                field={fromToken}
-                disableChangeToken={false}
-                dollarAmount={
-                  fromToken.value ?
-                  (elrondTokens.find((token) => token.identifier === fromToken.identifier)?.price
-                  * BigNumber(fromToken.value).toNumber()).toString() : ""
-                }
-                swapTokens={swapTokens}
-              />
-              <Center  position={"absolute"} bottom={"-25px"} zIndex={2}>
-                <IconButton
-                  onClick={handleExchangeFields}
-                  borderRadius={"2.5rem"}
-                  aria-label="change-positions"
-                  bg="black.base"
-                  boxSize={"55px"}
-                  border={"7px solid"}
-                  borderColor={"black.baseDark"}
-                  _hover={{ bg: "black.baseDark" }}
-                  disabled={false}
-                >
-                  <ArrowUpDownIcon color={"main"} />
-                </IconButton>
-              </Center>
-            </Center>
-            <TextField
-              sxProps={{borderColor: "transparent" , backgroundColor:"black.base"}}
-              label={"You receive"}
-              id="to"
-              hasMaxButton={false}
-              handleClickToken={handleOnSelectToToken}
-              field={toToken}
-              isDisabled={true}
-              isLoadingAmount={false}
-              dollarAmount={
-                toToken.value && fromToken.value ?
-                (elrondTokens.find((token) => token.identifier === toToken.identifier)?.price
-                * BigNumber(toToken.value).toNumber()).toString() : ""
-              }
-              swapTokens={swapTokens.filter((token) => token.identifier !== fromToken.identifier)}
-            />
-            {/* {toToken?.identifier && (
-              <Flex justifyContent={"flex-end"} mt={-2} color="#24918a"></Flex>
-            )} */}
-            {fromToken?.value && swapPaths && (
-              <SwapDetails swapPaths={swapPaths} />
-            )}
-            {!isWrapEgld && !isUnwrapEgld ? 
-              <SwapButton
-                //bg={"#22F6DC"}
-                bg={"linear-gradient(315deg, #FF005C 50%, #22F6DC 50% 100%);"}
-                filter={"brightness(90%)"}
-                color="black"
-                py="17px"
-                width="100%"
-                alignContent="center"
-                fontWeight={"900"}
-                fontSize={"1.2em"}
-                style={{ margin: 'auto' , marginTop:'20px'}}
-                interaction={interaction}
-                actualInputAmount={BigNumber(fromToken.value).times(Math.pow(10, fromToken.decimals)).toString()}
-                disabled={!hasEnoughBalance || !swapPaths || userAddress=="" ? true : false}
-                disabledMessage={hasEnoughBalance ? "Enter an amount" : "Insufficient balance"}
-              /> :
-              <SwapButton
-                //bg={"#22F6DC"}
-                bg={"linear-gradient(315deg, #FF005C 50%, #22F6DC 50% 100%);"}
-                filter={"brightness(90%)"}
-                color="black"
-                py="17px"
-                width="100%"
-                alignContent="center"
-                fontWeight={"900"}
-                fontSize={"1.2em"}
-                style={{ margin: 'auto' , marginTop:'20px'}}
-                disabled={!hasEnoughBalance || userAddress=="" || !fromToken.value ? true : false}
-                disabledMessage={hasEnoughBalance ? "Enter an amount" : "Insufficient balance"}
-                defaultMessage={isWrapEgld ? "Wrap" : "Unwrap"}
-                isWrapOrUnwrap={true}
-                wrapUnwrapCall={handleWrapUnwrap}
-              />
+    <Box>
+      <Flex flexDir={"column"} width={"full"}>
+        <Center flexDir={"column"} position="relative" mb={"10px"}>
+          <TextField
+            sxProps={{borderColor: "transparent" , backgroundColor:"black.base"}}
+            label={"You send"}
+            id="from"
+            hasMaxButton
+            onChange={(e) => handleChangeFromField(e.target.value)}
+            handleClickToken={handleOnSelectFromToken}
+            onClickMaxtoken={handleMaxFromField}
+            field={fromToken}
+            disableChangeToken={false}
+            dollarAmount={
+              fromToken.value ?
+              (elrondTokens.find((token) => token.identifier === fromToken.identifier)?.price
+              * BigNumber(fromToken.value).toNumber()).toString() : ""
             }
-            <FeeInfo fee={fee * 100}/>
-          </Flex>
-        </Box>
+            swapTokens={swapTokens}
+          />
+          <Center  position={"absolute"} bottom={"-25px"} zIndex={2}>
+            <IconButton
+              onClick={handleExchangeFields}
+              borderRadius={"2.5rem"}
+              aria-label="change-positions"
+              bg="black.base"
+              boxSize={"55px"}
+              border={"7px solid"}
+              borderColor={"black.baseDark"}
+              _hover={{ bg: "black.baseDark" }}
+              disabled={false}
+            >
+              <ArrowUpDownIcon color={"main"} />
+            </IconButton>
+          </Center>
+        </Center>
+        <TextField
+          sxProps={{borderColor: "transparent" , backgroundColor:"black.base"}}
+          label={"You receive"}
+          id="to"
+          hasMaxButton={false}
+          handleClickToken={handleOnSelectToToken}
+          field={toToken}
+          isDisabled={true}
+          isLoadingAmount={false}
+          dollarAmount={
+            toToken.value && fromToken.value ?
+            (elrondTokens.find((token) => token.identifier === toToken.identifier)?.price
+            * BigNumber(toToken.value).toNumber()).toString() : ""
+          }
+          swapTokens={swapTokens.filter((token) => token.identifier !== fromToken.identifier)}
+        />
+        {/* {toToken?.identifier && (
+          <Flex justifyContent={"flex-end"} mt={-2} color="#24918a"></Flex>
+        )} */}
+        {fromToken?.value && swapPaths && (
+          <SwapDetails swapPaths={swapPaths} />
         )}
-      </Box>
-    </Flex>
+        {!isWrapEgld && !isUnwrapEgld ? 
+          <SwapButton
+            //bg={"#22F6DC"}
+            bg={"linear-gradient(315deg, #FF005C 50%, #22F6DC 50% 100%);"}
+            filter={"brightness(90%)"}
+            color="black"
+            py="17px"
+            width="100%"
+            alignContent="center"
+            fontWeight={"900"}
+            fontSize={"1.2em"}
+            style={{ margin: 'auto' , marginTop:'20px'}}
+            interaction={interaction}
+            actualInputAmount={BigNumber(fromToken.value).times(Math.pow(10, fromToken.decimals)).toString()}
+            disabled={!hasEnoughBalance || !swapPaths || userAddress=="" ? true : false}
+            disabledMessage={hasEnoughBalance ? "Enter an amount" : "Insufficient balance"}
+          /> :
+          <SwapButton
+            //bg={"#22F6DC"}
+            bg={"linear-gradient(315deg, #FF005C 50%, #22F6DC 50% 100%);"}
+            filter={"brightness(90%)"}
+            color="black"
+            py="17px"
+            width="100%"
+            alignContent="center"
+            fontWeight={"900"}
+            fontSize={"1.2em"}
+            style={{ margin: 'auto' , marginTop:'20px'}}
+            disabled={!hasEnoughBalance || userAddress=="" || !fromToken.value ? true : false}
+            disabledMessage={hasEnoughBalance ? "Enter an amount" : "Insufficient balance"}
+            defaultMessage={isWrapEgld ? "Wrap" : "Unwrap"}
+            isWrapOrUnwrap={true}
+            wrapUnwrapCall={handleWrapUnwrap}
+          />
+        }
+        <FeeInfo fee={fee * 100} whichToken={"input"}/>
+      </Flex>
+    </Box>
   );
 };
 

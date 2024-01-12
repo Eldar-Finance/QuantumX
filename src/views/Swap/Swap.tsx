@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Card, Center, Flex, IconButton, Image, Link, Modal, ModalCloseButton, Text, useMediaQuery } from '@chakra-ui/react';
 import { ChevronRightIcon, ChevronLeftIcon } from '@chakra-ui/icons';
-import SwapCard from './components/SmartSwap/SwapCard/SwapCard';
+import SwapCard from './components/Swap/SwapCard/SwapCard';
 import Layout from 'components/Layout/Layout';
 import MyContainer from 'components/Container/Container';
 import withElronDapp from 'hoc/withElronDapp';
@@ -10,6 +10,7 @@ import { PiChartLine, PiChartLineBold } from "react-icons/pi";
 import { HiOutlineChartBarSquare } from "react-icons/hi2";
 import MyModal from 'components/Modal/Modal';
 import { breakpoints } from 'theme/chakra';
+import xExchangeLogo from "assets/logos/xexchange-light.svg";
 
 export function ChartIcon(isSecondCardOpen: boolean) {
   return (
@@ -35,6 +36,7 @@ const Swap = () => {
   const [isSecondCardOpen, setIsSecondCardOpen] = useState(false);
   const [graphTokens, setGraphTokens] = useState([]);
   const [isNftSwap, setIsNftSwap] = useState(false);
+  const [isMainSwap, setIsMainSwap] = useState(true);
   const [tok1, setVariable1] = useState('');
   const [tok2, setVariable2] = useState('');
 
@@ -72,6 +74,7 @@ const Swap = () => {
         alignItems="center"
         pb="50px"
         width="100%"
+        mt={{sm: 8}}
       >
         <Flex
           direction={{ base: "column", md: "row" }}
@@ -88,14 +91,15 @@ const Swap = () => {
             borderRadius="30px"
             border="1px solid"
             borderColor="transparent"
-            p={{ sm: "10px", md: "20px" }}
+            px={{ sm: "10px", md: "20px" }}
+            py={{ sm: "15px", md: "20px" }}
             position="relative"
             direction={"row"}
           >
             {/* The image now uses negative values to sit outside the top left corner */}
             <ImageQxAshFire/>
-            <SwapCard setGraphTokens={setGraphTokens} setIsNftSwap={setIsNftSwap}/>
-            {!isNftSwap && <IconButton
+            <SwapCard setGraphTokens={setGraphTokens} setIsNftSwap={setIsNftSwap} setIsMainSwap={setIsMainSwap}/>
+            {isMainSwap && <IconButton
                 aria-label="Toggle chart"
                 icon={ChartIcon(isSecondCardOpen)}
                 variant={"none"}
@@ -144,7 +148,7 @@ const Swap = () => {
                 </Box>
               </Card>
             </MyModal> :
-            (!isNftSwap && <Card
+            (isMainSwap && <Card
               maxW={"520px"}
               width="100%"
               bg={"black.baseDark"}
@@ -172,7 +176,7 @@ const Swap = () => {
         </Flex>
         {/* Footer Text and Image */}
         <Flex
-          mt="40px"
+          mt="50px"
           align="center"
         >
           <Text
@@ -186,15 +190,15 @@ const Swap = () => {
             isExternal
           > */}
             <Image
-              alt='ash'
+              alt='img'
               src={
                 isNftSwap ?
                 "https://xoxno.com/_next/image?url=%2Fimg%2Fsymbols%2Fxoxno_banner.png&w=256&q=100" :
-                "https://app.ashswap.io/logo.png"
+                isMainSwap ? "https://app.ashswap.io/logo.png" : "https://cdn.sanity.io/images/27df2ffs/production/57daf687f81ef2cc9a7ebfbbf9c76ddf4bad9dae-210x36.svg?auto=format"
               }
-              width={{ base: "64px", md: "96px" }}
+              width={{ sm: "64px", md: "100px" }}
               ml={2}
-              mt={isNftSwap ? 0 : -2}
+              mt={isNftSwap ? 0 : isMainSwap ? -3 : -1}
               ignoreFallback
             />
           {/* </Link> */}
