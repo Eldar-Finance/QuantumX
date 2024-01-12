@@ -154,7 +154,7 @@ const TextField = ({
                   formatNumberWithMaxDecimals(Number(field.value), firstNonZeroDigit > 8 ? firstNonZeroDigit : 6)
                   : formatNumberWithMaxDecimals(Number(field.value), Math.min(9, field.decimals))
                 : ""}
-              fontSize={{sm: firstNonZeroDigit > 8 ? "md" : "3xl", md: firstNonZeroDigit > 8 ? "30px" : "3xl"}}
+              fontSize={{sm: firstNonZeroDigit > 8 ? "16px" : "3xl", md: firstNonZeroDigit > 8 ? "26px" : "3xl"}}
               fontWeight={"500"}
               id={id}
               px={0}
