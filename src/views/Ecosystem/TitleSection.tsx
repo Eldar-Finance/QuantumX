@@ -12,14 +12,14 @@ const TitleSection = () => {
         A quick view into the ecosystem&apos;s tokens (excluding EGLD).
       </Text>
 
-      <Link  href="https://bop.ashswap.io?ref=VzYUCcDZFt" isExternal>
-        <Image
-          src="https://i.postimg.cc/dtHrQxks/Screenshot-2023-12-06-at-4-58-50-PM-copy.jpg"
-          alt="Description of the image content"
-          style={{ borderRadius: '25px', width: '100%'}}
-          height={{sm: "50px", md: "130px"}}
-        />
-      </Link>
+      <Link marginTop={"30px"} href="https://twitter.com/SuperRare_Bears/status/1747733437182542075?t=07ROu5JOLJC4VGynxn00Ug&s=19" isExternal>
+            <Image
+              src="https://i.ibb.co/3vqQJ8K/Quantum-X-Banner-01.jpg"
+              alt="Description of the image content"
+              style={{ borderRadius: '25px', width: '100%'}}
+              height={{sm: "50px", md: "130px"}}
+            />
+          </Link>
 
     </Center>
   );
