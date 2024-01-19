@@ -17,7 +17,7 @@ const NFTLiquidityInterface = ({...props}) => {
 
   const fetchRoyalties = async (nftIdentifier) => {
     try {
-      const response = await fetch(`https://api.multiversx.com/nfts/${nftIdentifier}`);
+      const response = await fetch(`https://next-api.multiversx.com/nfts/${nftIdentifier}`);
       if (!response.ok) {
         throw new Error('Failed to fetch NFT royalties');
       }
