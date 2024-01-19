@@ -32,7 +32,7 @@ export const getFromAllTokens2 = async ({
   //return (await res).data.price;
 //};
 
-export const getTokenPrice = async (identifier: string) => {
+export const getTokenPrice2 = async (identifier: string) => {
   try {
     const response = await fetch(`https://eldar.solutions/api/pricecall.php?tokenA=${identifier}`);
 
