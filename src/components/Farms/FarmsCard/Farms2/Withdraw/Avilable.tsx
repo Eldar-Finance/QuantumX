@@ -30,7 +30,7 @@ const Avilable = ({ farm, userFarmRewards }: IProps) => {
       "farms2",
       "harvest",
       [new BigUIntValue(new BigNumber(farm.farm.farmId))],
-      farm.farm.farmId === 8 ? 450000000 : 300000000
+      farm.farm.farmId === 8 ? 450000000 : 350000000
     );
   };
 
