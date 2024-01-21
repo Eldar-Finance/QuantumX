@@ -69,7 +69,7 @@ export const convertTokens = async (
           new BigUIntValue(new BigNumber(finalAmount)),
         ];
       });
-      const gas = swapInfo.length === 1 ? 80000000 : 120000000;
+      const gas = swapInfo.length === 1 ? 95000000 : 150000000;
       const tx = await ESDTTransferOnlyTx({
         funcName: scEndpoint,
         token: fromElrondToken,
