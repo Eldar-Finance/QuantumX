@@ -10,7 +10,7 @@ export const registerTag = async (
     "registerQtag",
     0,
     [BytesValue.fromUTF8(tag), BytesValue.fromUTF8(extension.extension)],
-    30000000,
+    50000000,
     extension.amount
   );
   return res;
@@ -23,7 +23,7 @@ export const updsteUserName = async (tag: string, usernameCost: IScPayment) => {
     "updateUsername",
     0,
     [BytesValue.fromUTF8(tag)],
-    30000000,
+    50000000,
     usernameCost.amount
   );
   return res;
@@ -34,7 +34,7 @@ export const replaceExtension = async (extension: IScQxTagExtension) => {
     "replaceExtension",
     0,
     [BytesValue.fromUTF8(extension.extension)],
-    30000000,
+    50000000,
     extension.amount
   );
   return res;
