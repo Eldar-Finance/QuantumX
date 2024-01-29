@@ -87,7 +87,7 @@ export async function depositRewards(
   return res;
 }
 export async function becomeCreator(fee: number) {
-  EGLDPayment("farms2", "becomeCreator", fee, [], 10000000);
+  EGLDPayment("farms2", "becomeCreator", fee, [], 30000000);
 }
 
 export async function createFarm(
