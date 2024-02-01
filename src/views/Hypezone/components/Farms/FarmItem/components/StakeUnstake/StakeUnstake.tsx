@@ -141,7 +141,7 @@ const StakeUnstake = ({
         <Center flex="1" flexDir={"column"} w="full" maxW={"50%"} position={"relative"}>
           <ActionButton
             onClick={() => setOpenUnstakeStake((s) => !s)}
-            isDisabled={disable || disableUnstake || shouldUserHarvestWarning}
+            isDisabled={disable || disableUnstake}
             w={isBearly ? "full" : { xs: "full", md: "50%" }}
           >
             UNSTAKE
