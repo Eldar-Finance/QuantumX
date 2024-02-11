@@ -18,7 +18,7 @@ const StakeButton = ({ sfts, address, ...props }) => {
         undefined,
         token,
         contractAddr.sftsRewards,
-        40000000,
+        100000000,
         undefined,
         amount
       );
