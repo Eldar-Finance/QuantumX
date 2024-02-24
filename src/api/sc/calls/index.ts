@@ -53,7 +53,7 @@ export const ESDTNFTTransfer = async (
   
     let tx = interaction
       .withSender(senderAddress)
-      .useThenIncrementNonceOf(new Account(senderAddress)) // den xerw an xreiazetai auto
+      // .useThenIncrementNonceOf(new Account(senderAddress)) // den xerw an xreiazetai auto
       .withSingleESDTNFTTransfer(TokenTransfer.semiFungible(tokenId, tokenNonce, finalValue))
       .withExplicitReceiver(senderAddress)
       .withGasLimit(gasL)
@@ -101,7 +101,7 @@ export const MultiESDTNFTTransfer = async (
     if (data.length > 0) {
       let tx = interaction
       .withSender(senderAddress)
-      .useThenIncrementNonceOf(new Account(senderAddress)) // den xerw an xreiazetai auto
+      // .useThenIncrementNonceOf(new Account(senderAddress)) // den xerw an xreiazetai auto
       .withMultiESDTNFTTransfer(data)
       .withGasLimit(gasL)
       .withChainID(ChainId)
@@ -149,7 +149,7 @@ export const MultiESDTNFTTransferOnlyTx = async (
     if (data.length > 0) {
       let tx = interaction
       .withSender(senderAddress)
-      .useThenIncrementNonceOf(new Account(senderAddress)) // den xerw an xreiazetai auto
+      // .useThenIncrementNonceOf(new Account(senderAddress)) // den xerw an xreiazetai auto
       .withMultiESDTNFTTransfer(data)
       .withGasLimit(gasL)
       .withChainID(ChainId)
@@ -268,7 +268,7 @@ export const ESDTTransfer = async ({
 
   let tx = interaction
     .withSender(senderAddress)
-    .useThenIncrementNonceOf(new Account(senderAddress)) // den xerw an xreiazetai auto
+    // .useThenIncrementNonceOf(new Account(senderAddress)) // den xerw an xreiazetai auto
     .withSingleESDTTransfer(TokenTransfer.fungibleFromBigInteger(tokenIdentifier, bgFinalValue, token.decimals))
     .withGasLimit(gasL)
     .withChainID(ChainId)
@@ -303,7 +303,7 @@ export const ESDTTransferOnlyTx = async ({
 
   let tx = interaction
     .withSender(senderAddress)
-    .useThenIncrementNonceOf(new Account(senderAddress)) // den xerw an xreiazetai auto
+    // .useThenIncrementNonceOf(new Account(senderAddress)) // den xerw an xreiazetai auto
     .withSingleESDTTransfer(TokenTransfer.fungibleFromBigInteger(tokenIdentifier, bgFinalValue, token.decimals))
     .withGasLimit(gasL)
     .withChainID(ChainId)
@@ -336,7 +336,7 @@ export const scCall = async (
 
   let tx = interaction
     .withSender(senderAddress)
-    .useThenIncrementNonceOf(new Account(senderAddress)) // den xerw an xreiazetai auto
+    // .useThenIncrementNonceOf(new Account(senderAddress)) // den xerw an xreiazetai auto
     .withGasLimit(gasLimit)
     .withChainID(ChainId)
     .buildTransaction();
@@ -373,7 +373,7 @@ export const scCallOnlyTx = async (
 
   let tx = interaction
     .withSender(senderAddress)
-    .useThenIncrementNonceOf(new Account(senderAddress)) // den xerw an xreiazetai auto
+    // .useThenIncrementNonceOf(new Account(senderAddress)) // den xerw an xreiazetai auto
     .withGasLimit(gasLimit)
     .withChainID(ChainId)
     .buildTransaction();
@@ -437,7 +437,7 @@ export const EGLDPayment = async (
 
   let tx = interaction
     .withSender(senderAddress)
-    .useThenIncrementNonceOf(new Account(senderAddress)) // den xerw an xreiazetai auto
+    // .useThenIncrementNonceOf(new Account(senderAddress)) // den xerw an xreiazetai auto
     .withValue(finalAmount ?? amount * EGLD_VAL)
     .withGasLimit(gasLimit)
     .withChainID(ChainId)
@@ -469,7 +469,7 @@ export const EGLDPaymentOnlyTx = async (
 
   let tx = interaction
     .withSender(senderAddress)
-    .useThenIncrementNonceOf(new Account(senderAddress)) // den xerw an xreiazetai auto
+    // .useThenIncrementNonceOf(new Account(senderAddress)) // den xerw an xreiazetai auto
     .withValue(finalAmount ?? amount * EGLD_VAL)
     .withGasLimit(gasLimit)
     .withChainID(ChainId)
@@ -507,7 +507,7 @@ export const MultESDTNFTTranferOrEgldPayment = async (
 
     let tx = interaction
     .withSender(senderAddress)
-    .useThenIncrementNonceOf(new Account(senderAddress)) // den xerw an xreiazetai auto
+    // .useThenIncrementNonceOf(new Account(senderAddress)) // den xerw an xreiazetai auto
     .withValue(token.amount)
     .withGasLimit(gasLimit)
     .withChainID(ChainId)
@@ -527,7 +527,7 @@ export const MultESDTNFTTranferOrEgldPayment = async (
   if (esdtTokensData.length > 0) {
     let tx = interaction
     .withSender(senderAddress)
-    .useThenIncrementNonceOf(new Account(senderAddress)) // den xerw an xreiazetai auto
+    // .useThenIncrementNonceOf(new Account(senderAddress)) // den xerw an xreiazetai auto
     .withMultiESDTNFTTransfer(esdtTokensData)
     .withGasLimit(gasLimit)
     .withChainID(ChainId)
@@ -556,7 +556,7 @@ export const wrapEgld = async (
 
   let tx1 = interaction
     .withSender(senderAddress)
-    .useThenIncrementNonceOf(new Account(senderAddress))
+    // .useThenIncrementNonceOf(new Account(senderAddress))
     .withValue(value)
     .withGasLimit(gasLimit)
     .withChainID(ChainId)
@@ -586,7 +586,7 @@ export const wrapEgldAndEsdtTranfer = async (
 
   let tx1 = interaction
     .withSender(senderAddress)
-    .useThenIncrementNonceOf(new Account(senderAddress)) // den xerw an xreiazetai auto
+    // .useThenIncrementNonceOf(new Account(senderAddress)) // den xerw an xreiazetai auto
     .withValue(value)
     .withGasLimit(20000000)
     .withChainID(ChainId)
@@ -600,7 +600,7 @@ export const wrapEgldAndEsdtTranfer = async (
 
   let tx2 = interaction2
   .withSender(senderAddress)
-  .useThenIncrementNonceOf(new Account(senderAddress)) // den xerw an xreiazetai auto
+  // .useThenIncrementNonceOf(new Account(senderAddress)) // den xerw an xreiazetai auto
   .withSingleESDTTransfer(TokenTransfer.fungibleFromBigInteger(tokenIdentifier, new BigNumber(value)))
   .withGasLimit(gasL)
   .withChainID(ChainId)
@@ -628,7 +628,7 @@ export const unwrapEgld = async (
 
   let tx1 = interaction
   .withSender(senderAddress)
-  .useThenIncrementNonceOf(new Account(senderAddress))
+  // .useThenIncrementNonceOf(new Account(senderAddress))
   .withSingleESDTTransfer(TokenTransfer.fungibleFromBigInteger(tokenIdentifier, finalValue))
   .withGasLimit(gasLimit)
   .withChainID(ChainId)
@@ -663,7 +663,7 @@ export const EsdtTranferAndUnwrapEgld = async (
 
   let tx1 = interaction1
   .withSender(senderAddress)
-  .useThenIncrementNonceOf(new Account(senderAddress)) // den xerw an xreiazetai auto
+  // .useThenIncrementNonceOf(new Account(senderAddress)) // den xerw an xreiazetai auto
   .withSingleESDTTransfer(TokenTransfer.fungibleFromBigInteger(tokenIdentifier, bgFinalValue))
   .withGasLimit(gasL)
   .withChainID(ChainId)
@@ -684,7 +684,7 @@ export const EsdtTranferAndUnwrapEgld = async (
 
   let tx2 = interaction2
     .withSender(senderAddress)
-    .useThenIncrementNonceOf(new Account(senderAddress)) // den xerw an xreiazetai auto
+    // .useThenIncrementNonceOf(new Account(senderAddress)) // den xerw an xreiazetai auto
     .withSingleESDTTransfer(TokenTransfer.fungibleFromBigInteger(toknesID.wegld, wegldAmountToSendFinalValue))
     .withGasLimit(20000000)
     .withChainID(ChainId)
@@ -741,7 +741,7 @@ export const MultipleHarvestCalls = async (
 
     let tx = interaction
     .withSender(senderAddress)
-    .useThenIncrementNonceOf(new Account(senderAddress)) // den xerw an xreiazetai auto
+    // .useThenIncrementNonceOf(new Account(senderAddress)) // den xerw an xreiazetai auto
     .withGasLimit(gasLimit)
     .withChainID(ChainId)
     .buildTransaction();
@@ -768,7 +768,7 @@ export const NFTLiquidSell = async (
   
     let tx = interaction
       .withSender(senderAddress)
-      .useThenIncrementNonceOf(new Account(senderAddress))
+      // .useThenIncrementNonceOf(new Account(senderAddress))
       .withSingleESDTNFTTransfer(TokenTransfer.nonFungible(collectionIdentifier, nftNonce))
       .withExplicitReceiver(senderAddress)
       .withGasLimit(gasLimit)

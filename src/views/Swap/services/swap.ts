@@ -278,7 +278,7 @@ export const lpSwapTx = async (
 
       let tx1 = interaction
         .withSender(senderAddress)
-        .useThenIncrementNonceOf(new Account(senderAddress)) // den xerw an xreiazetai auto
+        // .useThenIncrementNonceOf(new Account(senderAddress)) // den xerw an xreiazetai auto
         .withValue(value)
         .withGasLimit(20000000)
         .withChainID(ChainId)
@@ -305,7 +305,7 @@ export const lpSwapTx = async (
   
     let tx2 = interaction2
       .withSender(senderAddress)
-      .useThenIncrementNonceOf(new Account(senderAddress)) // den xerw an xreiazetai auto
+      // .useThenIncrementNonceOf(new Account(senderAddress)) // den xerw an xreiazetai auto
       .withSingleESDTTransfer(TokenTransfer.fungibleFromBigInteger(swapLpData[0].token1, bgFinalValue))
       .withGasLimit(100000000)
       .withChainID(ChainId)
