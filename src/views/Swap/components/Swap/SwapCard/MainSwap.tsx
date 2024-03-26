@@ -261,7 +261,6 @@ const SwapCard = ({setGraphTokens} : {setGraphTokens: any}) => {
   // NEW SWAP DATA
   //
   const [swapPaths, setSwapPaths] = useState(null);
-
   useEffect(() => {
     const handleCalculateNewSwapData = () => {
       const multiplier = Math.pow(10, fromToken?.decimals || 0);
