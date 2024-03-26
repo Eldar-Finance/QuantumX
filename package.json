@@ -10,7 +10,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "@ashswap/ash-sdk-js": "^2.0.3",
+    "@ashswap/ash-sdk-js": "^2.0.9",
     "@chakra-ui/icons": "^2.1.1",
     "@chakra-ui/react": "^2.8.1",
     "@emotion/react": "^11.11.1",

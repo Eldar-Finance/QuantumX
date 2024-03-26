@@ -54,6 +54,14 @@ export interface SwapToken {
 
 const egldFee = 0.01;
 
+const resolveWarning = async (warning: string): Promise<boolean> => {
+  // Here, you might prompt the user with the warning message
+  // and ask for confirmation. For simplicity, we'll assume the user always confirms.
+  console.log("Warning:", warning);
+  const userConfirmed = true; // Assume the user confirms
+  return userConfirmed;
+};
+
 const SwapCard = ({setGraphTokens} : {setGraphTokens: any}) => {
   const userAddress = store.getState().userAccount.connectedAddress;
   const router = useRouter();
@@ -299,7 +307,7 @@ const SwapCard = ({setGraphTokens} : {setGraphTokens: any}) => {
   useEffect(() => {
     const handleCreateInteractionFromSwapData = () => {
       try {
-        ashSwapAggregator.aggregateFromPaths(swapPaths, slipapge*100).then((i) => {
+        ashSwapAggregator.aggregateFromPaths(swapPaths, slipapge*100, resolveWarning).then((i) => {
           setInteraction(
             i.withSender(
               new Address(userAddress)
