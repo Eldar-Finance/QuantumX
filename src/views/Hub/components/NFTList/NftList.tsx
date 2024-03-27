@@ -5,6 +5,7 @@ import { EGLDPayment, ESDTTransfer } from "api/sc/calls";
 import srbImage from "assets/hub/srbcatalog.jpg";
 import vacineImage from "assets/hub/vacine.png";
 import vipImage from "assets/hub/vip.png";
+import squirrelImage from "assets/hub/squirrel.jpg";
 import miceCityImage from "assets/hub/miceCityImage.jpg";
 import cowImage from "assets/hub/cow.jpg";
 import pepeImage from "assets/hub/pepe.jpg";
@@ -19,7 +20,7 @@ import NftCard from "../NftCard/NftCard";
 const NftList = () => {
   const { offers } = useGetOffers();
   const { tokens } = useGetMultipleElrondTokens(
-    offers ? [offers[8].token, offers[9].token, offers[10].token, offers[11].token] : []
+    offers ? [offers[8].token, offers[9].token, offers[10].token, offers[11].token, offers[12].token] : []
   );
 
   if (!offers || !tokens) return null;
@@ -43,6 +44,10 @@ const NftList = () => {
   const offer8 = {
     ...offers[9],
     elrondToken: tokens.find((t) => t.identifier === offers[9].token),
+  };
+  const offer9 = {
+    ...offers[12],
+    elrondToken: tokens.find((t) => t.identifier === offers[12].token),
   };
 
   const handleSubmitHubOffer = (offer) => {
@@ -73,6 +78,23 @@ const NftList = () => {
 
   return (
     <Center flexWrap={"wrap"} gap={12} mt={8}>
+      <NftCard
+        token={offer9.token}
+        iamge={squirrelImage}
+        onSubmit={() => handleSubmitHubOffer(offer9)}
+        text={
+          <Text>
+            Pay{" "}
+            {formatBalance({
+              balance: offer9.price,
+              decimals: offer9.elrondToken?.decimals,
+            })}{" "}
+            {formatTokenI(offer9.token)} <br /> Get a random Squirrel
+            <br /> <br /> Available NFTs: <br /> {offer9.numberOfAvilableNfts}
+          </Text>
+        }
+        disabled={offer9.numberOfAvilableNfts === 0}
+      />
       <NftCard
         token={offer1.token}
         iamge={vipImage}
@@ -124,50 +146,6 @@ const NftList = () => {
         }
         disabled={offer3.numberOfAvilableNfts === 0}
       />
-      {/* <NftCard
-        iamge={cowImage}
-        token={offer4.token}
-        text={
-          <Text>
-            Pay{" "}
-            {formatBalance(
-              {
-                balance: offer4.price,
-                decimals: offer4.elrondToken?.decimals,
-              },
-              false,
-              8
-            )}{" "}
-            {formatTokenI(offer4.token)}
-            <br /> Get a random Cow
-            <br /> <br /> Available NFTs: <br /> {offer4.numberOfAvilableNfts}
-          </Text>
-        }
-        onSubmit={() => handleSubmitHubOffer(offer4)}
-        disabled={offer4.numberOfAvilableNfts === 0}
-      />
-      <NftCard
-        iamge={gnogenImage}
-        token={offer5.token}
-        text={
-          <Text>
-            Pay{" "}
-            {formatBalance(
-              {
-                balance: offer5.price,
-                decimals: offer5.elrondToken?.decimals,
-              },
-              false,
-              8
-            )}{" "}
-            {formatTokenI(offer5.token)}
-            <br /> Get a random Gnogon
-            <br /> <br /> Available NFTs: <br /> {offer5.numberOfAvilableNfts}
-          </Text>
-        }
-        onSubmit={() => handleSubmitHubOffer(offer5)}
-        disabled={offer5.numberOfAvilableNfts === 0}
-      /> */}
       <NftCard
         iamge={srbImage}
         token={offer8.token}
