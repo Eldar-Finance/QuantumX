@@ -1,19 +1,19 @@
 {
     "buildInfo": {
         "rustc": {
-            "version": "1.71.0-nightly",
-            "commitHash": "a2b1646c597329d0a25efa3889b66650f65de1de",
-            "commitDate": "2023-05-25",
+            "version": "1.76.0-nightly",
+            "commitHash": "d86d65bbc19b928387f68427fcc3a0da498d8a19",
+            "commitDate": "2023-12-10",
             "channel": "Nightly",
-            "short": "rustc 1.71.0-nightly (a2b1646c5 2023-05-25)"
+            "short": "rustc 1.76.0-nightly (d86d65bbc 2023-12-10)"
         },
         "contractCrate": {
             "name": "farms",
             "version": "0.0.0"
         },
         "framework": {
-            "name": "elrond-wasm",
-            "version": "0.38.0"
+            "name": "multiversx-sc",
+            "version": "0.47.5"
         }
     },
     "name": "Farms",
@@ -128,17 +128,17 @@
                     "type": "EgldOrEsdtTokenIdentifier"
                 },
                 {
-                    "name": "opt_reward_token",
-                    "type": "optional<EgldOrEsdtTokenIdentifier>",
-                    "multi_arg": true
-                },
-                {
                     "name": "unbonding_period",
                     "type": "u64"
                 },
                 {
                     "name": "early_unbonding_fee",
                     "type": "u64"
+                },
+                {
+                    "name": "opt_reward_token",
+                    "type": "optional<EgldOrEsdtTokenIdentifier>",
+                    "multi_arg": true
                 }
             ],
             "outputs": []
@@ -709,6 +709,25 @@
                 },
                 {
                     "name": "farm_id",
+                    "type": "BigUint"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "forceUnstake",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "user",
+                    "type": "Address"
+                },
+                {
+                    "name": "farm_id",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "amount",
                     "type": "BigUint"
                 }
             ],
@@ -1799,7 +1818,7 @@
             ]
         }
     ],
-    "events": [],
+    "esdtAttributes": [],
     "hasCallback": false,
     "types": {
         "EsdtTokenPayment": {
