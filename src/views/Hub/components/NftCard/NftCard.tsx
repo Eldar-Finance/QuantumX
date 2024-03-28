@@ -16,6 +16,8 @@ interface IProps {
 const NftCard = ({ iamge, onSubmit, text, token, disabled }: IProps) => {
   const { accountToken } = useGetAccountToken(token);
 
+  const isDisabled = disabled || formatBalance(accountToken, true) === 0;
+
   return (
     <Box bg="secondary" borderRadius={"md"} minH="400px" w="300px" p={4}>
       <NextImage
@@ -32,9 +34,10 @@ const NftCard = ({ iamge, onSubmit, text, token, disabled }: IProps) => {
         w="full"
         mt={8}
         fontWeight="900"
-        onClick={!disabled ? onSubmit : () => {}}
-        disabled={disabled || formatBalance(accountToken, true) === 0}
+        onClick={!isDisabled ? onSubmit : () => {}}
+        disabled={isDisabled}
         opacity={disabled ? 0.3 : 1}
+        _hover={{bg: null, cursor: isDisabled ? "not-allowed" : "pointer"}}
       >
         Buy Now
       </ActionButton>
