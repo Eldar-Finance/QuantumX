@@ -99,7 +99,8 @@ const Swap = () => {
             {/* The image now uses negative values to sit outside the top left corner */}
             <ImageQxAshFire/>
             <SwapCard setGraphTokens={setGraphTokens} setIsNftSwap={setIsNftSwap} setIsMainSwap={setIsMainSwap}/>
-            {isMainSwap && <IconButton
+            
+            {/* {isMainSwap && <IconButton
                 aria-label="Toggle chart"
                 icon={ChartIcon(isSecondCardOpen)}
                 variant={"none"}
@@ -112,7 +113,8 @@ const Swap = () => {
                 mr={-20}
                 ml={-8}
                 mt={-2}
-              />}
+              />} */}
+
           </Card>
 
           {/* Expandable Second Card */}
@@ -183,7 +185,7 @@ const Swap = () => {
             fontSize={{ base: "sm", md: "md" }}
             color="white.500"
           >
-            Powered by 
+            Powered by {isMainSwap ? "AshSwap" : ""}
           </Text>
           {/* <Link
             href="https://app.ashswap.io/swap/"
@@ -194,11 +196,11 @@ const Swap = () => {
               src={
                 isNftSwap ?
                 "https://xoxno.com/_next/image?url=%2Fimg%2Fsymbols%2Fxoxno_banner.png&w=256&q=100" :
-                isMainSwap ? "https://app.ashswap.io/logo.png" : "https://cdn.sanity.io/images/27df2ffs/production/57daf687f81ef2cc9a7ebfbbf9c76ddf4bad9dae-210x36.svg?auto=format"
+                isMainSwap ? "https://ashswap.io/_next/static/media/logo-ashswap.1639138c.png" : "https://cdn.sanity.io/images/27df2ffs/production/57daf687f81ef2cc9a7ebfbbf9c76ddf4bad9dae-210x36.svg?auto=format"
               }
-              width={{ sm: "64px", md: "100px" }}
+              width={{ sm: "64px", md: isMainSwap ? "24px" : "100px" }}
               ml={2}
-              mt={isNftSwap ? 0 : isMainSwap ? -3 : -1}
+              // mt={isNftSwap ? 0 : isMainSwap ? 0 : 0}
               ignoreFallback
             />
           {/* </Link> */}
