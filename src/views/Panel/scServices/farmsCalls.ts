@@ -101,6 +101,23 @@ export async function createFarm(
     allowMultipleRewardsTokens: true,
   }
 ) {
+
+  farm.allowMultipleRewardsTokens ?
+  EGLDPayment(
+    "farms2",
+    "createFarm",
+    fee,
+    [
+      BytesValue.fromUTF8(farm.stakingTokenI),
+      new BigUIntValue(new BigNumber(farm.unbondingPeriod)),
+      new BigUIntValue(
+        new BigNumber(
+          new BigNumber(farm.unbondingFee).multipliedBy(100).toFixed(0)
+        )
+      )
+    ],
+    70000000
+  ) :
   EGLDPayment(
     "farms2",
     "createFarm",
@@ -113,10 +130,8 @@ export async function createFarm(
           new BigNumber(farm.unbondingFee).multipliedBy(100).toFixed(0)
         )
       ),
-      BytesValue.fromUTF8(
-        farm.allowMultipleRewardsTokens ? "" : farm.rewardTokenI
-      ),
+      BytesValue.fromUTF8(farm.rewardTokenI),
     ],
     70000000
-  );
+  )
 }
