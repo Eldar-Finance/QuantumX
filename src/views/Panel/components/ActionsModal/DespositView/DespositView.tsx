@@ -208,7 +208,7 @@ const DepositView = memo(({ onClose, farm }: IProps) => {
 
           {selectedTokenId !== -1 ? (
             <TokenList
-              tokens={alltokens.filter(
+              tokens={alltokens.filter((t) => t.identifier != "EGLD").filter(
                 (userToken) =>
                   formik.values.tokens
                     .filter((t) => Boolean(t.tokenDetail))
