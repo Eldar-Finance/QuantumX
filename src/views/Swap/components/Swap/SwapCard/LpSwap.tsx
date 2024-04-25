@@ -235,17 +235,9 @@ const LpSwap = () => {
   // const swapToToken = useAppSelector(selectToToken);
   // const swapToTokenValue = useAppSelector(selectToTokenValue);
 
-  // console.log("⚠️ ~ fromTokenToLp:", fromTokenToLp.identifier)
-  // console.log("⚠️ ~ swapFromToken:", swapFromToken)
-  
-  // console.log("⚠️ ~ fromTokenToLp Value:", fromTokenToLp.value)
-  // console.log("⚠️ ~ swapFromToken Value:", swapFromTokenValue)
+  // console.log("⚠️ ~ fromTokenToLp:", fromTokenToLp)
 
-  // console.log("⚠️ ~ toTokenToLp:", toTokenToLp.identifier)
-  // console.log("⚠️ ~ swapToToken:", swapToToken)
-
-  // console.log("⚠️ ~ toTokenToLp Value:", toTokenToLp.value)
-  // console.log("⚠️ ~ swapToToken Value:", swapToTokenValue)
+  // console.log("⚠️ ~ toTokenToLp:", toTokenToLp)
 
 
   //
@@ -269,7 +261,6 @@ const LpSwap = () => {
   // LP SWAP DATA
   //
   const { data, isLoading, isSapwToLp } = useGetSwapInfo();
-  // console.log("⚠️ ~ data:", data)
 
   useEffect(() => {
     if (data) {
