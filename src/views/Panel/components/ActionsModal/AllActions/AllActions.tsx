@@ -53,7 +53,7 @@ const AllActions = ({ handleView, farm }: IProps) => {
               1 - staked funds will be returned to stakers
             </Text>
             <Text fontSize={'sm'}>
-              2 - run until not failed
+              2 - run until transaction is failed
             </Text>
             <Text fontSize={'sm'} mb={5}>
               3 - unclaimed rewards will be lost
