@@ -66,7 +66,7 @@ export const routes: {
   hypezone: {
     path: routeNames.hypezone,
     name: "Hypezone",
-    // onModalAndNavbar: true,
+    onModalAndNavbar: true,
   },
   hub: {
     path: routeNames.hub,
