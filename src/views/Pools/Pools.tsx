@@ -84,7 +84,7 @@ const Pools = () => {
 
   useEffect(() => {
     if (farms2) {
-      setFarms2ToSearch(farms2);
+      setFarms2ToSearch(farms2.filter((f) => f.farm.farmId != 4 && f.farm.farmId != 7));
     }
   }, [farms2]);
 
