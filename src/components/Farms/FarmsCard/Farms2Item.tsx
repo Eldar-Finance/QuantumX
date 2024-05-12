@@ -241,7 +241,7 @@ const Farms2Item = ({
                       label={
                         <div style={{ textAlign: 'center'}}>
                           ⚠️ Caution ⚠️<br />
-                          Currently, there are no rewards deposited for this Pool/Farm by its creator.<br />
+                          Currently, there are no deposited rewards by the creator of this Pool/Farm.<br />
                           DYOR before making any actions.
                         </div>
                       }
