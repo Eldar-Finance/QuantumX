@@ -110,10 +110,10 @@ const Farms2Item = ({
   const { isSrbStaker } = useCanUsePool7();
 
   const { apr, apy } = useApr(farm, multifarmRewardsLeft, stakedTokenPrice);
-  // console.log("⚠️ ~ file: Farms2Item.tsx:112 ~ apr::::", farm.stakedToken, apr, Number(apr), apy, tvl)
 
   const vertGap = 2;
 
+  const showWarning = !farm.totalRewardsLeft && multifarmRewardsLeft.length == 0; 
   return (
     <AccordionItem w="full">
       <Box w="full">
@@ -224,29 +224,42 @@ const Farms2Item = ({
                   <Flex></Flex>
                 )}
               </Flex>
+
               {/* NOTICE */}
               <Flex
                   ml={2}
                   flexDir={"column"}
                   justifyContent="center"
-                  alignItems={{xs: "flex-end", md: "center"}}
+                  alignItems={{xs: "center", md: "center"}}
                   height="100%"
-                  mt={{ xs: othersStakedTokens.length > 0 ? "-40px" : "-20px", md: "0" }} // added mt prop to move the component up if screen is xs
+                  // mt={{ xs: othersStakedTokens.length > 0 ? "-40px" : "-20px", md: "0" }} // added mt prop to move the component up if screen is xs
                 >
-                  {farmsTobeShutDown.includes(farm.farm.farmId) && (
-                    <Box fontSize={"lg"}>
-                      <Tooltip
-                        label="Harvest your rewards and unstake your funds. Pool/Farm will be terminated soon. Staking is disabled."
-                        aria-label="A tooltip"
-                        bg={"black.base"}
-                        color={"white"}
-                        fontSize={"16px"}
-                      >
-                        ⚠️
-                      </Tooltip>
-                    </Box>
+                  {showWarning && (
+                    <Box fontSize={"lg"} textAlign={"center"}>
+                    <Tooltip
+                      p={4}
+                      label={
+                        <div style={{ textAlign: 'center'}}>
+                          ⚠️ Caution ⚠️<br />
+                          Currently, there are no rewards deposited for this Pool/Farm by its creator.<br />
+                          DYOR before making any actions.
+                        </div>
+                      }
+                      aria-label="A tooltip"
+                      bgColor={"black.base"}
+                      textColor={"white"}
+                      fontSize={"16px"}
+                      border={"1px solid yellow"}
+                      borderRadius={"md"}
+                    >
+                      ⚠️
+                    </Tooltip>
+                  </Box>
+                  
                   )}
               </Flex>
+
+              {/* INFO GRID */}
               <Grid
                 w="full"
                 templateColumns={{ xs: "1fr 1fr", md: "1fr 1fr 1fr 1fr" }}
