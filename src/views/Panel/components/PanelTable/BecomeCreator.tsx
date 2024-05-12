@@ -5,7 +5,9 @@ import useGetFarmsFees from "views/Panel/hooks/useGetFarmsFees";
 import { becomeCreator } from "views/Panel/scServices/farmsCalls";
 
 const BecomeCreator = () => {
-  const { fees } = useGetFarmsFees();
+  const { fees, isLoading, error } = useGetFarmsFees();
+
+  const noCost = !isLoading && !error && formatBalance({ balance: fees.creator }) < 0.001;
 
   return (
     <Center textAlign={"center"}>
@@ -24,9 +26,9 @@ const BecomeCreator = () => {
           <Text>· Unlock Quantum Panel Features</Text>
           <Text> · Create Farms, Pools, or NFT offers</Text>
           <Text>· Get unlimited support from QuantumX Team</Text>
-          <Text>
+          {/* <Text>
             · Every new Farm/Pool costs {formatBalance({ balance: fees.farmCreation })} EGLD
-          </Text>
+          </Text> */}
           <Text>
             · Default fee of {fees.harvest / 100}% in users&apos; harvested rewards
           </Text>
@@ -44,7 +46,10 @@ const BecomeCreator = () => {
             becomeCreator(formatBalance({ balance: fees.creator }, true))
           }
         >
-          Become Creator - Pay {formatBalance({ balance: fees.creator })} EGLD
+          Become Creator&nbsp;&nbsp;-{noCost ?
+          <Text>&nbsp;&nbsp;IT&apos;S FREE</Text> :
+          <Text>&nbsp;&nbsp;Pay {formatBalance({ balance: fees.creator })} EGLD</Text>
+          }
         </ActionButton>
       </Box>
     </Center>

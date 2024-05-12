@@ -13,11 +13,15 @@
         },
         "framework": {
             "name": "multiversx-sc",
-            "version": "0.47.5"
+            "version": "0.49.0"
         }
     },
     "name": "Farms",
     "constructor": {
+        "inputs": [],
+        "outputs": []
+    },
+    "upgradeConstructor": {
         "inputs": [],
         "outputs": []
     },

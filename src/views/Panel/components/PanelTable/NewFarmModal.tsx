@@ -13,6 +13,7 @@ import {
   ModalBody,
   ModalFooter,
   ModalHeader,
+  Text,
 } from "@chakra-ui/react";
 import ActionButton from "components/ActionButton/ActionButton";
 import MyModal from "components/Modal/Modal";
@@ -24,10 +25,14 @@ import { createFarm } from "views/Panel/scServices/farmsCalls";
 import * as yup from "yup";
 
 const newFarmSchema = yup.object().shape({
-  stakingTokenI: yup.string().required("Staking token is required"),
+  stakingTokenI: yup.string()
+    .required("Staking token is required")
+    .matches(/^\S*$/, "Staking token cannot contain spaces"),
   rewardTokenI: yup.string(),
-  unbondingPeriod: yup.number().required("Unbonding period is required"),
-  unbondingFee: yup.number().required("Unbonding fee is required"),
+  unbondingPeriod: yup.number().integer().required("Unbonding period is required"),
+  unbondingFee: yup.number().required("Unbonding fee is required")
+    .min(0, "Unbonding fee must be at least 0.")
+    .max(99.99, "Unbonding fee must be less than 100."),
   allowMultipleRewardsTokens: yup.boolean(),
 });
 
@@ -58,7 +63,7 @@ const NewFarmModal = ({ isOpen, onClose }: IProps) => {
       <form onSubmit={formik.handleSubmit}>
         <ModalHeader>
           <Flex justifyContent={"space-between"} alignItems="center">
-            <Heading fontSize={"md"}> Create pool/farm</Heading>{" "}
+            <Heading fontSize={"md"}> Create Pool/Farm</Heading>{" "}
             <ActionButton aria-label="close" bg="transparent" onClick={onClose}>
               <CloseIcon color="main" fontSize={"12px"} cursor="pointer" />
             </ActionButton>
@@ -84,6 +89,9 @@ const NewFarmModal = ({ isOpen, onClose }: IProps) => {
               }
             />{" "}
           </FormControl>
+          {formik.touched.stakingTokenI && formik.errors.stakingTokenI ? (
+              <Text color={"white.600"} fontSize={"sm"}>{formik.errors.stakingTokenI}</Text>
+            ) : null}
           <Checkbox
             colorScheme="blue"
             onChange={formik.handleChange}
@@ -131,9 +139,12 @@ const NewFarmModal = ({ isOpen, onClose }: IProps) => {
                   formik.touched.unbondingPeriod &&
                   Boolean(formik.errors.unbondingPeriod)
                 }
-              />{" "}
+              />
               <InputRightAddon>Days</InputRightAddon>
             </InputGroup>
+            {formik.touched.unbondingPeriod && formik.errors.unbondingPeriod ? (
+              <Text color={"white.600"} fontSize={"sm"}>{formik.errors.unbondingPeriod}</Text>
+            ) : null}
           </FormControl>
 
           <FormControl
@@ -144,7 +155,7 @@ const NewFarmModal = ({ isOpen, onClose }: IProps) => {
             <FormLabel mb={1}>Unbonding Fee</FormLabel>
 
             <Box>
-              <Flex>
+              {/* <Flex> */}
                 <InputGroup>
                   <Input
                     p="2"
@@ -163,7 +174,10 @@ const NewFarmModal = ({ isOpen, onClose }: IProps) => {
                   />{" "}
                   <InputRightAddon>%</InputRightAddon>
                 </InputGroup>
-              </Flex>
+                {formik.touched.unbondingFee && formik.errors.unbondingFee ? (
+                  <Text color={"white.600"} fontSize={"sm"}>{formik.errors.unbondingFee}</Text>
+                ) : null}
+              {/* </Flex> */}
             </Box>
           </FormControl>
         </ModalBody>
