@@ -53,10 +53,10 @@ const AllActions = ({ handleView, farm }: IProps) => {
               1 - staked funds will be returned to stakers
             </Text>
             <Text fontSize={'sm'}>
-              2 - run until transaction is failed
+              2 - unclaimed rewards will be lost
             </Text>
-            <Text fontSize={'sm'} mb={5}>
-              3 - unclaimed rewards will be lost
+            <Text fontSize={'md'} my={5}>
+              The transaction might need to be run multiple times. So, refresh the page after each successful execution and re-run it if the pool/farm has not yet disappear.
             </Text>
             <ActionButton
               bg="danger"
