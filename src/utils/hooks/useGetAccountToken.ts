@@ -60,7 +60,7 @@ const useGetAccountToken = (identifier: string) => {
       identifier,
       balance: "0",
       nonce: 0,
-      decimals: 18,
+      decimals: identifier == "BLUEY-0522de" ? 8 : 18,
       name: null,
     },
     error: elrondTokenError || egldDataError,

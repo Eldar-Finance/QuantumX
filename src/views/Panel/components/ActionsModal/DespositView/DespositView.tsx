@@ -78,6 +78,7 @@ const DepositView = memo(({ onClose, farm }: IProps) => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
+
       depositRewards(
         values.tokens,
         farm.farmId,
@@ -86,6 +87,7 @@ const DepositView = memo(({ onClose, farm }: IProps) => {
       );
     },
   });
+
   // console.log("⚠️ ~ file: DespositView.tsx:72 ~ formik:", formik)
 
   useEffect(() => {
