@@ -308,7 +308,7 @@ const InputComponent = ({
           name={`tokens.${i}.amount`}
           onChangeInput={(val) => handleChange(val, i)}
           tranformValue={(val) =>
-            transformValue(val, field.tokenDetail?.identifier != "MXDOGE-378b61" ? field.tokenDetail?.decimals : 6)
+            transformValue(val, field.tokenDetail?.decimals)
           }
           ref={inputRef}
         />
