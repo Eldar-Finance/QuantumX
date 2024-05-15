@@ -72,11 +72,16 @@ export async function depositRewards(
     return data;
   });
 
-  const arg = [
+  const arg = bypass ? [
     new BigUIntValue(new BigNumber(farmId)),
     new BigUIntValue(new BigNumber(epochs)),
     new BooleanValue(bypass),
+  ] :
+  [
+    new BigUIntValue(new BigNumber(farmId)),
+    new BigUIntValue(new BigNumber(epochs)),
   ];
+
   res = MultESDTNFTTranferOrEgldPayment(
     "farms2",
     "depositRewards",
