@@ -327,5 +327,12 @@ export const pairs = [
     lpprice: "0",
     token2lp: "MXDOGE-378b61",
     token1lp: "WEGLD-bd4d79",
+  },
+  {
+    lpname: "BLODWEGLDLP",
+    lpidentifier: "BLODWEGLD-c0d005",
+    lpprice: "0",
+    token2lp: "BLOD-760741",
+    token1lp: "WEGLD-bd4d79",
   }
 ];
