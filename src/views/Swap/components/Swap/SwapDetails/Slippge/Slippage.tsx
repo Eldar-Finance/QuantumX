@@ -15,6 +15,7 @@ import { formatPrecision } from "utils/functions/formatBalance";
 import { breakpoints } from "theme/chakra";
 
 const Slippage = ({ swapPaths }: { swapPaths?: SorSwapResponse }) => {
+  console.log('⚠️ ~ swapPaths:', swapPaths);
   // const [usesInput, setUsesInput] = useState(false);
   const slipapge = useAppSelector(selectSlippage);
   const dispatch = useAppDispatch();
@@ -154,7 +155,7 @@ const Slippage = ({ swapPaths }: { swapPaths?: SorSwapResponse }) => {
             })} */}
             
             <Text fontSize={"lsm"} color="white.500">
-              ${formatPrecision(swapPaths?.effectivePrice)}
+              {formatPrecision(swapPaths?.effectivePrice)} {isLargerThanLg && swapPaths?.tokenIn.split('-')[0] + ' / ' + swapPaths?.tokenOut.split('-')[0]}
             </Text>
           </ul>
         </Box>
