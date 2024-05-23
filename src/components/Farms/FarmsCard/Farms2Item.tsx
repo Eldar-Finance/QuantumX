@@ -227,15 +227,15 @@ const Farms2Item = ({
 
               {/* NOTICE */}
               <Flex
-                  ml={2}
-                  flexDir={"column"}
-                  justifyContent="center"
-                  alignItems={{xs: "center", md: "center"}}
-                  height="100%"
-                  // mt={{ xs: othersStakedTokens.length > 0 ? "-40px" : "-20px", md: "0" }} // added mt prop to move the component up if screen is xs
-                >
-                  {showWarning && (
-                    <Box fontSize={"lg"} textAlign={"center"}>
+                ml={2}
+                flexDir={"column"}
+                justifyContent="center"
+                alignItems={{xs: "center", md: "center"}}
+                height="100%"
+                // mt={{ xs: othersStakedTokens.length > 0 ? "-40px" : "-20px", md: "0" }} // added mt prop to move the component up if screen is xs
+              >
+                {showWarning && (
+                  <Box fontSize={"lg"} textAlign={"center"}>
                     <Tooltip
                       p={4}
                       label={
@@ -255,8 +255,7 @@ const Farms2Item = ({
                       ⚠️
                     </Tooltip>
                   </Box>
-                  
-                  )}
+                )}
               </Flex>
 
               {/* INFO GRID */}
