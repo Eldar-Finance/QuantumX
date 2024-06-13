@@ -138,7 +138,7 @@ const Farms2Item = ({
               <Flex gap={3} flexDir={"row"} justifyContent={{sm: "center", md: "flex-start"}}>
                 {stakingToken ? (
                   <>
-                    {formatTokenI(stakingToken.name).slice(-2) === "LP" ? (
+                    {formatTokenI(stakingToken.name).slice(-2) === "LP" || stakingToken.identifier.slice(0,2) === "LP" ? (
                       <Flex gap="4" alignItems={"center"}>
                         <LpTokenImage lpToken={stakingToken} />
                         <Text fontWeight={"600"}>
