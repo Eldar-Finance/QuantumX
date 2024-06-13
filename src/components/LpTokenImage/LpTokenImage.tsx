@@ -10,11 +10,13 @@ interface IProps {
 }
 
 const LpTokenImage = ({ lpToken }: IProps) => {
+  console.log('⚠️ ~ lpToken:', lpToken);
   const lpData = pairs.find((pair) => pair.lpidentifier === lpToken.identifier);
 
   const { tokens } = useGetMultipleElrondTokens(
     lpData ? [lpData.token1lp, lpData.token2lp] : []
   );
+  console.log('⚠️ ~ tokens:', tokens);
 
   if (!tokens || tokens.length === 0) return null;
 
@@ -22,11 +24,11 @@ const LpTokenImage = ({ lpToken }: IProps) => {
     <Flex>
       <Image src={tokens[0].assets.svgUrl} alt="" width={27} height={27} />
       <Image 
-    src={tokens[1].identifier === "WAGMI-3f803d" ? "/images/wagmi.png" : tokens[1].assets.svgUrl} 
-    alt="" 
-    width={27} 
-    height={27} 
-/>
+        src={tokens[1].identifier === "WAGMI-3f803d" ? "/images/wagmi.png" : tokens[1].assets.svgUrl} 
+        alt="" 
+        width={27} 
+        height={27} 
+      />
     </Flex>
   );
 };
