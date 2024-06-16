@@ -147,7 +147,7 @@ const CryptoTable = () => {
   if (isLargerThan768) {
     // Desktop layout
     return (
-      <Box width="70%" marginTop={"50px"} background={"black.baseDark"} borderRadius={"20px"} overflowX={{ base: "scroll", md: "hidden" }}>
+      <Box width="80%" marginTop={"50px"} background={"black.baseDark"} borderRadius={"20px"} overflowX={{ base: "scroll", md: "hidden" }}>
         {marketInfoBoxes}
         <Table variant="simple" size="md">
           <Thead>
