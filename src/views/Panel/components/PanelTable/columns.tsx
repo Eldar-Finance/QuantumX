@@ -38,7 +38,7 @@ export const panelColumns = [
     Cell: ({ row }) => {
       const data: IScPanelFarms = row.original;
       return (
-        <Flex justify={"center"}> {formatTokenI(data.farm.rewardToken)}</Flex>
+        <Flex display={"flex"} alignItems={"center"} justify={"center"}> {formatTokenI(data.farm.rewardToken || 'MULTIPLE TOKENS')}</Flex>
       );
     },
   },
