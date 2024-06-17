@@ -12,6 +12,7 @@ import useGetElrondToken from "utils/hooks/useGetElrondToken";
 import useGetJexPrice from "utils/hooks/useGetJexPrice";
 import useGetMultipleElrondTokens from "utils/hooks/useGetMultipleElrondTokens";
 import useGetMultiplePrices from "utils/hooks/useGetMultiplePrices";
+import useGetElrondToken2 from "utils/hooks/useGetElrondToken2";
 
 const  useApr = (
   farm: IScFarmItem,
@@ -28,7 +29,9 @@ const  useApr = (
     ...farm.extraPools.map((p) => p.stakedToken),
   ]);
 
-  const { token: rewardToken } = useGetElrondToken(farm.farm.rewardToken);
+
+    const { token: rewardToken } = useGetElrondToken2(farm.farm.rewardToken);
+  
   const { data: lastRewardedEpoch } = useSWR<number>(
     //@ts-ignore
     farm.farm.farmId,

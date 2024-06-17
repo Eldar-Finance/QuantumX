@@ -1,4 +1,5 @@
 import axiosEldron from "api/rest/axiosEldron";
+import axiosNewEl from "api/rest/axiosNewEl";
 import { formatBalance } from "utils/functions/formatBalance";
 import { IElrondToken } from "utils/types/elrond.interface";
 
@@ -6,7 +7,7 @@ import { IElrondToken } from "utils/types/elrond.interface";
 //   return await axiosEldron.get("/tokens?size=10000");
 // };
 export const getFromAllTokens = async ({
-  size = 10000,
+  size = 400,
   name = undefined,
   identifier = undefined,
   identifiers = undefined,
@@ -23,13 +24,34 @@ export const getFromAllTokens = async ({
   });
 };
 
-export const getTokenPrice = async (identifier: string) => {
-  const res = axiosEldron.get<{ price: number }>(
-    `/tokens/${identifier}?fields=price`
-  );
+//export const getTokenPrice = async (identifier: string) => {
+  //const res = axiosEldron.get<{ price: number }>(
+    //`/tokens/${identifier}?fields=price`
+  //);
 
-  return (await res).data.price;
+ // return (await res).data.price;
+//};
+
+export const getTokenPrice = async (identifier: string) => {
+  try {
+    const response = await fetch(`https://eldar.solutions/api/pricecall.php?tokenA=${identifier}`);
+
+    if (!response.ok) {
+      throw new Error(`Request failed with status ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    if (!data.price) {
+      throw new Error(`Response does not contain a price field`);
+    }
+
+    return data.price;
+  } catch (error) {
+    throw new Error(`Failed to fetch token price: ${error.message}`);
+  }
 };
+
 
 export const getLpTokenPrice = async (
   accountAddress,

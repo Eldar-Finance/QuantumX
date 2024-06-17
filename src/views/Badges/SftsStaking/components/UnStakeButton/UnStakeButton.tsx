@@ -14,7 +14,7 @@ const UnStakeButton = ({ ...props }) => {
 
   const handleSubmit = () => {
     onClose();
-    scCall(sftsRewardsWsp, "unstakeSft", [], 40000000);
+    scCall(sftsRewardsWsp, "unstakeSft", [], 100000000);
   };
 
   return (

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Button, Image, Text, Box, Flex, Center, VStack, Divider, HStack } from '@chakra-ui/react';
 import NFTModal from './NFTModal'; // Adjust the path if necessary
-import TextField from '../components/SmartSwap/TextField/TextField';
+import TextField from '../components/Swap/TextField/TextField';
 import { updateURLParams } from 'utils/functions/routes';
 import { toknesID } from 'api/net.config';
-import { SwapToken } from '../components/SmartSwap/SwapCard/SwapCard';
+import { SwapToken } from '../components/Swap/SwapCard/SwapCard';
 import ActionButton from 'components/ActionButton/ActionButton';
 import { NFTLiquidSell } from 'api/sc/calls';
 import BigNumber from 'bignumber.js';
@@ -17,7 +17,7 @@ const NFTLiquidityInterface = ({...props}) => {
 
   const fetchRoyalties = async (nftIdentifier) => {
     try {
-      const response = await fetch(`https://api.multiversx.com/nfts/${nftIdentifier}`);
+      const response = await fetch(`https://next-api.multiversx.com/nfts/${nftIdentifier}`);
       if (!response.ok) {
         throw new Error('Failed to fetch NFT royalties');
       }

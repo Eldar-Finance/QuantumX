@@ -10,13 +10,14 @@ interface IProps {
 const AmountBox1 = ({ type, value }: IProps) => {
   return (
     <GradientBox
-      p="25px"
+      p="20px"
       textAlign={"center"}
       flexDir="column"
       borderRadius={"xl"}
+      gap={2}
     >
-      <Text color="main">TOTAL VALUE LOCKED</Text>
-      <Text color="main">{type}</Text>
+      {/* <Text color="main">TOTAL VALUE LOCKED</Text> */}
+      <Text color="main" minW={"70px"}>{type}</Text>
       <Text>$ {formatNumber(value)}</Text>
     </GradientBox>
   );

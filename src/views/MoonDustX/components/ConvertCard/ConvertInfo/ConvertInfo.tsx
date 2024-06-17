@@ -1,6 +1,7 @@
-import { Flex, Text } from "@chakra-ui/react";
+import { Flex, HStack, Text } from "@chakra-ui/react";
 import BigNumber from "bignumber.js";
 import Card from "components/Card/Card";
+import { HiServer } from "react-icons/hi2";
 import {
   selectConvertInfo,
   selectToTokenDust,
@@ -10,6 +11,7 @@ import { formatTokenI } from "utils/functions/tokens";
 import { useAppSelector } from "utils/hooks/redux";
 import useGetElrondToken from "utils/hooks/useGetElrondToken";
 import { protocolFee } from "views/MoonDustX/utils/contants";
+import { convertSlippage } from "views/MoonDustX/utils/contants";
 
 const ConvertInfo = () => {
   const toTokenToConvert = useAppSelector(selectToTokenDust);
@@ -18,13 +20,14 @@ const ConvertInfo = () => {
   const totalAmountOfTokens = selectedTokens.reduce((acc, cur) => {
     return (
       acc +
-      new BigNumber(cur.data[cur.data.length - 1].amountReceivDec).toNumber()
+      new BigNumber(cur.data?.[0].amountReceivDec || 0).toNumber()
     );
   }, 0);
 
   const totalDollar = selectedTokens.reduce((acc, cur) => {
+    const newVal = new BigNumber(cur.data?.[0].dollarAmount || 0).toNumber();
     return (
-      acc + new BigNumber(cur.data[cur.data.length - 1].dollarAmount).toNumber()
+      acc + newVal
     );
   }, 0);
 
@@ -35,7 +38,7 @@ const ConvertInfo = () => {
         mb={4}
         fontSize={{ xs: "14px", md: "md" }}
       >
-        <Text>Minimum {formatTokenI(toTokenToConvert)} to receive</Text>
+        <Text>Minimum to receive</Text>
         <Flex flexDir={"column"} alignItems="flex-end">
           <Text fontWeight="600">
             {formatBalance({
@@ -50,13 +53,23 @@ const ConvertInfo = () => {
         </Flex>
       </Flex>
       <Flex
-        justifyContent={"space-between"}
-        fontSize={{ xs: "14px", md: "md" }}
+        // justifyContent={"space-between"}
+        fontSize={{ xs: "12px", md: "14px" }}
+        gap={5}
+        mb={-4}
       >
-        <Text>Protocol Fee</Text>
-        <Text color={"GrayText"} fontWeight="600">
-          {protocolFee} %
-        </Text>
+        <HStack>
+          <Text>Fee</Text>
+          <Text color={"GrayText"} fontWeight="600">
+            {protocolFee} %
+          </Text>
+        </HStack>
+        <HStack>
+          <Text>Slippage</Text>
+          <Text color={"GrayText"} fontWeight="600">
+            {convertSlippage} %
+          </Text>
+        </HStack>
       </Flex>
     </Card>
   );

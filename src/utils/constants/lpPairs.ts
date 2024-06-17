@@ -313,5 +313,33 @@ export const pairs = [
     lpprice: "0",
     token2lp: "PADAWAN-a17f58",
     token1lp: "WEGLD-bd4d79",
+  },
+  {
+    lpname: "WAGMIUSDC",
+    lpidentifier: "WAGMIUSDC-b996b4",
+    lpprice: "0",
+    token2lp: "WAGMI-3f803d",
+    token1lp: "USDC-c76f1f",
+  },
+  {
+    lpname: "MXDOGWEGLD",
+    lpidentifier: "MXDOGWEGLD-75bcfe",
+    lpprice: "0",
+    token2lp: "MXDOGE-378b61",
+    token1lp: "WEGLD-bd4d79",
+  },
+  {
+    lpname: "LPLROABFUE",
+    lpidentifier: "LPLROABFUE-bfba38",
+    lpprice: "0",
+    token2lp: "BFUEL-361c73",
+    token1lp: "LROAR-de5ea5",
+  },
+  {
+    lpname: "BLODWEGLDLP",
+    lpidentifier: "BLODWEGLD-c0d005",
+    lpprice: "0",
+    token2lp: "WEGLD-bd4d79",
+    token1lp: "BLOD-760741",
   }
 ];

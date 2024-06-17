@@ -11,6 +11,7 @@ import { useAppDispatch } from "utils/hooks/redux";
 import LockedInFarms from "./LockedInFarms/LockedInFarms";
 import LockedInPools from "./LockedInPools/LockedInPools";
 import LockedInHypezone from "./LockedInHypezone/LockedInHypezone";
+import TotalLocked from "./TotalLocked/TotalLocked";
 
 const MainSection = () => {
   const dispatch = useAppDispatch();
@@ -19,6 +20,7 @@ const MainSection = () => {
   const handleConnect = () => {
     dispatch(openLogin(true));
   };
+
   return (
     <Center flexDir={"column"} m="auto" maxW={"692px"} textAlign={"center"}>
       <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}>
@@ -39,8 +41,8 @@ const MainSection = () => {
       <Flex
         justify={"center"}
         gap={"30px"}
-        mb="60px"
-        flexDir={{ xs: "column", md: "row" }}
+        mb="70px"
+        flexDir={{ xs: "row", md: "row" }}
       >
         {!isLoggedIn && (
           <motion.div initial={{ x: -25 }} whileInView={{ x: 0 }}>
@@ -77,17 +79,24 @@ const MainSection = () => {
         </motion.div>
       </Flex>
 
-      <Flex gap="20px" mb="30px" flexDir={{ xs: "column", md: "row" }}>
-        <motion.div initial={{ y: 25 }} whileInView={{ y: 0 }}>
-          <LockedInFarms />
-        </motion.div>
-        <motion.div initial={{ y: 25 }} whileInView={{ y: 0 }}>
-          <LockedInPools />
-        </motion.div>
-        <motion.div initial={{ y: 25 }} whileInView={{ y: 0 }}>
-          <LockedInHypezone />
-        </motion.div>
-      </Flex>
+      <Center flexDirection={"column"} gap={4}>
+        <Flex>
+          <motion.div initial={{ y: 25 }} whileInView={{ y: 0 }}>
+            <TotalLocked />
+          </motion.div>
+        </Flex>
+        <Flex gap={{xs: "15px", md: "20px"}} mb="30px" flexDir={{ xs: "row", md: "row" }} whiteSpace={"nowrap"}>
+          <motion.div initial={{ y: 25 }} whileInView={{ y: 0 }}>
+            <LockedInFarms />
+          </motion.div>
+          <motion.div initial={{ y: 25 }} whileInView={{ y: 0 }}>
+            <LockedInPools />
+          </motion.div>
+          <motion.div initial={{ y: 25 }} whileInView={{ y: 0 }}>
+            <LockedInHypezone />
+          </motion.div>
+        </Flex>
+      </Center>
 
       <Center gap="10px">
         <Text fontSize={"lg"}>built on</Text>

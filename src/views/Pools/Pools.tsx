@@ -1,4 +1,4 @@
-import { Box, Center, Flex, Link, Switch } from "@chakra-ui/react";
+import { Box, Center, Flex, Image, Link, Switch, Text } from "@chakra-ui/react";
 import auditImg from "assets/farms/audit.png";
 import MyContainer from "components/Container/Container";
 import ProteoFarmsCard from "components/Farms/FarmsCard/FarmsCard";
@@ -7,7 +7,7 @@ import Title from "components/Farms/Title/Title";
 import Layout from "components/Layout/Layout";
 import withElronDapp from "hoc/withElronDapp";
 import WrapperPages from "hoc/WrapperPages";
-import Image from "next/image";
+import NextImage from "next/image";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { fetchStats } from "redux/slices/elrond/elrond-slice";
@@ -39,6 +39,7 @@ import { InfoIcon } from "@chakra-ui/icons";
 import AutoHarvestInfoModal from "views/Admin/Views/Farms/AutoHarvestInfoModal";
 import HarvestAll from "components/Farms/HarvestAll/HarvestAll";
 import ActionButton from "components/ActionButton/ActionButton";
+import { GoPlusCircle } from "react-icons/go";
 
 const Pools = () => {
   const dispatch = useAppDispatch();
@@ -83,7 +84,7 @@ const Pools = () => {
 
   useEffect(() => {
     if (farms2) {
-      setFarms2ToSearch(farms2);
+      setFarms2ToSearch(farms2.filter((f) => f.farm.farmId != 4 && f.farm.farmId != 7));
     }
   }, [farms2]);
 
@@ -190,8 +191,18 @@ const Pools = () => {
             tvlText = "Total value Locked in Pools"
           />
           <HarvestAll harvestableFarms={userHarvestableFarms} type="pools"/>
+
+          <Link marginTop={"30px"} href="https://twitter.com/SuperRare_Bears/status/1747733437182542075?t=07ROu5JOLJC4VGynxn00Ug&s=19" isExternal>
+            <Image
+              src="https://i.ibb.co/3vqQJ8K/Quantum-X-Banner-01.jpg"
+              alt="Description of the image content"
+              style={{ borderRadius: '25px', width: '100%'}}
+              height={{sm: "50px", md: "130px"}}
+            />
+          </Link>
+
           <Flex w="full" justifyContent={"flex-end"} mt={"1px"}>
-            {!isSmallDevice && <Flex w="150px" alignItems="end" justifyContent={"flex-end"} mt={{ xs: "30px", md: "30px" }} onClick={handleInfoModal}>
+            {!isSmallDevice && <Flex  alignItems="end" gap={3} justifyContent={"flex-end"} mt={{ xs: "30px", md: "30px" }}>
               {/* <InfoIcon color="white" ml="3" boxSize={6} onClick={handleInfoModal}/> */}
               <ActionButton
                   height={"30px"}
@@ -203,18 +214,50 @@ const Pools = () => {
               >
                   <InfoIcon/> &nbsp;&nbsp; Auto-Harvest
               </ActionButton>
+
+              <Link
+                href="/panel"
+                // w={"min-content"}  alignSelf={"center"}
+                mt={1}
+                height={"30px"}
+              >
+                <ActionButton px={5} py={1} gap={2} height={"30px"}>
+                  <GoPlusCircle size={"20px"}/>
+                  <Text>
+                    Create new Pool
+                  </Text>
+                </ActionButton>
+              </Link>
+
             </Flex>}
-            <Flex w="full" gap={isSmallDevice ? "15px" : "10px"} alignItems="center" justifyContent={isSmallDevice ? "flex-start" : "flex-end"} mt={{ xs: "30px", md: "50px" }} whiteSpace={"nowrap"}>
-              { address && (<Flex alignItems="center" gap="10px">
-                  <Switch size="md" isChecked={isOpen} colorScheme="teal" onChange={handleToggle} />
-                  <Box>My Pools</Box>
-                </Flex>
-              )}
-              <Search onChange={handleSearch}/>
+        
+        {isSmallDevice && <Flex gap={2} mr={4} alignItems="center" mt={{ xs: "30px", md: "30px" }}>  
+          <Link
+            href="/panel"
+            w={"min-content"}  alignSelf={"center"}
+            // mt={1}
+            // height={"30px"}
+          >
+            <ActionButton py={1} px={1} gap={1} height={"30px"}>
+              <GoPlusCircle size={"22px"}/>
+              <Text>
+                Create
+              </Text>
+            </ActionButton>
+          </Link>
+
+          <InfoIcon color="white" boxSize={5} onClick={handleInfoModal}/>
+        </Flex>}
+
+        <Flex w="full" gap={isSmallDevice ? "10px" : "10px"} alignItems="center" justifyContent={isSmallDevice ? "flex-start" : "flex-end"} mt={{ xs: "30px", md: "30px" }} whiteSpace={"nowrap"}>
+          { address && (<Flex alignItems="center" gap="5px">
+              <Switch size="md" isChecked={isOpen} colorScheme="teal" onChange={handleToggle} />
+              <Box>My Pools</Box>
             </Flex>
-            {isSmallDevice && <Flex w="20px" alignItems="center" justifyContent={"flex-end"} mt={{ xs: "30px", md: "30px" }} onClick={handleInfoModal}>
-              <InfoIcon color="white" ml="3" boxSize={6} onClick={handleInfoModal}/>
-            </Flex>}
+          )}
+          <Search onChange={handleSearch}/>
+        </Flex>
+
           </Flex>
           {modalOpen && 
             <AutoHarvestInfoModal onClose={() => setModalOpen(false)}/>
@@ -238,7 +281,7 @@ const Pools = () => {
             isExternal
             href="https://bhero.com/pdf/audits/elrond/SuperRareBears_SmartContract_Audit_FarmsSmartContract_v.0.1.pdf"
           >
-            <Image src={auditImg} alt="audit" height={150} />
+            <NextImage src={auditImg} alt="audit" height={150} />
           </Link>
         </Center>
       </Box>

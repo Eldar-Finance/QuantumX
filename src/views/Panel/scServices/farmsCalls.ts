@@ -15,7 +15,7 @@ import { IElrondToken } from "utils/types/elrond.interface";
 export async function deleteFarm(farmId: number) {
   const res = await scCall("farms2", "deleteFarm", [
     new BigUIntValue(new BigNumber(farmId)),
-  ], 400000000);
+  ], 200000000);
 
   return res;
 }
@@ -59,6 +59,7 @@ export async function depositRewards(
   epochs: number | string,
   bypass?: boolean
 ) {
+    
   let res = null;
 
   const tokensToSend = tokensInfo.map((ti) => {
@@ -71,11 +72,16 @@ export async function depositRewards(
     return data;
   });
 
-  const arg = [
+  const arg = bypass ? [
     new BigUIntValue(new BigNumber(farmId)),
     new BigUIntValue(new BigNumber(epochs)),
     new BooleanValue(bypass),
+  ] :
+  [
+    new BigUIntValue(new BigNumber(farmId)),
+    new BigUIntValue(new BigNumber(epochs)),
   ];
+
   res = MultESDTNFTTranferOrEgldPayment(
     "farms2",
     "depositRewards",
@@ -87,7 +93,7 @@ export async function depositRewards(
   return res;
 }
 export async function becomeCreator(fee: number) {
-  EGLDPayment("farms2", "becomeCreator", fee, [], 10000000);
+  EGLDPayment("farms2", "becomeCreator", fee, [], 30000000);
 }
 
 export async function createFarm(
@@ -100,22 +106,37 @@ export async function createFarm(
     allowMultipleRewardsTokens: true,
   }
 ) {
+
+  farm.allowMultipleRewardsTokens ?
   EGLDPayment(
     "farms2",
     "createFarm",
     fee,
     [
       BytesValue.fromUTF8(farm.stakingTokenI),
-      BytesValue.fromUTF8(
-        farm.allowMultipleRewardsTokens ? "" : farm.rewardTokenI
-      ),
+      new BigUIntValue(new BigNumber(farm.unbondingPeriod)),
+      new BigUIntValue(
+        new BigNumber(
+          new BigNumber(farm.unbondingFee).multipliedBy(100).toFixed(0)
+        )
+      )
+    ],
+    70000000
+  ) :
+  EGLDPayment(
+    "farms2",
+    "createFarm",
+    fee,
+    [
+      BytesValue.fromUTF8(farm.stakingTokenI),
       new BigUIntValue(new BigNumber(farm.unbondingPeriod)),
       new BigUIntValue(
         new BigNumber(
           new BigNumber(farm.unbondingFee).multipliedBy(100).toFixed(0)
         )
       ),
+      BytesValue.fromUTF8(farm.rewardTokenI),
     ],
     70000000
-  );
+  )
 }

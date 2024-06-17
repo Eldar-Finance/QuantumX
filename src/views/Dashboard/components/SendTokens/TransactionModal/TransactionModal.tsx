@@ -111,13 +111,20 @@ const TransactionModal = ({ isOpen, onClose }: IProps) => {
   const getAddressViaQxTag = async () => {
     try {
       let qxTag = formik.values.address;
-      if (qxTag.includes(".")) {
-        const username = qxTag.split(".")[0];
-        const extension = qxTag.split(".")[1];
 
-        const res = await getAddress(username, extension);
-        formik.setFieldValue("address", res);
-        formik.setStatus(res);
+      let username = "";
+      let extension = "";
+      if (qxTag.includes(".") || (qxTag.length != 64 && !qxTag.includes('erd'))) {
+          username = qxTag.split(".")[0];
+          if (qxTag.includes(".")) {
+            extension = qxTag.split(".")[1];
+          } else {
+            extension = "";
+          }
+          
+          const res = await getAddress(username, extension);
+          formik.setFieldValue("address", res);
+          formik.setStatus(res);
       }
     } catch (error) {
       formik.setFieldError("address", error.message);
@@ -150,7 +157,7 @@ const TransactionModal = ({ isOpen, onClose }: IProps) => {
                   formik.handleBlur(e);
                   getAddressViaQxTag();
                 }}
-                placeholder="address"
+                placeholder="Address or QxTag"
                 name="address"
                 border={"none"}
                 bg="black.base"
@@ -189,7 +196,7 @@ const TransactionModal = ({ isOpen, onClose }: IProps) => {
               <FormLabel>Data</FormLabel>
               <Textarea
                 onChange={formik.handleChange}
-                placeholder="Data"
+                placeholder="Data (optional)"
                 name="data"
                 border={"none"}
                 bg="black.base"

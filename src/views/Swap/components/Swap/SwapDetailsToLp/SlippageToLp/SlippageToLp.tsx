@@ -14,18 +14,16 @@ import { SorSwapResponse } from "@ashswap/ash-sdk-js/out";
 import { formatPrecision } from "utils/functions/formatBalance";
 import { breakpoints } from "theme/chakra";
 
-const Slippage = ({ swapPaths }: { swapPaths?: SorSwapResponse }) => {
-  // const [usesInput, setUsesInput] = useState(false);
+const SlippageToLp = () => {
   const slipapge = useAppSelector(selectSlippage);
   const dispatch = useAppDispatch();
   
-  let slippageSlecctions; // = [0.5, 1, 2];
-
+  let slippageSlecctions;
   const [isLargerThanLg] = useMediaQuery(`(min-width: ${breakpoints["md"]})`);
   if (!isLargerThanLg) {
-    slippageSlecctions = [0.5, 1];
+    slippageSlecctions =  [1, 5];
   } else {
-    slippageSlecctions = [0.5, 1, 2];
+    slippageSlecctions = [1, 2, 5];
   }
 
   const handleUpdateSlippage = (newSlippage: number) => {
@@ -33,7 +31,6 @@ const Slippage = ({ swapPaths }: { swapPaths?: SorSwapResponse }) => {
   };
   
   return (
-    <HStack w={"full"} h={"full"} flex={1}>
       <Flex
         w="50%"
         gap={"10px"}
@@ -42,7 +39,8 @@ const Slippage = ({ swapPaths }: { swapPaths?: SorSwapResponse }) => {
         px={2}
         py={1}
         borderRadius={"20px"}
-        minH={"75px"}
+        minH={"95px"}
+        maxH={"95px"}
       >
         <Center bg="black.base" boxSize={"34px"} borderRadius="full">
           <MdCurrencyExchange size={"18"} color="#22F7DD"/>
@@ -57,7 +55,7 @@ const Slippage = ({ swapPaths }: { swapPaths?: SorSwapResponse }) => {
               {slipapge}%.
             </Text> */}
 
-            <Flex w="full" gap={{sm: 1, md: 2}} pt={1} ml={-3} direction={"row"}>
+            <Flex w="full" gap={{sm: 1, md: 2}} pt={3} ml={-3} direction={"row"}>
               <Flex gap={1}>
                 {slippageSlecctions.map((slippageOption) => {
                   return (
@@ -126,44 +124,10 @@ const Slippage = ({ swapPaths }: { swapPaths?: SorSwapResponse }) => {
           </Box>
         </Box>
       </Flex>
-      <Flex
-        w="50%"
-        gap={"10px"}
-        alignSelf={"flex-start"}
-        bg={"black.baseDark"}
-        p={2}
-        borderRadius={"20px"}
-        minH={"75px"}
-      >
-        <Center bg="black.base" boxSize={"34px"} borderRadius="full">
-          <MdAttachMoney size={"18"} color="#22F7DD"/>
-        </Center>
-        <Box>
-          <Text flex={1} fontSize={'16px'} my={1}>
-            Effective Price
-          </Text>
-          <ul>
-            {/* {finalRoutes.map((route, i) => {
-              return (
-                <li key={i}>
-                  <Text fontSize={"lsm"} color="white.500">
-                    {route.token1} {"->"} {route.token2}
-                  </Text>
-                </li>
-              );
-            })} */}
-            
-            <Text fontSize={"lsm"} color="white.500">
-              ${formatPrecision(swapPaths?.effectivePrice)}
-            </Text>
-          </ul>
-        </Box>
-      </Flex>
-    </HStack>
   );
 };
 
-export default Slippage;
+export default SlippageToLp;
 
 interface IProps {
   slippage: number;

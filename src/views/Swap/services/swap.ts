@@ -241,6 +241,7 @@ export const swapLp = async (
     swapInfo.filter((_d, i) => i > 0) as INomalSmartSwap[]
   );
 };
+
 export const lpSwapTx = async (
   tokens: {
     collection: string;
@@ -278,9 +279,9 @@ export const lpSwapTx = async (
 
       let tx1 = interaction
         .withSender(senderAddress)
-        .useThenIncrementNonceOf(new Account(senderAddress)) // den xerw an xreiazetai auto
+        // .useThenIncrementNonceOf(new Account(senderAddress)) // den xerw an xreiazetai auto
         .withValue(value)
-        .withGasLimit(20000000)
+        .withGasLimit(30000000)
         .withChainID(ChainId)
         .buildTransaction();
       
@@ -305,9 +306,9 @@ export const lpSwapTx = async (
   
     let tx2 = interaction2
       .withSender(senderAddress)
-      .useThenIncrementNonceOf(new Account(senderAddress)) // den xerw an xreiazetai auto
+      // .useThenIncrementNonceOf(new Account(senderAddress)) // den xerw an xreiazetai auto
       .withSingleESDTTransfer(TokenTransfer.fungibleFromBigInteger(swapLpData[0].token1, bgFinalValue))
-      .withGasLimit(100000000)
+      .withGasLimit(180000000)
       .withChainID(ChainId)
       .buildTransaction();
   

@@ -106,6 +106,10 @@ const StakeUnstake = ({ farm, userFarmItem, isPool, isBearly, farmUserRewards }:
     }
   };
 
+  const padawanMaxCap = 380_000000000000000000; // 247 LP
+  const isPadawanFull = farm.farm.farmId === 54 && farm.stakedBalance >= padawanMaxCap || false;
+  const disableMessage = isPadawanFull ? "FARM IS FULL" : isPool ? "STAKE" : "STAKE LP";
+
   return (
     <Flex h="full" flexDir={"column"} w="full">
       <Text color="white.400">
@@ -125,12 +129,19 @@ const StakeUnstake = ({ farm, userFarmItem, isPool, isBearly, farmUserRewards }:
             variant={"outline"}
             w="full"
             // maxW={"50%"}
-            isDisabled={(!isEligible && farm.farm.farmId === 49) || (!isSrbStaker && farm.farm.farmId === 7) || farmsTobeShutDown.includes(farm.farm.farmId)}
-            _hover={{bgColor: (!isEligible && farm.farm.farmId === 49) || (!isSrbStaker && farm.farm.farmId === 7) ? "red" : "main",
-            color: (!isEligible && farm.farm.farmId === 49) || (!isSrbStaker && farm.farm.farmId === 7) ? "white" : "black"
-          }}
+            isDisabled={
+              (!isEligible && farm.farm.farmId === 49) ||
+              (!isSrbStaker && farm.farm.farmId === 7) ||
+              farmsTobeShutDown.includes(farm.farm.farmId) ||
+              isPadawanFull
+            }
+            _hover={{
+              bgColor:(!isEligible && farm.farm.farmId === 49) || (!isSrbStaker && farm.farm.farmId === 7) || isPadawanFull ? "red" : "main",
+              color: (!isEligible && farm.farm.farmId === 49) || (!isSrbStaker && farm.farm.farmId === 7) || isPadawanFull ? "white" : "black"
+            }}
           >
-            STAKE {!isPool && "LP"}{" "}
+            {/* {isPadawanFull ? "FARM IS FULL" : {STAKE {!isPool && 'LP'}{' '}} } */}
+            {disableMessage}
           </ActionButton>
           {!isEligible && farm.farm.farmId === 49 &&
           <Text pl={2} placeSelf={"center"} whiteSpace={"nowrap"}>
@@ -147,13 +158,13 @@ const StakeUnstake = ({ farm, userFarmItem, isPool, isBearly, farmUserRewards }:
         <Center flex="1" flexDir={"column"} w="full" maxW={"50%"} position={"relative"}>
           <ActionButton
             onClick={() => setOpenUnstakeStake((s) => !s)}
-            isDisabled={disableUnstake || shouldUserHarvestWarning}
+            isDisabled={disableUnstake}
             w={isBearly ? "full" : { xs: "full", md: "50%" }}
           >
             UNSTAKE
           </ActionButton>
           {shouldUserHarvestWarning && 
-            <Text opacity={0.7} color={"yellow.300"} fontSize={"16px"} position={"absolute"} top={{sm: "42px", md: "-35px"}} right={{sm: "5px", md: "auto"}} whiteSpace={"nowrap"}>
+            <Text opacity={0.7} color={"yellow.300"} fontSize={"16px"} position={"absolute"} top={{sm: "47px", md: "-35px"}} right={{sm: "25px", md: "auto"}} whiteSpace={"nowrap"}>
               ⚠️ {" "} Harvest your rewards before unstaking.
             </Text>
           }
@@ -165,7 +176,7 @@ const StakeUnstake = ({ farm, userFarmItem, isPool, isBearly, farmUserRewards }:
             ⚠️ {" "} {timeToUnstake} remaining to unstake
           </Text>
         )}
-        {epochDiffrence <= 0 && farmFee?.earlyUnbondingFee > 0 && (
+        {hasuserStaked && epochDiffrence <= 0 && farmFee?.earlyUnbondingFee > 0 && (
           <Text fontSize={"md"} color="darkgray" mt={1}>
             ⚠️ {" "} {timeToUnstake} remaining to unstake with 0% penalty
           </Text>

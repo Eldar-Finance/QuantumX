@@ -10,7 +10,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "@ashswap/ash-sdk-js": "^2.0.3",
+    "@ashswap/ash-sdk-js": "^2.0.9",
     "@chakra-ui/icons": "^2.1.1",
     "@chakra-ui/react": "^2.8.1",
     "@emotion/react": "^11.11.1",
@@ -19,7 +19,6 @@
     "@multiversx/sdk-dapp": "2.23.0",
     "@multiversx/sdk-network-providers": "2.0.0",
     "@multiversx/sdk-wallet": "^4.2.0",
-    "@next/font": "14.0.0",
     "@reduxjs/toolkit": "^1.9.7",
     "axios": "1.6.0",
     "bignumber.js": "^9.1.2",

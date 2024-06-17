@@ -96,6 +96,7 @@ export const MetaHead = memo(
           content={metaImage || defaultMetaTags.image}
         />
         <meta key="twitter:url" name="twitter:url" content={canonicalURL} />
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7198509049220853" crossOrigin="anonymous"></script>
       </Head>
     );
   }

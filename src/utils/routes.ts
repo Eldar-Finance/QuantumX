@@ -26,6 +26,7 @@ export const routeNames = {
   moondustx: "/moondustx",
   qtags: "/qtags",
   marketplace: "/marketplace",
+  ecosystem:"/ecosystem",
 };
 
 export const routes: {
@@ -40,6 +41,7 @@ export const routes: {
   admin: IRoute;
   panel: IRoute;
   hypezone: IRoute;
+  ecosystem: IRoute;
   // converter: IRoute;
   moondustx: IRoute;
   // marketplace: IRoute;
@@ -69,7 +71,7 @@ export const routes: {
   hub: {
     path: routeNames.hub,
     name: "Hub",
-    onModalAndNavbar: true,
+    // onModalAndNavbar: true,
   },
   // dca: {
   //   path: routeNames.dca,
@@ -80,6 +82,11 @@ export const routes: {
     path: routeNames.rewards,
     name: "QuantumX Rewards",
     onModal: true,
+  },
+   ecosystem: {
+     path: routeNames.ecosystem,
+     name: "Ecosystem",
+     onModalAndNavbar: true,
   },
   // converter: {
   //   path: routeNames.converter,

@@ -35,7 +35,7 @@ const Avilable = ({ farm, userFarmRewards, disable }: IProps) => {
         "farms2",
         "harvest",
         [new BigUIntValue(new BigNumber(farm.farm.farmId))],
-        300000000
+        250000000
       );
 
       sendMultipleTransactions({ txs: [t1, t2] });

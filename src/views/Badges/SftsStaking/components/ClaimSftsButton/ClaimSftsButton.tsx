@@ -5,7 +5,7 @@ import ActionButton from "components/ActionButton/ActionButton";
 
 const ClaimSftsButton = ({ ...props }) => {
   const handleClaimSfts = async () => {
-    const res = await scCall(sftsRewardsWsp, "claimSfts", [], 40000000);
+    const res = await scCall(sftsRewardsWsp, "claimSfts", [], 100000000);
   };
 
   return (

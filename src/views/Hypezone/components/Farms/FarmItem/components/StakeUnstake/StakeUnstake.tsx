@@ -141,7 +141,7 @@ const StakeUnstake = ({
         <Center flex="1" flexDir={"column"} w="full" maxW={"50%"} position={"relative"}>
           <ActionButton
             onClick={() => setOpenUnstakeStake((s) => !s)}
-            isDisabled={disable || disableUnstake || shouldUserHarvestWarning}
+            isDisabled={disable || disableUnstake}
             w={isBearly ? "full" : { xs: "full", md: "50%" }}
           >
             UNSTAKE
@@ -159,7 +159,7 @@ const StakeUnstake = ({
             ⚠️ {" "} {timeToUnstake} remaining to unstake
           </Text>
         )}
-        {epochDiffrence <= 0 && farmFee?.earlyUnbondingFee > 0 && (
+        {hasuserStaked && epochDiffrence <= 0 && farmFee?.earlyUnbondingFee > 0 && (
           <Text fontSize={"md"} color="darkgray" mt={1}>
             ⚠️ {" "} {timeToUnstake} remaining to unstake with 0% penalty
           </Text>

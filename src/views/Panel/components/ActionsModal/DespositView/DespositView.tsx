@@ -54,13 +54,11 @@ const skipRender = (prevProps: IProps, nextProps: IProps) => {
 
 // eslint-disable-next-line react/display-name
 const DepositView = memo(({ onClose, farm }: IProps) => {
-  const { accountToken: token } = useGetAccountToken(farm.rewardToken);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const elrondToken = useMemo(() => token, [token.identifier]);
+  const { accountToken: elrondToken, error, isLoading } = useGetAccountToken(farm.rewardToken);
   const isOneToken = farm.rewardToken !== "";
 
-  const [usersTokens] = useGetUserTokens(null, true);
-  const alltokens: IELrondTOkenWithBalance[] = usersTokens;
+  const [tokens] = useGetUserTokens(null, false);
+  const alltokens: IELrondTOkenWithBalance[] = isOneToken ? tokens.filter((t: { identifier: string; }) => t.identifier == elrondToken.identifier) : tokens;
   const [selectedTokenId, setSelectedTokenId] = useState<number>(-1);
 
   const formik = useFormik<{
@@ -80,6 +78,7 @@ const DepositView = memo(({ onClose, farm }: IProps) => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
+
       depositRewards(
         values.tokens,
         farm.farmId,
@@ -89,12 +88,13 @@ const DepositView = memo(({ onClose, farm }: IProps) => {
     },
   });
 
+  // console.log("⚠️ ~ file: DespositView.tsx:72 ~ formik:", formik)
+
   useEffect(() => {
     if (isOneToken) {
       formik.setFieldValue(`tokens.0.tokenDetail`, elrondToken);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isOneToken, elrondToken]);
+  }, [isOneToken, elrondToken.identifier]);
 
   const handleSelectToken = (selectedToken: IELrondTOkenWithBalance) => {
     formik.setFieldValue(
@@ -113,14 +113,17 @@ const DepositView = memo(({ onClose, farm }: IProps) => {
       },
     ]);
   };
+
   const removeField = (index: number) => {
     const values = [...formik.values.tokens];
     values.splice(index, 1);
     formik.setFieldValue("tokens", values);
   };
+
   const handleChange = (val: string, i: number) => {
     formik.setFieldValue(`tokens.${i}.amount`, val, false);
   };
+
   const transformValue = (val: string, decimals?: number) => {
     if (decimals) {
       return setElrondBalance(Number(val), decimals);
@@ -128,6 +131,7 @@ const DepositView = memo(({ onClose, farm }: IProps) => {
       return "0";
     }
   };
+
   const handleMax = (realmax: string, i: number) => {
     formik.setFieldValue(`tokens.${i}.amount`, realmax, false);
   };
@@ -206,7 +210,7 @@ const DepositView = memo(({ onClose, farm }: IProps) => {
 
           {selectedTokenId !== -1 ? (
             <TokenList
-              tokens={alltokens.filter(
+              tokens={alltokens.filter((t) => t.identifier != "EGLD").filter(
                 (userToken) =>
                   formik.values.tokens
                     .filter((t) => Boolean(t.tokenDetail))
@@ -286,6 +290,7 @@ const InputComponent = ({
 
     onMax(realmax, i);
   };
+
   return (
     <Box
       key={i}
@@ -325,6 +330,12 @@ const InputComponent = ({
                 width={27}
                 height={27}
               />}
+              {!field.tokenDetail.assets && field.tokenDetail.identifier == "EGLD" ? <NextImage
+                src={"/images/egld.svg"}
+                alt=""
+                width={27}
+                height={27}
+              /> : null}
               <Text fontSize={"14px"} ml={2}>
                 {formatTokenI(field.tokenDetail.ticker)}
               </Text>

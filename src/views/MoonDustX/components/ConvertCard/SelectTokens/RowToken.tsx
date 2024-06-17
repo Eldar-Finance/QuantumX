@@ -58,6 +58,7 @@ const RowToken = ({ token }: IProps) => {
   }, [data, dispatch, token.balance, token.identifier]);
 
   return (
+    !data ? null :
     <Box>
       <Checkbox
         value={token.identifier}

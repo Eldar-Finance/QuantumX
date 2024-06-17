@@ -1,4 +1,4 @@
-import { Box, Flex, Image } from "@chakra-ui/react";
+import { Box, Center, Flex, HStack, Image } from "@chakra-ui/react";
 import ActionButton from "components/ActionButton/ActionButton";
 import {
   selectAllTokens,

@@ -7,7 +7,7 @@ import useGetTokenPrice from "utils/hooks/useGetTokenPrice";
 import { toknesID } from "api/net.config";
 import { formatBalance, formatBalanceDolar } from "utils/functions/formatBalance";
 import orderBy from "lodash/orderBy";
-import { EgldlogoIcon } from "components/Icons/ui";
+import { EgldlogoIcon, MultiversxLogo } from "components/Icons/ui";
 
 const CoinTab2 = () => {
   const dispatch = useAppDispatch();
@@ -42,7 +42,7 @@ const CoinTab2 = () => {
       name: "EGLD",
       ticker: "EGLD",
       decimals: 18,
-      assets: { img: <EgldlogoIcon /> },
+      assets: { img: <MultiversxLogo ml="4px" mt={"2px"}/> },
       price: egldPrice,
       balance: egldData.balance,
     };
@@ -52,7 +52,7 @@ const CoinTab2 = () => {
   }, [tableData.data, egldData, egldPrice]);
 
   // Limit the number of tokens to display to 5
-  const displayedTokens = data.slice(0, 5);
+  const displayedTokens = data.slice(0, 25);
 
   return (
     <>
@@ -60,6 +60,7 @@ const CoinTab2 = () => {
         {`
           .thin-scrollbar::-webkit-scrollbar {
             width: 5px; /* Adjust the width as needed */
+            margin-left: 15px;
           }
           .thin-scrollbar::-webkit-scrollbar-track {
             background: #f1f1f1; /* Track color */
@@ -72,35 +73,36 @@ const CoinTab2 = () => {
           }
         `}
       </style>
-    <Box w="full" maxW={"200px"} mx="auto" maxH="200px" overflowY={"auto"} className="thin-scrollbar">
+    <Box w="full" maxH="240px" overflowY={"auto"} className="thin-scrollbar" pb={2}>
       <List spacing={3}>
         {displayedTokens.map((token, index) => (
           <ListItem key={index} >
             <Flex alignItems="center" justifyContent="space-between">
               <Flex alignItems="center">
-              <Box
-              sx={{
-                borderRadius: "1.5rem",
-                width: "24px",
-                height: "24px",
-                marginRight: 2,
-                boxShadow: "rgb(255 255 255 / 8%) 0px 6px 10px",
-              }}
-            >
-              {token.assets?.img ? (
-                token.assets?.img
-              ) : (
-                <Image
-                  src={token.assets?.svgUrl || token.assets?.static.src || ""}
-                  alt={token.assets?.description || ""}
-                />
-              )}
-            </Box>
-                <Text fontSize={"xs"} fontWeight="bold">{token.name}</Text>
+                <Box
+                  sx={{
+                    borderRadius: "1.5rem",
+                    width: "24px",
+                    height: "24px",
+                    marginRight: 2,
+                    boxShadow: "rgb(255 255 255 / 8%) 0px 6px 10px",
+                  }}
+                  mb={1}
+                >
+                  {token.assets?.img ? (
+                    token.assets?.img
+                  ) : (
+                    <Image
+                      src={token.assets?.svgUrl || token.assets?.static.src || ""}
+                      alt={token.assets?.description || ""}
+                    />
+                  )}
+                </Box>
+                <Text fontSize={"0.9em"} fontWeight="semi-bold">{token.name}</Text>
               </Flex>
-              <Flex direction={"column"}>
-              <Text marginRight="10px">{formatBalance(token)}</Text>
-              <Text fontSize={"0.8em"} color={"gray"} textAlign={"end"} marginRight="10px">${formatBalanceDolar(token, token.price)}</Text>
+              <Flex direction={"column"} mr={2}>
+                <Text textAlign={"end"}>{formatBalance(token)}</Text>
+                <Text fontSize={"0.8em"} color={"gray"} textAlign={"end"}>${formatBalanceDolar(token, token.price)}</Text>
               </Flex>
               
               

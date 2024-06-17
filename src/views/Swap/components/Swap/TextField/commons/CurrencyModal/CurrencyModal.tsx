@@ -20,7 +20,7 @@ import LpTokenImage from "components/LpTokenImage/LpTokenImage";
 import TokenList from "components/TokenList/TokenList";
 import orderBy from "lodash/orderBy";
 import * as React from "react";
-import { selectFromToken } from "redux/slices/smartSwaps/smartSwaps";
+import { selectFromToken, selectToField, setFromToken, setToToken } from "redux/slices/smartSwaps/smartSwaps";
 import { formatTokenI } from "utils/functions/tokens";
 import { useAppSelector } from "utils/hooks/redux";
 import useGetMultipleElrondTokens from "utils/hooks/useGetMultipleElrondTokens";
@@ -28,10 +28,11 @@ import useGetTopSmartSwapTokens from "utils/hooks/useGetTopSmartSwapTokens";
 import { IElrondToken } from "utils/types/elrond.interface";
 import useSelectSmarSwapTokens from "views/Swap/hooks/useSelectSmarSwapTokens";
 import { SwapToken } from "../../../SwapCard/SwapCard";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SwapTopTokens } from "api/net.config";
 import useGetAccountTokens from "utils/hooks/useGetAccountTokens";
 import useGetUserTokens from "utils/hooks/useGetUserTokens";
+import router from "next/router";
 
 interface IProps {
   field: "from" | "to";
@@ -157,7 +158,7 @@ const CurrencyModal = ({
                 }
               }
             />
-            <Flex flexWrap={"wrap"} w="full" gap={2} mt={3}>
+            {diplayTokens.length > topElrondTokens.length && topElrondTokens.length > 0 && <Flex flexWrap={"wrap"} w="full" gap={2} mt={3}>
               {topElrondTokens.map((t) => {
                 return (
                   <Center
@@ -212,7 +213,7 @@ const CurrencyModal = ({
                   </Center>
                 );
               })}
-            </Flex>
+            </Flex>}
             <Flex gap={2} mt={4} borderTop={"1px solid"} borderColor={"white.200"} w="full">
               <Text mt={3}>Token Name</Text>
               <IconButton

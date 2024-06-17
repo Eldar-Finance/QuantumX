@@ -1,23 +1,27 @@
 {
     "buildInfo": {
         "rustc": {
-            "version": "1.72.0-nightly",
-            "commitHash": "04075b32021932e3e8f6ab55d519b3b3494b6ef9",
-            "commitDate": "2023-06-22",
+            "version": "1.76.0-nightly",
+            "commitHash": "d86d65bbc19b928387f68427fcc3a0da498d8a19",
+            "commitDate": "2023-12-10",
             "channel": "Nightly",
-            "short": "rustc 1.72.0-nightly (04075b320 2023-06-22)"
+            "short": "rustc 1.76.0-nightly (d86d65bbc 2023-12-10)"
         },
         "contractCrate": {
             "name": "farms",
             "version": "0.0.0"
         },
         "framework": {
-            "name": "elrond-wasm",
-            "version": "0.38.0"
+            "name": "multiversx-sc",
+            "version": "0.49.0"
         }
     },
     "name": "Farms",
     "constructor": {
+        "inputs": [],
+        "outputs": []
+    },
+    "upgradeConstructor": {
         "inputs": [],
         "outputs": []
     },
@@ -128,17 +132,17 @@
                     "type": "EgldOrEsdtTokenIdentifier"
                 },
                 {
-                    "name": "opt_reward_token",
-                    "type": "optional<EgldOrEsdtTokenIdentifier>",
-                    "multi_arg": true
-                },
-                {
                     "name": "unbonding_period",
                     "type": "u64"
                 },
                 {
                     "name": "early_unbonding_fee",
                     "type": "u64"
+                },
+                {
+                    "name": "opt_reward_token",
+                    "type": "optional<EgldOrEsdtTokenIdentifier>",
+                    "multi_arg": true
                 }
             ],
             "outputs": []
@@ -241,6 +245,32 @@
                 {
                     "name": "fee",
                     "type": "u64"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "setCustomHarvestFee",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "farm_id",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "fee",
+                    "type": "u64"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "clearCustomHarvestFee",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "farm_id",
+                    "type": "BigUint"
                 }
             ],
             "outputs": []
@@ -683,6 +713,25 @@
                 },
                 {
                     "name": "farm_id",
+                    "type": "BigUint"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "forceUnstake",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "user",
+                    "type": "Address"
+                },
+                {
+                    "name": "farm_id",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "amount",
                     "type": "BigUint"
                 }
             ],
@@ -1284,6 +1333,21 @@
             ]
         },
         {
+            "name": "customHarvestFee",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "farm_id",
+                    "type": "BigUint"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "u64"
+                }
+            ]
+        },
+        {
             "name": "multifarmRewardTokens",
             "mutability": "readonly",
             "inputs": [
@@ -1758,7 +1822,7 @@
             ]
         }
     ],
-    "events": [],
+    "esdtAttributes": [],
     "hasCallback": false,
     "types": {
         "EsdtTokenPayment": {

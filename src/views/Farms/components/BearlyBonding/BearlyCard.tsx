@@ -98,7 +98,7 @@ const BearlyCard = ({ farm, multifarmRewardsLeft }: IProps) => {
       "farms2",
       "harvest",
       [new BigUIntValue(new BigNumber(farm.farm.farmId))],
-      500000000
+      450000000
     );
   };
   const { isSrbStaker } = useCanUsePool7();
@@ -200,7 +200,7 @@ const BearlyCard = ({ farm, multifarmRewardsLeft }: IProps) => {
                 <Flex key={token.identifier} w="full" justify={"space-around"}>
                   <Text fontSize={"2xl"} fontWeight="bold">
                     {formatBalance({
-                      balance: rewardInfo?.harvestableAmount,
+                      balance: rewardInfo?.harvestableAmount || 0,
                       decimals: token.decimals,
                     })}
                   </Text>

@@ -3,6 +3,7 @@ import {
   Center,
   createIcon,
   Flex,
+  Icon,
   IconProps,
   Image,
 } from "@chakra-ui/react";
@@ -793,6 +794,7 @@ export const EgldlogoIcon = ({ wp = "5px", ...props }: IEgldlogoIconProps) => {
   return (
     <Center p={wp} bg="white" borderRadius={"full"}>
       <EgldPureLogoIcon {...props} />
+      {/* <MultiversxIcon {...props} /> */}
     </Center>
   );
 };

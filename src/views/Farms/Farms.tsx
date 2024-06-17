@@ -1,4 +1,4 @@
-import { Box, Center, Flex, Link } from "@chakra-ui/react";
+import { Box, Center, Flex, HStack, Icon, Image, Link, Text } from "@chakra-ui/react";
 import auditImg from "assets/farms/audit.png";
 import MyContainer from "components/Container/Container";
 import Title from "components/Farms/Title/Title";
@@ -6,7 +6,6 @@ import Layout from "components/Layout/Layout";
 import MyTabs from "components/MyTabs/MyTabs";
 import withElronDapp from "hoc/withElronDapp";
 import WrapperPages from "hoc/WrapperPages";
-import Image from "next/image";
 import { useEffect } from "react";
 import { fetchStats } from "redux/slices/elrond/elrond-slice";
 import {
@@ -31,6 +30,9 @@ import FarmsList from "./components/FarmsList/FarmsList";
 import { useSelector } from "react-redux";
 import { selectFarms, selectUserFarms2Rewards } from "redux/slices/farms2/farms2-slice";
 import HarvestAll from "components/Farms/HarvestAll/HarvestAll";
+import NextImage from "next/image";
+import ActionButton from "components/ActionButton/ActionButton";
+import { GoPlusCircle } from "react-icons/go";
 
 const Farms = () => {
   const dispatch = useAppDispatch();
@@ -86,6 +88,15 @@ const Farms = () => {
             amount={totalValueLocked}
           />
           <HarvestAll harvestableFarms={userHarvestableFarms} type="farms"/>
+
+          <Link marginTop={"30px"} href="https://twitter.com/SuperRare_Bears/status/1747733437182542075?t=07ROu5JOLJC4VGynxn00Ug&s=19" isExternal>
+            <Image
+              src="https://i.ibb.co/3vqQJ8K/Quantum-X-Banner-01.jpg"
+              alt="Description of the image content"
+              style={{ borderRadius: '25px', width: '100%'}}
+              height={{sm: "50px", md: "130px"}}
+            />
+          </Link>
           <MyTabs
             tabListProps={{
               overflow: "auto",
@@ -125,7 +136,7 @@ const Farms = () => {
             isExternal
             href="https://bhero.com/pdf/audits/elrond/SuperRareBears_SmartContract_Audit_FarmsSmartContract_v.0.1.pdf"
           >
-            <Image src={auditImg} alt="audit" height={150} />
+            <NextImage src={auditImg} alt="audit" height={150} />
           </Link>
         </Center>
       </Box>

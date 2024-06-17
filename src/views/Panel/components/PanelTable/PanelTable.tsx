@@ -37,13 +37,13 @@ const PanelTable = () => {
 
   const currentEpoch = statsRes?.data?.epoch;
 
-  const isCreator = Boolean(
-    creators.find((creatorAddress) => creatorAddress === address)
-  );
+  // const isCreator = Boolean(
+  //   creators.find((creatorAddress) => creatorAddress === address)
+  // );
 
-  if (!isCreator && !isLoading) {
-    return <BecomeCreator />;
-  }
+  // if (!isCreator && !isLoading) {
+  //   return <BecomeCreator />;
+  // }
 
   return (
     <Box w="full" maxW={"1000px"} mx="auto" minH="70vh" overflow={"auto"}>

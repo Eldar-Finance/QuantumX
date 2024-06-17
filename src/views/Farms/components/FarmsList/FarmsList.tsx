@@ -1,4 +1,4 @@
-import { Box, Center, Flex, Icon, Switch, Tooltip, extendTheme } from "@chakra-ui/react";
+import { Box, Center, Flex, Icon, Link, Switch, Text, Tooltip, extendTheme } from "@chakra-ui/react";
 import FarmsCard from "components/Farms/FarmsCard/FarmsCard";
 import Search from "components/Farms/Search/Search";
 import { useEffect, useState } from "react";
@@ -16,6 +16,7 @@ import { InfoIcon, InfoOutlineIcon } from "@chakra-ui/icons";
 import AutoHarvestInfoModal from "views/Admin/Views/Farms/AutoHarvestInfoModal";
 import ActionButton from "components/ActionButton/ActionButton";
 import HarvestAll from "components/Farms/HarvestAll/HarvestAll";
+import { GoPlusCircle } from "react-icons/go";
 
 const FarmsList = () => {
   const userFarm2Info = useSelector(selectUserFarms2Info);
@@ -106,7 +107,7 @@ const FarmsList = () => {
   return (
     <>
       <Flex w="full" justifyContent={"flex-end"} mt={"1px"}>
-        {!isSmallDevice && <Flex w="150px" alignItems="center" justifyContent={"flex-start"} mt={{ xs: "30px", md: "30px" }} onClick={handleInfoModal}>
+        {!isSmallDevice && <Flex gap={3} alignItems="end" justifyContent={"flex-start"} mt={{ xs: "30px", md: "30px" }}>
           {/* <InfoIcon color="white" ml="3" boxSize={6} onClick={handleInfoModal}/> */}
           <ActionButton
               height={"30px"}
@@ -118,18 +119,52 @@ const FarmsList = () => {
           >
               <InfoIcon/> &nbsp;&nbsp; Auto-Harvest
           </ActionButton>
+
+          <Link
+            href="/panel"
+            w={"min-content"}  alignSelf={"center"}
+            mt={1}
+            height={"30px"}
+          >
+            <ActionButton px={5} py={1} gap={2} height={"30px"}>
+              <GoPlusCircle size={"20px"}/>
+              <Text>
+                Create new Farm
+              </Text>
+            </ActionButton>
+          </Link>
+
         </Flex>}
-        <Flex w="full" gap={isSmallDevice ? "15px" : "10px"} alignItems="center" justifyContent={isSmallDevice ? "flex-start" : "flex-end"} mt={{ xs: "30px", md: "30px" }} whiteSpace={"nowrap"}>
-          { address && (<Flex alignItems="center" gap="10px">
+
+        {isSmallDevice && <Flex gap={2} mr={4} alignItems="center" mt={{ xs: "30px", md: "30px" }}>
+          
+          <Link
+            href="/panel"
+            w={"min-content"}  alignSelf={"center"}
+            // mt={1}
+            // height={"30px"}
+          >
+            <ActionButton py={1} px={1} gap={1} height={"30px"}>
+              <GoPlusCircle size={"22px"}/>
+              <Text>
+                Create
+              </Text>
+            </ActionButton>
+          </Link>
+
+          <InfoIcon color="white" boxSize={5} onClick={handleInfoModal}/>
+
+        </Flex>}
+
+        <Flex w="full" gap={isSmallDevice ? "10px" : "10px"} alignItems="center" justifyContent={isSmallDevice ? "flex-start" : "flex-end"} mt={{ xs: "30px", md: "30px" }} whiteSpace={"nowrap"}>
+          { address && (<Flex alignItems="center" gap="5px">
               <Switch size="md" isChecked={isOpen} colorScheme="teal" onChange={handleToggle} />
               <Box>My Farms</Box>
             </Flex>
           )}
           <Search onChange={handleSearch}/>
         </Flex>
-        {isSmallDevice && <Flex w="20px" alignItems="center" justifyContent={"flex-end"} mt={{ xs: "30px", md: "30px" }} onClick={handleInfoModal}>
-          <InfoIcon color="white" ml="3" boxSize={6} onClick={handleInfoModal}/>
-        </Flex>}
+        
       </Flex>
       {modalOpen && 
         <AutoHarvestInfoModal onClose={() => setModalOpen(false)}/>

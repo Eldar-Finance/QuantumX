@@ -8,7 +8,7 @@ import { MetaHead } from "components/MetaHead/MetaHead";
 import store from "redux/store";
 import customTheme from "theme/chakra";
 
-import { Manrope } from "@next/font/google";
+import { Manrope } from "next/font/google";
 /* eslint-disable react/display-name */
 
 import dynamic from "next/dynamic";

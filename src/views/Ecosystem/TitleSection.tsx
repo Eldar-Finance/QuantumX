@@ -1,0 +1,28 @@
+import { Center, Heading , Image, Link, Text } from "@chakra-ui/react";
+
+const TitleSection = () => {
+  return (
+    <Center textAlign={"center"} flexDir="column">
+
+      <Heading as="h1" fontSize={"3xl"} mb="1">
+        MultiversX Ecosystem
+      </Heading>
+      
+      <Text fontSize={"md"} color="white.400" mb="10">
+        A quick view into the ecosystem&apos;s tokens (excluding EGLD).
+      </Text>
+
+      <Link marginTop={"30px"} href="https://twitter.com/SuperRare_Bears/status/1747733437182542075?t=07ROu5JOLJC4VGynxn00Ug&s=19" isExternal>
+            <Image
+              src="https://i.ibb.co/3vqQJ8K/Quantum-X-Banner-01.jpg"
+              alt="Description of the image content"
+              style={{ borderRadius: '25px', width: '100%'}}
+              height={{sm: "50px", md: "130px"}}
+            />
+          </Link>
+
+    </Center>
+  );
+};
+
+export default TitleSection;

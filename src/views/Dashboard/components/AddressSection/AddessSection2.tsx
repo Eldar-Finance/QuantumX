@@ -12,8 +12,9 @@ const AddressSection2 = () => {
     <Box
       display={"flex"}
       alignItems={"center"} // Align items vertically center
-      justifyContent={"center"}
+      justifyContent={"space-between"}
       fontSize={"sm"}
+      w={"fit-content"}
     >
       <Image
         src={`https://id.maiar.com/users/photos/profile/${address}`}

@@ -45,13 +45,20 @@ const TotalAmount = () => {
   const balanceDisplayed = formatPrecision(balance, 2);
   return (
     <Center
-      position={"relative"}
-      p="10px 10px 10px 10px"
-      bg="black.dark"
+      // position={"relative"}
+      // p={4}
+      // bg="black.dark"
       borderRadius="xl"
+      alignItems={"flex-end"}
+      display={"flex"}
+      justifyContent={"space-between"}
+      mr={1}
     >
-      <Text fontSize={"xl"} fontWeight="500">
-        {showBalance
+      <Text fontWeight="500">
+        Wallet
+      </Text>
+      <Text fontWeight="700">
+       ≈ {showBalance
           ? `$${balanceDisplayed}`
           : createStringWithCharAndLenght(
               "*",
