@@ -348,5 +348,19 @@ export const pairs = [
     lpprice: "0",
     token2lp: "WEGLD-bd4d79",
     token1lp: "BLOD-760741",
+  },
+  {
+    lpname: "SHARDWEGLDLP",
+    lpidentifier: "SHARDWEGLD-f43ba1",
+    lpprice: "0",
+    token2lp: "WEGLD-bd4d79",
+    token1lp: "SHARD-99a172",
+  },
+  {
+    lpname: "SAFEUSDCLP",
+    lpidentifier: "SAFEUSDC-b7b745",
+    lpprice: "0",
+    token2lp: "USDC-c76f1f",
+    token1lp: "SAFE-c0e534",
   }
 ];
