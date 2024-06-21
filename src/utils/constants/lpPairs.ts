@@ -336,6 +336,13 @@ export const pairs = [
     token1lp: "LROAR-de5ea5",
   },
   {
+    lpname: "ROARWEGLDLP",
+    lpidentifier: "ROARWEGLD-745847",
+    lpprice: "0",
+    token2lp: "WEGLD-bd4d79",
+    token1lp: "ROAR-e5185d",
+  },
+  {
     lpname: "BLODWEGLDLP",
     lpidentifier: "BLODWEGLD-c0d005",
     lpprice: "0",

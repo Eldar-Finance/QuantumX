@@ -31,6 +31,7 @@ export const fetchSmartSwap = async ([tokenA, amountA, tokenB, isSapwToLp]: [
   string,
   boolean
 ]) => {
+
   const { data } = await api.get<ISmartSwapData[]>(
     isSapwToLp
       ? "https://eldar.solutions/api/pathfinderlp2.php"
@@ -43,6 +44,7 @@ export const fetchSmartSwap = async ([tokenA, amountA, tokenB, isSapwToLp]: [
       },
     }
   );
+
   return data;
 };
 
