@@ -1,5 +1,4 @@
 import axiosEldron from "api/rest/axiosEldron";
-import axiosNewEl from "api/rest/axiosNewEl";
 import { formatBalance } from "utils/functions/formatBalance";
 import { IElrondToken } from "utils/types/elrond.interface";
 

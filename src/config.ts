@@ -71,7 +71,6 @@ export const contractAddress = {
   xoxnoLiquidSell:
     "erd1qqqqqqqqqqqqqpgq6wegs2xkypfpync8mn2sa5cmpqjlvrhwz5nqgepyg8"
 };
-export const gatewayAddress = "https://gateway.multiversx.com/";
 
 export const walletConnectBridge = "https://bridge.walletconnect.org";
 
@@ -86,8 +85,8 @@ export const network = {
   name: "Mainnet",
   egldLabel: "EGLD",
   walletAddress: "https://wallet.multiversx.com",
-  apiAddress: "https://api.multiversx.com",
-  gatewayAddress: "https://gateway.multiversx.com",
+  apiAddress: "https://multiversx-api.beaconx.app/public-mainnet-api",
+  gatewayAddress: "https://multiversx-api.beaconx.app/public-mainnet-gateway",
   explorerAddress: "http://explorer.multiversx.com",
   graphQlAddress: "https://exchange-graph.multiversx.com/graphql",
   apiTimeout: 10000,
