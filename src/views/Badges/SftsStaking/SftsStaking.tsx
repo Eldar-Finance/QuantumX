@@ -1,4 +1,4 @@
-import { Alert, AlertIcon, Box, Flex, Link, Text } from "@chakra-ui/react";
+import { Alert, AlertIcon, Box, Flex, Link, Text,Image } from "@chakra-ui/react";
 import BadgesCard from "./components/BadgesCard/BadgesCard";
 import TitlePage from "components/TitlePage/TitlePage";
 
@@ -37,6 +37,15 @@ const SftsStaking = () => {
             </Text>
           </Box>
         </Alert>
+
+        <Link marginTop={"30px"} href="https://burnify.app/nft-burn" isExternal>
+            <Image
+              src="https://i.ibb.co/PtCWZPs/NFT-Burning-Banner-Quantum.png"
+              alt="Description of the image content"
+              style={{ borderRadius: '25px', width: '100%'}}
+              height={{sm: "50px", md: "130px"}}
+            />
+          </Link>
       <BadgesCard />
     </Box>
   );
