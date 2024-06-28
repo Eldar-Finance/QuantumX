@@ -71,13 +71,13 @@ const BadgesCard = () => {
               whiteSpace="nowrap"
               color="white"
             >
-              Buy STFs in
+              Buy STFs or Burn them
             </Text>
             <Link
               isExternal
-              href="https://deadrare.io/collection/ELBADGES-2efe5c"
+              href="https://burnify.app/nft-burn"
             >
-              <NextImage src={img1} alt="deadrare" width={25} />
+              <NextImage src="https://burnify.app/static/media/Burnify_Logo_White.6101a362bf009f033832.png" alt="deadrare" width={35} />
             </Link>
             <Link
               isExternal
