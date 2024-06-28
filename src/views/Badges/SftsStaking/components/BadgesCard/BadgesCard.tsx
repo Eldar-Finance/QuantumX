@@ -78,7 +78,7 @@ const BadgesCard = () => {
               isExternal
               href="https://burnify.app/nft-burn"
             >
-              <Image src="https://burnify.app/static/media/n_D_Flame.a473b9131dfc7a3448ca.png" width={35} alt={""} />
+              <Image src="https://burnify.app/static/media/n_D_Flame.a473b9131dfc7a3448ca.png" width={25} alt={""} />
             </Link>
             <Link
               isExternal
