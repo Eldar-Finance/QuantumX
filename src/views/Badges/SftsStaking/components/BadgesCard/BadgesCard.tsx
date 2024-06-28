@@ -10,6 +10,7 @@ import {
   Link,
   Spinner,
   Text,
+  Image
 } from "@chakra-ui/react";
 import img3 from "assets/eldar-badges/frameit_logo.svg";
 import img1 from "assets/eldar-badges/logo1.png";
@@ -77,7 +78,7 @@ const BadgesCard = () => {
               isExternal
               href="https://burnify.app/nft-burn"
             >
-              <NextImage src="https://burnify.app/static/media/n_D_Flame.a473b9131dfc7a3448ca.png" width={35} alt={""} />
+              <Image src="https://burnify.app/static/media/n_D_Flame.a473b9131dfc7a3448ca.png" width={35} alt={""} />
             </Link>
             <Link
               isExternal
