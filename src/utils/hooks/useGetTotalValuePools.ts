@@ -82,7 +82,7 @@ const useGetTotalValuePools = () => {
           totalLockedonProteoFarms += formatBalanceDolar(
             {
               balance: farm.stakedBalance,
-              decimals: stakingToken.decimals,
+              decimals: stakingToken?.decimals || 18,
             },
             stakingToken?.price
           );
