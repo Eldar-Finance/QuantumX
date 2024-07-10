@@ -10,7 +10,7 @@ export interface IRoute {
   color?: string;
 }
 export const routeNames = {
-  home: "/",
+  home: "/home",
   dashboard: "/dashboard",
   swap: "/swap",
   farms: "/farms",

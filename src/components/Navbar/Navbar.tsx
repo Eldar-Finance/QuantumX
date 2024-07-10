@@ -176,7 +176,7 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
         {!isLargerThanLg && (
           <Flex w="full" alignItems="center" justifyContent="space-between" direction="column" gap="20px">
             <Flex w="full" alignItems="center" justifyContent="space-between">
-              <Link href="/">
+              <Link href="/home">
                 <NextImage src={logo} alt="QuantumX" width={120} />
               </Link>
               <Flex alignItems="center" justifyContent="flex-end" flex="1" gap={2}>
@@ -203,7 +203,7 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
         )}
         {isLargerThanLg && (
           <Flex w="full" alignItems="center" justifyContent="space-between" gap="10px">
-            <Link href={"/"}>
+            <Link href={"/home"}>
               <NextImage src={logo} alt="QuantumX" width={168} height={38}/>
             </Link>
             {/* {isLoggedIn && <Box ml="20px" />} */}
