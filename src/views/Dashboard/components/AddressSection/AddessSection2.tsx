@@ -7,7 +7,6 @@ import { useAppSelector } from "utils/hooks/redux";
 
 const AddressSection2 = () => {
   const address = useAppSelector(selectUserAddress);
-  const { hasCopied, onCopy } = useClipboard(address);
   return (
     <Box
       display={"flex"}
