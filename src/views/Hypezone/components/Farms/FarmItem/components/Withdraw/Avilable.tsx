@@ -50,7 +50,7 @@ const Avilable = ({ farm, userFarmRewards, disable }: IProps) => {
   if (farm.farm.rewardToken === toknesID.bear) {
     manualImage = bearImage;
   }
-  const showCompound = farm.compound;
+  const showCompound = farm.compound && false;
   
   return (
     <Box>
