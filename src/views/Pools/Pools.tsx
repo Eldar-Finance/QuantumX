@@ -192,9 +192,9 @@ const Pools = () => {
           />
           <HarvestAll harvestableFarms={userHarvestableFarms} type="pools"/>
 
-          <Link marginTop={"30px"} href="https://burnify.app/nft-burn" isExternal>
+          <Link marginTop={"30px"} href="https://valoro.fund?referral=cryptomurmura20" isExternal>
             <Image
-              src="https://i.ibb.co/PtCWZPs/NFT-Burning-Banner-Quantum.png"
+              src="https://i.postimg.cc/ZqVRrKv2/valoro-banner.png"
               alt="Description of the image content"
               style={{ borderRadius: '25px', width: '100%'}}
               height={{sm: "50px", md: "130px"}}
