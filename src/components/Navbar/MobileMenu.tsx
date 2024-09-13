@@ -1,6 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Sparkles, Leaf, Droplet, Compass, MoreHorizontal, Zap, Star, Moon, Layout } from "lucide-react";
+import { 
+  Repeat, // for Swap
+  Sprout, // for Farms
+  Droplets, // for Pools
+  Compass, // Keep Compass for Hub
+  MoreHorizontal,
+  Zap, // Keep Zap for Hypezone
+  Award, // for Rewards
+  Moon, // Keep Moon for MoonDustX
+  LayoutDashboard // for Quantum Panel
+} from "lucide-react";
 import { Box, Flex, Text, Button, VStack, Grid, Portal } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 
@@ -10,17 +20,17 @@ const MobileMenu = () => {
   const router = useRouter();
 
   const menuItems = [
-    { name: "Swap", icon: Sparkles, color: "linear-gradient(to bottom right, purple.500, pink.500)", route: "/swap" },
-    { name: "Farms", icon: Leaf, color: "linear-gradient(to bottom right, green.500, teal.500)", route: "/farms" },
-    { name: "Pools", icon: Droplet, color: "linear-gradient(to bottom right, blue.500, cyan.500)", route: "/pools" },
+    { name: "Swap", icon: Repeat, color: "linear-gradient(to bottom right, purple.500, pink.500)", route: "/swap" },
+    { name: "Farms", icon: Sprout, color: "linear-gradient(to bottom right, green.500, teal.500)", route: "/farms" },
+    { name: "Pools", icon: Droplets, color: "linear-gradient(to bottom right, blue.500, cyan.500)", route: "/pools" },
     { name: "Hub", icon: Compass, color: "linear-gradient(to bottom right, orange.500, yellow.500)", route: "/hub" },
   ];
 
   const moreItems = [
     { name: "Hypezone", icon: Zap, color: "linear-gradient(to bottom right, red.500, yellow.500)", route: "/hypezone" },
-    { name: "Rewards", icon: Star, color: "linear-gradient(to bottom right, indigo.500, purple.500)", route: "/qrewards" },
+    { name: "Rewards", icon: Award, color: "linear-gradient(to bottom right, indigo.500, purple.500)", route: "/qrewards" },
     { name: "MoonDustX", icon: Moon, color: "linear-gradient(to bottom right, gray.500, blue.500)", route: "/moondustx" },
-    { name: "Quantum Panel", icon: Layout, color: "linear-gradient(to bottom right, green.500, blue.500)", route: "/panel" },
+    { name: "Quantum Panel", icon: LayoutDashboard, color: "linear-gradient(to bottom right, green.500, blue.500)", route: "/panel" },
   ];
 
   useEffect(() => {
