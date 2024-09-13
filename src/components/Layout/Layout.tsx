@@ -3,6 +3,7 @@ import bg from "assets/home/bg.png";
 import ImageBg from "components/ImageBg/ImageBg";
 import Navbar from "components/Navbar/Navbar";
 import { PropsWithChildren } from "react";
+
 interface IProps extends BoxProps {}
 
 const Layout = ({ children, ...props }: PropsWithChildren<IProps>) => {
@@ -10,6 +11,7 @@ const Layout = ({ children, ...props }: PropsWithChildren<IProps>) => {
     <Box
       position={"relative"}
       pt={{ xs: "160px", md: "180px", "2xl": "248px" }}
+      pb={{ base: "96px", md: "0" }} // Add padding at the bottom for mobile
       h="full"
       minH="100vh"
       {...props}

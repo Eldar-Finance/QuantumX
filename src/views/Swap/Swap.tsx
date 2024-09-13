@@ -74,16 +74,9 @@ const Swap = () => {
         alignItems="center"
         pb="50px"
         width="100%"
-        mt={{sm: 8}}
+        mt={{ base: 8, md: 16, lg: 40 }} // Increased top margin for larger screens
+        style={{ zIndex: 1 }}
       >
-        <Link marginTop={{md: "-50px"}} marginBottom={"40px"} href="https://valoro.fund?referral=cryptomurmura20" isExternal>
-          <Image
-            src="https://i.postimg.cc/ZqVRrKv2/valoro-banner.png"
-            alt="Description of the image content"
-            style={{ borderRadius: '25px', width: '100%'}}
-            height={{sm: "50px", md: "130px"}}
-          />
-        </Link>
 
         <Flex
           direction={{ base: "column", md: "row" }}

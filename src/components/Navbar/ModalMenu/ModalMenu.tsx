@@ -1,12 +1,12 @@
-import { useOutsideClick } from "@chakra-ui/react";
+import { useOutsideClick, Grid, Button, Text } from "@chakra-ui/react";
 import Card from "components/Card/Card";
 import { motion } from "framer-motion";
 import { useRef } from "react";
+import { Zap, Star, Moon, Layout, Settings } from "lucide-react";
 import { selectUserAddress } from "redux/slices/userAcount/account-slice";
 import { admins } from "utils/constants/site";
 import { useAppSelector } from "utils/hooks/redux";
-import { routesArr } from "utils/routes";
-import MenuItem from "./MenuItem";
+import { useRouter } from 'next/router'; // Import useRouter hook
 
 interface IProps {
   onClose: () => void;
@@ -14,58 +14,70 @@ interface IProps {
 
 const ModalMenu = ({ onClose }: IProps) => {
   const address = useAppSelector(selectUserAddress);
+  const router = useRouter(); // Initialize useRouter hook
   const ref = useRef();
   useOutsideClick({
     ref: ref,
     handler: () => onClose(),
   });
 
+  const handleItemClick = (path: string, name: string) => {
+    router.push(path); // Use router.push to redirect
+    onClose();
+  };
+
+  const menuItems = [
+    { name: "Rewards", icon: Zap, color: "linear-gradient(to bottom right, indigo.500, purple.500)", route: "/qrewards" },
+    { name: "MoonDustX", icon: Moon, color: "linear-gradient(to bottom right, gray.500, blue.500)", route: "/moondustx" },
+    { name: "Quantum Panel", icon: Layout, color: "linear-gradient(to bottom right, green.500, blue.500)", route: "/panel" },
+    { name: "Admin", icon: Settings, color: "linear-gradient(to bottom right, pink.500, purple.500)", route: "/admin-panel", adminOnly: true },
+  ];
+
+  const visibleMenuItems = menuItems.filter(item => !item.adminOnly || admins.includes(address));
+
   return (
-    <Card
-      display={"flex"}
-      justifyContent="center"
-      alignItems={"center"}
-      as={motion.div}
-      w={{sm: "45%", md: "28%"}}
-      position={"absolute"}
-      right={0}
-      top={{sm: "120%", md: "130%"}}
-      zIndex={20} // @ts-ignore
-      initial={{ opacity: 0, y: 50, scale: 0.3 }}
-      animate={{ opacity: 1, y: 0, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.5, transition: { duration: 0.2 } }}
-      borderRadius="md"
-      color="white"
-      flexDir={"column"}
-      p={0}
-      overflow="hidden"
-      fontSize={{ xs: "inherit", md: "inherit" }}
-      boxShadow={"0px 0px 10px 0px rgba(0,0,0,0.8)"}
-
+    <motion.div
+      initial={{ opacity: 0, scale: 0.95 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.95 }}
+      transition={{ duration: 0.2 }}
+      style={{
+        position: 'absolute',
+        top: 'calc(100% + 8px)', // Add some space below the menu button
+        right: 0, // Align to the right edge of the menu button
+        zIndex: 2147483647, // Maximum safe integer value for z-index
+      }}
+      ref={ref}
     >
-      {routesArr.map((route) => {
-        if (!route.onModal && !route.onModalAndNavbar) {
-          return null;
-        }
-
-        if (route.forAdmins) {
-          if (!admins.includes(address)) {
-            return null;
-          }
-        }
-        return (
-          <MenuItem
-            key={route.path}
-            href={route.path}
-            name={route.name}
-            soon={route.soon}
-            isNew={route.isNew}
-            onlyMobile={route.onModalAndNavbar}
-            textColor={route.color}
-          />
-        );
-      })}
-    </Card>
+      <Card
+        w={{base: "90vw", sm: "45vw", md: "28vw"}}
+        mt={2}
+        zIndex={99999999}
+        // ... other Card props ...
+      >
+        <Grid templateColumns="repeat(2, 1fr)" gap={4} zIndex={99999999}>
+          {visibleMenuItems.map((item) => (
+            <Button
+              key={item.name}
+              onClick={() => handleItemClick(item.route, item.name)}
+              flexDirection="column"
+              alignItems="center"
+              justifyContent="center"
+              p={4}
+              borderRadius="xl"
+              bgGradient={item.color}
+              color="white"
+              height="auto"
+              _hover={{ transform: 'scale(1.05)' }}
+              _active={{ transform: 'scale(0.95)' }}
+            >
+              <item.icon size={32} style={{ marginBottom: '8px' }} />
+              <Text fontSize="sm" fontWeight="bold" textAlign="center">{item.name}</Text>
+            </Button>
+          ))}
+        </Grid>
+      </Card>
+    </motion.div>
   );
 };
 

@@ -7,10 +7,35 @@ import { useRouter } from "next/router";
 import { isActiveRoute, routesArr } from "utils/routes";
 import ModalMenu from "../ModalMenu/ModalMenu";
 import { ImageQxAshFire } from "views/Swap/Swap";
+import { useEffect, useState } from "react";
 
-const Menu = () => {
-  const { isOpen, onClose, onOpen, onToggle } = useDisclosure();
-  const location = useRouter().asPath;
+interface Menu1Props {
+  currentPath: string;
+}
+
+const Menu1: React.FC<Menu1Props> = ({ currentPath: initialPath }) => {
+  const [currentPath, setCurrentPath] = useState(initialPath);
+  const { isOpen, onClose, onOpen } = useDisclosure();
+  const router = useRouter();
+
+  useEffect(() => {
+    setCurrentPath(router.asPath);
+  }, [router.asPath]);
+
+  const isActive = (path) => {
+    if (!path || !currentPath) return false;
+    return isActiveRoute(path, currentPath);
+  };
+
+  const handleNavigation = (e, path) => {
+    e.preventDefault();
+    router.push(path, undefined, { shallow: true });
+  };
+
+  if (!routesArr || routesArr.length === 0) {
+    console.error("routesArr is undefined or empty");
+    return null;
+  }
 
   return (
     <Flex
@@ -24,14 +49,14 @@ const Menu = () => {
       fontSize={{ xs: "sm", md: "inherit" }}
     >
       {routesArr.map((route) => {
-        if (route.onModal || route.onModalAndNavbar) {
+        if (!route || route.onModal || route.onModalAndNavbar) {
           return null;
         }
-        const isActive = isActiveRoute(route.path, location);
+        const active = isActive(route.path);
         return (
-          <Link href={route.path} key={route.path}>
+          <Link href={route.path} key={route.path} onClick={(e) => handleNavigation(e, route.path)}>
             <Flex position="relative">
-              <Box color={isActive && "main"}>{route.name}</Box>
+              <Box color={active ? "main" : undefined}>{route.name}</Box>
 
               {route.isNew && (
                 <Box
@@ -66,16 +91,16 @@ const Menu = () => {
         alignItems="center"
       >
         {routesArr.map((route) => {
-          if (!route.onModalAndNavbar) {
+          if (!route || !route.onModalAndNavbar) {
             return null;
           }
 
-          const isActive = isActiveRoute(route.path, location);
+          const active = isActive(route.path);
 
           return (
             <Link href={route.path} key={route.path}>
               <Flex position={"relative"}>
-                <Box color={isActive && "main"}>{route.name}</Box>
+                <Box color={active ? "main" : undefined}>{route.name}</Box>
                 {route.isNew && <Badge text="NEW" />}{" "}
               </Flex>
             </Link>
@@ -85,10 +110,21 @@ const Menu = () => {
       <DotsIcon cursor={"pointer"} fontSize={"16px"} onClick={onOpen} />
 
       <AnimatePresence>
-        {isOpen && <ModalMenu onClose={onClose} />}
+        {isOpen && (
+          <Box
+            position="fixed"
+            top="0"
+            left="0"
+            right="0"
+            bottom="0"
+            zIndex={9999}
+          >
+            <ModalMenu key="modal-menu" onClose={onClose} />
+          </Box>
+        )}
       </AnimatePresence>
     </Flex>
   );
 };
 
-export default Menu;
+export default Menu1;
