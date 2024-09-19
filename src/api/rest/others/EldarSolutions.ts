@@ -1,6 +1,6 @@
 import axios from "axios";
 import { ISmartSwapData } from "utils/types/others.interface";
-const BASE_URL = "https://eldar.solutions/api";
+const BASE_URL = "https://api.web3ninja.eu/api";
 
 const api = axios.create({
   baseURL: BASE_URL,
@@ -34,7 +34,7 @@ export const fetchSmartSwap = async ([tokenA, amountA, tokenB, isSapwToLp]: [
 
   const { data } = await api.get<ISmartSwapData[]>(
     isSapwToLp
-      ? "https://eldar.solutions/api/pathfinderlp2.php"
+      ? "https://api.web3ninja.eu/api/pathfinderlp2.php"
       : `/pathfinder.php`,
     {
       params: {
