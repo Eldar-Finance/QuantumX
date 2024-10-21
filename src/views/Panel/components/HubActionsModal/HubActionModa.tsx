@@ -1,6 +1,5 @@
 import MyModal from "components/Modal/Modal";
 import { useState } from "react";
-import SwipeableViews from "react-swipeable-views";
 import { IHubCreatorInfo } from "utils/types/sc.interface";
 import AddNfts from "./AddNfts/AddNfts";
 import AllActions from "./AllActions/AllActions";

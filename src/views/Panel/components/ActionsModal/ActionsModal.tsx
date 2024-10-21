@@ -1,11 +1,11 @@
 import MyModal from "components/Modal/Modal";
 import { useCallback, useState } from "react";
-import SwipeableViews from "react-swipeable-views";
 import { IScPanelFarms } from "utils/types/sc.interface";
 import AllActions from "./AllActions/AllActions";
 import DepositView from "./DespositView/DespositView";
 import EditFeeView from "./EditFeeView/EditFeeView";
 import UnboundingView from "./UnboundingView/UnboundingView";
+import { Box, Divider, ModalHeader } from "@chakra-ui/react";
 
 interface IProps {
   isOpen: boolean;
@@ -23,12 +23,19 @@ const ActionsModal = ({ isOpen, onClose, farm }: IProps) => {
   }, []);
   return (
     <MyModal isOpen={isOpen} onClose={onClose} size={"4xl"}>
-      <SwipeableViews index={view} onChangeIndex={handleView}>
-        <AllActions farm={farm} handleView={handleView} />
-        <EditFeeView farm={farm.farm} onClose={handleCloseView} />
-        <UnboundingView farm={farm.farm} onClose={handleCloseView} />
-        <DepositView farm={farm.farm} onClose={handleCloseView} />
-      </SwipeableViews>
+      <ModalHeader>Farm Actions</ModalHeader>
+
+      {view > 0 && <Divider />}
+
+      <Box className="flex flex-col">
+        {view == 0 && <AllActions farm={farm} handleView={handleView} />}
+        
+        {view == 1 && <EditFeeView farm={farm.farm} onClose={handleCloseView} />}
+        
+        {view == 2 && <UnboundingView farm={farm.farm} onClose={handleCloseView} />}
+        
+        {view == 3 && <DepositView farm={farm.farm} onClose={handleCloseView} />}
+      </Box>
     </MyModal>
   );
 };
