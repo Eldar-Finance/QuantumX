@@ -5,6 +5,7 @@ import { IHubCreatorInfo } from "utils/types/sc.interface";
 import AddNfts from "./AddNfts/AddNfts";
 import AllActions from "./AllActions/AllActions";
 import RemoveNFTs from "./RemoveNFTs/RemoveNFTs";
+import { Box, Divider, Flex } from "@chakra-ui/react";
 
 interface IProps {
   isOpen: boolean;
@@ -20,14 +21,18 @@ const HubActionModal = ({ hubInfo, isOpen, onClose }: IProps) => {
 
   return (
     <MyModal isOpen={isOpen} onClose={onClose} size={"4xl"} isCentered={false}>
-      <SwipeableViews index={view} onChangeIndex={handleView}>
+      <Box className="flex flex-col">    
         <AllActions handleView={handleView} />
+        
+        {view > 0 && <Divider />}
+        
         <AddNfts
           onClose={() => handleView(0)}
           collection={hubInfo.collection}
           id={hubInfo.id}
           view={view}
         />
+        
         <RemoveNFTs
           collection={hubInfo.collection}
           id={hubInfo.id}
@@ -35,7 +40,7 @@ const HubActionModal = ({ hubInfo, isOpen, onClose }: IProps) => {
           nonces={hubInfo.nftsNonces}
           view={view}
         />
-      </SwipeableViews>
+      </Box>
     </MyModal>
   );
 };
