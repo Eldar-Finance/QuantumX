@@ -1,6 +1,8 @@
+import { TransactionOnNetwork, ITransactionOnNetwork, SmartContractTransactionsOutcomeParser } from "@multiversx/sdk-core/out";
 import { contractAddr } from "api/net.config";
 import { getInterface, provider } from "api/sc/sc";
 import axios from "axios";
+
 export const getReturnedDataOfscCall = async (workspace, txHash, funcName) => {
   const AbiRegistry = (await import("@multiversx/sdk-core/out")).AbiRegistry;
   const ResultsParser = (await import("@multiversx/sdk-core/out"))
@@ -10,7 +12,7 @@ export const getReturnedDataOfscCall = async (workspace, txHash, funcName) => {
   // const SmartContractAbi = (await import("@multiversx/sdk-core/out"))
   //   .SmartContractAbi;
 
-  const parser = new ResultsParser();
+  const parser = new SmartContractTransactionsOutcomeParser();
   const { address, abiUrl, implementsInterfaces } = getInterface(workspace);
   const response = await axios.get(abiUrl);
 
@@ -20,10 +22,10 @@ export const getReturnedDataOfscCall = async (workspace, txHash, funcName) => {
     address: address,
     abi: abiRegistry,
   });
-  const transactionOnNetwork = await provider.getTransaction(txHash); // add True as 2nd argument when new versions are installed
+  const transactionOnNetwork = await provider.getTransaction(txHash, true); // add True as 2nd argument when new versions are installed
   const endpointDefinition = contract.getEndpoint(funcName);
 
-  const res = parser.parseOutcome(transactionOnNetwork, endpointDefinition);
+  const res = parser.parseExecute({transactionOnNetwork: transactionOnNetwork as unknown as ITransactionOnNetwork, function: funcName});
 
   return res;
 };
