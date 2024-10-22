@@ -25,5 +25,14 @@ module.exports = (phase, defaultConfig) => {
     { ...nextConfig }
   );
 
+  config.webpack = (config, { isServer }) => {
+    config.resolve.fallback = {
+      fs: false, // This will prevent fs from being bundled for the client
+      // https://github.com/multiversx/mx-sdk-js-core/issues/520
+    }
+
+    return config;
+  };
+
   return config;
 };
