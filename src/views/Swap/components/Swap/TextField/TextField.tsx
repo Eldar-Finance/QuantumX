@@ -1,4 +1,4 @@
-import { Box, Flex, Input, InputProps, Spinner, Text } from "@chakra-ui/react";
+import { As, Box, Flex, Input, InputProps, Spinner, Text } from "@chakra-ui/react";
 import styled from "@emotion/styled";
 import ActionButton from "components/ActionButton/ActionButton";
 import { formatBalance, formatNumber, formatPrecision } from "utils/functions/formatBalance";

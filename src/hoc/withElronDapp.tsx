@@ -1,41 +1,42 @@
 /* eslint-disable react/display-name */
 
+import dynamic from "next/dynamic";
+
+import { EnvironmentsEnum } from "@multiversx/sdk-dapp/types";
 import { AxiosInterceptorContext } from "@multiversx/sdk-dapp/wrappers/AxiosInterceptorContext";
+import { Box, Flex } from "@chakra-ui/react";
 import { network } from "api/net.config";
 import { sampleAuthenticatedDomains } from "../config";
-import { TransactionsToastList, SignTransactionsModals, NotificationModal } from '@multiversx/sdk-dapp/UI';
-import { DappProvider } from '@multiversx/sdk-dapp/wrappers';
+import classNames from "classnames";
 
-// export const DappProvider = dynamic(
-//   async () => {
-//     return (await import('@multiversx/sdk-dapp/wrappers/DappProvider')).DappProvider;
-//   },
-//   { ssr: false }
-// );
+export const DappProvider = dynamic(
+  async () => {
+    return (await import('@multiversx/sdk-dapp/wrappers/DappProvider')).DappProvider;
+  },
+  { ssr: false }
+);
 
-// const SignTransactionsModals: any = dynamic(
-//   async () => {
-//     return (await import("@multiversx/sdk-dapp/UI/SignTransactionsModals"))
-//       .SignTransactionsModals;
-//   },
-//   { ssr: false }
-// );
-
-// const NotificationModal: any = dynamic(
-//   async () => {
-//     return (await import("@multiversx/sdk-dapp/UI/NotificationModal"))
-//       .NotificationModal;
-//   },
-//   { ssr: false }
-// );
-
-// const TransactionsToastList: any = dynamic(
-//   async () => {
-//     return (await import("@multiversx/sdk-dapp/UI/TransactionsToastList"))
-//       .TransactionsToastList;
-//   },
-//   { ssr: false }
-// );
+const SignTransactionsModals: any = dynamic(
+  async () => {
+    return (await import("@multiversx/sdk-dapp/UI/SignTransactionsModals"))
+      .SignTransactionsModals;
+  },
+  { ssr: false }
+);
+const NotificationModal: any = dynamic(
+  async () => {
+    return (await import("@multiversx/sdk-dapp/UI/NotificationModal"))
+      .NotificationModal;
+  },
+  { ssr: false }
+);
+const TransactionsToastList: any = dynamic(
+  async () => {
+    return (await import("@multiversx/sdk-dapp/UI/TransactionsToastList"))
+      .TransactionsToastList;
+  },
+  { ssr: false }
+);
 
 const withElronDapp = (Component) => (props) => {
   return ( 
@@ -43,7 +44,7 @@ const withElronDapp = (Component) => (props) => {
       <AxiosInterceptorContext.Provider>
         {/* @ts-ignore */}
         <AxiosInterceptorContext.Interceptor
-          authenticatedDomains={sampleAuthenticatedDomains}
+          authenticatedDomanis={sampleAuthenticatedDomains}
         >
           <DappProvider
             environment={network.id}

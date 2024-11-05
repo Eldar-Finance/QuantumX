@@ -8,6 +8,17 @@ const nextConfig = withPWA({
   images: {
     domains: ["media.elrond.com", "devnet-media.elrond.com", "i.postimg.cc"],
   },
+  distDir: 'build',
+  transpilePackages: ['@multiversx/sdk-dapp'],
+  webpack: (config) => {
+    config.resolve.fallback = { fs: false };
+    config.externals.push('pino-pretty', 'lokijs', 'encoding', {
+      bufferutil: 'bufferutil',
+      'utf-8-validate': 'utf-8-validate'
+    });
+
+    return config;
+  }
 });
 
 const withTM = require("next-transpile-modules")(["@multiversx/sdk-dapp"]);
@@ -25,14 +36,22 @@ module.exports = (phase, defaultConfig) => {
     { ...nextConfig }
   );
 
-  config.webpack = (config, { isServer }) => {
-    config.resolve.fallback = {
-      fs: false, // This will prevent fs from being bundled for the client
-      // https://github.com/multiversx/mx-sdk-js-core/issues/520
-    }
-
-    return config;
-  };
-
   return config;
 };
+
+// /** @type {import('next').NextConfig} */
+// const nextConfig = {
+//   distDir: 'build',
+//   transpilePackages: ['@multiversx/sdk-dapp'],
+//   webpack: (config) => {
+//     config.resolve.fallback = { fs: false };
+//     config.externals.push('pino-pretty', 'lokijs', 'encoding', {
+//       bufferutil: 'bufferutil',
+//       'utf-8-validate': 'utf-8-validate'
+//     });
+
+//     return config;
+//   }
+// };
+
+// module.exports = nextConfig;
