@@ -11,11 +11,13 @@ import {
   Moon, // Keep Moon for MoonDustX
   LayoutDashboard // for Quantum Panel
 } from "lucide-react";
-import { Box, Flex, Text, Button, VStack, Grid, Portal } from "@chakra-ui/react";
+import { Box, Flex, Text, Button, VStack, Grid, Portal, Modal, ModalOverlay, ModalContent } from "@chakra-ui/react";
 import { useRouter } from "next/router";
+import BuyTab from "views/Dashboard/components/Dashtabs/BuyTab/BuyTab"; // Import BuyTab
 
 const MobileMenu = () => {
   const [isMoreOpen, setIsMoreOpen] = useState(false);
+  const [isBuyCryptoModalOpen, setIsBuyCryptoModalOpen] = useState(false);
   const [activeItem, setActiveItem] = useState("");
   const router = useRouter();
 
@@ -31,6 +33,7 @@ const MobileMenu = () => {
     { name: "Rewards", icon: Award, color: "linear-gradient(to bottom right, indigo.500, purple.500)", route: "/qrewards" },
     { name: "MoonDustX", icon: Moon, color: "linear-gradient(to bottom right, gray.500, blue.500)", route: "/moondustx" },
     { name: "Quantum Panel", icon: LayoutDashboard, color: "linear-gradient(to bottom right, green.500, blue.500)", route: "/panel" },
+    { name: "Buy Crypto", icon: Zap, color: "linear-gradient(to bottom right, blue.500, green.500)", route: "" },
   ];
 
   useEffect(() => {
@@ -189,7 +192,13 @@ const MobileMenu = () => {
                   {moreItems.map((item) => (
                     <Button
                       key={item.name}
-                      onClick={() => handleItemClick(item.route, item.name)}
+                      onClick={() => {
+                        if (item.name === "Buy Crypto") {
+                          setIsBuyCryptoModalOpen(true);
+                        } else {
+                          handleItemClick(item.route, item.name);
+                        }
+                      }}
                       flexDirection="column"
                       alignItems="center"
                       justifyContent="center"
@@ -211,6 +220,13 @@ const MobileMenu = () => {
           )}
         </AnimatePresence>
       </Box>
+
+      <Modal isOpen={isBuyCryptoModalOpen} onClose={() => setIsBuyCryptoModalOpen(false)} isCentered>
+        <ModalOverlay />
+        <ModalContent zIndex={2000}>
+          <BuyTab />
+        </ModalContent>
+      </Modal>
     </Portal>
   );
 };

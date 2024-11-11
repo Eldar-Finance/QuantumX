@@ -61,6 +61,7 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
   const [isBuyCryptoModalOpen, setIsBuyCryptoModalOpen] = useState(false);
   const [isBridgeModalOpen, setIsBridgeModalOpen] = useState(false);
   const [isMobile] = useMediaQuery(`(max-width: ${breakpoints.md})`);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const { onClose, onOpen, isOpen } = useDisclosure();
 
@@ -141,9 +142,6 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
               width="100%"
             >
               <GridItem>
-                <Button pt={1} leftIcon={<Icon as={AiTwotoneEuroCircle} mb={1} boxSize={"20px"}/>} variant={"ghost"} onClick={() => setIsBuyCryptoModalOpen(true)} width="100%">Buy Crypto</Button>
-              </GridItem>
-              <GridItem>
                 <Button pt={1} leftIcon={<Icon as={PiBridgeThin} mb={1} boxSize={"20px"}/>} variant={"ghost"} onClick={() => setIsBridgeModalOpen(true)} width="100%">Bridge</Button>
               </GridItem>
               <GridItem>
@@ -156,7 +154,7 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
 
             <Modal isOpen={isBuyCryptoModalOpen} onClose={() => setIsBuyCryptoModalOpen(false)} isCentered>
               <ModalOverlay />
-              <ModalContent>
+              <ModalContent zIndex={2000}>
                 <BuyTab />
               </ModalContent>
             </Modal>
