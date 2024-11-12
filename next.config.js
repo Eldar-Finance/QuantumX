@@ -6,16 +6,28 @@ const withPWA = require("next-pwa")({
 
 const nextConfig = withPWA({
   images: {
-    domains: ["media.elrond.com", "devnet-media.elrond.com", "i.postimg.cc"],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'media.elrond.com',
+        pathname: '**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'devnet-media.elrond.com',
+        pathname: '**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'i.postimg.cc',
+        pathname: '**',
+      },
+    ]
   },
   distDir: 'build',
   transpilePackages: ['@multiversx/sdk-dapp'],
   webpack: (config) => {
     config.resolve.fallback = { fs: false };
-    config.externals.push('pino-pretty', 'lokijs', 'encoding', {
-      bufferutil: 'bufferutil',
-      'utf-8-validate': 'utf-8-validate'
-    });
 
     return config;
   }
@@ -38,20 +50,3 @@ module.exports = (phase, defaultConfig) => {
 
   return config;
 };
-
-// /** @type {import('next').NextConfig} */
-// const nextConfig = {
-//   distDir: 'build',
-//   transpilePackages: ['@multiversx/sdk-dapp'],
-//   webpack: (config) => {
-//     config.resolve.fallback = { fs: false };
-//     config.externals.push('pino-pretty', 'lokijs', 'encoding', {
-//       bufferutil: 'bufferutil',
-//       'utf-8-validate': 'utf-8-validate'
-//     });
-
-//     return config;
-//   }
-// };
-
-// module.exports = nextConfig;
