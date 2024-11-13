@@ -8,7 +8,7 @@ export interface IRoute {
   forAdmins?: boolean;
   isNew?: boolean;
   color?: string;
-}
+} 
 export const routeNames = {
   home: "/home",
   dashboard: "/dashboard",
@@ -16,7 +16,7 @@ export const routeNames = {
   farms: "/farms",
   Pools: "/pools",
   hub: "/hub",
-  dca: "/dca",
+  dca: "/dca", 
   rewards: "/qrewards",
   heroes: "/qheroes",
   admin: "/admin-panel",
