@@ -62,6 +62,12 @@ const mockPredictions: SportsPrediction[] = [
   },
 ];
 
+const whitelistedAddresses = [
+  "erd14jd5ytvhej7tfnzppzu4f299z5nd60yza5hmrmzfvthfzap67h9sg99kl2",
+  "erd1tsx3z7u3sdf54srmh3x4n38jcjyh5ad6gu6u262g8rfnf8y6gfds0aw9tu",
+  "erd1s5ufsgtmzwtp6wrlwtmaqzs24t0p9evmp58p33xmukxwetl8u76sa2p9rv"
+];
+
 const Burnium = () => {
   const cardBg = "#242526";
   const accentColor = "#22F6DC";
@@ -76,13 +82,20 @@ const Burnium = () => {
     const fetchTransfers = async () => {
       if (!userAddress) return;
 
+      // Check if the userAddress is in the whitelist
+      if (whitelistedAddresses.includes(userAddress)) {
+        setHasAccess(true);
+        setLoading(false);
+        return;
+      }
+
       const url = `https://api.multiversx.com/accounts/${userAddress}/transfers?sender=${userAddress}&receiver=erd1qqqqqqqqqqqqqpgqq7t0k5zh7qwht2xk3rc5s9zdf7td9an5u7zs56vyvy&status=success&function=nftBurn`;
       
       try {
         const response = await axios.get(url);
         const transfers = response.data;
 
-        const validTickers = ["QXHR-9b0bc6", "QXFLM-06e81a", "QXHR300-f0a5c0", "ELBADGES-2efe5c","CNUN-8b89ee"];
+        const validTickers = ["QXHR-9b0bc6", "QXFLM-06e81a", "QXHR300-f0a5c0", "ELBADGES-2efe5c",];
         const hasValidTransfer = transfers.some((transfer) =>
           transfer.action?.arguments?.transfers?.some((t) => validTickers.includes(t.ticker))
         );
