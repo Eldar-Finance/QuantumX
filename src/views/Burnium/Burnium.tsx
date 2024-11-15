@@ -116,7 +116,8 @@ const Burnium = () => {
       const { data, error } = await supabase
         .from('telegram_posts')
         .select('*')
-        .order('timestamp', { ascending: false });
+        .order('timestamp', { ascending: false })
+        .limit(60);
 
       if (error) {
         console.error("Error fetching posts from Supabase:", error);
