@@ -131,7 +131,7 @@ const Burnium = () => {
     const interval = setInterval(fetchPosts, 5000);
 
     return () => clearInterval(interval);
-  }, [userAddress, latestPosts]);
+  }, [userAddress, latestPosts]); 
 
   return (
     <Layout>
