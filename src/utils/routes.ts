@@ -26,7 +26,7 @@ export const routeNames = {
   moondustx: "/moondustx",
   qtags: "/qtags",
   marketplace: "/marketplace",
-  //ecosystem:"/ecosystem",
+  burnium:"/burnium",
 };
 
 export const routes: {
@@ -41,7 +41,7 @@ export const routes: {
   admin: IRoute;
   panel: IRoute;
   hypezone: IRoute;
-  //ecosystem: IRoute;
+  burnium: IRoute;
   // converter: IRoute;
   moondustx: IRoute;
   // marketplace: IRoute;
@@ -83,11 +83,11 @@ export const routes: {
     name: "QuantumX Rewards",
     onModal: true,
   },
-//ecosystem: {
-  //   path: routeNames.ecosystem,
-    // name: "Ecosystem",
+burnium: {
+    path: routeNames.burnium,
+     name: "Burnium",
      //onModalAndNavbar: true,
-  //},
+  },
   // converter: {
   //   path: routeNames.converter,
   //   name: "Raretopia",
