@@ -24,6 +24,10 @@ import {
 import { Calendar, TrendingUp, MessageCircle } from "lucide-react";
 import { useAppSelector } from "utils/hooks/redux";
 import { selectUserAddress } from "redux/slices/userAcount/account-slice";
+import { motion } from 'framer-motion';
+import { Box as ChakraBox } from "@chakra-ui/react";
+
+const MotionBox = motion(ChakraBox);
 
 // Supabase credentials
 const supabaseUrl = "https://zsjkpqtjcykqpzycnmhn.supabase.co";
@@ -351,7 +355,7 @@ const Burnium = () => {
                           Latest Scans
                         </Text>
                         {latestPosts.map((post, index) => (
-                          <Box
+                          <MotionBox
                             key={post.id}
                             bg="whiteAlpha.50"
                             p={6}
@@ -359,6 +363,9 @@ const Burnium = () => {
                             w="full"
                             _hover={{ borderColor: "whiteAlpha.200" }}
                             position="relative"
+                            initial={{ opacity: 0, y: -20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.5 }}
                           >
                             {index === 0 && (
                               <Box
@@ -388,7 +395,7 @@ const Burnium = () => {
                             <Text fontSize="xs" color="gray.500" mt={2}>
                               {post.timestamp}
                             </Text>
-                          </Box>
+                          </MotionBox>
                         ))}
                       </VStack>
                     </CardBody>
