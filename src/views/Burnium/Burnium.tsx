@@ -144,6 +144,55 @@ const Burnium = () => {
                 >
                   You need to connect your wallet and burn one of the specified collections to access this content.
                 </Text>
+                
+                <Box textAlign="center" w="full" bg="#1A202C" p={6} borderRadius="lg" mb={6}>
+                  <Text fontSize="2xl" fontWeight="bold" color="white" mb={4}>
+                    Unlock Exclusive Features!
+                  </Text>
+                  <Flex wrap="wrap" justify="space-between" spacing={4}>
+                    <Box bg="#2D3748" p={4} borderRadius="md" w={{ base: "100%", md: "30%" }} mb={4}>
+                      <Text color="gray.200" fontWeight="bold">
+                        🕵️‍♂️ Insights from the Investor
+                      </Text>
+                      <Text color="gray.300">
+                        Gain insights from the investor who discovered $PNUT at a 27k market cap.
+                      </Text>
+                    </Box>
+                    <Box bg="#2D3748" p={4} borderRadius="md" w={{ base: "100%", md: "30%" }} mb={4}>
+                      <Text color="gray.200" fontWeight="bold">
+                        📸 Latest Scan Pictures
+                      </Text>
+                      <Text color="gray.300">
+                        Access the latest scan pictures on Solana and Ethereum, curated by the expert team who found PNUT.
+                      </Text>
+                    </Box>
+                    <Box bg="#2D3748" p={4} borderRadius="md" w={{ base: "100%", md: "30%" }} mb={4}>
+                      <Text color="gray.200" fontWeight="bold">
+                        ⚡ Fastest Multi-Chain Trading Bot
+                      </Text>
+                      <Text color="gray.300">
+                        Utilize the fastest multi-chain trading bot that automates buying and selling for these picks.
+                      </Text>
+                    </Box>
+                    <Box bg="#2D3748" p={4} borderRadius="md" w={{ base: "100%", md: "30%" }} mb={4}>
+                      <Text color="gray.200" fontWeight="bold">
+                        📈 Sports Predictions Coming Soon!
+                      </Text>
+                      <Text color="gray.300">
+                        Stay tuned for our upcoming sports predictions feature!
+                      </Text>
+                    </Box>
+                    <Box bg="#2D3748" p={4} borderRadius="md" w={{ base: "100%", md: "30%" }} mb={4}>
+                      <Text color="gray.200" fontWeight="bold">
+                        🔥 More Burns, More Access!
+                      </Text>
+                      <Text color="gray.300">
+                        The more you burn, the more access you will have to upcoming features!
+                      </Text>
+                    </Box>
+                  </Flex>
+                </Box>
+
                 <Flex justifyContent="space-between" mt={4} w="full">
                   {/* Box 1 */}
                   <Box textAlign="center" w="24%" bg="#242526" p={4} borderRadius="lg">
