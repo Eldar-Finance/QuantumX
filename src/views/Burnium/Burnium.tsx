@@ -149,7 +149,7 @@ const Burnium = () => {
                   <Text fontSize="2xl" fontWeight="bold" color="white" mb={4}>
                     Unlock Exclusive Features!
                   </Text>
-                  <Flex wrap="wrap" justify="space-between" spacing={4}>
+                  <Flex wrap="wrap" justify="space-between" gap={4}>
                     <Box bg="#2D3748" p={4} borderRadius="md" w={{ base: "100%", md: "30%" }} mb={4}>
                       <Text color="gray.200" fontWeight="bold">
                         🕵️‍♂️ Insights from the Investor
