@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { createClient } from '@supabase/supabase-js';
 import axios from 'axios';
 import MyContainer from "components/Container/Container";
 import Layout from "components/Layout/Layout";
@@ -28,21 +27,6 @@ import { motion } from 'framer-motion';
 import { Box as ChakraBox } from "@chakra-ui/react";
 
 const MotionBox = motion(ChakraBox);
-
-// Supabase credentials
-const supabaseUrl = "https://zsjkpqtjcykqpzycnmhn.supabase.co";
-const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpzamtwcXRqY3lrcXB6eWNubWhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzEyMjQ3MzQsImV4cCI6MjA0NjgwMDczNH0.5wacYcIxR2WQU5EKbycgOnK3SkiVFnyj1Y79s9DPwOQ";
-const supabase = createClient(supabaseUrl, supabaseKey);
-
-interface SportsPrediction {
-  id: number;
-  team1: string;
-  team2: string;
-  datetime: string;
-  prediction: string;
-}
-
-
 
 const whitelistedAddresses = [
   "erd14jd5ytvhej7tfnzppzu4f299z5nd60yza5hmrmzfvthfzap67h9sg99kl2",
@@ -92,54 +76,11 @@ const Burnium = () => {
     };
 
     const fetchPosts = async () => {
-      const { data, error } = await supabase
-        .from('telegram_posts')
-        .select('*')
-        .order('timestamp', { ascending: false })
-        .limit(60);
-
-      if (error) {
-        console.error("Error fetching posts from Supabase:", error);
-      } else {
-        setLatestPosts(data);
-      }
-    };
-
-    const fetchPredictions = async () => {
-      // const today = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
-      // console.log("Today's date:", today); // Debugging line
-
-      // const { data, error } = await supabase
-      //   .from('predictions')
-      //   .select('*')
-      //   .eq('date', today) // Ensure 'date' is in the correct format
-      //   .order('datetime', { ascending: true });
-
-      // if (error) {
-      //   console.error("Error fetching predictions from Supabase:", error);
-      // } else {
-      //   console.log("Fetched data:", data); // Debugging line
-      //   setSportsPredictions(data);
-      // }
-    };
-
-    const fetchLatestGems = async () => {
-      // const { data, error } = await supabase
-      //   .from('gems')
-      //   .select('*')
-      //   .order('created_at', { ascending: false });
-
-      // if (error) {
-      //   console.error("Error fetching latest gems from Supabase:", error);
-      // } else {
-      //   console.log("Fetched gems data:", data); // Debugging line
-      //   setLatestGems(data);
-      // }
+      // Removed Supabase fetch logic
     };
 
     fetchTransfers();
     fetchPosts();
-    fetchPredictions(); // Fetch predictions from Supabase
     const interval = setInterval(fetchPosts, 5000);
 
     return () => clearInterval(interval);
@@ -450,99 +391,116 @@ const Burnium = () => {
                             </Text>
                           </MotionBox>
                         ))}
+                        {/* New Button for Telegram Group */}
+                        <Link
+                          href="https://t.me/+r8n5K7TP8RtkNWM0"
+                          isExternal
+                          bg={accentColor}
+                          color="black"
+                          px={6}
+                          py={3}
+                          borderRadius="lg"
+                          _hover={{ bg: "cyan.400" }}
+                          display="flex"
+                          alignItems="center"
+                          justifyContent="center"
+                          w="full"
+                        >
+                          Join Telegram for Gems
+                        </Link>
                       </VStack>
                     </CardBody>
                   </Card>
 
                   {/* Sports Predictions */}
-<Card bg={cardBg} borderRadius="lg">
-  <CardBody>
-    <Flex align="center" gap={2} mb={6}>
-      <Icon as={Calendar} color={accentColor} boxSize={6} />
-      <Heading size="md" color={accentColor}>Sports Predictions</Heading>
-    </Flex>
-    <VStack
-      maxH="500px"
-      overflowY="auto"
-      spacing={4}
-      sx={{
-        "&::-webkit-scrollbar": {
-          width: "4px",
-        },
-        "&::-webkit-scrollbar-track": {
-          background: "transparent",
-        },
-        "&::-webkit-scrollbar-thumb": {
-          background: accentColor,
-          borderRadius: "full",
-        },
-      }}
-    >
-      {sportsPredictions.length > 0 ? (
-        sportsPredictions.map((prediction) => (
-          <Box
-            key={prediction.id}
-            bg="whiteAlpha.50"
-            p={6}
-            borderRadius="lg"
-            w="full"
-            transition="all 0.2s"
-            _hover={{ bg: 'whiteAlpha.100', transform: 'translateY(-2px)' }}
-          >
-            <Flex justify="space-between" align="center" mb={3}>
-              <Text fontSize="lg" fontWeight="bold" color="gray.200">
-                {prediction.team1} 
-                <Text as="span" color="gray.500" mx={2}>vs</Text> 
-                {prediction.team2}
-              </Text>
-              <Box
-                px={3}
-                py={1}
-                borderRadius="full"
-                bg={prediction.conviction >= 8 ? 'green.400/20' : prediction.conviction >= 6 ? 'yellow.400/20' : 'red.400/20'}
-                color={prediction.conviction >= 8 ? 'green.300' : prediction.conviction >= 6 ? 'yellow.300' : 'red.300'}
-              >
-                {prediction.conviction}/10
-              </Box>
-            </Flex>
-            
-            <Flex align="center" gap={2} mb={3}>
-              <Box
-                px={3}
-                py={1}
-                borderRadius="full"
-                bg={`${accentColor}20`}
-                color={accentColor}
-                fontSize="sm"
-                fontWeight="semibold"
-              >
-                {prediction.prediction}
-              </Box>
-            </Flex>
+                  <Card bg={cardBg} borderRadius="lg">
+                    <CardBody>
+                      <Flex align="center" gap={2} mb={6}>
+                        <Icon as={Calendar} color={accentColor} boxSize={6} />
+                        <Heading size="md" color={accentColor}>Sports Predictions</Heading>
+                      </Flex>
+                      <VStack
+                        maxH="500px"
+                        overflowY="auto"
+                        spacing={4}
+                        sx={{
+                          "&::-webkit-scrollbar": {
+                            width: "4px",
+                          },
+                          "&::-webkit-scrollbar-track": {
+                            background: "transparent",
+                          },
+                          "&::-webkit-scrollbar-thumb": {
+                            background: accentColor,
+                            borderRadius: "full",
+                          },
+                        }}
+                      >
+                        {sportsPredictions.length > 0 ? (
+                          sportsPredictions.map((prediction) => (
+                            <Box
+                              key={prediction.id}
+                              bg="whiteAlpha.50"
+                              p={6}
+                              borderRadius="lg"
+                              w="full"
+                              transition="all 0.2s"
+                              _hover={{ bg: 'whiteAlpha.100', transform: 'translateY(-2px)' }}
+                            >
+                              <Flex justify="space-between" align="center" mb={3}>
+                                <Text fontSize="lg" fontWeight="bold" color="gray.200">
+                                  {prediction.team1} 
+                                  <Text as="span" color="gray.500" mx={2}>vs</Text> 
+                                  {prediction.team2}
+                                </Text>
+                                <Box
+                                  px={3}
+                                  py={1}
+                                  borderRadius="full"
+                                  bg={prediction.conviction >= 8 ? 'green.400/20' : prediction.conviction >= 6 ? 'yellow.400/20' : 'red.400/20'}
+                                  color={prediction.conviction >= 8 ? 'green.300' : prediction.conviction >= 6 ? 'yellow.300' : 'red.300'}
+                                >
+                                  {prediction.conviction}/10
+                                </Box>
+                              </Flex>
+                              
+                              <Flex align="center" gap={2} mb={3}>
+                                <Box
+                                  px={3}
+                                  py={1}
+                                  borderRadius="full"
+                                  bg={`${accentColor}20`}
+                                  color={accentColor}
+                                  fontSize="sm"
+                                  fontWeight="semibold"
+                                >
+                                  {prediction.prediction}
+                                </Box>
+                              </Flex>
 
-            <Flex align="center" gap={2} color="gray.500" fontSize="sm">
-              <Calendar size={14} />
-              <Text>
-                {new Date(prediction.datetime).toLocaleString('el-GR', {
-                  weekday: 'short',
-                  month: 'short',
-                  day: 'numeric',
-                  hour: '2-digit',
-                  minute: '2-digit',
-                  hour12: false
-                })}
-              </Text>
-            </Flex>
-          </Box>
-        ))
-      ) : (
-        <Text fontWeight="bold" color="red.500">
-          No sports predictions available for today.
-        </Text>
-      )}
-    </VStack>
-  </CardBody>
-</Card>
+                              <Flex align="center" gap={2} color="gray.500" fontSize="sm">
+                                <Calendar size={14} />
+                                <Text>
+                                  {new Date(prediction.datetime).toLocaleString('el-GR', {
+                                    weekday: 'short',
+                                    month: 'short',
+                                    day: 'numeric',
+                                    hour: '2-digit',
+                                    minute: '2-digit',
+                                    hour12: false
+                                  })}
+                                </Text>
+                              </Flex>
+                            </Box>
+                          ))
+                        ) : (
+                          <Text fontWeight="bold" color="red.500">
+                            No sports predictions available for today.
+                          </Text>
+                        )}
+                      </VStack>
+                    </CardBody>
+                  </Card>
                 </Grid>
               </>
             ) : (
