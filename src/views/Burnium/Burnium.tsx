@@ -106,18 +106,35 @@ const Burnium = () => {
     };
 
     const fetchPredictions = async () => {
-      const today = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
-      const { data, error } = await supabase
-        .from('predictions')
-        .select('*')
-        .eq('date', today) // Assuming 'date' is the column name for the date in the database
-        .order('datetime', { ascending: true });
+      // const today = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
+      // console.log("Today's date:", today); // Debugging line
 
-      if (error) {
-        console.error("Error fetching predictions from Supabase:", error);
-      } else {
-        setSportsPredictions(data);
-      }
+      // const { data, error } = await supabase
+      //   .from('predictions')
+      //   .select('*')
+      //   .eq('date', today) // Ensure 'date' is in the correct format
+      //   .order('datetime', { ascending: true });
+
+      // if (error) {
+      //   console.error("Error fetching predictions from Supabase:", error);
+      // } else {
+      //   console.log("Fetched data:", data); // Debugging line
+      //   setSportsPredictions(data);
+      // }
+    };
+
+    const fetchLatestGems = async () => {
+      // const { data, error } = await supabase
+      //   .from('gems')
+      //   .select('*')
+      //   .order('created_at', { ascending: false });
+
+      // if (error) {
+      //   console.error("Error fetching latest gems from Supabase:", error);
+      // } else {
+      //   console.log("Fetched gems data:", data); // Debugging line
+      //   setLatestGems(data);
+      // }
     };
 
     fetchTransfers();
@@ -506,12 +523,13 @@ const Burnium = () => {
             <Flex align="center" gap={2} color="gray.500" fontSize="sm">
               <Calendar size={14} />
               <Text>
-                {new Date(prediction.datetime).toLocaleString('en-GB', { // Use 'en-GB' for 24-hour format
+                {new Date(prediction.datetime).toLocaleString('el-GR', {
                   weekday: 'short',
                   month: 'short',
                   day: 'numeric',
                   hour: '2-digit',
-                  minute: '2-digit'
+                  minute: '2-digit',
+                  hour12: false
                 })}
               </Text>
             </Flex>
