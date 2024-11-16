@@ -42,29 +42,7 @@ interface SportsPrediction {
   prediction: string;
 }
 
-const mockPredictions: SportsPrediction[] = [
-  {
-    id: 1,
-    team1: "Manchester United",
-    team2: "Arsenal",
-    datetime: "2024-03-21 20:00",
-    prediction: "2-1",
-  },
-  {
-    id: 2,
-    team1: "Real Madrid",
-    team2: "Barcelona",
-    datetime: "2024-03-22 21:00",
-    prediction: "3-2",
-  },
-  {
-    id: 3,
-    team1: "Bayern Munich",
-    team2: "Dortmund",
-    datetime: "2024-03-23 19:30",
-    prediction: "2-2",
-  },
-];
+
 
 const whitelistedAddresses = [
   "erd14jd5ytvhej7tfnzppzu4f299z5nd60yza5hmrmzfvthfzap67h9sg99kl2",
@@ -81,6 +59,7 @@ const Burnium = () => {
   const [latestPosts, setLatestPosts] = useState([]);
   const [loadingPosts, setLoadingPosts] = useState(true);
   const [newPostsAvailable, setNewPostsAvailable] = useState(false);
+  const [sportsPredictions, setSportsPredictions] = useState([]);
 
   useEffect(() => {
     const fetchTransfers = async () => {
@@ -126,8 +105,24 @@ const Burnium = () => {
       }
     };
 
+    const fetchPredictions = async () => {
+      const today = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
+      const { data, error } = await supabase
+        .from('predictions')
+        .select('*')
+        .eq('date', today) // Assuming 'date' is the column name for the date in the database
+        .order('datetime', { ascending: true });
+
+      if (error) {
+        console.error("Error fetching predictions from Supabase:", error);
+      } else {
+        setSportsPredictions(data);
+      }
+    };
+
     fetchTransfers();
     fetchPosts();
+    fetchPredictions(); // Fetch predictions from Supabase
     const interval = setInterval(fetchPosts, 5000);
 
     return () => clearInterval(interval);
@@ -288,44 +283,84 @@ const Burnium = () => {
             ) : hasAccess ? (
               <>
                 {/* Trading Bot Promotion */}
-                <Card bg={cardBg} w="full" overflow="hidden" borderRadius="lg">
-                  <CardBody>
-                    <Flex direction={{ base: "column", md: "row" }} gap={6}>
-                      <Box w={{ base: "full", md: "50%" }}>
-                        <Image
-                          src="https://pbs.twimg.com/media/GRGABrNXkAA0KIV.png"
-                          alt="Trading Bot"
-                          borderRadius="lg"
-                        />
-                      </Box>
-                      <VStack w={{ base: "full", md: "50%" }} align="start" spacing={4}>
-                        <Heading color={accentColor} size="lg">
-                          Multi-Chain Fast Trading Bot
-                        </Heading>
-                        <Text color="gray.300">
-                          Experience lightning-fast trades across multiple chains with our advanced trading bot.
-                          Get instant access to market opportunities and maximize your profits.
-                        </Text>
-                        <Link
-                          href="https://t.me/BullxBetaBot?start=access_5GSJKL7IGL6"
-                          isExternal
-                          bg={accentColor}
-                          color="black"
-                          px={6}
-                          py={3}
-                          borderRadius="lg"
-                          _hover={{ bg: "cyan.400" }}
-                          display="flex"
-                          alignItems="center"
-                          gap={2}
-                        >
-                          <Icon as={MessageCircle} />
-                          Join on Telegram
-                        </Link>
-                      </VStack>
-                    </Flex>
-                  </CardBody>
-                </Card>
+                <Flex direction={{ base: "column", md: "row" }} gap={6}>
+                  <Card bg={cardBg} w="full" overflow="hidden" borderRadius="lg">
+                    <CardBody>
+                      <Flex direction={{ base: "column", md: "row" }} gap={6}>
+                        <Box w={{ base: "full", md: "50%" }}>
+                          <Image
+                            src="https://pbs.twimg.com/media/GRGABrNXkAA0KIV.png"
+                            alt="Trading Bot"
+                            borderRadius="lg"
+                          />
+                        </Box>
+                        <VStack w={{ base: "full", md: "50%" }} align="start" spacing={4}>
+                          <Heading color={accentColor} size="lg">
+                            Multi-Chain Fast Trading Bot
+                          </Heading>
+                          <Text color="gray.300">
+                            Experience lightning-fast trades across multiple chains with our advanced trading bot.
+                            Get instant access to market opportunities and maximize your profits.
+                          </Text>
+                          <Link
+                            href="https://t.me/BullxBetaBot?start=access_5GSJKL7IGL6"
+                            isExternal
+                            bg={accentColor}
+                            color="black"
+                            px={6}
+                            py={3}
+                            borderRadius="lg"
+                            _hover={{ bg: "cyan.400" }}
+                            display="flex"
+                            alignItems="center"
+                            gap={2}
+                          >
+                            <Icon as={MessageCircle} />
+                            Access the Bot
+                          </Link>
+                        </VStack>
+                      </Flex>
+                    </CardBody>
+                  </Card>
+
+                  <Card bg={cardBg} w="full" overflow="hidden" borderRadius="lg">
+                    <CardBody>
+                      <Flex direction={{ base: "column", md: "row" }} gap={6}>
+                        <Box w={{ base: "full", md: "50%" }}>
+                          <Image
+                            src="https://i.ytimg.com/vi/2Qg8PxkqHHg/hqdefault.jpg"
+                            alt="Rollbit"
+                            borderRadius="lg"
+                          />
+                        </Box>
+                        <VStack w={{ base: "full", md: "50%" }} align="start" spacing={4}>
+                          <Heading color={accentColor} size="lg">
+                            Bet with Rollbit
+                          </Heading>
+                          <Text color="gray.300">
+                          Rollbit offers a wide range of gambling options, from sports betting and slots to more unique features like crypto futures.
+                          </Text>
+                          <Link
+                            href="https://rollbit.com/referral/quantumxroll"
+                            isExternal
+                            bg={accentColor}
+                            color="black"
+                            px={6}
+                            py={3}
+                            borderRadius="lg"
+                            _hover={{ bg: "cyan.400" }}
+                            display="flex"
+                            alignItems="center"
+                            gap={2}
+                          >
+                            <Icon as={MessageCircle} />
+                            Join Rollbit
+                          </Link>
+                        </VStack>
+                      </Flex>
+                    </CardBody>
+                  </Card>
+                </Flex>
 
                 <Grid templateColumns={{ base: "1fr", md: "repeat(2, 1fr)" }} gap={6} w="full">
                   {/* Telegram Feed */}
@@ -387,7 +422,7 @@ const Burnium = () => {
                             )}
                             <Text
                               fontFamily="mono"
-                              fontSize="sm"
+                              fontSize="md"
                               color="gray.300"
                               whiteSpace="pre-line"
                             >
@@ -403,37 +438,93 @@ const Burnium = () => {
                   </Card>
 
                   {/* Sports Predictions */}
-                  <Card bg={cardBg} borderRadius="lg">
-                    <CardBody>
-                      <Flex align="center" gap={2} mb={4}>
-                        <Icon as={Calendar} color={accentColor} boxSize={6} />
-                        <Heading size="md" color={accentColor}>Sports Predictions</Heading>
-                      </Flex>
-                      <VStack
-                        maxH="500px"
-                        overflowY="auto"
-                        spacing={4}
-                        sx={{
-                          "&::-webkit-scrollbar": {
-                            width: "4px",
-                          },
-                          "&::-webkit-scrollbar-track": {
-                            background: "transparent",
-                          },
-                          "&::-webkit-scrollbar-thumb": {
-                            background: accentColor,
-                            borderRadius: "full",
-                          },
-                        }}
-                      >
-                        <Box bg="whiteAlpha.50" p={6} borderRadius="lg" mb={4}>
-                          <Text fontSize="lg" fontWeight="bold" color="gray.300">
-                            This feature is coming very soon!
-                          </Text>
-                        </Box>
-                      </VStack>
-                    </CardBody>
-                  </Card>
+<Card bg={cardBg} borderRadius="lg">
+  <CardBody>
+    <Flex align="center" gap={2} mb={6}>
+      <Icon as={Calendar} color={accentColor} boxSize={6} />
+      <Heading size="md" color={accentColor}>Sports Predictions</Heading>
+    </Flex>
+    <VStack
+      maxH="500px"
+      overflowY="auto"
+      spacing={4}
+      sx={{
+        "&::-webkit-scrollbar": {
+          width: "4px",
+        },
+        "&::-webkit-scrollbar-track": {
+          background: "transparent",
+        },
+        "&::-webkit-scrollbar-thumb": {
+          background: accentColor,
+          borderRadius: "full",
+        },
+      }}
+    >
+      {sportsPredictions.length > 0 ? (
+        sportsPredictions.map((prediction) => (
+          <Box
+            key={prediction.id}
+            bg="whiteAlpha.50"
+            p={6}
+            borderRadius="lg"
+            w="full"
+            transition="all 0.2s"
+            _hover={{ bg: 'whiteAlpha.100', transform: 'translateY(-2px)' }}
+          >
+            <Flex justify="space-between" align="center" mb={3}>
+              <Text fontSize="lg" fontWeight="bold" color="gray.200">
+                {prediction.team1} 
+                <Text as="span" color="gray.500" mx={2}>vs</Text> 
+                {prediction.team2}
+              </Text>
+              <Box
+                px={3}
+                py={1}
+                borderRadius="full"
+                bg={prediction.conviction >= 8 ? 'green.400/20' : prediction.conviction >= 6 ? 'yellow.400/20' : 'red.400/20'}
+                color={prediction.conviction >= 8 ? 'green.300' : prediction.conviction >= 6 ? 'yellow.300' : 'red.300'}
+              >
+                {prediction.conviction}/10
+              </Box>
+            </Flex>
+            
+            <Flex align="center" gap={2} mb={3}>
+              <Box
+                px={3}
+                py={1}
+                borderRadius="full"
+                bg={`${accentColor}20`}
+                color={accentColor}
+                fontSize="sm"
+                fontWeight="semibold"
+              >
+                {prediction.prediction}
+              </Box>
+            </Flex>
+
+            <Flex align="center" gap={2} color="gray.500" fontSize="sm">
+              <Calendar size={14} />
+              <Text>
+                {new Date(prediction.datetime).toLocaleString('en-GB', { // Use 'en-GB' for 24-hour format
+                  weekday: 'short',
+                  month: 'short',
+                  day: 'numeric',
+                  hour: '2-digit',
+                  minute: '2-digit'
+                })}
+              </Text>
+            </Flex>
+          </Box>
+        ))
+      ) : (
+        <Text fontWeight="bold" color="red.500">
+          No sports predictions available for today.
+        </Text>
+      )}
+    </VStack>
+  </CardBody>
+</Card>
                 </Grid>
               </>
             ) : (
