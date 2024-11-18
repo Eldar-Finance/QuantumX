@@ -1,5 +1,6 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
+import Script from "next/script";
 import { memo } from "react";
 import { defaultMetaTags } from "utils/constants/site";
 
@@ -16,6 +17,7 @@ export const MetaHead = memo(
     const title = metaTitle;
 
     return (
+      <>
       <Head>
         <title key="titleTag">{title}</title>
 
@@ -96,8 +98,9 @@ export const MetaHead = memo(
           content={metaImage || defaultMetaTags.image}
         />
         <meta key="twitter:url" name="twitter:url" content={canonicalURL} />
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7198509049220853" crossOrigin="anonymous"></script>
       </Head>
+      <Script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7198509049220853" crossOrigin="anonymous"/>
+      </>
     );
   }
 );

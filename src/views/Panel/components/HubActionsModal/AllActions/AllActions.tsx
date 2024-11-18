@@ -13,6 +13,7 @@ const AllActions = ({ handleView }: IProps) => {
           templateColumns={{ xs: "1fr", md: "1fr 1fr" }}
           textAlign="center"
           gap={5}
+          my={5}
         >
           <ActionButton onClick={() => handleView(1)}>Add NFTs</ActionButton>
           <ActionButton onClick={() => handleView(2)}>Remove NFTs</ActionButton>

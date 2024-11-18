@@ -192,9 +192,9 @@ const Pools = () => {
           />
           <HarvestAll harvestableFarms={userHarvestableFarms} type="pools"/>
 
-          <Link marginTop={"30px"} href="https://twitter.com/SuperRare_Bears/status/1747733437182542075?t=07ROu5JOLJC4VGynxn00Ug&s=19" isExternal>
+          <Link marginTop={"30px"} href="https://valoro.fund?referral=cryptomurmura20" isExternal>
             <Image
-              src="https://i.ibb.co/3vqQJ8K/Quantum-X-Banner-01.jpg"
+              src="https://i.postimg.cc/ZqVRrKv2/valoro-banner.png"
               alt="Description of the image content"
               style={{ borderRadius: '25px', width: '100%'}}
               height={{sm: "50px", md: "130px"}}

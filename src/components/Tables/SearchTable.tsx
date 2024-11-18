@@ -169,6 +169,7 @@ function SearchTable(props) {
                     >
                       <Flex
                         align="center"
+                        justify={column.Header === "Pool/Farm id" ? "flex-start" : "center"}
                         fontSize={{ sm: "sm", lg: "md" }}
                         textTransform="capitalize"
                         color="white.400"

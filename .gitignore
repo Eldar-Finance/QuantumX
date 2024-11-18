@@ -23,27 +23,30 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+.pnpm-debug.log*
 
 # local env files
-.env.local
+/src/config/index.ts
+.env*.local
 .env.development.local
 .env.test.local
 .env.production.local
 
 # vercel
 .vercel
-public/sitemap.xml
-public/robots.txt
-public/sitemap-0.xml
-public/sw.js
-public/workbox-588899ac.js
-src/components/Farms/FarmsCard/Farms2Item.tsx
-public/workbox-327c579b.js.map
-public/workbox-327c579b.js
-public/sw.js.map
-src/api/net.config.ts
-.env
-tsconfig.tsbuildinfo
 
-/.vscode
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+yalc.lock
+
+.idea
+.yalc
+
+
+#cypress 
+cypress/reports/
+cypress/screenshots/
+cypress/videos/
+
 package-lock.json

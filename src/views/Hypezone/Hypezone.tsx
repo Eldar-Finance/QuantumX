@@ -43,7 +43,7 @@ const Hypezone = () => {
       if (userRareAmount <= rareFee) {
         if (process.env.NEXT_PUBLIC_SIMULATE_HYPEZONE_ACCESS) {
           setIsOpenRareModal(false);
-        } else {
+        } else { 
           setIsOpenRareModal(true);
         }
       } else {

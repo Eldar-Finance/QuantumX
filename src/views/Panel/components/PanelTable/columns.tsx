@@ -1,9 +1,11 @@
-import { HamburgerIcon } from "@chakra-ui/icons";
-import { Flex, Icon } from "@chakra-ui/react";
+import { HamburgerIcon, Search2Icon } from "@chakra-ui/icons";
+import { Flex, HStack, Icon, Link, Text } from "@chakra-ui/react";
 import ActionButton from "components/ActionButton/ActionButton";
 import { ToolIcon } from "components/Icons/ui";
+import { network } from "api/net.config";
 import dynamic from "next/dynamic";
 import { useState } from "react";
+import { formatAddress } from "utils/functions/formatAddress";
 import { formatTokenI } from "utils/functions/tokens";
 import { IScPanelFarms } from "utils/types/sc.interface";
 
@@ -17,6 +19,30 @@ export const panelColumns = [
       const data: IScPanelFarms = row.original;
 
       return <Flex>{data.farm.farmId}</Flex>;
+    },
+  },
+  {
+    Header: "Creator",
+    accessor: "creator",
+    Cell: ({ row }) => {
+      const data: IScPanelFarms = row.original;
+      const address = data.farm.creator;
+
+      return (
+        <Flex display={"flex"} alignItems={"center"} justify={"center"}>
+          <Link
+            isExternal
+            href={`${network.explorerAddress}/accounts/${address}`}
+            aria-label="find in explorer"
+            whiteSpace={"nowrap"}
+            color={"blue.500"}
+          >
+            <Flex display={"flex"} alignItems={"center"} justify={"center"}>
+              {formatAddress(data.farm.creator)}
+            </Flex>
+          </Link>
+        </Flex>
+      );
     },
   },
   {

@@ -2,7 +2,7 @@ import { ChainId, contractAddr, network } from "../net.config";
 
 import { Address, Transaction } from "@multiversx/sdk-core/out";
 import { sendTransactions } from "@multiversx/sdk-dapp/services";
-import { ProxyNetworkProvider } from "@multiversx/sdk-network-providers";
+import { ProxyNetworkProvider } from "@multiversx/sdk-core/out";
 import store from "redux/store";
 
 //abis import

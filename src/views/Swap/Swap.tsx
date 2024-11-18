@@ -74,8 +74,10 @@ const Swap = () => {
         alignItems="center"
         pb="50px"
         width="100%"
-        mt={{sm: 8}}
+        mt={{ base: 8, md: 16, lg: 40 }} // Increased top margin for larger screens
+        style={{ zIndex: 1 }}
       >
+
         <Flex
           direction={{ base: "column", md: "row" }}
           width="100%"

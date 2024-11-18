@@ -44,7 +44,7 @@ const withElronDapp = (Component) => (props) => {
       <AxiosInterceptorContext.Provider>
         {/* @ts-ignore */}
         <AxiosInterceptorContext.Interceptor
-          authenticatedDomanis={sampleAuthenticatedDomains}
+          authenticatedDomains={sampleAuthenticatedDomains}
         >
           <DappProvider
             environment={network.id}

@@ -10,6 +10,7 @@ import {
   Link,
   Spinner,
   Text,
+  Image
 } from "@chakra-ui/react";
 import img3 from "assets/eldar-badges/frameit_logo.svg";
 import img1 from "assets/eldar-badges/logo1.png";
@@ -71,13 +72,13 @@ const BadgesCard = () => {
               whiteSpace="nowrap"
               color="white"
             >
-              Buy STFs in
+              Buy STFs or Burn them
             </Text>
             <Link
               isExternal
-              href="https://deadrare.io/collection/ELBADGES-2efe5c"
+              href="https://burnify.app/nft-burn"
             >
-              <NextImage src={img1} alt="deadrare" width={25} />
+              <Image src="https://burnify.app/static/media/n_D_Flame.a473b9131dfc7a3448ca.png" width={25} alt={""} />
             </Link>
             <Link
               isExternal

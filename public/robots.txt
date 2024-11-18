@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://www.quantumx.network
+
+# Sitemaps
+Sitemap: https://www.quantumx.network/sitemap.xml

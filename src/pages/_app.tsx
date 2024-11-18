@@ -34,8 +34,9 @@ const TransactionsToastList: any = dynamic(
   },
   { ssr: false }
 );
+
 // If loading a variable font, you don't need to specify the font weight
-const inter = Manrope({ subsets: ["latin"] });
+const inter = Manrope({ subsets: ["latin"], display: 'swap', adjustFontFallback: false });
 
 const QuantumXApp = ({ Component, pageProps }) => {
   return (

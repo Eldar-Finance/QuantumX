@@ -336,10 +336,31 @@ export const pairs = [
     token1lp: "LROAR-de5ea5",
   },
   {
+    lpname: "ROARWEGLDLP",
+    lpidentifier: "ROARWEGLD-745847",
+    lpprice: "0",
+    token2lp: "WEGLD-bd4d79",
+    token1lp: "ROAR-e5185d",
+  },
+  {
     lpname: "BLODWEGLDLP",
     lpidentifier: "BLODWEGLD-c0d005",
     lpprice: "0",
     token2lp: "WEGLD-bd4d79",
     token1lp: "BLOD-760741",
+  },
+  {
+    lpname: "SHARDWEGLDLP",
+    lpidentifier: "SHARDWEGLD-f43ba1",
+    lpprice: "0",
+    token2lp: "WEGLD-bd4d79",
+    token1lp: "SHARD-99a172",
+  },
+  {
+    lpname: "SAFEUSDCLP",
+    lpidentifier: "SAFEUSDC-b7b745",
+    lpprice: "0",
+    token2lp: "USDC-c76f1f",
+    token1lp: "SAFE-c0e534",
   }
 ];

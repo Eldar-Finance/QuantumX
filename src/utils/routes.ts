@@ -8,15 +8,15 @@ export interface IRoute {
   forAdmins?: boolean;
   isNew?: boolean;
   color?: string;
-}
+} 
 export const routeNames = {
-  home: "/",
+  home: "/home",
   dashboard: "/dashboard",
   swap: "/swap",
   farms: "/farms",
   Pools: "/pools",
   hub: "/hub",
-  dca: "/dca",
+  dca: "/dca", 
   rewards: "/qrewards",
   heroes: "/qheroes",
   admin: "/admin-panel",
@@ -26,7 +26,7 @@ export const routeNames = {
   moondustx: "/moondustx",
   qtags: "/qtags",
   marketplace: "/marketplace",
-  ecosystem:"/ecosystem",
+  burnium:"/burnium",
 };
 
 export const routes: {
@@ -41,7 +41,7 @@ export const routes: {
   admin: IRoute;
   panel: IRoute;
   hypezone: IRoute;
-  ecosystem: IRoute;
+  burnium: IRoute;
   // converter: IRoute;
   moondustx: IRoute;
   // marketplace: IRoute;
@@ -83,10 +83,10 @@ export const routes: {
     name: "QuantumX Rewards",
     onModal: true,
   },
-   ecosystem: {
-     path: routeNames.ecosystem,
-     name: "Ecosystem",
-     onModalAndNavbar: true,
+burnium: {
+    path: routeNames.burnium,
+     name: "Burnium",
+     //onModalAndNavbar: true,
   },
   // converter: {
   //   path: routeNames.converter,

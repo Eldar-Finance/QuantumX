@@ -1,6 +1,6 @@
 import { MetaHead } from "components/MetaHead/MetaHead";
 import { Fragment } from "react";
-import Ecosystem from "views/Ecosystem/Ecosystem";
+import Burnium from "views/Burnium/Burnium";
 const IndexPage = () => {
   return (
     <Fragment>
@@ -9,7 +9,7 @@ const IndexPage = () => {
         metaDescription="Add description here"
       />
       
-      <Ecosystem />
+      <Burnium />
     </Fragment>
   );
 };

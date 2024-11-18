@@ -34,7 +34,7 @@ export const getFromAllTokens2 = async ({
 
 export const getTokenPrice2 = async (identifier: string) => {
   try {
-    const response = await fetch(`https://eldar.solutions/api/pricecall.php?tokenA=${identifier}`);
+    const response = await fetch(`https://api.web3ninja.eu/api/pricecall.php?tokenA=${identifier}`);
 
     if (!response.ok) {
       throw new Error(`Request failed with status ${response.status}`);
