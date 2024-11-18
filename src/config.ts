@@ -87,6 +87,8 @@ export const network = {
   walletAddress: "https://wallet.multiversx.com",
   apiAddress: "https://multiversx-api.beaconx.app/public-mainnet-api",
   gatewayAddress: "https://multiversx-api.beaconx.app/public-mainnet-gateway",
+  // apiAddress: "https://api.multiversx.com",
+  // gatewayAddress: "https://gateway.multiversx.com",
   explorerAddress: "http://explorer.multiversx.com",
   graphQlAddress: "https://exchange-graph.multiversx.com/graphql",
   apiTimeout: 10000,

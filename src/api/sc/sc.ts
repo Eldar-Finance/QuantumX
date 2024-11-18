@@ -3,7 +3,6 @@ import { ChainId, contractAddr, network } from "../net.config";
 import { Address, Transaction } from "@multiversx/sdk-core/out";
 import { sendTransactions } from "@multiversx/sdk-dapp/services";
 import { ProxyNetworkProvider } from "@multiversx/sdk-core/out";
-import store from "redux/store";
 
 //abis import
 import dcaAbi from "assets/abi/dca.abi.json";
@@ -27,7 +26,7 @@ import ashswapAbi from "assets/abi/ashswap.abi.json";
 //end abos import
 
 /* Queries */
-export const provider = new ProxyNetworkProvider(network.gatewayAddress, {
+export const provider = new ProxyNetworkProvider(network.apiAddress, {
   timeout: 30000,
 });
 

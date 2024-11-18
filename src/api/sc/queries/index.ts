@@ -35,6 +35,7 @@ export const scQuery = async (
     console.log(`query error for ${funcName}  : `, error);
   }
 };
+
 export const scSimpleQuery = async (
   scAddress: string,
   funcName: string,
