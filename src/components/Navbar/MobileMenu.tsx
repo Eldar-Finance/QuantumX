@@ -5,7 +5,7 @@ import {
   Sprout, // for Farms
   Droplets, // for Pools
   Compass, // Keep Compass for Hub
-  MoreHorizontal,
+  MoreHorizontal,  
   Zap, // Keep Zap for Hypezone
   Award, // for Rewards
   Moon, // Keep Moon for MoonDustX
