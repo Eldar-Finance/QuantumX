@@ -15,7 +15,6 @@ const QTagButton = ({...props}) => {
       href={routeNames.qtags}
       fontWeight={"500"}
       fontSize={{ xs: "14px", "2xl": "md" }}
-      h={{xs: "32px", md: "40px"}}
       variant={"ghost"}
       {...props}
     >

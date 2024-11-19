@@ -29,7 +29,7 @@ const AddressSection3 = () => {
       gap={2}
       justifyItems={"space-between"}
     >
-      <HStack onClick={onOpen} cursor={"pointer"} gap={1} justify={"flex-start"} _hover={{bg: "black.baseDark"}} py={2} px={3} borderRadius={"md"} width={"fit-content"} whiteSpace={"nowrap"}>
+      <HStack onClick={onOpen} cursor={"pointer"} gap={1} justifySelf={"flex-start"} _hover={{bg: "black.baseDark"}} py={2} px={3} borderRadius={"md"} width={"fit-content"} whiteSpace={"nowrap"}>
         <Text>
           Send funds
         </Text>
@@ -37,7 +37,7 @@ const AddressSection3 = () => {
       </HStack>
       {isOpen && <TransactionModal isOpen={true} onClose={onClose} />}
     
-      <HStack  onClick={onCopy} cursor={"pointer"} gap={1} justify={"flex-end"} _hover={{bg: "black.baseDark"}} py={2} px={3} borderRadius={"md"} width={"fit-content"} whiteSpace={"nowrap"}>
+      <HStack  onClick={onCopy} cursor={"pointer"} gap={1} justifySelf={"flex-end"} _hover={{bg: "black.baseDark"}} py={2} px={3} borderRadius={"md"} width={"fit-content"} whiteSpace={"nowrap"}>
         <Text>
           Copy address
         </Text>
@@ -48,7 +48,7 @@ const AddressSection3 = () => {
         )}
       </HStack>
 
-      <HStack onClick={onOpenNfts} cursor={"pointer"} gap={1} justify={"flex-start"} bg={"ghost"} _hover={{bg: "black.baseDark"}} py={2} px={3} borderRadius={"md"} width={"fit-content"} whiteSpace={"nowrap"}>
+      <HStack onClick={onOpenNfts} cursor={"pointer"} gap={1} justifySelf={"flex-start"} bg={"ghost"} _hover={{bg: "black.baseDark"}} py={2} px={3} borderRadius={"md"} width={"fit-content"} whiteSpace={"nowrap"}>
         <Text>
           My NFTs
         </Text>

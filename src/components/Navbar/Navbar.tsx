@@ -93,7 +93,7 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
         <Portal>
           <MenuList
             bg={"black.baseDark"}
-            minWidth="340px"
+            minWidth={{ sm: "100dvw", md: "400px" }}
             width="full"
             px={4}
             mt={2}
@@ -101,8 +101,8 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
             borderRadius={"xl"}
             boxShadow={"0px 0px 20px 4px rgba(0,0,0,0.8)"}
             fontSize={"md"}
-            position="absolute"
-            left={{sm: "-150px", md: "-85px"}}
+            position="relative"
+            left={{ md: "28%" }}
             zIndex={999}  // Increased z-index even further
           >
             <Box
@@ -132,29 +132,24 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
 
             <Grid
               templateColumns="repeat(2, 1fr)"
-              // gap={2}
-              // pt={2}
-              // width="100%"
               bg={"black.base"}
               borderRadius={"xl"}
-              alignContent={"center"}
-              p={2}
-              mb={3}
-              mt={2}
-              justifyContent={"space-between"}
-              justifyItems={"flex-start"}
+              // alignContent={"center"}
+              p={3}
+              mb={1.5}
+              // justifyItems={"flex-start"}
             >
+              <GridItem justifySelf={"flex-start"} mb={2}>
+                <Button pt={1} leftIcon={<Icon as={PiBridgeThin} mb={1} boxSize={"20px"}/>} variant={"ghost"} onClick={() => setIsBridgeModalOpen(true)}>Bridge</Button>
+              </GridItem>
+              <GridItem justifySelf={"flex-end"} mb={2}>
+                <QTagButton leftIcon={<Icon as={FaHashtag} mb={1} boxSize={"20px"}/>} _hover={{bg: "black.baseDark"}} px={2}/>
+              </GridItem>
               <GridItem justifySelf={"flex-start"}>
-                <Button pt={1} leftIcon={<Icon as={PiBridgeThin} mb={1} boxSize={"20px"}/>} variant={"ghost"} onClick={() => setIsBridgeModalOpen(true)} width="100%">Bridge</Button>
+                <Button pt={1} leftIcon={<Icon as={FiLogOut} mb={1} boxSize={"20px"}/>} variant={"ghost"} onClick={handleLogout}>Disconnect</Button>
               </GridItem>
               <GridItem justifySelf={"flex-end"}>
-                <QTagButton leftIcon={<Icon as={FaHashtag} mb={1} boxSize={"20px"}/>} width="100%" _hover={{bg: "black.baseDark"}} px={2}/>
-              </GridItem>
-              <GridItem justifySelf={"flex-start"}>
-                <Button pt={1} leftIcon={<Icon as={FiLogOut} mb={1} boxSize={"20px"}/>} variant={"ghost"} onClick={handleLogout} width="100%">Disconnect</Button>
-              </GridItem>
-              <GridItem justifySelf={"flex-end"}>
-                <Button pt={1} leftIcon={<Icon as={AiTwotoneEuroCircle} mb={1} boxSize={"20px"}/>} variant={"ghost"} onClick={() => setIsBuyCryptoModalOpen(true)} width="100%">Buy Crypto</Button>
+                <Button pt={1} leftIcon={<Icon as={AiTwotoneEuroCircle} mb={1} boxSize={"20px"}/>} variant={"ghost"} onClick={() => setIsBuyCryptoModalOpen(true)}>Buy Crypto</Button>
               </GridItem>
             </Grid>
 
