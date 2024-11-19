@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { toknesID } from "api/net.config";
 import { AppState } from "redux/store";
 import { STATUS } from "utils/types/core.interface";
+import { FetchWhitelistedTokens } from "./funcs";
 
 export const reducerName = "smartSwap";
 
@@ -67,6 +68,33 @@ export const smartSwap = createSlice({
     updateSlippage: (state, action) => {
       state.slippage = action.payload;
     },
+  },
+  extraReducers(builder) {
+    builder
+      // FetchWhitelistedTokens
+      .addCase(FetchWhitelistedTokens.pending, (state) => {
+        state.tokens.status = "loading";
+      })
+      .addCase(
+        FetchWhitelistedTokens.fulfilled,
+        (
+          state,
+          action: PayloadAction<{
+            allWhitelisted: string[];
+            wegldWhitelisted: string[];
+            usdcWhitelisted: string[];
+          }>
+        ) => {
+          state.tokens.status = "succeeded";
+          state.tokens.data = action.payload.allWhitelisted;
+          state.tokens.wegldWhitelisted = action.payload.wegldWhitelisted;
+          state.tokens.usdcWhitelisted = action.payload.usdcWhitelisted;
+        }
+      )
+      .addCase(FetchWhitelistedTokens.rejected, (state, action) => {
+        state.tokens.status = "failed";
+        state.tokens.error = action.error.message;
+      });
   },
 });
 
