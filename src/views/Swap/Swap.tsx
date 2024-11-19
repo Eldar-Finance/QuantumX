@@ -197,7 +197,7 @@ const Swap = () => {
               alt='img'
               src={
                 isNftSwap ?
-                "https://xoxno.com/_next/image?url=%2Fimg%2Fsymbols%2Fxoxno_banner.png&w=256&q=100" :
+                "https://xoxno.com/_next/static/media/wide.221596a0.webp" :
                 isMainSwap ? "https://ashswap.io/_next/static/media/logo-ashswap.1639138c.png" : "https://cdn.sanity.io/images/27df2ffs/production/57daf687f81ef2cc9a7ebfbbf9c76ddf4bad9dae-210x36.svg?auto=format"
               }
               width={{ sm: "64px", md: isMainSwap ? "24px" : "100px" }}
