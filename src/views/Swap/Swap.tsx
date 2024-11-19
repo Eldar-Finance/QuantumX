@@ -77,7 +77,6 @@ const Swap = () => {
         pb="50px"
         width="100%"
         mt={{ md: 30, base: 30 }} // Increased top margin for larger screens
-        style={{ zIndex: 1 }}
       >
 
         <Flex

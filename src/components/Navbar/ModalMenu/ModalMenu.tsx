@@ -45,17 +45,18 @@ const ModalMenu = ({ onClose }: IProps) => {
         position: 'absolute',
         top: 'calc(100% + 8px)', // Add some space below the menu button
         right: 0, // Align to the right edge of the menu button
-        zIndex: 2147483647, // Maximum safe integer value for z-index
+        zIndex: 9999, // Maximum safe integer value for z-index
       }}
       ref={ref}
     >
       <Card
         w={{base: "90vw", sm: "45vw", md: "28vw"}}
         mt={2}
-        zIndex={99999999}
+        zIndex={9999}
+        boxShadow={"0px 0px 10px 0px rgba(0,0,0,0.8)"}
         // ... other Card props ...
       >
-        <Grid templateColumns="repeat(2, 1fr)" gap={4} zIndex={99999999}>
+        <Grid templateColumns="repeat(2, 1fr)" gap={4} zIndex={9999}>
           {visibleMenuItems.map((item) => (
             <Button
               key={item.name}

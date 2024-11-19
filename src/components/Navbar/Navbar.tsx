@@ -61,9 +61,6 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
   const [isBuyCryptoModalOpen, setIsBuyCryptoModalOpen] = useState(false);
   const [isBridgeModalOpen, setIsBridgeModalOpen] = useState(false);
   const [isMobile] = useMediaQuery(`(max-width: ${breakpoints.md})`);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-  const { onClose, onOpen, isOpen } = useDisclosure();
 
   const handleLogout = () => {
     logout(getWebUrl(location));
@@ -71,8 +68,6 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
   const handleConnect = () => {
     dispatch(openLogin(true));
   };
-
-  const [nrOfNfts, setNrOfNfts] = useState(0);
 
   const LoggedInMenu = () => {
     return (
@@ -198,7 +193,7 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
   return (
     <Box 
       position="relative" 
-      zIndex={0} 
+      zIndex={999} 
       width="100%" 
       bg="black.light"
       borderRadius={{ base: "xl", "2xl": "3xl" }}

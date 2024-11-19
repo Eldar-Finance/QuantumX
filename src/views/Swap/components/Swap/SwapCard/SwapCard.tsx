@@ -73,7 +73,7 @@ const SwapCard = ({setGraphTokens, setIsNftSwap, setIsMainSwap} : {setGraphToken
       justifyContent="flex-start"
       alignItems="left"
     >
-      <Flex width="100%" mb={1} ml={6} gap={7} zIndex={10} w={"full"}>
+      <Flex width="100%" mb={1} ml={6} gap={7} zIndex={1} w={"full"}>
         <Heading
           as="h1"
           fontSize={"m"}
