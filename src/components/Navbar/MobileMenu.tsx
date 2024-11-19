@@ -7,7 +7,7 @@ import {
   Compass, // Keep Compass for Hub
   MoreHorizontal,  
   Zap, // Keep Zap for Hypezone
-  Award, // for Rewards
+  Award, // for Rewards  
   Moon, // Keep Moon for MoonDustX    
   LayoutDashboard, // for Quantum Panel
   Flame // Import Fire icon
