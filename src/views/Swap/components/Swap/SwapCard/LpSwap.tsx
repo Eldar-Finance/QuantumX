@@ -1,9 +1,10 @@
-import { Box, BoxProps, Center, Flex, FlexProps, Heading, IconButton, Text, useEditable } from "@chakra-ui/react";
+import { Box, Center, Flex, IconButton } from "@chakra-ui/react";
 import TextField from "../TextField/TextField";
 import BigNumber from "bignumber.js";
 import { NotAllowedIcon } from "@chakra-ui/icons";
 import { useRouter } from "next/dist/client/router";
 import { useEffect, useMemo } from "react";
+import { FetchWhitelistedTokens } from "redux/slices/smartSwaps/funcs";
 import {
   setFromToken,
   setFromTokenValue,
@@ -47,7 +48,9 @@ const LpSwap = () => {
   const userAddress = store.getState().userAccount.connectedAddress;
   const router = useRouter();
   const dispatch = useAppDispatch();
-
+  useEffect(() => {
+    dispatch(FetchWhitelistedTokens());
+  }, [dispatch]);
   const chainId = getAshChainId();
 
   const { fees } = useGetFees();
@@ -86,16 +89,12 @@ const LpSwap = () => {
 
   // LP Tokens
   const smartSwapTokens = useAppSelector((state) => state.smartSwap.tokens)
-  console.log('⚠️ ~ smartSwapTokens:', smartSwapTokens);
   const { elrondTokens: allSmartSwapTokens } = useSelectSmarSwapTokens(
     fromTokenToLp.identifier,
     smartSwapTokens,
     "to"
   );
-  console.log('⚠️ ~ allSmartSwapTokens:', allSmartSwapTokens);
-
   const toLpTokens = allSmartSwapTokens.filter((t) => t.name.includes('LP'));
-  console.log('⚠️ ~ toLpTokens:', toLpTokens);
 
   useEffect(() => {
     let isMounted = true;
@@ -216,9 +215,9 @@ const LpSwap = () => {
   // const swapToToken = useAppSelector(selectToToken);
   // const swapToTokenValue = useAppSelector(selectToTokenValue);
 
-  console.log("⚠️ ~ fromTokenToLp:", fromTokenToLp)
+  // console.log("⚠️ ~ fromTokenToLp:", fromTokenToLp)
 
-  console.log("⚠️ ~ toTokenToLp:", toTokenToLp)
+  // console.log("⚠️ ~ toTokenToLp:", toTokenToLp)
 
 
   //
@@ -242,9 +241,6 @@ const LpSwap = () => {
   // LP SWAP DATA
   //
   const { data, isLoading, isSwapToLp } = useGetSwapInfo();
-  console.log('⚠️ ~ isSwapToLp:', isSwapToLp);
-  console.log('⚠️ ~ isLoading:', isLoading);
-  console.log('⚠️ ~ data:', data);
 
   useEffect(() => {
     if (data) {

@@ -25,7 +25,6 @@ const useGetSwapInfo = (
   const fromTokenValue = fromTokenValueProp ?? swapFromTokenValue;
 
   const isToTokenLp = useIsSmarSwapLp(toToken);
-  console.log('⚠️ ~ isToTokenLp:', isToTokenLp);
   const isSwapToLp = lp || isToTokenLp;
 
   const [value] = useDebounce(fromTokenValue, 800);
