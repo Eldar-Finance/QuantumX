@@ -26,7 +26,7 @@ const MobileMenu = () => {
     { name: "Swap", icon: Repeat, color: "linear-gradient(to bottom right, purple.500, pink.500)", route: "/swap" },
     { name: "Farms", icon: Sprout, color: "linear-gradient(to bottom right, green.500, teal.500)", route: "/farms" },
     { name: "Pools", icon: Droplets, color: "linear-gradient(to bottom right, blue.500, cyan.500)", route: "/pools" },
-    { name: "Burnium", icon: Flame, color: "linear-gradient(to bottom right, orange.500, red.500)", route: "/burnium" },
+    { name: "Burnium", icon: Flame, color: "linear-gradient(to bottom right, orange.500, red.500)", route: "/burnium" }, 
   ];
 
   const moreItems = [
