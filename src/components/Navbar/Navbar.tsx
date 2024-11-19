@@ -99,11 +99,11 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
             mt={2}
             border={"none"}
             borderRadius={"xl"}
-            boxShadow={"0px 0px 20px 4px rgba(0,0,0,0.8)"}
+            boxShadow="0px 0px 20px 4px rgba(0,0,0,0.8)"
             fontSize={"md"}
             position="relative"
             left={{ md: "28%" }}
-            zIndex={999}  // Increased z-index even further
+            // zIndex={2147483647}  // Increased z-index even further
           >
             <Box
               alignContent={"center"}

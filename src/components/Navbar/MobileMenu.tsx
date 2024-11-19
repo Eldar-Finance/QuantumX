@@ -61,14 +61,10 @@ const MobileMenu = () => {
         right={0}
         bg="#232526"
         borderTopRadius="2xl"
-        boxShadow="0 -4px 10px rgba(0, 0, 0, 0.1)"
-        zIndex={2147483647} // Maximum z-index value
+        boxShadow="0px 0px 20px 4px rgba(0,0,0,0.8)"
+        zIndex={9999} // Maximum z-index value
         width="100%"
         maxWidth="100%"
-        style={{
-          isolation: 'isolate',
-          willChange: 'transform',
-        }}
       >
         <Flex as="nav" justifyContent="space-between" alignItems="center" px={4} py={2}>
           {menuItems.map((item) => (

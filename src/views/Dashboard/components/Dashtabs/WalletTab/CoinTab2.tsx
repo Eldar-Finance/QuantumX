@@ -73,7 +73,7 @@ const CoinTab2 = () => {
           }
         `}
       </style>
-    <Box w="full" maxH="240px" overflowY={"auto"} className="thin-scrollbar" pb={2}>
+    <Box w="full" maxH="290px" overflowY={"auto"} className="thin-scrollbar" pb={2}>
       <List spacing={3}>
         {displayedTokens.map((token, index) => (
           <ListItem key={index} >
