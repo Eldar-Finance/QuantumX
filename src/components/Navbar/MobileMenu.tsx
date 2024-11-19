@@ -8,7 +8,7 @@ import {
   MoreHorizontal,  
   Zap, // Keep Zap for Hypezone
   Award, // for Rewards
-  Moon, // Keep Moon for MoonDustX 
+  Moon, // Keep Moon for MoonDustX    
   LayoutDashboard, // for Quantum Panel
   Flame // Import Fire icon
 } from "lucide-react";
