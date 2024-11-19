@@ -67,14 +67,16 @@ const Swap = () => {
   };
 
   return (
-    <Layout>
+    <Layout 
+      pt={{ xs: "120px", md: "200px", "xl": "248px" }}
+    >
       <MyContainer
         display="flex"
         flexDirection="column"
         alignItems="center"
         pb="50px"
         width="100%"
-        mt={{ base: 8, md: 16, lg: 40 }} // Increased top margin for larger screens
+        mt={{ md: 30, base: 30 }} // Increased top margin for larger screens
         style={{ zIndex: 1 }}
       >
 
