@@ -53,7 +53,7 @@ const ModalMenu = ({ onClose }: IProps) => {
         w={{base: "90vw", sm: "45vw", md: "28vw"}}
         mt={2}
         zIndex={9999}
-        boxShadow={"0px 0px 10px 0px rgba(0,0,0,0.8)"}
+        boxShadow={"0px 0px 20px 4px rgba(0,0,0,0.8)"}
         // ... other Card props ...
       >
         <Grid templateColumns="repeat(2, 1fr)" gap={4} zIndex={9999}>

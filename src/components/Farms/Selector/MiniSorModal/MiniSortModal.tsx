@@ -28,7 +28,7 @@ const MiniSortModal = ({
       px={"24px"}
       bg={"black.base"}
       border="0.5px solid #a8a8a8a3"
-      boxShadow={"0px 4px 20px rgb(0 0 0 / 30%)"}
+      boxShadow={"0px 0px 20px 4px rgba(0,0,0,0.8)"}
       {...props}
     >
       {sortList.map((s) => {

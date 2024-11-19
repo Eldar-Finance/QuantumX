@@ -99,7 +99,7 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
             mt={2}
             border={"none"}
             borderRadius={"xl"}
-            boxShadow={"0px 0px 10px 0px rgba(0,0,0,0.8)"}
+            boxShadow={"0px 0px 20px 4px rgba(0,0,0,0.8)"}
             fontSize={"md"}
             position="absolute"
             left={{sm: "-150px", md: "-85px"}}
