@@ -5,15 +5,12 @@ import TitlePage from "components/TitlePage/TitlePage";
 import withElronDapp from "hoc/withElronDapp";
 import WrapperPages from "hoc/WrapperPages";
 import { useEffect } from "react";
-import { FetchWhitelistedTokens } from "redux/slices/smartSwaps/funcs";
+
 import { useAppDispatch } from "utils/hooks/redux";
 import ConvertCard from "./components/ConvertCard/MoonDustXCard";
 
 const ConverterView = () => {
-  const dispatch = useAppDispatch();
-  useEffect(() => {
-    dispatch(FetchWhitelistedTokens());
-  }, [dispatch]);
+
   return (
     <Layout>
       <MyContainer maxW="730px" mt={0} mb={20}>

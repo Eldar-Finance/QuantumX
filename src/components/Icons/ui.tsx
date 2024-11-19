@@ -10,7 +10,6 @@ import {
 import EgldLogoImg from "assets/logos/egld.png";
 import multiversxLogo from "assets/logos/multiversx.svg";
 import MexLockdLogoImg from "assets/logos/newlkmex.svg";
-import proteoImg from "assets/logos/proteo.png";
 import wegldlogo from "assets/logos/wegldlogo.svg";
 import searchLogo from "assets/ui-elemts/search.svg";
 import NextImage from "components/NextImage/NextImage";
@@ -828,25 +827,7 @@ export const EgldlogoIcon2 = ({
     </Box>
   );
 };
-export const ProteoIcon = ({
-  size = null,
-  wrapperProps = undefined,
-  ...props
-}) => {
-  return (
-    <Box w={size || 4} {...wrapperProps}>
-      <Image
-        as={NextImage}
-        layout="responsive"
-        borderRadius="full"
-        // @ts-ignore
-        src={proteoImg}
-        alt="Egld"
-        {...props}
-      />
-    </Box>
-  );
-};
+
 export const WegldlogoIcon = ({ size, wrapperProps, ...props }) => {
   return (
     <Box w={size || 4} {...wrapperProps}>

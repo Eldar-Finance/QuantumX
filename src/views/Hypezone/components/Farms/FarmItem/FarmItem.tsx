@@ -27,24 +27,21 @@ import {
 } from "utils/types/sc.interface";
 
 import LpTokenImage from "components/LpTokenImage/LpTokenImage";
-import { addTvlInEldarFarm } from "redux/slices/proteo/proteo";
 import {
   formatBalance,
   formatBalanceDolar,
   formatNumber,
 } from "utils/functions/formatBalance";
 import { formatTokenI } from "utils/functions/tokens";
-import { useAppDispatch } from "utils/hooks/redux";
 import useGetElrondToken from "utils/hooks/useGetElrondToken";
 import useGetMultipleElrondTokens from "utils/hooks/useGetMultipleElrondTokens";
 import useGetMultiplePrices from "utils/hooks/useGetMultiplePrices";
-import { farms2Data, farmsTobeShutDown } from "views/Farms/constants";
+import { farms2Data } from "views/Farms/constants";
 import useApr from "views/Pools/hooks/useApr";
 import EarnedRewards from "./components/EarnedRewards/EarnedRewards";
 import EarnTokens from "./components/EarnTokens/EarnTokens";
 import StakeUnstake from "./components/StakeUnstake/StakeUnstake";
 import Avilable from "./components/Withdraw/Avilable";
-// import { useGetUserHarvestableRewards } from "views/Hypezone/utils/hooks";
 
 interface IProps {
   farm: IScFarmItem;
@@ -95,29 +92,6 @@ const Farms2Item = ({
     : { logo: "", name: "" };
 
   const price = stakedTokenPrice;
-  const dispatch = useAppDispatch();
-  useEffect(() => {
-    dispatch(
-      addTvlInEldarFarm({
-        balance: formatBalanceDolar(
-          {
-            balance: farm.stakedBalance,
-            decimals: stakingToken.decimals,
-          },
-          price
-        ),
-        id: farm.farm.stakingToken,
-        type: isPool ? "pool" : "farm",
-      })
-    );
-  }, [
-    dispatch,
-    farm.farm.stakingToken,
-    farm.stakedBalance,
-    isPool,
-    price,
-    stakingToken.decimals,
-  ]);
 
   const { apr, apy } = useApr(
     farm,

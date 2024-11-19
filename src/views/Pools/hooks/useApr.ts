@@ -8,8 +8,6 @@ import useSWR from "swr";
 import { aprFarms, apyFarms } from "utils/functions/farms";
 import { formatNumber } from "utils/functions/formatBalance";
 import { useAppSelector } from "utils/hooks/redux";
-import useGetElrondToken from "utils/hooks/useGetElrondToken";
-import useGetJexPrice from "utils/hooks/useGetJexPrice";
 import useGetMultipleElrondTokens from "utils/hooks/useGetMultipleElrondTokens";
 import useGetMultiplePrices from "utils/hooks/useGetMultiplePrices";
 import useGetElrondToken2 from "utils/hooks/useGetElrondToken2";
@@ -39,12 +37,7 @@ const  useApr = (
   );
 
   const { data: stats } = useAppSelector(selectElrondStats);
-  const { jexPrice } = useGetJexPrice(
-    multifarmRewardsLeft.find((r) => r.token === toknesID.jex)?.token
-  );
-  const { jexPrice: bonezPrice } = useGetJexPrice(
-    multifarmRewardsLeft.find((r) => r.token === toknesID.bonez)?.token
-  );
+
   const { tokens: rewardsTokens } = useGetMultipleElrondTokens(
     multifarmRewardsLeft ? multifarmRewardsLeft.map((f) => f.token) : []
   );
@@ -62,10 +55,6 @@ const  useApr = (
       stats,
       "multi",
       multifarmRewardsLeft,
-      [
-        { tokenI: toknesID.jex, price: jexPrice },
-        { tokenI: toknesID.bonez, price: bonezPrice },
-      ]
     ) as string;
     aprNumber = aprFarms(
       prices || price,
@@ -76,10 +65,6 @@ const  useApr = (
       stats,
       "multi",
       multifarmRewardsLeft,
-      [
-        { tokenI: toknesID.jex, price: jexPrice },
-        { tokenI: toknesID.bonez, price: bonezPrice },
-      ],
       true
     ) as number;
   } else {
@@ -117,7 +102,6 @@ const  useApr = (
           }
         : farm,
       stats,
-      undefined,
       undefined,
       undefined,
       true

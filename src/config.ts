@@ -156,3 +156,5 @@ export const walletConnectV2ProjectId = "6bec64742092caa5f1b382312bb17be2";
 export const apiTimeout = 6000;
 export const TOOLS_API_URL = "https://tools.multiversx.com";
 export const sampleAuthenticatedDomains = [TOOLS_API_URL, network.apiAddress];
+export const metamaskSnapWalletAddress =
+  'https://snap-wallet.multiversx.com';

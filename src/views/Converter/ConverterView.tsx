@@ -6,18 +6,15 @@ import TitlePage from "components/TitlePage/TitlePage";
 import withElronDapp from "hoc/withElronDapp";
 import WrapperPages from "hoc/WrapperPages";
 import { useEffect } from "react";
-import { FetchWhitelistedTokens } from "redux/slices/smartSwaps/funcs";
+
 import { useAppDispatch } from "utils/hooks/redux";
 import useGetElrondToken from "utils/hooks/useGetElrondToken";
 import ConvertCard from "./components/ConvertCard/ConvertCard";
 import { toTokenToConvert } from "./utils/contants";
 
 const ConverterView = () => {
-  const dispatch = useAppDispatch();
   const { token } = useGetElrondToken(toTokenToConvert);
-  useEffect(() => {
-    dispatch(FetchWhitelistedTokens());
-  }, [dispatch]);
+
   return (
     <Layout>
       <MyContainer maxW="730px" mt={-8} mb={20}>

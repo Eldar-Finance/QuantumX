@@ -40,9 +40,7 @@ const FarmAccordion = ({
 }: IProps) => {
   const router = useRouter();
   const [accordionIndex, setAccordionIndex] = useState<number[]>([]);
-  const { data: generalFarmsData } = useAppSelector(
-    (state) => state.proteo.generalInfoApp
-  );
+
   const { data: multifarmRewardsLeft } = useAppSelector(
     selectMultiFarms2RewardsLeft
   );
@@ -74,9 +72,7 @@ const FarmAccordion = ({
   let farmStored: IFarmWithTvl[] = getSortedFarm(
     tokenPrices,
     tokens,
-    [],
     othersArr,
-    generalFarmsData
   );
 
   return (

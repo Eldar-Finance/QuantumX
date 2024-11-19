@@ -14,18 +14,9 @@ import {
   fetchUSerFarmInfo,
   fetchUSerRewardsInfo,
 } from "redux/slices/farms2/funcs";
-import {
-  fetchGeneralInfo,
-  fetchIndex,
-  fetchPrice,
-  fetchRanking,
-  fetchUserInfo,
-  fetchWithdrawInfo,
-} from "redux/slices/proteo/funcs";
 import { selectUserAddress } from "redux/slices/userAcount/account-slice";
 import { useAppDispatch, useAppSelector } from "utils/hooks/redux";
 import useGetTotalValueInFarms from "utils/hooks/useGetTotalValueInFarms";
-import BearlyBonding from "./components/BearlyBonding/BearlyBonding";
 import FarmsList from "./components/FarmsList/FarmsList";
 import { useSelector } from "react-redux";
 import { selectFarms, selectUserFarms2Rewards } from "redux/slices/farms2/farms2-slice";
@@ -40,11 +31,6 @@ const Farms = () => {
   const totalValueLocked = useGetTotalValueInFarms();
   useEffect(() => {
     if (address) {
-      //farms from proteo
-      dispatch(fetchUserInfo(address));
-      dispatch(fetchRanking(address));
-      dispatch(fetchWithdrawInfo(address));
-
       //farms from oteher farms (Quantumn smart constract)
       dispatch(fetchUSerFarmInfo(address));
     }
@@ -52,9 +38,6 @@ const Farms = () => {
   }, [address, dispatch]);
 
   useEffect(() => {
-    dispatch(fetchPrice());
-    dispatch(fetchIndex());
-    dispatch(fetchGeneralInfo());
     dispatch(fetchMultiFarms2RewardsLeft());
 
     //elrond network
@@ -97,37 +80,9 @@ const Farms = () => {
               height={{sm: "50px", md: "130px"}}
             />
           </Link>
-          <MyTabs
-            tabListProps={{
-              overflow: "auto",
-            }}
-            tabsProps={{
-              w: "full",
-              mt: { xs: "25px", md: "50px" },
-            }}
-            tabListWarapperProps={{
-              display: "flex",
-              alignItems: "center",
-              flexDir: "column",
-              w: "full",
-            }}
-            tabProps={{
-              w: "full",
-              display: "flex",
-              alignItems: "center",
-              flexDir: "column",
-            }}
-            tabData={[
-              {
-                tabText: "Farms",
-                tabPanel: <FarmsList />,
-              },
-              {
-                tabText: "BearlyBonding",
-                tabPanel: <BearlyBonding />,
-              },
-            ]}
-          />
+
+          <FarmsList />
+
         </Flex>
       </MyContainer>
       <Box pb="100px">

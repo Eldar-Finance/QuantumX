@@ -27,7 +27,6 @@ const HypezoneTitle = ({
         setFeesModalOpen(!feesModalOpen);
     };
 
-    const isSmallDevice = window.innerWidth <= 768;
     const [modalOpen, setModalOpen] = useState(false);
   
     const handleInfoModal = async () => {

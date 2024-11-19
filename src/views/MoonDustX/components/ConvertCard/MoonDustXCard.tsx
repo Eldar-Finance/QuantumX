@@ -1,6 +1,7 @@
 import { Box, Center, Flex, HStack, Image } from "@chakra-ui/react";
 import ActionButton from "components/ActionButton/ActionButton";
 import {
+  dissectAllTokens,
   selectAllTokens,
   selectToToken,
   selectToTokenDust,
@@ -17,8 +18,6 @@ const MoonDustXCard = () => {
   const dispatch = useAppDispatch();
   const selectedToToken = useAppSelector(selectToTokenDust);
   
-  const tokens = useAppSelector((state) => state.smartSwap.tokens);
-
   const { tokens: finalTokens } = useGetMultipleElrondTokens(toTokensToConvert);
 
   return (
@@ -58,13 +57,22 @@ const MoonDustXCard = () => {
           );
         })}
       </Flex>
+
       <SelectTokens />
-      <Flex w="full" mt={4}>
+      
+      <Flex w="full" mt={4} gap={3}>
         <ActionButton
           variant={"outline"}
           onClick={() => dispatch(selectAllTokens())}
         >
           Select All
+        </ActionButton>
+
+        <ActionButton
+          variant={"outline"}
+          onClick={() => dispatch(dissectAllTokens())}
+        >
+          Deselect All
         </ActionButton>
       </Flex>
       <ConvertInfo />

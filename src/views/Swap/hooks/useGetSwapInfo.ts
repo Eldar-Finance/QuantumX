@@ -25,7 +25,8 @@ const useGetSwapInfo = (
   const fromTokenValue = fromTokenValueProp ?? swapFromTokenValue;
 
   const isToTokenLp = useIsSmarSwapLp(toToken);
-  const isSapwToLp = lp || isToTokenLp;
+  console.log('⚠️ ~ isToTokenLp:', isToTokenLp);
+  const isSwapToLp = lp || isToTokenLp;
 
   const [value] = useDebounce(fromTokenValue, 800);
 
@@ -35,7 +36,7 @@ const useGetSwapInfo = (
           fromToken === "EGLD" ? toknesID.wegld : fromToken,
           value,
           toToken === "EGLD" ? toknesID.wegld : toToken,
-          isSapwToLp,
+          isSwapToLp,
         ]
       : null,
     fetchSmartSwap
@@ -45,7 +46,7 @@ const useGetSwapInfo = (
     data,
     error,
     isLoading,
-    isSapwToLp,
+    isSwapToLp,
   };
 };
 

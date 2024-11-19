@@ -1,20 +1,12 @@
-import { ChainId, contractAddr, network } from "../net.config";
-
-import { Address, Transaction } from "@multiversx/sdk-core/out";
+import { contractAddr, network } from "../net.config";
+import { Address } from "@multiversx/sdk-core/out";
 import { sendTransactions } from "@multiversx/sdk-dapp/services";
 import { ProxyNetworkProvider } from "@multiversx/sdk-core/out";
-
-//abis import
 import dcaAbi from "assets/abi/dca.abi.json";
 import esdtrewardsAbi from "assets/abi/esdtrewards.abi.json";
 import farmsAbi from "assets/abi/farms.abi.json";
-import fastSwapAbi from "assets/abi/fastp2pswap.abi.json";
 import hypefaucetAbi from "assets/abi/hypefaucet.abi.json";
-import jexAbi from "assets/abi/jex.abi.json";
-import jexSwapAbi from "assets/abi/jex_swap.abi.json";
 import nftHubAbi from "assets/abi/nfthub.abi.json";
-import proteoEliteAbi from "assets/abi/proteo_elite.abi.json";
-import proteoEliteFakeAbi from "assets/abi/proteo_elite_fake.abi.json";
 import qxTagsAbi from "assets/abi/qxtags.abi.json";
 import rewardsAbi from "assets/abi/rewards.abi.json";
 import sftsRewardsAbi from "assets/abi/sft-rewards-sc.abi.json";
@@ -100,30 +92,13 @@ export type WspTypes =
   | "crowdfunding"
   | "lottery"
   | "test"
-  | "lkmerge"
   | "faucet"
   | "rps"
   | "rpsRewards"
   | "dca"
   | "egldLkmexSwap"
   | "sftsRewards"
-  | "mundialBet"
-  | "bettings"
-  | "proteoElite"
-  | "fastp2pSwap"
-  | "jexSwap"
-  | "jex"
   | "farms2"
-  | "usdcProteo"
-  | "proteoEgldNonElite"
-  | "zpayEgldEliteDual"
-  | "egldProteo"
-  | "kroUsdcEliteDual"
-  | "zpayEgldNonEliteDual"
-  | "kroUsdcNonEliteDual"
-  | "proteoEgldElite"
-  | "rideFarmWsp"
-  | "aeroWegld"
   | "smartSwap"
   | "wrapEgld"
   | "wrapEgldShard1"
@@ -149,7 +124,6 @@ export const getInterface = (workspace: WspTypes) => {
       abiUrl = rewardsAbi;
       implementsInterfaces = "Rewards";
       break;
-
     case rpsRewardsWsp:
       simpleAddress = contractAddr.rpsRewards;
       address = new Address(simpleAddress);
@@ -161,103 +135,18 @@ export const getInterface = (workspace: WspTypes) => {
       address = new Address(simpleAddress);
       abiUrl = dcaAbi;
       implementsInterfaces = "Dca";
-
       break;
-
     case sftsRewardsWsp:
       simpleAddress = contractAddr.sftsRewards;
       address = new Address(simpleAddress);
       abiUrl = sftsRewardsAbi;
       implementsInterfaces = "SftRewards";
-
-      break;
-
-    case proteoEliteWsp:
-      simpleAddress = contractAddr.proteoElite;
-      address = new Address(simpleAddress);
-      abiUrl = proteoEliteAbi;
-      implementsInterfaces = "ProteoElite";
-
       break;
     case farms2Wsp:
       simpleAddress = contractAddr.farms2;
       address = new Address(simpleAddress);
       abiUrl = farmsAbi;
       implementsInterfaces = "Farms";
-      break;
-    // proteo farms
-    case usdcProteoWsp:
-      simpleAddress = contractAddr.usdcProteo;
-      address = new Address(simpleAddress);
-      abiUrl = proteoEliteFakeAbi;
-      implementsInterfaces = "ProteoEliteFake";
-      break;
-    case proteoEgldNonEliteWsp:
-      simpleAddress = contractAddr.proteoEgldNonElite;
-      address = new Address(simpleAddress);
-      abiUrl = proteoEliteFakeAbi;
-      implementsInterfaces = "ProteoEliteFake";
-      break;
-    case zpayEgldEliteDualWsp:
-      simpleAddress = contractAddr.zpayEgldEliteDual;
-      address = new Address(simpleAddress);
-      abiUrl = proteoEliteFakeAbi;
-      implementsInterfaces = "ProteoEliteFake";
-      break;
-    case egldProteoWsp:
-      simpleAddress = contractAddr.egldProteo;
-      address = new Address(simpleAddress);
-      abiUrl = proteoEliteFakeAbi;
-      implementsInterfaces = "ProteoEliteFake";
-      break;
-    case kroUsdcEliteDualWsp:
-      simpleAddress = contractAddr.kroUsdcEliteDual;
-      address = new Address(simpleAddress);
-      abiUrl = proteoEliteFakeAbi;
-      implementsInterfaces = "ProteoEliteFake";
-      break;
-    case zpayEgldNonEliteDualWsp:
-      simpleAddress = contractAddr.zpayEgldNonEliteDual;
-      address = new Address(simpleAddress);
-      abiUrl = proteoEliteFakeAbi;
-      implementsInterfaces = "ProteoEliteFake";
-      break;
-    case kroUsdcNonEliteDualWsp:
-      simpleAddress = contractAddr.kroUsdcNonEliteDual;
-      address = new Address(simpleAddress);
-      abiUrl = proteoEliteFakeAbi;
-      implementsInterfaces = "ProteoEliteFake";
-      break;
-    case proteoEgldEliteWsp:
-      simpleAddress = contractAddr.proteoEgldElite;
-      address = new Address(simpleAddress);
-      abiUrl = proteoEliteFakeAbi;
-      implementsInterfaces = "ProteoEliteFake";
-      break;
-    case aeroWegldWsp:
-      simpleAddress = contractAddr.aeroEgldEliteDual;
-      address = new Address(simpleAddress);
-      abiUrl = proteoEliteFakeAbi;
-      implementsInterfaces = "ProteoEliteFake";
-      break;
-    case cyberWegldWsp:
-      simpleAddress = contractAddr.cyberWegkdElite;
-      address = new Address(simpleAddress);
-      abiUrl = proteoEliteFakeAbi;
-      implementsInterfaces = "ProteoEliteFake";
-      break;
-    case fastp2pSwapWsp:
-      simpleAddress = contractAddr.fastp2pswap;
-      address = new Address(simpleAddress);
-      abiUrl = fastSwapAbi;
-      implementsInterfaces = "FastP2PSwap";
-      break;
-
-    case jexWsp:
-      simpleAddress = contractAddr.jexSawp;
-      address = new Address(simpleAddress);
-      abiUrl = jexAbi;
-      implementsInterfaces = "Jex";
       break;
     case smartSwapWsp:
       simpleAddress = contractAddr.smartSwap;
@@ -340,7 +229,6 @@ export const egldLkmexSwapWsp = "egldLkmexSwap";
 export const sftsRewardsWsp = "sftsRewards";
 export const mundialBetWsp = "mundialBet";
 export const bettingsWsp = "bettings";
-export const proteoEliteWsp = "proteoElite";
 export const fastp2pSwapWsp = "fastp2pSwap";
 export const jexSwapWsp = "jexSwap";
 export const jexWsp = "jex";
@@ -351,16 +239,3 @@ export const wrapEgldpWspShard1 = "wrapEgldShard1";
 export const wrapEgldpWspShard2 = "wrapEgldShard2";
 export const hub = "hubWsp";
 export const ashswapWsp = "ashswapWsp";
-
-// proteo farms
-export const usdcProteoWsp = "usdcProteo";
-export const proteoEgldNonEliteWsp = "proteoEgldNonElite";
-export const zpayEgldEliteDualWsp = "zpayEgldEliteDual";
-export const egldProteoWsp = "egldProteo";
-export const kroUsdcEliteDualWsp = "kroUsdcEliteDual";
-export const zpayEgldNonEliteDualWsp = "zpayEgldNonEliteDual";
-export const kroUsdcNonEliteDualWsp = "kroUsdcNonEliteDual";
-export const proteoEgldEliteWsp = "proteoEgldElite";
-export const egldRideWsp = "rideFarmWsp";
-export const aeroWegldWsp = "aeroWegld";
-export const cyberWegldWsp = "cyberWegld";

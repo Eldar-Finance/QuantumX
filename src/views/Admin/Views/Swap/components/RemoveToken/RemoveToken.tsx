@@ -5,7 +5,6 @@ import ActionButton from "components/ActionButton/ActionButton";
 import { useFormik } from "formik";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { fetchAllowedTokens } from "redux/slices/fastSwap/funcs";
 import { selectTokens } from "redux/slices/smartSwaps/smartSwaps";
 import { useAppDispatch } from "utils/hooks/redux";
 import * as yup from "yup";
@@ -15,10 +14,6 @@ const validationSchema = yup.object({
 });
 
 const RemoveToken = () => {
-  const dispatch = useAppDispatch();
-  useEffect(() => {
-    dispatch(fetchAllowedTokens());
-  }, [dispatch]);
 
   const { data: allowedTokens } = useSelector(selectTokens);
 

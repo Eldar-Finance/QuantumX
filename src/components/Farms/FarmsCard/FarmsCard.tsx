@@ -6,17 +6,14 @@ import { getSortedFarm, unparseMultipleFarms } from "utils/functions/farms";
 import { useAppSelector } from "utils/hooks/redux";
 import useGetMultipleElrondTokens from "utils/hooks/useGetMultipleElrondTokens";
 import useGetMultiplePrices from "utils/hooks/useGetMultiplePrices";
-import { IProteoFarm } from "utils/types/farms.interface";
 import {
   IScFarmItem,
   IScUserFarmInfo,
   IScUserFarmRewards,
 } from "utils/types/sc.interface";
 import Farms2Item from "./Farms2Item";
-// import ProteoFarmItem from "./ProteoFarmItem";
 
 interface IProps {
-  proteoArr: IProteoFarm[];
   othersArr?: {
     allFarms: IScFarmItem[];
     userFarmInfo: IScUserFarmInfo[];
@@ -34,12 +31,10 @@ export interface IFarmWithTvl {
   farm: any;
 }
 
-const FarmsCard = ({ proteoArr, isPool, othersArr = null }: IProps) => {
+const FarmsCard = ({ isPool, othersArr = null }: IProps) => {
   const router = useRouter();
   const [accordionIndex, setAccordionIndex] = useState<number[]>([]);
-  const { data: generalFarmsData } = useAppSelector(
-    (state) => state.proteo.generalInfoApp
-  );
+
   const { data: multifarmRewardsLeft } = useAppSelector(
     selectMultiFarms2RewardsLeft
   );
@@ -47,13 +42,11 @@ const FarmsCard = ({ proteoArr, isPool, othersArr = null }: IProps) => {
   const [tokenPrices] = useGetMultiplePrices(
     unparseMultipleFarms(othersArr.allFarms)
       .map((f) => f.stakedToken)
-      .concat(proteoArr.map((pf) => pf.tokenIdentifier))
   );
   
   const { tokens } = useGetMultipleElrondTokens(
     unparseMultipleFarms(othersArr.allFarms)
       .map((f) => f.stakedToken)
-      .concat(proteoArr.map((pf) => pf.tokenIdentifier))
   );
 
   useEffect(() => {
@@ -69,9 +62,7 @@ const FarmsCard = ({ proteoArr, isPool, othersArr = null }: IProps) => {
   let farmStored: IFarmWithTvl[] = getSortedFarm(
     tokenPrices,
     tokens,
-    proteoArr,
     othersArr,
-    generalFarmsData
   );
 
   return (
@@ -85,36 +76,28 @@ const FarmsCard = ({ proteoArr, isPool, othersArr = null }: IProps) => {
       onChange={handleChangePoolIndex}
     >
       {farmStored.map((farm, i) => {
-        if (farm.type === "proteo") {
-          return null
-          // if (!farm.farm.stakedCoin) return null;
-          // return (
-          //   <ProteoFarmItem tvl={farm.totalLocked} key={i} pf={farm.farm} />
-          // );
-        } else {
-          if (!farm.farm.farm.farmId) return null;
-          return (
-            <Farms2Item
-              key={i}
-              farm={farm.farm}
-              tvl={farm.totalLocked}
-              farmUserInfoArr={othersArr.userFarmInfo.filter((userFarm) => {
-                return userFarm.farmId === farm.farm.farm.farmId;
-              })}
-              farmUserRewards={othersArr.userFarm2Rewards.filter((userFarm) => {
-                return userFarm.farmId === farm.farm.farm.farmId;
-              })}
-              stakedTokenPrice={farm.stakedTokenPrice}
-              isPool={isPool}
-              logoSize={isPool ? 40 : 27}
-              multifarmRewardsLeft={
-                multifarmRewardsLeft.find(
-                  (mfr) => mfr.farmId === farm.farm.farm.farmId
-                )?.rewardsLeft || []
-              }
-            />
-          );
-        }
+        if (!farm.farm.farm.farmId) return null;
+        return (
+          <Farms2Item
+            key={i}
+            farm={farm.farm}
+            tvl={farm.totalLocked}
+            farmUserInfoArr={othersArr.userFarmInfo.filter((userFarm) => {
+              return userFarm.farmId === farm.farm.farm.farmId;
+            })}
+            farmUserRewards={othersArr.userFarm2Rewards.filter((userFarm) => {
+              return userFarm.farmId === farm.farm.farm.farmId;
+            })}
+            stakedTokenPrice={farm.stakedTokenPrice}
+            isPool={isPool}
+            logoSize={isPool ? 40 : 27}
+            multifarmRewardsLeft={
+              multifarmRewardsLeft.find(
+                (mfr) => mfr.farmId === farm.farm.farm.farmId
+              )?.rewardsLeft || []
+            }
+          />
+        );
       })}
     </Accordion>
   );

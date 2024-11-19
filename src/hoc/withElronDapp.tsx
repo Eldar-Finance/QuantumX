@@ -1,6 +1,6 @@
 /* eslint-disable react/display-name */
 import { AxiosInterceptorContext } from "@multiversx/sdk-dapp/wrappers/AxiosInterceptorContext";
-import { network } from "api/net.config";
+import { MetamaskSnapWalletAddress, network } from "api/net.config";
 import { sampleAuthenticatedDomains } from "../config";
 import { DappProvider } from "@multiversx/sdk-dapp/wrappers/DappProvider/DappProvider";
 import { TransactionsToastList } from "@multiversx/sdk-dapp/UI/TransactionsToastList";
@@ -20,9 +20,10 @@ const withElronDapp = (Component) => (props) => {
             customNetworkConfig={{
               name: "quantumxConfig",
               walletConnectV2ProjectId: "6bec64742092caa5f1b382312bb17be2",
+              metamaskSnapWalletAddress: MetamaskSnapWalletAddress
             }}
             dappConfig={{
-              isSSR: true,
+              isSSR: false,
               shouldUseWebViewProvider: true,
             }}
           >

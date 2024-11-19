@@ -1,17 +1,10 @@
 import { Box, BoxProps, Center, Flex, FlexProps, Heading, IconButton, Text, useEditable } from "@chakra-ui/react";
-import SwapButton from "../SwapButton/SwapButton";
 import TextField from "../TextField/TextField";
 import BigNumber from "bignumber.js";
-import { ExchangeIcon } from "components/Icons/ui";
-import { ArrowUpDownIcon, NotAllowedIcon } from "@chakra-ui/icons";
+import { NotAllowedIcon } from "@chakra-ui/icons";
 import { useRouter } from "next/dist/client/router";
-import { PropsWithChildren, use, useEffect, useMemo } from "react";
-import { FetchWhitelistedTokens } from "redux/slices/smartSwaps/funcs";
+import { useEffect, useMemo } from "react";
 import {
-  selectFromToken,
-  selectFromTokenValue,
-  selectToToken,
-  selectToTokenValue,
   setFromToken,
   setFromTokenValue,
   setToToken,
@@ -22,22 +15,12 @@ import { useAppDispatch, useAppSelector } from "utils/hooks/redux";
 import { ILpSmartSwap, INomalSmartSwap } from "utils/types/others.interface";
 import useGetSwapInfo from "views/Swap/hooks/useGetSwapInfo";
 import FeeInfo from "../FeeInfo/FeeInfo";
-import SwapDetails from "../SwapDetails/SwapDetails";
 import React, { useState } from 'react';
 import {Aggregator, ChainId} from '@ashswap/ash-sdk-js';
-import { Address } from "@multiversx/sdk-core/out";
-import { sendTransactions } from "@multiversx/sdk-dapp/services";
-import ActionButton from "components/ActionButton/ActionButton";
 import { network, toknesID } from "api/net.config";
-import { set } from "lodash";
 import useGetMultipleElrondTokens from "utils/hooks/useGetMultipleElrondTokens";
 import useGetAccountToken from "utils/hooks/useGetAccountToken";
-import useGetAccountTokens from "utils/hooks/useGetAccountTokens";
 import store from "redux/store";
-import useGetAshSwapFee from "utils/hooks/useGetAshSwapFee";
-import { unwrapEgld, wrapEgld } from "api/sc/calls";
-import CoinTab from "views/Dashboard/components/Dashtabs/WalletTab/CoinTab";
-import NFTLiquidityInterface from "views/Swap/NFTSwap/NFTLiquidityInterface";
 import useSelectSmarSwapTokens from "views/Swap/hooks/useSelectSmarSwapTokens";
 import { useGetFees } from "views/Admin/Views/Swap/hooks";
 import { formatBalance } from "utils/functions/formatBalance";
@@ -52,10 +35,6 @@ const getAshChainId = () => {
   }
 }
 
-// const getValueAfterFee = (token, fee) => {
-//   return BigNumber(token.value).times(BigNumber(1).minus(BigNumber(fee))).toFixed(18).toString();
-// }
-
 export interface SwapToken {
   identifier: string;
   decimals?: number;
@@ -68,9 +47,7 @@ const LpSwap = () => {
   const userAddress = store.getState().userAccount.connectedAddress;
   const router = useRouter();
   const dispatch = useAppDispatch();
-  useEffect(() => {
-    dispatch(FetchWhitelistedTokens());
-  }, [dispatch]);
+
   const chainId = getAshChainId();
 
   const { fees } = useGetFees();
@@ -109,12 +86,16 @@ const LpSwap = () => {
 
   // LP Tokens
   const smartSwapTokens = useAppSelector((state) => state.smartSwap.tokens)
+  console.log('⚠️ ~ smartSwapTokens:', smartSwapTokens);
   const { elrondTokens: allSmartSwapTokens } = useSelectSmarSwapTokens(
     fromTokenToLp.identifier,
     smartSwapTokens,
     "to"
   );
+  console.log('⚠️ ~ allSmartSwapTokens:', allSmartSwapTokens);
+
   const toLpTokens = allSmartSwapTokens.filter((t) => t.name.includes('LP'));
+  console.log('⚠️ ~ toLpTokens:', toLpTokens);
 
   useEffect(() => {
     let isMounted = true;
@@ -235,9 +216,9 @@ const LpSwap = () => {
   // const swapToToken = useAppSelector(selectToToken);
   // const swapToTokenValue = useAppSelector(selectToTokenValue);
 
-  // console.log("⚠️ ~ fromTokenToLp:", fromTokenToLp)
+  console.log("⚠️ ~ fromTokenToLp:", fromTokenToLp)
 
-  // console.log("⚠️ ~ toTokenToLp:", toTokenToLp)
+  console.log("⚠️ ~ toTokenToLp:", toTokenToLp)
 
 
   //
@@ -260,11 +241,14 @@ const LpSwap = () => {
   //
   // LP SWAP DATA
   //
-  const { data, isLoading, isSapwToLp } = useGetSwapInfo();
+  const { data, isLoading, isSwapToLp } = useGetSwapInfo();
+  console.log('⚠️ ~ isSwapToLp:', isSwapToLp);
+  console.log('⚠️ ~ isLoading:', isLoading);
+  console.log('⚠️ ~ data:', data);
 
   useEffect(() => {
     if (data) {
-      if (!isSapwToLp) {
+      if (!isSwapToLp) {
         const swapData = data[data.length - 1] as INomalSmartSwap;
         dispatch(
           setToTokenValue(new BigNumber(swapData.amountReceiv).toFixed(4))
@@ -295,7 +279,7 @@ const LpSwap = () => {
         value: null,
       });
     }
-  }, [data, dispatch, isSapwToLp, toTokenToLp.decimals, toTokenToLp.identifier]);
+  }, [data, dispatch, isSwapToLp, toTokenToLp.decimals, toTokenToLp.identifier]);
 
   useEffect(() => {
     dispatch(setFromTokenValue(fromTokenToLp.value))
@@ -349,7 +333,7 @@ const LpSwap = () => {
           isLoadingAmount={isLoading}
           dollarAmount={
             data &&
-              (isSapwToLp
+              (isSwapToLp
                 ? data[0]?.finalvalue
                 : data[data.length - 1]?.dollarAmount)
           }
@@ -371,7 +355,7 @@ const LpSwap = () => {
           style={{ margin: 'auto' , marginTop:'20px'}}
           disableButton={!hasEnoughBalance || !data || isLoading || userAddress=="" ? true : false}
           opacity={!hasEnoughBalance || !data || isLoading || userAddress=="" ? 0.2 : 1}
-          isSapwToLp={isSapwToLp}
+          isSwapToLp={isSwapToLp}
           swapInfo={data}
           isLoading={isLoading}
           disabledMessage={

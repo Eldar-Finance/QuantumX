@@ -1,7 +1,7 @@
 import { Box, Center, Flex, Image, Link, Switch, Text } from "@chakra-ui/react";
 import auditImg from "assets/farms/audit.png";
 import MyContainer from "components/Container/Container";
-import ProteoFarmsCard from "components/Farms/FarmsCard/FarmsCard";
+import FarmsCard from "components/Farms/FarmsCard/FarmsCard";
 import Search from "components/Farms/Search/Search";
 import Title from "components/Farms/Title/Title";
 import Layout from "components/Layout/Layout";
@@ -22,19 +22,10 @@ import {
   fetchUSerFarmInfo,
   fetchUSerRewardsInfo,
 } from "redux/slices/farms2/funcs";
-import {
-  fetchGeneralInfo,
-  fetchIndex,
-  fetchPrice,
-  fetchRanking,
-  fetchUserInfo,
-  fetchWithdrawInfo,
-} from "redux/slices/proteo/funcs";
 import { selectUserAddress } from "redux/slices/userAcount/account-slice";
 import { formatTokenI } from "utils/functions/tokens";
 import { useAppDispatch, useAppSelector } from "utils/hooks/redux";
 import useGetTotalValuePools from "utils/hooks/useGetTotalValuePools";
-import { proteoPoolsArr } from "./constants";
 import { InfoIcon } from "@chakra-ui/icons";
 import AutoHarvestInfoModal from "views/Admin/Views/Farms/AutoHarvestInfoModal";
 import HarvestAll from "components/Farms/HarvestAll/HarvestAll";
@@ -49,19 +40,11 @@ const Pools = () => {
   const userFarm2Rewards = useSelector(selectUserFarms2Rewards);
 
   const [farms2ToSearch, setFarms2ToSearch] = useState(farms2);
-  const [proteoPoolsArrToSearch, setproteoPoolsArrToSearch] = useState(
-    proteoPoolsArr
-  );
 
   const totalValueLocked = useGetTotalValuePools();
 
   useEffect(() => {
     if (address) {
-      //farms from proteo
-      dispatch(fetchUserInfo(address));
-      dispatch(fetchRanking(address));
-      dispatch(fetchWithdrawInfo(address));
-
       //farms from oteher farms (Quantumn smart constract)
       dispatch(fetchUSerFarmInfo(address));
       dispatch(fetchUSerRewardsInfo(address));
@@ -69,9 +52,6 @@ const Pools = () => {
   }, [address, dispatch]);
 
   useEffect(() => {
-    dispatch(fetchPrice());
-    dispatch(fetchIndex());
-    dispatch(fetchGeneralInfo());
     dispatch(fetchMultiFarms2RewardsLeft());
 
     //elrond network
@@ -91,7 +71,6 @@ const Pools = () => {
   const handleSearch = (query: string) => {
     if (query === "") {
       setFarms2ToSearch(farms2);
-      setproteoPoolsArrToSearch(proteoPoolsArr);
     } else {
       const newFarm2 = farms2.filter((farm) => {
         return (
@@ -101,17 +80,8 @@ const Pools = () => {
             .indexOf(query.toLowerCase()) > -1
         );
       });
-      const newProteoFarms = proteoPoolsArr.filter((farm) => {
-        return (
-          farm.stakedCoin
-            .toString()
-            .toLowerCase()
-            .indexOf(query.toLowerCase()) > -1
-        );
-      });
 
       setFarms2ToSearch(newFarm2);
-      setproteoPoolsArrToSearch(newProteoFarms);
     }
   };
 
@@ -121,14 +91,8 @@ const Pools = () => {
     const fetchData = async () => {
       if (address) {
         await Promise.all([
-          dispatch(fetchUserInfo(address)),
-          dispatch(fetchRanking(address)),
-          dispatch(fetchWithdrawInfo(address)),
           dispatch(fetchUSerFarmInfo(address)),
           dispatch(fetchUSerRewardsInfo(address)),
-          dispatch(fetchPrice()),
-          dispatch(fetchIndex()),
-          dispatch(fetchGeneralInfo()),
           dispatch(fetchMultiFarms2RewardsLeft()),
           dispatch(fetchStats()),
           dispatch(fetchAllFarms()),
@@ -154,15 +118,13 @@ const Pools = () => {
           );
         });
         setFarms2ToSearch(newFarm2);
-        setproteoPoolsArrToSearch([]);
       } else {
         setFarms2ToSearch(farms2);
-        setproteoPoolsArrToSearch(proteoPoolsArr);
       }
     }
   };
 
-  const isSmallDevice = window.innerWidth <= 768;
+  const isSmallDevice = window?.innerWidth <= 768;
   const [modalOpen, setModalOpen] = useState(false);
 
   const handleInfoModal = async () => {
@@ -263,8 +225,7 @@ const Pools = () => {
             <AutoHarvestInfoModal onClose={() => setModalOpen(false)}/>
           }
           <Center mt={"15px"} w="full">
-            <ProteoFarmsCard
-              proteoArr={proteoPoolsArrToSearch}
+            <FarmsCard
               othersArr={{
                 allFarms: farms2ToSearch,
                 userFarmInfo: userFarm2Info.data,

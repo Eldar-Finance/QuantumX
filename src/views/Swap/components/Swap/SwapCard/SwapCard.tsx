@@ -8,7 +8,7 @@ import { ExchangeIcon } from "components/Icons/ui";
 import { ArrowUpDownIcon } from "@chakra-ui/icons";
 import router, { useRouter } from "next/dist/client/router";
 import { PropsWithChildren, use, useEffect, useMemo } from "react";
-import { FetchWhitelistedTokens } from "redux/slices/smartSwaps/funcs";
+
 import {
   selectSlippage,
   setFromToken,

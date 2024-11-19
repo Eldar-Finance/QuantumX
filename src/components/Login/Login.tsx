@@ -272,7 +272,7 @@ export default Login;
 
 const LoginMethod = ({ children, onClick = undefined, isXAlias = false}) => {
   const bg = useColorModeValue("lightGray.lighter", "");
-  const isSmallDevice = window.innerWidth <= 768;
+  const isSmallDevice = window?.innerWidth <= 768;
   const googleImage = isSmallDevice ? GoogleSmall : GoogleLarge;
   const googleImageWidth = isSmallDevice ? "32" : "160";
   return (

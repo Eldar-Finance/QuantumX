@@ -11,8 +11,7 @@ import {
   Tooltip,
 } from "@chakra-ui/react";
 import NextImage from "components/NextImage/NextImage";
-
-import { createContext, Fragment, PropsWithChildren, useEffect } from "react";
+import { createContext, Fragment, PropsWithChildren } from "react";
 import {
   IScFarm2RewardsLeft,
   IScFarmItem,
@@ -21,14 +20,12 @@ import {
 } from "utils/types/sc.interface";
 
 import LpTokenImage from "components/LpTokenImage/LpTokenImage";
-import { addTvlInEldarFarm } from "redux/slices/proteo/proteo";
 import {
   formatBalance,
   formatBalanceDolar,
   formatNumber,
 } from "utils/functions/formatBalance";
 import { formatTokenI } from "utils/functions/tokens";
-import { useAppDispatch } from "utils/hooks/redux";
 import useGetElrondToken from "utils/hooks/useGetElrondToken";
 import useGetMultipleElrondTokens from "utils/hooks/useGetMultipleElrondTokens";
 import useGetMultiplePrices from "utils/hooks/useGetMultiplePrices";
@@ -39,7 +36,6 @@ import EarnedRewards from "./Farms2/EarnedRewards/EarnedRewards";
 import EarnTokens from "./Farms2/EarnTokens/EarnTokens";
 import StakeUnstake from "./Farms2/StakeUnstake/StakeUnstake";
 import Avilable from "./Farms2/Withdraw/Avilable";
-// import { AiOutlinePlus } from 'react-icons/ai';
 
 interface IProps {
   farm: IScFarmItem;
@@ -51,12 +47,6 @@ interface IProps {
   tvl: number;
   multifarmRewardsLeft: IScFarm2RewardsLeft[];
 }
-
-export const ProteoItemContenxt = createContext({
-  tokenInfo: null,
-  tokenInfo2: null,
-  decimals: 0,
-});
 
 const Farms2Item = ({
   farm,
@@ -82,29 +72,6 @@ const Farms2Item = ({
     : { logo: "/images/defaultTokenLogo.png", name: "" };
 
   const price = stakedTokenPrice;
-  const dispatch = useAppDispatch();
-  useEffect(() => {
-    dispatch(
-      addTvlInEldarFarm({
-        balance: formatBalanceDolar(
-          {
-            balance: farm.stakedBalance,
-            decimals: stakingToken.decimals,
-          },
-          price
-        ),
-        id: farm.farm.stakingToken,
-        type: isPool ? "pool" : "farm",
-      })
-    );
-  }, [
-    dispatch,
-    farm.farm.stakingToken,
-    farm.stakedBalance,
-    isPool,
-    price,
-    stakingToken.decimals,
-  ]);
 
   // only for srb farm
   const { isSrbStaker } = useCanUsePool7();

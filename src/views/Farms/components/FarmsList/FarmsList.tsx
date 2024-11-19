@@ -9,13 +9,11 @@ import {
   selectUserFarms2Rewards,
 } from "redux/slices/farms2/farms2-slice";
 import { formatTokenI } from "utils/functions/tokens";
-import { proteoFarmsArr } from "views/Farms/constants";
 import { selectUserAddress } from "redux/slices/userAcount/account-slice";
 import { useAppSelector } from "utils/hooks/redux";
 import { InfoIcon, InfoOutlineIcon } from "@chakra-ui/icons";
 import AutoHarvestInfoModal from "views/Admin/Views/Farms/AutoHarvestInfoModal";
 import ActionButton from "components/ActionButton/ActionButton";
-import HarvestAll from "components/Farms/HarvestAll/HarvestAll";
 import { GoPlusCircle } from "react-icons/go";
 
 const FarmsList = () => {
@@ -25,9 +23,6 @@ const FarmsList = () => {
   const address = useAppSelector(selectUserAddress);
 
   const [farms2ToSearch, setFarms2ToSearch] = useState(farms2);
-  const [proteoFarmsArrToSearch, setproteoFarmsArrToSearch] = useState(
-    proteoFarmsArr
-  );
 
   useEffect(() => {
     if (farms2) {
@@ -38,7 +33,6 @@ const FarmsList = () => {
   const handleSearch = (query: string) => {
     if (query === "") {
       setFarms2ToSearch(farms2);
-      setproteoFarmsArrToSearch(proteoFarmsArr);
     } else {
       const newFarm2 = farms2.filter((farm) => {
         return (
@@ -48,17 +42,8 @@ const FarmsList = () => {
             .indexOf(query.toLowerCase()) > -1
         );
       });
-      const newProteoFarms = proteoFarmsArr.filter((farm) => {
-        return (
-          farm.stakedCoin
-            .toString()
-            .toLowerCase()
-            .indexOf(query.toLowerCase()) > -1
-        );
-      });
 
       setFarms2ToSearch(newFarm2);
-      setproteoFarmsArrToSearch(newProteoFarms);
     }
   };
 
@@ -92,17 +77,12 @@ const FarmsList = () => {
     }
   };
 
-  const isSmallDevice = window.innerWidth <= 768;
+  const isSmallDevice = window?.innerWidth <= 768;
   const [modalOpen, setModalOpen] = useState(false);
 
   const handleInfoModal = async () => {
       setModalOpen(!modalOpen);
   };
-
-  // const userHarvestableFarms = userFarm2Rewards.data.filter((farm) => {
-  //   return farm.harvestableAmount > 0 && farms2ToSearch.some((f) => f.farm.farmId === farm.farmId);
-  // });
-  // console.log("⚠️ ~ harvestable farms: ", userHarvestableFarms)
 
   return (
     <>
@@ -171,7 +151,6 @@ const FarmsList = () => {
       }
       <Center mt={"15px"} w="full">
         <FarmsCard
-          proteoArr={proteoFarmsArrToSearch}
           othersArr={{
             allFarms: farms2ToSearch,
             userFarmInfo: userFarm2Info.data,

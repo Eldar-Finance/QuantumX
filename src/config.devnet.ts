@@ -147,3 +147,6 @@ export const TOKENS_ID = {
 
 export const swapTopTokens = [ TOKENS_ID.egld, TOKENS_ID.wegld, TOKENS_ID.usdc,
 TOKENS_ID.mex, TOKENS_ID.ash ];
+
+export const metamaskSnapWalletAddress =
+  'https://devnet-snap-wallet.multiversx.com';

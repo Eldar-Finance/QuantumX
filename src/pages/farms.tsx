@@ -1,13 +1,14 @@
 import { MetaHead } from "components/MetaHead/MetaHead";
 import type { NextPage } from "next";
-import ProteoFarms from "views/Farms/Farms";
-const ProteoFarmsPage: NextPage = () => {
+import Farms from "views/Farms/Farms";
+
+const FarmsPage: NextPage = () => {
   return (
     <>
       <MetaHead metaTitle="QuantumX Network - Farms" />
-      <ProteoFarms />
+      <Farms />
     </>
   );
 };
 
-export default ProteoFarmsPage;
+export default FarmsPage;

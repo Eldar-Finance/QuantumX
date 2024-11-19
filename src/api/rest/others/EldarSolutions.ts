@@ -25,7 +25,7 @@ interface IEligibleAddr {
   address: string;
 }
 
-export const fetchSmartSwap = async ([tokenA, amountA, tokenB, isSapwToLp]: [
+export const fetchSmartSwap = async ([tokenA, amountA, tokenB, isSwapToLp]: [
   string,
   string,
   string,
@@ -33,7 +33,7 @@ export const fetchSmartSwap = async ([tokenA, amountA, tokenB, isSapwToLp]: [
 ]) => {
 
   const { data } = await api.get<ISmartSwapData[]>(
-    isSapwToLp
+    isSwapToLp
       ? "https://api.web3ninja.eu/api/pathfinderlp2.php"
       : `/pathfinder.php`,
     {

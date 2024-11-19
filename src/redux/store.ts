@@ -3,22 +3,19 @@ import converterReducer from "./slices/converter/converter-slice";
 import eldarSftsReducer from "./slices/eldarSfts/eldarSfts";
 import elrondReducer from "./slices/elrond/elrond-slice";
 import farms2Reducer from "./slices/farms2/farms2-slice";
-import fastSwapReducer from "./slices/fastSwap/fastSwap";
 import hubReducer from "./slices/hub/hub-slice";
 import moondustxReducer from "./slices/moondustx/moondustx-slice";
-import proteoReducer from "./slices/proteo/proteo";
 import siteSettingsReducer from "./slices/settings/settings-reducer";
 import smartSwapReducer from "./slices/smartSwaps/smartSwaps";
 import userAccountReducer from "./slices/userAcount/account-slice";
+
 export function makeStore() {
   return configureStore({
     reducer: {
       siteSettings: siteSettingsReducer,
       userAccount: userAccountReducer,
-      fastSwap: fastSwapReducer,
       smartSwap: smartSwapReducer,
       elrond: elrondReducer,
-      proteo: proteoReducer,
       farms2: farms2Reducer,
       eldarSfts: eldarSftsReducer,
       hub: hubReducer,

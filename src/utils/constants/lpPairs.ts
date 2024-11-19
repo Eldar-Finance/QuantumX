@@ -189,20 +189,6 @@ export const pairs = [
     token2lp: "WEGLD-bd4d79",
   },
   {
-    lpname: "PROTEOEGLDLP",
-    lpidentifier: "PROTEOEGLD-baf054",
-    lpprice: "34.2298",
-    token1lp: "PROTEO-0c7311",
-    token2lp: "WEGLD-bd4d79",
-  },
-  {
-    lpname: "PROTEOUSDCLP",
-    lpidentifier: "PROTEOUSDC-9d584e",
-    lpprice: "4.13284e23",
-    token1lp: "USDC-c76f1f",
-    token2lp: "PROTEO-0c7311",
-  },
-  {
     lpname: "QWTWEGLDLP",
     lpidentifier: "QWTWEGLD-3eff55",
     lpprice: "30669600000",

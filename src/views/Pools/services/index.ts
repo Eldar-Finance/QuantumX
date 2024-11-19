@@ -25,7 +25,7 @@ export async function fetchInfoForNumber7Pool([key, address]) {
 export async function compound(
   farm: IScFarmItem,
   swapInfo: INomalSmartSwap[],
-  isSapwToLp: boolean
+  isSwapToLp: boolean
 ) {
   if (farm.farm.stakingToken === farm.farm.rewardToken) {
     scCall(
@@ -35,7 +35,7 @@ export async function compound(
       360000000
     );
   } else {
-    if (isSapwToLp) {
+    if (isSwapToLp) {
       const swapLpData = swapInfo.filter((_d, i) => i > 0) as INomalSmartSwap[];
       const lpSwapArg = getFirstArgsOfLpSwaps(swapInfo, 2);
       const multiswapArgs = getOthersArgsOfLpSwaps(swapLpData, 2);

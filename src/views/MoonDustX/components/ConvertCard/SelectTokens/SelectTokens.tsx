@@ -14,14 +14,12 @@ import RowToken from "./RowToken";
 const SelectTokens = () => {
   const toTokenToConvert = useAppSelector(selectToTokenDust);
 
-  const [userTokens, _t, isLoading]: IElrondAccountToken[][] =
-    useGetUserTokens();
-  const tokens = useAppSelector((state) => state.smartSwap.tokens);
+  const [userTokens, _t, isLoading]: IElrondAccountToken[][] = useGetUserTokens();
+
   const selectedTokens = useAppSelector(selectConvertInfo);
 
   const finalTokens = userTokens.filter((userToken) => {
     if (
-      tokens.data.includes(userToken.identifier) &&
       userToken.identifier !== "EGLD" &&
       formatBalanceDolar(userToken, userToken.price) > limitDollarAmount &&
       userToken.identifier !== toTokenToConvert
@@ -43,7 +41,7 @@ const SelectTokens = () => {
       rounded="xl"
       px={{ xs: "12px", md: "20px" }}
     >
-      {isLoading || tokens.status === "loading" ? (
+      {isLoading ? (
         <Center w="full" minH="400px">
           <Spinner />
         </Center>

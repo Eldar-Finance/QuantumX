@@ -15,15 +15,11 @@ import {
   fetchUSerFarmInfo,
   fetchUSerRewardsInfo,
 } from "redux/slices/farms2/funcs";
-import {
-  fetchGeneralInfo,
-  fetchIndex,
-  fetchPrice,
-} from "redux/slices/proteo/funcs";
 import { selectUserAddress } from "redux/slices/userAcount/account-slice";
 import { fetchMexPairs } from "redux/slices/userAcount/funcs";
 import { useAppDispatch, useAppSelector } from "utils/hooks/redux";
 import FarmAccordion from "./FarmAccordion";
+
 interface IProps {
   title: string;
   subtitle?: string;
@@ -68,9 +64,6 @@ const FarmList = ({
   }, [address, dispatch]);
   useEffect(() => {
     dispatch(fetchMexPairs());
-    dispatch(fetchPrice());
-    dispatch(fetchIndex());
-    dispatch(fetchGeneralInfo());
     dispatch(fetchMultiFarms2RewardsLeft());
 
     //elrond network

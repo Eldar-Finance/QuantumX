@@ -13,11 +13,11 @@ import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons';
 
 
 const SwapRouteToLp = () => {
-  const { data, isSapwToLp } = useGetSwapInfo();
+  const { data, isSwapToLp } = useGetSwapInfo();
 
   const routes = data
     ? data.map((swapData, i) => {
-        if (!isSapwToLp) {
+        if (!isSwapToLp) {
           const d: INomalSmartSwap = swapData as INomalSmartSwap;
           return {
             token1: formatTokenI(d.token1),

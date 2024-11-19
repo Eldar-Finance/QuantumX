@@ -64,6 +64,9 @@ export const moonDustx = createSlice({
     selectAllTokens: (state) => {
       state.convertInfo = state.allConvertInfo;
     },
+    dissectAllTokens: (state) => {
+      state.convertInfo = [];
+    },
     addSwapInfoToAllConvertTokens: (
       state,
       action: PayloadAction<{
@@ -94,6 +97,7 @@ export const {
   handleConverterToken,
   addSwapInfoToAllConvertTokens,
   selectAllTokens,
+  dissectAllTokens,
   selectToToken,
 } = moonDustx.actions;
 

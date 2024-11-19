@@ -16,7 +16,7 @@ const useCompund = (
   const { tokens: rewardsTokens } = useGetMultipleElrondTokens(
     userFarmRewards.map((r) => r.rewardToken)
   );
-  const { data, isLoading, isSapwToLp } = useGetSwapInfo(
+  const { data, isLoading, isSwapToLp } = useGetSwapInfo(
     farm.farm.rewardToken,
     farm.farm.stakingToken,
     userFarmRewards && userFarmRewards.length > 0 && rewardsTokens.length > 0
@@ -42,7 +42,7 @@ const useCompund = (
   return {
     data,
     isLoading,
-    isSapwToLp,
+    isSwapToLp,
     handleCompound,
   };
 };

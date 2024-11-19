@@ -7,6 +7,7 @@ import {
   TOKENS_ID,
   eldarSftCollection,
   swapTopTokens,
+  metamaskSnapWalletAddress
 } from "../config";
 
 export const toknesID = TOKENS_ID;
@@ -16,4 +17,5 @@ export const gasLimit = GAS_LIMIT;
 export const ChainId = ChainID;
 export const EldarSftCollection = eldarSftCollection;
 export const SwapTopTokens = swapTopTokens;
+export const MetamaskSnapWalletAddress = metamaskSnapWalletAddress;
 export { network };

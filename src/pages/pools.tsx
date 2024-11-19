@@ -1,14 +1,15 @@
 import { MetaHead } from "components/MetaHead/MetaHead";
 import type { NextPage } from "next";
-import ProteoPools from "views/Pools/Pools";
-const ProteoPoolsPage: NextPage = () => {
+import Pools from "views/Pools/Pools";
+
+const PoolsPage: NextPage = () => {
   return (
     <>
       {" "}
       <MetaHead metaTitle="QuantumX Network - Pools" />
-      <ProteoPools />
+      <Pools />
     </>
   );
 };
 
-export default ProteoPoolsPage;
+export default PoolsPage;

@@ -14,7 +14,7 @@ import { swap, swapLp } from "views/Swap/services/swap";
 
 interface IProps extends ButtonProps {
   disableButton?: boolean;
-  isSapwToLp: boolean;
+  isSwapToLp: boolean;
   swapInfo?: ISmartSwapData[];
   isLoading?: boolean;
   disabledMessage?: string;
@@ -24,7 +24,7 @@ const SLIPAGE = 2.5;
 
 const SwapToLpButton = ({
   disableButton,
-  isSapwToLp,
+  isSwapToLp,
   swapInfo,
   isLoading,
   disabledMessage,
@@ -49,7 +49,7 @@ const SwapToLpButton = ({
   const handleSwap = async () => {
     if (swapInfo && swapInfo.length > 0 && fromElrondToken) {
       const gas = 90000000;
-      if (!isSapwToLp) {
+      if (!isSwapToLp) {
         swap(
           swapInfo as INomalSmartSwap[],
           slipapge,
