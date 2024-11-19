@@ -108,7 +108,7 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
             fontSize={"md"}
             position="absolute"
             left={{sm: "-150px", md: "-85px"}}
-            zIndex={99999}  // Increased z-index even further
+            zIndex={999}  // Increased z-index even further
           >
             <Box
               alignContent={"center"}
@@ -137,18 +137,29 @@ const Navbar = ({ onlyConnectButton }: IProps) => {
 
             <Grid
               templateColumns="repeat(2, 1fr)"
-              gap={2}
-              pt={2}
-              width="100%"
+              // gap={2}
+              // pt={2}
+              // width="100%"
+              bg={"black.base"}
+              borderRadius={"xl"}
+              alignContent={"center"}
+              p={2}
+              mb={3}
+              mt={2}
+              justifyContent={"space-between"}
+              justifyItems={"flex-start"}
             >
-              <GridItem>
+              <GridItem justifySelf={"flex-start"}>
                 <Button pt={1} leftIcon={<Icon as={PiBridgeThin} mb={1} boxSize={"20px"}/>} variant={"ghost"} onClick={() => setIsBridgeModalOpen(true)} width="100%">Bridge</Button>
               </GridItem>
-              <GridItem>
-                <QTagButton leftIcon={<Icon as={FaHashtag} mb={1} boxSize={"20px"}/>} width="100%"/>
+              <GridItem justifySelf={"flex-end"}>
+                <QTagButton leftIcon={<Icon as={FaHashtag} mb={1} boxSize={"20px"}/>} width="100%" _hover={{bg: "black.baseDark"}} px={2}/>
               </GridItem>
-              <GridItem>
+              <GridItem justifySelf={"flex-start"}>
                 <Button pt={1} leftIcon={<Icon as={FiLogOut} mb={1} boxSize={"20px"}/>} variant={"ghost"} onClick={handleLogout} width="100%">Disconnect</Button>
+              </GridItem>
+              <GridItem justifySelf={"flex-end"}>
+                <Button pt={1} leftIcon={<Icon as={AiTwotoneEuroCircle} mb={1} boxSize={"20px"}/>} variant={"ghost"} onClick={() => setIsBuyCryptoModalOpen(true)} width="100%">Buy Crypto</Button>
               </GridItem>
             </Grid>
 

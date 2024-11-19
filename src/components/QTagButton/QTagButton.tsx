@@ -7,24 +7,20 @@ import useGetUserQTag from "views/Tags/hooks/useGetQTag";
 
 const QTagButton = ({...props}) => {
   const { tagInfo, isLoading } = useGetUserQTag();
-  const { isLoggedIn } = useGetLoginInfo();
+  // const { isLoggedIn } = useGetLoginInfo();
   return (
-    <Box minW={"120px"}>
-      {isLoggedIn && (
-        <ActionButton
-          as={Link}
-          /* @ts-ignore */
-          href={routeNames.qtags}
-          fontWeight={"500"}
-          fontSize={{ xs: "14px", "2xl": "md" }}
-          h={{xs: "32px", md: "40px"}}
-          variant={"ghost"}
-          {...props}
-        >
-          {tagInfo.tag || (isLoading ? <Spinner size={"sm"} /> : "Claim QxTag")}
-        </ActionButton>
-      )}
-    </Box>
+    <ActionButton
+      as={Link}
+      /* @ts-ignore */
+      href={routeNames.qtags}
+      fontWeight={"500"}
+      fontSize={{ xs: "14px", "2xl": "md" }}
+      h={{xs: "32px", md: "40px"}}
+      variant={"ghost"}
+      {...props}
+    >
+      {tagInfo.tag || (isLoading ? <Spinner size={"sm"} /> : "Claim QxTag")}
+    </ActionButton>
   );
 };
 

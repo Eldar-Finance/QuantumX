@@ -1,5 +1,5 @@
 import { CheckIcon, CopyIcon, Search2Icon, ArrowUpIcon } from "@chakra-ui/icons";
-import { Box, Center, Grid, HStack, Icon, Link, Text, useClipboard, useDisclosure } from "@chakra-ui/react";
+import { Box, Center, Grid, GridItem, HStack, Icon, Link, Text, useClipboard, useDisclosure } from "@chakra-ui/react";
 import { network } from "api/net.config";
 import { selectUserAddress } from "redux/slices/userAcount/account-slice";
 import { formatAddress } from "utils/functions/formatAddress";
@@ -24,24 +24,20 @@ const AddressSection3 = () => {
 
   return (
     <Grid
-      // display={"flex"}
-      justifyContent={"space-between"}
       gridTemplateColumns={"repeat(2, 1fr)"}
-      gap={8}
-      my={2}
-      mx={1}
+      bg={"black.base"}
+      gap={2}
+      justifyItems={"space-between"}
     >
-
-      <HStack onClick={onOpen} cursor={"pointer"} gap={1} justify={"flex-start"}>
+      <HStack onClick={onOpen} cursor={"pointer"} gap={1} justify={"flex-start"} _hover={{bg: "black.baseDark"}} py={2} px={3} borderRadius={"md"} width={"fit-content"} whiteSpace={"nowrap"}>
         <Text>
           Send funds
         </Text>
         <Icon as={ArrowUpIcon} fontSize={"18px"} mb={0}/>
       </HStack>
-
       {isOpen && <TransactionModal isOpen={true} onClose={onClose} />}
     
-      <HStack  onClick={onCopy} cursor={"pointer"} gap={1} justify={"flex-end"} whiteSpace={"nowrap"}>
+      <HStack  onClick={onCopy} cursor={"pointer"} gap={1} justify={"flex-end"} _hover={{bg: "black.baseDark"}} py={2} px={3} borderRadius={"md"} width={"fit-content"} whiteSpace={"nowrap"}>
         <Text>
           Copy address
         </Text>
@@ -52,7 +48,7 @@ const AddressSection3 = () => {
         )}
       </HStack>
 
-      <HStack onClick={onOpenNfts} cursor={"pointer"} gap={1} justify={"flex-start"}>
+      <HStack onClick={onOpenNfts} cursor={"pointer"} gap={1} justify={"flex-start"} bg={"ghost"} _hover={{bg: "black.baseDark"}} py={2} px={3} borderRadius={"md"} width={"fit-content"} whiteSpace={"nowrap"}>
         <Text>
           My NFTs
         </Text>
@@ -65,8 +61,9 @@ const AddressSection3 = () => {
         href={`${network.explorerAddress}/accounts/${address}`}
         aria-label="find in explorer"
         gap={1}
-        whiteSpace={"nowrap"}
         justifySelf={"flex-end"}
+        _hover={{bg: "black.baseDark"}}
+        py={2} px={3} borderRadius={"md"} width={"fit-content"} whiteSpace={"nowrap"}
       >
         <HStack>
         <Text>
