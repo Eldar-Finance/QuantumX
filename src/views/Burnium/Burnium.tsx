@@ -44,6 +44,7 @@ const Burnium = () => {
   const [loadingPosts, setLoadingPosts] = useState(true);
   const [newPostsAvailable, setNewPostsAvailable] = useState(false);
   const [sportsPredictions, setSportsPredictions] = useState([]);
+  const [iframeVisible, setIframeVisible] = useState(false);
 
   useEffect(() => {
     const fetchTransfers = async () => {
@@ -52,6 +53,7 @@ const Burnium = () => {
       // Check if the userAddress is in the whitelist
       if (whitelistedAddresses.includes(userAddress)) {
         setHasAccess(true);
+        setIframeVisible(true);
         setLoading(false);
         return;
       }
@@ -62,12 +64,17 @@ const Burnium = () => {
         const response = await axios.get(url);
         const transfers = response.data;
 
-        const validTickers = ["QXHR-9b0bc6", "QXFLM-06e81a", "QXHR300-f0a5c0", "ELBADGES-2efe5c",];
-        const hasValidTransfer = transfers.some((transfer) =>
+        const validTickers = ["QXHR-9b0bc6", "QXFLM-06e81a", "QXHR300-f0a5c0", "ELBADGES-2efe5c"];
+        const validTransfers = transfers.filter((transfer) =>
           transfer.action?.arguments?.transfers?.some((t) => validTickers.includes(t.ticker))
         );
 
-        setHasAccess(hasValidTransfer);
+        if (validTransfers.length >= 3) {
+          setHasAccess(true);
+          setIframeVisible(true);
+        } else {
+          setIframeVisible(false);
+        }
       } catch (error) {
         console.error("Error fetching transfers:", error);
       } finally {
@@ -116,49 +123,49 @@ const Burnium = () => {
                   You need to connect your wallet and burn one of the specified collections to access this content.
                 </Text>
                 
-                <Box textAlign="center" w="full" bg="#1A202C" p={6} borderRadius="lg" mb={6}>
+                <Box textAlign="center" w="full" bg="#242526" p={6} borderRadius="lg" mb={6}>
                   <Text fontSize="2xl" fontWeight="bold" color="white" mb={4}>
                     Unlock Exclusive Features!
                   </Text>
                   <Flex wrap="wrap" justify="space-between" gap={4}>
-                    <Box bg="#2D3748" p={4} borderRadius="md" w={{ base: "100%", md: "30%" }} mb={4}>
-                      <Text color="gray.200" fontWeight="bold">
-                        🕵️‍♂️ Insights from the Investor
+                    <Box bg="#1F2022" p={4} borderRadius="md" w={{ base: "100%", md: "30%" }} mb={4}>
+                      <Text color="gray.200" fontWeight="semibold">
+                        🕵️‍♂️ Investor Insights
                       </Text>
                       <Text color="gray.300">
-                        Gain insights from the investor who discovered $PNUT at a 27k market cap.
+                        Gain valuable insights from experienced investors who analyze market trends and opportunities.
                       </Text>
                     </Box>
-                    <Box bg="#2D3748" p={4} borderRadius="md" w={{ base: "100%", md: "30%" }} mb={4}>
-                      <Text color="gray.200" fontWeight="bold">
-                        📸 Latest Scan Pictures
+                    <Box bg="#1F2022" p={4} borderRadius="md" w={{ base: "100%", md: "30%" }} mb={4}>
+                      <Text color="gray.200" fontWeight="semibold">
+                        📸 Latest Market Analysis
                       </Text>
                       <Text color="gray.300">
-                        Access the latest scan pictures on Solana and Ethereum, curated by the expert team who found PNUT.
+                        Access the latest market analysis and reports curated by our expert team.
                       </Text>
                     </Box>
-                    <Box bg="#2D3748" p={4} borderRadius="md" w={{ base: "100%", md: "30%" }} mb={4}>
-                      <Text color="gray.200" fontWeight="bold">
-                        ⚡ Fastest Multi-Chain Trading Bot
+                    <Box bg="#1F2022" p={4} borderRadius="md" w={{ base: "100%", md: "30%" }} mb={4}>
+                      <Text color="gray.200" fontWeight="semibold">
+                        ⚡ Advanced Trading Bot
                       </Text>
                       <Text color="gray.300">
-                        Utilize the fastest multi-chain trading bot that automates buying and selling for these picks.
+                        Utilize our advanced trading bot that automates buying and selling based on market signals.
                       </Text>
                     </Box>
-                    <Box bg="#2D3748" p={4} borderRadius="md" w={{ base: "100%", md: "30%" }} mb={4}>
-                      <Text color="gray.200" fontWeight="bold">
-                        📈 Sports Predictions Coming Soon!
+                    <Box bg="#1F2022" p={4} borderRadius="md" w={{ base: "100%", md: "30%" }} mb={4}>
+                      <Text color="gray.200" fontWeight="semibold">
+                        📈 Sell Target Calculations
                       </Text>
                       <Text color="gray.300">
-                        Stay tuned for our upcoming sports predictions feature!
+                        Users who have burned more than 3 NFTs will gain access to personalized sell target calculations for their favorite cryptocurrencies.
                       </Text>
                     </Box>
-                    <Box bg="#2D3748" p={4} borderRadius="md" w={{ base: "100%", md: "30%" }} mb={4}>
-                      <Text color="gray.200" fontWeight="bold">
-                        🔥 More Burns, More Access!
+                    <Box bg="#1F2022" p={4} borderRadius="md" w={{ base: "100%", md: "30%" }} mb={4}>
+                      <Text color="gray.200" fontWeight="semibold">
+                        🔥 Enhanced Access
                       </Text>
                       <Text color="gray.300">
-                        The more you burn, the more access you will have to upcoming features!
+                        The more NFTs you burn, the greater your access to exclusive features and insights.
                       </Text>
                     </Box>
                   </Flex>
@@ -507,6 +514,17 @@ const Burnium = () => {
               <Text color="red.500" textAlign="center" mt={4}>
                 You need to burn one of the specified collections to access this content.
               </Text>
+            )}
+
+            {/* New Iframe Section */}
+            {iframeVisible && (
+              <Box w="full" h="500px" overflow="hidden" borderRadius="lg">
+                <iframe
+                  src="https://wensell.vercel.app/"
+                  style={{ width: '100%', height: '100%', border: 'none' }}
+                  scrolling="yes"
+                />
+              </Box>
             )}
           </VStack>
         </Flex>
