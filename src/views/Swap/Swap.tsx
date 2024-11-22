@@ -52,13 +52,15 @@ const Swap = () => {
 
   useEffect(() => {
     if (graphTokens.length >= 1) {
-      const token1 = graphTokens[0].split('-')[0];
+      const token1 = graphTokens[0];
       setVariable1(token1);
+      console.log("tok1:", token1);
     }
   
     if (graphTokens.length >= 2) {
-      const token2 = graphTokens[1].split('-')[0];
+      const token2 = graphTokens[1];
       setVariable2(token2);
+      console.log("tok2:", token2);
     }
   }, [graphTokens]);
 
@@ -88,8 +90,8 @@ const Swap = () => {
         >
           {/* First Card */}
           <Card
+            flex="1"
             maxW={"520px"}
-            width="100%"
             bg={"black.baseDark"}
             borderRadius="30px"
             border="1px solid"
@@ -99,86 +101,34 @@ const Swap = () => {
             position="relative"
             direction={"row"}
           >
-            {/* The image now uses negative values to sit outside the top left corner */}
             <ImageQxAshFire/>
             <SwapCard setGraphTokens={setGraphTokens} setIsNftSwap={setIsNftSwap} setIsMainSwap={setIsMainSwap}/>
-            
-            {/* {isMainSwap && <IconButton
-                aria-label="Toggle chart"
-                icon={ChartIcon(isSecondCardOpen)}
-                variant={"none"}
-                zIndex="15"
-                onClick={toggleSecondCard}
-                fontSize={"3xl"}
-                size={"xl"}
-                w={"fit-content"}
-                h={"fit-content"}
-                mr={-20}
-                ml={-8}
-                mt={-2}
-              />} */}
-
           </Card>
 
-          {/* Expandable Second Card */}
-          {isSecondCardOpen && ( !isLargeScreen ?
-            <MyModal
-              isOpen={isSecondCardOpen}
-              onClose={toggleSecondCard}
-              isCentered
-              bg={"transparent"}
-              // size={"full"}
-              width={"95%"}
-            >
-              <ModalCloseButton mt={-12} color={"main"} bg={"black.baseDark"} borderRadius={"full"}/>
-              <Card
-                maxW={"520px"}
-                width="100%"
-                bg={"black.baseDark"}
-                borderRadius="30px"
-                // border="1px solid"
-                // borderColor="transparent"
-                p={{ sm: "10px", md: "20px" }}
-                position="relative"
-                height="100%" // Ensure the height matches the first card              
-              >
-                <Box height="100%" overflow="hidden" borderRadius={"30px"}>
-                  <iframe
-                    src={url}
-                    title="QuantumX"
-                    width="100%"
-                    height="650px" // Adjust the height to match the content of the iframe
-                    // style={{ border: 'none' }}
-                  />
-                </Box>
-              </Card>
-            </MyModal> :
-            (isMainSwap && <Card
-              maxW={"520px"}
-              width="100%"
-              bg={"black.baseDark"}
-              borderRadius="30px"
-              // border="1px solid"
-              // borderColor="transparent"
-              p={{ sm: "10px", md: "20px" }}
-              position="relative"
-              height="100%" // Ensure the height matches the first card              
-             >
-               <Box height="100%" overflow="hidden" borderRadius={"30px"}>
-                 <iframe
-                   src={url}
-                   title="QuantumX"
-                   width="100%"
-                   height="628px" // Adjust the height to match the content of the iframe
-                   // style={{ border: 'none' }}
-                 />
-               </Box>
-             </Card>)
-            )
-          }
-
-          
+          {/* Iframe Display */}
+          <Card
+            flex="2"
+            bg={"black.baseDark"}
+            borderRadius="30px"
+            p={{ sm: "10px", md: "20px" }}
+            position="relative"
+            height="100%" // Ensure the height matches the first card              
+          >
+            <Box height="100%" overflow="hidden" borderRadius={"30px"}>
+              <style>
+                {`#dexscreener-embed{position:relative;width:100%;padding-bottom:125%;}@media(min-width:1400px){#dexscreener-embed{padding-bottom:65%;}}#dexscreener-embed iframe{position:absolute;width:100%;height:100%;top:0;left:0;border:0;}`}
+              </style>
+              <div id="dexscreener-embed">
+                <iframe 
+                  src={`https://dexscreener.com/multiversx/${tok2 !== "EGLD" && tok2 !== "WEGLD" && tok2 !== "USDC" ? tok2 : tok1}?embed=1&loadChartSettings=0&trades=0&tabs=0&chartLeftToolbar=0&chartDefaultOnMobile=0&chartTheme=dark&theme=dark&chartStyle=1&chartType=usd&interval=15`} 
+                  title="Dexscreener"
+                  style={{ width: '100%', height: '100%' }}
+                />
+              </div>
+            </Box>
+          </Card>
         </Flex>
+
         {/* Footer Text and Image */}
         <Flex
           mt="50px"
@@ -190,29 +140,18 @@ const Swap = () => {
           >
             Powered by {isMainSwap ? "AshSwap" : ""}
           </Text>
-          {/* <Link
-            href="https://app.ashswap.io/swap/"
-            isExternal
-          > */}
-            <Image
-              alt='img'
-              src={
-                isNftSwap ?
-                "https://xoxno.com/_next/static/media/wide.221596a0.webp" :
-                isMainSwap ? "https://ashswap.io/_next/static/media/logo-ashswap.1639138c.png" : "https://cdn.sanity.io/images/27df2ffs/production/57daf687f81ef2cc9a7ebfbbf9c76ddf4bad9dae-210x36.svg?auto=format"
-              }
-              width={{ sm: "64px", md: isMainSwap ? "24px" : "100px" }}
-              ml={2}
-              // mt={isNftSwap ? 0 : isMainSwap ? 0 : 0}
-              ignoreFallback
-            />
-          {/* </Link> */}
-
-
-          
+          <Image
+            alt='img'
+            src={
+              isNftSwap ?
+              "https://xoxno.com/_next/static/media/wide.221596a0.webp" :
+              isMainSwap ? "https://ashswap.io/_next/static/media/logo-ashswap.1639138c.png" : "https://cdn.sanity.io/images/27df2ffs/production/57daf687f81ef2cc9a7ebfbbf9c76ddf4bad9dae-210x36.svg?auto=format"
+            }
+            width={{ sm: "64px", md: isMainSwap ? "24px" : "100px" }}
+            ml={2}
+            ignoreFallback
+          />
         </Flex>
-
-        
       </MyContainer>
     </Layout>
   );
