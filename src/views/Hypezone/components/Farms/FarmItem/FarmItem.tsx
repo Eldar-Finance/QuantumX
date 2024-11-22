@@ -227,6 +227,7 @@ const Farms2Item = ({
                   justifyContent="center"
                   alignItems={{xs: "flex-end", md: "center"}}
                   height="100%"
+                  // minW={"20px"}
                   mt={{ xs: othersStakedTokens.length > 0 ? "-40px" : "-20px", md: "0" }} // added mt prop to move the component up if screen is xs
                 >
                 {showWarning && (

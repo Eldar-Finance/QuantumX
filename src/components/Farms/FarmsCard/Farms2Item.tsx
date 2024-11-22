@@ -80,7 +80,12 @@ const Farms2Item = ({
 
   const vertGap = 2;
 
-  const showWarning = !farm.totalRewardsLeft && multifarmRewardsLeft.length == 0; 
+  const showWarning = !farm.totalRewardsLeft && multifarmRewardsLeft.filter((r) => r.amount > 0).length === 0; 
+  console.log('⚠️ ~ farm.totalRewardsLeft:', farm.farm.stakingToken);
+  console.log('⚠️ ~ multifarmRewardsLeft:', multifarmRewardsLeft);
+  console.log('⚠️ ~ multifarmRewardsLeft:', multifarmRewardsLeft.filter((r) => r.amount > 0));
+  console.log('⚠️ ~ farm.totalRewardsLeft:', farm.totalRewardsLeft);
+  console.log('⚠️ ~ showWarning:', showWarning);
   return (
     <AccordionItem w="full">
       <Box w="full">
@@ -199,12 +204,12 @@ const Farms2Item = ({
                 justifyContent="center"
                 alignItems={{xs: "center", md: "center"}}
                 height="100%"
+                minW={"20px"}
                 // mt={{ xs: othersStakedTokens.length > 0 ? "-40px" : "-20px", md: "0" }} // added mt prop to move the component up if screen is xs
               >
                 {showWarning && (
                   <Box fontSize={"lg"} textAlign={"center"}>
                     <Tooltip
-                      p={4}
                       label={
                         <div style={{ textAlign: 'center'}}>
                           ⚠️ Caution ⚠️<br />

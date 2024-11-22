@@ -22,6 +22,11 @@ const nextConfig = withPWA({
         hostname: 'i.postimg.cc',
         pathname: '**',
       },
+      {
+        protocol: 'https',
+        hostname: 'tools.multiversx.com',
+        pathname: '**',
+      }
     ]
   },
   distDir: 'build',
