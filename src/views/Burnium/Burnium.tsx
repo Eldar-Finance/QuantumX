@@ -521,7 +521,7 @@ const Burnium = () => {
               <Box w="full" h="500px" overflow="hidden" borderRadius="lg">
                 <iframe
                   src="https://wensell.vercel.app/"
-                  style={{ width: '100%', height: '100%', border: 'none' }}
+                  style={{ width: '100%', height: '700px', border: 'none' }}
                   scrolling="yes"
                 />
               </Box>
