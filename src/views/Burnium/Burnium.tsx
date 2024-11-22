@@ -168,7 +168,7 @@ const Burnium = () => {
                         The more NFTs you burn, the greater your access to exclusive features and insights.
                       </Text>
                     </Box>
-                  </Flex>
+                  </Flex> 
                 </Box>
 
                 <Flex justifyContent="space-between" mt={4} w="full">
