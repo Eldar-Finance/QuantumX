@@ -280,7 +280,7 @@ const SwapCard = ({setGraphTokens} : {setGraphTokens: any}) => {
           setSwapPaths(p);
         });
       } catch (error) {
-        console.log("⚠️ ~ file: SwapCard.tsx:207 ~ error:", error)
+        console.log("SwapCard:", error)
       }
     };
 
@@ -303,7 +303,6 @@ const SwapCard = ({setGraphTokens} : {setGraphTokens: any}) => {
   // INTERACTION DATA
   //
   const [interaction, setInteraction] = useState(null);
-  // console.log("⚠️ ~ file: SwapCard.tsx:223 ~ interaction:", interaction)
   useEffect(() => {
     const handleCreateInteractionFromSwapData = () => {
       try {
@@ -315,7 +314,7 @@ const SwapCard = ({setGraphTokens} : {setGraphTokens: any}) => {
           );
         });
       } catch (error) {
-        console.log("⚠️ ~ file: SwapCard.tsx:237 ~ error:", error)
+        console.log("SwapCard:", error)
       }
     };
 

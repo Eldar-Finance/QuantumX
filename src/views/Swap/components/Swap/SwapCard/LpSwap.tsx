@@ -215,11 +215,6 @@ const LpSwap = () => {
   // const swapToToken = useAppSelector(selectToToken);
   // const swapToTokenValue = useAppSelector(selectToTokenValue);
 
-  // console.log("⚠️ ~ fromTokenToLp:", fromTokenToLp)
-
-  // console.log("⚠️ ~ toTokenToLp:", toTokenToLp)
-
-
   //
   // CONDITIONS
   //

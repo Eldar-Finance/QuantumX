@@ -701,8 +701,6 @@ export const MultipleHarvestCalls = async (
   feeAmount: number,
   gasLimit: number = 90000000,
 ) => {
-  console.log("⚠️ ~ file: index.ts:649 ~ feeAmount::::", feeAmount)
-  console.log("⚠️ ~ file: index.ts:649 ~ feeToken::::", feeToken)
   const transactions = [];
   const sender = store.getState().userAccount.connectedAddress;
   const senderAddress = new Address(sender);
@@ -713,13 +711,9 @@ export const MultipleHarvestCalls = async (
 
   // Fee
   const tokenIdentifier = feeToken.identifier;
-  console.log("⚠️ ~ file: index.ts:659 ~ tokenIdentifier::::", tokenIdentifier)
   const multiplyier = Math.pow(10, feeToken.decimals || 18);
-  console.log("⚠️ ~ file: index.ts:661 ~ multiplyier::::", multiplyier)
   const finalValue = feeAmount * multiplyier;
-  console.log("⚠️ ~ file: index.ts:663 ~ finalValue::::", finalValue)
   const bgFinalValue = new BigNumber(finalValue).toFixed(0);
-  console.log("⚠️ ~ file: index.ts:665 ~ bgFinalValue::::", bgFinalValue)
 
   const factory = new TransferTransactionsFactory(new GasEstimator());
   const transfer = TokenTransfer.fungibleFromBigInteger(tokenIdentifier, bgFinalValue, feeToken.decimals);

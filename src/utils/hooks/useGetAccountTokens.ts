@@ -45,7 +45,6 @@ const useGetAccountTokens = (identifiers: string[]) => {
   //   address !== "" && identifiers.includes("EGLD") ? address : null,
   //   getEgldBalance
   // );
-  // console.log("⚠️ ~ file: useGetAccountTokens.ts:45 ~ egldData:", egldData)
 
   // const data = identifiers.includes("EGLD")
   //   ? {
@@ -60,8 +59,6 @@ const useGetAccountTokens = (identifiers: string[]) => {
 
   // // const finalData = [...elrondTokenData, data];
   // elrondTokenData.push(data);
-
-  // console.log("⚠️ ~ file: useGetAccountTokens.ts:69 ~ finalData:", finalData)
 
   return {
     accountTokens: elrondTokenData,

@@ -88,8 +88,6 @@ const DepositView = memo(({ onClose, farm }: IProps) => {
     },
   });
 
-  // console.log("⚠️ ~ file: DespositView.tsx:72 ~ formik:", formik)
-
   useEffect(() => {
     if (isOneToken) {
       formik.setFieldValue(`tokens.0.tokenDetail`, elrondToken);

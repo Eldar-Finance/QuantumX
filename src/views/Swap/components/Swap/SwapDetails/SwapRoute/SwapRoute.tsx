@@ -13,7 +13,6 @@ import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons';
 
 
 const SwapRoute = ({ swapPaths }: { swapPaths?: SorSwapResponse }) => {
-  // console.log("⚠️ ~ file: SwapRoute.tsx:9 ~ swapPaths:", swapPaths)
   const { data, isSwapToLp } = useGetSwapInfo();
 
   const routes = swapPaths.swaps?.map((path) => {
