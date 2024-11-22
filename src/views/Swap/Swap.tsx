@@ -23,7 +23,7 @@ export function ChartIcon(isSecondCardOpen: boolean) {
       borderColor="transparent"
       _hover={{
         bg: isSecondCardOpen ? 'main' : 'black.base',
-        color: isSecondCardOpen ? 'black.base' : 'main', 
+        color: isSecondCardOpen ? 'black.base' : 'main',  
         borderColor: "main"
       }}
     >
