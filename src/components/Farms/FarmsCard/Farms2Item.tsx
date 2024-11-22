@@ -81,11 +81,7 @@ const Farms2Item = ({
   const vertGap = 2;
 
   const showWarning = !farm.totalRewardsLeft && multifarmRewardsLeft.filter((r) => r.amount > 0).length === 0; 
-  console.log('⚠️ ~ farm.totalRewardsLeft:', farm.farm.stakingToken);
-  console.log('⚠️ ~ multifarmRewardsLeft:', multifarmRewardsLeft);
-  console.log('⚠️ ~ multifarmRewardsLeft:', multifarmRewardsLeft.filter((r) => r.amount > 0));
-  console.log('⚠️ ~ farm.totalRewardsLeft:', farm.totalRewardsLeft);
-  console.log('⚠️ ~ showWarning:', showWarning);
+
   return (
     <AccordionItem w="full">
       <Box w="full">
