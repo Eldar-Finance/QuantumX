@@ -120,7 +120,7 @@ const Swap = () => {
               </style>
               <div id="dexscreener-embed">
                 <iframe 
-                  src={`https://dexscreener.com/multiversx/${tok2 !== "EGLD" && tok2 !== "WEGLD" && tok2 !== "USDC" ? tok2 : tok1}?embed=1&loadChartSettings=0&trades=0&tabs=0&chartLeftToolbar=0&chartDefaultOnMobile=0&chartTheme=dark&theme=dark&chartStyle=1&chartType=usd&interval=15`} 
+                  src={`https://dexscreener.com/multiversx/${tok2 !== "EGLD" && tok2 !== "WEGLD" && tok2 !== "USDC" ? tok2 : tok1}?embed=1&loadChartSettings=0&trades=0&tabs=0&chartLeftToolbar=0&chartDefaultOnMobile=1&chartTheme=dark&theme=dark&chartStyle=1&chartType=usd&interval=15`} 
                   title="Dexscreener"
                   style={{ width: '100%', height: '100%' }}
                 />
