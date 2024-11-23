@@ -13,7 +13,7 @@ import { breakpoints } from 'theme/chakra';
 import xExchangeLogo from "assets/logos/xexchange-light.svg";
 
 export function ChartIcon(isSecondCardOpen: boolean) {
-  return (
+  return ( 
     <Center
       bg={isSecondCardOpen ? 'main' : 'black.base'}
       boxSize={"32px"}
