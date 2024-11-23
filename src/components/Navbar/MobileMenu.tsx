@@ -45,11 +45,13 @@ const MobileMenu = () => {
     if (currentItem) {
       setActiveItem(currentItem.name);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.pathname]);
 
-  const handleItemClick = (route: string, name: string) => {
+  const handleItemClick = (e, route: string, name: string) => {
+    e.preventDefault();
     setActiveItem(name);
-    router.push(route);
+    router.push(route, undefined, { shallow: true });
   };
 
   return (
@@ -70,7 +72,7 @@ const MobileMenu = () => {
           {menuItems.map((item) => (
             <VStack key={item.name} spacing={0}>
               <Button
-                onClick={() => handleItemClick(item.route, item.name)}
+                onClick={(e) => handleItemClick(e, item.route, item.name)}
                 variant="unstyled"
                 position="relative"
                 height="auto"
@@ -190,11 +192,11 @@ const MobileMenu = () => {
                   {moreItems.map((item) => (
                     <Button
                       key={item.name}
-                      onClick={() => {
+                      onClick={(e) => {
                         if (item.name === "Buy Crypto") {
                           setIsBuyCryptoModalOpen(true);
                         } else {
-                          handleItemClick(item.route, item.name);
+                          handleItemClick(e, item.route, item.name);
                         }
                       }}
                       flexDirection="column"

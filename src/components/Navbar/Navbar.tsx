@@ -49,9 +49,9 @@ interface IProps {
 const Navbar = ({ onlyConnectButton }: IProps) => {
   const router = useRouter();
   
-  useEffect(() => {
-    console.log("Navbar component mounted");
-  }, []);
+  // useEffect(() => {
+  //   console.log("Navbar component mounted");
+  // }, []);
 
   const dispatch = useAppDispatch();
   const location = useRouter().asPath;

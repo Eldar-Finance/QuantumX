@@ -107,6 +107,7 @@ const Menu1: React.FC<Menu1Props> = ({ currentPath: initialPath }) => {
           );
         })}
       </Flex>
+      
       <DotsIcon cursor={"pointer"} fontSize={"16px"} onClick={onOpen} />
 
       <AnimatePresence>
