@@ -22,7 +22,7 @@ const SftsStaking = () => {
         }
           mb={{sm: 8, md: 8}}
         />
-        {/* <Alert status='error' mb={4} css={{ borderRadius: '10px' }}>
+        <Alert status='error' mb={4} css={{ borderRadius: '10px' }}>
           <AlertIcon />
           <Box>
             <Text>
@@ -37,19 +37,7 @@ const SftsStaking = () => {
             </Text>
           </Box>
         </Alert>
-      <BadgesCard /> */}
-      <Flex
-        direction="column"
-        align="center"
-        justify="center"
-        w="100%"
-        h="100%"
-        p={20}
-        textAlign="center"
-        fontSize="3xl"
-      >
-        <h1>Update in progress...</h1>
-      </Flex>
+      <BadgesCard />
     </Box>
   );
 };
