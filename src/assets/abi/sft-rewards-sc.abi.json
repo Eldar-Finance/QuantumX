@@ -1,23 +1,27 @@
 {
     "buildInfo": {
         "rustc": {
-            "version": "1.67.0-nightly",
-            "commitHash": "b7bc90fea3b441234a84b49fdafeb75815eebbab",
-            "commitDate": "2022-11-21",
-            "channel": "Nightly",
-            "short": "rustc 1.67.0-nightly (b7bc90fea 2022-11-21)"
+            "version": "1.80.1",
+            "commitHash": "3f5fd8dd41153bc5fdca9427e9e05be2c767ba23",
+            "commitDate": "2024-08-06",
+            "channel": "Stable",
+            "short": "rustc 1.80.1 (3f5fd8dd4 2024-08-06)"
         },
         "contractCrate": {
             "name": "sft-rewards-sc",
-            "version": "0.0.0"
+            "version": "0.1.0"
         },
         "framework": {
-            "name": "elrond-wasm",
-            "version": "0.38.0"
+            "name": "multiversx-sc",
+            "version": "0.53.2"
         }
     },
     "name": "SftRewards",
     "constructor": {
+        "inputs": [],
+        "outputs": []
+    },
+    "upgradeConstructor": {
         "inputs": [],
         "outputs": []
     },
@@ -60,21 +64,13 @@
             "name": "claimRewards",
             "mutability": "mutable",
             "inputs": [],
-            "outputs": [
-                {
-                    "type": "List<tuple<TokenIdentifier,BigUint>>"
-                }
-            ]
+            "outputs": []
         },
         {
             "name": "claimInvestorRewards",
             "mutability": "mutable",
             "inputs": [],
-            "outputs": [
-                {
-                    "type": "List<tuple<TokenIdentifier,BigUint>>"
-                }
-            ]
+            "outputs": []
         },
         {
             "name": "retrieveInvestorRewards",
@@ -87,7 +83,8 @@
             ],
             "outputs": [
                 {
-                    "type": "List<List<tuple<TokenIdentifier,BigUint>>>"
+                    "type": "variadic<List<Reward>>",
+                    "multi_result": true
                 }
             ]
         },
@@ -102,7 +99,8 @@
             ],
             "outputs": [
                 {
-                    "type": "List<List<tuple<TokenIdentifier,BigUint>>>"
+                    "type": "variadic<List<Reward>>",
+                    "multi_result": true
                 }
             ]
         },
@@ -117,7 +115,8 @@
             ],
             "outputs": [
                 {
-                    "type": "List<tuple<SftStakingStatus,TokenIdentifier,u64,BigUint>>"
+                    "type": "variadic<SftStaking>",
+                    "multi_result": true
                 }
             ]
         },
@@ -132,7 +131,8 @@
             ],
             "outputs": [
                 {
-                    "type": "List<u64>"
+                    "type": "variadic<u64>",
+                    "multi_result": true
                 }
             ]
         },
@@ -264,6 +264,44 @@
             "outputs": []
         },
         {
+            "name": "addBlacklisted",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "addresses",
+                    "type": "variadic<Address>",
+                    "multi_arg": true
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "removeBlacklisted",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "addresses",
+                    "type": "variadic<Address>",
+                    "multi_arg": true
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "setQxXsafe",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "address",
+                    "type": "Address"
+                }
+            ],
+            "outputs": []
+        },
+        {
             "name": "sfts",
             "mutability": "readonly",
             "inputs": [],
@@ -320,6 +358,27 @@
                 {
                     "type": "variadic<Address>",
                     "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "blacklisted",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<Address>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "qxXsafe",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "Address"
                 }
             ]
         },
@@ -569,21 +628,6 @@
             ]
         },
         {
-            "name": "getTotalNrOfStakingSftsPerAddress",
-            "mutability": "readonly",
-            "inputs": [
-                {
-                    "name": "address",
-                    "type": "Address"
-                }
-            ],
-            "outputs": [
-                {
-                    "type": "BigUint"
-                }
-            ]
-        },
-        {
             "name": "getTotalNrOfUnlockingSftsPerAddress",
             "mutability": "readonly",
             "inputs": [
@@ -600,21 +644,6 @@
         },
         {
             "name": "getTotalNrOfClaimableSftsPerAddress",
-            "mutability": "readonly",
-            "inputs": [
-                {
-                    "name": "address",
-                    "type": "Address"
-                }
-            ],
-            "outputs": [
-                {
-                    "type": "BigUint"
-                }
-            ]
-        },
-        {
-            "name": "getTotalNrOfClaimedSftsPerAddress",
             "mutability": "readonly",
             "inputs": [
                 {
@@ -653,7 +682,7 @@
             "outputs": []
         }
     ],
-    "events": [],
+    "esdtAttributes": [],
     "hasCallback": false,
     "types": {
         "EsdtTokenPayment": {
@@ -665,6 +694,40 @@
                 },
                 {
                     "name": "token_nonce",
+                    "type": "u64"
+                },
+                {
+                    "name": "amount",
+                    "type": "BigUint"
+                }
+            ]
+        },
+        "Reward": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "token",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "amount",
+                    "type": "BigUint"
+                }
+            ]
+        },
+        "SftStaking": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "status",
+                    "type": "SftStakingStatus"
+                },
+                {
+                    "name": "token",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "nonce",
                     "type": "u64"
                 },
                 {
