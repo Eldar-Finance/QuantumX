@@ -124,7 +124,7 @@ const Swap = () => {
                   title="Dexscreener"
                   style={{ width: '100%', height: '100%' }}
                 />
-              </div>
+              </div>  
             </Box>
           </Card>
         </Flex>
