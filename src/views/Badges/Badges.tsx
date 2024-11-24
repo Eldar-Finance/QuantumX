@@ -34,7 +34,7 @@ const BadgesView = () => {
         <Box width={{ xs: "100%", md: "90%" }} marginX={"auto"} height="100%">
           <Center width={"95%"} margin="auto" flexDir={"column"} gap={"50px"}>
             <SftsStaking />
-            <InvestorsCard />
+            {/* <InvestorsCard /> */}
           </Center>
         </Box>
       </Box>
