@@ -23,11 +23,8 @@ export const fetcRetrieveStakingStats = createAsyncThunk(
       "getRetrieveStakingStats",
       [new AddressValue(new Address(address))]
     );
-    console.log('⚠️ ~ response:', response);
 
-    const { firstValue } = response;
-    console.log('⚠️ ~ firstValue:', firstValue);
-    const data = firstValue.backingCollection.items.map((num) => {
+    const data = response.values?.[0].items.map((num) => {
       return Number(num);
     });
     waitToResetStatus(resetStakingNumbers);
@@ -48,9 +45,6 @@ export const fetchRetrieveNrOfSftsPerStatus = createAsyncThunk(
       "getRetrieveNrOfSftsPerStatus",
       [new AddressValue(new Address(address))]
     );
-    console.log('⚠️ ~ response:', response);
-
-    console.log('⚠️ ~ response:', response);
 
     const data = response.values?.[0].items.map((struct) => {
       return {
@@ -78,11 +72,8 @@ export const fetchSftsRewards = createAsyncThunk(
       "getRetrieveRewardsViews",
       [new AddressValue(new Address(address))]
     );
-    console.log('⚠️ ~ response:', response);
 
-    const { firstValue } = response;
-    console.log('⚠️ ~ firstValue:', firstValue);
-    const data = firstValue.backingCollection.items.map((list) => {
+    const data = response.values?.[0].items.map((list) => {
       return list.backingCollection.items.map((struct) => {
         return {
           tokenI: struct.getFieldValue("token"),
