@@ -23,7 +23,10 @@ export const fetcRetrieveStakingStats = createAsyncThunk(
       "getRetrieveStakingStats",
       [new AddressValue(new Address(address))]
     );
+    console.log('⚠️ ~ response:', response);
+
     const { firstValue } = response;
+    console.log('⚠️ ~ firstValue:', firstValue);
     const data = firstValue.backingCollection.items.map((num) => {
       return Number(num);
     });
@@ -45,14 +48,16 @@ export const fetchRetrieveNrOfSftsPerStatus = createAsyncThunk(
       "getRetrieveNrOfSftsPerStatus",
       [new AddressValue(new Address(address))]
     );
-    const { firstValue } = response;
+    console.log('⚠️ ~ response:', response);
 
-    const data = firstValue.backingCollection.items.map((struct) => {
+    console.log('⚠️ ~ response:', response);
+
+    const data = response.values?.[0].items.map((struct) => {
       return {
-        status: struct.getFieldValue("field0").name,
-        tokenI: struct.getFieldValue("field1"),
-        nonce: struct.getFieldValue("field2").toNumber(),
-        amount: struct.getFieldValue("field3").toNumber(),
+        status: struct.getFieldValue("status").name,
+        tokenI: struct.getFieldValue("token"),
+        nonce: struct.getFieldValue("nonce").toNumber(),
+        amount: struct.getFieldValue("amount").toNumber(),
       };
     });
     waitToResetStatus(resetEldarSftsWithStatus);
@@ -73,7 +78,10 @@ export const fetchSftsRewards = createAsyncThunk(
       "getRetrieveRewardsViews",
       [new AddressValue(new Address(address))]
     );
+    console.log('⚠️ ~ response:', response);
+
     const { firstValue } = response;
+    console.log('⚠️ ~ firstValue:', firstValue);
     const data = firstValue.backingCollection.items.map((list) => {
       return list.backingCollection.items.map((struct) => {
         return {
