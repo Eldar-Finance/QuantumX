@@ -198,7 +198,7 @@ const BadgesCard = () => {
                         isSftsClaimable
                       }
                       w={"full"}
-                    />
+                    />  
                   {isStakerUser && <UnStakeButton w={"full"}/>}
                   {(isUserSftsInUnlocking || isSftsClaimable) && (
                     <ClaimSftsButton w={"full"}
