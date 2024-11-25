@@ -30,10 +30,13 @@ import UnStakeButton from "../UnStakeButton/UnStakeButton";
 
 const BadgesCard = () => {
   const [sfts] = useGetEldarSfts();
+
   const address = useAppSelector((state) => state.userAccount.connectedAddress);
+
   const eldarSftsWithStatus = useAppSelector(
     (state) => state.eldarSfts.eldarSftsWithStatus
   );
+  
   const isStakerUser = useAppSelector((state) => state.eldarSfts.isStakerUser);
   const isSftsClaimable = useAppSelector(
     (state) => state.eldarSfts.isSftsClaimable

@@ -85,8 +85,8 @@ export const fetchSftsRewards = createAsyncThunk(
     const data = firstValue.backingCollection.items.map((list) => {
       return list.backingCollection.items.map((struct) => {
         return {
-          tokenI: struct.getFieldValue("field0"),
-          value: struct.getFieldValue("field1").toNumber(),
+          tokenI: struct.getFieldValue("token"),
+          value: struct.getFieldValue("amount").toNumber(),
         };
       });
     });

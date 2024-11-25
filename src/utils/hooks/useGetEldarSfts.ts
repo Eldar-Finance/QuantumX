@@ -9,6 +9,7 @@ const useGetEldarSfts = (initialValue = undefined) => {
   const nfts: IElrondNFT[] = useAppSelector(
     (state) => state.userAccount.nfts.data
   );
+
   const { data: sftsAllowed, isLoading, error } = useSWR(
     "sftsRewards:allowedSftsWithNonces",
     fetchAllowedSfts
@@ -17,14 +18,17 @@ const useGetEldarSfts = (initialValue = undefined) => {
   const connectedAddress = useAppSelector(
     (state) => state.userAccount.connectedAddress
   );
+
   const [sfts, setSfts] = useState(initialValue || []);
 
   const dispatch = useAppDispatch();
+
   useEffect(() => {
     if (connectedAddress) {
       dispatch(fetchNfts(connectedAddress));
     }
   }, [dispatch, connectedAddress]);
+
   useEffect(() => {
     if (sftsAllowed && nfts.length > 0) {
       const sftsList = [];
