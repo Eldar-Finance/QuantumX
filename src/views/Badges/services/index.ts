@@ -6,18 +6,21 @@ import { IScInvestorRewards } from "utils/types/sc.interface";
 
 export const fetchSuppoertersInfo = async () => {
   const address = store.getState().userAccount.connectedAddress;
+
   const res = await scQuery("sftsRewards", "retrieveInvestorRewards", [
     new AddressValue(new Address(address)),
   ]);
+
   const scData = res.firstValue.valueOf();
+  
   const data: IScInvestorRewards = {
     claimable: scData[0].map((rewardInfo: any) => {
       const d: {
         token: string;
         amount: number;
       } = {
-        token: rewardInfo.field0,
-        amount: rewardInfo.field1,
+        token: rewardInfo.token,
+        amount: rewardInfo.amount,
       };
       return d;
     }),
@@ -26,8 +29,8 @@ export const fetchSuppoertersInfo = async () => {
         token: string;
         amount: number;
       } = {
-        token: rewardInfo.field0,
-        amount: rewardInfo.field1,
+        token: rewardInfo.token,
+        amount: rewardInfo.amount,
       };
       return d;
     }),
@@ -35,6 +38,7 @@ export const fetchSuppoertersInfo = async () => {
 
   return data;
 };
+
 export const fetchAllowedSfts = async () => {
   const res = await scQuery("sftsRewards", "allowedSftsWithNonces");
   const scData = res.firstValue.valueOf();

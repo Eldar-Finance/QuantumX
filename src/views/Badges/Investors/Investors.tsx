@@ -64,10 +64,12 @@ const InvestorsCard = () => {
       }
     }
   };
+  
   const transactionStatus = useTrackTransactionStatus({
     transactionId: sessionId,
     onSuccess: onSuccess,
   });
+
   return (
     <Card px={5} bg="secondary" w="full">
       <CardHeader flexDir="column">
