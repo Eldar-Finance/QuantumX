@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import {
   Box,
   Card,
@@ -27,6 +28,10 @@ import ClaimSftsButton from "../ClaimSftsButton/ClaimSftsButton";
 import SFtsItem from "../SFtsItem/SFtsItem";
 import StakeButton from "../StakeButton/StakeButton";
 import UnStakeButton from "../UnStakeButton/UnStakeButton";
+import { useDisclosure } from "@chakra-ui/react";
+import { Checkbox } from "@chakra-ui/react";
+import { Button } from "@chakra-ui/react";
+import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalFooter } from "@chakra-ui/react";
 
 const BadgesCard = () => {
   const [sfts] = useGetEldarSfts();
@@ -53,6 +58,9 @@ const BadgesCard = () => {
   const [countdownTimer] = useCountDown(stakingNumbers.timeToRetriveSft);
   const { days, hours, mins, secs } = countdownTimer;
   const biggerTime = getBigerTime(days, hours, mins, secs);
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [isChecked, setIsChecked] = useState(false);
 
   return (
     <Card px={5} bg="secondary">
@@ -186,7 +194,6 @@ const BadgesCard = () => {
                   justifyContent={"space-between"}
                   justifySelf={"space-between"}
                   alignItems={"space-between"}
-                  // mt={2}
                   w={"full"}
                 >
                   <StakeButton
@@ -205,11 +212,63 @@ const BadgesCard = () => {
                       disabled={!isSftsClaimable && !isUserSftsInUnlocking}
                     />
                   )}
+                  <Button 
+                    onClick={onOpen} 
+                    style={{
+                      backgroundColor: 'red', // Set background color to red
+                      color: 'white', // Set text color to white
+                      border: 'none', // Remove border
+                      padding: '10px 20px', // Add padding
+                      cursor: 'pointer', // Change cursor to pointer
+                      fontSize: '16px', // Set font size
+                      borderRadius: '5px' // Add rounded corners
+                    }}
+                  >
+                    Burn Everything - soon
+                  </Button>
                 </Grid>
             </Box>
           </CardBody>
         </Card>
       </CardBody>
+
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Confirm Your Action: Burn Your SFTs</ModalHeader>
+          <ModalBody>
+            <Text>
+              Are you sure you want to proceed with burning your SFTs?
+              <br /><br />
+              By clicking the "Burn" button, you will gain exclusive access to the Burnium Membership Page of QuantumX. This membership includes tools designed to enhance your cryptocurrency and investment journey, such as:
+              <ul>
+                <li>Early access to a trading bot</li>
+                <li>Trade signals</li>
+                <li>Calculators</li>
+                <li>And more features planned for the near future</li>
+              </ul>
+              Due to minimal or no revenue in recent months, QuantumX is striving to provide value through these tools, even as we cannot currently distribute additional rewards.
+              <br /><br />
+              However, you also have the choice to keep your SFTs staked, continuing to receive rewards when our revenue increases.
+              <br /><br />
+              Important: By choosing to burn your SFTs, you will lose access to all your QuantumX/Eldar SFTs permanently.
+              <br /><br />
+              Choose wisely, and thank you for being part of QuantumX.
+            </Text>
+            <Checkbox isChecked={isChecked} onChange={(e) => setIsChecked(e.target.checked)}>
+              I agree with the terms and conditions
+            </Checkbox>
+          </ModalBody>
+          <ModalFooter>
+            <Button colorScheme="red" isDisabled={!isChecked}>
+              I want Burnium access now - soon
+            </Button>
+            <Button onClick={onClose} ml={3}>
+              Cancel
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </Card>
   );
 };

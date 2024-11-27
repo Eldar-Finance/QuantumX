@@ -129,9 +129,44 @@ const InvestorsCard = () => {
                   )}
                 </Center>
               </HStack>
+              <Center flexDir={"column"}>
+                {/* Add any additional content you want here */}
+              </Center>
               <ActionButton w={"120px"} onClick={handleClaim} disabled={!userCanClaim}>
                 Claim
               </ActionButton>
+              <Card bg="gray.700" p={4} borderRadius="md">
+                <Text fontSize={"lg"} fontWeight="bold" color="white" mb={2}>
+                  Are you sure you want to proceed with burning your Early Investor status?
+                </Text>
+                <Text fontSize={"md"} fontWeight="bold" color="gray.300" mb={4}>
+                  By clicking the "Burn" button, you will gain exclusive access to the Burnium Membership Page of QuantumX. This membership includes tools designed to enhance your cryptocurrency and investment journey, such as:
+                </Text>
+                <Text fontSize={"md"} fontWeight="bold" color="gray.300" mb={2}>
+                  - Early access to a trading bot
+                </Text>
+                <Text fontSize={"md"} fontWeight="bold" color="gray.300" mb={2}>
+                  - Trade signals
+                </Text>
+                <Text fontSize={"md"} fontWeight="bold" color="gray.300" mb={2}>
+                  - Calculators
+                </Text>
+                <Text fontSize={"md"} fontWeight="bold" color="gray.300" mb={4}>
+                  - And more features planned for the near future
+                </Text>
+                <Text fontSize={"md"} fontWeight="bold" color="gray.300" mb={4}>
+                  Due to minimal or no revenue in recent months, QuantumX is striving to provide value through these tools, even as we cannot currently distribute additional rewards.
+                </Text>
+                <Text fontSize={"md"} fontWeight="bold" color="gray.300" mb={4}>
+                  However, you also have the choice to retain your Early Investor status, keeping the benefits and rewards tied to it when our revenue improves.
+                </Text>
+                <Text fontSize={"md"} fontWeight="bold" color="red.400" mb={4}>
+                  Important: By choosing to burn your Early Investor status, you will lose access to all associated benefits permanently.
+                </Text>
+                <ActionButton w={"full"} colorScheme="red">
+                  I want Burnium Access - Coming Soon
+                </ActionButton>
+              </Card>
             </Flex>
           </CardBody>
         </Card>
