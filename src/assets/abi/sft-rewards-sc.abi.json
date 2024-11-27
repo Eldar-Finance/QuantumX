@@ -73,6 +73,18 @@
             "outputs": []
         },
         {
+            "name": "burnAllForBurnium",
+            "mutability": "mutable",
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "name": "giveUpForBurnium",
+            "mutability": "mutable",
+            "inputs": [],
+            "outputs": []
+        },
+        {
             "name": "retrieveInvestorRewards",
             "mutability": "readonly",
             "inputs": [
