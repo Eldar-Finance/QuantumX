@@ -26,7 +26,7 @@ import { selectUserAddress } from "redux/slices/userAcount/account-slice";
 import { motion } from 'framer-motion';
 import { Box as ChakraBox } from "@chakra-ui/react";
 
-const MotionBox = motion(ChakraBox);
+const MotionBox = motion(ChakraBox); 
 
 const whitelistedAddresses = [
   "erd14jd5ytvhej7tfnzppzu4f299z5nd60yza5hmrmzfvthfzap67h9sg99kl2",
