@@ -15,6 +15,7 @@ import {
 import { Box, Flex, Text, Button, VStack, Grid, Portal, Modal, ModalOverlay, ModalContent } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import BuyTab from "views/Dashboard/components/Dashtabs/BuyTab/BuyTab"; // Import BuyTab
+import Link from "next/link";
 
 const MobileMenu = () => {
   const [isMoreOpen, setIsMoreOpen] = useState(false);
@@ -71,43 +72,21 @@ const MobileMenu = () => {
         <Flex as="nav" justifyContent="space-between" alignItems="center" px={4} py={2}>
           {menuItems.map((item) => (
             <VStack key={item.name} spacing={0}>
-              <Button
-                onClick={(e) => handleItemClick(e, item.route, item.name)}
-                variant="unstyled"
-                position="relative"
-                height="auto"
-                p={0}
-              >
-                <Box
-                  position="absolute"
-                  top="-20px"
-                  left="50%"
-                  transform="translateX(-50%)"
-                  w="48px"
-                  h="48px"
-                  borderRadius="full"
-                  bgGradient={item.color}
-                  display="flex"
-                  alignItems="center"
-                  justifyContent="center"
-                  transition="all 0.3s"
-                  opacity={activeItem === item.name ? 1 : 0}
-                  scale={activeItem === item.name ? 1 : 0}
-                >
-                  <item.icon size={20} color="white" />
-                </Box>
+              <Link href={item.route}>
                 <Box
                   w="40px"
                   h="40px"
                   borderRadius="full"
-                  bg={activeItem === item.name ? "transparent" : "#151515"}
+                  bg={activeItem === item.name ? item.color : "#151515"}
+                  bgGradient={ activeItem === item.name ? item.color : "transparent" }
                   display="flex"
                   alignItems="center"
                   justifyContent="center"
                   transition="all 0.3s"
-                  transform={activeItem === item.name ? 'translateY(12px) scale(0)' : 'translateY(0) scale(1)'}
+                  transform={activeItem === item.name ? 'translateY(-12px) scale(1.2)' : 'translateY(0) scale(1)'}
+                  scale={activeItem === item.name ? 1 : 0.8}
                 >
-                  <item.icon size={18} />
+                  <item.icon size={ activeItem === item.name ? 20 : 18 } />
                 </Box>
                 <Text
                   fontSize="sm"
@@ -115,10 +94,13 @@ const MobileMenu = () => {
                   mt={1}
                   opacity={activeItem === item.name ? 1 : 0.5}
                   transition="all 0.3s"
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
                 >
                   {item.name}
                 </Text>
-              </Button>
+              </Link>
             </VStack>
           ))}
           <VStack spacing={1}>
@@ -129,8 +111,8 @@ const MobileMenu = () => {
               p={0}
             >
               <Box
-                w="48px"
-                h="48px"
+                w="40px"
+                h="40px"
                 borderRadius="full"
                 bg={isMoreOpen ? "linear-gradient(to bottom right, pink.500, purple.500)" : "#151515"}
                 display="flex"
@@ -141,7 +123,7 @@ const MobileMenu = () => {
                 <MoreHorizontal size={20} />
               </Box>
               <Text
-                fontSize="xs"
+                fontSize="sm"
                 mt={1}
                 opacity={isMoreOpen ? 1 : 0.5}
                 transition="all 0.3s"
