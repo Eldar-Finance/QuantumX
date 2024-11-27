@@ -61,6 +61,12 @@
             "outputs": []
         },
         {
+            "name": "unstakeAndClaimSfts",
+            "mutability": "mutable",
+            "inputs": [],
+            "outputs": []
+        },
+        {
             "name": "claimRewards",
             "mutability": "mutable",
             "inputs": [],
