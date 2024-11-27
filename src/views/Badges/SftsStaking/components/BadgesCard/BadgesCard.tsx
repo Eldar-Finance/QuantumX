@@ -240,7 +240,7 @@ const BadgesCard = () => {
             <Text>
               Are you sure you want to proceed with burning your SFTs?
               <br /><br />
-              By clicking the "Burn" button, you will gain exclusive access to the Burnium Membership Page of QuantumX. This membership includes tools designed to enhance your cryptocurrency and investment journey, such as:
+              By clicking the &quot;Burn&quot; button, you will gain exclusive access to the Burnium Membership Page of QuantumX. This membership includes tools designed to enhance your cryptocurrency and investment journey, such as:
               <ul>
                 <li>Early access to a trading bot</li>
                 <li>Trade signals</li>
