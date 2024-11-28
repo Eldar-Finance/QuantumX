@@ -12,7 +12,7 @@ const UnStakeButton = ({ ...props }) => {
   );
 
   const handleSubmit = () => {
-    scCall(sftsRewardsWsp, "unstakeAndClaimSfts", [], 150000000);
+    scCall(sftsRewardsWsp, "unstakeAndClaimSfts", [], 50000000);
   };
 
   return (
