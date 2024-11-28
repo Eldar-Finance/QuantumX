@@ -69,6 +69,10 @@ const InvestorsCard = () => {
   //   transactionId: sessionId,
   //   onSuccess: onSuccess,
   // });
+  
+  const handleSubmit = () => {
+    scCall(sftsRewardsWsp, "giveUpForBurnium", [], 20000000);
+  };
 
   return (
     <Card px={5} bg="secondary" w="full">
@@ -163,8 +167,7 @@ const InvestorsCard = () => {
                 <Text fontSize={"md"} fontWeight="bold" color="red.400" mb={4}>
                   Important: By choosing to burn your Early Investor status, you will lose access to all associated benefits permanently.
                 </Text>
-                <ActionButton w={"full"} colorScheme="red" disabled>
-                  {/* TODO: run the giveUpForBurnium with no input */}
+                <ActionButton w={"full"} colorScheme="red" onClick={handleSubmit}>
                   I want Burnium Access
                 </ActionButton>
               </Card>

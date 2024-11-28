@@ -33,6 +33,8 @@ import { useDisclosure } from "@chakra-ui/react";
 import { Checkbox } from "@chakra-ui/react";
 import { Button } from "@chakra-ui/react";
 import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalFooter } from "@chakra-ui/react";
+import { sftsRewardsWsp } from 'api/sc/sc';
+import { scCall } from 'api/sc/calls';
 
 const BadgesCard = () => {
   const [sfts] = useGetEldarSfts();
@@ -66,7 +68,10 @@ const BadgesCard = () => {
   const stfsRewards = useAppSelector(
     (state) => state.eldarSfts.stfsRewards.data
   );
-  const hasToClaim = stfsRewards.claimable.some((token) => token.value > 0);
+
+  const handleSubmit = () => {
+    scCall(sftsRewardsWsp, "burnAllForBurnium", [], 30000000);
+  };
 
   return (
     <Card px={5} bg="secondary">
@@ -268,7 +273,7 @@ const BadgesCard = () => {
             </Checkbox>
           </ModalBody>
           <ModalFooter>
-            <Button colorScheme="red" isDisabled={!isChecked}>
+            <Button colorScheme="red" isDisabled={!isChecked} onClick={handleSubmit}>
               {/* TODO: run the burnAllForBurnium with no input */}
               I want Burnium access now
             </Button>
