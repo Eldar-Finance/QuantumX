@@ -163,8 +163,9 @@ const InvestorsCard = () => {
                 <Text fontSize={"md"} fontWeight="bold" color="red.400" mb={4}>
                   Important: By choosing to burn your Early Investor status, you will lose access to all associated benefits permanently.
                 </Text>
-                <ActionButton w={"full"} colorScheme="red">
-                  I want Burnium Access - Coming Soon
+                <ActionButton w={"full"} colorScheme="red" disabled>
+                  {/* TODO: run the giveUpForBurnium with no input */}
+                  I want Burnium Access
                 </ActionButton>
               </Card>
             </Flex>

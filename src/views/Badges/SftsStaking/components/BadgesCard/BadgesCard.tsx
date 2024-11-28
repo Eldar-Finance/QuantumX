@@ -11,7 +11,8 @@ import {
   Link,
   Spinner,
   Text,
-  Image
+  Image,
+  Tooltip
 } from "@chakra-ui/react";
 import img3 from "assets/eldar-badges/frameit_logo.svg";
 import img1 from "assets/eldar-badges/logo1.png";
@@ -61,6 +62,11 @@ const BadgesCard = () => {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isChecked, setIsChecked] = useState(false);
+
+  const stfsRewards = useAppSelector(
+    (state) => state.eldarSfts.stfsRewards.data
+  );
+  const hasToClaim = stfsRewards.claimable.some((token) => token.value > 0);
 
   return (
     <Card px={5} bg="secondary">
@@ -177,7 +183,7 @@ const BadgesCard = () => {
                             <Text>
                               {isSftsClaimable
                                 ? "Your sft’s are ready to claim"
-                                : " You have not staked any sft’s yet , if you have some press the stake button"}
+                                : " You have not staked any SFTs/NFTs."}
                             </Text>
                           )}
                         </Box>
@@ -221,10 +227,12 @@ const BadgesCard = () => {
                       padding: '10px 20px', // Add padding
                       cursor: 'pointer', // Change cursor to pointer
                       fontSize: '16px', // Set font size
-                      borderRadius: '5px' // Add rounded corners
+                      borderRadius: '10px' // Add rounded corners
                     }}
+                    disabled={!isStakerUser}
+                    _hover={{}} // Remove hover effect
                   >
-                    Burn Everything - soon
+                    Burn Everything
                   </Button>
                 </Grid>
             </Box>
@@ -261,7 +269,8 @@ const BadgesCard = () => {
           </ModalBody>
           <ModalFooter>
             <Button colorScheme="red" isDisabled={!isChecked}>
-              I want Burnium access now - soon
+              {/* TODO: run the burnAllForBurnium with no input */}
+              I want Burnium access now
             </Button>
             <Button onClick={onClose} ml={3}>
               Cancel
