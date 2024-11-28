@@ -243,7 +243,7 @@ const BadgesCard = () => {
             </Box>
           </CardBody>
         </Card>
-      </CardBody>
+      </CardBody> 
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
