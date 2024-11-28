@@ -15,34 +15,35 @@ const ClaimRewardsButton = ({ ...props }) => {
   const [rewards, setRewards] = useState([]);
   const [sessionId, setSessionId] = useState<string>();
   const isRewards = useAppSelector((state) => state.eldarSfts.isLkmexRewards);
-  const onSuccess = async () => {
-    if (
-      transactionStatus.transactions &&
-      isArray(transactionStatus.transactions) &&
-      transactionStatus.transactions[0].hash
-    ) {
-      const txHash = transactionStatus.transactions[0].hash;
-      const res: any = await getReturnedDataOfscCall(
-        sftsRewardsWsp,
-        txHash,
-        "claimRewards"
-      );
-      if (res.returnCode.text === "ok") {
-        const data = res.firstValue.backingCollection.items.map((struct) => {
-          return {
-            tokenI: struct.getFieldValue("field0"),
-            value: struct.getFieldValue("field1").toNumber(),
-          };
-        });
-        onOpen();
-        setRewards(data);
-      }
-    }
-  };
-  const transactionStatus = useTrackTransactionStatus({
-    transactionId: sessionId,
-    onSuccess: onSuccess,
-  });
+  
+  // const onSuccess = async () => {
+  //   if (
+  //     transactionStatus.transactions &&
+  //     isArray(transactionStatus.transactions) &&
+  //     transactionStatus.transactions[0].hash
+  //   ) {
+  //     const txHash = transactionStatus.transactions[0].hash;
+  //     const res: any = await getReturnedDataOfscCall(
+  //       sftsRewardsWsp,
+  //       txHash,
+  //       "claimRewards"
+  //     );
+  //     if (res.returnCode.text === "ok") {
+  //       const data = res.firstValue.backingCollection.items.map((struct) => {
+  //         return {
+  //           tokenI: struct.getFieldValue("field0"),
+  //           value: struct.getFieldValue("field1").toNumber(),
+  //         };
+  //       });
+  //       onOpen();
+  //       setRewards(data);
+  //     }
+  //   }
+  // };
+  // const transactionStatus = useTrackTransactionStatus({
+  //   transactionId: sessionId,
+  //   onSuccess: onSuccess,
+  // });
 
   const handleClaimRewards = async () => {
     const res = await scCall(sftsRewardsWsp, "claimRewards", [], 50000000);
