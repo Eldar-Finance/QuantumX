@@ -436,7 +436,7 @@ const Burnium = () => {
                             Copy Trade Crypto Whales
                           </Heading>
                           <Text color="gray.300">
-                            GMGN.AI is a game-changer for crypto traders. By combining automated tools, advanced analytics, and copy trading, it simplifies the trading process while helping you avoid common pitfalls. Whether you're a beginner or an experienced trader, this bot can level up your strategy.
+                            GMGN.AI is a game-changer for crypto traders. By combining automated tools, advanced analytics, and copy trading, it simplifies the trading process while helping you avoid common pitfalls. Whether you&apos;re a beginner or an experienced trader, this bot can level up your strategy.
                           </Text>
                           <Link
                             href="https://gmgn.ai/?ref=eJSsbuKd&chain=sol"
