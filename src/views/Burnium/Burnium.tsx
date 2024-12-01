@@ -420,93 +420,42 @@ const Burnium = () => {
                     </CardBody>
                   </Card>
 
-                  {/* Sports Predictions */}
-                  <Card bg={cardBg} borderRadius="lg">
+                  {/* GMGN.AI Card */}
+                  <Card bg={cardBg} w="full" overflow="hidden" borderRadius="lg">
                     <CardBody>
-                      <Flex align="center" gap={2} mb={6}>
-                        <Icon as={Calendar} color={accentColor} boxSize={6} />
-                        <Heading size="md" color={accentColor}>Sports Predictions</Heading>
-                      </Flex>
-                      <VStack
-                        maxH="500px"
-                        overflowY="auto"
-                        spacing={4}
-                        sx={{
-                          "&::-webkit-scrollbar": {
-                            width: "4px",
-                          },
-                          "&::-webkit-scrollbar-track": {
-                            background: "transparent",
-                          },
-                          "&::-webkit-scrollbar-thumb": {
-                            background: accentColor,
-                            borderRadius: "full",
-                          },
-                        }}
-                      >
-                        {sportsPredictions.length > 0 ? (
-                          sportsPredictions.map((prediction) => (
-                            <Box
-                              key={prediction.id}
-                              bg="whiteAlpha.50"
-                              p={6}
-                              borderRadius="lg"
-                              w="full"
-                              transition="all 0.2s"
-                              _hover={{ bg: 'whiteAlpha.100', transform: 'translateY(-2px)' }}
-                            >
-                              <Flex justify="space-between" align="center" mb={3}>
-                                <Text fontSize="lg" fontWeight="bold" color="gray.200">
-                                  {prediction.team1} 
-                                  <Text as="span" color="gray.500" mx={2}>vs</Text> 
-                                  {prediction.team2}
-                                </Text>
-                                <Box
-                                  px={3}
-                                  py={1}
-                                  borderRadius="full"
-                                  bg={prediction.conviction >= 8 ? 'green.400/20' : prediction.conviction >= 6 ? 'yellow.400/20' : 'red.400/20'}
-                                  color={prediction.conviction >= 8 ? 'green.300' : prediction.conviction >= 6 ? 'yellow.300' : 'red.300'}
-                                >
-                                  {prediction.conviction}/10
-                                </Box>
-                              </Flex>
-                              
-                              <Flex align="center" gap={2} mb={3}>
-                                <Box
-                                  px={3}
-                                  py={1}
-                                  borderRadius="full"
-                                  bg={`${accentColor}20`}
-                                  color={accentColor}
-                                  fontSize="sm"
-                                  fontWeight="semibold"
-                                >
-                                  {prediction.prediction}
-                                </Box>
-                              </Flex>
-
-                              <Flex align="center" gap={2} color="gray.500" fontSize="sm">
-                                <Calendar size={14} />
-                                <Text>
-                                  {new Date(prediction.datetime).toLocaleString('el-GR', {
-                                    weekday: 'short',
-                                    month: 'short',
-                                    day: 'numeric',
-                                    hour: '2-digit',
-                                    minute: '2-digit',
-                                    hour12: false
-                                  })}
-                                </Text>
-                              </Flex>
-                            </Box>
-                          ))
-                        ) : (
-                          <Text fontWeight="bold" color="red.500">
-                            No sports predictions available for today.
+                      <Flex direction={{ base: "column", md: "row" }} gap={6}>
+                        <Box w={{ base: "full", md: "50%" }}>
+                          <Image
+                            src="https://gmgn.ai/static/logo/GMGNLogo.webp"
+                            alt="GMGN.AI"
+                            borderRadius="lg"
+                          />
+                        </Box>
+                        <VStack w={{ base: "full", md: "50%" }} align="start" spacing={4}>
+                          <Heading color={accentColor} size="lg">
+                            Copy Trade Crypto Whales
+                          </Heading>
+                          <Text color="gray.300">
+                            GMGN.AI is a game-changer for crypto traders. By combining automated tools, advanced analytics, and copy trading, it simplifies the trading process while helping you avoid common pitfalls. Whether you're a beginner or an experienced trader, this bot can level up your strategy.
                           </Text>
-                        )}
-                      </VStack>
+                          <Link
+                            href="https://gmgn.ai/?ref=eJSsbuKd&chain=sol"
+                            isExternal
+                            bg={accentColor}
+                            color="black"
+                            px={6}
+                            py={3}
+                            borderRadius="lg"
+                            _hover={{ bg: "cyan.400" }}
+                            display="flex"
+                            alignItems="center"
+                            gap={2}
+                          >
+                            <Icon as={MessageCircle} />
+                            Access GMGN.AI
+                          </Link>
+                        </VStack>
+                      </Flex>
                     </CardBody>
                   </Card>
                 </Grid>
