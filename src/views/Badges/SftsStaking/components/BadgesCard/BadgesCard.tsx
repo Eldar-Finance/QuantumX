@@ -207,7 +207,7 @@ const BadgesCard = () => {
                   alignItems={"space-between"}
                   w={"full"}
                 >
-                  <StakeButton
+                  {/* <StakeButton
                       sfts={sfts}
                       address={address}
                       disabled={
@@ -216,7 +216,7 @@ const BadgesCard = () => {
                         isSftsClaimable
                       }
                       w={"full"}
-                    />  
+                    />   */}
                   {isStakerUser && <UnStakeButton w={"full"}/>}
                   {(isUserSftsInUnlocking || isSftsClaimable) && (
                     <ClaimSftsButton w={"full"}
@@ -262,7 +262,7 @@ const BadgesCard = () => {
               </ul>
               Due to minimal or no revenue in recent months, QuantumX is striving to provide value through these tools, even as we cannot currently distribute additional rewards.
               <br /><br />
-              However, you also have the choice to keep your SFTs staked, continuing to receive rewards when our revenue increases.
+              However, you also have the choice to keep your SFTs staked, continuing to receive rewards IF our revenue increases.
               <br /><br />
               Important: By choosing to burn your SFTs, you will lose access to all your QuantumX/Eldar SFTs permanently.
               <br /><br />

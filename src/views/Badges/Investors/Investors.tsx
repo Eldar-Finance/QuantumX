@@ -162,7 +162,7 @@ const InvestorsCard = () => {
                   Due to minimal or no revenue in recent months, QuantumX is striving to provide value through these tools, even as we cannot currently distribute additional rewards.
                 </Text>
                 <Text fontSize={"md"} fontWeight="bold" color="gray.300" mb={4}>
-                  However, you also have the choice to retain your Early Investor status, keeping the benefits and rewards tied to it when our revenue improves.
+                  However, you also have the choice to retain your Early Investor status, keeping the benefits and rewards tied to it IF our revenue improves.
                 </Text>
                 <Text fontSize={"md"} fontWeight="bold" color="red.400" mb={4}>
                   Important: By choosing to burn your Early Investor status, you will lose access to all associated benefits permanently.

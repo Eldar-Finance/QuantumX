@@ -15,9 +15,6 @@ const SftsStaking = () => {
             textAlign="center"
             flexWrap={"wrap"}
           >
-            <Text>
-              Support QuantumX and earn rewards just by holding your SFTs forever.
-            </Text>
           </Flex>
         }
           mb={{sm: 8, md: 8}}
