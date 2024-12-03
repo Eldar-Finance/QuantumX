@@ -33,6 +33,7 @@ const whitelistedAddresses = [
   "erd1tsx3z7u3sdf54srmh3x4n38jcjyh5ad6gu6u262g8rfnf8y6gfds0aw9tu",
   "erd1s5ufsgtmzwtp6wrlwtmaqzs24t0p9evmp58p33xmukxwetl8u76sa2p9rv",
   "erd1kxpkx9dvnp8cmx3azvtp9m6s3uldajxuvqtlhxay20xu5xer77jq025av9",
+  "erd1tsuu9jf4pn8rsus9knrw4ju39ukyp247gug8gahsfdjzdzewd0eqcwgl30",
 ];
 
 const Burnium = () => {
