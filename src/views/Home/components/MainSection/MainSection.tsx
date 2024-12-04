@@ -79,7 +79,7 @@ const MainSection = () => {
         </motion.div>
       </Flex>
 
-      <Center flexDirection={"column"} gap={4}>
+      {/* <Center flexDirection={"column"} gap={4}>
         <Flex>
           <motion.div initial={{ y: 25 }} whileInView={{ y: 0 }}>
             <TotalLocked />
@@ -96,7 +96,7 @@ const MainSection = () => {
             <LockedInHypezone />
           </motion.div>
         </Flex>
-      </Center>
+      </Center> */}
 
       <Center gap="10px">
         <Text fontSize={"lg"}>built on</Text>

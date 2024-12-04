@@ -23,7 +23,7 @@ const Title = ({
       <Text fontSize={"md"} color="white.400" mb="10">
         {subtitle}
       </Text>
-      <Center
+      {/* <Center
         px="6"
         py="3"
         textAlign={"center"}
@@ -39,7 +39,7 @@ const Title = ({
         <Text fontSize={"2xl"} fontWeight="600">
           ${formatNumber(amount)}
         </Text>
-      </Center>
+      </Center> */}
     </Box>
   );
 };

@@ -72,14 +72,7 @@ const Farms = () => {
           />
           <HarvestAll harvestableFarms={userHarvestableFarms} type="farms"/>
 
-          <Link marginTop={"30px"} href="https://valoro.fund?referral=cryptomurmura20" isExternal>
-            <Image
-              src="https://i.postimg.cc/ZqVRrKv2/valoro-banner.png"
-              alt="Description of the image content"
-              style={{ borderRadius: '25px', width: '100%'}}
-              height={{sm: "50px", md: "130px"}}
-            />
-          </Link>
+         
 
           <FarmsList />
 

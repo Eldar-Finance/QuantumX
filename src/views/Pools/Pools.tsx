@@ -154,15 +154,6 @@ const Pools = () => {
           />
           <HarvestAll harvestableFarms={userHarvestableFarms} type="pools"/>
 
-          <Link marginTop={"30px"} href="https://valoro.fund?referral=cryptomurmura20" isExternal>
-            <Image
-              src="https://i.postimg.cc/ZqVRrKv2/valoro-banner.png"
-              alt="Description of the image content"
-              style={{ borderRadius: '25px', width: '100%'}}
-              height={{sm: "50px", md: "130px"}}
-            />
-          </Link>
-
           <Flex w="full" justifyContent={"flex-end"} mt={"1px"}>
             {!isSmallDevice && <Flex  alignItems="end" gap={3} justifyContent={"flex-end"} mt={{ xs: "30px", md: "30px" }}>
               {/* <InfoIcon color="white" ml="3" boxSize={6} onClick={handleInfoModal}/> */}
