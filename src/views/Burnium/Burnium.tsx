@@ -348,7 +348,7 @@ const Burnium = () => {
                                 </Box>
                               )}
                               <Text color={textColor} whiteSpace="pre-line">
-                                {post.content.replace(/https?:\/\/[^\s]+/g, '')}
+                                {post.content.replace(/https?:\/\/[^\s]+/g, "")}
                               </Text>
                               <Text fontSize="xs" color="gray.500" mt={2}>
                                 {post.timestamp}
