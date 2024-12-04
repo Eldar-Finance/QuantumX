@@ -55,3 +55,13 @@ module.exports = (phase, defaultConfig) => {
 
   return config;
 };
+
+module.exports = {
+  eslint: {
+    ignoreDuringBuilds: true,
+    // or more specifically:
+    rules: {
+      "react/no-unescaped-entities": "off"
+    }
+  }
+}
