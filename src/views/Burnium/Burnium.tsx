@@ -35,6 +35,33 @@ const whitelistedAddresses = [
   "erd1tsuu9jf4pn8rsus9knrw4ju39ukyp247gug8gahsfdjzdzewd0eqcwgl30",
 ];
 
+const FeatureCard = ({ title, description, icon, cardBg, textColor, descriptionColor, accentColor }) => (
+  <Box bg={cardBg} p={6} borderRadius="lg" boxShadow="md" height="100%">
+    <Icon as={icon} color={accentColor} boxSize={8} mb={4} />
+    <Text color={textColor} fontWeight="semibold" mb={2}>
+      {title}
+    </Text>
+    <Text color={descriptionColor}>
+      {description}
+    </Text>
+  </Box>
+);
+
+const NFTCard = ({ image, name, cardBg, textColor }) => (
+  <Box textAlign="center" bg={cardBg} p={4} borderRadius="lg" boxShadow="md">
+    <Image
+      src={image}
+      alt={name}
+      borderRadius="lg"
+      mb={2}
+      width="100%"
+      height="200px"
+      objectFit="cover"
+    />
+    <Text color={textColor}>{name}</Text>
+  </Box>
+);
+
 const Burnium = () => {
   const bgColor = useColorModeValue("gray.50", "#242526");
   const cardBg = useColorModeValue("white", "#1E1E1E");
@@ -86,33 +113,6 @@ const Burnium = () => {
     fetchTransfers();
   }, [userAddress]);
 
-  const FeatureCard = ({ title, description, icon }) => (
-    <Box bg={cardBg} p={6} borderRadius="lg" boxShadow="md" height="100%">
-      <Icon as={icon} color={accentColor} boxSize={8} mb={4} />
-      <Text color={textColor} fontWeight="semibold" mb={2}>
-        {title}
-      </Text>
-      <Text color={descriptionColor}>
-        {description}
-      </Text>
-    </Box>
-  );
-
-  const NFTCard = ({ image, name }) => (
-    <Box textAlign="center" bg={cardBg} p={4} borderRadius="lg" boxShadow="md">
-      <Image
-        src={image}
-        alt={name}
-        borderRadius="lg"
-        mb={2}
-        width="100%"
-        height="200px"
-        objectFit="cover"
-      />
-      <Text color={textColor}>{name}</Text>
-    </Box>
-  );
-
   return (
     <Layout>
       <Box bg={bgColor} minH="100vh" py={10}>
@@ -144,16 +144,28 @@ const Burnium = () => {
                       title="Investor Insights"
                       description="Gain valuable insights from experienced investors who analyze market trends and opportunities."
                       icon={TrendingUp}
+                      cardBg={cardBg}
+                      textColor={textColor}
+                      descriptionColor={descriptionColor}
+                      accentColor={accentColor}
                     />
                     <FeatureCard
                       title="Latest Market Analysis"
                       description="Access the latest market analysis and reports curated by our expert team."
                       icon={Calendar}
+                      cardBg={cardBg}
+                      textColor={textColor}
+                      descriptionColor={descriptionColor}
+                      accentColor={accentColor}
                     />
                     <FeatureCard
                       title="Advanced Trading Bot"
                       description="Utilize our advanced trading bot that automates buying and selling based on market signals."
                       icon={MessageCircle}
+                      cardBg={cardBg}
+                      textColor={textColor}
+                      descriptionColor={descriptionColor}
+                      accentColor={accentColor}
                     />
                   </Grid>
                 </Box>
@@ -162,18 +174,26 @@ const Burnium = () => {
                   <NFTCard
                     image="https://media.xoxno.com/nftmedia/QXFLM-06e81a/QXFLM-06e81a-022e.avif"
                     name="QuantumXFlamies"
+                    cardBg={cardBg}
+                    textColor={textColor}
                   />
                   <NFTCard
                     image="https://media.xoxno.com/nftmedia/QXHR-9b0bc6/QXHR-9b0bc6-01a6.avif"
                     name="QuantumXHeroes"
+                    cardBg={cardBg}
+                    textColor={textColor}
                   />
                   <NFTCard
                     image="https://media.xoxno.com/nftmedia/QXHR300-f0a5c0/QXHR300-f0a5c0-01.avif"
                     name="QuantumXHeroes300"
+                    cardBg={cardBg}
+                    textColor={textColor}
                   />
                   <NFTCard
                     image="https://miro.medium.com/v2/resize:fit:1400/format:webp/0*BF5B1ULLD_bnXnna"
                     name="Eldar Badges"
+                    cardBg={cardBg}
+                    textColor={textColor}
                   />
                 </Grid>
 
