@@ -115,8 +115,8 @@ const Burnium = () => {
   }, [userAddress]);
 
   return (
-    <Layout showBackground={false}>
-      <Box  minH="100vh" py={10}>
+    <Layout>
+      <Box minH="100vh" py={10}>
         <MyContainer maxW="1200px">
           <VStack spacing={10} align="stretch">
             <TitleSection />
