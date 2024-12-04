@@ -34,6 +34,7 @@ const whitelistedAddresses = [
   "erd1s5ufsgtmzwtp6wrlwtmaqzs24t0p9evmp58p33xmukxwetl8u76sa2p9rv",
   "erd1kxpkx9dvnp8cmx3azvtp9m6s3uldajxuvqtlhxay20xu5xer77jq025av9",
   "erd1tsuu9jf4pn8rsus9knrw4ju39ukyp247gug8gahsfdjzdzewd0eqcwgl30",
+  "erd1pr497tdmurx6zqyh4wf2pug6vvahx0n0s7e34etzuvwawdtlf62sf7qx3h",
 ];
 
 const FeatureCard = ({ title, description, icon, cardBg, textColor, descriptionColor, accentColor }) => (
