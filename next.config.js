@@ -4,7 +4,7 @@ const withPWA = require("next-pwa")({
   disable: process.env.NODE_ENV === "development",
 });
 
-const nextConfig = withPWA({
+const nextConfig = {
   images: {
     remotePatterns: [
       {
@@ -32,36 +32,24 @@ const nextConfig = withPWA({
   distDir: 'build',
   transpilePackages: ['@multiversx/sdk-dapp'],
   webpack: (config) => {
-    config.resolve.fallback = { fs: false };
-
+    config.resolve.fallback = {
+      fs: false,
+      path: false,
+      crypto: false,
+      os: false,
+      stream: false,
+      buffer: require.resolve('buffer/'),
+    };
     return config;
-  }
-});
-
-const withTM = require("next-transpile-modules")(["@multiversx/sdk-dapp"]);
-
-module.exports = (phase, defaultConfig) => {
-  const plugins = [withTM, (config) => config];
-
-  const config = plugins.reduce(
-    (acc, plugin) => {
-      const update = plugin(acc);
-      return typeof update === "function"
-        ? update(phase, defaultConfig)
-        : update;
-    },
-    { ...nextConfig }
-  );
-
-  return config;
-};
-
-module.exports = {
+  },
   eslint: {
     ignoreDuringBuilds: true,
-    // or more specifically:
     rules: {
       "react/no-unescaped-entities": "off"
     }
   }
-}
+};
+
+const withTM = require("next-transpile-modules")(["@multiversx/sdk-dapp"]);
+
+module.exports = withPWA(withTM(nextConfig));
