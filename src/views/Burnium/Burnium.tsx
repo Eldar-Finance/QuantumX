@@ -68,6 +68,7 @@ const Burnium = () => {
   const accentColor = "#22F6DC";
   const textColor = useColorModeValue("gray.700", "gray.200");
   const descriptionColor = useColorModeValue("gray.600", "gray.400");
+  const motionBoxBg = useColorModeValue("gray.100", "whiteAlpha.100");
 
   const userAddress = useAppSelector(selectUserAddress);
   const [hasAccess, setHasAccess] = useState(false);
@@ -323,7 +324,7 @@ const Burnium = () => {
                           {latestPosts.map((post, index) => (
                             <MotionBox
                               key={post.id}
-                              bg={useColorModeValue("gray.100", "whiteAlpha.100")}
+                              bg={motionBoxBg}
                               p={4}
                               borderRadius="md"
                               initial={{ opacity: 0, y: -20 }}
