@@ -133,7 +133,7 @@ const Burnium = () => {
                   fontSize="xl"
                   fontWeight="bold"
                 >
-                  You need to connect your wallet and burn one of the specified collections to access this content.
+                  You need to connect your wallet and burn one of the specified collections to access this content
                 </Text>
                 
                 <Box bg={cardBg} p={8} borderRadius="lg" boxShadow="xl">
