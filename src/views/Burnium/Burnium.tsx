@@ -40,6 +40,7 @@ const Burnium = () => {
   const cardBg = useColorModeValue("white", "#1E1E1E");
   const accentColor = "#22F6DC";
   const textColor = useColorModeValue("gray.700", "gray.200");
+  const descriptionColor = useColorModeValue("gray.600", "gray.400");
 
   const userAddress = useAppSelector(selectUserAddress);
   const [hasAccess, setHasAccess] = useState(false);
@@ -91,7 +92,7 @@ const Burnium = () => {
       <Text color={textColor} fontWeight="semibold" mb={2}>
         {title}
       </Text>
-      <Text color={useColorModeValue("gray.600", "gray.400")}>
+      <Text color={descriptionColor}>
         {description}
       </Text>
     </Box>
