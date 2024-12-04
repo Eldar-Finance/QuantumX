@@ -25,16 +25,16 @@ const MainSection = () => {
     <Center flexDir={"column"} m="auto" maxW={"692px"} textAlign={"center"}>
       <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}>
         <Heading as="h1" fontSize={{ xs: "3xl", md: "7xl" }} mb="30px" mx={50}>
-          A dimension in the Multiverse only accessible through{" "}
+          A realm within the Multiverse, unlocked solely by{" "}
           <Box as="span" bg="main" bgClip={"text"}>
             {" "}
-            DeFi magic.
+            the power of DeFi.
           </Box>
         </Heading>
       </motion.div>
       <motion.div initial={{ y: 20 }} whileInView={{ y: 0 }}>
         <Heading as="h4" fontSize={{ xs: "md", md: "lg" }} mb={"30px"}>
-          Friction-less swaps. Quantum level latency. Next-level interface.
+          Seamless swaps. Lightning-fast latency. Cutting-edge interface.
         </Heading>
       </motion.div>
 

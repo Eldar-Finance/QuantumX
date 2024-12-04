@@ -21,7 +21,7 @@ export const routeNames = {
   heroes: "/qheroes",
   admin: "/admin-panel",
   panel: "/panel",
-  hypezone: "/hypezone",
+  //hypezone: "/hypezone",
   converter: "/raretopia",
   moondustx: "/moondustx",
   qtags: "/qtags",
@@ -40,7 +40,7 @@ export const routes: {
   // heroes: IRoute;
   admin: IRoute;
   panel: IRoute;
-  hypezone: IRoute;
+  //hypezone: IRoute;
   burnium: IRoute;
   // converter: IRoute;
   moondustx: IRoute;
@@ -63,11 +63,11 @@ export const routes: {
     name: "Pools",
     // onModalAndNavbar: true,
   },
-  hypezone: {
-    path: routeNames.hypezone,
-    name: "Hypezone",
-    onModalAndNavbar: true,
-  },
+ // hypezone: {
+    //path: routeNames.hypezone,
+    //name: "Hypezone",
+    //onModalAndNavbar: true,
+  //},
   hub: {
     path: routeNames.hub,
     name: "Hub",

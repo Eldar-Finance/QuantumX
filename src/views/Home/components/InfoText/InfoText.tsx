@@ -9,8 +9,7 @@ const InfoText = () => {
       textAlign={"center"}
       m="auto"
     >
-      It's not a different place; it's a different way of looking at why things
-      are the way they are.
+      It's not just a new location; it's a fresh perspective on understanding the reasons behind everything.
     </Text>
   );
 };

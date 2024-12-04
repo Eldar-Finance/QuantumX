@@ -1,4 +1,4 @@
-import { Box, Center, Flex, Grid, HStack, Spinner, Text } from "@chakra-ui/react";
+import { Box, Center, Flex, Grid, HStack, VStack, Spinner, Text, Button, useDisclosure } from "@chakra-ui/react";
 import { toknesID } from "api/net.config";
 import Image from "next/image";
 import { memo, useEffect, useState } from "react";
@@ -8,6 +8,78 @@ import useGetElrondToken from "utils/hooks/useGetElrondToken";
 import BadgeStaticBox from "../BadgeStaticBox/BadgeStaticBox";
 import ClaimRewardsButton from "../ClaimRewardsButton/ClaimRewardsButton";
 import useGetMultipleElrondTokens from "utils/hooks/useGetMultipleElrondTokens";
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalCloseButton,
+} from "@chakra-ui/react";
+import { Table, Thead, Tbody, Tr, Th, Td } from "@chakra-ui/react";
+
+const RewardsTable = ({ rewards, title, showTotal = false, totalValue = 0 }) => {
+  if (!rewards?.length) return null;
+  
+  return (
+    <Box>
+      <Text fontSize="md" color="gray.500" mb={4}>{title}</Text>
+      <Table variant="simple" size="sm">
+        <Thead>
+          <Tr>
+            <Th color="gray.400">Token</Th>
+            <Th color="gray.400">Amount</Th>
+          </Tr>
+        </Thead>
+        <Tbody>
+          {rewards.map((reward) => (
+            <TokenRow 
+              key={reward.token}
+              amount={reward.value}
+              token={reward.tokenI}
+            />
+          ))}
+        </Tbody>
+      </Table>
+      {showTotal && (
+        <Text fontSize="sm" color="gray.500" mt={4}>
+          Total Value: ${totalValue.toFixed(2)}
+        </Text>
+      )}
+    </Box>
+  );
+};
+
+const TokenRow = ({ token, amount }) => {
+  const { token: elrondToken, isLoading } = useGetElrondToken(token);
+
+  if (isLoading) return <Tr><Td colSpan={2}><Spinner size="sm" /></Td></Tr>;
+
+  return (
+    <Tr>
+      <Td>
+        <HStack>
+          {elrondToken?.assets?.svgUrl && (
+            <Image
+              src={elrondToken.assets.svgUrl}
+              alt={elrondToken.ticker}
+              width={20}
+              height={20}
+              style={{ maxWidth: "100%", height: "auto" }}
+            />
+          )}
+          <Text color="white">{elrondToken.ticker}</Text>
+        </HStack>
+      </Td>
+      <Td color="white">
+        {formatBalance({
+          balance: amount,
+          decimals: elrondToken.decimals,
+        })}
+      </Td>
+    </Tr>
+  );
+};
 
 const BadgesStatics = () => {
   const { InStakingPeriod } = useAppSelector(
@@ -25,6 +97,8 @@ const BadgesStatics = () => {
   const [totalPaidLkmex, setTotalPaidkemx] = useState(0);
 
   const [sftsInStaking, setSftsInStaking] = useState(0);
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   useEffect(() => {
     const claimableRewards = stfsRewards.claimable;
@@ -91,16 +165,21 @@ const BadgesStatics = () => {
     }
   }, [elrondTokens, stfsRewards.totalRewards]);
 
+  // Calculate claimable amount display
+  const claimableDisplay = stfsRewards?.claimable?.length 
+    ? `${stfsRewards.claimable.length} token${stfsRewards.claimable.length > 1 ? 's' : ''} to claim`
+    : 'Nothing to claim';
+
   return (
     <Flex
-      justifyContent={{ xs: "center", lg: "space-between" }}
+      justifyContent="space-between"
       alignItems="center"
       w={"full"}
-      // mb={6}
       gap={{sm: 10}}
       flexDir={{ xs: "column", lg: "row" }}
     >
-      <Flex alignItems={"flex-start"} flexWrap="wrap">
+      {/* Left side */}
+      <Flex alignItems={"flex-start"}>
         <Flex flexDir={{ xs: "column", md: "row" }} alignItems={{ xs: "center", md: "flex-start" }}>
           <BadgeStaticBox
             alignItems={"flex-start"}
@@ -108,129 +187,70 @@ const BadgesStatics = () => {
             title={" My Staked Badges"}
             content={`${sftsInStaking}  Badges`}
           />
-          <Flex flexDir={{sm: "column", md: "row"}} w={"full"}>
-            <HStack gap={8}>
-              <Center flexDir={"column"} justifyContent="flex-start">
-                <Text fontSize={"12px"} color="gray.500" whiteSpace={"nowrap"}>
-                  You have earned
-                </Text>
-                {stfsRewards?.claimed && (
-                  <>
-                    {stfsRewards.claimed.map((claimedReward) => {
-                      return (
-                        <StaticInfo
-                          amount={claimedReward.value}
-                          token={claimedReward.tokenI}
-                          key={claimedReward.token}
-                        />
-                      );
-                    })}
-                  </>
-                )}
-              </Center>
-              <Center flexDir={"column"} justifyContent="flex-start">
-                <Text fontSize={"12px"} color="gray.500" whiteSpace={"nowrap"}>
-                  Available to claim
-                </Text>
-                {stfsRewards?.claimable && (
-                  <>
-                    {stfsRewards.claimable.map((claimableReward) => {
-                      return (
-                        <StaticInfo
-                          amount={claimableReward.value}
-                          token={claimableReward.tokenI}
-                          key={claimableReward.token}
-                        />
-                      );
-                    })}
-                  </>
-                )}
-              </Center>
-            </HStack>
-            <Center m={4}>
+          
+          <HStack gap={8}>
+            <VStack spacing={2}>
               <ClaimRewardsButton w={"120px"}/>
-            </Center>
-          </Flex>
+              <Text fontSize="xs" color="gray.400">
+                {claimableDisplay}
+              </Text>
+            </VStack>
+            
+            <Button 
+              onClick={onOpen}
+              colorScheme="blue"
+              size="sm"
+              variant="outline"
+              mt="-20px"
+            >
+              View Details
+            </Button>
+          </HStack>
         </Flex>
       </Flex>
-      <Flex
-        flexDir={{ xs: "column", md: "row" }}
-        alignItems={{ xs: "center", md: "flex-start" }}
-      >
-        <BadgeStaticBox
-          title={"Total Badges Staked"}
-          content={`${totalStaked} Badges`}
-        />
-        <Center flexDir={"column"}>
-          <Text fontSize={"12px"} color="gray.500" whiteSpace={"nowrap"}>
-            Paid out
-          </Text>
-          {stfsRewards?.totalRewards && (
-            <>
-              {stfsRewards?.totalRewards.map((r) => {
-                return (
-                  <StaticInfo amount={r.value} token={r.tokenI} key={r.token}
-                  />
-                );
-              })}
-            </>
-          )}
-          <Text fontSize={"14px"} color="gray.500" whiteSpace={"nowrap"}>
-            {/* calc the total $ of rewards by adding their $ value */}
-            Total: &nbsp; ${totalDollarValue}
-          </Text>
-        </Center>
-      </Flex>
+
+      {/* Right side */}
+      <Center flexDir={"column"} justifyContent="flex-start">
+        <Text fontSize={"12px"} color="gray.500" whiteSpace={"nowrap"}>
+          Total Paid Out
+        </Text>
+        <Text color="white" fontSize="xl" fontWeight="bold">
+          ${totalDollarValue.toFixed(2)}
+        </Text>
+      </Center>
+
+      {/* Updated Modal with Tables */}
+      <Modal isOpen={isOpen} onClose={onClose} size="6xl">
+        <ModalOverlay />
+        <ModalContent bg="secondary">
+          <ModalHeader color="white">Rewards Details</ModalHeader>
+          <ModalCloseButton color="white" />
+          <ModalBody pb={6}>
+            <Flex 
+              direction={{ base: "column", md: "row" }} 
+              gap={8} 
+              justify="space-between"
+            >
+              <RewardsTable 
+                rewards={stfsRewards?.claimable} 
+                title="Available to Claim"
+              />
+              <RewardsTable 
+                rewards={stfsRewards?.claimed} 
+                title="Already Claimed"
+              />
+              <RewardsTable 
+                rewards={stfsRewards?.totalRewards} 
+                title="Total Paid Out"
+                showTotal={true}
+                totalValue={totalDollarValue}
+              />
+            </Flex>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
     </Flex>
   );
 };
 
 export default memo(BadgesStatics);
-
-const StaticInfo = ({ token, amount }) => {
-  const { token: elrondToken, isLoading } = useGetElrondToken(token);
-
-  return (
-    <Center
-      flexDir={"column"}
-      justifyContent="flex-start"
-      px={3}
-      mb={1}
-      alignItems={{ xs: "center", md: "flex-start" }}
-    >
-      <Box
-        as="span"
-        fontSize={"xl"}
-        fontWeight="bold"
-        whiteSpace={"nowrap"}
-        color="white"
-      >
-        <Center textAlign={"center"}>
-          {isLoading ? (
-            <Spinner />
-          ) : (
-            <>
-              <Text mr={2} w="full" textAlign={"center"}>
-                {formatBalance({
-                  balance: amount,
-                  decimals: elrondToken.decimals,
-                })}
-              </Text>
-              {elrondToken?.assets?.svgUrl && (
-                <Image
-                  src={elrondToken.assets.svgUrl}
-                  alt={elrondToken.ticker}
-                  width={24}
-                  height={24}
-                  style={{
-                    maxWidth: "100%",
-                    height: "auto"
-                  }} />
-              )}
-            </>
-          )}
-        </Center>
-      </Box>
-    </Center>
-  );
-};

@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import MyContainer from "components/Container/Container";
-import Layout from "components/Layout/Layout";
-import WrapperPages from "hoc/WrapperPages";
-import withElronDapp from "hoc/withElronDapp";
-import TitleSection from "./TitleSection";
+import { motion } from 'framer-motion';
 import {
   Box,
+  Button,
   Card,
   CardBody,
   Container,
@@ -19,14 +16,16 @@ import {
   VStack,
   Icon,
   useColorModeValue,
+  Spinner,
 } from "@chakra-ui/react";
-import { Calendar, TrendingUp, MessageCircle } from "lucide-react";
+import { Calendar, TrendingUp, MessageCircle, ExternalLink } from 'lucide-react';
 import { useAppSelector } from "utils/hooks/redux";
 import { selectUserAddress } from "redux/slices/userAcount/account-slice";
-import { motion } from 'framer-motion';
-import { Box as ChakraBox } from "@chakra-ui/react";
+import Layout from "components/Layout/Layout";
+import MyContainer from "components/Container/Container";
+import TitleSection from "./TitleSection";
 
-const MotionBox = motion(ChakraBox); 
+const MotionBox = motion(Box);
 
 const whitelistedAddresses = [
   "erd14jd5ytvhej7tfnzppzu4f299z5nd60yza5hmrmzfvthfzap67h9sg99kl2",
@@ -37,22 +36,21 @@ const whitelistedAddresses = [
 ];
 
 const Burnium = () => {
-  const cardBg = "#242526";
+  const bgColor = useColorModeValue("gray.50", "#242526");
+  const cardBg = useColorModeValue("white", "#1E1E1E");
   const accentColor = "#22F6DC";
+  const textColor = useColorModeValue("gray.700", "gray.200");
+
   const userAddress = useAppSelector(selectUserAddress);
   const [hasAccess, setHasAccess] = useState(false);
   const [loading, setLoading] = useState(true);
   const [latestPosts, setLatestPosts] = useState([]);
-  const [loadingPosts, setLoadingPosts] = useState(true);
-  const [newPostsAvailable, setNewPostsAvailable] = useState(false);
-  const [sportsPredictions, setSportsPredictions] = useState([]);
   const [iframeVisible, setIframeVisible] = useState(false);
 
   useEffect(() => {
     const fetchTransfers = async () => {
       if (!userAddress) return;
 
-      // Check if the userAddress is in the whitelist
       if (whitelistedAddresses.includes(userAddress)) {
         setHasAccess(true);
         setIframeVisible(true);
@@ -84,404 +82,326 @@ const Burnium = () => {
       }
     };
 
-    const fetchPosts = async () => {
-      // Removed Supabase fetch logic
-    };
-
     fetchTransfers();
-    fetchPosts();
-    const interval = setInterval(fetchPosts, 5000);
+  }, [userAddress]);
 
-    return () => clearInterval(interval);
-  }, [userAddress, latestPosts]); 
+  const FeatureCard = ({ title, description, icon }) => (
+    <Box bg={cardBg} p={6} borderRadius="lg" boxShadow="md" height="100%">
+      <Icon as={icon} color={accentColor} boxSize={8} mb={4} />
+      <Text color={textColor} fontWeight="semibold" mb={2}>
+        {title}
+      </Text>
+      <Text color={useColorModeValue("gray.600", "gray.400")}>
+        {description}
+      </Text>
+    </Box>
+  );
+
+  const NFTCard = ({ image, name }) => (
+    <Box textAlign="center" bg={cardBg} p={4} borderRadius="lg" boxShadow="md">
+      <Image
+        src={image}
+        alt={name}
+        borderRadius="lg"
+        mb={2}
+        width="100%"
+        height="200px"
+        objectFit="cover"
+      />
+      <Text color={textColor}>{name}</Text>
+    </Box>
+  );
 
   return (
     <Layout>
-      <MyContainer pb="70px">
-        <Flex
-          w="full"
-          justifyContent="center"
-          flexDir="column"
-          alignContent="center"
-          maxW="1500px"
-          mx="auto"
-        >
-          <TitleSection />
-          
-          <VStack spacing={6} w="full">
+      <Box bg={bgColor} minH="100vh" py={10}>
+        <MyContainer maxW="1200px">
+          <VStack spacing={10} align="stretch">
+            <TitleSection />
+            
             {loading && userAddress ? (
-              <Text color="gray.500" textAlign="center" mt={4}>
-                Loading...
-              </Text>
+              <Flex justify="center" align="center" h="200px">
+                <Spinner size="xl" color={accentColor} />
+              </Flex>
             ) : !userAddress ? (
-              <>
+              <VStack spacing={8} align="stretch">
                 <Text 
                   color="red.500" 
-                  textAlign="center" 
-                  mt={4} 
+                  textAlign="center"
                   fontSize="xl"
                   fontWeight="bold"
                 >
                   You need to connect your wallet and burn one of the specified collections to access this content.
                 </Text>
                 
-                <Box textAlign="center" w="full" bg="#242526" p={6} borderRadius="lg" mb={6}>
-                  <Text fontSize="2xl" fontWeight="bold" color="white" mb={4}>
+                <Box bg={cardBg} p={8} borderRadius="lg" boxShadow="xl">
+                  <Heading as="h2" size="xl" textAlign="center" mb={6} color={textColor}>
                     Unlock Exclusive Features!
-                  </Text>
-                  <Flex wrap="wrap" justify="space-between" gap={4}>
-                    <Box bg="#1F2022" p={4} borderRadius="md" w={{ base: "100%", md: "30%" }} mb={4}>
-                      <Text color="gray.200" fontWeight="semibold">
-                        🕵️‍♂️ Investor Insights
-                      </Text>
-                      <Text color="gray.300">
-                        Gain valuable insights from experienced investors who analyze market trends and opportunities.
-                      </Text>
-                    </Box>
-                    <Box bg="#1F2022" p={4} borderRadius="md" w={{ base: "100%", md: "30%" }} mb={4}>
-                      <Text color="gray.200" fontWeight="semibold">
-                        📸 Latest Market Analysis
-                      </Text>
-                      <Text color="gray.300">
-                        Access the latest market analysis and reports curated by our expert team.
-                      </Text>
-                    </Box>
-                    <Box bg="#1F2022" p={4} borderRadius="md" w={{ base: "100%", md: "30%" }} mb={4}>
-                      <Text color="gray.200" fontWeight="semibold">
-                        ⚡ Advanced Trading Bot
-                      </Text>
-                      <Text color="gray.300">
-                        Utilize our advanced trading bot that automates buying and selling based on market signals.
-                      </Text>
-                    </Box>
-                    <Box bg="#1F2022" p={4} borderRadius="md" w={{ base: "100%", md: "30%" }} mb={4}>
-                      <Text color="gray.200" fontWeight="semibold">
-                        📈 Sell Target Calculations
-                      </Text>
-                      <Text color="gray.300">
-                        Users who have burned more than 3 NFTs will gain access to personalized sell target calculations for their favorite cryptocurrencies.
-                      </Text>
-                    </Box>
-                    <Box bg="#1F2022" p={4} borderRadius="md" w={{ base: "100%", md: "30%" }} mb={4}>
-                      <Text color="gray.200" fontWeight="semibold">
-                        🔥 Enhanced Access
-                      </Text>
-                      <Text color="gray.300">
-                        The more NFTs you burn, the greater your access to exclusive features and insights.
-                      </Text>
-                    </Box>
-                  </Flex> 
+                  </Heading>
+                  <Grid templateColumns={{ base: "1fr", md: "repeat(3, 1fr)" }} gap={6}>
+                    <FeatureCard
+                      title="Investor Insights"
+                      description="Gain valuable insights from experienced investors who analyze market trends and opportunities."
+                      icon={TrendingUp}
+                    />
+                    <FeatureCard
+                      title="Latest Market Analysis"
+                      description="Access the latest market analysis and reports curated by our expert team."
+                      icon={Calendar}
+                    />
+                    <FeatureCard
+                      title="Advanced Trading Bot"
+                      description="Utilize our advanced trading bot that automates buying and selling based on market signals."
+                      icon={MessageCircle}
+                    />
+                  </Grid>
                 </Box>
 
-                <Flex justifyContent="space-between" mt={4} w="full">
-                  {/* Box 1 */}
-                  <Box textAlign="center" w="24%" bg="#242526" p={4} borderRadius="lg">
-                    <Image
-                      src="https://media.xoxno.com/nftmedia/QXFLM-06e81a/QXFLM-06e81a-022e.avif"
-                      alt="QuantumXFlamies"
-                      borderRadius="lg"
-                      mb={2}
-                    />
-                    <Text color="gray.300">QuantumXFlamies</Text>
-                  </Box>
-                  {/* Box 2 */}
-                  <Box textAlign="center" w="24%" bg="#242526" p={4} borderRadius="lg">
-                    <Image
-                      src="https://media.xoxno.com/nftmedia/QXHR-9b0bc6/QXHR-9b0bc6-01a6.avif"
-                      alt="QuantumXHeroes"
-                      borderRadius="lg"
-                      mb={2}
-                    />
-                    <Text color="gray.300">QuantumXHeroes</Text>
-                  </Box>
-                  {/* Box 3 */}
-                  <Box textAlign="center" w="24%" bg="#242526" p={4} borderRadius="lg">
-                    <Image
-                      src="https://media.xoxno.com/nftmedia/QXHR300-f0a5c0/QXHR300-f0a5c0-01.avif"
-                      alt="QuantumXHeroes300"
-                      borderRadius="lg"
-                      mb={2}
-                    />
-                    <Text color="gray.300">QuantumXHeroes300</Text>
-                  </Box>
-                  {/* Box 4 */}
-                  <Box textAlign="center" w="24%" bg="#242526" p={4} borderRadius="lg">
-                    <Image
-                      src="https://miro.medium.com/v2/resize:fit:1400/format:webp/0*BF5B1ULLD_bnXnna"
-                      alt="Eldar Badges"
-                      borderRadius="lg"
-                      mb={2}
-                    />
-                    <Text color="gray.300">Eldar Badges</Text>
-                  </Box>
-                </Flex>
+                <Grid templateColumns={{ base: "1fr", md: "repeat(4, 1fr)" }} gap={6}>
+                  <NFTCard
+                    image="https://media.xoxno.com/nftmedia/QXFLM-06e81a/QXFLM-06e81a-022e.avif"
+                    name="QuantumXFlamies"
+                  />
+                  <NFTCard
+                    image="https://media.xoxno.com/nftmedia/QXHR-9b0bc6/QXHR-9b0bc6-01a6.avif"
+                    name="QuantumXHeroes"
+                  />
+                  <NFTCard
+                    image="https://media.xoxno.com/nftmedia/QXHR300-f0a5c0/QXHR300-f0a5c0-01.avif"
+                    name="QuantumXHeroes300"
+                  />
+                  <NFTCard
+                    image="https://miro.medium.com/v2/resize:fit:1400/format:webp/0*BF5B1ULLD_bnXnna"
+                    name="Eldar Badges"
+                  />
+                </Grid>
 
-                {/* New Section for Links and Images */}
-                <Flex justifyContent="space-between" mt={6} w="full">
-                  {/* Burnify Section */}
-                  <Box textAlign="center" w="48%" bg="#242526" p={4} borderRadius="lg">
-                    <Text fontSize="lg" fontWeight="bold" color="gray.300" mb={2}>
-                      Burn them here
-                    </Text>
-                    <Link href="https://burnify.app/nft-burn" isExternal>
-                      <Image
-                        src="https://burnify.app/static/media/Burnify_Logo_White.6101a362bf009f033832.png"
-                        alt="Burnify Logo"
-                        borderRadius="lg"
-                      />
-                    </Link>
-                  </Box>
-
-                  {/* Xoxno Section */}
-                  <Box textAlign="center" w="48%" bg="#242526" p={4} borderRadius="lg">
-                    <Text fontSize="lg" fontWeight="bold" color="gray.300" mb={2}>
-                      Buy one here
-                    </Text>
-                    <Link href="https://xoxno.com" isExternal>
-                      <Image
-                        src="https://xoxno.com/_next/static/media/wide.221596a0.webp"
-                        alt="Buy on Xoxno"
-                        borderRadius="lg"
-                      />
-                    </Link>
-                  </Box>
-                </Flex>
-              </>
-            ) : hasAccess ? (
-              <>
-                {/* Trading Bot Promotion */}
-                <Flex direction={{ base: "column", md: "row" }} gap={6}>
-                  <Card bg={cardBg} w="full" overflow="hidden" borderRadius="lg">
+                <Flex justifyContent="space-between" gap={6}>
+                  <Card bg={cardBg} flex={1}>
                     <CardBody>
-                      <Flex direction={{ base: "column", md: "row" }} gap={6}>
-                        <Box w={{ base: "full", md: "50%" }}>
+                      <VStack spacing={4}>
+                        <Heading size="md" color={textColor}>Burn them here</Heading>
+                        <Link href="https://burnify.app/nft-burn" isExternal>
                           <Image
-                            src="https://pbs.twimg.com/media/GRGABrNXkAA0KIV.png"
-                            alt="Trading Bot"
+                            src="https://burnify.app/static/media/Burnify_Logo_White.6101a362bf009f033832.png"
+                            alt="Burnify Logo"
                             borderRadius="lg"
                           />
-                        </Box>
-                        <VStack w={{ base: "full", md: "50%" }} align="start" spacing={4}>
-                          <Heading color={accentColor} size="lg">
-                            Multi-Chain Fast Trading Bot
-                          </Heading>
-                          <Text color="gray.300">
-                            Experience lightning-fast trades across multiple chains with our advanced trading bot.
-                            Get instant access to market opportunities and maximize your profits.
-                          </Text>
-                          <Link
-                            href="https://t.me/BullxBetaBot?start=access_5GSJKL7IGL6"
-                            isExternal
-                            bg={accentColor}
-                            color="black"
-                            px={6}
-                            py={3}
-                            borderRadius="lg"
-                            _hover={{ bg: "cyan.400" }}
-                            display="flex"
-                            alignItems="center"
-                            gap={2}
-                          >
-                            <Icon as={MessageCircle} />
-                            Access the Bot
-                          </Link>
-                        </VStack>
-                      </Flex>
-                    </CardBody>
-                  </Card>
-
-                  <Card bg={cardBg} w="full" overflow="hidden" borderRadius="lg">
-                    <CardBody>
-                      <Flex direction={{ base: "column", md: "row" }} gap={6}>
-                        <Box w={{ base: "full", md: "50%" }}>
-                          <Image
-                            src="https://i.ytimg.com/vi/2Qg8PxkqHHg/hqdefault.jpg"
-                            alt="Rollbit"
-                            borderRadius="lg"
-                          />
-                        </Box>
-                        <VStack w={{ base: "full", md: "50%" }} align="start" spacing={4}>
-                          <Heading color={accentColor} size="lg">
-                            Bet with Rollbit
-                          </Heading>
-                          <Text color="gray.300">
-                          Rollbit offers a wide range of gambling options, from sports betting and slots to more unique features like crypto futures.
-                          </Text>
-                          <Link
-                            href="https://rollbit.com/referral/quantumxroll"
-                            isExternal
-                            bg={accentColor}
-                            color="black"
-                            px={6}
-                            py={3}
-                            borderRadius="lg"
-                            _hover={{ bg: "cyan.400" }}
-                            display="flex"
-                            alignItems="center"
-                            gap={2}
-                          >
-                            <Icon as={MessageCircle} />
-                            Join Rollbit
-                          </Link>
-                        </VStack>
-                      </Flex>
-                    </CardBody>
-                  </Card>
-                </Flex>
-
-                <Grid templateColumns={{ base: "1fr", md: "repeat(2, 1fr)" }} gap={6} w="full">
-                  {/* Telegram Feed */}
-                  <Card bg={cardBg} borderRadius="lg">
-                    <CardBody>
-                      <Flex align="center" gap={2} mb={4}>
-                        <Icon as={TrendingUp} color={accentColor} boxSize={6} />
-                        <Heading size="md" color={accentColor}>Latest Gem Scans - Be Fast and Dyor</Heading>
-                      </Flex>
-                      <VStack
-                        maxH="500px"
-                        overflowY="auto"
-                        spacing={4}
-                        sx={{
-                          "&::-webkit-scrollbar": {
-                            width: "4px",
-                          },
-                          "&::-webkit-scrollbar-track": {
-                            background: "transparent",
-                          },
-                          "&::-webkit-scrollbar-thumb": {
-                            background: accentColor,
-                            borderRadius: "full",
-                          },
-                        }}
-                      >
-                        <Text color="gray.500" fontWeight="bold" mb={2}>
-                          Latest Scans
-                        </Text>
-                        {latestPosts.map((post, index) => (
-                          <MotionBox
-                            key={post.id}
-                            bg="whiteAlpha.50"
-                            p={6}
-                            borderRadius="lg"
-                            w="full"
-                            _hover={{ borderColor: "whiteAlpha.200" }}
-                            position="relative"
-                            initial={{ opacity: 0, y: -20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.5 }}
-                          >
-                            {index === 0 && (
-                              <Box
-                                position="absolute"
-                                top={-4}
-                                left="50%"
-                                transform="translateX(-50%)"
-                                bg="green.400"
-                                color="white"
-                                px={3}
-                                py={1}
-                                borderRadius="md"
-                                fontWeight="bold"
-                                boxShadow="md"
-                              >
-                                New
-                              </Box>
-                            )}
-                            <Text
-                              fontFamily="mono"
-                              fontSize="md"
-                              color="gray.300"
-                              whiteSpace="pre-line"
-                            >
-                              {post.content.replace(/https?:\/\/[^\s]+/g, '')}
-                            </Text>
-                            <Text fontSize="xs" color="gray.500" mt={2}>
-                              {post.timestamp}
-                            </Text>
-                          </MotionBox>
-                        ))}
-                        {/* New Button for Telegram Group */}
-                        <Link
-                          href="https://t.me/+r8n5K7TP8RtkNWM0"
-                          isExternal
-                          bg={accentColor}
-                          color="black"
-                          px={6}
-                          py={3}
-                          borderRadius="lg"
-                          _hover={{ bg: "cyan.400" }}
-                          display="flex"
-                          alignItems="center"
-                          justifyContent="center"
-                          w="full"
-                        >
-                          Join Telegram for Gems
                         </Link>
                       </VStack>
                     </CardBody>
                   </Card>
-
-                  {/* GMGN.AI Card */}
-                  <Card bg={cardBg} w="full" overflow="hidden" borderRadius="lg">
+                  <Card bg={cardBg} flex={1}>
                     <CardBody>
-                      <Flex direction={{ base: "column", md: "row" }} gap={6}>
-                        <Box w={{ base: "full", md: "50%" }}>
+                      <VStack spacing={4}>
+                        <Heading size="md" color={textColor}>Buy one here</Heading>
+                        <Link href="https://xoxno.com" isExternal>
                           <Image
-                            src="https://gmgn.ai/static/logo/GMGNLogo.webp"
-                            alt="GMGN.AI"
+                            src="https://xoxno.com/_next/static/media/wide.221596a0.webp"
+                            alt="Buy on Xoxno"
                             borderRadius="lg"
                           />
-                        </Box>
-                        <VStack w={{ base: "full", md: "50%" }} align="start" spacing={4}>
-                          <Heading color={accentColor} size="lg">
-                            Copy Trade Crypto Whales
-                          </Heading>
-                          <Text color="gray.300">
-                            GMGN.AI is a game-changer for crypto traders. By combining automated tools, advanced analytics, and copy trading, it simplifies the trading process while helping you avoid common pitfalls. Whether you&apos;re a beginner or an experienced trader, this bot can level up your strategy.
-                          </Text>
-                          <Link
-                            href="https://gmgn.ai/?ref=eJSsbuKd&chain=sol"
-                            isExternal
-                            bg={accentColor}
-                            color="black"
-                            px={6}
-                            py={3}
-                            borderRadius="lg"
-                            _hover={{ bg: "cyan.400" }}
-                            display="flex"
-                            alignItems="center"
-                            gap={2}
-                          >
-                            <Icon as={MessageCircle} />
-                            Access GMGN.AI
-                          </Link>
-                        </VStack>
-                      </Flex>
+                        </Link>
+                      </VStack>
+                    </CardBody>
+                  </Card>
+                </Flex>
+              </VStack>
+            ) : hasAccess ? (
+              <VStack spacing={8} align="stretch">
+                <Grid templateColumns={{ base: "1fr", md: "repeat(2, 1fr)" }} gap={6}>
+                  <Card bg={cardBg} overflow="hidden">
+                    <CardBody>
+                      <VStack align="start" spacing={4}>
+                        <Image
+                          src="https://pbs.twimg.com/media/GRGABrNXkAA0KIV.png"
+                          alt="Trading Bot"
+                          borderRadius="lg"
+                          w="100%"
+                        />
+                        <Heading color={accentColor} size="lg">
+                          Multi-Chain Fast Trading Bot
+                        </Heading>
+                        <Text color={textColor}>
+                          Experience lightning-fast trades across multiple chains with our advanced trading bot.
+                          Get instant access to market opportunities and maximize your profits.
+                        </Text>
+                        <Button
+                          as={Link}
+                          href="https://t.me/BullxBetaBot?start=access_5GSJKL7IGL6"
+                          isExternal
+                          leftIcon={<Icon as={MessageCircle} />}
+                          bg={accentColor}
+                          color="black"
+                          _hover={{ bg: "cyan.400" }}
+                        >
+                          Access the Bot
+                        </Button>
+                      </VStack>
+                    </CardBody>
+                  </Card>
+
+                  <Card bg={cardBg} overflow="hidden">
+                    <CardBody>
+                      <VStack align="start" spacing={4}>
+                        <Image
+                          src="https://i.ytimg.com/vi/2Qg8PxkqHHg/hqdefault.jpg"
+                          alt="Rollbit"
+                          borderRadius="lg"
+                          w="100%"
+                        />
+                        <Heading color={accentColor} size="lg">
+                          Bet with Rollbit
+                        </Heading>
+                        <Text color={textColor}>
+                          Rollbit offers a wide range of gambling options, from sports betting and slots to more unique features like crypto futures.
+                        </Text>
+                        <Button
+                          as={Link}
+                          href="https://rollbit.com/referral/quantumxroll"
+                          isExternal
+                          leftIcon={<Icon as={ExternalLink} />}
+                          bg={accentColor}
+                          color="black"
+                          _hover={{ bg: "cyan.400" }}
+                        >
+                          Join Rollbit
+                        </Button>
+                      </VStack>
                     </CardBody>
                   </Card>
                 </Grid>
-              </>
+
+                <Grid templateColumns={{ base: "1fr", md: "repeat(2, 1fr)" }} gap={6}>
+                  <Card bg={cardBg}>
+                    <CardBody>
+                      <VStack align="start" spacing={4}>
+                        <Flex align="center" gap={2}>
+                          <Icon as={TrendingUp} color={accentColor} boxSize={6} />
+                          <Heading size="md" color={accentColor}>Latest Gem Scans - Be Fast and Dyor</Heading>
+                        </Flex>
+                        <VStack
+                          maxH="500px"
+                          overflowY="auto"
+                          spacing={4}
+                          align="stretch"
+                          w="100%"
+                          sx={{
+                            "&::-webkit-scrollbar": {
+                              width: "4px",
+                            },
+                            "&::-webkit-scrollbar-track": {
+                              background: "transparent",
+                            },
+                            "&::-webkit-scrollbar-thumb": {
+                              background: accentColor,
+                              borderRadius: "full",
+                            },
+                          }}
+                        >
+                          {latestPosts.map((post, index) => (
+                            <MotionBox
+                              key={post.id}
+                              bg={useColorModeValue("gray.100", "whiteAlpha.100")}
+                              p={4}
+                              borderRadius="md"
+                              initial={{ opacity: 0, y: -20 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              transition={{ duration: 0.5 }}
+                            >
+                              {index === 0 && (
+                                <Box
+                                  position="absolute"
+                                  top={-2}
+                                  right={-2}
+                                  bg="green.400"
+                                  color="white"
+                                  px={2}
+                                  py={1}
+                                  borderRadius="md"
+                                  fontSize="xs"
+                                  fontWeight="bold"
+                                >
+                                  New
+                                </Box>
+                              )}
+                              <Text color={textColor} whiteSpace="pre-line">
+                                {post.content.replace(/https?:\/\/[^\s]+/g, '')}
+                              </Text>
+                              <Text fontSize="xs" color="gray.500" mt={2}>
+                                {post.timestamp}
+                              </Text>
+                            </MotionBox>
+                          ))}
+                        </VStack>
+                        <Button
+                          as={Link}
+                          href="https://t.me/+r8n5K7TP8RtkNWM0"
+                          isExternal
+                          leftIcon={<Icon as={MessageCircle} />}
+                          bg={accentColor}
+                          color="black"
+                          _hover={{ bg: "cyan.400" }}
+                          w="full"
+                        >
+                          Join Telegram for Gems
+                        </Button>
+                      </VStack>
+                    </CardBody>
+                  </Card>
+
+                  <Card bg={cardBg}>
+                    <CardBody>
+                      <VStack align="start" spacing={4}>
+                        <Image
+                          src="https://gmgn.ai/static/logo/GMGNLogo.webp"
+                          alt="GMGN.AI"
+                          borderRadius="lg"
+                          w="100%"
+                        />
+                        <Heading color={accentColor} size="lg">
+                          Copy Trade Crypto Whales
+                        </Heading>
+                        <Text color={textColor}>
+                          GMGN.AI is a game-changer for crypto traders. By combining automated tools, advanced analytics, and copy trading, it simplifies the trading process while helping you avoid common pitfalls. Whether you're a beginner or an experienced trader, this bot can level up your strategy.
+                        </Text>
+                        <Button
+                          as={Link}
+                          href="https://gmgn.ai/?ref=eJSsbuKd&chain=sol"
+                          isExternal
+                          leftIcon={<Icon as={ExternalLink} />}
+                          bg={accentColor}
+                          color="black"
+                          _hover={{ bg: "cyan.400" }}
+                        >
+                          Access GMGN.AI
+                        </Button>
+                      </VStack>
+                    </CardBody>
+                  </Card>
+                </Grid>
+
+                {iframeVisible && (
+                  <Box w="full" h="500px" overflow="hidden" borderRadius="lg" boxShadow="xl">
+                    <iframe
+                      src="https://wensell.vercel.app/"
+                      style={{ width: '100%', height: '700px', border: 'none' }}
+                      scrolling="yes"
+                    />
+                  </Box>
+                )}
+              </VStack>
             ) : (
-              <Text color="red.500" textAlign="center" mt={4}>
+              <Text color="red.500" textAlign="center" fontSize="xl" fontWeight="bold">
                 You need to burn one of the specified collections to access this content.
               </Text>
             )}
-
-            {/* New Iframe Section */}
-            {iframeVisible && (
-              <Box w="full" h="500px" overflow="hidden" borderRadius="lg">
-                <iframe
-                  src="https://wensell.vercel.app/"
-                  style={{ width: '100%', height: '700px', border: 'none' }}
-                  scrolling="yes"
-                />
-              </Box>
-            )}
           </VStack>
-        </Flex>
-      </MyContainer>
+        </MyContainer>
+      </Box>
     </Layout>
   );
 };
 
-export default withElronDapp(WrapperPages(Burnium));
+export default Burnium;
+

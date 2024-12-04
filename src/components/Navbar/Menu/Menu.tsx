@@ -37,6 +37,8 @@ const Menu1: React.FC<Menu1Props> = ({ currentPath: initialPath }) => {
     return null;
   }
 
+  const MAX_VISIBLE_ITEMS = 6;
+
   return (
     <Flex
       px={{ xs: "20px", lg: "40px" }}
@@ -48,67 +50,57 @@ const Menu1: React.FC<Menu1Props> = ({ currentPath: initialPath }) => {
       position="relative"
       fontSize={{ xs: "sm", md: "inherit" }}
     >
-      {routesArr.map((route) => {
-        if (!route || route.onModal || route.onModalAndNavbar) {
+      {routesArr.map((route, index) => {
+        if (!route || route.onModal || route.onModalAndNavbar || !route.path) {
           return null;
         }
         const active = isActive(route.path);
-        return (
-          <Link href={route.path} key={route.path} onClick={(e) => handleNavigation(e, route.path)}>
-            <Flex position="relative">
-              <Box color={active ? "main" : undefined}>{route.name}</Box>
-
-              {route.isNew && (
-                <Box
-                  position={"absolute"}
-                  top={"-10px"}
-                  right={"-20px"}
-                  bg="main"
-                  color="black"
-                  fontSize={"xs"}
-                  rounded={"full"}
-                  px={1}
-                  fontWeight="bold"
-                >
-                  NEW
-                </Box>
-              )}
-
-              {route.name === "Swap" && (
-                <ImageQxAshFire
-                  width={{sm: "20px", md: "30px"}}
-                  transform="translate(-80%, -30%)"
-                />
-              )}
-            </Flex>
-          </Link>
-        );
-      })}
-
-      <Flex
-        display={{ xs: "none", lg: "flex" }}
-        gap={{ xs: "30px", md: "50px" }}
-        alignItems="center"
-      >
-        {routesArr.map((route) => {
-          if (!route || !route.onModalAndNavbar) {
-            return null;
-          }
-
-          const active = isActive(route.path);
-
+        if (index < MAX_VISIBLE_ITEMS) {
           return (
-            <Link href={route.path} key={route.path}>
-              <Flex position={"relative"}>
-                <Box color={active ? "main" : undefined}>{route.name}</Box>
-                {route.isNew && <Badge text="NEW" />}{" "}
+            <Link href={route.path} key={route.path} onClick={(e) => handleNavigation(e, route.path)}>
+              <Flex position="relative">
+                <Box
+                  color={route.name === "Burnium" ? "white" : active ? "main" : undefined}
+                  fontWeight="bold"
+                  bg={route.name === "Burnium" ? "red.600" : undefined}
+                  px={2}
+                  borderRadius="md"
+                >
+                  {route.name}
+                </Box>
+
+                {route.isNew && (
+                  <Box
+                    position={"absolute"}
+                    top={"-10px"}
+                    right={"-20px"}
+                    bg="main"
+                    color="black"
+                    fontSize={"xs"}
+                    rounded={"full"}
+                    px={1}
+                    fontWeight="bold"
+                  >
+                    NEW
+                  </Box>
+                )}
+
+                {route.name === "Swap" && (
+                  <ImageQxAshFire
+                    width={{sm: "20px", md: "30px"}}
+                    transform="translate(-80%, -30%)"
+                  />
+                )}
               </Flex>
             </Link>
           );
-        })}
-      </Flex>
-      
-      <DotsIcon cursor={"pointer"} fontSize={"16px"} onClick={onOpen} />
+        }
+        return null;
+      })}
+
+      {routesArr.length > MAX_VISIBLE_ITEMS && (
+        <DotsIcon cursor={"pointer"} fontSize={"16px"} onClick={onOpen} />
+      )}
 
       <AnimatePresence>
         {isOpen && (

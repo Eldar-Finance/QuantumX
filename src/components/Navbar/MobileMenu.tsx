@@ -31,7 +31,6 @@ const MobileMenu = () => {
   ];
 
   const moreItems = [
-    { name: "Hypezone", icon: Zap, color: "linear-gradient(to bottom right, red.500, yellow.500)", route: "/hypezone" },
     { name: "Rewards", icon: Award, color: "linear-gradient(to bottom right, indigo.500, purple.500)", route: "/qrewards" },
     { name: "MoonDustX", icon: Moon, color: "linear-gradient(to bottom right, gray.500, blue.500)", route: "/moondustx" },
     { name: "Quantum Panel", icon: LayoutDashboard, color: "linear-gradient(to bottom right, green.500, blue.500)", route: "/panel" },

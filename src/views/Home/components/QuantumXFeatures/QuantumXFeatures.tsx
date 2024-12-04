@@ -64,10 +64,9 @@ const QuantumXFeatures = () => {
             />
 
             <IconAndButtonBox
-              href={routeNames.dca}
-              title="DCA"
-              desc="One-click Personalised
-            or Predefined DCA Portfolios."
+              href={routeNames.moondustx}
+              title="Dust Converter"
+              desc="Convert your dust tokens into favorable assets like EGLD, USDC, and HATOM."
               icon={<RocketIcon fontSize={"24px"} />}
               buttonText="Invest"
             />
