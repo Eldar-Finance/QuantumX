@@ -210,13 +210,24 @@ const BadgesStatics = () => {
       </Flex>
 
       {/* Right side */}
-      <Center flexDir={"column"} justifyContent="flex-start">
-        <Text fontSize={"12px"} color="gray.500" whiteSpace={"nowrap"}>
-          Total Paid Out
-        </Text>
-        <Text color="white" fontSize="xl" fontWeight="bold">
-          ${totalDollarValue.toFixed(2)}
-        </Text>
+      <Center flexDir={"column"} justifyContent="flex-start" gap={4}>
+        <Box textAlign="center">
+          <Text fontSize={"12px"} color="gray.500" whiteSpace={"nowrap"}>
+            Total Badges Staked
+          </Text>
+          <Text color="white" fontSize="xl" fontWeight="bold">
+            {totalStaked} Badges
+          </Text>
+        </Box>
+
+        <Box textAlign="center">
+          <Text fontSize={"12px"} color="gray.500" whiteSpace={"nowrap"}>
+            Total Paid Out
+          </Text>
+          <Text color="white" fontSize="xl" fontWeight="bold">
+            ${totalDollarValue.toFixed(2)}
+          </Text>
+        </Box>
       </Center>
 
       {/* Updated Modal with Tables */}

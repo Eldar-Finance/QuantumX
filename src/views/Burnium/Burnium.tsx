@@ -17,8 +17,9 @@ import {
   Icon,
   useColorModeValue,
   Spinner,
+  HStack,
 } from "@chakra-ui/react";
-import { Calendar, TrendingUp, MessageCircle, ExternalLink } from 'lucide-react';
+import { Calendar, TrendingUp, MessageCircle, ExternalLink, Check } from 'lucide-react';
 import { useAppSelector } from "utils/hooks/redux";
 import { selectUserAddress } from "redux/slices/userAcount/account-slice";
 import Layout from "components/Layout/Layout";
@@ -62,6 +63,52 @@ const NFTCard = ({ image, name, cardBg, textColor }) => (
   </Box>
 );
 
+const TierCard = ({ tier, requirements, features, isActive, cardBg, textColor, accentColor }) => (
+  <Box 
+    bg={cardBg} 
+    p={6} 
+    borderRadius="lg" 
+    boxShadow="md"
+    border="1px solid"
+    borderColor={isActive ? accentColor : "whiteAlpha.200"}
+    position="relative"
+    opacity={isActive ? 1 : 0.7}
+    transition="all 0.2s"
+    _hover={{ opacity: 1 }}
+  >
+    {isActive && (
+      <Box
+        position="absolute"
+        top={-2}
+        right={-2}
+        bg={accentColor}
+        color="black"
+        px={2}
+        py={1}
+        borderRadius="md"
+        fontSize="xs"
+        fontWeight="bold"
+      >
+        Active
+      </Box>
+    )}
+    <Text color={accentColor} fontSize="xl" fontWeight="bold" mb={4}>
+      {tier}
+    </Text>
+    <Text color="gray.400" fontSize="sm" mb={4}>
+      {requirements}
+    </Text>
+    <VStack align="start" spacing={2}>
+      {features.map((feature, index) => (
+        <HStack key={index} color={textColor}>
+          <Icon as={Check} color={accentColor} />
+          <Text>{feature}</Text>
+        </HStack>
+      ))}
+    </VStack>
+  </Box>
+);
+
 const Burnium = () => {
   const bgColor = useColorModeValue("gray.50", "#242526");
   const cardBg = useColorModeValue("white", "#1E1E1E");
@@ -75,6 +122,7 @@ const Burnium = () => {
   const [loading, setLoading] = useState(true);
   const [latestPosts, setLatestPosts] = useState([]);
   const [iframeVisible, setIframeVisible] = useState(false);
+  const [validTransfers, setValidTransfers] = useState([]);
 
   useEffect(() => {
     const fetchTransfers = async () => {
@@ -94,11 +142,13 @@ const Burnium = () => {
         const transfers = response.data;
 
         const validTickers = ["QXHR-9b0bc6", "QXFLM-06e81a", "QXHR300-f0a5c0", "ELBADGES-2efe5c"];
-        const validTransfers = transfers.filter((transfer) =>
+        const _validTransfers = transfers.filter((transfer) =>
           transfer.action?.arguments?.transfers?.some((t) => validTickers.includes(t.ticker))
         );
+        
+        setValidTransfers(_validTransfers);
 
-        if (validTransfers.length >= 3) {
+        if (_validTransfers.length >= 3) {
           setHasAccess(true);
           setIframeVisible(true);
         } else {
@@ -166,6 +216,58 @@ const Burnium = () => {
                       cardBg={cardBg}
                       textColor={textColor}
                       descriptionColor={descriptionColor}
+                      accentColor={accentColor}
+                    />
+                  </Grid>
+                </Box>
+
+                <Box bg={cardBg} p={8} borderRadius="lg" boxShadow="xl" mt={8}>
+                  <Heading as="h2" size="xl" textAlign="center" mb={6} color={textColor}>
+                    Burn-to-Unlock Tiers
+                  </Heading>
+                  <Text color="gray.400" textAlign="center" mb={8}>
+                    The more you burn, the more features you unlock
+                  </Text>
+                  <Grid templateColumns={{ base: "1fr", md: "repeat(3, 1fr)" }} gap={6}>
+                    <TierCard
+                      tier="Basic Access"
+                      requirements="Burn 1 NFT/SFT"
+                      features={[
+                        "Trading Bot Access",
+                        "Trading Signals Group Access",
+                        "CopyTrade Bot Access"
+                      ]}
+                      isActive={validTransfers?.length === 1}
+                      cardBg={cardBg}
+                      textColor={textColor}
+                      accentColor={accentColor}
+                    />
+                    <TierCard
+                      tier="Advanced Access"
+                      requirements="Burn 2-5 NFTs/SFTs"
+                      features={[
+                        "All Basic Features",
+                        "Advanced Trading Signals",
+                        "Priority Support",
+                        "Sell Targets Calculator"
+                      ]}
+                      isActive={validTransfers?.length === 2}
+                      cardBg={cardBg}
+                      textColor={textColor}
+                      accentColor={accentColor}
+                    />
+                    <TierCard
+                      tier="Premium Access"
+                      requirements="Burn 5+ NFTs/SFTs"
+                      features={[
+                        "All Advanced Features",
+                        "Exclusive Tools Access - Soon",
+                        "Priority Beta Testing - Soon",
+                        "Custom Support Channel - Soon"
+                      ]}
+                      isActive={validTransfers?.length >= 3}
+                      cardBg={cardBg}
+                      textColor={textColor}
                       accentColor={accentColor}
                     />
                   </Grid>

@@ -73,6 +73,10 @@ const BadgesCard = () => {
     scCall(sftsRewardsWsp, "burnAllForBurnium", [], 30000000);
   };
 
+  const { totalStaked } = useAppSelector(
+    (state) => state.eldarSfts.stakingNumbers.data
+  );
+
   return (
     <Card px={5} bg="secondary">
       <CardHeader mb={1} flexDir="column">
