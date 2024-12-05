@@ -50,15 +50,18 @@ const EarnedRewards = ({ userRewards, multifarmRewardsLeft }: IProps) => {
               {manualImage ? (
                 <NextImage alt="" src={manualImage} height={30} width={30} />
               ) : (
-                <> {rewardsToken?.assets?.svgUrl && (
-                <NextImage
-                  src={rewardsToken.assets.svgUrl}
-                  alt=""
-                  height={30}
-                  width={30}
-                />)}
-              </>
+                <> 
+                  {rewardsToken?.assets?.svgUrl && (
+                    <NextImage
+                      src={rewardsToken.assets.svgUrl}
+                      alt=""
+                      height={30}
+                      width={30}
+                    />
+                  )}
+                </>
               )}
+              <Text color="white.400">{rewardsToken.name}</Text>
             </Flex>
           </Center>
         );
