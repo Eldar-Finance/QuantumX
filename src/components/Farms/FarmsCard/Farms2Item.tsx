@@ -91,6 +91,7 @@ const Farms2Item = ({
       borderRadius={farm.farm.farmId === 106 ? "20px" : "none"}
       position="relative"
       mt={farm.farm.farmId === 106 ? "16px" : "0"}
+      mb={farm.farm.farmId === 106 ? "16px" : "0"}
       {...(farm.farm.farmId === 106 ? {
         _before: {
           content: '""',
