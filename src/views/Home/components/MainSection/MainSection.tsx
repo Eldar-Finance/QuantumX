@@ -25,7 +25,7 @@ const MainSection = () => {
     <Center flexDir={"column"} m="auto" maxW={"692px"} textAlign={"center"}>
       <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}>
         <Heading as="h1" fontSize={{ xs: "3xl", md: "7xl" }} mb="30px" mx={50}>
-          A realm within the Multiverse, unlocked solely by{" "}
+          A realm within the Multivers, unlocked solely by{" "}
           <Box as="span" bg="main" bgClip={"text"}>
             {" "}
             the power of DeFi.
