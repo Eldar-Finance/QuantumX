@@ -77,6 +77,7 @@ const FarmsCard = ({ isPool, othersArr = null }: IProps) => {
     >
       {farmStored.map((farm, i) => {
         if (!farm.farm.farm.farmId) return null;
+        const borderColor = farm.farm.farm.farmId === 106 ? "red.500" : "black.100";
         return (
           <Farms2Item
             key={i}
@@ -96,6 +97,7 @@ const FarmsCard = ({ isPool, othersArr = null }: IProps) => {
                 (mfr) => mfr.farmId === farm.farm.farm.farmId
               )?.rewardsLeft || []
             }
+            borderColor={borderColor}
           />
         );
       })}

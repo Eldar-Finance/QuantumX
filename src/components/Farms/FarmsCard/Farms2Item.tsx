@@ -38,14 +38,15 @@ import StakeUnstake from "./Farms2/StakeUnstake/StakeUnstake";
 import Avilable from "./Farms2/Withdraw/Avilable";
 
 interface IProps {
-  farm: IScFarmItem;
+  farm: any;
+  tvl: any;
   farmUserInfoArr: IScUserFarmInfo[];
   farmUserRewards: IScUserFarmRewards[];
-  logoSize?: number;
-  stakedTokenPrice: number;
+  stakedTokenPrice: any;
   isPool?: boolean;
-  tvl: number;
+  logoSize?: number;
   multifarmRewardsLeft: IScFarm2RewardsLeft[];
+  borderColor?: string;
 }
 
 const Farms2Item = ({
@@ -57,6 +58,7 @@ const Farms2Item = ({
   stakedTokenPrice,
   tvl,
   multifarmRewardsLeft,
+  borderColor,
 }: IProps) => {
   const { token: stakingToken } = useGetElrondToken(farm.farm.stakingToken);
   const { tokens: othersStakedTokens } = useGetMultipleElrondTokens(
@@ -83,7 +85,59 @@ const Farms2Item = ({
   const showWarning = !farm.totalRewardsLeft && multifarmRewardsLeft.filter((r) => r.amount > 0).length === 0; 
 
   return (
-    <AccordionItem w="full">
+    <AccordionItem 
+      w="full" 
+      borderWidth={farm.farm.farmId === 106 ? "4px" : "1px"}
+      borderRadius={farm.farm.farmId === 106 ? "20px" : "none"}
+      position="relative"
+      mt={farm.farm.farmId === 106 ? "16px" : "0"}
+      {...(farm.farm.farmId === 106 ? {
+        _before: {
+          content: '""',
+          position: "absolute",
+          top: 0,
+          right: 0,
+          bottom: 0,
+          left: 0,
+          borderRadius: "20px",
+          padding: "4px",
+          background: "linear-gradient(90deg, #3182CE 40%, #ECC94B 40% 60%, #3182CE 60%)",
+          WebkitMask: 
+            "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+          WebkitMaskComposite: "xor",
+          maskComposite: "exclude",
+          pointerEvents: "none",
+          zIndex: 1
+        },
+        overflow: "hidden"
+      } : {
+        borderColor: borderColor || "black.100"
+      })}
+    >
+      {farm.farm.farmId === 106 && (
+        <Box
+          position="absolute"
+          top="-12px"
+          left="20px"
+          bg="black.baseDark"
+          px={4}
+          py={1}
+          borderRadius="full"
+          border="2px solid"
+          borderColor="#3182CE"
+          zIndex={10}
+        >
+          <Text
+            fontSize="lg"
+            fontWeight="extrabold"
+            bgGradient="linear(to-r, #3182CE, #ECC94B)"
+            bgClip="text"
+            letterSpacing="wide"
+          >
+            BearlyBonding 2.0
+          </Text>
+        </Box>
+      )}
       <Box w="full">
         <AccordionButton
           py="4"
