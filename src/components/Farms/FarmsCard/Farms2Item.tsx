@@ -158,7 +158,7 @@ const Farms2Item = ({
               gap={{ xs: "4", md: "1" }}
             >
               {/* TOKENS */}
-              <Flex gap={3} flexDir={"row"} justifyContent={{sm: "center", md: "flex-start"}}>
+              <Flex gap={3} flexDir={"row"} justifyContent={{sm: "center", md: "flex-start"}} mt={{ xs: "5", md: "0" }}>
                 {stakingToken && stakingToken.name && stakingToken.identifier ? (
                   <>
                     {formatTokenI(stakingToken.name).slice(-2) === "LP" || stakingToken.identifier.slice(0,2) === "LP" ? (
