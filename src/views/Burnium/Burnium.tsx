@@ -37,7 +37,9 @@ const whitelistedAddresses = [
   "erd1pr497tdmurx6zqyh4wf2pug6vvahx0n0s7e34etzuvwawdtlf62sf7qx3h",
   "erd1y3g3ahj5ymd5u0m2t3qtkh9adgfgu5qzkhwmyftztzp2dju755qqgtuyxp",
   "erd1qtsvmjggneq4z30qm2hz4xcyjfrmxegdejlu090fxkrfyacu0kjqx777tn",
-  "erd13ers9u3ts4lxa9zgdafptdd4735yjw6wznt2djm4rr4wm0hdu0eqdu69j2"
+  "erd13ers9u3ts4lxa9zgdafptdd4735yjw6wznt2djm4rr4wm0hdu0eqdu69j2",
+  "erd17u9myqadv7vvqswj4zvs3hdnzgc28wvx8rp0k7cm9qz98tqv4cusq6sry8",
+  "erd10znpcqha0kmqtzas3fkyvgzs8ks03runhy64vkm83dgu0acgyp4sgy534e"
 ];
 
 const FeatureCard = ({ title, description, icon, cardBg, textColor, descriptionColor, accentColor }) => (
@@ -279,19 +281,19 @@ const Burnium = () => {
 
                 <Grid templateColumns={{ base: "1fr", md: "repeat(4, 1fr)" }} gap={6}>
                   <NFTCard
-                    image="https://media.xoxno.com/nftmedia/QXFLM-06e81a/QXFLM-06e81a-022e.avif"
+                    image="https://media..com/nftmedia/QXFLM-06e81a/QXFLM-06e81a-022e.avif"
                     name="QuantumXFlamies"
                     cardBg={cardBg}
                     textColor={textColor}
                   />
                   <NFTCard
-                    image="https://media.xoxno.com/nftmedia/QXHR-9b0bc6/QXHR-9b0bc6-01a6.avif"
+                    image="https://media..com/nftmedia/QXHR-9b0bc6/QXHR-9b0bc6-01a6.avif"
                     name="QuantumXHeroes"
                     cardBg={cardBg}
                     textColor={textColor}
                   />
                   <NFTCard
-                    image="https://media.xoxno.com/nftmedia/QXHR300-f0a5c0/QXHR300-f0a5c0-01.avif"
+                    image="https://media..com/nftmedia/QXHR300-f0a5c0/QXHR300-f0a5c0-01.avif"
                     name="QuantumXHeroes300"
                     cardBg={cardBg}
                     textColor={textColor}
@@ -323,9 +325,9 @@ const Burnium = () => {
                     <CardBody>
                       <VStack spacing={4}>
                         <Heading size="md" color={textColor}>Buy one here</Heading>
-                        <Link href="https://xoxno.com" isExternal>
+                        <Link href="https://.com" isExternal>
                           <Image
-                            src="https://xoxno.com/_next/static/media/wide.221596a0.webp"
+                            src="https://.com/_next/static/media/wide.221596a0.webp"
                             alt="Buy on Xoxno"
                             borderRadius="lg"
                           />
