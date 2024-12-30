@@ -21,7 +21,7 @@ const AddressSection2 = () => {
         onError={(e) => {
           const target = e.target as HTMLImageElement;
           target.onerror = null;
-          target.src = 'https://pbs.twimg.com/profile_images/1611302688699858946/Dbs4USUR_400x400.jpg'; // Replace with your default image URL
+          target.src = 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
         }}
         style={{
           width: '30px', // Small size, adjust as needed
