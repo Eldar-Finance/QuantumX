@@ -35,7 +35,7 @@ const whitelistedAddresses = [
   "erd1kxpkx9dvnp8cmx3azvtp9m6s3uldajxuvqtlhxay20xu5xer77jq025av9",
   "erd1tsuu9jf4pn8rsus9knrw4ju39ukyp247gug8gahsfdjzdzewd0eqcwgl30",
   "erd1pr497tdmurx6zqyh4wf2pug6vvahx0n0s7e34etzuvwawdtlf62sf7qx3h",
-  "erd1y3g3ahj5ymd5u0m2t3qtkh9adgfgu5qzkhwmyftztzp2dju755qqgtuyxp",
+  "erd1y3g3ahj5ymd5u0m2t3qtkh9adgfgu5qzkhwmyftztzp2dju755qqgtuyxp", 
   "erd1qtsvmjggneq4z30qm2hz4xcyjfrmxegdejlu090fxkrfyacu0kjqx777tn",
   "erd13ers9u3ts4lxa9zgdafptdd4735yjw6wznt2djm4rr4wm0hdu0eqdu69j2",
   "erd17u9myqadv7vvqswj4zvs3hdnzgc28wvx8rp0k7cm9qz98tqv4cusq6sry8",
