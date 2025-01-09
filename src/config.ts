@@ -81,7 +81,7 @@ export const walletConnectDeepLink =
 
 export const ChainID = "1";
 export const network = {
-  id: "mainnet",
+  id: "mainnet",  
   name: "Mainnet",
   egldLabel: "EGLD",
   walletAddress: "https://wallet.multiversx.com",
