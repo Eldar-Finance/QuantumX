@@ -54,7 +54,7 @@ export const fetchAllFarms = createAsyncThunk(
             (farm) =>
               pairs.findIndex(
                 (mexPair) => mexPair.lpidentifier === farm.farm.stakingToken
-              ) === -1
+              ) === -1 
           )
         : [],
       farms: pairs
