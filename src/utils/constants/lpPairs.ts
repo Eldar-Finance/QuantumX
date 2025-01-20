@@ -348,5 +348,12 @@ export const pairs = [
     lpprice: "0",
     token2lp: "USDC-c76f1f",
     token1lp: "SAFE-c0e534",
+  },
+  {
+    lpname: "EUGWEGLDLP",
+    lpidentifier: "EUGWEGLD-179835",
+    lpprice: "0",
+    token2lp: "WEGLD-bd4d79",
+    token1lp: "EUG-902041",
   }
 ];
