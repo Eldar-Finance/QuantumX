@@ -351,7 +351,7 @@ export const pairs = [
   },
   {
     lpname: "EUGWEGLDLP",
-    lpidentifier: "EUGWEGLD-179835",
+    lpidentifier: "EUGWEGLD-93baf8",
     lpprice: "0",
     token2lp: "WEGLD-bd4d79",
     token1lp: "EUG-902041",
