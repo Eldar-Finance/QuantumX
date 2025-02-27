@@ -12,7 +12,11 @@ import {
   Spinner,
   Text,
   Image,
-  Tooltip
+  Tooltip,
+  UnorderedList,
+  ListItem,
+  Alert,
+  AlertIcon
 } from "@chakra-ui/react";
 import img3 from "assets/eldar-badges/frameit_logo.svg";
 import img1 from "assets/eldar-badges/logo1.png";
@@ -79,6 +83,34 @@ const BadgesCard = () => {
 
   return (
     <Card px={5} bg="secondary">
+      <Box 
+        w="full" 
+        bg="rgba(220, 53, 69, 0.1)" 
+        p={4} 
+        borderRadius="md" 
+        mb={4}
+        border="1px solid"
+        borderColor="red.500"
+      >
+        <Flex direction="column" gap={2}>
+          <Text color="red.400" fontWeight="bold" fontSize="sm">
+            Important Announcement
+          </Text>
+          <Text color="white" fontSize="sm">
+            Due to market conditions, we're transitioning from rewards to buybacks. We'll buy back and burn ELBADGES, QXHR300, and QXFlamies listed at 0.1 EGLD or less for the next year. Consider burning your SFTs for immediate Burnium access.
+          </Text>
+          <Link 
+            color="cyan.400" 
+            fontSize="sm" 
+            onClick={onOpen}
+            cursor="pointer"
+            _hover={{ textDecoration: 'underline' }}
+          >
+            Learn More →
+          </Link>
+        </Flex>
+      </Box>
+
       <CardHeader mb={1} flexDir="column">
         <Flex justifyContent="space-between" w={"full"} flexDirection={{sm: "column", md: "row"}} gap={4}>
           <Box alignSelf={"center"}>
@@ -191,7 +223,7 @@ const BadgesCard = () => {
                           ) : (
                             <Text>
                               {isSftsClaimable
-                                ? "Your sft’s are ready to claim"
+                                ? "Your sft's are ready to claim"
                                 : " You have not staked any SFTs/NFTs."}
                             </Text>
                           )}
@@ -252,28 +284,40 @@ const BadgesCard = () => {
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Confirm Your Action: Burn Your SFTs</ModalHeader>
+          <ModalHeader>Important: SFT Burning Decision</ModalHeader>
           <ModalBody>
             <Text>
-              Are you sure you want to proceed with burning your SFTs?
-              <br /><br />
-              By clicking the &quot;Burn&quot; button, you will gain exclusive access to the Burnium Membership Page of QuantumX. This membership includes tools designed to enhance your cryptocurrency and investment journey, such as:
-              <ul>
-                <li>Early access to a trading bot</li>
-                <li>Trade signals</li>
-                <li>Calculators</li>
-                <li>And more features planned for the near future</li>
-              </ul>
-              Due to minimal or no revenue in recent months, QuantumX is striving to provide value through these tools, even as we cannot currently distribute additional rewards.
-              <br /><br />
-              However, you also have the choice to keep your SFTs staked, continuing to receive rewards IF our revenue increases.
-              <br /><br />
-              Important: By choosing to burn your SFTs, you will lose access to all your QuantumX/Eldar SFTs permanently.
-              <br /><br />
-              Choose wisely, and thank you for being part of QuantumX.
+              Due to current market conditions, QuantumX is not generating sufficient revenue to maintain the rewards program. As a result, we are making two important announcements:
+
+              <Box mt={4} mb={4}>
+                <Text fontWeight="bold" mb={2}>1. Buyback Program:</Text>
+                <Text>
+                  For the next year, we will try to buy back and burning ELBADGES, QXHR300, and QXFlamies listed at 0.1 EGLD or less on any marketplace.
+                </Text>
+              </Box>
+
+              <Box mb={4}>
+                <Text fontWeight="bold" mb={2}>2. Burnium Access Option:</Text>
+                <Text>
+                  You can choose to burn your SFTs now to gain immediate access to Burnium membership, which includes:
+                </Text>
+                <UnorderedList mt={2} ml={4}>
+                  <ListItem>Trading bot access</ListItem>
+                  <ListItem>Trade signals</ListItem>
+                  <ListItem>Advanced calculators</ListItem>
+                  <ListItem>Future tools and features</ListItem>
+                </UnorderedList>
+              </Box>
+
+              <Alert status="warning" mt={4}>
+                <AlertIcon />
+                <Text>
+                  Warning: Burning your SFTs is permanent and irreversible. You will lose all associated benefits and rewards.
+                </Text>
+              </Alert>
             </Text>
-            <Checkbox isChecked={isChecked} onChange={(e) => setIsChecked(e.target.checked)}>
-              I agree with the terms and conditions
+            <Checkbox mt={4} isChecked={isChecked} onChange={(e) => setIsChecked(e.target.checked)}>
+              I understand this is irreversible and agree to proceed
             </Checkbox>
           </ModalBody>
           <ModalFooter>

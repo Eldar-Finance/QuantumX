@@ -8,6 +8,10 @@ import {
   HStack,
   Text,
   useDisclosure,
+  UnorderedList,
+  ListItem,
+  Alert,
+  AlertIcon,
 } from "@chakra-ui/react";
 import { useTrackTransactionStatus } from "@multiversx/sdk-dapp/hooks/transactions/useTrackTransactionStatus";
 import { scCall } from "api/sc/calls";
@@ -140,35 +144,31 @@ const InvestorsCard = () => {
                 Claim
               </ActionButton>
               <Card bg="gray.700" p={4} borderRadius="md">
-                <Text fontSize={"lg"} fontWeight="bold" color="white" mb={2}>
-                  Are you sure you want to proceed with burning your Early Investor status?
+                <Text fontSize={"lg"} fontWeight="bold" color="white" mb={4}>
+                  Important: Rewards Program Ending
                 </Text>
-                <Text fontSize={"md"} fontWeight="bold" color="gray.300" mb={4}>
-                  By clicking the &quot;Burn&quot; button, you will gain exclusive access to the Burnium Membership Page of QuantumX. This membership includes tools designed to enhance your cryptocurrency and investment journey, such as:
+                <Text fontSize={"md"} color="gray.300" mb={4}>
+                  Due to market conditions, we're permanently discontinuing the rewards program. Convert your Early Investor status to Burnium access for immediate benefits:
                 </Text>
-                <Text fontSize={"md"} fontWeight="bold" color="gray.300" mb={2}>
-                  - Early access to a trading bot
-                </Text>
-                <Text fontSize={"md"} fontWeight="bold" color="gray.300" mb={2}>
-                  - Trade signals
-                </Text>
-                <Text fontSize={"md"} fontWeight="bold" color="gray.300" mb={2}>
-                  - Calculators
-                </Text>
-                <Text fontSize={"md"} fontWeight="bold" color="gray.300" mb={4}>
-                  - And more features planned for the near future
-                </Text>
-                <Text fontSize={"md"} fontWeight="bold" color="gray.300" mb={4}>
-                  Due to minimal or no revenue in recent months, QuantumX is striving to provide value through these tools, even as we cannot currently distribute additional rewards.
-                </Text>
-                <Text fontSize={"md"} fontWeight="bold" color="gray.300" mb={4}>
-                  However, you also have the choice to retain your Early Investor status, keeping the benefits and rewards tied to it IF our revenue improves.
-                </Text>
-                <Text fontSize={"md"} fontWeight="bold" color="red.400" mb={4}>
-                  Important: By choosing to burn your Early Investor status, you will lose access to all associated benefits permanently.
-                </Text>
+                
+                <Box mb={4} bg="whiteAlpha.100" p={3} borderRadius="md">
+                  <UnorderedList color="gray.300" spacing={2}>
+                    <ListItem>Advanced Trading Bot Access</ListItem>
+                    <ListItem>Premium Trade Signals</ListItem>
+                    <ListItem>Investment Calculators</ListItem>
+                    <ListItem>Future Premium Tools</ListItem>
+                  </UnorderedList>
+                </Box>
+
+                <Alert status="warning" bg="transparent" mb={4}>
+                  <AlertIcon />
+                  <Text color="orange.300" fontSize="sm">
+                    This conversion is permanent and cannot be reversed. Act now to secure your Burnium benefits.
+                  </Text>
+                </Alert>
+
                 <ActionButton w={"full"} colorScheme="red" onClick={handleSubmit}>
-                  I want Burnium Access
+                  Convert to Burnium Access
                 </ActionButton>
               </Card>
             </Flex>
