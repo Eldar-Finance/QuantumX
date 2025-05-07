@@ -51,7 +51,7 @@ const Menu1: React.FC<Menu1Props> = ({ currentPath: initialPath }) => {
       fontSize={{ xs: "sm", md: "inherit" }}
     >
       {routesArr.map((route, index) => {
-        if (!route || route.onModal || route.onModalAndNavbar || !route.path) {
+        if (!route || route.onModal || route.onModalAndNavbar || !route.path || route.outMenu) {
           return null;
         }
         const active = isActive(route.path);

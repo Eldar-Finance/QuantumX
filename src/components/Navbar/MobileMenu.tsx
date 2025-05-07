@@ -27,15 +27,12 @@ const MobileMenu = () => {
     { name: "Swap", icon: Repeat, color: "linear-gradient(to bottom right, purple.500, pink.500)", route: "/swap" },
     { name: "Farms", icon: Sprout, color: "linear-gradient(to bottom right, green.500, teal.500)", route: "/farms" },
     { name: "Pools", icon: Droplets, color: "linear-gradient(to bottom right, blue.500, cyan.500)", route: "/pools" },
-    { name: "Burnium", icon: Flame, color: "linear-gradient(to bottom right, orange.500, red.500)", route: "/burnium" }, 
   ];
 
   const moreItems = [
     { name: "Rewards", icon: Award, color: "linear-gradient(to bottom right, indigo.500, purple.500)", route: "/qrewards" },
-    { name: "MoonDustX", icon: Moon, color: "linear-gradient(to bottom right, gray.500, blue.500)", route: "/moondustx" },
     { name: "Quantum Panel", icon: LayoutDashboard, color: "linear-gradient(to bottom right, green.500, blue.500)", route: "/panel" },
     { name: "Buy Crypto", icon: Zap, color: "linear-gradient(to bottom right, blue.500, green.500)", route: "" },
-    { name: "Hub", icon: Compass, color: "linear-gradient(to bottom right, orange.500, yellow.500)", route: "/hub" },
   ];
 
   useEffect(() => {

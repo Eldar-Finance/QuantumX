@@ -71,6 +71,7 @@ export const routes: {
   hub: {
     path: routeNames.hub,
     name: "Hub",
+    outMenu: true,
     // onModalAndNavbar: true,
   },
   // dca: {
@@ -85,8 +86,9 @@ export const routes: {
   },
 burnium: {
     path: routeNames.burnium,
-     name: "Burnium",
-     //onModalAndNavbar: true,
+    name: "Burnium",
+    outMenu: true,
+    //onModalAndNavbar: true,
   },
   // converter: {
   //   path: routeNames.converter,
@@ -97,6 +99,7 @@ burnium: {
     path: routeNames.moondustx,
     name: "MoonDustX",
     onModal: true,
+    outMenu: true,
   },
   // marketplace: {
   //   path: routeNames.marketplace,

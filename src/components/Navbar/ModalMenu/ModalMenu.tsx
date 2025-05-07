@@ -28,7 +28,6 @@ const ModalMenu = ({ onClose }: IProps) => {
 
   const menuItems = [
     { name: "Rewards", icon: Zap, color: "linear-gradient(to bottom right, indigo.500, purple.500)", route: "/qrewards" },
-    { name: "MoonDustX", icon: Moon, color: "linear-gradient(to bottom right, gray.500, blue.500)", route: "/moondustx" },
     { name: "Quantum Panel", icon: Layout, color: "linear-gradient(to bottom right, green.500, blue.500)", route: "/panel" },
     { name: "Admin", icon: Settings, color: "linear-gradient(to bottom right, pink.500, purple.500)", route: "/admin-panel", adminOnly: true },
   ];
