@@ -64,15 +64,33 @@ const Pools = () => {
 
   useEffect(() => {
     if (farms2) {
-      setFarms2ToSearch(farms2.filter((f) => f.farm.farmId != 4 && f.farm.farmId != 7));
+      // Filter out farms with 0 staked balance and exclude specific farm IDs (4 and 7)
+      const farmsWithStake = farms2.filter((f) => 
+        f.farm.farmId != 4 && 
+        f.farm.farmId != 7 && 
+        f.stakedBalance > 0
+      );
+      setFarms2ToSearch(farmsWithStake);
     }
   }, [farms2]);
 
   const handleSearch = (query: string) => {
     if (query === "") {
-      setFarms2ToSearch(farms2);
+      // Filter out farms with 0 staked balance and exclude specific farm IDs when resetting search
+      const farmsWithStake = farms2.filter((f) => 
+        f.farm.farmId != 4 && 
+        f.farm.farmId != 7 && 
+        f.stakedBalance > 0
+      );
+      setFarms2ToSearch(farmsWithStake);
     } else {
-      const newFarm2 = farms2.filter((farm) => {
+      // Search only within farms that have staked balance > 0 and exclude specific farm IDs
+      const farmsWithStake = farms2.filter((f) => 
+        f.farm.farmId != 4 && 
+        f.farm.farmId != 7 && 
+        f.stakedBalance > 0
+      );
+      const newFarm2 = farmsWithStake.filter((farm) => {
         return (
           formatTokenI(farm.farm.stakingToken)
             .toString()
@@ -110,6 +128,7 @@ const Pools = () => {
       setIsOpen(!isOpen);
   
       if (!isOpen) {
+        // Filter to show only pools where user has staked balance > 0
         const newFarm2 = farms2.filter((farm) => {
           return userFarm2Info.data.some(
             (userFarm) =>
@@ -119,7 +138,13 @@ const Pools = () => {
         });
         setFarms2ToSearch(newFarm2);
       } else {
-        setFarms2ToSearch(farms2);
+        // Show all pools with staked balance > 0 and exclude specific farm IDs
+        const farmsWithStake = farms2.filter((f) => 
+          f.farm.farmId != 4 && 
+          f.farm.farmId != 7 && 
+          f.stakedBalance > 0
+        );
+        setFarms2ToSearch(farmsWithStake);
       }
     }
   };

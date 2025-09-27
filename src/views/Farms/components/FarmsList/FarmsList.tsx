@@ -26,15 +26,21 @@ const FarmsList = () => {
 
   useEffect(() => {
     if (farms2) {
-      setFarms2ToSearch(farms2);
+      // Filter out farms with 0 staked balance
+      const farmsWithStake = farms2.filter((farm) => farm.stakedBalance > 0);
+      setFarms2ToSearch(farmsWithStake);
     }
   }, [farms2]);
 
   const handleSearch = (query: string) => {
     if (query === "") {
-      setFarms2ToSearch(farms2);
+      // Filter out farms with 0 staked balance when resetting search
+      const farmsWithStake = farms2.filter((farm) => farm.stakedBalance > 0);
+      setFarms2ToSearch(farmsWithStake);
     } else {
-      const newFarm2 = farms2.filter((farm) => {
+      // Search only within farms that have staked balance > 0
+      const farmsWithStake = farms2.filter((farm) => farm.stakedBalance > 0);
+      const newFarm2 = farmsWithStake.filter((farm) => {
         return (
           formatTokenI(farm.farm.stakingToken)
             .toString()
@@ -62,6 +68,7 @@ const FarmsList = () => {
       setIsOpen(!isOpen);
 
       if (!isOpen) {
+        // Filter to show only farms where user has staked balance > 0
         const newFarm2 = farms2.filter((farm) => {
           return userFarm2Info.data.some(
             (userFarm) =>
@@ -72,7 +79,9 @@ const FarmsList = () => {
 
         setFarms2ToSearch(newFarm2);
       } else {
-        setFarms2ToSearch(farms2);
+        // Show all farms with staked balance > 0 (not just user's farms)
+        const farmsWithStake = farms2.filter((farm) => farm.stakedBalance > 0);
+        setFarms2ToSearch(farmsWithStake);
       }
     }
   };
